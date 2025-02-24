@@ -262,7 +262,8 @@ namespace Hl7.Fhir.Model
       if(other is not Schedule otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
       if(!comparer.ListEquals(_ServiceCategory, otherT._ServiceCategory)) return false;
       if(!comparer.ListEquals(_ServiceType, otherT._ServiceType)) return false;
@@ -271,7 +272,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_Actor, otherT._Actor)) return false;
       if(!comparer.Equals(_PlanningHorizon, otherT._PlanningHorizon)) return false;
       if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

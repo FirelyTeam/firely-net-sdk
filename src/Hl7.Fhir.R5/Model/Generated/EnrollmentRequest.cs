@@ -223,14 +223,15 @@ namespace Hl7.Fhir.Model
       if(other is not EnrollmentRequest otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_CreatedElement, otherT._CreatedElement)) return false;
       if(!comparer.Equals(_Insurer, otherT._Insurer)) return false;
       if(!comparer.Equals(_Provider, otherT._Provider)) return false;
       if(!comparer.Equals(_Candidate, otherT._Candidate)) return false;
       if(!comparer.Equals(_Coverage, otherT._Coverage)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

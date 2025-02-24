@@ -295,11 +295,12 @@ namespace Hl7.Fhir.Model
         if(other is not ChannelComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
         if(!comparer.Equals(_EndpointElement, otherT._EndpointElement)) return false;
         if(!comparer.Equals(_PayloadElement, otherT._PayloadElement)) return false;
         if(!comparer.ListEquals(_HeaderElement, otherT._HeaderElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -575,7 +576,8 @@ namespace Hl7.Fhir.Model
       if(other is not Subscription otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.ListEquals(_Contact, otherT._Contact)) return false;
       if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
       if(!comparer.Equals(_ReasonElement, otherT._ReasonElement)) return false;
@@ -583,7 +585,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_ErrorElement, otherT._ErrorElement)) return false;
       if(!comparer.Equals(_Channel, otherT._Channel)) return false;
       if(!comparer.ListEquals(_Tag, otherT._Tag)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

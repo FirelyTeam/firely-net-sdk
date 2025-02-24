@@ -177,12 +177,13 @@ namespace Hl7.Fhir.Model
         if(other is not IncludedStructureComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Structure, otherT._Structure)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Structure, otherT._Structure)) return false;
         if(!comparer.Equals(_Laterality, otherT._Laterality)) return false;
         if(!comparer.ListEquals(_BodyLandmarkOrientation, otherT._BodyLandmarkOrientation)) return false;
         if(!comparer.ListEquals(_SpatialReference, otherT._SpatialReference)) return false;
         if(!comparer.ListEquals(_Qualifier, otherT._Qualifier)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -348,11 +349,12 @@ namespace Hl7.Fhir.Model
         if(other is not BodyLandmarkOrientationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_LandmarkDescription, otherT._LandmarkDescription)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_LandmarkDescription, otherT._LandmarkDescription)) return false;
         if(!comparer.ListEquals(_ClockFacePosition, otherT._ClockFacePosition)) return false;
         if(!comparer.ListEquals(_DistanceFromLandmark, otherT._DistanceFromLandmark)) return false;
         if(!comparer.ListEquals(_SurfaceOrientation, otherT._SurfaceOrientation)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -479,9 +481,10 @@ namespace Hl7.Fhir.Model
         if(other is not DistanceFromLandmarkComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Device, otherT._Device)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Device, otherT._Device)) return false;
         if(!comparer.ListEquals(_Value, otherT._Value)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -699,7 +702,8 @@ namespace Hl7.Fhir.Model
       if(other is not BodyStructure otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
       if(!comparer.Equals(_Morphology, otherT._Morphology)) return false;
       if(!comparer.ListEquals(_IncludedStructure, otherT._IncludedStructure)) return false;
@@ -707,7 +711,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
       if(!comparer.ListEquals(_Image, otherT._Image)) return false;
       if(!comparer.Equals(_Patient, otherT._Patient)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

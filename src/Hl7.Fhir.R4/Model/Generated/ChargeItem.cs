@@ -182,9 +182,10 @@ namespace Hl7.Fhir.Model
         if(other is not PerformerComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Function, otherT._Function)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Function, otherT._Function)) return false;
         if(!comparer.Equals(_Actor, otherT._Actor)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -712,7 +713,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Code; set => Code = value!; }
-    IEnumerable<Coding> ICoded.ToCodings() => Code?.ToCodings() ?? [];
+    IReadOnlyCollection<Coding> ICoded.ToCodings() => Code?.ToCodings() ?? [];
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -760,7 +761,8 @@ namespace Hl7.Fhir.Model
       if(other is not ChargeItem otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.ListEquals(_DefinitionUriElement, otherT._DefinitionUriElement)) return false;
       if(!comparer.ListEquals(_DefinitionCanonicalElement, otherT._DefinitionCanonicalElement)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
@@ -786,7 +788,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_Account, otherT._Account)) return false;
       if(!comparer.ListEquals(_Note, otherT._Note)) return false;
       if(!comparer.ListEquals(_SupportingInformation, otherT._SupportingInformation)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

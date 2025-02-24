@@ -220,13 +220,14 @@ namespace Hl7.Fhir.Model
         if(other is not PredictionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Outcome, otherT._Outcome)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Outcome, otherT._Outcome)) return false;
         if(!comparer.Equals(_Probability, otherT._Probability)) return false;
         if(!comparer.Equals(_QualitativeRisk, otherT._QualitativeRisk)) return false;
         if(!comparer.Equals(_RelativeRiskElement, otherT._RelativeRiskElement)) return false;
         if(!comparer.Equals(_When, otherT._When)) return false;
         if(!comparer.Equals(_RationaleElement, otherT._RationaleElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -616,7 +617,8 @@ namespace Hl7.Fhir.Model
       if(other is not RiskAssessment otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_BasedOn, otherT._BasedOn)) return false;
       if(!comparer.Equals(_Parent, otherT._Parent)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
@@ -632,7 +634,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_Prediction, otherT._Prediction)) return false;
       if(!comparer.Equals(_MitigationElement, otherT._MitigationElement)) return false;
       if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

@@ -156,11 +156,12 @@ namespace Hl7.Fhir.Model
         if(other is not ContactComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Purpose, otherT._Purpose)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Purpose, otherT._Purpose)) return false;
         if(!comparer.Equals(_Name, otherT._Name)) return false;
         if(!comparer.ListEquals(_Telecom, otherT._Telecom)) return false;
         if(!comparer.Equals(_Address, otherT._Address)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -442,7 +443,8 @@ namespace Hl7.Fhir.Model
       if(other is not Organization otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
       if(!comparer.ListEquals(_Type, otherT._Type)) return false;
       if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
@@ -452,7 +454,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_PartOf, otherT._PartOf)) return false;
       if(!comparer.ListEquals(_Contact, otherT._Contact)) return false;
       if(!comparer.ListEquals(_Endpoint, otherT._Endpoint)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

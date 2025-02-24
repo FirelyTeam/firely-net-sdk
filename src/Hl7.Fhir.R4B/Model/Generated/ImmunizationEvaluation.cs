@@ -370,7 +370,8 @@ namespace Hl7.Fhir.Model
       if(other is not ImmunizationEvaluation otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_Patient, otherT._Patient)) return false;
       if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
@@ -383,7 +384,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_SeriesElement, otherT._SeriesElement)) return false;
       if(!comparer.Equals(_DoseNumber, otherT._DoseNumber)) return false;
       if(!comparer.Equals(_SeriesDoses, otherT._SeriesDoses)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

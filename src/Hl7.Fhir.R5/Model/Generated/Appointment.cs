@@ -3170,12 +3170,13 @@ namespace Hl7.Fhir.Model
         if(other is not ParticipantComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Type, otherT._Type)) return false;
         if(!comparer.Equals(_Period, otherT._Period)) return false;
         if(!comparer.Equals(_Actor, otherT._Actor)) return false;
         if(!comparer.Equals(_RequiredElement, otherT._RequiredElement)) return false;
         if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -3508,7 +3509,8 @@ namespace Hl7.Fhir.Model
         if(other is not RecurrenceTemplateComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Timezone, otherT._Timezone)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Timezone, otherT._Timezone)) return false;
         if(!comparer.Equals(_RecurrenceType, otherT._RecurrenceType)) return false;
         if(!comparer.Equals(_LastOccurrenceDateElement, otherT._LastOccurrenceDateElement)) return false;
         if(!comparer.Equals(_OccurrenceCountElement, otherT._OccurrenceCountElement)) return false;
@@ -3518,7 +3520,7 @@ namespace Hl7.Fhir.Model
         if(!comparer.Equals(_YearlyTemplate, otherT._YearlyTemplate)) return false;
         if(!comparer.ListEquals(_ExcludingDateElement, otherT._ExcludingDateElement)) return false;
         if(!comparer.ListEquals(_ExcludingRecurrenceIdElement, otherT._ExcludingRecurrenceIdElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -3885,7 +3887,8 @@ namespace Hl7.Fhir.Model
         if(other is not WeeklyTemplateComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_MondayElement, otherT._MondayElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_MondayElement, otherT._MondayElement)) return false;
         if(!comparer.Equals(_TuesdayElement, otherT._TuesdayElement)) return false;
         if(!comparer.Equals(_WednesdayElement, otherT._WednesdayElement)) return false;
         if(!comparer.Equals(_ThursdayElement, otherT._ThursdayElement)) return false;
@@ -3893,7 +3896,7 @@ namespace Hl7.Fhir.Model
         if(!comparer.Equals(_SaturdayElement, otherT._SaturdayElement)) return false;
         if(!comparer.Equals(_SundayElement, otherT._SundayElement)) return false;
         if(!comparer.Equals(_WeekIntervalElement, otherT._WeekIntervalElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -4103,11 +4106,12 @@ namespace Hl7.Fhir.Model
         if(other is not MonthlyTemplateComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_DayOfMonthElement, otherT._DayOfMonthElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_DayOfMonthElement, otherT._DayOfMonthElement)) return false;
         if(!comparer.Equals(_NthWeekOfMonth, otherT._NthWeekOfMonth)) return false;
         if(!comparer.Equals(_DayOfWeek, otherT._DayOfWeek)) return false;
         if(!comparer.Equals(_MonthIntervalElement, otherT._MonthIntervalElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -4230,8 +4234,9 @@ namespace Hl7.Fhir.Model
         if(other is not YearlyTemplateComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_YearIntervalElement, otherT._YearIntervalElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_YearIntervalElement, otherT._YearIntervalElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -4919,7 +4924,8 @@ namespace Hl7.Fhir.Model
       if(other is not Appointment otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_CancellationReason, otherT._CancellationReason)) return false;
       if(!comparer.ListEquals(_Class, otherT._Class)) return false;
@@ -4951,7 +4957,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_RecurrenceIdElement, otherT._RecurrenceIdElement)) return false;
       if(!comparer.Equals(_OccurrenceChangedElement, otherT._OccurrenceChangedElement)) return false;
       if(!comparer.ListEquals(_RecurrenceTemplate, otherT._RecurrenceTemplate)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

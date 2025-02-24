@@ -165,12 +165,13 @@ namespace Hl7.Fhir.Model
       if(other is not MarketingStatus otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Country, otherT._Country)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Country, otherT._Country)) return false;
       if(!comparer.Equals(_Jurisdiction, otherT._Jurisdiction)) return false;
       if(!comparer.Equals(_Status, otherT._Status)) return false;
       if(!comparer.Equals(_DateRange, otherT._DateRange)) return false;
       if(!comparer.Equals(_RestoreDateElement, otherT._RestoreDateElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

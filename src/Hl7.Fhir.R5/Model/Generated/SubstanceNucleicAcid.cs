@@ -251,7 +251,8 @@ namespace Hl7.Fhir.Model
         if(other is not SubunitComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_SubunitElement, otherT._SubunitElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SubunitElement, otherT._SubunitElement)) return false;
         if(!comparer.Equals(_SequenceElement, otherT._SequenceElement)) return false;
         if(!comparer.Equals(_LengthElement, otherT._LengthElement)) return false;
         if(!comparer.Equals(_SequenceAttachment, otherT._SequenceAttachment)) return false;
@@ -259,7 +260,7 @@ namespace Hl7.Fhir.Model
         if(!comparer.Equals(_ThreePrime, otherT._ThreePrime)) return false;
         if(!comparer.ListEquals(_Linkage, otherT._Linkage)) return false;
         if(!comparer.ListEquals(_Sugar, otherT._Sugar)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -481,11 +482,12 @@ namespace Hl7.Fhir.Model
         if(other is not LinkageComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_ConnectivityElement, otherT._ConnectivityElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_ConnectivityElement, otherT._ConnectivityElement)) return false;
         if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
         if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
         if(!comparer.Equals(_ResidueSiteElement, otherT._ResidueSiteElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -650,10 +652,11 @@ namespace Hl7.Fhir.Model
         if(other is not SugarComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
         if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
         if(!comparer.Equals(_ResidueSiteElement, otherT._ResidueSiteElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -827,12 +830,13 @@ namespace Hl7.Fhir.Model
       if(other is not SubstanceNucleicAcid otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_SequenceType, otherT._SequenceType)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_SequenceType, otherT._SequenceType)) return false;
       if(!comparer.Equals(_NumberOfSubunitsElement, otherT._NumberOfSubunitsElement)) return false;
       if(!comparer.Equals(_AreaOfHybridisationElement, otherT._AreaOfHybridisationElement)) return false;
       if(!comparer.Equals(_OligoNucleotideType, otherT._OligoNucleotideType)) return false;
       if(!comparer.ListEquals(_Subunit, otherT._Subunit)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

@@ -434,7 +434,8 @@ namespace Hl7.Fhir.Model
       if(other is not Address otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
       if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
       if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
       if(!comparer.ListEquals(_LineElement, otherT._LineElement)) return false;
@@ -444,7 +445,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_PostalCodeElement, otherT._PostalCodeElement)) return false;
       if(!comparer.Equals(_CountryElement, otherT._CountryElement)) return false;
       if(!comparer.Equals(_Period, otherT._Period)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

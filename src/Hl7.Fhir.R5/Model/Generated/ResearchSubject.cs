@@ -307,13 +307,14 @@ namespace Hl7.Fhir.Model
         if(other is not ProgressComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
         if(!comparer.Equals(_SubjectState, otherT._SubjectState)) return false;
         if(!comparer.Equals(_Milestone, otherT._Milestone)) return false;
         if(!comparer.Equals(_Reason, otherT._Reason)) return false;
         if(!comparer.Equals(_StartDateElement, otherT._StartDateElement)) return false;
         if(!comparer.Equals(_EndDateElement, otherT._EndDateElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -594,7 +595,8 @@ namespace Hl7.Fhir.Model
       if(other is not ResearchSubject otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.ListEquals(_Progress, otherT._Progress)) return false;
       if(!comparer.Equals(_Period, otherT._Period)) return false;
@@ -603,7 +605,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_AssignedComparisonGroupElement, otherT._AssignedComparisonGroupElement)) return false;
       if(!comparer.Equals(_ActualComparisonGroupElement, otherT._ActualComparisonGroupElement)) return false;
       if(!comparer.ListEquals(_Consent, otherT._Consent)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

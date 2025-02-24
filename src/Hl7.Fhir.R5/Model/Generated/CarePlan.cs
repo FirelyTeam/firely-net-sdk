@@ -185,10 +185,11 @@ namespace Hl7.Fhir.Model
         if(other is not ActivityComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_PerformedActivity, otherT._PerformedActivity)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_PerformedActivity, otherT._PerformedActivity)) return false;
         if(!comparer.ListEquals(_Progress, otherT._Progress)) return false;
         if(!comparer.Equals(_PlannedActivityReference, otherT._PlannedActivityReference)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -739,7 +740,8 @@ namespace Hl7.Fhir.Model
       if(other is not CarePlan otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.ListEquals(_InstantiatesCanonicalElement, otherT._InstantiatesCanonicalElement)) return false;
       if(!comparer.ListEquals(_InstantiatesUriElement, otherT._InstantiatesUriElement)) return false;
       if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
@@ -762,7 +764,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_Goal, otherT._Goal)) return false;
       if(!comparer.ListEquals(_Activity, otherT._Activity)) return false;
       if(!comparer.ListEquals(_Note, otherT._Note)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

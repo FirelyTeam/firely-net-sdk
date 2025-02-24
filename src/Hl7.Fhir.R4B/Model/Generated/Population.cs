@@ -140,11 +140,12 @@ namespace Hl7.Fhir.Model
       if(other is not Population otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Age, otherT._Age)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Age, otherT._Age)) return false;
       if(!comparer.Equals(_Gender, otherT._Gender)) return false;
       if(!comparer.Equals(_Race, otherT._Race)) return false;
       if(!comparer.Equals(_PhysiologicalCondition, otherT._PhysiologicalCondition)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

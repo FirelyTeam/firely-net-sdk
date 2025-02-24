@@ -172,13 +172,14 @@ namespace Hl7.Fhir.Model
       if(other is not ExtendedContactDetail otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Purpose, otherT._Purpose)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Purpose, otherT._Purpose)) return false;
       if(!comparer.ListEquals(_Name, otherT._Name)) return false;
       if(!comparer.ListEquals(_Telecom, otherT._Telecom)) return false;
       if(!comparer.Equals(_Address, otherT._Address)) return false;
       if(!comparer.Equals(_Organization, otherT._Organization)) return false;
       if(!comparer.Equals(_Period, otherT._Period)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

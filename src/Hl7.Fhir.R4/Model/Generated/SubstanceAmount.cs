@@ -120,9 +120,10 @@ namespace Hl7.Fhir.Model
         if(other is not ReferenceRangeComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_LowLimit, otherT._LowLimit)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_LowLimit, otherT._LowLimit)) return false;
         if(!comparer.Equals(_HighLimit, otherT._HighLimit)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -261,11 +262,12 @@ namespace Hl7.Fhir.Model
       if(other is not SubstanceAmount otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Amount, otherT._Amount)) return false;
       if(!comparer.Equals(_AmountType, otherT._AmountType)) return false;
       if(!comparer.Equals(_AmountTextElement, otherT._AmountTextElement)) return false;
       if(!comparer.Equals(_ReferenceRange, otherT._ReferenceRange)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

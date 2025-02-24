@@ -337,14 +337,15 @@ namespace Hl7.Fhir.Model
       if(other is not HumanName otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
       if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
       if(!comparer.Equals(_FamilyElement, otherT._FamilyElement)) return false;
       if(!comparer.ListEquals(_GivenElement, otherT._GivenElement)) return false;
       if(!comparer.ListEquals(_PrefixElement, otherT._PrefixElement)) return false;
       if(!comparer.ListEquals(_SuffixElement, otherT._SuffixElement)) return false;
       if(!comparer.Equals(_Period, otherT._Period)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

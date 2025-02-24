@@ -263,7 +263,8 @@ namespace Hl7.Fhir.Model
         if(other is not RecommendationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
         if(!comparer.Equals(_VaccineCode, otherT._VaccineCode)) return false;
         if(!comparer.Equals(_TargetDisease, otherT._TargetDisease)) return false;
         if(!comparer.Equals(_DoseNumberElement, otherT._DoseNumberElement)) return false;
@@ -272,7 +273,7 @@ namespace Hl7.Fhir.Model
         if(!comparer.Equals(_Protocol, otherT._Protocol)) return false;
         if(!comparer.ListEquals(_SupportingImmunization, otherT._SupportingImmunization)) return false;
         if(!comparer.ListEquals(_SupportingPatientInformation, otherT._SupportingPatientInformation)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -449,9 +450,10 @@ namespace Hl7.Fhir.Model
         if(other is not DateCriterionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Code, otherT._Code)) return false;
         if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -636,11 +638,12 @@ namespace Hl7.Fhir.Model
         if(other is not ProtocolComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_DoseSequenceElement, otherT._DoseSequenceElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_DoseSequenceElement, otherT._DoseSequenceElement)) return false;
         if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
         if(!comparer.Equals(_Authority, otherT._Authority)) return false;
         if(!comparer.Equals(_SeriesElement, otherT._SeriesElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -769,10 +772,11 @@ namespace Hl7.Fhir.Model
       if(other is not ImmunizationRecommendation otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_Patient, otherT._Patient)) return false;
       if(!comparer.ListEquals(_Recommendation, otherT._Recommendation)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

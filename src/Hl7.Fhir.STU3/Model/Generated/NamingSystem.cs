@@ -295,12 +295,13 @@ namespace Hl7.Fhir.Model
         if(other is not UniqueIdComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
         if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
         if(!comparer.Equals(_PreferredElement, otherT._PreferredElement)) return false;
         if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
         if(!comparer.Equals(_Period, otherT._Period)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -719,7 +720,8 @@ namespace Hl7.Fhir.Model
       if(other is not NamingSystem otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_KindElement, otherT._KindElement)) return false;
       if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
@@ -733,7 +735,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_UsageElement, otherT._UsageElement)) return false;
       if(!comparer.ListEquals(_UniqueId, otherT._UniqueId)) return false;
       if(!comparer.Equals(_ReplacedBy, otherT._ReplacedBy)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

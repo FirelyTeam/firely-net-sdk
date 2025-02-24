@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     Hl7.Fhir.Model.DataType? ICoded<Hl7.Fhir.Model.DataType?>.Code { get => Module; set => Module = value!; }
-    IEnumerable<Coding> ICoded.ToCodings() => Module?.ToCodings() ?? [];
+    IReadOnlyCollection<Coding> ICoded.ToCodings() => Module?.ToCodings() ?? [];
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -399,7 +399,8 @@ namespace Hl7.Fhir.Model
       if(other is not GuidanceResponse otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_RequestIdentifier, otherT._RequestIdentifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_RequestIdentifier, otherT._RequestIdentifier)) return false;
       if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_Module, otherT._Module)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
@@ -414,7 +415,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_OutputParameters, otherT._OutputParameters)) return false;
       if(!comparer.Equals(_Result, otherT._Result)) return false;
       if(!comparer.ListEquals(_DataRequirement, otherT._DataRequirement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
