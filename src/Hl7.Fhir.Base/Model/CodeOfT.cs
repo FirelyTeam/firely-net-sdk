@@ -132,7 +132,7 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
     public static new bool IsValidValue(string value) => doParse(value) is not null;
 
     /// <inheritdoc />
-    public override IEnumerable<Coding> ToCodings() => [new(Value?.GetSystem(), Value?.GetLiteral())];
+    public override IReadOnlyCollection<Coding> ToCodings() => [new(Value?.GetSystem(), Value?.GetLiteral())];
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() =>
         Value is not null ? new P.Code(Value.GetSystem(), Value.GetLiteral()!, display: null, version: null) : null;

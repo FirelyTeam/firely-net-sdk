@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             var newType = new ElementDefinition.TypeRefComponent
             {
                 Code = type,
-                Profile = profiles
+                Profile = profiles!
             };
 
             ed.Type.Add(newType);
@@ -115,8 +115,8 @@ namespace Hl7.Fhir.Model
             {
                 Code = REFERENCE_LITERAL,
                 TargetProfile = targetProfiles,
-                Profile = profiles,
-                Aggregation = aggregation?.Cast<ElementDefinition.AggregationMode?>()
+                Profile = profiles!,
+                Aggregation = aggregation?.Cast<ElementDefinition.AggregationMode?>()!
             };
 
             ed.Type.Add(newType);

@@ -98,5 +98,5 @@ public partial class CodeableConcept : ICoded, P.IToSystemPrimitive
     }
 
     /// <inheritdoc cref="ICoded.ToCodings"/>
-    public IEnumerable<Coding> ToCodings() => Coding;
+    public IReadOnlyCollection<Coding> ToCodings() => Coding;
 }

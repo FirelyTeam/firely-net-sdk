@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Tests.Model
             string xml = ReadTestData("TestPatient.xml");
 
             var p = new FhirXmlParser().Parse<Patient>(xml);
-            var p2 = (Patient)p.DeepCopy();
+            var p2 = p.DeepCopy();
 
             // If you set an element to null in the pattern, it need not be set in the source
             p2.Gender = null;
