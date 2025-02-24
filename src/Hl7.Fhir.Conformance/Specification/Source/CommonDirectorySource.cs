@@ -585,6 +585,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
         public Resource? ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
 
+        ///<inheritdoc/>
         public ResolverResult TryResolveByUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
@@ -609,6 +610,7 @@ namespace Hl7.Fhir.Specification.Source
             return resource;
         }
 
+        ///<inheritdoc/>
         public ResolverResult TryResolveByCanonicalUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));

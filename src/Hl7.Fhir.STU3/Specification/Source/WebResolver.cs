@@ -60,6 +60,12 @@ namespace Hl7.Fhir.Specification.Source
             return ResolveByUri(uri);
         }
 
+        /// <summary>
+        /// Uses provided <paramref name="uri"/> to construct <see cref="ResourceIdentity"/> and then tries to read the resource from that source.
+        /// </summary>
+        /// <param name="uri">Uri to attempt resolving on</param>
+        /// <returns><see cref="ResolverResult"/> with an actual resource, or the <see cref="ResolverResult.Error"/>.</returns>
+        /// <exception cref="ArgumentNullException">Provided <paramref name="uri"/> is <c>null</c>.</exception>
         public ResolverResult TryResolveByUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
@@ -92,10 +98,13 @@ namespace Hl7.Fhir.Specification.Source
             // Other runtime exceptions are fatal...
         }
 
+        /// <inheritdoc cref="TryResolveByUri"/>
         public ResolverResult TryResolveByCanonicalUri(string uri) => TryResolveByUri(uri);
         public Tasks.Task<Resource> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByUri(uri));
         public Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
+        /// <inheritdoc cref="TryResolveByUri"/>
         public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
+        /// <inheritdoc cref="TryResolveByUri"/>
         public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
 
         // Allow derived classes to override

@@ -35,11 +35,13 @@ namespace Hl7.Fhir.Specification.Source
             return Task.FromResult(result);
         }
 
+        ///<inheritdoc/>
         public Task<ResolverResult> TryResolveByUriAsync(string uri)
         {
             return Task.FromResult(SyncResolver.TryResolveByUri(uri));
         }
 
+        ///<inheritdoc/>
         public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
         {
             return Task.FromResult(SyncResolver.TryResolveByCanonicalUri(uri));

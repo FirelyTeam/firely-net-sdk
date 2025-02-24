@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Retrieve the artifact with the specified url.</summary>
         /// <param name="url">The url of the target artifact.</param>
         /// <param name="strategy">Option flag to control the loading strategy.</param>
-        /// <returns>A <see cref="Resource"/> instance, or <c>null</c> if unavailable.</returns>
+        /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<ResolverResult> TryResolveByUriAsync(string url, CachedResolverLoadingStrategy strategy)
         {
@@ -110,9 +110,11 @@ namespace Hl7.Fhir.Specification.Source
         [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public Resource ResolveByCanonicalUri(string url) => TryResolveByCanonicalUri(url).Value;
 
+        /// <inheritdoc cref="TryResolveByUriAsync(string)" />
         [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
         public ResolverResult TryResolveByUri(string uri) => TaskHelper.Await(() => TryResolveByUriAsync(uri));
 
+        /// <inheritdoc cref="TryResolveByCanonicalUriAsync(string)" />
         [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public ResolverResult TryResolveByCanonicalUri(string uri) => TaskHelper.Await(() => TryResolveByCanonicalUriAsync(uri));
 
@@ -125,9 +127,17 @@ namespace Hl7.Fhir.Specification.Source
             var result = await TryResolveByCanonicalUriAsync(url).ConfigureAwait(false);
             return result.Value;
         }
-
+        
+        /// <summary>Retrieve the artifact with the specified url.</summary>
+        /// <param name="uri">The url of the target artifact.</param>
+        /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
+        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<ResolverResult> TryResolveByUriAsync(string uri) => await TryResolveByUriAsync(uri, CachedResolverLoadingStrategy.LoadOnDemand).ConfigureAwait(false);
 
+        /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
+        /// <param name="uri">The canonical url of the target conformance resource.</param>
+        /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
+        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => await TryResolveByCanonicalUriAsync(uri, CachedResolverLoadingStrategy.LoadOnDemand).ConfigureAwait(false);
 
         /// <inheritdoc cref="ResolveByCanonicalUriAsync(string, CachedResolverLoadingStrategy)" />
@@ -146,6 +156,11 @@ namespace Hl7.Fhir.Specification.Source
             return result.Value;
         }
         
+        /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
+        /// <param name="uri">The canonical url of the target conformance resource.</param>
+        /// <param name="strategy">Option flag to control the loading strategy.</param>
+        /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
+        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CachedResolverLoadingStrategy strategy)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));

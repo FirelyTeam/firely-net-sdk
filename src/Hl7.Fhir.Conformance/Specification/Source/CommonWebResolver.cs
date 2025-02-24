@@ -60,6 +60,7 @@ namespace Hl7.Fhir.Specification.Source
             return TryResolveByCanonicalUri(uri).Value;
         }
 
+        ///<inheritdoc/>
         public ResolverResult TryResolveByUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
@@ -91,6 +92,7 @@ namespace Hl7.Fhir.Specification.Source
             // Other runtime exceptions are fatal...
         }
 
+        ///<inheritdoc/>
         public ResolverResult TryResolveByCanonicalUri(string uri) => TryResolveByUri(uri);
 
         public async Tasks.Task<Resource?> ResolveByUriAsync(string uri)
@@ -105,8 +107,10 @@ namespace Hl7.Fhir.Specification.Source
             return result.Value;
         }
         
+        ///<inheritdoc/>
         public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
         
+        ///<inheritdoc/>
         public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
 
         // Allow derived classes to override

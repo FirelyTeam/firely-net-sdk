@@ -161,13 +161,17 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
         public Resource? ResolveByCanonicalUri(string uri) => FileSource.ResolveByCanonicalUri(uri);
 
+        ///<inheritdoc/>
         public ResolverResult TryResolveByUri(string uri) => FileSource.TryResolveByUri(uri);
+        ///<inheritdoc/>
         public ResolverResult TryResolveByCanonicalUri(string uri) => FileSource.TryResolveByCanonicalUri(uri);
 
         public Task<Resource?> ResolveByUriAsync(string uri) => FileSource.ResolveByUriAsync(uri);
         public Task<Resource?> ResolveByCanonicalUriAsync(string uri) => FileSource.ResolveByCanonicalUriAsync(uri);
         
+        ///<inheritdoc/>
         public Task<ResolverResult> TryResolveByUriAsync(string uri) => FileSource.TryResolveByUriAsync(uri);
+        ///<inheritdoc/>
         public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => FileSource.TryResolveByCanonicalUriAsync(uri);
 
         #endregion

@@ -245,7 +245,9 @@ namespace Hl7.Fhir.Specification.Source
             return result.Value;
         }
         
+        /// <inheritdoc/>
         public Task<ResolverResult> TryResolveByUriAsync(string uri) => FileSource.TryResolveByUriAsync(uri);
+        /// <inheritdoc/>
         public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => FileSource.TryResolveByCanonicalUriAsync(uri);
 
         #endregion

@@ -80,9 +80,11 @@ namespace Hl7.Fhir.Specification.Source
         [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
 
+        /// <inheritdoc cref="TryResolveByUriAsync(string)"/>
         [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
         public ResolverResult TryResolveByUri(string uri) => TaskHelper.Await(() => TryResolveByUriAsync(uri));
 
+        /// <inheritdoc cref="TryResolveByCanonicalUriAsync(string)"/>
         [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public ResolverResult TryResolveByCanonicalUri(string uri)  => TaskHelper.Await(() => TryResolveByCanonicalUriAsync(uri));
 
@@ -102,8 +104,20 @@ namespace Hl7.Fhir.Specification.Source
             return result.Value;
         }
 
+        /// <summary>
+        /// Find a resource based on it's relative or absolute uri.
+        /// </summary>
+        /// <param name="uri">A resource uri</param>
+        /// <returns><see cref="ResolverResult"/> with an actual resource, combined with the <see cref="ResolverResult.Error"/> if snapshot generation failed.</returns>
+        /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component. If the snapshot generation failed, the <see cref="ResolverResult.Error"/> will be populated.</remarks>
         public async  Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => await ensureSnapshot(await _resolver.TryResolveByUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
 
+        /// <summary>
+        /// Find a (conformance) resource based on it's canonical uri.
+        /// </summary>
+        /// <param name="uri">A canonical uri of a (conformance) resource.</param>
+        /// <returns><see cref="ResolverResult"/> with an actual resource, combined with the <see cref="ResolverResult.Error"/> if snapshot generation failed.</returns>
+        /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component. If the snapshot generation failed, the <see cref="ResolverResult.Error"/> will be populated.</remarks>
         public async Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => await ensureSnapshot(await _resolver.TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
 
         #endregion

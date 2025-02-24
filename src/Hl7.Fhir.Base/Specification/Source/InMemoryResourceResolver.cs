@@ -94,6 +94,7 @@ namespace Hl7.Fhir.Specification.Source
                 : null;
         }
 
+        ///<inheritdoc/>
         public ResolverResult TryResolveByUri(string uri)
         {
             var resource = _resources
@@ -107,6 +108,7 @@ namespace Hl7.Fhir.Specification.Source
             return ResolverException.NotFound();
         }
 
+        ///<inheritdoc/>
         public ResolverResult TryResolveByCanonicalUri(string uri)
         {
             var resource =  _resources
@@ -144,11 +146,13 @@ namespace Hl7.Fhir.Specification.Source
             return Task.FromResult(ResolveByUri(uri));
         }
 
+        ///<inheritdoc/>
         public Task<ResolverResult> TryResolveByUriAsync(string uri)
         {
             return Task.FromResult(TryResolveByUri(uri));
         }
 
+        ///<inheritdoc/>
         public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
         {
             return Task.FromResult(TryResolveByCanonicalUri(uri));

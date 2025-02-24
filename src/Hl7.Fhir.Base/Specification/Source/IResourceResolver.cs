@@ -18,7 +18,6 @@ namespace Hl7.Fhir.Specification.Source
 #pragma warning restore CS0618 // Type or member is obsolete
     {
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
-        /// <param name="uri">A resource uri.</param>
         [Obsolete("This method does not provide information about the kind of error that lead to us returning null. Consider using TryResolveByUri instead.")]
         Resource? ResolveByUri(string uri);
 
@@ -27,8 +26,8 @@ namespace Hl7.Fhir.Specification.Source
         [Obsolete("This method does not provide information about the kind of error that lead to us returning null. Consider using TryResolveByCanonicalUri instead.")]
         Resource? ResolveByCanonicalUri(string uri);
 
-        /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
-        /// <param name="uri">The canonical url of a (conformance) resource.</param>
+        /// <summary>Find a resource based on its relative or absolute uri.</summary>
+        /// <param name="uri">A resource uri.</param>
         /// <returns><see cref="ResolverResult"/> with an actual resource, or the <see cref="ResolverResult.Error"/>.</returns>
         ResolverResult TryResolveByUri(string uri)
         {
@@ -42,8 +41,8 @@ namespace Hl7.Fhir.Specification.Source
             return ResolverException.NotFound();
         }
         
-        /// <summary>Find a resource based on its relative or absolute uri.</summary>
-        /// <param name="uri">A resource uri.</param>
+        /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
+        /// <param name="uri">The canonical url of a (conformance) resource.</param>
         /// <returns><see cref="ResolverResult"/> with an actual resource, or the <see cref="ResolverResult.Error"/>.</returns>
         ResolverResult TryResolveByCanonicalUri(string uri)
         {
