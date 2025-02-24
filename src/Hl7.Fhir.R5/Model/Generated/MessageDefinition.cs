@@ -649,9 +649,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Replaces
+    public IEnumerable<string?> Replaces
     {
-      get => _ReplacesElement?.Select(elem => elem.Value);
+      get => _ReplacesElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -980,9 +980,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Parent
+    public IEnumerable<string?> Parent
     {
-      get => _ParentElement?.Select(elem => elem.Value);
+      get => _ParentElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

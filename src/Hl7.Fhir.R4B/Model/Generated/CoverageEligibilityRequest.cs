@@ -468,9 +468,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? SupportingInfoSequence
+      public IEnumerable<int?> SupportingInfoSequence
       {
-        get => _SupportingInfoSequenceElement?.Select(elem => elem.Value);
+        get => _SupportingInfoSequenceElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -926,9 +926,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose?>? Purpose
+    public IEnumerable<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose?> Purpose
     {
-      get => _PurposeElement?.Select(elem => elem.Value);
+      get => _PurposeElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

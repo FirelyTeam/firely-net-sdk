@@ -1027,9 +1027,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Modification
+    public IEnumerable<string?> Modification
     {
-      get => _ModificationElement?.Select(elem => elem.Value);
+      get => _ModificationElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

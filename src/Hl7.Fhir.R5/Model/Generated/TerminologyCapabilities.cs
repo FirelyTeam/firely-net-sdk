@@ -704,9 +704,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.CommonLanguages?>? Language
+      public IEnumerable<Hl7.Fhir.Model.CommonLanguages?> Language
       {
-        get => _LanguageElement?.Select(elem => elem.Value);
+        get => _LanguageElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -750,9 +750,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Property
+      public IEnumerable<string?> Property
       {
-        get => _PropertyElement?.Select(elem => elem.Value);
+        get => _PropertyElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -930,9 +930,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Op
+      public IEnumerable<string?> Op
       {
-        get => _OpElement?.Select(elem => elem.Value);
+        get => _OpElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)

@@ -471,9 +471,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? DerivedFromUri
+    public IEnumerable<string?> DerivedFromUri
     {
-      get => _DerivedFromUriElement?.Select(elem => elem.Value);
+      get => _DerivedFromUriElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -503,9 +503,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? PartOf
+    public IEnumerable<string?> PartOf
     {
-      get => _PartOfElement?.Select(elem => elem.Value);
+      get => _PartOfElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -535,9 +535,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Replaces
+    public IEnumerable<string?> Replaces
     {
-      get => _ReplacesElement?.Select(elem => elem.Value);
+      get => _ReplacesElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

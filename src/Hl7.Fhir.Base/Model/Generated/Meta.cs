@@ -178,9 +178,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? ProfileUri
+    public IEnumerable<string?> ProfileUri
     {
-      get => _ProfileElement?.Cast<IValue<string>>()?.Select(elem => elem.Value);
+      get => _ProfileElement?.Cast<IValue<string>>()?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -196,9 +196,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Profile
+    public IEnumerable<string?> Profile
     {
-      get => _ProfileElement?.Cast<IValue<string>>()?.Select(elem => elem.Value);
+      get => _ProfileElement?.Cast<IValue<string>>()?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

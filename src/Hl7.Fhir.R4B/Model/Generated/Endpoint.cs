@@ -273,9 +273,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? PayloadMimeType
+    public IEnumerable<string?> PayloadMimeType
     {
-      get => _PayloadMimeTypeElement?.Select(elem => elem.Value);
+      get => _PayloadMimeTypeElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -334,9 +334,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Header
+    public IEnumerable<string?> Header
     {
-      get => _HeaderElement?.Select(elem => elem.Value);
+      get => _HeaderElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

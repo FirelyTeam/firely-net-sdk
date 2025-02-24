@@ -1262,9 +1262,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? ContextInvariant
+    public IEnumerable<string?> ContextInvariant
     {
-      get => _ContextInvariantElement?.Select(elem => elem.Value);
+      get => _ContextInvariantElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

@@ -296,9 +296,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? TargetProfile
+      public IEnumerable<string?> TargetProfile
       {
-        get => _TargetProfileElement?.Select(elem => elem.Value);
+        get => _TargetProfileElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -857,9 +857,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? ParameterName
+      public IEnumerable<string?> ParameterName
       {
-        get => _ParameterNameElement?.Select(elem => elem.Value);
+        get => _ParameterNameElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1460,9 +1460,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.ResourceType?>? Resource
+    public IEnumerable<Hl7.Fhir.Model.ResourceType?> Resource
     {
-      get => _ResourceElement?.Select(elem => elem.Value);
+      get => _ResourceElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

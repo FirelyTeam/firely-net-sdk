@@ -2959,9 +2959,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.FHIRVersion?>? FhirVersion
+      public IEnumerable<Hl7.Fhir.Model.FHIRVersion?> FhirVersion
       {
-        get => _FhirVersionElement?.Select(elem => elem.Value);
+        get => _FhirVersionElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -3785,9 +3785,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Image
+      public IEnumerable<string?> Image
       {
-        get => _ImageElement?.Select(elem => elem.Value);
+        get => _ImageElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -3817,9 +3817,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Other
+      public IEnumerable<string?> Other
       {
-        get => _OtherElement?.Select(elem => elem.Value);
+        get => _OtherElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -4173,9 +4173,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Anchor
+      public IEnumerable<string?> Anchor
       {
-        get => _AnchorElement?.Select(elem => elem.Value);
+        get => _AnchorElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -4673,9 +4673,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.FHIRVersion?>? FhirVersion
+    public IEnumerable<Hl7.Fhir.Model.FHIRVersion?> FhirVersion
     {
-      get => _FhirVersionElement?.Select(elem => elem.Value);
+      get => _FhirVersionElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

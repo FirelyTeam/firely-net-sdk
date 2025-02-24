@@ -468,9 +468,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Include
+    public IEnumerable<string?> Include
     {
-      get => _IncludeElement?.Select(elem => elem.Value);
+      get => _IncludeElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -500,9 +500,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Exclude
+    public IEnumerable<string?> Exclude
     {
-      get => _ExcludeElement?.Select(elem => elem.Value);
+      get => _ExcludeElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

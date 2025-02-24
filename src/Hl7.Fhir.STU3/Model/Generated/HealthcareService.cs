@@ -97,9 +97,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?>? DaysOfWeek
+      public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?> DaysOfWeek
       {
-        get => _DaysOfWeekElement?.Select(elem => elem.Value);
+        get => _DaysOfWeekElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -730,9 +730,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? ProgramName
+    public IEnumerable<string?> ProgramName
     {
-      get => _ProgramNameElement?.Select(elem => elem.Value);
+      get => _ProgramNameElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

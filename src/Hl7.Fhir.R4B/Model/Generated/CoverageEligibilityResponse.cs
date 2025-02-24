@@ -1033,9 +1033,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose?>? Purpose
+    public IEnumerable<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose?> Purpose
     {
-      get => _PurposeElement?.Select(elem => elem.Value);
+      get => _PurposeElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

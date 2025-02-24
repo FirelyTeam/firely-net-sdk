@@ -1996,9 +1996,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode?>? ListMode
+      public IEnumerable<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode?> ListMode
       {
-        get => _ListModeElement?.Select(elem => elem.Value);
+        get => _ListModeElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -2858,9 +2858,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Import
+    public IEnumerable<string?> Import
     {
-      get => _ImportElement?.Select(elem => elem.Value);
+      get => _ImportElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

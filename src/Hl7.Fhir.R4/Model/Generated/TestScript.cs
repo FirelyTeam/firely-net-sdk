@@ -935,9 +935,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? Origin
+      public IEnumerable<int?> Origin
       {
-        get => _OriginElement?.Select(elem => elem.Value);
+        get => _OriginElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -995,9 +995,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Link
+      public IEnumerable<string?> Link
       {
-        get => _LinkElement?.Select(elem => elem.Value);
+        get => _LinkElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)

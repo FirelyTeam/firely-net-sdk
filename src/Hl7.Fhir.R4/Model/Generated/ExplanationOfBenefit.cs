@@ -1293,9 +1293,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? PreAuthRef
+      public IEnumerable<string?> PreAuthRef
       {
-        get => _PreAuthRefElement?.Select(elem => elem.Value);
+        get => _PreAuthRefElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1602,9 +1602,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? CareTeamSequence
+      public IEnumerable<int?> CareTeamSequence
       {
-        get => _CareTeamSequenceElement?.Select(elem => elem.Value);
+        get => _CareTeamSequenceElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1634,9 +1634,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? DiagnosisSequence
+      public IEnumerable<int?> DiagnosisSequence
       {
-        get => _DiagnosisSequenceElement?.Select(elem => elem.Value);
+        get => _DiagnosisSequenceElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1666,9 +1666,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? ProcedureSequence
+      public IEnumerable<int?> ProcedureSequence
       {
-        get => _ProcedureSequenceElement?.Select(elem => elem.Value);
+        get => _ProcedureSequenceElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1698,9 +1698,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? InformationSequence
+      public IEnumerable<int?> InformationSequence
       {
-        get => _InformationSequenceElement?.Select(elem => elem.Value);
+        get => _InformationSequenceElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1963,9 +1963,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? NoteNumber
+      public IEnumerable<int?> NoteNumber
       {
-        get => _NoteNumberElement?.Select(elem => elem.Value);
+        get => _NoteNumberElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -2657,9 +2657,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? NoteNumber
+      public IEnumerable<int?> NoteNumber
       {
-        get => _NoteNumberElement?.Select(elem => elem.Value);
+        get => _NoteNumberElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -3096,9 +3096,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? NoteNumber
+      public IEnumerable<int?> NoteNumber
       {
-        get => _NoteNumberElement?.Select(elem => elem.Value);
+        get => _NoteNumberElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -3327,9 +3327,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? ItemSequence
+      public IEnumerable<int?> ItemSequence
       {
-        get => _ItemSequenceElement?.Select(elem => elem.Value);
+        get => _ItemSequenceElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -3359,9 +3359,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? DetailSequence
+      public IEnumerable<int?> DetailSequence
       {
-        get => _DetailSequenceElement?.Select(elem => elem.Value);
+        get => _DetailSequenceElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -3391,9 +3391,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? SubDetailSequence
+      public IEnumerable<int?> SubDetailSequence
       {
-        get => _SubDetailSequenceElement?.Select(elem => elem.Value);
+        get => _SubDetailSequenceElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -3612,9 +3612,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? NoteNumber
+      public IEnumerable<int?> NoteNumber
       {
-        get => _NoteNumberElement?.Select(elem => elem.Value);
+        get => _NoteNumberElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -3999,9 +3999,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? NoteNumber
+      public IEnumerable<int?> NoteNumber
       {
-        get => _NoteNumberElement?.Select(elem => elem.Value);
+        get => _NoteNumberElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -4305,9 +4305,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? NoteNumber
+      public IEnumerable<int?> NoteNumber
       {
-        get => _NoteNumberElement?.Select(elem => elem.Value);
+        get => _NoteNumberElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -5872,9 +5872,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? PreAuthRef
+    public IEnumerable<string?> PreAuthRef
     {
-      get => _PreAuthRefElement?.Select(elem => elem.Value);
+      get => _PreAuthRefElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

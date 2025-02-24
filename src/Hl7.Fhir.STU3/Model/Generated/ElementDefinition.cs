@@ -908,9 +908,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.ElementDefinition.AggregationMode?>? Aggregation
+      public IEnumerable<Hl7.Fhir.Model.ElementDefinition.AggregationMode?> Aggregation
       {
-        get => _AggregationElement?.Select(elem => elem.Value);
+        get => _AggregationElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1959,9 +1959,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation?>? Representation
+    public IEnumerable<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation?> Representation
     {
-      get => _RepresentationElement?.Select(elem => elem.Value);
+      get => _RepresentationElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -2187,9 +2187,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Alias
+    public IEnumerable<string?> Alias
     {
-      get => _AliasElement?.Select(elem => elem.Value);
+      get => _AliasElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -2503,9 +2503,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Condition
+    public IEnumerable<string?> Condition
     {
-      get => _ConditionElement?.Select(elem => elem.Value);
+      get => _ConditionElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

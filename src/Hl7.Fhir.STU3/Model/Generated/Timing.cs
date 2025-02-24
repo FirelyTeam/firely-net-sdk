@@ -579,9 +579,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?>? DayOfWeek
+      public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?> DayOfWeek
       {
-        get => _DayOfWeekElement?.Select(elem => elem.Value);
+        get => _DayOfWeekElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -611,9 +611,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? TimeOfDay
+      public IEnumerable<string?> TimeOfDay
       {
-        get => _TimeOfDayElement?.Select(elem => elem.Value);
+        get => _TimeOfDayElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -645,9 +645,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.Timing.EventTiming?>? When
+      public IEnumerable<Hl7.Fhir.Model.Timing.EventTiming?> When
       {
-        get => _WhenElement?.Select(elem => elem.Value);
+        get => _WhenElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -892,9 +892,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Event
+    public IEnumerable<string?> Event
     {
-      get => _EventElement?.Select(elem => elem.Value);
+      get => _EventElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

@@ -1531,9 +1531,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? DerivedFrom
+    public IEnumerable<string?> DerivedFrom
     {
-      get => _DerivedFromElement?.Select(elem => elem.Value);
+      get => _DerivedFromElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -1624,9 +1624,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<Hl7.Fhir.Model.ResourceType?>? SubjectType
+    public IEnumerable<Hl7.Fhir.Model.ResourceType?> SubjectType
     {
-      get => _SubjectTypeElement?.Select(elem => elem.Value);
+      get => _SubjectTypeElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
