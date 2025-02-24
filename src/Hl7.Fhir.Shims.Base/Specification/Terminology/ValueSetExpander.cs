@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             try
             {
-                inclusionChain.Push(source.Url);
+                inclusionChain.Push(source.Url ?? throw new ArgumentException("ValueSet must have a canonical URL to expand", nameof(source)));
                 await handleCompose(source, inclusionChain).ConfigureAwait(false);
             }
             catch (Exception)
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private void setExpansionParameters(ValueSet vs)
         {
-            vs.Expansion.Parameter = new List<ValueSet.ParameterComponent>();
+            vs.Expansion ??= new ValueSet.ExpansionComponent();
             if (Settings.IncludeDesignations)
             {
                 vs.Expansion.Parameter.Add(new ValueSet.ParameterComponent
@@ -156,16 +156,18 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 // > valueSet(s) only: Codes are 'selected' for inclusion if they are in all the referenced value sets
                 // "all the referenced sets" means we need to calculate the intersection of the expanded valuesets.
-                var expanded = await Tasks.Task.WhenAll(conceptSet.ValueSet.Select(vs => expandValueSetAndFilterOnSystem(vs))).ConfigureAwait(false);
+                var expanded = await Tasks.Task.WhenAll(
+                    conceptSet.ValueSet!.Where(vs => vs is not null)
+                        .Select(vs => expandValueSetAndFilterOnSystem(vs!))).ConfigureAwait(false);
                 var concepts = expanded.Length == 1 ? expanded.Single() : expanded.Aggregate((l, r) => l.Intersect(r, _systemAndCodeComparer));
 
-                addCapped(result, concepts, $"Import of valuesets '{string.Join(",", conceptSet.ValueSet)}' would result in an expansion larger than the maximum expansion size.");
+                addCapped(result, concepts, $"Import of valuesets '{string.Join(",", conceptSet.ValueSet!)}' would result in an expansion larger than the maximum expansion size.");
 
                 // > valueSet and System: Codes are 'selected' for inclusion if they are selected by the code system selection (after checking for concept and filter) and if they are in all the referenced value sets
                 // If a System was specified, simulate a intersection between the codesystem and the valuesets by filtering on the
                 // codesystem's canonical. See previous if.
-                IEnumerable<ValueSet.ContainsComponent> filterOnSystem(IEnumerable<ValueSet.ContainsComponent> concepts) =>
-                    conceptSet.System is not null ? concepts.Where(c => c.System == conceptSet.System) : concepts;
+                IEnumerable<ValueSet.ContainsComponent> filterOnSystem(IEnumerable<ValueSet.ContainsComponent> innerConcepts) =>
+                    conceptSet.System is not null ? innerConcepts.Where(c => c.System == conceptSet.System) : innerConcepts;
 
                 async Tasks.Task<IEnumerable<ValueSet.ContainsComponent>> expandValueSetAndFilterOnSystem(string canonical)
                 {
@@ -231,14 +233,15 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private async Tasks.Task handleInclude(ValueSet source, Stack<string> inclusionChain)
         {
-            if (!source.Compose.Include.Any()) return;
+            if (!source.Compose?.Include.Any() == true) return;
 
             int csIndex = 0;
-            foreach (var include in source.Compose.Include)
+            foreach (var include in source.Compose!.Include)
             {
                 var includedConcepts = await processConceptSet(include, inclusionChain).ConfigureAwait(false);
 
                 // Yes, exclusion could make this smaller again, but alas, before we have processed those we might have run out of memory
+                source.Expansion ??= new ValueSet.ExpansionComponent();
                 addCapped(source.Expansion.Contains, includedConcepts, $"Inclusion of {includedConcepts.Count} concepts from conceptset #{csIndex}' to  " +
                         $"valueset '{source.Url}' ({source.Expansion.Total} concepts) would be larger than the set maximum size ({Settings.MaxExpansionSize})");
 
@@ -250,12 +253,13 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private async Tasks.Task handleExclude(ValueSet source, Stack<string> inclusionChain)
         {
-            if (!source.Compose.Exclude.Any()) return;
+            if (!source.Compose?.Exclude.Any() == true) return;
 
-            foreach (var exclude in source.Compose.Exclude)
+            foreach (var exclude in source.Compose!.Exclude)
             {
                 var excludedConcepts = await processConceptSet(exclude, inclusionChain).ConfigureAwait(false);
 
+                source.Expansion ??= new ValueSet.ExpansionComponent();
                 source.Expansion.Contains.Remove(excludedConcepts);
 
                 var original = source.Expansion.Total ?? 0;
@@ -276,7 +280,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (!importedVs.HasExpansion) await expandAsync(importedVs, inclusionChain).ConfigureAwait(false);
 
             return importedVs.HasExpansion
-                ? importedVs.Expansion.Contains
+                ? importedVs.Expansion!.Contains
                 : throw new ValueSetUnknownException($"Expansion returned neither an error, nor an expansion for ValueSet with canonical reference '{uri}'");
         }
 
@@ -306,7 +310,8 @@ namespace Hl7.Fhir.Specification.Terminology
 
     public static class ContainsSetExtensions
     {
-        internal static ValueSet.ContainsComponent BuildContainsComponent(string system, string version, string code, string display, List<ValueSet.DesignationComponent>? designations = null, IEnumerable<ValueSet.ContainsComponent>? children = null)
+        internal static ValueSet.ContainsComponent BuildContainsComponent(string? system, string? version, string? code,
+            string? display, List<ValueSet.DesignationComponent>? designations = null, IEnumerable<ValueSet.ContainsComponent>? children = null)
         {
             return new ValueSet.ContainsComponent
             {
@@ -314,10 +319,9 @@ namespace Hl7.Fhir.Specification.Terminology
                 Code = code,
                 Display = display,
                 Version = version,
-                Designation = designations,
-                Contains = children?.ToList()
+                Designation = designations!,
+                Contains = children?.ToList()!
             };
-
         }
 
         public static ValueSet.ContainsComponent Add(this List<ValueSet.ContainsComponent> dest, string system, string version, string code, string display, List<ValueSet.DesignationComponent>? designations = null, IEnumerable<ValueSet.ContainsComponent>? children = null)
@@ -328,7 +332,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return newContains;
         }
 
-        public static void Remove(this List<ValueSet.ContainsComponent> dest, string system, string code)
+        public static void Remove(this List<ValueSet.ContainsComponent> dest, string? system, string? code)
         {
             var children = dest.Where(c => c.System == system && c.Code == code).SelectMany(c => c.Contains).ToList();
             dest.RemoveAll(c => c.System == system && c.Code == code);

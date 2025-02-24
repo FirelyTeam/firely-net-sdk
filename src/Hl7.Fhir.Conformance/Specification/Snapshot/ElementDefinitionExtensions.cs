@@ -54,15 +54,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Returns the type profile reference of the primary element type, if it exists, or <c>null</c>
         /// </summary>
         public static string? PrimaryTypeProfile(this ElementDefinition elem)
-            => elem.Type?.FirstOrDefault()?.Profile.FirstOrDefault();
+            => elem.Type.FirstOrDefault()?.Profile?.FirstOrDefault();
 
         /// <summary>
         /// Returns the type profile reference(s) of the primary element type code, if available.
         /// </summary>
-        public static IEnumerable<string> PrimaryTypeProfiles(this ElementDefinition elem)
-        {
-            return elem.Type.FirstOrDefault()?.Profile ?? Enumerable.Empty<string>();
-        }
+        public static IEnumerable<string> PrimaryTypeProfiles(this ElementDefinition elem) =>
+            elem.Type.FirstOrDefault()?.Profile?.Where(p=>p is not null).Select(p=>p!) ?? [];
 
         /// <summary>Returns the typeName of the primary element type, or <c>null</c>.</summary>
         public static string? GetTypeCode(this ElementDefinition elem)
