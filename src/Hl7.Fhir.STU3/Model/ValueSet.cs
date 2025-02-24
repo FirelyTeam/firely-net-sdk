@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Model
         {
             if (HasExpansion)
             {
-                return Expansion.Contains.CountConcepts();
+                return Expansion!.Contains.CountConcepts();
             }
             else
                 return null;
@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
         {
             ensureExpansion();
 
-            return Expansion.Contains.FindCode(code, system);
+            return Expansion!.Contains.FindCode(code, system);
         }
 
         public void ImportExpansion(ValueSet other)
@@ -59,12 +59,13 @@ namespace Hl7.Fhir.Model
 
             if (this.HasExpansion)
             {
-                combinedExpansion.Parameter.AddRange(this.Expansion.Parameter);
+                combinedExpansion.Parameter.AddRange(this.Expansion!.Parameter);
                 combinedExpansion.Contains.AddRange(this.Expansion.Contains);
 
                 combinedExpansion.Total += this?.Expansion.Total ?? this.Expansion.Contains.CountConcepts();
             }
 
+            other.Expansion ??= new ExpansionComponent();
             combinedExpansion.Parameter.AddRange(other.Expansion.Parameter);
             combinedExpansion.Contains.AddRange(other.Expansion.Contains);
             combinedExpansion.Total += other.Expansion!.Total ?? other.Expansion.Contains.CountConcepts();

@@ -64,5 +64,5 @@ public partial class StructureDefinition
     public bool HasSnapshot => Snapshot is not null && Snapshot.Element.Any();
 
     [NotMapped]
-    public bool IsCoreDefinition => Type == Id && Url == Canonical.CanonicalUriForFhirCoreType(Type);
+    public bool IsCoreDefinition => Type == Id && Type is not null && Url == Canonical.CanonicalUriForFhirCoreType(Type);
 }

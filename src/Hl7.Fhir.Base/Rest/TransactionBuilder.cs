@@ -496,7 +496,8 @@ public partial class TransactionBuilder
             {
                 foreach (var parameter in parameters.Parameter)
                 {
-                    path.AddParam(parameter.Name, paramValueToString(parameter));
+                    path.AddParam(parameter.Name ?? throw new ArgumentException("Parameters should have a name.", nameof(parameters)),
+                        paramValueToString(parameter));
                 }
             }
         }

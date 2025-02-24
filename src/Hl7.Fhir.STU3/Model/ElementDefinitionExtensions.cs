@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Determines whether the given element is the root element of an extension or modifierExtension.
         /// </summary>
-        public static bool IsExtension(this ElementDefinition defn) => defn != null && IsExtensionPath(defn.Path);
+        public static bool IsExtension(this ElementDefinition? defn) => defn?.Path is {} p && IsExtensionPath(p);
 
         /// <summary>Determines if the specified element path represents a root element.</summary>
         public static bool IsRootPath(string path) => !string.IsNullOrEmpty(path) && !path.Contains('.');
@@ -208,13 +208,13 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Determines if the specified element is the root element.
         /// </summary>
-        public static bool IsRootElement(this ElementDefinition defn) => defn != null && IsRootPath(defn.Path);
+        public static bool IsRootElement(this ElementDefinition? defn) => defn?.Path is {} p && IsRootPath(p);
 
         /// <summary>Returns a list of distinct type codes supported by the specified element definition.</summary>
         /// <param name="types">A list of element types.</param>
         /// <returns>A list of type code strings.</returns>
         public static IReadOnlyList<string> DistinctTypeCodes(this List<ElementDefinition.TypeRefComponent> types)
-            => types.Where(t => t.Code != null).Select(t => t.Code).Distinct().ToList();
+            => types.Where(t => t.Code != null).Select(t => t.Code!).Distinct().ToList();
 
         /// <summary>Returns a list of distinct type codes supported by the specified element definition.</summary>
         /// <param name="elem">An <see cref="ElementDefinition"/> instance.</param>
@@ -241,8 +241,8 @@ namespace Hl7.Fhir.Model
         /// Determines if the specified element is a backbone element.
         /// </summary>
         public static bool IsBackboneElement(this ElementDefinition defn) =>
-            defn.Path.Contains('.') && defn.Type.Count == 1 &&
-            (defn.Type[0].Code == "BackboneElement" || defn.Type[0].Code == "Element");
+            defn.Path?.Contains('.') == true && defn.Type.Count == 1 &&
+            defn.Type[0].Code is "BackboneElement" or "Element";
 
         /// <summary>
         /// Determines if the specified type reference represents a <see cref="ResourceReference"/>.
@@ -254,25 +254,27 @@ namespace Hl7.Fhir.Model
         /// </summary>
         public static string GetNameFromPath(string path)
         {
-            var pos = path.LastIndexOf(".");
+            var pos = path.LastIndexOf(".", StringComparison.Ordinal);
 
-            return pos != -1 ? path.Substring(pos + 1) : path;
+            return pos != -1 ? path[(pos + 1)..] : path;
         }
 
         /// <inheritdoc cref="GetNameFromPath(string)"/>
-        public static string GetNameFromPath(this ElementDefinition defn) => GetNameFromPath(defn.Path);
+        public static string GetNameFromPath(this ElementDefinition defn) =>
+            GetNameFromPath(defn.Path ?? throw new ArgumentException("ElementDefinition must have a Path.", nameof(defn)));
 
         /// <summary>
         /// Returns the parent path of the specified element path, or an empty string if there is no parent.
         /// </summary>
         public static string GetParentPath(string child)
         {
-            var dot = child.LastIndexOf(".");
-            return dot != -1 ? child.Substring(0, dot) : string.Empty;
+            var dot = child.LastIndexOf(".", StringComparison.Ordinal);
+            return dot != -1 ? child[..dot] : string.Empty;
         }
 
         /// <inheritdoc cref="GetParentPath(string)"/>
-        public static string GetParentNameFromPath(this ElementDefinition defn) => GetParentPath(defn.Path);
+        public static string GetParentNameFromPath(this ElementDefinition defn) =>
+            GetParentPath(defn.Path ?? throw new ArgumentException("ElementDefinition must have a Path.", nameof(defn)) );
 
         /// <summary>
         /// Returns the root element from the specified element list if available, or <c>null</c> otherwise.
@@ -303,7 +305,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This function will match any definition for which the path is a direct match, or matches the element name without suffix.</remarks>
         public static bool MatchesName(this ElementDefinition def, string name)
         {
-            var namePart = GetNameFromPath(def.Path);
+            var namePart = GetNameFromPath(def.Path ?? throw new ArgumentException("ElementDefinition must have a Path.", nameof(def)));
 
             // Direct match
             if (namePart == name) return true;
@@ -313,7 +315,7 @@ namespace Hl7.Fhir.Model
             if (namePart == suffixedName) return true;
 
             // Match a constrained choice type name, by looking at the original name of the element
-            if (def.Base != null)
+            if (def.Base?.Path is not null)
             {
                 var baseNamePart = GetNameFromPath(def.Base.Path);
                 if (baseNamePart == suffixedName) return true;
@@ -331,10 +333,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
         {
-            //TODO: There is something smarter for this in STU3
-            var path = ed.Path;
-
-            return path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
+            return ed.Path?.EndsWith(".value") == true && ed.Type.All(t => t.Code == null);
         }
 
         /// <summary>
@@ -343,7 +342,7 @@ namespace Hl7.Fhir.Model
         /// <param name="ed"></param>
         /// <returns></returns>
         public static bool IsResourcePlaceholder(this ElementDefinition ed) =>
-            ed.Type is not null && ed.Type.Any(t => t.Code == "Resource" || t.Code == "DomainResource");
+            ed.Type.Any(t => t.Code is "Resource" or "DomainResource");
 
         /*
          * From TypeRefExtension.cs
@@ -352,7 +351,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Returns the human-readable name for this <see cref="StructureDefinition"/>.
         /// </summary>
-        public static string ReadableName(this StructureDefinition sd) => sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint ? sd.Url : sd.Id;
+        public static string? ReadableName(this StructureDefinition sd) =>
+            sd.Derivation == StructureDefinition.TypeDerivationRule.Constraint ? sd.Url : sd.Id;
 
         /// <summary>
         /// Determines whether the element allows values of more than one type.
@@ -362,7 +362,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Determines if the specified element definition represents a type choice element by verifying that the element name ends with "[x]".
         /// </summary>
-        public static bool IsChoice(this ElementDefinition defn) => defn.Path.EndsWith("[x]");
+        public static bool IsChoice(this ElementDefinition defn) =>
+            defn.Path?.EndsWith("[x]") ?? throw new ArgumentException("ElementDefinition must have a Path.", nameof(defn));
     }
 }
 

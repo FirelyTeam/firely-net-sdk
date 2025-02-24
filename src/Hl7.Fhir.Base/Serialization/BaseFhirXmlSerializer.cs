@@ -147,7 +147,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
             case null:
                 break;  // In error situations there may be a null in a list, just don't serialize it.
             case XHtml xhtml:
-                writer.WriteRaw(xhtml.Value);
+                writer.WriteRaw(xhtml.Value ?? "");
                 break;
             case Base complex:
                 writer.WriteStartElement(elementName, XmlNs.FHIR);
