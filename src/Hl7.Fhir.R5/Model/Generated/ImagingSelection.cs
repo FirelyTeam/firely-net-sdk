@@ -397,9 +397,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Subset
+      public IEnumerable<string?> Subset
       {
-        get => _SubsetElement?.Select(elem => elem.Value);
+        get => _SubsetElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -611,9 +611,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<decimal?>? Coordinate
+      public IEnumerable<decimal?> Coordinate
       {
-        get => _CoordinateElement?.Select(elem => elem.Value);
+        get => _CoordinateElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -760,9 +760,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<decimal?>? Coordinate
+      public IEnumerable<decimal?> Coordinate
       {
-        get => _CoordinateElement?.Select(elem => elem.Value);
+        get => _CoordinateElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)

@@ -915,9 +915,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Comment
+    public IEnumerable<string?> Comment
     {
-      get => _CommentElement?.Select(elem => elem.Value);
+      get => _CommentElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -1214,9 +1214,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Library
+    public IEnumerable<string?> Library
     {
-      get => _LibraryElement?.Select(elem => elem.Value);
+      get => _LibraryElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

@@ -184,9 +184,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Color
+    public IEnumerable<string?> Color
     {
-      get => _ColorElement?.Select(elem => elem.Value);
+      get => _ColorElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -216,9 +216,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Imprint
+    public IEnumerable<string?> Imprint
     {
-      get => _ImprintElement?.Select(elem => elem.Value);
+      get => _ImprintElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

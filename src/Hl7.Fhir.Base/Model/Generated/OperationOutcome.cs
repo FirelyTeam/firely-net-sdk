@@ -451,9 +451,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Location
+      public IEnumerable<string?> Location
       {
-        get => _LocationElement?.Select(elem => elem.Value);
+        get => _LocationElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -483,9 +483,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Expression
+      public IEnumerable<string?> Expression
       {
-        get => _ExpressionElement?.Select(elem => elem.Value);
+        get => _ExpressionElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)

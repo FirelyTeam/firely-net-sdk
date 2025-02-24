@@ -190,9 +190,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.Requirements.ConformanceExpectation?>? Conformance
+      public IEnumerable<Hl7.Fhir.Model.Requirements.ConformanceExpectation?> Conformance
       {
-        get => _ConformanceElement?.Select(elem => elem.Value);
+        get => _ConformanceElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -335,9 +335,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? SatisfiedBy
+      public IEnumerable<string?> SatisfiedBy
       {
-        get => _SatisfiedByElement?.Select(elem => elem.Value);
+        get => _SatisfiedByElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -367,9 +367,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Reference
+      public IEnumerable<string?> Reference
       {
-        get => _ReferenceElement?.Select(elem => elem.Value);
+        get => _ReferenceElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -968,9 +968,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? DerivedFrom
+    public IEnumerable<string?> DerivedFrom
     {
-      get => _DerivedFromElement?.Select(elem => elem.Value);
+      get => _DerivedFromElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -1000,9 +1000,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Reference
+    public IEnumerable<string?> Reference
     {
-      get => _ReferenceElement?.Select(elem => elem.Value);
+      get => _ReferenceElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -1032,9 +1032,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Actor
+    public IEnumerable<string?> Actor
     {
-      get => _ActorElement?.Select(elem => elem.Value);
+      get => _ActorElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

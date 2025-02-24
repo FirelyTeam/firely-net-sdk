@@ -210,9 +210,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? InstantiatesCanonical
+    public IEnumerable<string?> InstantiatesCanonical
     {
-      get => _InstantiatesCanonicalElement?.Select(elem => elem.Value);
+      get => _InstantiatesCanonicalElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -242,9 +242,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? InstantiatesUri
+    public IEnumerable<string?> InstantiatesUri
     {
-      get => _InstantiatesUriElement?.Select(elem => elem.Value);
+      get => _InstantiatesUriElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

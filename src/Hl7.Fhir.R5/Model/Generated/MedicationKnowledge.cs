@@ -2598,9 +2598,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Name
+    public IEnumerable<string?> Name
     {
-      get => _NameElement?.Select(elem => elem.Value);
+      get => _NameElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

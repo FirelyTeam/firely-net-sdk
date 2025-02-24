@@ -905,9 +905,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Compartment
+      public IEnumerable<string?> Compartment
       {
-        get => _CompartmentElement?.Select(elem => elem.Value);
+        get => _CompartmentElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1699,9 +1699,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy?>? ReferencePolicy
+      public IEnumerable<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy?> ReferencePolicy
       {
-        get => _ReferencePolicyElement?.Select(elem => elem.Value);
+        get => _ReferencePolicyElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1731,9 +1731,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? SearchInclude
+      public IEnumerable<string?> SearchInclude
       {
-        get => _SearchIncludeElement?.Select(elem => elem.Value);
+        get => _SearchIncludeElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1763,9 +1763,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? SearchRevInclude
+      public IEnumerable<string?> SearchRevInclude
       {
-        get => _SearchRevIncludeElement?.Select(elem => elem.Value);
+        get => _SearchRevIncludeElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -3968,9 +3968,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Instantiates
+    public IEnumerable<string?> Instantiates
     {
-      get => _InstantiatesElement?.Select(elem => elem.Value);
+      get => _InstantiatesElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -4087,9 +4087,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? Format
+    public IEnumerable<string?> Format
     {
-      get => _FormatElement?.Select(elem => elem.Value);
+      get => _FormatElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -4120,9 +4120,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? PatchFormat
+    public IEnumerable<string?> PatchFormat
     {
-      get => _PatchFormatElement?.Select(elem => elem.Value);
+      get => _PatchFormatElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -4152,9 +4152,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? ImplementationGuide
+    public IEnumerable<string?> ImplementationGuide
     {
-      get => _ImplementationGuideElement?.Select(elem => elem.Value);
+      get => _ImplementationGuideElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

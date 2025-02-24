@@ -263,9 +263,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? DefinitionUri
+    public IEnumerable<string?> DefinitionUri
     {
-      get => _DefinitionUriElement?.Select(elem => elem.Value);
+      get => _DefinitionUriElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
@@ -295,9 +295,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? DefinitionCanonical
+    public IEnumerable<string?> DefinitionCanonical
     {
-      get => _DefinitionCanonicalElement?.Select(elem => elem.Value);
+      get => _DefinitionCanonicalElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

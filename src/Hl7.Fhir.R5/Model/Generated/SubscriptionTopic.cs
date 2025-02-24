@@ -207,9 +207,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger?>? SupportedInteraction
+      public IEnumerable<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger?> SupportedInteraction
       {
-        get => _SupportedInteractionElement?.Select(elem => elem.Value);
+        get => _SupportedInteractionElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -934,9 +934,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.SearchComparator?>? Comparator
+      public IEnumerable<Hl7.Fhir.Model.SearchComparator?> Comparator
       {
-        get => _ComparatorElement?.Select(elem => elem.Value);
+        get => _ComparatorElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -968,9 +968,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<Hl7.Fhir.Model.SearchModifierCode?>? Modifier
+      public IEnumerable<Hl7.Fhir.Model.SearchModifierCode?> Modifier
       {
-        get => _ModifierElement?.Select(elem => elem.Value);
+        get => _ModifierElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1152,9 +1152,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Include
+      public IEnumerable<string?> Include
       {
-        get => _IncludeElement?.Select(elem => elem.Value);
+        get => _IncludeElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1184,9 +1184,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? RevInclude
+      public IEnumerable<string?> RevInclude
       {
-        get => _RevIncludeElement?.Select(elem => elem.Value);
+        get => _RevIncludeElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1437,9 +1437,9 @@ namespace Hl7.Fhir.Model
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string?>? DerivedFrom
+    public IEnumerable<string?> DerivedFrom
     {
-      get => _DerivedFromElement?.Select(elem => elem.Value);
+      get => _DerivedFromElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)

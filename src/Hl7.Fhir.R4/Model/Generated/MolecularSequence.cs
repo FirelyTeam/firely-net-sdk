@@ -1446,9 +1446,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? Score
+      public IEnumerable<int?> Score
       {
-        get => _ScoreElement?.Select(elem => elem.Value);
+        get => _ScoreElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1478,9 +1478,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? NumTP
+      public IEnumerable<int?> NumTP
       {
-        get => _NumTPElement?.Select(elem => elem.Value);
+        get => _NumTPElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1510,9 +1510,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? NumFP
+      public IEnumerable<int?> NumFP
       {
-        get => _NumFPElement?.Select(elem => elem.Value);
+        get => _NumFPElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1542,9 +1542,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<int?>? NumFN
+      public IEnumerable<int?> NumFN
       {
-        get => _NumFNElement?.Select(elem => elem.Value);
+        get => _NumFNElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1574,9 +1574,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<decimal?>? Precision
+      public IEnumerable<decimal?> Precision
       {
-        get => _PrecisionElement?.Select(elem => elem.Value);
+        get => _PrecisionElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1606,9 +1606,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<decimal?>? Sensitivity
+      public IEnumerable<decimal?> Sensitivity
       {
-        get => _SensitivityElement?.Select(elem => elem.Value);
+        get => _SensitivityElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
@@ -1638,9 +1638,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<decimal?>? FMeasure
+      public IEnumerable<decimal?> FMeasure
       {
-        get => _FMeasureElement?.Select(elem => elem.Value);
+        get => _FMeasureElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)

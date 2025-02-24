@@ -368,9 +368,9 @@ namespace Hl7.Fhir.Model
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string?>? Path
+      public IEnumerable<string?> Path
       {
-        get => _PathElement?.Select(elem => elem.Value);
+        get => _PathElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
