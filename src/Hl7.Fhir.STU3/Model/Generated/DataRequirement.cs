@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Code> ValueCodeElement
       {
-        get => _ValueCodeElement ?? new List<Hl7.Fhir.Model.Code>();
+        get => _ValueCodeElement ??= [];
         set { _ValueCodeElement = value; OnPropertyChanged("ValueCodeElement"); }
       }
 
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> ValueCoding
       {
-        get => _ValueCoding ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _ValueCoding ??= [];
         set { _ValueCoding = value; OnPropertyChanged("ValueCoding"); }
       }
 
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ValueCodeableConcept
       {
-        get => _ValueCodeableConcept ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ValueCodeableConcept ??= [];
         set { _ValueCodeableConcept = value; OnPropertyChanged("ValueCodeableConcept"); }
       }
 
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> ProfileElement
     {
-      get => _ProfileElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _ProfileElement ??= [];
       set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
     }
 
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> MustSupportElement
     {
-      get => _MustSupportElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _MustSupportElement ??= [];
       set { _MustSupportElement = value; OnPropertyChanged("MustSupportElement"); }
     }
 
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> CodeFilter
     {
-      get => _CodeFilter ?? new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>();
+      get => _CodeFilter ??= [];
       set { _CodeFilter = value; OnPropertyChanged("CodeFilter"); }
     }
 
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> DateFilter
     {
-      get => _DateFilter ?? new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>();
+      get => _DateFilter ??= [];
       set { _DateFilter = value; OnPropertyChanged("DateFilter"); }
     }
 

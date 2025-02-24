@@ -862,7 +862,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -1047,7 +1047,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -1109,7 +1109,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Udi
       {
-        get => _Udi ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Udi ??= [];
         set { _Udi = value; OnPropertyChanged("Udi"); }
       }
 
@@ -1282,7 +1282,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> PreAuthRefElement
       {
-        get => _PreAuthRefElement ?? new List<Hl7.Fhir.Model.FhirString>();
+        get => _PreAuthRefElement ??= [];
         set { _PreAuthRefElement = value; OnPropertyChanged("PreAuthRefElement"); }
       }
 
@@ -1591,7 +1591,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> CareTeamSequenceElement
       {
-        get => _CareTeamSequenceElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _CareTeamSequenceElement ??= [];
         set { _CareTeamSequenceElement = value; OnPropertyChanged("CareTeamSequenceElement"); }
       }
 
@@ -1623,7 +1623,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> DiagnosisSequenceElement
       {
-        get => _DiagnosisSequenceElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _DiagnosisSequenceElement ??= [];
         set { _DiagnosisSequenceElement = value; OnPropertyChanged("DiagnosisSequenceElement"); }
       }
 
@@ -1655,7 +1655,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> ProcedureSequenceElement
       {
-        get => _ProcedureSequenceElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _ProcedureSequenceElement ??= [];
         set { _ProcedureSequenceElement = value; OnPropertyChanged("ProcedureSequenceElement"); }
       }
 
@@ -1687,7 +1687,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> InformationSequenceElement
       {
-        get => _InformationSequenceElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _InformationSequenceElement ??= [];
         set { _InformationSequenceElement = value; OnPropertyChanged("InformationSequenceElement"); }
       }
 
@@ -1763,7 +1763,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
-        get => _Modifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Modifier ??= [];
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
@@ -1778,7 +1778,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
       {
-        get => _ProgramCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ProgramCode ??= [];
         set { _ProgramCode = value; OnPropertyChanged("ProgramCode"); }
       }
 
@@ -1893,7 +1893,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Udi
       {
-        get => _Udi ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Udi ??= [];
         set { _Udi = value; OnPropertyChanged("Udi"); }
       }
 
@@ -1922,7 +1922,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SubSite
       {
-        get => _SubSite ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _SubSite ??= [];
         set { _SubSite = value; OnPropertyChanged("SubSite"); }
       }
 
@@ -1938,7 +1938,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Encounter
       {
-        get => _Encounter ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Encounter ??= [];
         set { _Encounter = value; OnPropertyChanged("Encounter"); }
       }
 
@@ -1952,7 +1952,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
-        get => _NoteNumberElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _NoteNumberElement ??= [];
         set { _NoteNumberElement = value; OnPropertyChanged("NoteNumberElement"); }
       }
 
@@ -1984,7 +1984,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> Adjudication
       {
-        get => _Adjudication ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent>();
+        get => _Adjudication ??= [];
         set { _Adjudication = value; OnPropertyChanged("Adjudication"); }
       }
 
@@ -1998,7 +1998,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.DetailComponent> Detail
       {
-        get => _Detail ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.DetailComponent>();
+        get => _Detail ??= [];
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
@@ -2534,7 +2534,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
-        get => _Modifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Modifier ??= [];
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
@@ -2549,7 +2549,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
       {
-        get => _ProgramCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ProgramCode ??= [];
         set { _ProgramCode = value; OnPropertyChanged("ProgramCode"); }
       }
 
@@ -2632,7 +2632,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Udi
       {
-        get => _Udi ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Udi ??= [];
         set { _Udi = value; OnPropertyChanged("Udi"); }
       }
 
@@ -2646,7 +2646,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
-        get => _NoteNumberElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _NoteNumberElement ??= [];
         set { _NoteNumberElement = value; OnPropertyChanged("NoteNumberElement"); }
       }
 
@@ -2678,7 +2678,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> Adjudication
       {
-        get => _Adjudication ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent>();
+        get => _Adjudication ??= [];
         set { _Adjudication = value; OnPropertyChanged("Adjudication"); }
       }
 
@@ -2692,7 +2692,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.SubDetailComponent> SubDetail
       {
-        get => _SubDetail ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.SubDetailComponent>();
+        get => _SubDetail ??= [];
         set { _SubDetail = value; OnPropertyChanged("SubDetail"); }
       }
 
@@ -2973,7 +2973,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
-        get => _Modifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Modifier ??= [];
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
@@ -2988,7 +2988,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
       {
-        get => _ProgramCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ProgramCode ??= [];
         set { _ProgramCode = value; OnPropertyChanged("ProgramCode"); }
       }
 
@@ -3071,7 +3071,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Udi
       {
-        get => _Udi ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Udi ??= [];
         set { _Udi = value; OnPropertyChanged("Udi"); }
       }
 
@@ -3085,7 +3085,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
-        get => _NoteNumberElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _NoteNumberElement ??= [];
         set { _NoteNumberElement = value; OnPropertyChanged("NoteNumberElement"); }
       }
 
@@ -3117,7 +3117,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> Adjudication
       {
-        get => _Adjudication ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent>();
+        get => _Adjudication ??= [];
         set { _Adjudication = value; OnPropertyChanged("Adjudication"); }
       }
 
@@ -3316,7 +3316,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> ItemSequenceElement
       {
-        get => _ItemSequenceElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _ItemSequenceElement ??= [];
         set { _ItemSequenceElement = value; OnPropertyChanged("ItemSequenceElement"); }
       }
 
@@ -3348,7 +3348,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> DetailSequenceElement
       {
-        get => _DetailSequenceElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _DetailSequenceElement ??= [];
         set { _DetailSequenceElement = value; OnPropertyChanged("DetailSequenceElement"); }
       }
 
@@ -3380,7 +3380,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> SubDetailSequenceElement
       {
-        get => _SubDetailSequenceElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _SubDetailSequenceElement ??= [];
         set { _SubDetailSequenceElement = value; OnPropertyChanged("SubDetailSequenceElement"); }
       }
 
@@ -3414,7 +3414,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Provider
       {
-        get => _Provider ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Provider ??= [];
         set { _Provider = value; OnPropertyChanged("Provider"); }
       }
 
@@ -3444,7 +3444,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
-        get => _Modifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Modifier ??= [];
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
@@ -3459,7 +3459,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
       {
-        get => _ProgramCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ProgramCode ??= [];
         set { _ProgramCode = value; OnPropertyChanged("ProgramCode"); }
       }
 
@@ -3587,7 +3587,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SubSite
       {
-        get => _SubSite ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _SubSite ??= [];
         set { _SubSite = value; OnPropertyChanged("SubSite"); }
       }
 
@@ -3601,7 +3601,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
-        get => _NoteNumberElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _NoteNumberElement ??= [];
         set { _NoteNumberElement = value; OnPropertyChanged("NoteNumberElement"); }
       }
 
@@ -3633,7 +3633,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> Adjudication
       {
-        get => _Adjudication ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent>();
+        get => _Adjudication ??= [];
         set { _Adjudication = value; OnPropertyChanged("Adjudication"); }
       }
 
@@ -3647,7 +3647,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemDetailComponent> Detail
       {
-        get => _Detail ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemDetailComponent>();
+        get => _Detail ??= [];
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
@@ -3907,7 +3907,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
-        get => _Modifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Modifier ??= [];
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
@@ -3988,7 +3988,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
-        get => _NoteNumberElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _NoteNumberElement ??= [];
         set { _NoteNumberElement = value; OnPropertyChanged("NoteNumberElement"); }
       }
 
@@ -4020,7 +4020,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> Adjudication
       {
-        get => _Adjudication ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent>();
+        get => _Adjudication ??= [];
         set { _Adjudication = value; OnPropertyChanged("Adjudication"); }
       }
 
@@ -4034,7 +4034,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemDetailSubDetailComponent> SubDetail
       {
-        get => _SubDetail ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemDetailSubDetailComponent>();
+        get => _SubDetail ??= [];
         set { _SubDetail = value; OnPropertyChanged("SubDetail"); }
       }
 
@@ -4213,7 +4213,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
-        get => _Modifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Modifier ??= [];
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
@@ -4294,7 +4294,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
-        get => _NoteNumberElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _NoteNumberElement ??= [];
         set { _NoteNumberElement = value; OnPropertyChanged("NoteNumberElement"); }
       }
 
@@ -4326,7 +4326,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> Adjudication
       {
-        get => _Adjudication ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent>();
+        get => _Adjudication ??= [];
         set { _Adjudication = value; OnPropertyChanged("Adjudication"); }
       }
 
@@ -5155,7 +5155,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExplanationOfBenefit.BenefitComponent> Financial
       {
-        get => _Financial ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.BenefitComponent>();
+        get => _Financial ??= [];
         set { _Financial = value; OnPropertyChanged("Financial"); }
       }
 
@@ -5433,7 +5433,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -5685,7 +5685,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.RelatedClaimComponent> Related
     {
-      get => _Related ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.RelatedClaimComponent>();
+      get => _Related ??= [];
       set { _Related = value; OnPropertyChanged("Related"); }
     }
 
@@ -5861,7 +5861,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> PreAuthRefElement
     {
-      get => _PreAuthRefElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _PreAuthRefElement ??= [];
       set { _PreAuthRefElement = value; OnPropertyChanged("PreAuthRefElement"); }
     }
 
@@ -5893,7 +5893,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Period> PreAuthRefPeriod
     {
-      get => _PreAuthRefPeriod ?? new List<Hl7.Fhir.Model.Period>();
+      get => _PreAuthRefPeriod ??= [];
       set { _PreAuthRefPeriod = value; OnPropertyChanged("PreAuthRefPeriod"); }
     }
 
@@ -5907,7 +5907,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.CareTeamComponent> CareTeam
     {
-      get => _CareTeam ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.CareTeamComponent>();
+      get => _CareTeam ??= [];
       set { _CareTeam = value; OnPropertyChanged("CareTeam"); }
     }
 
@@ -5921,7 +5921,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.SupportingInformationComponent> SupportingInfo
     {
-      get => _SupportingInfo ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.SupportingInformationComponent>();
+      get => _SupportingInfo ??= [];
       set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
     }
 
@@ -5935,7 +5935,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.DiagnosisComponent> Diagnosis
     {
-      get => _Diagnosis ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.DiagnosisComponent>();
+      get => _Diagnosis ??= [];
       set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
     }
 
@@ -5949,7 +5949,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.ProcedureComponent> Procedure
     {
-      get => _Procedure ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.ProcedureComponent>();
+      get => _Procedure ??= [];
       set { _Procedure = value; OnPropertyChanged("Procedure"); }
     }
 
@@ -5991,7 +5991,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.InsuranceComponent> Insurance
     {
-      get => _Insurance ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.InsuranceComponent>();
+      get => _Insurance ??= [];
       set { _Insurance = value; OnPropertyChanged("Insurance"); }
     }
 
@@ -6018,7 +6018,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.ItemComponent> Item
     {
-      get => _Item ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.ItemComponent>();
+      get => _Item ??= [];
       set { _Item = value; OnPropertyChanged("Item"); }
     }
 
@@ -6032,7 +6032,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemComponent> AddItem
     {
-      get => _AddItem ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemComponent>();
+      get => _AddItem ??= [];
       set { _AddItem = value; OnPropertyChanged("AddItem"); }
     }
 
@@ -6046,7 +6046,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent> Adjudication
     {
-      get => _Adjudication ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent>();
+      get => _Adjudication ??= [];
       set { _Adjudication = value; OnPropertyChanged("Adjudication"); }
     }
 
@@ -6060,7 +6060,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.TotalComponent> Total
     {
-      get => _Total ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.TotalComponent>();
+      get => _Total ??= [];
       set { _Total = value; OnPropertyChanged("Total"); }
     }
 
@@ -6114,7 +6114,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.NoteComponent> ProcessNote
     {
-      get => _ProcessNote ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.NoteComponent>();
+      get => _ProcessNote ??= [];
       set { _ProcessNote = value; OnPropertyChanged("ProcessNote"); }
     }
 
@@ -6141,7 +6141,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExplanationOfBenefit.BenefitBalanceComponent> BenefitBalance
     {
-      get => _BenefitBalance ?? new List<Hl7.Fhir.Model.ExplanationOfBenefit.BenefitBalanceComponent>();
+      get => _BenefitBalance ??= [];
       set { _BenefitBalance = value; OnPropertyChanged("BenefitBalance"); }
     }
 

@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
       {
-        get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Jurisdiction ??= [];
         set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
       }
 
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent> Application
       {
-        get => _Application ?? new List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>();
+        get => _Application ??= [];
         set { _Application = value; OnPropertyChanged("Application"); }
       }
 
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Country
     {
-      get => _Country ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Country ??= [];
       set { _Country = value; OnPropertyChanged("Country"); }
     }
 
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent> JurisdictionalAuthorization
     {
-      get => _JurisdictionalAuthorization ?? new List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent>();
+      get => _JurisdictionalAuthorization ??= [];
       set { _JurisdictionalAuthorization = value; OnPropertyChanged("JurisdictionalAuthorization"); }
     }
 

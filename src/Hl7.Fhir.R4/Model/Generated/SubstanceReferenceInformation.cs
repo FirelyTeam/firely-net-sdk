@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get => _Source ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get => _Source ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Subtype
       {
-        get => _Subtype ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Subtype ??= [];
         set { _Subtype = value; OnPropertyChanged("Subtype"); }
       }
 
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get => _Source ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get => _Source ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
@@ -766,7 +766,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent> Gene
     {
-      get => _Gene ?? new List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent>();
+      get => _Gene ??= [];
       set { _Gene = value; OnPropertyChanged("Gene"); }
     }
 
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent> GeneElement
     {
-      get => _GeneElement ?? new List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent>();
+      get => _GeneElement ??= [];
       set { _GeneElement = value; OnPropertyChanged("GeneElement"); }
     }
 
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceReferenceInformation.ClassificationComponent> Classification
     {
-      get => _Classification ?? new List<Hl7.Fhir.Model.SubstanceReferenceInformation.ClassificationComponent>();
+      get => _Classification ??= [];
       set { _Classification = value; OnPropertyChanged("Classification"); }
     }
 
@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent> Target
     {
-      get => _Target ?? new List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent>();
+      get => _Target ??= [];
       set { _Target = value; OnPropertyChanged("Target"); }
     }
 

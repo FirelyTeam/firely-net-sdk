@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
-        get => _DaysOfWeekElement ?? new List<Code<Hl7.Fhir.Model.DaysOfWeek>>();
+        get => _DaysOfWeekElement ??= [];
         set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
       }
 
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Availability.AvailableTimeComponent> AvailableTime
     {
-      get => _AvailableTime ?? new List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>();
+      get => _AvailableTime ??= [];
       set { _AvailableTime = value; OnPropertyChanged("AvailableTime"); }
     }
 
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent> NotAvailableTime
     {
-      get => _NotAvailableTime ?? new List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>();
+      get => _NotAvailableTime ??= [];
       set { _NotAvailableTime = value; OnPropertyChanged("NotAvailableTime"); }
     }
 

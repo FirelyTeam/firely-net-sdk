@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent> Element
       {
-        get => _Element ?? new List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent>();
+        get => _Element ??= [];
         set { _Element = value; OnPropertyChanged("Element"); }
       }
 
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ConceptMap.TargetElementComponent> Target
       {
-        get => _Target ?? new List<Hl7.Fhir.Model.ConceptMap.TargetElementComponent>();
+        get => _Target ??= [];
         set { _Target = value; OnPropertyChanged("Target"); }
       }
 
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> DependsOn
       {
-        get => _DependsOn ?? new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>();
+        get => _DependsOn ??= [];
         set { _DependsOn = value; OnPropertyChanged("DependsOn"); }
       }
 
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> Product
       {
-        get => _Product ?? new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>();
+        get => _Product ??= [];
         set { _Product = value; OnPropertyChanged("Product"); }
       }
 
@@ -1469,7 +1469,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1511,7 +1511,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1526,7 +1526,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1626,7 +1626,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ConceptMap.GroupComponent> Group
     {
-      get => _Group ?? new List<Hl7.Fhir.Model.ConceptMap.GroupComponent>();
+      get => _Group ??= [];
       set { _Group = value; OnPropertyChanged("Group"); }
     }
 

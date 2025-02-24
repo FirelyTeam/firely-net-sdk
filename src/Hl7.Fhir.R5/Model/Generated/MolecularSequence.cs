@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MolecularSequence.EditComponent> Edit
       {
-        get => _Edit ?? new List<Hl7.Fhir.Model.MolecularSequence.EditComponent>();
+        get => _Edit ??= [];
         set { _Edit = value; OnPropertyChanged("Edit"); }
       }
 
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Focus
     {
-      get => _Focus ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Focus ??= [];
       set { _Focus = value; OnPropertyChanged("Focus"); }
     }
 
@@ -985,7 +985,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Formatted
     {
-      get => _Formatted ?? new List<Hl7.Fhir.Model.Attachment>();
+      get => _Formatted ??= [];
       set { _Formatted = value; OnPropertyChanged("Formatted"); }
     }
 
@@ -999,7 +999,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent> Relative
     {
-      get => _Relative ?? new List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>();
+      get => _Relative ??= [];
       set { _Relative = value; OnPropertyChanged("Relative"); }
     }
 

@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.EligibilityResponse.BenefitsComponent> BenefitBalance
       {
-        get => _BenefitBalance ?? new List<Hl7.Fhir.Model.EligibilityResponse.BenefitsComponent>();
+        get => _BenefitBalance ??= [];
         set { _BenefitBalance = value; OnPropertyChanged("BenefitBalance"); }
       }
 
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.EligibilityResponse.BenefitComponent> Financial
       {
-        get => _Financial ?? new List<Hl7.Fhir.Model.EligibilityResponse.BenefitComponent>();
+        get => _Financial ??= [];
         set { _Financial = value; OnPropertyChanged("Financial"); }
       }
 
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -961,7 +961,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EligibilityResponse.InsuranceComponent> Insurance
     {
-      get => _Insurance ?? new List<Hl7.Fhir.Model.EligibilityResponse.InsuranceComponent>();
+      get => _Insurance ??= [];
       set { _Insurance = value; OnPropertyChanged("Insurance"); }
     }
 
@@ -989,7 +989,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EligibilityResponse.ErrorsComponent> Error
     {
-      get => _Error ?? new List<Hl7.Fhir.Model.EligibilityResponse.ErrorsComponent>();
+      get => _Error ??= [];
       set { _Error = value; OnPropertyChanged("Error"); }
     }
 

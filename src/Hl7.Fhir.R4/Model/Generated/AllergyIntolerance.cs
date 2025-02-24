@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Manifestation
       {
-        get => _Manifestation ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Manifestation ??= [];
         set { _Manifestation = value; OnPropertyChanged("Manifestation"); }
       }
 
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
-        get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+        get => _Note ??= [];
         set { _Note = value; OnPropertyChanged("Note"); }
       }
 
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>> CategoryElement
     {
-      get => _CategoryElement ?? new List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>();
+      get => _CategoryElement ??= [];
       set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
     }
 
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> Reaction
     {
-      get => _Reaction ?? new List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>();
+      get => _Reaction ??= [];
       set { _Reaction = value; OnPropertyChanged("Reaction"); }
     }
 

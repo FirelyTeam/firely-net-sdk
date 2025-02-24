@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent> Characteristic
       {
-        get => _Characteristic ?? new List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>();
+        get => _Characteristic ??= [];
         set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
       }
 
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
-        get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+        get => _Note ??= [];
         set { _Note = value; OnPropertyChanged("Note"); }
       }
 
@@ -812,7 +812,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Author
       {
-        get => _Author ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Author ??= [];
         set { _Author = value; OnPropertyChanged("Author"); }
       }
 
@@ -884,7 +884,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> EntryClassifier
       {
-        get => _EntryClassifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _EntryClassifier ??= [];
         set { _EntryClassifier = value; OnPropertyChanged("EntryClassifier"); }
       }
 
@@ -900,7 +900,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> EntryReference
       {
-        get => _EntryReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _EntryReference ??= [];
         set { _EntryReference = value; OnPropertyChanged("EntryReference"); }
       }
 
@@ -914,7 +914,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Quantity> EntryQuantity
       {
-        get => _EntryQuantity ?? new List<Hl7.Fhir.Model.Quantity>();
+        get => _EntryQuantity ??= [];
         set { _EntryQuantity = value; OnPropertyChanged("EntryQuantity"); }
       }
 
@@ -942,7 +942,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.EvidenceReport.SectionComponent> Section
       {
-        get => _Section ?? new List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>();
+        get => _Section ??= [];
         set { _Section = value; OnPropertyChanged("Section"); }
       }
 
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1189,7 +1189,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1203,7 +1203,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> RelatedIdentifier
     {
-      get => _RelatedIdentifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _RelatedIdentifier ??= [];
       set { _RelatedIdentifier = value; OnPropertyChanged("RelatedIdentifier"); }
     }
 
@@ -1247,7 +1247,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -1261,7 +1261,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
-      get => _RelatedArtifact ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+      get => _RelatedArtifact ??= [];
       set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
     }
 
@@ -1317,7 +1317,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1331,7 +1331,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
-      get => _Author ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Author ??= [];
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
@@ -1345,7 +1345,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
-      get => _Editor ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Editor ??= [];
       set { _Editor = value; OnPropertyChanged("Editor"); }
     }
 
@@ -1359,7 +1359,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
-      get => _Reviewer ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Reviewer ??= [];
       set { _Reviewer = value; OnPropertyChanged("Reviewer"); }
     }
 
@@ -1373,7 +1373,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
-      get => _Endorser ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Endorser ??= [];
       set { _Endorser = value; OnPropertyChanged("Endorser"); }
     }
 
@@ -1387,7 +1387,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent> RelatesTo
     {
-      get => _RelatesTo ?? new List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>();
+      get => _RelatesTo ??= [];
       set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
     }
 
@@ -1401,7 +1401,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EvidenceReport.SectionComponent> Section
     {
-      get => _Section ?? new List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>();
+      get => _Section ??= [];
       set { _Section = value; OnPropertyChanged("Section"); }
     }
 

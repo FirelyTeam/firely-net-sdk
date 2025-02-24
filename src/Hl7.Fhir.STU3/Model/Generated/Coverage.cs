@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Payor
     {
-      get => _Payor ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Payor ??= [];
       set { _Payor = value; OnPropertyChanged("Payor"); }
     }
 
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Contract
     {
-      get => _Contract ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Contract ??= [];
       set { _Contract = value; OnPropertyChanged("Contract"); }
     }
 

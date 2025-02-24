@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Type
     {
-      get => _Type ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 

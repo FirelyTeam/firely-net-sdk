@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> LocationElement
       {
-        get => _LocationElement ?? new List<Hl7.Fhir.Model.FhirString>();
+        get => _LocationElement ??= [];
         set { _LocationElement = value; OnPropertyChanged("LocationElement"); }
       }
 
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> ExpressionElement
       {
-        get => _ExpressionElement ?? new List<Hl7.Fhir.Model.FhirString>();
+        get => _ExpressionElement ??= [];
         set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
       }
 
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.OperationOutcome.IssueComponent> Issue
     {
-      get => _Issue ?? new List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>();
+      get => _Issue ??= [];
       set { _Issue = value; OnPropertyChanged("Issue"); }
     }
 

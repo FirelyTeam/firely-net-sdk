@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get => _Subject ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Account.CoverageComponent> Coverage
     {
-      get => _Coverage ?? new List<Hl7.Fhir.Model.Account.CoverageComponent>();
+      get => _Coverage ??= [];
       set { _Coverage = value; OnPropertyChanged("Coverage"); }
     }
 
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Account.GuarantorComponent> Guarantor
     {
-      get => _Guarantor ?? new List<Hl7.Fhir.Model.Account.GuarantorComponent>();
+      get => _Guarantor ??= [];
       set { _Guarantor = value; OnPropertyChanged("Guarantor"); }
     }
 

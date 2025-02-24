@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> MethodType
       {
-        get => _MethodType ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _MethodType ??= [];
         set { _MethodType = value; OnPropertyChanged("MethodType"); }
       }
 
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ChangeType
       {
-        get => _ChangeType ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ChangeType ??= [];
         set { _ChangeType = value; OnPropertyChanged("ChangeType"); }
       }
 
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Focus
       {
-        get => _Focus ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Focus ??= [];
         set { _Focus = value; OnPropertyChanged("Focus"); }
       }
 
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Specimen
       {
-        get => _Specimen ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Specimen ??= [];
         set { _Specimen = value; OnPropertyChanged("Specimen"); }
       }
 
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
-        get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+        get => _Note ??= [];
         set { _Note = value; OnPropertyChanged("Note"); }
       }
 
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> RegionsStudied
       {
-        get => _RegionsStudied ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _RegionsStudied ??= [];
         set { _RegionsStudied = value; OnPropertyChanged("RegionsStudied"); }
       }
 
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> RegionsCalled
       {
-        get => _RegionsCalled ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _RegionsCalled ??= [];
         set { _RegionsCalled = value; OnPropertyChanged("RegionsCalled"); }
       }
 
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.GenomicStudy.InputComponent> Input
       {
-        get => _Input ?? new List<Hl7.Fhir.Model.GenomicStudy.InputComponent>();
+        get => _Input ??= [];
         set { _Input = value; OnPropertyChanged("Input"); }
       }
 
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.GenomicStudy.OutputComponent> Output
       {
-        get => _Output ?? new List<Hl7.Fhir.Model.GenomicStudy.OutputComponent>();
+        get => _Output ??= [];
         set { _Output = value; OnPropertyChanged("Output"); }
       }
 
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.GenomicStudy.PerformerComponent> Performer
       {
-        get => _Performer ?? new List<Hl7.Fhir.Model.GenomicStudy.PerformerComponent>();
+        get => _Performer ??= [];
         set { _Performer = value; OnPropertyChanged("Performer"); }
       }
 
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.GenomicStudy.DeviceComponent> Device
       {
-        get => _Device ?? new List<Hl7.Fhir.Model.GenomicStudy.DeviceComponent>();
+        get => _Device ??= [];
         set { _Device = value; OnPropertyChanged("Device"); }
       }
 
@@ -1130,7 +1130,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1176,7 +1176,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
@@ -1251,7 +1251,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -1282,7 +1282,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Interpreter
     {
-      get => _Interpreter ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Interpreter ??= [];
       set { _Interpreter = value; OnPropertyChanged("Interpreter"); }
     }
 
@@ -1296,7 +1296,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Reason ??= [];
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
@@ -1366,7 +1366,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -1408,7 +1408,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent> Analysis
     {
-      get => _Analysis ?? new List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent>();
+      get => _Analysis ??= [];
       set { _Analysis = value; OnPropertyChanged("Analysis"); }
     }
 

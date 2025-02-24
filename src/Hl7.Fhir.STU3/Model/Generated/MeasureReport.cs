@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.PopulationComponent> Population
       {
-        get => _Population ?? new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>();
+        get => _Population ??= [];
         set { _Population = value; OnPropertyChanged("Population"); }
       }
 
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierComponent> Stratifier
       {
-        get => _Stratifier ?? new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>();
+        get => _Stratifier ??= [];
         set { _Stratifier = value; OnPropertyChanged("Stratifier"); }
       }
 
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent> Stratum
       {
-        get => _Stratum ?? new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>();
+        get => _Stratum ??= [];
         set { _Stratum = value; OnPropertyChanged("Stratum"); }
       }
 
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent> Population
       {
-        get => _Population ?? new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>();
+        get => _Population ??= [];
         set { _Population = value; OnPropertyChanged("Population"); }
       }
 
@@ -1090,7 +1090,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MeasureReport.GroupComponent> Group
     {
-      get => _Group ?? new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>();
+      get => _Group ??= [];
       set { _Group = value; OnPropertyChanged("Group"); }
     }
 

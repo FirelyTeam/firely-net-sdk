@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
       {
-        get => _AppliesTo ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _AppliesTo ??= [];
         set { _AppliesTo = value; OnPropertyChanged("AppliesTo"); }
       }
 
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
       {
-        get => _PermittedDataTypeElement ?? new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>();
+        get => _PermittedDataTypeElement ??= [];
         set { _PermittedDataTypeElement = value; OnPropertyChanged("PermittedDataTypeElement"); }
       }
 
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> PermittedUnit
       {
-        get => _PermittedUnit ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _PermittedUnit ??= [];
         set { _PermittedUnit = value; OnPropertyChanged("PermittedUnit"); }
       }
 
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent> QualifiedValue
       {
-        get => _QualifiedValue ?? new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent>();
+        get => _QualifiedValue ??= [];
         set { _QualifiedValue = value; OnPropertyChanged("QualifiedValue"); }
       }
 
@@ -1056,7 +1056,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1098,7 +1098,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1113,7 +1113,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1280,7 +1280,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> DerivedFromCanonicalElement
     {
-      get => _DerivedFromCanonicalElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _DerivedFromCanonicalElement ??= [];
       set { _DerivedFromCanonicalElement = value; OnPropertyChanged("DerivedFromCanonicalElement"); }
     }
 
@@ -1312,7 +1312,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> DerivedFromUriElement
     {
-      get => _DerivedFromUriElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _DerivedFromUriElement ??= [];
       set { _DerivedFromUriElement = value; OnPropertyChanged("DerivedFromUriElement"); }
     }
 
@@ -1344,7 +1344,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Subject
     {
-      get => _Subject ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
@@ -1372,7 +1372,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1403,7 +1403,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
     {
-      get => _PermittedDataTypeElement ?? new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>();
+      get => _PermittedDataTypeElement ??= [];
       set { _PermittedDataTypeElement = value; OnPropertyChanged("PermittedDataTypeElement"); }
     }
 
@@ -1493,7 +1493,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Specimen
     {
-      get => _Specimen ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Specimen ??= [];
       set { _Specimen = value; OnPropertyChanged("Specimen"); }
     }
 
@@ -1509,7 +1509,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Device
     {
-      get => _Device ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Device ??= [];
       set { _Device = value; OnPropertyChanged("Device"); }
     }
 
@@ -1552,7 +1552,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> PermittedUnit
     {
-      get => _PermittedUnit ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _PermittedUnit ??= [];
       set { _PermittedUnit = value; OnPropertyChanged("PermittedUnit"); }
     }
 
@@ -1566,7 +1566,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent> QualifiedValue
     {
-      get => _QualifiedValue ?? new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedValueComponent>();
+      get => _QualifiedValue ??= [];
       set { _QualifiedValue = value; OnPropertyChanged("QualifiedValue"); }
     }
 
@@ -1582,7 +1582,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> HasMember
     {
-      get => _HasMember ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _HasMember ??= [];
       set { _HasMember = value; OnPropertyChanged("HasMember"); }
     }
 
@@ -1596,7 +1596,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ObservationDefinition.ComponentComponent> Component
     {
-      get => _Component ?? new List<Hl7.Fhir.Model.ObservationDefinition.ComponentComponent>();
+      get => _Component ??= [];
       set { _Component = value; OnPropertyChanged("Component"); }
     }
 

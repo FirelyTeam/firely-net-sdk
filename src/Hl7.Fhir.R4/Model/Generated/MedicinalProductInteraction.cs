@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get => _Subject ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent> Interactant
     {
-      get => _Interactant ?? new List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>();
+      get => _Interactant ??= [];
       set { _Interactant = value; OnPropertyChanged("Interactant"); }
     }
 

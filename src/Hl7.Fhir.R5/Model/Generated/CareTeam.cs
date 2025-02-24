@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CareTeam.ParticipantComponent> Participant
     {
-      get => _Participant ?? new List<Hl7.Fhir.Model.CareTeam.ParticipantComponent>();
+      get => _Participant ??= [];
       set { _Participant = value; OnPropertyChanged("Participant"); }
     }
 
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Reason ??= [];
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ManagingOrganization
     {
-      get => _ManagingOrganization ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ManagingOrganization ??= [];
       set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
     }
 
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
-      get => _Telecom ?? new List<Hl7.Fhir.Model.ContactPoint>();
+      get => _Telecom ??= [];
       set { _Telecom = value; OnPropertyChanged("Telecom"); }
     }
 
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 

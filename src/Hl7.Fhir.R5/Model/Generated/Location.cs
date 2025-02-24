@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> AliasElement
     {
-      get => _AliasElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _AliasElement ??= [];
       set { _AliasElement = value; OnPropertyChanged("AliasElement"); }
     }
 
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExtendedContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ExtendedContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
     {
-      get => _Characteristic ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Characteristic ??= [];
       set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
     }
 
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Availability> HoursOfOperation
     {
-      get => _HoursOfOperation ?? new List<Hl7.Fhir.Model.Availability>();
+      get => _HoursOfOperation ??= [];
       set { _HoursOfOperation = value; OnPropertyChanged("HoursOfOperation"); }
     }
 
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.VirtualServiceDetail> VirtualService
     {
-      get => _VirtualService ?? new List<Hl7.Fhir.Model.VirtualServiceDetail>();
+      get => _VirtualService ??= [];
       set { _VirtualService = value; OnPropertyChanged("VirtualService"); }
     }
 
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
-      get => _Endpoint ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Endpoint ??= [];
       set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
     }
 

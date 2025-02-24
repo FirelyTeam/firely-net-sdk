@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SupplyRequest.ParameterComponent> Parameter
     {
-      get => _Parameter ?? new List<Hl7.Fhir.Model.SupplyRequest.ParameterComponent>();
+      get => _Parameter ??= [];
       set { _Parameter = value; OnPropertyChanged("Parameter"); }
     }
 
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Supplier
     {
-      get => _Supplier ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Supplier ??= [];
       set { _Supplier = value; OnPropertyChanged("Supplier"); }
     }
 
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Reason ??= [];
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 

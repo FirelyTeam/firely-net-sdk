@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestReport.SetupActionComponent> Action
       {
-        get => _Action ?? new List<Hl7.Fhir.Model.TestReport.SetupActionComponent>();
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
@@ -1020,7 +1020,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestReport.TestActionComponent> Action
       {
-        get => _Action ?? new List<Hl7.Fhir.Model.TestReport.TestActionComponent>();
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
@@ -1242,7 +1242,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestReport.TeardownActionComponent> Action
       {
-        get => _Action ?? new List<Hl7.Fhir.Model.TestReport.TeardownActionComponent>();
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
@@ -1612,7 +1612,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.TestReport.ParticipantComponent> Participant
     {
-      get => _Participant ?? new List<Hl7.Fhir.Model.TestReport.ParticipantComponent>();
+      get => _Participant ??= [];
       set { _Participant = value; OnPropertyChanged("Participant"); }
     }
 
@@ -1639,7 +1639,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.TestReport.TestComponent> Test
     {
-      get => _Test ?? new List<Hl7.Fhir.Model.TestReport.TestComponent>();
+      get => _Test ??= [];
       set { _Test = value; OnPropertyChanged("Test"); }
     }
 

@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> AdditionalIdentifier
     {
-      get => _AdditionalIdentifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _AdditionalIdentifier ??= [];
       set { _AdditionalIdentifier = value; OnPropertyChanged("AdditionalIdentifier"); }
     }
 
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Classification
     {
-      get => _Classification ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Classification ??= [];
       set { _Classification = value; OnPropertyChanged("Classification"); }
     }
 
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalCharacteristic
     {
-      get => _AdditionalCharacteristic ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _AdditionalCharacteristic ??= [];
       set { _AdditionalCharacteristic = value; OnPropertyChanged("AdditionalCharacteristic"); }
     }
 
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalClassification
     {
-      get => _AdditionalClassification ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _AdditionalClassification ??= [];
       set { _AdditionalClassification = value; OnPropertyChanged("AdditionalClassification"); }
     }
 
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent> RelatedEntry
     {
-      get => _RelatedEntry ?? new List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent>();
+      get => _RelatedEntry ??= [];
       set { _RelatedEntry = value; OnPropertyChanged("RelatedEntry"); }
     }
 

@@ -867,7 +867,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1076,7 +1076,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ResultingEffect
     {
-      get => _ResultingEffect ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ResultingEffect ??= [];
       set { _ResultingEffect = value; OnPropertyChanged("ResultingEffect"); }
     }
 
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Outcome
     {
-      get => _Outcome ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Outcome ??= [];
       set { _Outcome = value; OnPropertyChanged("Outcome"); }
     }
 
@@ -1149,7 +1149,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent> Participant
     {
-      get => _Participant ?? new List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>();
+      get => _Participant ??= [];
       set { _Participant = value; OnPropertyChanged("Participant"); }
     }
 
@@ -1165,7 +1165,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Study
     {
-      get => _Study ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Study ??= [];
       set { _Study = value; OnPropertyChanged("Study"); }
     }
 
@@ -1207,7 +1207,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> SuspectEntity
     {
-      get => _SuspectEntity ?? new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>();
+      get => _SuspectEntity ??= [];
       set { _SuspectEntity = value; OnPropertyChanged("SuspectEntity"); }
     }
 
@@ -1221,7 +1221,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent> ContributingFactor
     {
-      get => _ContributingFactor ?? new List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent>();
+      get => _ContributingFactor ??= [];
       set { _ContributingFactor = value; OnPropertyChanged("ContributingFactor"); }
     }
 
@@ -1235,7 +1235,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent> PreventiveAction
     {
-      get => _PreventiveAction ?? new List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent>();
+      get => _PreventiveAction ??= [];
       set { _PreventiveAction = value; OnPropertyChanged("PreventiveAction"); }
     }
 
@@ -1249,7 +1249,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent> MitigatingAction
     {
-      get => _MitigatingAction ?? new List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent>();
+      get => _MitigatingAction ??= [];
       set { _MitigatingAction = value; OnPropertyChanged("MitigatingAction"); }
     }
 
@@ -1263,7 +1263,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent> SupportingInfo
     {
-      get => _SupportingInfo ?? new List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent>();
+      get => _SupportingInfo ??= [];
       set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
     }
 
@@ -1277,7 +1277,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 

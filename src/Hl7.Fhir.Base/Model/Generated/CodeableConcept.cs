@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Coding
     {
-      get => _Coding ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _Coding ??= [];
       set { _Coding = value; OnPropertyChanged("Coding"); }
     }
 

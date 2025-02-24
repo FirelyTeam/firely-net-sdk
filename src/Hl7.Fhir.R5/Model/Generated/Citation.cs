@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
       {
-        get => _Classifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Classifier ??= [];
         set { _Classifier = value; OnPropertyChanged("Classifier"); }
       }
 
@@ -715,7 +715,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
@@ -729,7 +729,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> RelatedIdentifier
       {
-        get => _RelatedIdentifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _RelatedIdentifier ??= [];
         set { _RelatedIdentifier = value; OnPropertyChanged("RelatedIdentifier"); }
       }
 
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> CurrentState
       {
-        get => _CurrentState ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _CurrentState ??= [];
         set { _CurrentState = value; OnPropertyChanged("CurrentState"); }
       }
 
@@ -799,7 +799,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactStatusDateComponent> StatusDate
       {
-        get => _StatusDate ?? new List<Hl7.Fhir.Model.Citation.CitedArtifactStatusDateComponent>();
+        get => _StatusDate ??= [];
         set { _StatusDate = value; OnPropertyChanged("StatusDate"); }
       }
 
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactTitleComponent> Title
       {
-        get => _Title ?? new List<Hl7.Fhir.Model.Citation.CitedArtifactTitleComponent>();
+        get => _Title ??= [];
         set { _Title = value; OnPropertyChanged("Title"); }
       }
 
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactAbstractComponent> Abstract
       {
-        get => _Abstract ?? new List<Hl7.Fhir.Model.Citation.CitedArtifactAbstractComponent>();
+        get => _Abstract ??= [];
         set { _Abstract = value; OnPropertyChanged("Abstract"); }
       }
 
@@ -854,7 +854,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactRelatesToComponent> RelatesTo
       {
-        get => _RelatesTo ?? new List<Hl7.Fhir.Model.Citation.CitedArtifactRelatesToComponent>();
+        get => _RelatesTo ??= [];
         set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
       }
 
@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactPublicationFormComponent> PublicationForm
       {
-        get => _PublicationForm ?? new List<Hl7.Fhir.Model.Citation.CitedArtifactPublicationFormComponent>();
+        get => _PublicationForm ??= [];
         set { _PublicationForm = value; OnPropertyChanged("PublicationForm"); }
       }
 
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactWebLocationComponent> WebLocation
       {
-        get => _WebLocation ?? new List<Hl7.Fhir.Model.Citation.CitedArtifactWebLocationComponent>();
+        get => _WebLocation ??= [];
         set { _WebLocation = value; OnPropertyChanged("WebLocation"); }
       }
 
@@ -896,7 +896,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactClassificationComponent> Classification
       {
-        get => _Classification ?? new List<Hl7.Fhir.Model.Citation.CitedArtifactClassificationComponent>();
+        get => _Classification ??= [];
         set { _Classification = value; OnPropertyChanged("Classification"); }
       }
 
@@ -923,7 +923,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
-        get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+        get => _Note ??= [];
         set { _Note = value; OnPropertyChanged("Note"); }
       }
 
@@ -1417,7 +1417,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -1939,7 +1939,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
       {
-        get => _Classifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Classifier ??= [];
         set { _Classifier = value; OnPropertyChanged("Classifier"); }
       }
 
@@ -2427,7 +2427,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Language
       {
-        get => _Language ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Language ??= [];
         set { _Language = value; OnPropertyChanged("Language"); }
       }
 
@@ -2823,7 +2823,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
@@ -3019,7 +3019,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
       {
-        get => _Classifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Classifier ??= [];
         set { _Classifier = value; OnPropertyChanged("Classifier"); }
       }
 
@@ -3159,7 +3159,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
       {
-        get => _Classifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Classifier ??= [];
         set { _Classifier = value; OnPropertyChanged("Classifier"); }
       }
 
@@ -3175,7 +3175,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> ArtifactAssessment
       {
-        get => _ArtifactAssessment ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _ArtifactAssessment ??= [];
         set { _ArtifactAssessment = value; OnPropertyChanged("ArtifactAssessment"); }
       }
 
@@ -3312,7 +3312,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent> Entry
       {
-        get => _Entry ?? new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryComponent>();
+        get => _Entry ??= [];
         set { _Entry = value; OnPropertyChanged("Entry"); }
       }
 
@@ -3326,7 +3326,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent> Summary
       {
-        get => _Summary ?? new List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>();
+        get => _Summary ??= [];
         set { _Summary = value; OnPropertyChanged("Summary"); }
       }
 
@@ -3482,7 +3482,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Affiliation
       {
-        get => _Affiliation ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Affiliation ??= [];
         set { _Affiliation = value; OnPropertyChanged("Affiliation"); }
       }
 
@@ -3497,7 +3497,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ContributionType
       {
-        get => _ContributionType ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ContributionType ??= [];
         set { _ContributionType = value; OnPropertyChanged("ContributionType"); }
       }
 
@@ -3525,7 +3525,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryContributionInstanceComponent> ContributionInstance
       {
-        get => _ContributionInstance ?? new List<Hl7.Fhir.Model.Citation.CitedArtifactContributorshipEntryContributionInstanceComponent>();
+        get => _ContributionInstance ??= [];
         set { _ContributionInstance = value; OnPropertyChanged("ContributionInstance"); }
       }
 
@@ -4045,7 +4045,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -4273,7 +4273,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -4315,7 +4315,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -4330,7 +4330,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -4497,7 +4497,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
-      get => _Author ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Author ??= [];
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
@@ -4511,7 +4511,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
-      get => _Editor ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Editor ??= [];
       set { _Editor = value; OnPropertyChanged("Editor"); }
     }
 
@@ -4525,7 +4525,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
-      get => _Reviewer ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Reviewer ??= [];
       set { _Reviewer = value; OnPropertyChanged("Reviewer"); }
     }
 
@@ -4539,7 +4539,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
-      get => _Endorser ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Endorser ??= [];
       set { _Endorser = value; OnPropertyChanged("Endorser"); }
     }
 
@@ -4553,7 +4553,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Citation.SummaryComponent> Summary
     {
-      get => _Summary ?? new List<Hl7.Fhir.Model.Citation.SummaryComponent>();
+      get => _Summary ??= [];
       set { _Summary = value; OnPropertyChanged("Summary"); }
     }
 
@@ -4567,7 +4567,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Citation.ClassificationComponent> Classification
     {
-      get => _Classification ?? new List<Hl7.Fhir.Model.Citation.ClassificationComponent>();
+      get => _Classification ??= [];
       set { _Classification = value; OnPropertyChanged("Classification"); }
     }
 
@@ -4581,7 +4581,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -4596,7 +4596,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CurrentState
     {
-      get => _CurrentState ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _CurrentState ??= [];
       set { _CurrentState = value; OnPropertyChanged("CurrentState"); }
     }
 
@@ -4610,7 +4610,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Citation.StatusDateComponent> StatusDate
     {
-      get => _StatusDate ?? new List<Hl7.Fhir.Model.Citation.StatusDateComponent>();
+      get => _StatusDate ??= [];
       set { _StatusDate = value; OnPropertyChanged("StatusDate"); }
     }
 
@@ -4624,7 +4624,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
-      get => _RelatedArtifact ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+      get => _RelatedArtifact ??= [];
       set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
     }
 

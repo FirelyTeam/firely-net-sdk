@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.AdministrableProductDefinition.TargetSpeciesComponent> TargetSpecies
       {
-        get => _TargetSpecies ?? new List<Hl7.Fhir.Model.AdministrableProductDefinition.TargetSpeciesComponent>();
+        get => _TargetSpecies ??= [];
         set { _TargetSpecies = value; OnPropertyChanged("TargetSpecies"); }
       }
 
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.AdministrableProductDefinition.WithdrawalPeriodComponent> WithdrawalPeriod
       {
-        get => _WithdrawalPeriod ?? new List<Hl7.Fhir.Model.AdministrableProductDefinition.WithdrawalPeriodComponent>();
+        get => _WithdrawalPeriod ??= [];
         set { _WithdrawalPeriod = value; OnPropertyChanged("WithdrawalPeriod"); }
       }
 
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -739,7 +739,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> FormOf
     {
-      get => _FormOf ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _FormOf ??= [];
       set { _FormOf = value; OnPropertyChanged("FormOf"); }
     }
 
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ProducedFrom
     {
-      get => _ProducedFrom ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ProducedFrom ??= [];
       set { _ProducedFrom = value; OnPropertyChanged("ProducedFrom"); }
     }
 
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
     {
-      get => _Ingredient ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Ingredient ??= [];
       set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
     }
 
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdministrableProductDefinition.PropertyComponent> Property
     {
-      get => _Property ?? new List<Hl7.Fhir.Model.AdministrableProductDefinition.PropertyComponent>();
+      get => _Property ??= [];
       set { _Property = value; OnPropertyChanged("Property"); }
     }
 
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdministrableProductDefinition.RouteOfAdministrationComponent> RouteOfAdministration
     {
-      get => _RouteOfAdministration ?? new List<Hl7.Fhir.Model.AdministrableProductDefinition.RouteOfAdministrationComponent>();
+      get => _RouteOfAdministration ??= [];
       set { _RouteOfAdministration = value; OnPropertyChanged("RouteOfAdministration"); }
     }
 

@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
       {
-        get => _Reason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Reason ??= [];
         set { _Reason = value; OnPropertyChanged("Reason"); }
       }
 
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
       {
-        get => _ReasonNotGiven ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ReasonNotGiven ??= [];
         set { _ReasonNotGiven = value; OnPropertyChanged("ReasonNotGiven"); }
       }
 
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
       {
-        get => _TargetDisease ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _TargetDisease ??= [];
         set { _TargetDisease = value; OnPropertyChanged("TargetDisease"); }
       }
 
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Immunization.PractitionerComponent> Practitioner
     {
-      get => _Practitioner ?? new List<Hl7.Fhir.Model.Immunization.PractitionerComponent>();
+      get => _Practitioner ??= [];
       set { _Practitioner = value; OnPropertyChanged("Practitioner"); }
     }
 
@@ -1134,7 +1134,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -1161,7 +1161,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Immunization.ReactionComponent> Reaction
     {
-      get => _Reaction ?? new List<Hl7.Fhir.Model.Immunization.ReactionComponent>();
+      get => _Reaction ??= [];
       set { _Reaction = value; OnPropertyChanged("Reaction"); }
     }
 
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> VaccinationProtocol
     {
-      get => _VaccinationProtocol ?? new List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>();
+      get => _VaccinationProtocol ??= [];
       set { _VaccinationProtocol = value; OnPropertyChanged("VaccinationProtocol"); }
     }
 

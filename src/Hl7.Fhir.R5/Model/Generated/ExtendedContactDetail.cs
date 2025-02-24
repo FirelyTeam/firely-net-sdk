@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.HumanName> Name
     {
-      get => _Name ?? new List<Hl7.Fhir.Model.HumanName>();
+      get => _Name ??= [];
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
-      get => _Telecom ?? new List<Hl7.Fhir.Model.ContactPoint>();
+      get => _Telecom ??= [];
       set { _Telecom = value; OnPropertyChanged("Telecom"); }
     }
 

@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
-      get => _PartOf ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _PartOf ??= [];
       set { _PartOf = value; OnPropertyChanged("PartOf"); }
     }
 
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> InformationSource
     {
-      get => _InformationSource ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _InformationSource ??= [];
       set { _InformationSource = value; OnPropertyChanged("InformationSource"); }
     }
 
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
     {
-      get => _DerivedFrom ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _DerivedFrom ??= [];
       set { _DerivedFrom = value; OnPropertyChanged("DerivedFrom"); }
     }
 
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Reason ??= [];
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> RelatedClinicalInformation
     {
-      get => _RelatedClinicalInformation ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _RelatedClinicalInformation ??= [];
       set { _RelatedClinicalInformation = value; OnPropertyChanged("RelatedClinicalInformation"); }
     }
 
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Dosage> Dosage
     {
-      get => _Dosage ?? new List<Hl7.Fhir.Model.Dosage>();
+      get => _Dosage ??= [];
       set { _Dosage = value; OnPropertyChanged("Dosage"); }
     }
 

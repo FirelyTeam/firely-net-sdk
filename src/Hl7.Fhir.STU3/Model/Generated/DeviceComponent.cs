@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OperationalStatus
     {
-      get => _OperationalStatus ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _OperationalStatus ??= [];
       set { _OperationalStatus = value; OnPropertyChanged("OperationalStatus"); }
     }
 
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent> ProductionSpecification
     {
-      get => _ProductionSpecification ?? new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>();
+      get => _ProductionSpecification ??= [];
       set { _ProductionSpecification = value; OnPropertyChanged("ProductionSpecification"); }
     }
 

@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Group.CharacteristicComponent> Characteristic
     {
-      get => _Characteristic ?? new List<Hl7.Fhir.Model.Group.CharacteristicComponent>();
+      get => _Characteristic ??= [];
       set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
     }
 
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Group.MemberComponent> Member
     {
-      get => _Member ?? new List<Hl7.Fhir.Model.Group.MemberComponent>();
+      get => _Member ??= [];
       set { _Member = value; OnPropertyChanged("Member"); }
     }
 

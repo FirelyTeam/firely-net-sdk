@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent> Applicability
       {
-        get => _Applicability ?? new List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent>();
+        get => _Applicability ??= [];
         set { _Applicability = value; OnPropertyChanged("Applicability"); }
       }
 
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ChargeItemDefinition.PriceComponentComponent> PriceComponent
       {
-        get => _PriceComponent ?? new List<Hl7.Fhir.Model.ChargeItemDefinition.PriceComponentComponent>();
+        get => _PriceComponent ??= [];
         set { _PriceComponent = value; OnPropertyChanged("PriceComponent"); }
       }
 
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> DerivedFromUriElement
     {
-      get => _DerivedFromUriElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _DerivedFromUriElement ??= [];
       set { _DerivedFromUriElement = value; OnPropertyChanged("DerivedFromUriElement"); }
     }
 
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> PartOfElement
     {
-      get => _PartOfElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _PartOfElement ??= [];
       set { _PartOfElement = value; OnPropertyChanged("PartOfElement"); }
     }
 
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> ReplacesElement
     {
-      get => _ReplacesElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _ReplacesElement ??= [];
       set { _ReplacesElement = value; OnPropertyChanged("ReplacesElement"); }
     }
 
@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -905,7 +905,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1047,7 +1047,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Instance
     {
-      get => _Instance ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Instance ??= [];
       set { _Instance = value; OnPropertyChanged("Instance"); }
     }
 
@@ -1061,7 +1061,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent> Applicability
     {
-      get => _Applicability ?? new List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent>();
+      get => _Applicability ??= [];
       set { _Applicability = value; OnPropertyChanged("Applicability"); }
     }
 
@@ -1075,7 +1075,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ChargeItemDefinition.PropertyGroupComponent> PropertyGroup
     {
-      get => _PropertyGroup ?? new List<Hl7.Fhir.Model.ChargeItemDefinition.PropertyGroupComponent>();
+      get => _PropertyGroup ??= [];
       set { _PropertyGroup = value; OnPropertyChanged("PropertyGroup"); }
     }
 

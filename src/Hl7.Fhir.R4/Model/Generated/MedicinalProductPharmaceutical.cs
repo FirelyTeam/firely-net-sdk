@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.TargetSpeciesComponent> TargetSpecies
       {
-        get => _TargetSpecies ?? new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.TargetSpeciesComponent>();
+        get => _TargetSpecies ??= [];
         set { _TargetSpecies = value; OnPropertyChanged("TargetSpecies"); }
       }
 
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.WithdrawalPeriodComponent> WithdrawalPeriod
       {
-        get => _WithdrawalPeriod ?? new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.WithdrawalPeriodComponent>();
+        get => _WithdrawalPeriod ??= [];
         set { _WithdrawalPeriod = value; OnPropertyChanged("WithdrawalPeriod"); }
       }
 
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -700,7 +700,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Ingredient
     {
-      get => _Ingredient ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Ingredient ??= [];
       set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
     }
 
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Device
     {
-      get => _Device ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Device ??= [];
       set { _Device = value; OnPropertyChanged("Device"); }
     }
 
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.CharacteristicsComponent> Characteristics
     {
-      get => _Characteristics ?? new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.CharacteristicsComponent>();
+      get => _Characteristics ??= [];
       set { _Characteristics = value; OnPropertyChanged("Characteristics"); }
     }
 
@@ -744,7 +744,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.RouteOfAdministrationComponent> RouteOfAdministration
     {
-      get => _RouteOfAdministration ?? new List<Hl7.Fhir.Model.MedicinalProductPharmaceutical.RouteOfAdministrationComponent>();
+      get => _RouteOfAdministration ??= [];
       set { _RouteOfAdministration = value; OnPropertyChanged("RouteOfAdministration"); }
     }
 

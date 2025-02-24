@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Author
     {
-      get => _Author ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Author ??= [];
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Recipient
     {
-      get => _Recipient ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Recipient ??= [];
       set { _Recipient = value; OnPropertyChanged("Recipient"); }
     }
 
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Content
     {
-      get => _Content ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Content ??= [];
       set { _Content = value; OnPropertyChanged("Content"); }
     }
 
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DocumentManifest.RelatedComponent> Related
     {
-      get => _Related ?? new List<Hl7.Fhir.Model.DocumentManifest.RelatedComponent>();
+      get => _Related ??= [];
       set { _Related = value; OnPropertyChanged("Related"); }
     }
 

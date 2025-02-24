@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Ratio> Amount
       {
-        get => _Amount ?? new List<Hl7.Fhir.Model.Ratio>();
+        get => _Amount ??= [];
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Ratio> Amount
       {
-        get => _Amount ?? new List<Hl7.Fhir.Model.Ratio>();
+        get => _Amount ??= [];
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
@@ -766,7 +766,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get => _Manufacturer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Manufacturer ??= [];
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.NutritionProduct.NutrientComponent> Nutrient
     {
-      get => _Nutrient ?? new List<Hl7.Fhir.Model.NutritionProduct.NutrientComponent>();
+      get => _Nutrient ??= [];
       set { _Nutrient = value; OnPropertyChanged("Nutrient"); }
     }
 
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.NutritionProduct.IngredientComponent> Ingredient
     {
-      get => _Ingredient ?? new List<Hl7.Fhir.Model.NutritionProduct.IngredientComponent>();
+      get => _Ingredient ??= [];
       set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
     }
 
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> KnownAllergen
     {
-      get => _KnownAllergen ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _KnownAllergen ??= [];
       set { _KnownAllergen = value; OnPropertyChanged("KnownAllergen"); }
     }
 
@@ -839,7 +839,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.NutritionProduct.CharacteristicComponent> Characteristic
     {
-      get => _Characteristic ?? new List<Hl7.Fhir.Model.NutritionProduct.CharacteristicComponent>();
+      get => _Characteristic ??= [];
       set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
     }
 
@@ -853,7 +853,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.NutritionProduct.InstanceComponent> Instance
     {
-      get => _Instance ?? new List<Hl7.Fhir.Model.NutritionProduct.InstanceComponent>();
+      get => _Instance ??= [];
       set { _Instance = value; OnPropertyChanged("Instance"); }
     }
 
@@ -867,7 +867,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 

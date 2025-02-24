@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Implicated
     {
-      get => _Implicated ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Implicated ??= [];
       set { _Implicated = value; OnPropertyChanged("Implicated"); }
     }
 
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> Mitigation
     {
-      get => _Mitigation ?? new List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>();
+      get => _Mitigation ??= [];
       set { _Mitigation = value; OnPropertyChanged("Mitigation"); }
     }
 

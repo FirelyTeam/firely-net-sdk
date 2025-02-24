@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Part
       {
-        get => _Part ?? new List<Hl7.Fhir.Model.Parameters.ParameterComponent>();
+        get => _Part ??= [];
         set { _Part = value; OnPropertyChanged("Part"); }
       }
 
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Parameter
     {
-      get => _Parameter ?? new List<Hl7.Fhir.Model.Parameters.ParameterComponent>();
+      get => _Parameter ??= [];
       set { _Parameter = value; OnPropertyChanged("Parameter"); }
     }
 

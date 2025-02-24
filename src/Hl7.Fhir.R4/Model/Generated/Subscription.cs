@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> HeaderElement
       {
-        get => _HeaderElement ?? new List<Hl7.Fhir.Model.FhirString>();
+        get => _HeaderElement ??= [];
         set { _HeaderElement = value; OnPropertyChanged("HeaderElement"); }
       }
 
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactPoint>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 

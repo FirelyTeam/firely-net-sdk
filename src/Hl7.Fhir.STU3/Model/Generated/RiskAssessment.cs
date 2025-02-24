@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Basis
     {
-      get => _Basis ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Basis ??= [];
       set { _Basis = value; OnPropertyChanged("Basis"); }
     }
 
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> Prediction
     {
-      get => _Prediction ?? new List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>();
+      get => _Prediction ??= [];
       set { _Prediction = value; OnPropertyChanged("Prediction"); }
     }
 

@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ElementDefinition> Element
       {
-        get => _Element ?? new List<Hl7.Fhir.Model.ElementDefinition>();
+        get => _Element ??= [];
         set { _Element = value; OnPropertyChanged("Element"); }
       }
 
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ElementDefinition> Element
       {
-        get => _Element ?? new List<Hl7.Fhir.Model.ElementDefinition>();
+        get => _Element ??= [];
         set { _Element = value; OnPropertyChanged("Element"); }
       }
 
@@ -728,7 +728,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -960,7 +960,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1002,7 +1002,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1119,7 +1119,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Keyword
     {
-      get => _Keyword ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _Keyword ??= [];
       set { _Keyword = value; OnPropertyChanged("Keyword"); }
     }
 
@@ -1163,7 +1163,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.StructureDefinition.MappingComponent> Mapping
     {
-      get => _Mapping ?? new List<Hl7.Fhir.Model.StructureDefinition.MappingComponent>();
+      get => _Mapping ??= [];
       set { _Mapping = value; OnPropertyChanged("Mapping"); }
     }
 
@@ -1237,7 +1237,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.StructureDefinition.ContextComponent> Context
     {
-      get => _Context ?? new List<Hl7.Fhir.Model.StructureDefinition.ContextComponent>();
+      get => _Context ??= [];
       set { _Context = value; OnPropertyChanged("Context"); }
     }
 
@@ -1251,7 +1251,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ContextInvariantElement
     {
-      get => _ContextInvariantElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _ContextInvariantElement ??= [];
       set { _ContextInvariantElement = value; OnPropertyChanged("ContextInvariantElement"); }
     }
 

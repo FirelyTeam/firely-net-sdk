@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Assessment
       {
-        get => _Assessment ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Assessment ??= [];
         set { _Assessment = value; OnPropertyChanged("Assessment"); }
       }
 
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
-        get => _Code ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Code ??= [];
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Detail
       {
-        get => _Detail ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Detail ??= [];
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
     {
-      get => _BodySite ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _BodySite ??= [];
       set { _BodySite = value; OnPropertyChanged("BodySite"); }
     }
 
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Condition.StageComponent> Stage
     {
-      get => _Stage ?? new List<Hl7.Fhir.Model.Condition.StageComponent>();
+      get => _Stage ??= [];
       set { _Stage = value; OnPropertyChanged("Stage"); }
     }
 
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Condition.EvidenceComponent> Evidence
     {
-      get => _Evidence ?? new List<Hl7.Fhir.Model.Condition.EvidenceComponent>();
+      get => _Evidence ??= [];
       set { _Evidence = value; OnPropertyChanged("Evidence"); }
     }
 
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 

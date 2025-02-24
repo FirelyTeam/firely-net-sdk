@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Code
       {
-        get => _Code ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _Code ??= [];
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Questionnaire.EnableWhenComponent> EnableWhen
       {
-        get => _EnableWhen ?? new List<Hl7.Fhir.Model.Questionnaire.EnableWhenComponent>();
+        get => _EnableWhen ??= [];
         set { _EnableWhen = value; OnPropertyChanged("EnableWhen"); }
       }
 
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Questionnaire.AnswerOptionComponent> AnswerOption
       {
-        get => _AnswerOption ?? new List<Hl7.Fhir.Model.Questionnaire.AnswerOptionComponent>();
+        get => _AnswerOption ??= [];
         set { _AnswerOption = value; OnPropertyChanged("AnswerOption"); }
       }
 
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Questionnaire.InitialComponent> Initial
       {
-        get => _Initial ?? new List<Hl7.Fhir.Model.Questionnaire.InitialComponent>();
+        get => _Initial ??= [];
         set { _Initial = value; OnPropertyChanged("Initial"); }
       }
 
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Questionnaire.ItemComponent> Item
       {
-        get => _Item ?? new List<Hl7.Fhir.Model.Questionnaire.ItemComponent>();
+        get => _Item ??= [];
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
@@ -1279,7 +1279,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1377,7 +1377,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> DerivedFromElement
     {
-      get => _DerivedFromElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _DerivedFromElement ??= [];
       set { _DerivedFromElement = value; OnPropertyChanged("DerivedFromElement"); }
     }
 
@@ -1470,7 +1470,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement
     {
-      get => _SubjectTypeElement ?? new List<Code<Hl7.Fhir.Model.ResourceType>>();
+      get => _SubjectTypeElement ??= [];
       set { _SubjectTypeElement = value; OnPropertyChanged("SubjectTypeElement"); }
     }
 
@@ -1558,7 +1558,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1600,7 +1600,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1615,7 +1615,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1755,7 +1755,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Code
     {
-      get => _Code ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _Code ??= [];
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
@@ -1769,7 +1769,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Questionnaire.ItemComponent> Item
     {
-      get => _Item ?? new List<Hl7.Fhir.Model.Questionnaire.ItemComponent>();
+      get => _Item ??= [];
       set { _Item = value; OnPropertyChanged("Item"); }
     }
 

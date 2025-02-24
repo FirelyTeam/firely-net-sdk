@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> AdditionalContext
       {
-        get => _AdditionalContext ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _AdditionalContext ??= [];
         set { _AdditionalContext = value; OnPropertyChanged("AdditionalContext"); }
       }
 
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent> NotificationEvent
     {
-      get => _NotificationEvent ?? new List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>();
+      get => _NotificationEvent ??= [];
       set { _NotificationEvent = value; OnPropertyChanged("NotificationEvent"); }
     }
 
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Error
     {
-      get => _Error ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Error ??= [];
       set { _Error = value; OnPropertyChanged("Error"); }
     }
 

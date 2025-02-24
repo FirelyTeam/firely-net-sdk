@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MonetaryComponent> PriceComponent
       {
-        get => _PriceComponent ?? new List<Hl7.Fhir.Model.MonetaryComponent>();
+        get => _PriceComponent ??= [];
         set { _PriceComponent = value; OnPropertyChanged("PriceComponent"); }
       }
 
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Invoice.ParticipantComponent> Participant
     {
-      get => _Participant ?? new List<Hl7.Fhir.Model.Invoice.ParticipantComponent>();
+      get => _Participant ??= [];
       set { _Participant = value; OnPropertyChanged("Participant"); }
     }
 
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Invoice.LineItemComponent> LineItem
     {
-      get => _LineItem ?? new List<Hl7.Fhir.Model.Invoice.LineItemComponent>();
+      get => _LineItem ??= [];
       set { _LineItem = value; OnPropertyChanged("LineItem"); }
     }
 
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MonetaryComponent> TotalPriceComponent
     {
-      get => _TotalPriceComponent ?? new List<Hl7.Fhir.Model.MonetaryComponent>();
+      get => _TotalPriceComponent ??= [];
       set { _TotalPriceComponent = value; OnPropertyChanged("TotalPriceComponent"); }
     }
 
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 

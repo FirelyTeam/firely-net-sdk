@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CoverageEligibilityResponse.ItemsComponent> Item
       {
-        get => _Item ?? new List<Hl7.Fhir.Model.CoverageEligibilityResponse.ItemsComponent>();
+        get => _Item ??= [];
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
-        get => _Modifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Modifier ??= [];
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CoverageEligibilityResponse.BenefitComponent> Benefit
       {
-        get => _Benefit ?? new List<Hl7.Fhir.Model.CoverageEligibilityResponse.BenefitComponent>();
+        get => _Benefit ??= [];
         set { _Benefit = value; OnPropertyChanged("Benefit"); }
       }
 
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AuthorizationSupporting
       {
-        get => _AuthorizationSupporting ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _AuthorizationSupporting ??= [];
         set { _AuthorizationSupporting = value; OnPropertyChanged("AuthorizationSupporting"); }
       }
 
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1022,7 +1022,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>> PurposeElement
     {
-      get => _PurposeElement ?? new List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>>();
+      get => _PurposeElement ??= [];
       set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
     }
 
@@ -1220,7 +1220,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityResponse.InsuranceComponent> Insurance
     {
-      get => _Insurance ?? new List<Hl7.Fhir.Model.CoverageEligibilityResponse.InsuranceComponent>();
+      get => _Insurance ??= [];
       set { _Insurance = value; OnPropertyChanged("Insurance"); }
     }
 
@@ -1276,7 +1276,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent> Error
     {
-      get => _Error ?? new List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent>();
+      get => _Error ??= [];
       set { _Error = value; OnPropertyChanged("Error"); }
     }
 

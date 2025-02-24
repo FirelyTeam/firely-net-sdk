@@ -768,7 +768,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1024,7 +1024,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1066,7 +1066,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1081,7 +1081,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1236,7 +1236,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> DefinitionElement
     {
-      get => _DefinitionElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _DefinitionElement ??= [];
       set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
     }
 
@@ -1268,7 +1268,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ConditionDefinition.ObservationComponent> Observation
     {
-      get => _Observation ?? new List<Hl7.Fhir.Model.ConditionDefinition.ObservationComponent>();
+      get => _Observation ??= [];
       set { _Observation = value; OnPropertyChanged("Observation"); }
     }
 
@@ -1282,7 +1282,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ConditionDefinition.MedicationComponent> Medication
     {
-      get => _Medication ?? new List<Hl7.Fhir.Model.ConditionDefinition.MedicationComponent>();
+      get => _Medication ??= [];
       set { _Medication = value; OnPropertyChanged("Medication"); }
     }
 
@@ -1296,7 +1296,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ConditionDefinition.PreconditionComponent> Precondition
     {
-      get => _Precondition ?? new List<Hl7.Fhir.Model.ConditionDefinition.PreconditionComponent>();
+      get => _Precondition ??= [];
       set { _Precondition = value; OnPropertyChanged("Precondition"); }
     }
 
@@ -1312,7 +1312,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Team
     {
-      get => _Team ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Team ??= [];
       set { _Team = value; OnPropertyChanged("Team"); }
     }
 
@@ -1326,7 +1326,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ConditionDefinition.QuestionnaireComponent> Questionnaire
     {
-      get => _Questionnaire ?? new List<Hl7.Fhir.Model.ConditionDefinition.QuestionnaireComponent>();
+      get => _Questionnaire ??= [];
       set { _Questionnaire = value; OnPropertyChanged("Questionnaire"); }
     }
 
@@ -1340,7 +1340,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ConditionDefinition.PlanComponent> Plan
     {
-      get => _Plan ?? new List<Hl7.Fhir.Model.ConditionDefinition.PlanComponent>();
+      get => _Plan ??= [];
       set { _Plan = value; OnPropertyChanged("Plan"); }
     }
 

@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
-      get => _PartOf ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _PartOf ??= [];
       set { _PartOf = value; OnPropertyChanged("PartOf"); }
     }
 
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Receiver
     {
-      get => _Receiver ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Receiver ??= [];
       set { _Receiver = value; OnPropertyChanged("Receiver"); }
     }
 

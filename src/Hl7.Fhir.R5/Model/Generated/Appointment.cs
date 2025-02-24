@@ -3052,7 +3052,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -3351,7 +3351,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Date> OccurrenceDateElement
       {
-        get => _OccurrenceDateElement ?? new List<Hl7.Fhir.Model.Date>();
+        get => _OccurrenceDateElement ??= [];
         set { _OccurrenceDateElement = value; OnPropertyChanged("OccurrenceDateElement"); }
       }
 
@@ -3422,7 +3422,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Date> ExcludingDateElement
       {
-        get => _ExcludingDateElement ?? new List<Hl7.Fhir.Model.Date>();
+        get => _ExcludingDateElement ??= [];
         set { _ExcludingDateElement = value; OnPropertyChanged("ExcludingDateElement"); }
       }
 
@@ -3454,7 +3454,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> ExcludingRecurrenceIdElement
       {
-        get => _ExcludingRecurrenceIdElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _ExcludingRecurrenceIdElement ??= [];
         set { _ExcludingRecurrenceIdElement = value; OnPropertyChanged("ExcludingRecurrenceIdElement"); }
       }
 
@@ -4278,7 +4278,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -4338,7 +4338,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Class
     {
-      get => _Class ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Class ??= [];
       set { _Class = value; OnPropertyChanged("Class"); }
     }
 
@@ -4353,7 +4353,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
     {
-      get => _ServiceCategory ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _ServiceCategory ??= [];
       set { _ServiceCategory = value; OnPropertyChanged("ServiceCategory"); }
     }
 
@@ -4368,7 +4368,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
     {
-      get => _ServiceType ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _ServiceType ??= [];
       set { _ServiceType = value; OnPropertyChanged("ServiceType"); }
     }
 
@@ -4383,7 +4383,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
-      get => _Specialty ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Specialty ??= [];
       set { _Specialty = value; OnPropertyChanged("Specialty"); }
     }
 
@@ -4412,7 +4412,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Reason ??= [];
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
@@ -4470,7 +4470,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
     {
-      get => _Replaces ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Replaces ??= [];
       set { _Replaces = value; OnPropertyChanged("Replaces"); }
     }
 
@@ -4484,7 +4484,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.VirtualServiceDetail> VirtualService
     {
-      get => _VirtualService ?? new List<Hl7.Fhir.Model.VirtualServiceDetail>();
+      get => _VirtualService ??= [];
       set { _VirtualService = value; OnPropertyChanged("VirtualService"); }
     }
 
@@ -4500,7 +4500,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
-      get => _SupportingInformation ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _SupportingInformation ??= [];
       set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
     }
 
@@ -4628,7 +4628,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Period> RequestedPeriod
     {
-      get => _RequestedPeriod ?? new List<Hl7.Fhir.Model.Period>();
+      get => _RequestedPeriod ??= [];
       set { _RequestedPeriod = value; OnPropertyChanged("RequestedPeriod"); }
     }
 
@@ -4644,7 +4644,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Slot
     {
-      get => _Slot ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Slot ??= [];
       set { _Slot = value; OnPropertyChanged("Slot"); }
     }
 
@@ -4660,7 +4660,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Account
     {
-      get => _Account ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Account ??= [];
       set { _Account = value; OnPropertyChanged("Account"); }
     }
 
@@ -4730,7 +4730,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -4744,7 +4744,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> PatientInstruction
     {
-      get => _PatientInstruction ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _PatientInstruction ??= [];
       set { _PatientInstruction = value; OnPropertyChanged("PatientInstruction"); }
     }
 
@@ -4760,7 +4760,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -4789,7 +4789,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Appointment.ParticipantComponent> Participant
     {
-      get => _Participant ?? new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>();
+      get => _Participant ??= [];
       set { _Participant = value; OnPropertyChanged("Participant"); }
     }
 
@@ -4859,7 +4859,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent> RecurrenceTemplate
     {
-      get => _RecurrenceTemplate ?? new List<Hl7.Fhir.Model.Appointment.RecurrenceTemplateComponent>();
+      get => _RecurrenceTemplate ??= [];
       set { _RecurrenceTemplate = value; OnPropertyChanged("RecurrenceTemplate"); }
     }
 

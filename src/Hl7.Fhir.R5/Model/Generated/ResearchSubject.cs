@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent> Progress
     {
-      get => _Progress ?? new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>();
+      get => _Progress ??= [];
       set { _Progress = value; OnPropertyChanged("Progress"); }
     }
 
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Consent
     {
-      get => _Consent ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Consent ??= [];
       set { _Consent = value; OnPropertyChanged("Consent"); }
     }
 

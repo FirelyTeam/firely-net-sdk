@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Medication.ContentComponent> Content
       {
-        get => _Content ?? new List<Hl7.Fhir.Model.Medication.ContentComponent>();
+        get => _Content ??= [];
         set { _Content = value; OnPropertyChanged("Content"); }
       }
 
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Medication.BatchComponent> Batch
       {
-        get => _Batch ?? new List<Hl7.Fhir.Model.Medication.BatchComponent>();
+        get => _Batch ??= [];
         set { _Batch = value; OnPropertyChanged("Batch"); }
       }
 
@@ -776,7 +776,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Medication.IngredientComponent> Ingredient
     {
-      get => _Ingredient ?? new List<Hl7.Fhir.Model.Medication.IngredientComponent>();
+      get => _Ingredient ??= [];
       set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
     }
 
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
-      get => _Image ?? new List<Hl7.Fhir.Model.Attachment>();
+      get => _Image ??= [];
       set { _Image = value; OnPropertyChanged("Image"); }
     }
 

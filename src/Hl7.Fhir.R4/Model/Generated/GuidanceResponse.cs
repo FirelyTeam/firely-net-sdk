@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
     {
-      get => _ReasonCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _ReasonCode ??= [];
       set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
     }
 
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
     {
-      get => _ReasonReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ReasonReference ??= [];
       set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
     }
 
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> EvaluationMessage
     {
-      get => _EvaluationMessage ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _EvaluationMessage ??= [];
       set { _EvaluationMessage = value; OnPropertyChanged("EvaluationMessage"); }
     }
 
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement> DataRequirement
     {
-      get => _DataRequirement ?? new List<Hl7.Fhir.Model.DataRequirement>();
+      get => _DataRequirement ??= [];
       set { _DataRequirement = value; OnPropertyChanged("DataRequirement"); }
     }
 

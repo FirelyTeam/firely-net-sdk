@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUrl> AdditionalInfoElement
     {
-      get => _AdditionalInfoElement ?? new List<Hl7.Fhir.Model.FhirUrl>();
+      get => _AdditionalInfoElement ??= [];
       set { _AdditionalInfoElement = value; OnPropertyChanged("AdditionalInfoElement"); }
     }
 

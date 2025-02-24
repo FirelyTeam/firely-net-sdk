@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProduct.NamePartComponent> NamePart
       {
-        get => _NamePart ?? new List<Hl7.Fhir.Model.MedicinalProduct.NamePartComponent>();
+        get => _NamePart ??= [];
         set { _NamePart = value; OnPropertyChanged("NamePart"); }
       }
 
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProduct.CountryLanguageComponent> CountryLanguage
       {
-        get => _CountryLanguage ?? new List<Hl7.Fhir.Model.MedicinalProduct.CountryLanguageComponent>();
+        get => _CountryLanguage ??= [];
         set { _CountryLanguage = value; OnPropertyChanged("CountryLanguage"); }
       }
 
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
       {
-        get => _Manufacturer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Manufacturer ??= [];
         set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
       }
 
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
@@ -930,7 +930,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1009,7 +1009,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> SpecialMeasuresElement
     {
-      get => _SpecialMeasuresElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _SpecialMeasuresElement ??= [];
       set { _SpecialMeasuresElement = value; OnPropertyChanged("SpecialMeasuresElement"); }
     }
 
@@ -1054,7 +1054,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ProductClassification
     {
-      get => _ProductClassification ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _ProductClassification ??= [];
       set { _ProductClassification = value; OnPropertyChanged("ProductClassification"); }
     }
 
@@ -1068,7 +1068,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
-      get => _MarketingStatus ?? new List<Hl7.Fhir.Model.MarketingStatus>();
+      get => _MarketingStatus ??= [];
       set { _MarketingStatus = value; OnPropertyChanged("MarketingStatus"); }
     }
 
@@ -1084,7 +1084,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PharmaceuticalProduct
     {
-      get => _PharmaceuticalProduct ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _PharmaceuticalProduct ??= [];
       set { _PharmaceuticalProduct = value; OnPropertyChanged("PharmaceuticalProduct"); }
     }
 
@@ -1100,7 +1100,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PackagedMedicinalProduct
     {
-      get => _PackagedMedicinalProduct ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _PackagedMedicinalProduct ??= [];
       set { _PackagedMedicinalProduct = value; OnPropertyChanged("PackagedMedicinalProduct"); }
     }
 
@@ -1116,7 +1116,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> AttachedDocument
     {
-      get => _AttachedDocument ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _AttachedDocument ??= [];
       set { _AttachedDocument = value; OnPropertyChanged("AttachedDocument"); }
     }
 
@@ -1132,7 +1132,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> MasterFile
     {
-      get => _MasterFile ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _MasterFile ??= [];
       set { _MasterFile = value; OnPropertyChanged("MasterFile"); }
     }
 
@@ -1148,7 +1148,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1164,7 +1164,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ClinicalTrial
     {
-      get => _ClinicalTrial ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ClinicalTrial ??= [];
       set { _ClinicalTrial = value; OnPropertyChanged("ClinicalTrial"); }
     }
 
@@ -1178,7 +1178,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProduct.NameComponent> Name
     {
-      get => _Name ?? new List<Hl7.Fhir.Model.MedicinalProduct.NameComponent>();
+      get => _Name ??= [];
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
@@ -1192,7 +1192,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> CrossReference
     {
-      get => _CrossReference ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _CrossReference ??= [];
       set { _CrossReference = value; OnPropertyChanged("CrossReference"); }
     }
 
@@ -1206,7 +1206,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProduct.ManufacturingBusinessOperationComponent> ManufacturingBusinessOperation
     {
-      get => _ManufacturingBusinessOperation ?? new List<Hl7.Fhir.Model.MedicinalProduct.ManufacturingBusinessOperationComponent>();
+      get => _ManufacturingBusinessOperation ??= [];
       set { _ManufacturingBusinessOperation = value; OnPropertyChanged("ManufacturingBusinessOperation"); }
     }
 
@@ -1220,7 +1220,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProduct.SpecialDesignationComponent> SpecialDesignation
     {
-      get => _SpecialDesignation ?? new List<Hl7.Fhir.Model.MedicinalProduct.SpecialDesignationComponent>();
+      get => _SpecialDesignation ??= [];
       set { _SpecialDesignation = value; OnPropertyChanged("SpecialDesignation"); }
     }
 

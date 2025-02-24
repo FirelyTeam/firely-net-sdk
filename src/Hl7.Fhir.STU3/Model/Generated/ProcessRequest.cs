@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent> Item
     {
-      get => _Item ?? new List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent>();
+      get => _Item ??= [];
       set { _Item = value; OnPropertyChanged("Item"); }
     }
 
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> IncludeElement
     {
-      get => _IncludeElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _IncludeElement ??= [];
       set { _IncludeElement = value; OnPropertyChanged("IncludeElement"); }
     }
 
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ExcludeElement
     {
-      get => _ExcludeElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _ExcludeElement ??= [];
       set { _ExcludeElement = value; OnPropertyChanged("ExcludeElement"); }
     }
 

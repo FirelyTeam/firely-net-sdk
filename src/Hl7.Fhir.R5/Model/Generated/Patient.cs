@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Relationship
       {
-        get => _Relationship ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Relationship ??= [];
         set { _Relationship = value; OnPropertyChanged("Relationship"); }
       }
 
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ContactPoint> Telecom
       {
-        get => _Telecom ?? new List<Hl7.Fhir.Model.ContactPoint>();
+        get => _Telecom ??= [];
         set { _Telecom = value; OnPropertyChanged("Telecom"); }
       }
 
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.HumanName> Name
     {
-      get => _Name ?? new List<Hl7.Fhir.Model.HumanName>();
+      get => _Name ??= [];
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
-      get => _Telecom ?? new List<Hl7.Fhir.Model.ContactPoint>();
+      get => _Telecom ??= [];
       set { _Telecom = value; OnPropertyChanged("Telecom"); }
     }
 
@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Address> Address
     {
-      get => _Address ?? new List<Hl7.Fhir.Model.Address>();
+      get => _Address ??= [];
       set { _Address = value; OnPropertyChanged("Address"); }
     }
 
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Photo
     {
-      get => _Photo ?? new List<Hl7.Fhir.Model.Attachment>();
+      get => _Photo ??= [];
       set { _Photo = value; OnPropertyChanged("Photo"); }
     }
 
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Patient.ContactComponent> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.Patient.ContactComponent>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Patient.CommunicationComponent> Communication
     {
-      get => _Communication ?? new List<Hl7.Fhir.Model.Patient.CommunicationComponent>();
+      get => _Communication ??= [];
       set { _Communication = value; OnPropertyChanged("Communication"); }
     }
 
@@ -840,7 +840,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> GeneralPractitioner
     {
-      get => _GeneralPractitioner ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _GeneralPractitioner ??= [];
       set { _GeneralPractitioner = value; OnPropertyChanged("GeneralPractitioner"); }
     }
 
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Patient.LinkComponent> Link
     {
-      get => _Link ?? new List<Hl7.Fhir.Model.Patient.LinkComponent>();
+      get => _Link ??= [];
       set { _Link = value; OnPropertyChanged("Link"); }
     }
 

@@ -1083,7 +1083,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1138,7 +1138,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Device.UdiCarrierComponent> UdiCarrier
     {
-      get => _UdiCarrier ?? new List<Hl7.Fhir.Model.Device.UdiCarrierComponent>();
+      get => _UdiCarrier ??= [];
       set { _UdiCarrier = value; OnPropertyChanged("UdiCarrier"); }
     }
 
@@ -1349,7 +1349,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Device.NameComponent> Name
     {
-      get => _Name ?? new List<Hl7.Fhir.Model.Device.NameComponent>();
+      get => _Name ??= [];
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
@@ -1420,7 +1420,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1435,7 +1435,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
@@ -1449,7 +1449,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Device.VersionComponent> Version
     {
-      get => _Version ?? new List<Hl7.Fhir.Model.Device.VersionComponent>();
+      get => _Version ??= [];
       set { _Version = value; OnPropertyChanged("Version"); }
     }
 
@@ -1463,7 +1463,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Device.ConformsToComponent> ConformsTo
     {
-      get => _ConformsTo ?? new List<Hl7.Fhir.Model.Device.ConformsToComponent>();
+      get => _ConformsTo ??= [];
       set { _ConformsTo = value; OnPropertyChanged("ConformsTo"); }
     }
 
@@ -1477,7 +1477,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Device.PropertyComponent> Property
     {
-      get => _Property ?? new List<Hl7.Fhir.Model.Device.PropertyComponent>();
+      get => _Property ??= [];
       set { _Property = value; OnPropertyChanged("Property"); }
     }
 
@@ -1546,7 +1546,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactPoint>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1605,7 +1605,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
-      get => _Endpoint ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Endpoint ??= [];
       set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
     }
 
@@ -1619,7 +1619,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Gateway
     {
-      get => _Gateway ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Gateway ??= [];
       set { _Gateway = value; OnPropertyChanged("Gateway"); }
     }
 
@@ -1633,7 +1633,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -1648,7 +1648,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Safety
     {
-      get => _Safety ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Safety ??= [];
       set { _Safety = value; OnPropertyChanged("Safety"); }
     }
 

@@ -555,7 +555,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
       {
-        get => _TargetDisease ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _TargetDisease ??= [];
         set { _TargetDisease = value; OnPropertyChanged("TargetDisease"); }
       }
 
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -739,7 +739,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -928,7 +928,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
-      get => _SupportingInformation ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _SupportingInformation ??= [];
       set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
     }
 
@@ -1056,7 +1056,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Immunization.PerformerComponent> Performer
     {
-      get => _Performer ?? new List<Hl7.Fhir.Model.Immunization.PerformerComponent>();
+      get => _Performer ??= [];
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
@@ -1070,7 +1070,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -1085,7 +1085,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Reason ??= [];
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SubpotentReason
     {
-      get => _SubpotentReason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _SubpotentReason ??= [];
       set { _SubpotentReason = value; OnPropertyChanged("SubpotentReason"); }
     }
 
@@ -1142,7 +1142,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Immunization.ProgramEligibilityComponent> ProgramEligibility
     {
-      get => _ProgramEligibility ?? new List<Hl7.Fhir.Model.Immunization.ProgramEligibilityComponent>();
+      get => _ProgramEligibility ??= [];
       set { _ProgramEligibility = value; OnPropertyChanged("ProgramEligibility"); }
     }
 
@@ -1170,7 +1170,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Immunization.ReactionComponent> Reaction
     {
-      get => _Reaction ?? new List<Hl7.Fhir.Model.Immunization.ReactionComponent>();
+      get => _Reaction ??= [];
       set { _Reaction = value; OnPropertyChanged("Reaction"); }
     }
 
@@ -1184,7 +1184,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent> ProtocolApplied
     {
-      get => _ProtocolApplied ?? new List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent>();
+      get => _ProtocolApplied ??= [];
       set { _ProtocolApplied = value; OnPropertyChanged("ProtocolApplied"); }
     }
 

@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> CommunicationMethod
       {
-        get => _CommunicationMethod ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _CommunicationMethod ??= [];
         set { _CommunicationMethod = value; OnPropertyChanged("CommunicationMethod"); }
       }
 
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PushTypeAvailable
       {
-        get => _PushTypeAvailable ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _PushTypeAvailable ??= [];
         set { _PushTypeAvailable = value; OnPropertyChanged("PushTypeAvailable"); }
       }
 
@@ -805,7 +805,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Target
     {
-      get => _Target ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Target ??= [];
       set { _Target = value; OnPropertyChanged("Target"); }
     }
 
@@ -819,7 +819,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> TargetLocationElement
     {
-      get => _TargetLocationElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _TargetLocationElement ??= [];
       set { _TargetLocationElement = value; OnPropertyChanged("TargetLocationElement"); }
     }
 
@@ -939,7 +939,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ValidationProcess
     {
-      get => _ValidationProcess ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _ValidationProcess ??= [];
       set { _ValidationProcess = value; OnPropertyChanged("ValidationProcess"); }
     }
 
@@ -1036,7 +1036,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent> PrimarySource
     {
-      get => _PrimarySource ?? new List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>();
+      get => _PrimarySource ??= [];
       set { _PrimarySource = value; OnPropertyChanged("PrimarySource"); }
     }
 
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent> Validator
     {
-      get => _Validator ?? new List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>();
+      get => _Validator ??= [];
       set { _Validator = value; OnPropertyChanged("Validator"); }
     }
 

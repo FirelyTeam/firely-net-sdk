@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>> ModeElement
       {
-        get => _ModeElement ?? new List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>();
+        get => _ModeElement ??= [];
         set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
       }
 
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
-        get => _Code ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Code ??= [];
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Detail
       {
-        get => _Detail ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Detail ??= [];
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
@@ -733,7 +733,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Entry
       {
-        get => _Entry ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Entry ??= [];
         set { _Entry = value; OnPropertyChanged("Entry"); }
       }
 
@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
       {
-        get => _Section ?? new List<Hl7.Fhir.Model.Composition.SectionComponent>();
+        get => _Section ??= [];
         set { _Section = value; OnPropertyChanged("Section"); }
       }
 
@@ -1034,7 +1034,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Author
     {
-      get => _Author ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Author ??= [];
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
@@ -1107,7 +1107,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.AttesterComponent> Attester
     {
-      get => _Attester ?? new List<Hl7.Fhir.Model.Composition.AttesterComponent>();
+      get => _Attester ??= [];
       set { _Attester = value; OnPropertyChanged("Attester"); }
     }
 
@@ -1136,7 +1136,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.RelatesToComponent> RelatesTo
     {
-      get => _RelatesTo ?? new List<Hl7.Fhir.Model.Composition.RelatesToComponent>();
+      get => _RelatesTo ??= [];
       set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
     }
 
@@ -1150,7 +1150,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.EventComponent> Event
     {
-      get => _Event ?? new List<Hl7.Fhir.Model.Composition.EventComponent>();
+      get => _Event ??= [];
       set { _Event = value; OnPropertyChanged("Event"); }
     }
 
@@ -1164,7 +1164,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
     {
-      get => _Section ?? new List<Hl7.Fhir.Model.Composition.SectionComponent>();
+      get => _Section ??= [];
       set { _Section = value; OnPropertyChanged("Section"); }
     }
 

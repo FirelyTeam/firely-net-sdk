@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
-      get => _Extension ?? new List<Hl7.Fhir.Model.Extension>();
+      get => _Extension ??= [];
       set { _Extension = value; OnPropertyChanged("Extension"); }
     }
 

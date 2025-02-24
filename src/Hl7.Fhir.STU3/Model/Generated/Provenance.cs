@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
-        get => _Role ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Role ??= [];
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent
       {
-        get => _Agent ?? new List<Hl7.Fhir.Model.Provenance.AgentComponent>();
+        get => _Agent ??= [];
         set { _Agent = value; OnPropertyChanged("Agent"); }
       }
 
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Target
     {
-      get => _Target ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Target ??= [];
       set { _Target = value; OnPropertyChanged("Target"); }
     }
 
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> PolicyElement
     {
-      get => _PolicyElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _PolicyElement ??= [];
       set { _PolicyElement = value; OnPropertyChanged("PolicyElement"); }
     }
 
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Reason
     {
-      get => _Reason ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _Reason ??= [];
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent
     {
-      get => _Agent ?? new List<Hl7.Fhir.Model.Provenance.AgentComponent>();
+      get => _Agent ??= [];
       set { _Agent = value; OnPropertyChanged("Agent"); }
     }
 
@@ -583,7 +583,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Provenance.EntityComponent> Entity
     {
-      get => _Entity ?? new List<Hl7.Fhir.Model.Provenance.EntityComponent>();
+      get => _Entity ??= [];
       set { _Entity = value; OnPropertyChanged("Entity"); }
     }
 
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Signature> Signature
     {
-      get => _Signature ?? new List<Hl7.Fhir.Model.Signature>();
+      get => _Signature ??= [];
       set { _Signature = value; OnPropertyChanged("Signature"); }
     }
 

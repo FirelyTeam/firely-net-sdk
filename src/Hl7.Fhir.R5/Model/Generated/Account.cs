@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PackageCode
       {
-        get => _PackageCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _PackageCode ??= [];
         set { _PackageCode = value; OnPropertyChanged("PackageCode"); }
       }
 
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -747,7 +747,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PackageCode
       {
-        get => _PackageCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _PackageCode ??= [];
         set { _PackageCode = value; OnPropertyChanged("PackageCode"); }
       }
 
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Device
       {
-        get => _Device ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Device ??= [];
         set { _Device = value; OnPropertyChanged("Device"); }
       }
 
@@ -1171,7 +1171,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1274,7 +1274,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get => _Subject ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
@@ -1301,7 +1301,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Account.CoverageComponent> Coverage
     {
-      get => _Coverage ?? new List<Hl7.Fhir.Model.Account.CoverageComponent>();
+      get => _Coverage ??= [];
       set { _Coverage = value; OnPropertyChanged("Coverage"); }
     }
 
@@ -1358,7 +1358,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Account.GuarantorComponent> Guarantor
     {
-      get => _Guarantor ?? new List<Hl7.Fhir.Model.Account.GuarantorComponent>();
+      get => _Guarantor ??= [];
       set { _Guarantor = value; OnPropertyChanged("Guarantor"); }
     }
 
@@ -1372,7 +1372,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Account.DiagnosisComponent> Diagnosis
     {
-      get => _Diagnosis ?? new List<Hl7.Fhir.Model.Account.DiagnosisComponent>();
+      get => _Diagnosis ??= [];
       set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
     }
 
@@ -1386,7 +1386,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Account.ProcedureComponent> Procedure
     {
-      get => _Procedure ?? new List<Hl7.Fhir.Model.Account.ProcedureComponent>();
+      get => _Procedure ??= [];
       set { _Procedure = value; OnPropertyChanged("Procedure"); }
     }
 
@@ -1400,7 +1400,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Account.RelatedAccountComponent> RelatedAccount
     {
-      get => _RelatedAccount ?? new List<Hl7.Fhir.Model.Account.RelatedAccountComponent>();
+      get => _RelatedAccount ??= [];
       set { _RelatedAccount = value; OnPropertyChanged("RelatedAccount"); }
     }
 
@@ -1428,7 +1428,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Account.BalanceComponent> Balance
     {
-      get => _Balance ?? new List<Hl7.Fhir.Model.Account.BalanceComponent>();
+      get => _Balance ??= [];
       set { _Balance = value; OnPropertyChanged("Balance"); }
     }
 

@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent> Detail
     {
-      get => _Detail ?? new List<Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent>();
+      get => _Detail ??= [];
       set { _Detail = value; OnPropertyChanged("Detail"); }
     }
 
@@ -673,7 +673,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> ProcessNote
     {
-      get => _ProcessNote ?? new List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent>();
+      get => _ProcessNote ??= [];
       set { _ProcessNote = value; OnPropertyChanged("ProcessNote"); }
     }
 

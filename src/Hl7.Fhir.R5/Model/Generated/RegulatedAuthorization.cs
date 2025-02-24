@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent> Application
       {
-        get => _Application ?? new List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>();
+        get => _Application ??= [];
         set { _Application = value; OnPropertyChanged("Application"); }
       }
 
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get => _Subject ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Region
     {
-      get => _Region ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Region ??= [];
       set { _Region = value; OnPropertyChanged("Region"); }
     }
 
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Indication
     {
-      get => _Indication ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Indication ??= [];
       set { _Indication = value; OnPropertyChanged("Indication"); }
     }
 
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Basis
     {
-      get => _Basis ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Basis ??= [];
       set { _Basis = value; OnPropertyChanged("Basis"); }
     }
 
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> AttachedDocument
     {
-      get => _AttachedDocument ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _AttachedDocument ??= [];
       set { _AttachedDocument = value; OnPropertyChanged("AttachedDocument"); }
     }
 

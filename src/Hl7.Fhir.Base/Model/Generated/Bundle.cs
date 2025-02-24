@@ -1133,7 +1133,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
       {
-        get => _Link ?? new List<Hl7.Fhir.Model.Bundle.LinkComponent>();
+        get => _Link ??= [];
         set { _Link = value; OnPropertyChanged("Link"); }
       }
 
@@ -2117,7 +2117,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
     {
-      get => _Link ?? new List<Hl7.Fhir.Model.Bundle.LinkComponent>();
+      get => _Link ??= [];
       set { _Link = value; OnPropertyChanged("Link"); }
     }
 
@@ -2131,7 +2131,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Bundle.EntryComponent> Entry
     {
-      get => _Entry ?? new List<Hl7.Fhir.Model.Bundle.EntryComponent>();
+      get => _Entry ??= [];
       set { _Entry = value; OnPropertyChanged("Entry"); }
     }
 

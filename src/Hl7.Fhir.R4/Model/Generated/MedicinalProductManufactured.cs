@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get => _Manufacturer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Manufacturer ??= [];
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Ingredient
     {
-      get => _Ingredient ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Ingredient ??= [];
       set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
     }
 
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OtherCharacteristics
     {
-      get => _OtherCharacteristics ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _OtherCharacteristics ??= [];
       set { _OtherCharacteristics = value; OnPropertyChanged("OtherCharacteristics"); }
     }
 

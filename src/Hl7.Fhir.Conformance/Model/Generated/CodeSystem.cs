@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FilterOperator>> OperatorElement
       {
-        get => _OperatorElement ?? new List<Code<Hl7.Fhir.Model.FilterOperator>>();
+        get => _OperatorElement ??= [];
         set { _OperatorElement = value; OnPropertyChanged("OperatorElement"); }
       }
 
@@ -704,7 +704,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeSystem.DesignationComponent> Designation
       {
-        get => _Designation ?? new List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>();
+        get => _Designation ??= [];
         set { _Designation = value; OnPropertyChanged("Designation"); }
       }
 
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent> Property
       {
-        get => _Property ?? new List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>();
+        get => _Property ??= [];
         set { _Property = value; OnPropertyChanged("Property"); }
       }
 
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> Concept
       {
-        get => _Concept ?? new List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>();
+        get => _Concept ??= [];
         set { _Concept = value; OnPropertyChanged("Concept"); }
       }
 
@@ -916,7 +916,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> AdditionalUse
       {
-        get => _AdditionalUse ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _AdditionalUse ??= [];
         set { _AdditionalUse = value; OnPropertyChanged("AdditionalUse"); }
       }
 
@@ -1206,7 +1206,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1437,7 +1437,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1479,7 +1479,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1494,7 +1494,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1677,7 +1677,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
-      get => _Topic ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Topic ??= [];
       set { _Topic = value; OnPropertyChanged("Topic"); }
     }
 
@@ -1694,7 +1694,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
-      get => _Author ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Author ??= [];
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
@@ -1711,7 +1711,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
-      get => _Editor ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Editor ??= [];
       set { _Editor = value; OnPropertyChanged("Editor"); }
     }
 
@@ -1728,7 +1728,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
-      get => _Reviewer ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Reviewer ??= [];
       set { _Reviewer = value; OnPropertyChanged("Reviewer"); }
     }
 
@@ -1745,7 +1745,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
-      get => _Endorser ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Endorser ??= [];
       set { _Endorser = value; OnPropertyChanged("Endorser"); }
     }
 
@@ -1762,7 +1762,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
-      get => _RelatedArtifact ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+      get => _RelatedArtifact ??= [];
       set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
     }
 
@@ -2005,7 +2005,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeSystem.FilterComponent> Filter
     {
-      get => _Filter ?? new List<Hl7.Fhir.Model.CodeSystem.FilterComponent>();
+      get => _Filter ??= [];
       set { _Filter = value; OnPropertyChanged("Filter"); }
     }
 
@@ -2019,7 +2019,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeSystem.PropertyComponent> Property
     {
-      get => _Property ?? new List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>();
+      get => _Property ??= [];
       set { _Property = value; OnPropertyChanged("Property"); }
     }
 
@@ -2033,7 +2033,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> Concept
     {
-      get => _Concept ?? new List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>();
+      get => _Concept ??= [];
       set { _Concept = value; OnPropertyChanged("Concept"); }
     }
 

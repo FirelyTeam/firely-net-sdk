@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent> BodyLandmarkOrientation
       {
-        get => _BodyLandmarkOrientation ?? new List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>();
+        get => _BodyLandmarkOrientation ??= [];
         set { _BodyLandmarkOrientation = value; OnPropertyChanged("BodyLandmarkOrientation"); }
       }
 
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> SpatialReference
       {
-        get => _SpatialReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _SpatialReference ??= [];
         set { _SpatialReference = value; OnPropertyChanged("SpatialReference"); }
       }
 
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
       {
-        get => _Qualifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Qualifier ??= [];
         set { _Qualifier = value; OnPropertyChanged("Qualifier"); }
       }
 
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> LandmarkDescription
       {
-        get => _LandmarkDescription ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _LandmarkDescription ??= [];
         set { _LandmarkDescription = value; OnPropertyChanged("LandmarkDescription"); }
       }
 
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ClockFacePosition
       {
-        get => _ClockFacePosition ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ClockFacePosition ??= [];
         set { _ClockFacePosition = value; OnPropertyChanged("ClockFacePosition"); }
       }
 
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent> DistanceFromLandmark
       {
-        get => _DistanceFromLandmark ?? new List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>();
+        get => _DistanceFromLandmark ??= [];
         set { _DistanceFromLandmark = value; OnPropertyChanged("DistanceFromLandmark"); }
       }
 
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SurfaceOrientation
       {
-        get => _SurfaceOrientation ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _SurfaceOrientation ??= [];
         set { _SurfaceOrientation = value; OnPropertyChanged("SurfaceOrientation"); }
       }
 
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Device
       {
-        get => _Device ?? new List<Hl7.Fhir.Model.CodeableReference>();
+        get => _Device ??= [];
         set { _Device = value; OnPropertyChanged("Device"); }
       }
 
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Quantity> Value
       {
-        get => _Value ?? new List<Hl7.Fhir.Model.Quantity>();
+        get => _Value ??= [];
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> IncludedStructure
     {
-      get => _IncludedStructure ?? new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>();
+      get => _IncludedStructure ??= [];
       set { _IncludedStructure = value; OnPropertyChanged("IncludedStructure"); }
     }
 
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> ExcludedStructure
     {
-      get => _ExcludedStructure ?? new List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>();
+      get => _ExcludedStructure ??= [];
       set { _ExcludedStructure = value; OnPropertyChanged("ExcludedStructure"); }
     }
 
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
-      get => _Image ?? new List<Hl7.Fhir.Model.Attachment>();
+      get => _Image ??= [];
       set { _Image = value; OnPropertyChanged("Image"); }
     }
 

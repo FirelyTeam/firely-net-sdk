@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get => _Manufacturer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Manufacturer ??= [];
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
     {
-      get => _Ingredient ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Ingredient ??= [];
       set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
     }
 
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> Property
     {
-      get => _Property ?? new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>();
+      get => _Property ??= [];
       set { _Property = value; OnPropertyChanged("Property"); }
     }
 

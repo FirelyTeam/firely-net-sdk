@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Item
       {
-        get => _Item ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Item ??= [];
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Problem
     {
-      get => _Problem ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Problem ??= [];
       set { _Problem = value; OnPropertyChanged("Problem"); }
     }
 
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ClinicalImpression.InvestigationComponent> Investigation
     {
-      get => _Investigation ?? new List<Hl7.Fhir.Model.ClinicalImpression.InvestigationComponent>();
+      get => _Investigation ??= [];
       set { _Investigation = value; OnPropertyChanged("Investigation"); }
     }
 
@@ -568,7 +568,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> ProtocolElement
     {
-      get => _ProtocolElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _ProtocolElement ??= [];
       set { _ProtocolElement = value; OnPropertyChanged("ProtocolElement"); }
     }
 
@@ -628,7 +628,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ClinicalImpression.FindingComponent> Finding
     {
-      get => _Finding ?? new List<Hl7.Fhir.Model.ClinicalImpression.FindingComponent>();
+      get => _Finding ??= [];
       set { _Finding = value; OnPropertyChanged("Finding"); }
     }
 
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PrognosisCodeableConcept
     {
-      get => _PrognosisCodeableConcept ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _PrognosisCodeableConcept ??= [];
       set { _PrognosisCodeableConcept = value; OnPropertyChanged("PrognosisCodeableConcept"); }
     }
 
@@ -659,7 +659,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PrognosisReference
     {
-      get => _PrognosisReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _PrognosisReference ??= [];
       set { _PrognosisReference = value; OnPropertyChanged("PrognosisReference"); }
     }
 
@@ -675,7 +675,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Action
     {
-      get => _Action ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Action ??= [];
       set { _Action = value; OnPropertyChanged("Action"); }
     }
 
@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 

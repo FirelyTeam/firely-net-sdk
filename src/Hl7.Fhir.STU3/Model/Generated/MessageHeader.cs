@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination
     {
-      get => _Destination ?? new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>();
+      get => _Destination ??= [];
       set { _Destination = value; OnPropertyChanged("Destination"); }
     }
 
@@ -851,7 +851,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Focus
     {
-      get => _Focus ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Focus ??= [];
       set { _Focus = value; OnPropertyChanged("Focus"); }
     }
 

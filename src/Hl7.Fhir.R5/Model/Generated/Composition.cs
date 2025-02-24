@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Detail
       {
-        get => _Detail ?? new List<Hl7.Fhir.Model.CodeableReference>();
+        get => _Detail ??= [];
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Author
       {
-        get => _Author ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Author ??= [];
         set { _Author = value; OnPropertyChanged("Author"); }
       }
 
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Entry
       {
-        get => _Entry ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Entry ??= [];
         set { _Entry = value; OnPropertyChanged("Entry"); }
       }
 
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
       {
-        get => _Section ?? new List<Hl7.Fhir.Model.Composition.SectionComponent>();
+        get => _Section ??= [];
         set { _Section = value; OnPropertyChanged("Section"); }
       }
 
@@ -661,7 +661,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -766,7 +766,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get => _Subject ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -840,7 +840,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Author
     {
-      get => _Author ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Author ??= [];
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
@@ -911,7 +911,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -925,7 +925,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.AttesterComponent> Attester
     {
-      get => _Attester ?? new List<Hl7.Fhir.Model.Composition.AttesterComponent>();
+      get => _Attester ??= [];
       set { _Attester = value; OnPropertyChanged("Attester"); }
     }
 
@@ -954,7 +954,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatesTo
     {
-      get => _RelatesTo ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+      get => _RelatesTo ??= [];
       set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
     }
 
@@ -968,7 +968,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.EventComponent> Event
     {
-      get => _Event ?? new List<Hl7.Fhir.Model.Composition.EventComponent>();
+      get => _Event ??= [];
       set { _Event = value; OnPropertyChanged("Event"); }
     }
 
@@ -982,7 +982,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
     {
-      get => _Section ?? new List<Hl7.Fhir.Model.Composition.SectionComponent>();
+      get => _Section ??= [];
       set { _Section = value; OnPropertyChanged("Section"); }
     }
 

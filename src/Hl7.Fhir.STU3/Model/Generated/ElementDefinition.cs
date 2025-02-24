@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent> Discriminator
       {
-        get => _Discriminator ?? new List<Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent>();
+        get => _Discriminator ??= [];
         set { _Discriminator = value; OnPropertyChanged("Discriminator"); }
       }
 
@@ -897,7 +897,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>> AggregationElement
       {
-        get => _AggregationElement ?? new List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>();
+        get => _AggregationElement ??= [];
         set { _AggregationElement = value; OnPropertyChanged("AggregationElement"); }
       }
 
@@ -1948,7 +1948,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>> RepresentationElement
     {
-      get => _RepresentationElement ?? new List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>>();
+      get => _RepresentationElement ??= [];
       set { _RepresentationElement = value; OnPropertyChanged("RepresentationElement"); }
     }
 
@@ -2037,7 +2037,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Code
     {
-      get => _Code ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _Code ??= [];
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
@@ -2176,7 +2176,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> AliasElement
     {
-      get => _AliasElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _AliasElement ??= [];
       set { _AliasElement = value; OnPropertyChanged("AliasElement"); }
     }
 
@@ -2305,7 +2305,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ElementDefinition.TypeRefComponent> Type
     {
-      get => _Type ?? new List<Hl7.Fhir.Model.ElementDefinition.TypeRefComponent>();
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
@@ -2420,7 +2420,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ElementDefinition.ExampleComponent> Example
     {
-      get => _Example ?? new List<Hl7.Fhir.Model.ElementDefinition.ExampleComponent>();
+      get => _Example ??= [];
       set { _Example = value; OnPropertyChanged("Example"); }
     }
 
@@ -2492,7 +2492,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Id> ConditionElement
     {
-      get => _ConditionElement ?? new List<Hl7.Fhir.Model.Id>();
+      get => _ConditionElement ??= [];
       set { _ConditionElement = value; OnPropertyChanged("ConditionElement"); }
     }
 
@@ -2524,7 +2524,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ElementDefinition.ConstraintComponent> Constraint
     {
-      get => _Constraint ?? new List<Hl7.Fhir.Model.ElementDefinition.ConstraintComponent>();
+      get => _Constraint ??= [];
       set { _Constraint = value; OnPropertyChanged("Constraint"); }
     }
 
@@ -2635,7 +2635,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ElementDefinition.MappingComponent> Mapping
     {
-      get => _Mapping ?? new List<Hl7.Fhir.Model.ElementDefinition.MappingComponent>();
+      get => _Mapping ??= [];
       set { _Mapping = value; OnPropertyChanged("Mapping"); }
     }
 

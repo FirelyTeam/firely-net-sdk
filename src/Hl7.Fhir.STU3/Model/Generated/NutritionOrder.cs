@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Timing> Schedule
       {
-        get => _Schedule ?? new List<Hl7.Fhir.Model.Timing>();
+        get => _Schedule ??= [];
         set { _Schedule = value; OnPropertyChanged("Schedule"); }
       }
 
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent> Nutrient
       {
-        get => _Nutrient ?? new List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>();
+        get => _Nutrient ??= [];
         set { _Nutrient = value; OnPropertyChanged("Nutrient"); }
       }
 
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.NutritionOrder.TextureComponent> Texture
       {
-        get => _Texture ?? new List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>();
+        get => _Texture ??= [];
         set { _Texture = value; OnPropertyChanged("Texture"); }
       }
 
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> FluidConsistencyType
       {
-        get => _FluidConsistencyType ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _FluidConsistencyType ??= [];
         set { _FluidConsistencyType = value; OnPropertyChanged("FluidConsistencyType"); }
       }
 
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Timing> Schedule
       {
-        get => _Schedule ?? new List<Hl7.Fhir.Model.Timing>();
+        get => _Schedule ??= [];
         set { _Schedule = value; OnPropertyChanged("Schedule"); }
       }
 
@@ -921,7 +921,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent> Administration
       {
-        get => _Administration ?? new List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>();
+        get => _Administration ??= [];
         set { _Administration = value; OnPropertyChanged("Administration"); }
       }
 
@@ -1246,7 +1246,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1367,7 +1367,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> AllergyIntolerance
     {
-      get => _AllergyIntolerance ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _AllergyIntolerance ??= [];
       set { _AllergyIntolerance = value; OnPropertyChanged("AllergyIntolerance"); }
     }
 
@@ -1382,7 +1382,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> FoodPreferenceModifier
     {
-      get => _FoodPreferenceModifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _FoodPreferenceModifier ??= [];
       set { _FoodPreferenceModifier = value; OnPropertyChanged("FoodPreferenceModifier"); }
     }
 
@@ -1397,7 +1397,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ExcludeFoodModifier
     {
-      get => _ExcludeFoodModifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _ExcludeFoodModifier ??= [];
       set { _ExcludeFoodModifier = value; OnPropertyChanged("ExcludeFoodModifier"); }
     }
 
@@ -1424,7 +1424,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent> Supplement
     {
-      get => _Supplement ?? new List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>();
+      get => _Supplement ??= [];
       set { _Supplement = value; OnPropertyChanged("Supplement"); }
     }
 

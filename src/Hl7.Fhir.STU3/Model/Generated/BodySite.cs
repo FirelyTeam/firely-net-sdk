@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
     {
-      get => _Qualifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Qualifier ??= [];
       set { _Qualifier = value; OnPropertyChanged("Qualifier"); }
     }
 
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
-      get => _Image ?? new List<Hl7.Fhir.Model.Attachment>();
+      get => _Image ??= [];
       set { _Image = value; OnPropertyChanged("Image"); }
     }
 

@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.DocumentReference.ProfileComponent> Profile
       {
-        get => _Profile ?? new List<Hl7.Fhir.Model.DocumentReference.ProfileComponent>();
+        get => _Profile ??= [];
         set { _Profile = value; OnPropertyChanged("Profile"); }
       }
 
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -702,7 +702,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Modality
     {
-      get => _Modality ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Modality ??= [];
       set { _Modality = value; OnPropertyChanged("Modality"); }
     }
 
@@ -731,7 +731,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -762,7 +762,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Context
     {
-      get => _Context ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Context ??= [];
       set { _Context = value; OnPropertyChanged("Context"); }
     }
 
@@ -777,7 +777,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Event
     {
-      get => _Event ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Event ??= [];
       set { _Event = value; OnPropertyChanged("Event"); }
     }
 
@@ -792,7 +792,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> BodySite
     {
-      get => _BodySite ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _BodySite ??= [];
       set { _BodySite = value; OnPropertyChanged("BodySite"); }
     }
 
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Author
     {
-      get => _Author ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Author ??= [];
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
@@ -891,7 +891,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DocumentReference.AttesterComponent> Attester
     {
-      get => _Attester ?? new List<Hl7.Fhir.Model.DocumentReference.AttesterComponent>();
+      get => _Attester ??= [];
       set { _Attester = value; OnPropertyChanged("Attester"); }
     }
 
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent> RelatesTo
     {
-      get => _RelatesTo ?? new List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent>();
+      get => _RelatesTo ??= [];
       set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
     }
 
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
     {
-      get => _SecurityLabel ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _SecurityLabel ??= [];
       set { _SecurityLabel = value; OnPropertyChanged("SecurityLabel"); }
     }
 
@@ -977,7 +977,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DocumentReference.ContentComponent> Content
     {
-      get => _Content ?? new List<Hl7.Fhir.Model.DocumentReference.ContentComponent>();
+      get => _Content ??= [];
       set { _Content = value; OnPropertyChanged("Content"); }
     }
 

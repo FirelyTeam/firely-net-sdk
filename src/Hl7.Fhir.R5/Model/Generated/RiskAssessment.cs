@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Reason ??= [];
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Basis
     {
-      get => _Basis ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Basis ??= [];
       set { _Basis = value; OnPropertyChanged("Basis"); }
     }
 
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> Prediction
     {
-      get => _Prediction ?? new List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>();
+      get => _Prediction ??= [];
       set { _Prediction = value; OnPropertyChanged("Prediction"); }
     }
 
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 

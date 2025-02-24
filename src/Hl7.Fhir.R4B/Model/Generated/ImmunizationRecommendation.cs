@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> VaccineCode
       {
-        get => _VaccineCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _VaccineCode ??= [];
         set { _VaccineCode = value; OnPropertyChanged("VaccineCode"); }
       }
 
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ContraindicatedVaccineCode
       {
-        get => _ContraindicatedVaccineCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ContraindicatedVaccineCode ??= [];
         set { _ContraindicatedVaccineCode = value; OnPropertyChanged("ContraindicatedVaccineCode"); }
       }
 
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ForecastReason
       {
-        get => _ForecastReason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ForecastReason ??= [];
         set { _ForecastReason = value; OnPropertyChanged("ForecastReason"); }
       }
 
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> DateCriterion
       {
-        get => _DateCriterion ?? new List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>();
+        get => _DateCriterion ??= [];
         set { _DateCriterion = value; OnPropertyChanged("DateCriterion"); }
       }
 
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> SupportingImmunization
       {
-        get => _SupportingImmunization ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _SupportingImmunization ??= [];
         set { _SupportingImmunization = value; OnPropertyChanged("SupportingImmunization"); }
       }
 
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> SupportingPatientInformation
       {
-        get => _SupportingPatientInformation ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _SupportingPatientInformation ??= [];
         set { _SupportingPatientInformation = value; OnPropertyChanged("SupportingPatientInformation"); }
       }
 
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> Recommendation
     {
-      get => _Recommendation ?? new List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>();
+      get => _Recommendation ??= [];
       set { _Recommendation = value; OnPropertyChanged("Recommendation"); }
     }
 

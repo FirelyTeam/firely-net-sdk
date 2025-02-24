@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coverage.ExemptionComponent> Exception
       {
-        get => _Exception ?? new List<Hl7.Fhir.Model.Coverage.ExemptionComponent>();
+        get => _Exception ??= [];
         set { _Exception = value; OnPropertyChanged("Exception"); }
       }
 
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coverage.PaymentByComponent> PaymentBy
     {
-      get => _PaymentBy ?? new List<Hl7.Fhir.Model.Coverage.PaymentByComponent>();
+      get => _PaymentBy ??= [];
       set { _PaymentBy = value; OnPropertyChanged("PaymentBy"); }
     }
 
@@ -861,7 +861,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> SubscriberId
     {
-      get => _SubscriberId ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _SubscriberId ??= [];
       set { _SubscriberId = value; OnPropertyChanged("SubscriberId"); }
     }
 
@@ -961,7 +961,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coverage.ClassComponent> Class
     {
-      get => _Class ?? new List<Hl7.Fhir.Model.Coverage.ClassComponent>();
+      get => _Class ??= [];
       set { _Class = value; OnPropertyChanged("Class"); }
     }
 
@@ -1031,7 +1031,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coverage.CostToBeneficiaryComponent> CostToBeneficiary
     {
-      get => _CostToBeneficiary ?? new List<Hl7.Fhir.Model.Coverage.CostToBeneficiaryComponent>();
+      get => _CostToBeneficiary ??= [];
       set { _CostToBeneficiary = value; OnPropertyChanged("CostToBeneficiary"); }
     }
 
@@ -1075,7 +1075,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Contract
     {
-      get => _Contract ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Contract ??= [];
       set { _Contract = value; OnPropertyChanged("Contract"); }
     }
 

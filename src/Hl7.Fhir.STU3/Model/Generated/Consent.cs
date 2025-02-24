@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Consent.ExceptActorComponent> Actor
       {
-        get => _Actor ?? new List<Hl7.Fhir.Model.Consent.ExceptActorComponent>();
+        get => _Actor ??= [];
         set { _Actor = value; OnPropertyChanged("Actor"); }
       }
 
@@ -640,7 +640,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
       {
-        get => _Action ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
       {
-        get => _SecurityLabel ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _SecurityLabel ??= [];
         set { _SecurityLabel = value; OnPropertyChanged("SecurityLabel"); }
       }
 
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Purpose
       {
-        get => _Purpose ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _Purpose ??= [];
         set { _Purpose = value; OnPropertyChanged("Purpose"); }
       }
 
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Class
       {
-        get => _Class ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _Class ??= [];
         set { _Class = value; OnPropertyChanged("Class"); }
       }
 
@@ -700,7 +700,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Code
       {
-        get => _Code ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _Code ??= [];
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Consent.ExceptDataComponent> Data
       {
-        get => _Data ?? new List<Hl7.Fhir.Model.Consent.ExceptDataComponent>();
+        get => _Data ??= [];
         set { _Data = value; OnPropertyChanged("Data"); }
       }
 
@@ -1178,7 +1178,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1251,7 +1251,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ConsentingParty
     {
-      get => _ConsentingParty ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ConsentingParty ??= [];
       set { _ConsentingParty = value; OnPropertyChanged("ConsentingParty"); }
     }
 
@@ -1265,7 +1265,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Consent.ActorComponent> Actor
     {
-      get => _Actor ?? new List<Hl7.Fhir.Model.Consent.ActorComponent>();
+      get => _Actor ??= [];
       set { _Actor = value; OnPropertyChanged("Actor"); }
     }
 
@@ -1280,7 +1280,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Action
     {
-      get => _Action ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Action ??= [];
       set { _Action = value; OnPropertyChanged("Action"); }
     }
 
@@ -1296,7 +1296,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Organization
     {
-      get => _Organization ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Organization ??= [];
       set { _Organization = value; OnPropertyChanged("Organization"); }
     }
 
@@ -1326,7 +1326,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Consent.PolicyComponent> Policy
     {
-      get => _Policy ?? new List<Hl7.Fhir.Model.Consent.PolicyComponent>();
+      get => _Policy ??= [];
       set { _Policy = value; OnPropertyChanged("Policy"); }
     }
 
@@ -1369,7 +1369,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> SecurityLabel
     {
-      get => _SecurityLabel ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _SecurityLabel ??= [];
       set { _SecurityLabel = value; OnPropertyChanged("SecurityLabel"); }
     }
 
@@ -1384,7 +1384,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Purpose
     {
-      get => _Purpose ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _Purpose ??= [];
       set { _Purpose = value; OnPropertyChanged("Purpose"); }
     }
 
@@ -1411,7 +1411,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Consent.DataComponent> Data
     {
-      get => _Data ?? new List<Hl7.Fhir.Model.Consent.DataComponent>();
+      get => _Data ??= [];
       set { _Data = value; OnPropertyChanged("Data"); }
     }
 
@@ -1425,7 +1425,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Consent.ExceptComponent> Except
     {
-      get => _Except ?? new List<Hl7.Fhir.Model.Consent.ExceptComponent>();
+      get => _Except ??= [];
       set { _Except = value; OnPropertyChanged("Except"); }
     }
 

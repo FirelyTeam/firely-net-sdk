@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get => _Subject ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Population> Population
     {
-      get => _Population ?? new List<Hl7.Fhir.Model.Population>();
+      get => _Population ??= [];
       set { _Population = value; OnPropertyChanged("Population"); }
     }
 

@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
     {
-      get => _ServiceCategory ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _ServiceCategory ??= [];
       set { _ServiceCategory = value; OnPropertyChanged("ServiceCategory"); }
     }
 
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
     {
-      get => _ServiceType ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _ServiceType ??= [];
       set { _ServiceType = value; OnPropertyChanged("ServiceType"); }
     }
 
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
-      get => _Specialty ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Specialty ??= [];
       set { _Specialty = value; OnPropertyChanged("Specialty"); }
     }
 

@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TerminologyCapabilities.VersionComponent> Version
       {
-        get => _Version ?? new List<Hl7.Fhir.Model.TerminologyCapabilities.VersionComponent>();
+        get => _Version ??= [];
         set { _Version = value; OnPropertyChanged("Version"); }
       }
 
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.CommonLanguages>> LanguageElement
       {
-        get => _LanguageElement ?? new List<Code<Hl7.Fhir.Model.CommonLanguages>>();
+        get => _LanguageElement ??= [];
         set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
       }
 
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TerminologyCapabilities.FilterComponent> Filter
       {
-        get => _Filter ?? new List<Hl7.Fhir.Model.TerminologyCapabilities.FilterComponent>();
+        get => _Filter ??= [];
         set { _Filter = value; OnPropertyChanged("Filter"); }
       }
 
@@ -739,7 +739,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Code> PropertyElement
       {
-        get => _PropertyElement ?? new List<Hl7.Fhir.Model.Code>();
+        get => _PropertyElement ??= [];
         set { _PropertyElement = value; OnPropertyChanged("PropertyElement"); }
       }
 
@@ -919,7 +919,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Code> OpElement
       {
-        get => _OpElement ?? new List<Hl7.Fhir.Model.Code>();
+        get => _OpElement ??= [];
         set { _OpElement = value; OnPropertyChanged("OpElement"); }
       }
 
@@ -1118,7 +1118,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TerminologyCapabilities.ParameterComponent> Parameter
       {
-        get => _Parameter ?? new List<Hl7.Fhir.Model.TerminologyCapabilities.ParameterComponent>();
+        get => _Parameter ??= [];
         set { _Parameter = value; OnPropertyChanged("Parameter"); }
       }
 
@@ -1736,7 +1736,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1965,7 +1965,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -2007,7 +2007,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -2022,7 +2022,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -2205,7 +2205,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.TerminologyCapabilities.CodeSystemComponent> CodeSystem
     {
-      get => _CodeSystem ?? new List<Hl7.Fhir.Model.TerminologyCapabilities.CodeSystemComponent>();
+      get => _CodeSystem ??= [];
       set { _CodeSystem = value; OnPropertyChanged("CodeSystem"); }
     }
 

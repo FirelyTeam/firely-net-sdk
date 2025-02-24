@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactPoint>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Subscription.FilterByComponent> FilterBy
     {
-      get => _FilterBy ?? new List<Hl7.Fhir.Model.Subscription.FilterByComponent>();
+      get => _FilterBy ??= [];
       set { _FilterBy = value; OnPropertyChanged("FilterBy"); }
     }
 
@@ -747,7 +747,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Subscription.ParameterComponent> Parameter
     {
-      get => _Parameter ?? new List<Hl7.Fhir.Model.Subscription.ParameterComponent>();
+      get => _Parameter ??= [];
       set { _Parameter = value; OnPropertyChanged("Parameter"); }
     }
 

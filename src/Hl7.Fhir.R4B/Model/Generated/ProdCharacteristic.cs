@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ColorElement
     {
-      get => _ColorElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _ColorElement ??= [];
       set { _ColorElement = value; OnPropertyChanged("ColorElement"); }
     }
 
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ImprintElement
     {
-      get => _ImprintElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _ImprintElement ??= [];
       set { _ImprintElement = value; OnPropertyChanged("ImprintElement"); }
     }
 
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
-      get => _Image ?? new List<Hl7.Fhir.Model.Attachment>();
+      get => _Image ??= [];
       set { _Image = value; OnPropertyChanged("Image"); }
     }
 

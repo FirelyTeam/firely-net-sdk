@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent> Linkage
       {
-        get => _Linkage ?? new List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>();
+        get => _Linkage ??= [];
         set { _Linkage = value; OnPropertyChanged("Linkage"); }
       }
 
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent> Sugar
       {
-        get => _Sugar ?? new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>();
+        get => _Sugar ??= [];
         set { _Sugar = value; OnPropertyChanged("Sugar"); }
       }
 
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent> Subunit
     {
-      get => _Subunit ?? new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>();
+      get => _Subunit ??= [];
       set { _Subunit = value; OnPropertyChanged("Subunit"); }
     }
 

@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Supplier
     {
-      get => _Supplier ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Supplier ??= [];
       set { _Supplier = value; OnPropertyChanged("Supplier"); }
     }
 

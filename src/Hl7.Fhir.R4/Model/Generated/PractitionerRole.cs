@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
-        get => _DaysOfWeekElement ?? new List<Code<Hl7.Fhir.Model.DaysOfWeek>>();
+        get => _DaysOfWeekElement ??= [];
         set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
       }
 
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Code
     {
-      get => _Code ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Code ??= [];
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
-      get => _Specialty ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Specialty ??= [];
       set { _Specialty = value; OnPropertyChanged("Specialty"); }
     }
 
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Location
     {
-      get => _Location ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Location ??= [];
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
     {
-      get => _HealthcareService ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _HealthcareService ??= [];
       set { _HealthcareService = value; OnPropertyChanged("HealthcareService"); }
     }
 
@@ -568,7 +568,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
-      get => _Telecom ?? new List<Hl7.Fhir.Model.ContactPoint>();
+      get => _Telecom ??= [];
       set { _Telecom = value; OnPropertyChanged("Telecom"); }
     }
 
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.PractitionerRole.AvailableTimeComponent> AvailableTime
     {
-      get => _AvailableTime ?? new List<Hl7.Fhir.Model.PractitionerRole.AvailableTimeComponent>();
+      get => _AvailableTime ??= [];
       set { _AvailableTime = value; OnPropertyChanged("AvailableTime"); }
     }
 
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.PractitionerRole.NotAvailableComponent> NotAvailable
     {
-      get => _NotAvailable ?? new List<Hl7.Fhir.Model.PractitionerRole.NotAvailableComponent>();
+      get => _NotAvailable ??= [];
       set { _NotAvailable = value; OnPropertyChanged("NotAvailable"); }
     }
 
@@ -640,7 +640,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
-      get => _Endpoint ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Endpoint ??= [];
       set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
     }
 

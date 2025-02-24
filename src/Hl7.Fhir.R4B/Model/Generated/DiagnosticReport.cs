@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Performer
     {
-      get => _Performer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Performer ??= [];
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ResultsInterpreter
     {
-      get => _ResultsInterpreter ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ResultsInterpreter ??= [];
       set { _ResultsInterpreter = value; OnPropertyChanged("ResultsInterpreter"); }
     }
 
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Specimen
     {
-      get => _Specimen ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Specimen ??= [];
       set { _Specimen = value; OnPropertyChanged("Specimen"); }
     }
 
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Result
     {
-      get => _Result ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Result ??= [];
       set { _Result = value; OnPropertyChanged("Result"); }
     }
 
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ImagingStudy
     {
-      get => _ImagingStudy ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ImagingStudy ??= [];
       set { _ImagingStudy = value; OnPropertyChanged("ImagingStudy"); }
     }
 
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DiagnosticReport.MediaComponent> Media
     {
-      get => _Media ?? new List<Hl7.Fhir.Model.DiagnosticReport.MediaComponent>();
+      get => _Media ??= [];
       set { _Media = value; OnPropertyChanged("Media"); }
     }
 
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ConclusionCode
     {
-      get => _ConclusionCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _ConclusionCode ??= [];
       set { _ConclusionCode = value; OnPropertyChanged("ConclusionCode"); }
     }
 
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> PresentedForm
     {
-      get => _PresentedForm ?? new List<Hl7.Fhir.Model.Attachment>();
+      get => _PresentedForm ??= [];
       set { _PresentedForm = value; OnPropertyChanged("PresentedForm"); }
     }
 

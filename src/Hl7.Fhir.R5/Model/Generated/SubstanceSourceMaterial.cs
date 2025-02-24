@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent> Author
       {
-        get => _Author ?? new List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>();
+        get => _Author ??= [];
         set { _Author = value; OnPropertyChanged("Author"); }
       }
 
@@ -1149,7 +1149,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> ParentSubstanceId
     {
-      get => _ParentSubstanceId ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _ParentSubstanceId ??= [];
       set { _ParentSubstanceId = value; OnPropertyChanged("ParentSubstanceId"); }
     }
 
@@ -1163,7 +1163,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ParentSubstanceNameElement
     {
-      get => _ParentSubstanceNameElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _ParentSubstanceNameElement ??= [];
       set { _ParentSubstanceNameElement = value; OnPropertyChanged("ParentSubstanceNameElement"); }
     }
 
@@ -1195,7 +1195,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CountryOfOrigin
     {
-      get => _CountryOfOrigin ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _CountryOfOrigin ??= [];
       set { _CountryOfOrigin = value; OnPropertyChanged("CountryOfOrigin"); }
     }
 
@@ -1209,7 +1209,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> GeographicalLocationElement
     {
-      get => _GeographicalLocationElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _GeographicalLocationElement ??= [];
       set { _GeographicalLocationElement = value; OnPropertyChanged("GeographicalLocationElement"); }
     }
 
@@ -1254,7 +1254,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent> FractionDescription
     {
-      get => _FractionDescription ?? new List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>();
+      get => _FractionDescription ??= [];
       set { _FractionDescription = value; OnPropertyChanged("FractionDescription"); }
     }
 
@@ -1281,7 +1281,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent> PartDescription
     {
-      get => _PartDescription ?? new List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>();
+      get => _PartDescription ??= [];
       set { _PartDescription = value; OnPropertyChanged("PartDescription"); }
     }
 

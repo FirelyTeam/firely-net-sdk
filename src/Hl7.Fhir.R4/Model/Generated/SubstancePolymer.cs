@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent> StartingMaterial
       {
-        get => _StartingMaterial ?? new List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>();
+        get => _StartingMaterial ??= [];
         set { _StartingMaterial = value; OnPropertyChanged("StartingMaterial"); }
       }
 
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent> RepeatUnit
       {
-        get => _RepeatUnit ?? new List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>();
+        get => _RepeatUnit ??= [];
         set { _RepeatUnit = value; OnPropertyChanged("RepeatUnit"); }
       }
 
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent> DegreeOfPolymerisation
       {
-        get => _DegreeOfPolymerisation ?? new List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>();
+        get => _DegreeOfPolymerisation ??= [];
         set { _DegreeOfPolymerisation = value; OnPropertyChanged("DegreeOfPolymerisation"); }
       }
 
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent> StructuralRepresentation
       {
-        get => _StructuralRepresentation ?? new List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>();
+        get => _StructuralRepresentation ??= [];
         set { _StructuralRepresentation = value; OnPropertyChanged("StructuralRepresentation"); }
       }
 
@@ -1002,7 +1002,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CopolymerConnectivity
     {
-      get => _CopolymerConnectivity ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _CopolymerConnectivity ??= [];
       set { _CopolymerConnectivity = value; OnPropertyChanged("CopolymerConnectivity"); }
     }
 
@@ -1016,7 +1016,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ModificationElement
     {
-      get => _ModificationElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _ModificationElement ??= [];
       set { _ModificationElement = value; OnPropertyChanged("ModificationElement"); }
     }
 
@@ -1048,7 +1048,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent> MonomerSet
     {
-      get => _MonomerSet ?? new List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>();
+      get => _MonomerSet ??= [];
       set { _MonomerSet = value; OnPropertyChanged("MonomerSet"); }
     }
 
@@ -1062,7 +1062,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent> Repeat
     {
-      get => _Repeat ?? new List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>();
+      get => _Repeat ??= [];
       set { _Repeat = value; OnPropertyChanged("Repeat"); }
     }
 

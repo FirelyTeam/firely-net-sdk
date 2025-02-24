@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Classifier
     {
-      get => _Classifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Classifier ??= [];
       set { _Classifier = value; OnPropertyChanged("Classifier"); }
     }
 

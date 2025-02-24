@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement> Data
     {
-      get => _Data ?? new List<Hl7.Fhir.Model.DataRequirement>();
+      get => _Data ??= [];
       set { _Data = value; OnPropertyChanged("Data"); }
     }
 

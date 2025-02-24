@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> LineElement
     {
-      get => _LineElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _LineElement ??= [];
       set { _LineElement = value; OnPropertyChanged("LineElement"); }
     }
 

@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Operator
       {
-        get => _Operator ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Operator ??= [];
         set { _Operator = value; OnPropertyChanged("Operator"); }
       }
 
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
     {
-      get => _StatusReason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _StatusReason ??= [];
       set { _StatusReason = value; OnPropertyChanged("StatusReason"); }
     }
 
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent> Operation
     {
-      get => _Operation ?? new List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent>();
+      get => _Operation ??= [];
       set { _Operation = value; OnPropertyChanged("Operation"); }
     }
 

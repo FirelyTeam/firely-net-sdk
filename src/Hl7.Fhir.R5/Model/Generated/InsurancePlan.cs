@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Network
       {
-        get => _Network ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Network ??= [];
         set { _Network = value; OnPropertyChanged("Network"); }
       }
 
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.CoverageBenefitComponent> Benefit
       {
-        get => _Benefit ?? new List<Hl7.Fhir.Model.InsurancePlan.CoverageBenefitComponent>();
+        get => _Benefit ??= [];
         set { _Benefit = value; OnPropertyChanged("Benefit"); }
       }
 
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.LimitComponent> Limit
       {
-        get => _Limit ?? new List<Hl7.Fhir.Model.InsurancePlan.LimitComponent>();
+        get => _Limit ??= [];
         set { _Limit = value; OnPropertyChanged("Limit"); }
       }
 
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
       {
-        get => _CoverageArea ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _CoverageArea ??= [];
         set { _CoverageArea = value; OnPropertyChanged("CoverageArea"); }
       }
 
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Network
       {
-        get => _Network ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Network ??= [];
         set { _Network = value; OnPropertyChanged("Network"); }
       }
 
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.GeneralCostComponent> GeneralCost
       {
-        get => _GeneralCost ?? new List<Hl7.Fhir.Model.InsurancePlan.GeneralCostComponent>();
+        get => _GeneralCost ??= [];
         set { _GeneralCost = value; OnPropertyChanged("GeneralCost"); }
       }
 
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.SpecificCostComponent> SpecificCost
       {
-        get => _SpecificCost ?? new List<Hl7.Fhir.Model.InsurancePlan.SpecificCostComponent>();
+        get => _SpecificCost ??= [];
         set { _SpecificCost = value; OnPropertyChanged("SpecificCost"); }
       }
 
@@ -922,7 +922,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.PlanBenefitComponent> Benefit
       {
-        get => _Benefit ?? new List<Hl7.Fhir.Model.InsurancePlan.PlanBenefitComponent>();
+        get => _Benefit ??= [];
         set { _Benefit = value; OnPropertyChanged("Benefit"); }
       }
 
@@ -1036,7 +1036,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.CostComponent> Cost
       {
-        get => _Cost ?? new List<Hl7.Fhir.Model.InsurancePlan.CostComponent>();
+        get => _Cost ??= [];
         set { _Cost = value; OnPropertyChanged("Cost"); }
       }
 
@@ -1164,7 +1164,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Qualifiers
       {
-        get => _Qualifiers ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Qualifiers ??= [];
         set { _Qualifiers = value; OnPropertyChanged("Qualifiers"); }
       }
 
@@ -1279,7 +1279,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1324,7 +1324,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
@@ -1366,7 +1366,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> AliasElement
     {
-      get => _AliasElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _AliasElement ??= [];
       set { _AliasElement = value; OnPropertyChanged("AliasElement"); }
     }
 
@@ -1443,7 +1443,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
     {
-      get => _CoverageArea ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _CoverageArea ??= [];
       set { _CoverageArea = value; OnPropertyChanged("CoverageArea"); }
     }
 
@@ -1457,7 +1457,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExtendedContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ExtendedContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1473,7 +1473,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
-      get => _Endpoint ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Endpoint ??= [];
       set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
     }
 
@@ -1489,7 +1489,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Network
     {
-      get => _Network ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Network ??= [];
       set { _Network = value; OnPropertyChanged("Network"); }
     }
 
@@ -1503,7 +1503,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.InsurancePlan.CoverageComponent> Coverage
     {
-      get => _Coverage ?? new List<Hl7.Fhir.Model.InsurancePlan.CoverageComponent>();
+      get => _Coverage ??= [];
       set { _Coverage = value; OnPropertyChanged("Coverage"); }
     }
 
@@ -1517,7 +1517,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.InsurancePlan.PlanComponent> Plan
     {
-      get => _Plan ?? new List<Hl7.Fhir.Model.InsurancePlan.PlanComponent>();
+      get => _Plan ??= [];
       set { _Plan = value; OnPropertyChanged("Plan"); }
     }
 

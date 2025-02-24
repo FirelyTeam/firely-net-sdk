@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> ReplacesElement
     {
-      get => _ReplacesElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _ReplacesElement ??= [];
       set { _ReplacesElement = value; OnPropertyChanged("ReplacesElement"); }
     }
 
@@ -737,7 +737,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -892,7 +892,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> ParentElement
     {
-      get => _ParentElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _ParentElement ??= [];
       set { _ParentElement = value; OnPropertyChanged("ParentElement"); }
     }
 
@@ -971,7 +971,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MessageDefinition.FocusComponent> Focus
     {
-      get => _Focus ?? new List<Hl7.Fhir.Model.MessageDefinition.FocusComponent>();
+      get => _Focus ??= [];
       set { _Focus = value; OnPropertyChanged("Focus"); }
     }
 
@@ -1015,7 +1015,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent> AllowedResponse
     {
-      get => _AllowedResponse ?? new List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent>();
+      get => _AllowedResponse ??= [];
       set { _AllowedResponse = value; OnPropertyChanged("AllowedResponse"); }
     }
 
@@ -1029,7 +1029,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> GraphElement
     {
-      get => _GraphElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _GraphElement ??= [];
       set { _GraphElement = value; OnPropertyChanged("GraphElement"); }
     }
 

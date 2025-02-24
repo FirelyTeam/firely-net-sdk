@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Ingredient.StrengthComponent> Strength
       {
-        get => _Strength ?? new List<Hl7.Fhir.Model.Ingredient.StrengthComponent>();
+        get => _Strength ??= [];
         set { _Strength = value; OnPropertyChanged("Strength"); }
       }
 
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
-        get => _Country ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Country ??= [];
         set { _Country = value; OnPropertyChanged("Country"); }
       }
 
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent> ReferenceStrength
       {
-        get => _ReferenceStrength ?? new List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent>();
+        get => _ReferenceStrength ??= [];
         set { _ReferenceStrength = value; OnPropertyChanged("ReferenceStrength"); }
       }
 
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
-        get => _Country ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Country ??= [];
         set { _Country = value; OnPropertyChanged("Country"); }
       }
 
@@ -836,7 +836,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> For
     {
-      get => _For ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _For ??= [];
       set { _For = value; OnPropertyChanged("For"); }
     }
 
@@ -866,7 +866,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Function
     {
-      get => _Function ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Function ??= [];
       set { _Function = value; OnPropertyChanged("Function"); }
     }
 
@@ -908,7 +908,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Ingredient.ManufacturerComponent> Manufacturer
     {
-      get => _Manufacturer ?? new List<Hl7.Fhir.Model.Ingredient.ManufacturerComponent>();
+      get => _Manufacturer ??= [];
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 

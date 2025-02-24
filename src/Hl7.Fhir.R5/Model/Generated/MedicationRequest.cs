@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> DispenserInstruction
       {
-        get => _DispenserInstruction ?? new List<Hl7.Fhir.Model.Annotation>();
+        get => _DispenserInstruction ??= [];
         set { _DispenserInstruction = value; OnPropertyChanged("DispenserInstruction"); }
       }
 
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -870,7 +870,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> InformationSource
     {
-      get => _InformationSource ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _InformationSource ??= [];
       set { _InformationSource = value; OnPropertyChanged("InformationSource"); }
     }
 
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
-      get => _SupportingInformation ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _SupportingInformation ??= [];
       set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
     }
 
@@ -1107,7 +1107,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Performer
     {
-      get => _Performer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Performer ??= [];
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
@@ -1121,7 +1121,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Device
     {
-      get => _Device ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Device ??= [];
       set { _Device = value; OnPropertyChanged("Device"); }
     }
 
@@ -1151,7 +1151,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Reason ??= [];
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
@@ -1181,7 +1181,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Insurance
     {
-      get => _Insurance ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Insurance ??= [];
       set { _Insurance = value; OnPropertyChanged("Insurance"); }
     }
 
@@ -1195,7 +1195,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -1250,7 +1250,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Dosage> DosageInstruction
     {
-      get => _DosageInstruction ?? new List<Hl7.Fhir.Model.Dosage>();
+      get => _DosageInstruction ??= [];
       set { _DosageInstruction = value; OnPropertyChanged("DosageInstruction"); }
     }
 
@@ -1292,7 +1292,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> EventHistory
     {
-      get => _EventHistory ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _EventHistory ??= [];
       set { _EventHistory = value; OnPropertyChanged("EventHistory"); }
     }
 

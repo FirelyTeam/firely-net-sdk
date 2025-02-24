@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent> Resource
       {
-        get => _Resource ?? new List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent>();
+        get => _Resource ??= [];
         set { _Resource = value; OnPropertyChanged("Resource"); }
       }
 
@@ -971,7 +971,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ResourceType>> TypeElement
       {
-        get => _TypeElement ?? new List<Code<Hl7.Fhir.Model.ResourceType>>();
+        get => _TypeElement ??= [];
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> PackageElement
       {
-        get => _PackageElement ?? new List<Hl7.Fhir.Model.FhirString>();
+        get => _PackageElement ??= [];
         set { _PackageElement = value; OnPropertyChanged("PackageElement"); }
       }
 
@@ -1064,7 +1064,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ImplementationGuide.PageComponent> Page
       {
-        get => _Page ?? new List<Hl7.Fhir.Model.ImplementationGuide.PageComponent>();
+        get => _Page ??= [];
         set { _Page = value; OnPropertyChanged("Page"); }
       }
 
@@ -1394,7 +1394,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1436,7 +1436,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1451,7 +1451,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1521,7 +1521,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent> Dependency
     {
-      get => _Dependency ?? new List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent>();
+      get => _Dependency ??= [];
       set { _Dependency = value; OnPropertyChanged("Dependency"); }
     }
 
@@ -1535,7 +1535,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent> Package
     {
-      get => _Package ?? new List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent>();
+      get => _Package ??= [];
       set { _Package = value; OnPropertyChanged("Package"); }
     }
 
@@ -1549,7 +1549,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent> Global
     {
-      get => _Global ?? new List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent>();
+      get => _Global ??= [];
       set { _Global = value; OnPropertyChanged("Global"); }
     }
 
@@ -1563,7 +1563,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> BinaryElement
     {
-      get => _BinaryElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _BinaryElement ??= [];
       set { _BinaryElement = value; OnPropertyChanged("BinaryElement"); }
     }
 

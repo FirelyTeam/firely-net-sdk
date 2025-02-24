@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
     {
-      get => _ServiceType ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _ServiceType ??= [];
       set { _ServiceType = value; OnPropertyChanged("ServiceType"); }
     }
 
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EncounterHistory.LocationComponent> Location
     {
-      get => _Location ?? new List<Hl7.Fhir.Model.EncounterHistory.LocationComponent>();
+      get => _Location ??= [];
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 

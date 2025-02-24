@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PositiveInt> SupportingInfoSequenceElement
       {
-        get => _SupportingInfoSequenceElement ?? new List<Hl7.Fhir.Model.PositiveInt>();
+        get => _SupportingInfoSequenceElement ??= [];
         set { _SupportingInfoSequenceElement = value; OnPropertyChanged("SupportingInfoSequenceElement"); }
       }
 
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
-        get => _Modifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Modifier ??= [];
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent> Diagnosis
       {
-        get => _Diagnosis ?? new List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent>();
+        get => _Diagnosis ??= [];
         set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
       }
 
@@ -721,7 +721,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Detail
       {
-        get => _Detail ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Detail ??= [];
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
@@ -971,7 +971,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1032,7 +1032,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>> PurposeElement
     {
-      get => _PurposeElement ?? new List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>();
+      get => _PurposeElement ??= [];
       set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
     }
 
@@ -1080,7 +1080,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityRequest.EventComponent> Event
     {
-      get => _Event ?? new List<Hl7.Fhir.Model.CoverageEligibilityRequest.EventComponent>();
+      get => _Event ??= [];
       set { _Event = value; OnPropertyChanged("Event"); }
     }
 
@@ -1199,7 +1199,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent> SupportingInfo
     {
-      get => _SupportingInfo ?? new List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent>();
+      get => _SupportingInfo ??= [];
       set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
     }
 
@@ -1213,7 +1213,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent> Insurance
     {
-      get => _Insurance ?? new List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent>();
+      get => _Insurance ??= [];
       set { _Insurance = value; OnPropertyChanged("Insurance"); }
     }
 
@@ -1227,7 +1227,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent> Item
     {
-      get => _Item ?? new List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent>();
+      get => _Item ??= [];
       set { _Item = value; OnPropertyChanged("Item"); }
     }
 

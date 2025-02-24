@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Event
       {
-        get => _Event ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Event ??= [];
         set { _Event = value; OnPropertyChanged("Event"); }
       }
 
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.DocumentReference.RelatedComponent> Related
       {
-        get => _Related ?? new List<Hl7.Fhir.Model.DocumentReference.RelatedComponent>();
+        get => _Related ??= [];
         set { _Related = value; OnPropertyChanged("Related"); }
       }
 
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -856,7 +856,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Author
     {
-      get => _Author ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Author ??= [];
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
@@ -900,7 +900,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent> RelatesTo
     {
-      get => _RelatesTo ?? new List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent>();
+      get => _RelatesTo ??= [];
       set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
     }
 
@@ -943,7 +943,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
     {
-      get => _SecurityLabel ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _SecurityLabel ??= [];
       set { _SecurityLabel = value; OnPropertyChanged("SecurityLabel"); }
     }
 
@@ -957,7 +957,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DocumentReference.ContentComponent> Content
     {
-      get => _Content ?? new List<Hl7.Fhir.Model.DocumentReference.ContentComponent>();
+      get => _Content ??= [];
       set { _Content = value; OnPropertyChanged("Content"); }
     }
 

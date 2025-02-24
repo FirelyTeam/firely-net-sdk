@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> DisulfideLinkageElement
     {
-      get => _DisulfideLinkageElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _DisulfideLinkageElement ??= [];
       set { _DisulfideLinkageElement = value; OnPropertyChanged("DisulfideLinkageElement"); }
     }
 
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent> Subunit
     {
-      get => _Subunit ?? new List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>();
+      get => _Subunit ??= [];
       set { _Subunit = value; OnPropertyChanged("Subunit"); }
     }
 

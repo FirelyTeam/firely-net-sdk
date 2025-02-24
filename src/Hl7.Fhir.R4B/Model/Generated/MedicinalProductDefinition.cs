@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductDefinition.NamePartComponent> NamePart
       {
-        get => _NamePart ?? new List<Hl7.Fhir.Model.MedicinalProductDefinition.NamePartComponent>();
+        get => _NamePart ??= [];
         set { _NamePart = value; OnPropertyChanged("NamePart"); }
       }
 
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductDefinition.CountryLanguageComponent> CountryLanguage
       {
-        get => _CountryLanguage ?? new List<Hl7.Fhir.Model.MedicinalProductDefinition.CountryLanguageComponent>();
+        get => _CountryLanguage ??= [];
         set { _CountryLanguage = value; OnPropertyChanged("CountryLanguage"); }
       }
 
@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Organization
       {
-        get => _Organization ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Organization ??= [];
         set { _Organization = value; OnPropertyChanged("Organization"); }
       }
 
@@ -1011,7 +1011,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1166,7 +1166,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Route
     {
-      get => _Route ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Route ??= [];
       set { _Route = value; OnPropertyChanged("Route"); }
     }
 
@@ -1237,7 +1237,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SpecialMeasures
     {
-      get => _SpecialMeasures ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _SpecialMeasures ??= [];
       set { _SpecialMeasures = value; OnPropertyChanged("SpecialMeasures"); }
     }
 
@@ -1266,7 +1266,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Classification
     {
-      get => _Classification ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Classification ??= [];
       set { _Classification = value; OnPropertyChanged("Classification"); }
     }
 
@@ -1280,7 +1280,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
-      get => _MarketingStatus ?? new List<Hl7.Fhir.Model.MarketingStatus>();
+      get => _MarketingStatus ??= [];
       set { _MarketingStatus = value; OnPropertyChanged("MarketingStatus"); }
     }
 
@@ -1295,7 +1295,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PackagedMedicinalProduct
     {
-      get => _PackagedMedicinalProduct ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _PackagedMedicinalProduct ??= [];
       set { _PackagedMedicinalProduct = value; OnPropertyChanged("PackagedMedicinalProduct"); }
     }
 
@@ -1310,7 +1310,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
     {
-      get => _Ingredient ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Ingredient ??= [];
       set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
     }
 
@@ -1325,7 +1325,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Impurity
     {
-      get => _Impurity ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Impurity ??= [];
       set { _Impurity = value; OnPropertyChanged("Impurity"); }
     }
 
@@ -1341,7 +1341,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> AttachedDocument
     {
-      get => _AttachedDocument ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _AttachedDocument ??= [];
       set { _AttachedDocument = value; OnPropertyChanged("AttachedDocument"); }
     }
 
@@ -1357,7 +1357,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> MasterFile
     {
-      get => _MasterFile ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _MasterFile ??= [];
       set { _MasterFile = value; OnPropertyChanged("MasterFile"); }
     }
 
@@ -1371,7 +1371,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductDefinition.ContactComponent> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.MedicinalProductDefinition.ContactComponent>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1387,7 +1387,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ClinicalTrial
     {
-      get => _ClinicalTrial ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ClinicalTrial ??= [];
       set { _ClinicalTrial = value; OnPropertyChanged("ClinicalTrial"); }
     }
 
@@ -1402,7 +1402,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Code
     {
-      get => _Code ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _Code ??= [];
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
@@ -1416,7 +1416,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductDefinition.NameComponent> Name
     {
-      get => _Name ?? new List<Hl7.Fhir.Model.MedicinalProductDefinition.NameComponent>();
+      get => _Name ??= [];
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
@@ -1430,7 +1430,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductDefinition.CrossReferenceComponent> CrossReference
     {
-      get => _CrossReference ?? new List<Hl7.Fhir.Model.MedicinalProductDefinition.CrossReferenceComponent>();
+      get => _CrossReference ??= [];
       set { _CrossReference = value; OnPropertyChanged("CrossReference"); }
     }
 
@@ -1444,7 +1444,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductDefinition.OperationComponent> Operation
     {
-      get => _Operation ?? new List<Hl7.Fhir.Model.MedicinalProductDefinition.OperationComponent>();
+      get => _Operation ??= [];
       set { _Operation = value; OnPropertyChanged("Operation"); }
     }
 
@@ -1458,7 +1458,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductDefinition.CharacteristicComponent> Characteristic
     {
-      get => _Characteristic ?? new List<Hl7.Fhir.Model.MedicinalProductDefinition.CharacteristicComponent>();
+      get => _Characteristic ??= [];
       set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
     }
 

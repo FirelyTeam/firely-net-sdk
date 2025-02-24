@@ -838,7 +838,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CapabilityStatement.ResourceComponent> Resource
       {
-        get => _Resource ?? new List<Hl7.Fhir.Model.CapabilityStatement.ResourceComponent>();
+        get => _Resource ??= [];
         set { _Resource = value; OnPropertyChanged("Resource"); }
       }
 
@@ -852,7 +852,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CapabilityStatement.SystemInteractionComponent> Interaction
       {
-        get => _Interaction ?? new List<Hl7.Fhir.Model.CapabilityStatement.SystemInteractionComponent>();
+        get => _Interaction ??= [];
         set { _Interaction = value; OnPropertyChanged("Interaction"); }
       }
 
@@ -866,7 +866,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CapabilityStatement.SearchParamComponent> SearchParam
       {
-        get => _SearchParam ?? new List<Hl7.Fhir.Model.CapabilityStatement.SearchParamComponent>();
+        get => _SearchParam ??= [];
         set { _SearchParam = value; OnPropertyChanged("SearchParam"); }
       }
 
@@ -880,7 +880,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CapabilityStatement.OperationComponent> Operation
       {
-        get => _Operation ?? new List<Hl7.Fhir.Model.CapabilityStatement.OperationComponent>();
+        get => _Operation ??= [];
         set { _Operation = value; OnPropertyChanged("Operation"); }
       }
 
@@ -894,7 +894,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirUri> CompartmentElement
       {
-        get => _CompartmentElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+        get => _CompartmentElement ??= [];
         set { _CompartmentElement = value; OnPropertyChanged("CompartmentElement"); }
       }
 
@@ -1095,7 +1095,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Service
       {
-        get => _Service ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Service ??= [];
         set { _Service = value; OnPropertyChanged("Service"); }
       }
 
@@ -1137,7 +1137,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CapabilityStatement.CertificateComponent> Certificate
       {
-        get => _Certificate ?? new List<Hl7.Fhir.Model.CapabilityStatement.CertificateComponent>();
+        get => _Certificate ??= [];
         set { _Certificate = value; OnPropertyChanged("Certificate"); }
       }
 
@@ -1470,7 +1470,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CapabilityStatement.ResourceInteractionComponent> Interaction
       {
-        get => _Interaction ?? new List<Hl7.Fhir.Model.CapabilityStatement.ResourceInteractionComponent>();
+        get => _Interaction ??= [];
         set { _Interaction = value; OnPropertyChanged("Interaction"); }
       }
 
@@ -1688,7 +1688,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>> ReferencePolicyElement
       {
-        get => _ReferencePolicyElement ?? new List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>>();
+        get => _ReferencePolicyElement ??= [];
         set { _ReferencePolicyElement = value; OnPropertyChanged("ReferencePolicyElement"); }
       }
 
@@ -1720,7 +1720,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> SearchIncludeElement
       {
-        get => _SearchIncludeElement ?? new List<Hl7.Fhir.Model.FhirString>();
+        get => _SearchIncludeElement ??= [];
         set { _SearchIncludeElement = value; OnPropertyChanged("SearchIncludeElement"); }
       }
 
@@ -1752,7 +1752,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> SearchRevIncludeElement
       {
-        get => _SearchRevIncludeElement ?? new List<Hl7.Fhir.Model.FhirString>();
+        get => _SearchRevIncludeElement ??= [];
         set { _SearchRevIncludeElement = value; OnPropertyChanged("SearchRevIncludeElement"); }
       }
 
@@ -1784,7 +1784,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CapabilityStatement.SearchParamComponent> SearchParam
       {
-        get => _SearchParam ?? new List<Hl7.Fhir.Model.CapabilityStatement.SearchParamComponent>();
+        get => _SearchParam ??= [];
         set { _SearchParam = value; OnPropertyChanged("SearchParam"); }
       }
 
@@ -2643,7 +2643,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CapabilityStatement.EndpointComponent> Endpoint
       {
-        get => _Endpoint ?? new List<Hl7.Fhir.Model.CapabilityStatement.EndpointComponent>();
+        get => _Endpoint ??= [];
         set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
       }
 
@@ -2713,7 +2713,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CapabilityStatement.SupportedMessageComponent> SupportedMessage
       {
-        get => _SupportedMessage ?? new List<Hl7.Fhir.Model.CapabilityStatement.SupportedMessageComponent>();
+        get => _SupportedMessage ??= [];
         set { _SupportedMessage = value; OnPropertyChanged("SupportedMessage"); }
       }
 
@@ -2727,7 +2727,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CapabilityStatement.EventComponent> Event
       {
-        get => _Event ?? new List<Hl7.Fhir.Model.CapabilityStatement.EventComponent>();
+        get => _Event ??= [];
         set { _Event = value; OnPropertyChanged("Event"); }
       }
 
@@ -3799,7 +3799,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -3841,7 +3841,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -3856,7 +3856,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -3957,7 +3957,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesElement
     {
-      get => _InstantiatesElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _InstantiatesElement ??= [];
       set { _InstantiatesElement = value; OnPropertyChanged("InstantiatesElement"); }
     }
 
@@ -4076,7 +4076,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Code> FormatElement
     {
-      get => _FormatElement ?? new List<Hl7.Fhir.Model.Code>();
+      get => _FormatElement ??= [];
       set { _FormatElement = value; OnPropertyChanged("FormatElement"); }
     }
 
@@ -4109,7 +4109,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Code> PatchFormatElement
     {
-      get => _PatchFormatElement ?? new List<Hl7.Fhir.Model.Code>();
+      get => _PatchFormatElement ??= [];
       set { _PatchFormatElement = value; OnPropertyChanged("PatchFormatElement"); }
     }
 
@@ -4141,7 +4141,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> ImplementationGuideElement
     {
-      get => _ImplementationGuideElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _ImplementationGuideElement ??= [];
       set { _ImplementationGuideElement = value; OnPropertyChanged("ImplementationGuideElement"); }
     }
 
@@ -4175,7 +4175,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Profile
     {
-      get => _Profile ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Profile ??= [];
       set { _Profile = value; OnPropertyChanged("Profile"); }
     }
 
@@ -4189,7 +4189,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CapabilityStatement.RestComponent> Rest
     {
-      get => _Rest ?? new List<Hl7.Fhir.Model.CapabilityStatement.RestComponent>();
+      get => _Rest ??= [];
       set { _Rest = value; OnPropertyChanged("Rest"); }
     }
 
@@ -4203,7 +4203,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CapabilityStatement.MessagingComponent> Messaging
     {
-      get => _Messaging ?? new List<Hl7.Fhir.Model.CapabilityStatement.MessagingComponent>();
+      get => _Messaging ??= [];
       set { _Messaging = value; OnPropertyChanged("Messaging"); }
     }
 
@@ -4217,7 +4217,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CapabilityStatement.DocumentComponent> Document
     {
-      get => _Document ?? new List<Hl7.Fhir.Model.CapabilityStatement.DocumentComponent>();
+      get => _Document ??= [];
       set { _Document = value; OnPropertyChanged("Document"); }
     }
 

@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Linkage.ItemComponent> Item
     {
-      get => _Item ?? new List<Hl7.Fhir.Model.Linkage.ItemComponent>();
+      get => _Item ??= [];
       set { _Item = value; OnPropertyChanged("Item"); }
     }
 

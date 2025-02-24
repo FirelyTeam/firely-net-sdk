@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
-      get => _Topic ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Topic ??= [];
       set { _Topic = value; OnPropertyChanged("Topic"); }
     }
 
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contributor> Contributor
     {
-      get => _Contributor ?? new List<Hl7.Fhir.Model.Contributor>();
+      get => _Contributor ??= [];
       set { _Contributor = value; OnPropertyChanged("Contributor"); }
     }
 
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -911,7 +911,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
-      get => _RelatedArtifact ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+      get => _RelatedArtifact ??= [];
       set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
     }
 
@@ -927,7 +927,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Library
     {
-      get => _Library ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Library ??= [];
       set { _Library = value; OnPropertyChanged("Library"); }
     }
 
@@ -1015,7 +1015,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ActivityDefinition.ParticipantComponent> Participant
     {
-      get => _Participant ?? new List<Hl7.Fhir.Model.ActivityDefinition.ParticipantComponent>();
+      get => _Participant ??= [];
       set { _Participant = value; OnPropertyChanged("Participant"); }
     }
 
@@ -1059,7 +1059,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Dosage> Dosage
     {
-      get => _Dosage ?? new List<Hl7.Fhir.Model.Dosage>();
+      get => _Dosage ??= [];
       set { _Dosage = value; OnPropertyChanged("Dosage"); }
     }
 
@@ -1074,7 +1074,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
     {
-      get => _BodySite ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _BodySite ??= [];
       set { _BodySite = value; OnPropertyChanged("BodySite"); }
     }
 
@@ -1103,7 +1103,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent> DynamicValue
     {
-      get => _DynamicValue ?? new List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent>();
+      get => _DynamicValue ??= [];
       set { _DynamicValue = value; OnPropertyChanged("DynamicValue"); }
     }
 

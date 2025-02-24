@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -894,7 +894,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Request
     {
-      get => _Request ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Request ??= [];
       set { _Request = value; OnPropertyChanged("Request"); }
     }
 
@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Parent
     {
-      get => _Parent ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Parent ??= [];
       set { _Parent = value; OnPropertyChanged("Parent"); }
     }
 
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.BiologicallyDerivedProduct.ProcessingComponent> Processing
     {
-      get => _Processing ?? new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.ProcessingComponent>();
+      get => _Processing ??= [];
       set { _Processing = value; OnPropertyChanged("Processing"); }
     }
 
@@ -992,7 +992,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.BiologicallyDerivedProduct.StorageComponent> Storage
     {
-      get => _Storage ?? new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.StorageComponent>();
+      get => _Storage ??= [];
       set { _Storage = value; OnPropertyChanged("Storage"); }
     }
 

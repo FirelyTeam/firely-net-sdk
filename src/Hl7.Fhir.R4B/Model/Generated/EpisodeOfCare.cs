@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent> StatusHistory
     {
-      get => _StatusHistory ?? new List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>();
+      get => _StatusHistory ??= [];
       set { _StatusHistory = value; OnPropertyChanged("StatusHistory"); }
     }
 
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent> Diagnosis
     {
-      get => _Diagnosis ?? new List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>();
+      get => _Diagnosis ??= [];
       set { _Diagnosis = value; OnPropertyChanged("Diagnosis"); }
     }
 
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ReferralRequest
     {
-      get => _ReferralRequest ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ReferralRequest ??= [];
       set { _ReferralRequest = value; OnPropertyChanged("ReferralRequest"); }
     }
 
@@ -568,7 +568,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Team
     {
-      get => _Team ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Team ??= [];
       set { _Team = value; OnPropertyChanged("Team"); }
     }
 
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Account
     {
-      get => _Account ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Account ??= [];
       set { _Account = value; OnPropertyChanged("Account"); }
     }
 

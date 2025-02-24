@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SpecialPrecautionsForStorage
     {
-      get => _SpecialPrecautionsForStorage ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _SpecialPrecautionsForStorage ??= [];
       set { _SpecialPrecautionsForStorage = value; OnPropertyChanged("SpecialPrecautionsForStorage"); }
     }
 

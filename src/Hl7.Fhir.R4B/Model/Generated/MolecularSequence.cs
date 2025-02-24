@@ -1435,7 +1435,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Integer> ScoreElement
       {
-        get => _ScoreElement ?? new List<Hl7.Fhir.Model.Integer>();
+        get => _ScoreElement ??= [];
         set { _ScoreElement = value; OnPropertyChanged("ScoreElement"); }
       }
 
@@ -1467,7 +1467,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Integer> NumTPElement
       {
-        get => _NumTPElement ?? new List<Hl7.Fhir.Model.Integer>();
+        get => _NumTPElement ??= [];
         set { _NumTPElement = value; OnPropertyChanged("NumTPElement"); }
       }
 
@@ -1499,7 +1499,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Integer> NumFPElement
       {
-        get => _NumFPElement ?? new List<Hl7.Fhir.Model.Integer>();
+        get => _NumFPElement ??= [];
         set { _NumFPElement = value; OnPropertyChanged("NumFPElement"); }
       }
 
@@ -1531,7 +1531,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Integer> NumFNElement
       {
-        get => _NumFNElement ?? new List<Hl7.Fhir.Model.Integer>();
+        get => _NumFNElement ??= [];
         set { _NumFNElement = value; OnPropertyChanged("NumFNElement"); }
       }
 
@@ -1563,7 +1563,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirDecimal> PrecisionElement
       {
-        get => _PrecisionElement ?? new List<Hl7.Fhir.Model.FhirDecimal>();
+        get => _PrecisionElement ??= [];
         set { _PrecisionElement = value; OnPropertyChanged("PrecisionElement"); }
       }
 
@@ -1595,7 +1595,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirDecimal> SensitivityElement
       {
-        get => _SensitivityElement ?? new List<Hl7.Fhir.Model.FhirDecimal>();
+        get => _SensitivityElement ??= [];
         set { _SensitivityElement = value; OnPropertyChanged("SensitivityElement"); }
       }
 
@@ -1627,7 +1627,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirDecimal> FMeasureElement
       {
-        get => _FMeasureElement ?? new List<Hl7.Fhir.Model.FhirDecimal>();
+        get => _FMeasureElement ??= [];
         set { _FMeasureElement = value; OnPropertyChanged("FMeasureElement"); }
       }
 
@@ -2554,7 +2554,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -2713,7 +2713,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MolecularSequence.VariantComponent> Variant
     {
-      get => _Variant ?? new List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>();
+      get => _Variant ??= [];
       set { _Variant = value; OnPropertyChanged("Variant"); }
     }
 
@@ -2755,7 +2755,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MolecularSequence.QualityComponent> Quality
     {
-      get => _Quality ?? new List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>();
+      get => _Quality ??= [];
       set { _Quality = value; OnPropertyChanged("Quality"); }
     }
 
@@ -2797,7 +2797,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent> Repository
     {
-      get => _Repository ?? new List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>();
+      get => _Repository ??= [];
       set { _Repository = value; OnPropertyChanged("Repository"); }
     }
 
@@ -2813,7 +2813,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Pointer
     {
-      get => _Pointer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Pointer ??= [];
       set { _Pointer = value; OnPropertyChanged("Pointer"); }
     }
 
@@ -2827,7 +2827,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent> StructureVariant
     {
-      get => _StructureVariant ?? new List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>();
+      get => _StructureVariant ??= [];
       set { _StructureVariant = value; OnPropertyChanged("StructureVariant"); }
     }
 

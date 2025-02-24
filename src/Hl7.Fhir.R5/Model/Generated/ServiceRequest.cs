@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ServiceRequest.ParameterComponent> Parameter
       {
-        get => _Parameter ?? new List<Hl7.Fhir.Model.ServiceRequest.ParameterComponent>();
+        get => _Parameter ??= [];
         set { _Parameter = value; OnPropertyChanged("Parameter"); }
       }
 
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
     {
-      get => _InstantiatesCanonicalElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _InstantiatesCanonicalElement ??= [];
       set { _InstantiatesCanonicalElement = value; OnPropertyChanged("InstantiatesCanonicalElement"); }
     }
 
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
     {
-      get => _InstantiatesUriElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _InstantiatesUriElement ??= [];
       set { _InstantiatesUriElement = value; OnPropertyChanged("InstantiatesUriElement"); }
     }
 
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
     {
-      get => _Replaces ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Replaces ??= [];
       set { _Replaces = value; OnPropertyChanged("Replaces"); }
     }
 
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ServiceRequest.OrderDetailComponent> OrderDetail
     {
-      get => _OrderDetail ?? new List<Hl7.Fhir.Model.ServiceRequest.OrderDetailComponent>();
+      get => _OrderDetail ??= [];
       set { _OrderDetail = value; OnPropertyChanged("OrderDetail"); }
     }
 
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Focus
     {
-      get => _Focus ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Focus ??= [];
       set { _Focus = value; OnPropertyChanged("Focus"); }
     }
 
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Performer
     {
-      get => _Performer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Performer ??= [];
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
@@ -844,7 +844,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Location
     {
-      get => _Location ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Location ??= [];
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 
@@ -859,7 +859,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
-      get => _Reason ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _Reason ??= [];
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
@@ -875,7 +875,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Insurance
     {
-      get => _Insurance ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Insurance ??= [];
       set { _Insurance = value; OnPropertyChanged("Insurance"); }
     }
 
@@ -889,7 +889,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> SupportingInfo
     {
-      get => _SupportingInfo ?? new List<Hl7.Fhir.Model.CodeableReference>();
+      get => _SupportingInfo ??= [];
       set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
     }
 
@@ -905,7 +905,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Specimen
     {
-      get => _Specimen ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Specimen ??= [];
       set { _Specimen = value; OnPropertyChanged("Specimen"); }
     }
 
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
     {
-      get => _BodySite ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _BodySite ??= [];
       set { _BodySite = value; OnPropertyChanged("BodySite"); }
     }
 
@@ -949,7 +949,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ServiceRequest.PatientInstructionComponent> PatientInstruction
     {
-      get => _PatientInstruction ?? new List<Hl7.Fhir.Model.ServiceRequest.PatientInstructionComponent>();
+      get => _PatientInstruction ??= [];
       set { _PatientInstruction = value; OnPropertyChanged("PatientInstruction"); }
     }
 
@@ -979,7 +979,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> RelevantHistory
     {
-      get => _RelevantHistory ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _RelevantHistory ??= [];
       set { _RelevantHistory = value; OnPropertyChanged("RelevantHistory"); }
     }
 

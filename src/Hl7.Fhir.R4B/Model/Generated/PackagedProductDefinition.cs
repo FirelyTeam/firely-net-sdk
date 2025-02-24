@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Material
       {
-        get => _Material ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Material ??= [];
         set { _Material = value; OnPropertyChanged("Material"); }
       }
 
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AlternateMaterial
       {
-        get => _AlternateMaterial ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _AlternateMaterial ??= [];
         set { _AlternateMaterial = value; OnPropertyChanged("AlternateMaterial"); }
       }
 
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PackagedProductDefinition.ShelfLifeStorageComponent> ShelfLifeStorage
       {
-        get => _ShelfLifeStorage ?? new List<Hl7.Fhir.Model.PackagedProductDefinition.ShelfLifeStorageComponent>();
+        get => _ShelfLifeStorage ??= [];
         set { _ShelfLifeStorage = value; OnPropertyChanged("ShelfLifeStorage"); }
       }
 
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
       {
-        get => _Manufacturer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Manufacturer ??= [];
         set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
       }
 
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PackagedProductDefinition.PropertyComponent> Property
       {
-        get => _Property ?? new List<Hl7.Fhir.Model.PackagedProductDefinition.PropertyComponent>();
+        get => _Property ??= [];
         set { _Property = value; OnPropertyChanged("Property"); }
       }
 
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PackagedProductDefinition.ContainedItemComponent> ContainedItem
       {
-        get => _ContainedItem ?? new List<Hl7.Fhir.Model.PackagedProductDefinition.ContainedItemComponent>();
+        get => _ContainedItem ??= [];
         set { _ContainedItem = value; OnPropertyChanged("ContainedItem"); }
       }
 
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PackagedProductDefinition.PackageComponent> Package
       {
-        get => _Package ?? new List<Hl7.Fhir.Model.PackagedProductDefinition.PackageComponent>();
+        get => _Package ??= [];
         set { _Package = value; OnPropertyChanged("Package"); }
       }
 
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SpecialPrecautionsForStorage
       {
-        get => _SpecialPrecautionsForStorage ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _SpecialPrecautionsForStorage ??= [];
         set { _SpecialPrecautionsForStorage = value; OnPropertyChanged("SpecialPrecautionsForStorage"); }
       }
 
@@ -851,7 +851,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PackageFor
     {
-      get => _PackageFor ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _PackageFor ??= [];
       set { _PackageFor = value; OnPropertyChanged("PackageFor"); }
     }
 
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Quantity> ContainedItemQuantity
     {
-      get => _ContainedItemQuantity ?? new List<Hl7.Fhir.Model.Quantity>();
+      get => _ContainedItemQuantity ??= [];
       set { _ContainedItemQuantity = value; OnPropertyChanged("ContainedItemQuantity"); }
     }
 
@@ -1007,7 +1007,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.PackagedProductDefinition.LegalStatusOfSupplyComponent> LegalStatusOfSupply
     {
-      get => _LegalStatusOfSupply ?? new List<Hl7.Fhir.Model.PackagedProductDefinition.LegalStatusOfSupplyComponent>();
+      get => _LegalStatusOfSupply ??= [];
       set { _LegalStatusOfSupply = value; OnPropertyChanged("LegalStatusOfSupply"); }
     }
 
@@ -1021,7 +1021,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
-      get => _MarketingStatus ?? new List<Hl7.Fhir.Model.MarketingStatus>();
+      get => _MarketingStatus ??= [];
       set { _MarketingStatus = value; OnPropertyChanged("MarketingStatus"); }
     }
 
@@ -1036,7 +1036,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
     {
-      get => _Characteristic ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Characteristic ??= [];
       set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
     }
 
@@ -1080,7 +1080,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get => _Manufacturer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Manufacturer ??= [];
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 

@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> Calibration
     {
-      get => _Calibration ?? new List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>();
+      get => _Calibration ??= [];
       set { _Calibration = value; OnPropertyChanged("Calibration"); }
     }
 

@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
@@ -990,7 +990,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1049,7 +1049,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Code
     {
-      get => _Code ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Code ??= [];
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.InventoryItem.NameComponent> Name
     {
-      get => _Name ?? new List<Hl7.Fhir.Model.InventoryItem.NameComponent>();
+      get => _Name ??= [];
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
@@ -1077,7 +1077,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.InventoryItem.ResponsibleOrganizationComponent> ResponsibleOrganization
     {
-      get => _ResponsibleOrganization ?? new List<Hl7.Fhir.Model.InventoryItem.ResponsibleOrganizationComponent>();
+      get => _ResponsibleOrganization ??= [];
       set { _ResponsibleOrganization = value; OnPropertyChanged("ResponsibleOrganization"); }
     }
 
@@ -1104,7 +1104,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> InventoryStatus
     {
-      get => _InventoryStatus ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _InventoryStatus ??= [];
       set { _InventoryStatus = value; OnPropertyChanged("InventoryStatus"); }
     }
 
@@ -1144,7 +1144,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.InventoryItem.AssociationComponent> Association
     {
-      get => _Association ?? new List<Hl7.Fhir.Model.InventoryItem.AssociationComponent>();
+      get => _Association ??= [];
       set { _Association = value; OnPropertyChanged("Association"); }
     }
 
@@ -1158,7 +1158,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.InventoryItem.CharacteristicComponent> Characteristic
     {
-      get => _Characteristic ?? new List<Hl7.Fhir.Model.InventoryItem.CharacteristicComponent>();
+      get => _Characteristic ??= [];
       set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
     }
 

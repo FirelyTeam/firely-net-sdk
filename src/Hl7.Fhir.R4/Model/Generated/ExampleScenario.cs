@@ -435,7 +435,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExampleScenario.VersionComponent> Version
       {
-        get => _Version ?? new List<Hl7.Fhir.Model.ExampleScenario.VersionComponent>();
+        get => _Version ??= [];
         set { _Version = value; OnPropertyChanged("Version"); }
       }
 
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExampleScenario.ContainedInstanceComponent> ContainedInstance
       {
-        get => _ContainedInstance ?? new List<Hl7.Fhir.Model.ExampleScenario.ContainedInstanceComponent>();
+        get => _ContainedInstance ??= [];
         set { _ContainedInstance = value; OnPropertyChanged("ContainedInstance"); }
       }
 
@@ -979,7 +979,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExampleScenario.StepComponent> Step
       {
-        get => _Step ?? new List<Hl7.Fhir.Model.ExampleScenario.StepComponent>();
+        get => _Step ??= [];
         set { _Step = value; OnPropertyChanged("Step"); }
       }
 
@@ -1103,7 +1103,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent> Process
       {
-        get => _Process ?? new List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent>();
+        get => _Process ??= [];
         set { _Process = value; OnPropertyChanged("Process"); }
       }
 
@@ -1158,7 +1158,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExampleScenario.AlternativeComponent> Alternative
       {
-        get => _Alternative ?? new List<Hl7.Fhir.Model.ExampleScenario.AlternativeComponent>();
+        get => _Alternative ??= [];
         set { _Alternative = value; OnPropertyChanged("Alternative"); }
       }
 
@@ -1739,7 +1739,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExampleScenario.StepComponent> Step
       {
-        get => _Step ?? new List<Hl7.Fhir.Model.ExampleScenario.StepComponent>();
+        get => _Step ??= [];
         set { _Step = value; OnPropertyChanged("Step"); }
       }
 
@@ -1860,7 +1860,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -2045,7 +2045,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -2059,7 +2059,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -2074,7 +2074,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -2144,7 +2144,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExampleScenario.ActorComponent> Actor
     {
-      get => _Actor ?? new List<Hl7.Fhir.Model.ExampleScenario.ActorComponent>();
+      get => _Actor ??= [];
       set { _Actor = value; OnPropertyChanged("Actor"); }
     }
 
@@ -2158,7 +2158,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExampleScenario.InstanceComponent> Instance
     {
-      get => _Instance ?? new List<Hl7.Fhir.Model.ExampleScenario.InstanceComponent>();
+      get => _Instance ??= [];
       set { _Instance = value; OnPropertyChanged("Instance"); }
     }
 
@@ -2172,7 +2172,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent> Process
     {
-      get => _Process ?? new List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent>();
+      get => _Process ??= [];
       set { _Process = value; OnPropertyChanged("Process"); }
     }
 
@@ -2186,7 +2186,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> WorkflowElement
     {
-      get => _WorkflowElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _WorkflowElement ??= [];
       set { _WorkflowElement = value; OnPropertyChanged("WorkflowElement"); }
     }
 

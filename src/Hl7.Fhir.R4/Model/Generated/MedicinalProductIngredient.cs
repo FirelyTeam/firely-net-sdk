@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> Strength
       {
-        get => _Strength ?? new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>();
+        get => _Strength ??= [];
         set { _Strength = value; OnPropertyChanged("Strength"); }
       }
 
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
-        get => _Country ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Country ??= [];
         set { _Country = value; OnPropertyChanged("Country"); }
       }
 
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent> ReferenceStrength
       {
-        get => _ReferenceStrength ?? new List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>();
+        get => _ReferenceStrength ??= [];
         set { _ReferenceStrength = value; OnPropertyChanged("ReferenceStrength"); }
       }
 
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
-        get => _Country ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Country ??= [];
         set { _Country = value; OnPropertyChanged("Country"); }
       }
 
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> Strength
       {
-        get => _Strength ?? new List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>();
+        get => _Strength ??= [];
         set { _Strength = value; OnPropertyChanged("Strength"); }
       }
 
@@ -820,7 +820,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get => _Manufacturer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Manufacturer ??= [];
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
@@ -834,7 +834,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent> SpecifiedSubstance
     {
-      get => _SpecifiedSubstance ?? new List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>();
+      get => _SpecifiedSubstance ??= [];
       set { _SpecifiedSubstance = value; OnPropertyChanged("SpecifiedSubstance"); }
     }
 

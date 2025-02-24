@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> GivenElement
     {
-      get => _GivenElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _GivenElement ??= [];
       set { _GivenElement = value; OnPropertyChanged("GivenElement"); }
     }
 
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> PrefixElement
     {
-      get => _PrefixElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _PrefixElement ??= [];
       set { _PrefixElement = value; OnPropertyChanged("PrefixElement"); }
     }
 
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> SuffixElement
     {
-      get => _SuffixElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _SuffixElement ??= [];
       set { _SuffixElement = value; OnPropertyChanged("SuffixElement"); }
     }
 

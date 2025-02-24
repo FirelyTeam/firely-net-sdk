@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Addresses
       {
-        get => _Addresses ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Addresses ??= [];
         set { _Addresses = value; OnPropertyChanged("Addresses"); }
       }
 
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
       {
-        get => _Documentation ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+        get => _Documentation ??= [];
         set { _Documentation = value; OnPropertyChanged("Documentation"); }
       }
 
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PlanDefinition.TargetComponent> Target
       {
-        get => _Target ?? new List<Hl7.Fhir.Model.PlanDefinition.TargetComponent>();
+        get => _Target ??= [];
         set { _Target = value; OnPropertyChanged("Target"); }
       }
 
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
-        get => _Code ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Code ??= [];
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
       {
-        get => _Reason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Reason ??= [];
         set { _Reason = value; OnPropertyChanged("Reason"); }
       }
 
@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
       {
-        get => _Documentation ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+        get => _Documentation ??= [];
         set { _Documentation = value; OnPropertyChanged("Documentation"); }
       }
 
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Id> GoalIdElement
       {
-        get => _GoalIdElement ?? new List<Hl7.Fhir.Model.Id>();
+        get => _GoalIdElement ??= [];
         set { _GoalIdElement = value; OnPropertyChanged("GoalIdElement"); }
       }
 
@@ -640,7 +640,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TriggerDefinition> TriggerDefinition
       {
-        get => _TriggerDefinition ?? new List<Hl7.Fhir.Model.TriggerDefinition>();
+        get => _TriggerDefinition ??= [];
         set { _TriggerDefinition = value; OnPropertyChanged("TriggerDefinition"); }
       }
 
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PlanDefinition.ConditionComponent> Condition
       {
-        get => _Condition ?? new List<Hl7.Fhir.Model.PlanDefinition.ConditionComponent>();
+        get => _Condition ??= [];
         set { _Condition = value; OnPropertyChanged("Condition"); }
       }
 
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.DataRequirement> Input
       {
-        get => _Input ?? new List<Hl7.Fhir.Model.DataRequirement>();
+        get => _Input ??= [];
         set { _Input = value; OnPropertyChanged("Input"); }
       }
 
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.DataRequirement> Output
       {
-        get => _Output ?? new List<Hl7.Fhir.Model.DataRequirement>();
+        get => _Output ??= [];
         set { _Output = value; OnPropertyChanged("Output"); }
       }
 
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent> RelatedAction
       {
-        get => _RelatedAction ?? new List<Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent>();
+        get => _RelatedAction ??= [];
         set { _RelatedAction = value; OnPropertyChanged("RelatedAction"); }
       }
 
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PlanDefinition.ParticipantComponent> Participant
       {
-        get => _Participant ?? new List<Hl7.Fhir.Model.PlanDefinition.ParticipantComponent>();
+        get => _Participant ??= [];
         set { _Participant = value; OnPropertyChanged("Participant"); }
       }
 
@@ -933,7 +933,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent> DynamicValue
       {
-        get => _DynamicValue ?? new List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent>();
+        get => _DynamicValue ??= [];
         set { _DynamicValue = value; OnPropertyChanged("DynamicValue"); }
       }
 
@@ -947,7 +947,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> Action
       {
-        get => _Action ?? new List<Hl7.Fhir.Model.PlanDefinition.ActionComponent>();
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
@@ -2003,7 +2003,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -2383,7 +2383,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -2398,7 +2398,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -2413,7 +2413,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
-      get => _Topic ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Topic ??= [];
       set { _Topic = value; OnPropertyChanged("Topic"); }
     }
 
@@ -2427,7 +2427,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contributor> Contributor
     {
-      get => _Contributor ?? new List<Hl7.Fhir.Model.Contributor>();
+      get => _Contributor ??= [];
       set { _Contributor = value; OnPropertyChanged("Contributor"); }
     }
 
@@ -2441,7 +2441,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -2483,7 +2483,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
-      get => _RelatedArtifact ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+      get => _RelatedArtifact ??= [];
       set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
     }
 
@@ -2499,7 +2499,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Library
     {
-      get => _Library ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Library ??= [];
       set { _Library = value; OnPropertyChanged("Library"); }
     }
 
@@ -2513,7 +2513,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.PlanDefinition.GoalComponent> Goal
     {
-      get => _Goal ?? new List<Hl7.Fhir.Model.PlanDefinition.GoalComponent>();
+      get => _Goal ??= [];
       set { _Goal = value; OnPropertyChanged("Goal"); }
     }
 
@@ -2527,7 +2527,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> Action
     {
-      get => _Action ?? new List<Hl7.Fhir.Model.PlanDefinition.ActionComponent>();
+      get => _Action ??= [];
       set { _Action = value; OnPropertyChanged("Action"); }
     }
 

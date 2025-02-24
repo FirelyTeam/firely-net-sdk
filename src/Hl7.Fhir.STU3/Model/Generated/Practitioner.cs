@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.HumanName> Name
     {
-      get => _Name ?? new List<Hl7.Fhir.Model.HumanName>();
+      get => _Name ??= [];
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
-      get => _Telecom ?? new List<Hl7.Fhir.Model.ContactPoint>();
+      get => _Telecom ??= [];
       set { _Telecom = value; OnPropertyChanged("Telecom"); }
     }
 
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Address> Address
     {
-      get => _Address ?? new List<Hl7.Fhir.Model.Address>();
+      get => _Address ??= [];
       set { _Address = value; OnPropertyChanged("Address"); }
     }
 
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Photo
     {
-      get => _Photo ?? new List<Hl7.Fhir.Model.Attachment>();
+      get => _Photo ??= [];
       set { _Photo = value; OnPropertyChanged("Photo"); }
     }
 
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Practitioner.QualificationComponent> Qualification
     {
-      get => _Qualification ?? new List<Hl7.Fhir.Model.Practitioner.QualificationComponent>();
+      get => _Qualification ??= [];
       set { _Qualification = value; OnPropertyChanged("Qualification"); }
     }
 
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Communication
     {
-      get => _Communication ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Communication ??= [];
       set { _Communication = value; OnPropertyChanged("Communication"); }
     }
 

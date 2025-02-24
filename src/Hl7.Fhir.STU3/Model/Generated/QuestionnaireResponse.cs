@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> Answer
       {
-        get => _Answer ?? new List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>();
+        get => _Answer ??= [];
         set { _Answer = value; OnPropertyChanged("Answer"); }
       }
 
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
       {
-        get => _Item ?? new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>();
+        get => _Item ??= [];
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
       {
-        get => _Item ?? new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>();
+        get => _Item ??= [];
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Parent
     {
-      get => _Parent ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Parent ??= [];
       set { _Parent = value; OnPropertyChanged("Parent"); }
     }
 
@@ -659,7 +659,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
     {
-      get => _Item ?? new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>();
+      get => _Item ??= [];
       set { _Item = value; OnPropertyChanged("Item"); }
     }
 

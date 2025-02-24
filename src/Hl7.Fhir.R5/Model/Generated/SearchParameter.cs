@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>> BaseElement
     {
-      get => _BaseElement ?? new List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>();
+      get => _BaseElement ??= [];
       set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
     }
 
@@ -867,7 +867,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>> TargetElement
     {
-      get => _TargetElement ?? new List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>>();
+      get => _TargetElement ??= [];
       set { _TargetElement = value; OnPropertyChanged("TargetElement"); }
     }
 
@@ -957,7 +957,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchComparator>> ComparatorElement
     {
-      get => _ComparatorElement ?? new List<Code<Hl7.Fhir.Model.SearchComparator>>();
+      get => _ComparatorElement ??= [];
       set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
     }
 
@@ -991,7 +991,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchModifierCode>> ModifierElement
     {
-      get => _ModifierElement ?? new List<Code<Hl7.Fhir.Model.SearchModifierCode>>();
+      get => _ModifierElement ??= [];
       set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
     }
 
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ChainElement
     {
-      get => _ChainElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _ChainElement ??= [];
       set { _ChainElement = value; OnPropertyChanged("ChainElement"); }
     }
 
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SearchParameter.ComponentComponent> Component
     {
-      get => _Component ?? new List<Hl7.Fhir.Model.SearchParameter.ComponentComponent>();
+      get => _Component ??= [];
       set { _Component = value; OnPropertyChanged("Component"); }
     }
 

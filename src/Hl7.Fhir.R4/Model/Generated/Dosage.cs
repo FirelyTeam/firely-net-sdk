@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalInstruction
     {
-      get => _AdditionalInstruction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _AdditionalInstruction ??= [];
       set { _AdditionalInstruction = value; OnPropertyChanged("AdditionalInstruction"); }
     }
 
@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent> DoseAndRate
     {
-      get => _DoseAndRate ?? new List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>();
+      get => _DoseAndRate ??= [];
       set { _DoseAndRate = value; OnPropertyChanged("DoseAndRate"); }
     }
 

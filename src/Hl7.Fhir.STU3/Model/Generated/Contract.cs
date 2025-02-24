@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
-        get => _Role ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Role ??= [];
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Signature> Signature
       {
-        get => _Signature ?? new List<Hl7.Fhir.Model.Signature>();
+        get => _Signature ??= [];
         set { _Signature = value; OnPropertyChanged("Signature"); }
       }
 
@@ -820,7 +820,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Topic
       {
-        get => _Topic ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Topic ??= [];
         set { _Topic = value; OnPropertyChanged("Topic"); }
       }
 
@@ -835,7 +835,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
       {
-        get => _Action ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
@@ -850,7 +850,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ActionReason
       {
-        get => _ActionReason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ActionReason ??= [];
         set { _ActionReason = value; OnPropertyChanged("ActionReason"); }
       }
 
@@ -865,7 +865,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
       {
-        get => _SecurityLabel ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _SecurityLabel ??= [];
         set { _SecurityLabel = value; OnPropertyChanged("SecurityLabel"); }
       }
 
@@ -879,7 +879,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Contract.TermAgentComponent> Agent
       {
-        get => _Agent ?? new List<Hl7.Fhir.Model.Contract.TermAgentComponent>();
+        get => _Agent ??= [];
         set { _Agent = value; OnPropertyChanged("Agent"); }
       }
 
@@ -921,7 +921,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Contract.TermValuedItemComponent> ValuedItem
       {
-        get => _ValuedItem ?? new List<Hl7.Fhir.Model.Contract.TermValuedItemComponent>();
+        get => _ValuedItem ??= [];
         set { _ValuedItem = value; OnPropertyChanged("ValuedItem"); }
       }
 
@@ -935,7 +935,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Contract.TermComponent> Group
       {
-        get => _Group ?? new List<Hl7.Fhir.Model.Contract.TermComponent>();
+        get => _Group ??= [];
         set { _Group = value; OnPropertyChanged("Group"); }
       }
 
@@ -1153,7 +1153,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
-        get => _Role ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Role ??= [];
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
@@ -1897,7 +1897,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get => _Subject ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
@@ -1913,7 +1913,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Topic
     {
-      get => _Topic ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Topic ??= [];
       set { _Topic = value; OnPropertyChanged("Topic"); }
     }
 
@@ -1929,7 +1929,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Authority
     {
-      get => _Authority ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Authority ??= [];
       set { _Authority = value; OnPropertyChanged("Authority"); }
     }
 
@@ -1945,7 +1945,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Domain
     {
-      get => _Domain ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Domain ??= [];
       set { _Domain = value; OnPropertyChanged("Domain"); }
     }
 
@@ -1974,7 +1974,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SubType
     {
-      get => _SubType ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _SubType ??= [];
       set { _SubType = value; OnPropertyChanged("SubType"); }
     }
 
@@ -1989,7 +1989,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Action
     {
-      get => _Action ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Action ??= [];
       set { _Action = value; OnPropertyChanged("Action"); }
     }
 
@@ -2004,7 +2004,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ActionReason
     {
-      get => _ActionReason ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _ActionReason ??= [];
       set { _ActionReason = value; OnPropertyChanged("ActionReason"); }
     }
 
@@ -2047,7 +2047,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> SecurityLabel
     {
-      get => _SecurityLabel ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _SecurityLabel ??= [];
       set { _SecurityLabel = value; OnPropertyChanged("SecurityLabel"); }
     }
 
@@ -2061,7 +2061,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.AgentComponent> Agent
     {
-      get => _Agent ?? new List<Hl7.Fhir.Model.Contract.AgentComponent>();
+      get => _Agent ??= [];
       set { _Agent = value; OnPropertyChanged("Agent"); }
     }
 
@@ -2075,7 +2075,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.SignatoryComponent> Signer
     {
-      get => _Signer ?? new List<Hl7.Fhir.Model.Contract.SignatoryComponent>();
+      get => _Signer ??= [];
       set { _Signer = value; OnPropertyChanged("Signer"); }
     }
 
@@ -2089,7 +2089,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.ValuedItemComponent> ValuedItem
     {
-      get => _ValuedItem ?? new List<Hl7.Fhir.Model.Contract.ValuedItemComponent>();
+      get => _ValuedItem ??= [];
       set { _ValuedItem = value; OnPropertyChanged("ValuedItem"); }
     }
 
@@ -2103,7 +2103,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.TermComponent> Term
     {
-      get => _Term ?? new List<Hl7.Fhir.Model.Contract.TermComponent>();
+      get => _Term ??= [];
       set { _Term = value; OnPropertyChanged("Term"); }
     }
 
@@ -2133,7 +2133,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.FriendlyLanguageComponent> Friendly
     {
-      get => _Friendly ?? new List<Hl7.Fhir.Model.Contract.FriendlyLanguageComponent>();
+      get => _Friendly ??= [];
       set { _Friendly = value; OnPropertyChanged("Friendly"); }
     }
 
@@ -2147,7 +2147,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.LegalLanguageComponent> Legal
     {
-      get => _Legal ?? new List<Hl7.Fhir.Model.Contract.LegalLanguageComponent>();
+      get => _Legal ??= [];
       set { _Legal = value; OnPropertyChanged("Legal"); }
     }
 
@@ -2161,7 +2161,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent> Rule
     {
-      get => _Rule ?? new List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent>();
+      get => _Rule ??= [];
       set { _Rule = value; OnPropertyChanged("Rule"); }
     }
 

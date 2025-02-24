@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> SubsetElement
       {
-        get => _SubsetElement ?? new List<Hl7.Fhir.Model.FhirString>();
+        get => _SubsetElement ??= [];
         set { _SubsetElement = value; OnPropertyChanged("SubsetElement"); }
       }
 
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent> ImageRegion2D
       {
-        get => _ImageRegion2D ?? new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent>();
+        get => _ImageRegion2D ??= [];
         set { _ImageRegion2D = value; OnPropertyChanged("ImageRegion2D"); }
       }
 
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent> ImageRegion3D
       {
-        get => _ImageRegion3D ?? new List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent>();
+        get => _ImageRegion3D ??= [];
         set { _ImageRegion3D = value; OnPropertyChanged("ImageRegion3D"); }
       }
 
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirDecimal> CoordinateElement
       {
-        get => _CoordinateElement ?? new List<Hl7.Fhir.Model.FhirDecimal>();
+        get => _CoordinateElement ??= [];
         set { _CoordinateElement = value; OnPropertyChanged("CoordinateElement"); }
       }
 
@@ -749,7 +749,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirDecimal> CoordinateElement
       {
-        get => _CoordinateElement ?? new List<Hl7.Fhir.Model.FhirDecimal>();
+        get => _CoordinateElement ??= [];
         set { _CoordinateElement = value; OnPropertyChanged("CoordinateElement"); }
       }
 
@@ -851,7 +851,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -939,7 +939,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent> Performer
     {
-      get => _Performer ?? new List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent>();
+      get => _Performer ??= [];
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
@@ -955,7 +955,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -970,7 +970,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1029,7 +1029,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
     {
-      get => _DerivedFrom ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _DerivedFrom ??= [];
       set { _DerivedFrom = value; OnPropertyChanged("DerivedFrom"); }
     }
 
@@ -1045,7 +1045,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
-      get => _Endpoint ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Endpoint ??= [];
       set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
     }
 
@@ -1159,7 +1159,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Focus
     {
-      get => _Focus ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Focus ??= [];
       set { _Focus = value; OnPropertyChanged("Focus"); }
     }
 
@@ -1173,7 +1173,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent> Instance
     {
-      get => _Instance ?? new List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent>();
+      get => _Instance ??= [];
       set { _Instance = value; OnPropertyChanged("Instance"); }
     }
 

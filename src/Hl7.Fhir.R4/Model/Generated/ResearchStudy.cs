@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Protocol
     {
-      get => _Protocol ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Protocol ??= [];
       set { _Protocol = value; OnPropertyChanged("Protocol"); }
     }
 
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
-      get => _PartOf ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _PartOf ??= [];
       set { _PartOf = value; OnPropertyChanged("PartOf"); }
     }
 
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Focus
     {
-      get => _Focus ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Focus ??= [];
       set { _Focus = value; OnPropertyChanged("Focus"); }
     }
 
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Condition
     {
-      get => _Condition ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Condition ??= [];
       set { _Condition = value; OnPropertyChanged("Condition"); }
     }
 
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
-      get => _RelatedArtifact ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+      get => _RelatedArtifact ??= [];
       set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
     }
 
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Keyword
     {
-      get => _Keyword ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Keyword ??= [];
       set { _Keyword = value; OnPropertyChanged("Keyword"); }
     }
 
@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Location
     {
-      get => _Location ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Location ??= [];
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Enrollment
     {
-      get => _Enrollment ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Enrollment ??= [];
       set { _Enrollment = value; OnPropertyChanged("Enrollment"); }
     }
 
@@ -765,7 +765,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Site
     {
-      get => _Site ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Site ??= [];
       set { _Site = value; OnPropertyChanged("Site"); }
     }
 
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResearchStudy.ArmComponent> Arm
     {
-      get => _Arm ?? new List<Hl7.Fhir.Model.ResearchStudy.ArmComponent>();
+      get => _Arm ??= [];
       set { _Arm = value; OnPropertyChanged("Arm"); }
     }
 
@@ -821,7 +821,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent> Objective
     {
-      get => _Objective ?? new List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent>();
+      get => _Objective ??= [];
       set { _Objective = value; OnPropertyChanged("Objective"); }
     }
 

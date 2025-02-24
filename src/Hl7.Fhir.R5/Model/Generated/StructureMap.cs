@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.InputComponent> Input
       {
-        get => _Input ?? new List<Hl7.Fhir.Model.StructureMap.InputComponent>();
+        get => _Input ??= [];
         set { _Input = value; OnPropertyChanged("Input"); }
       }
 
@@ -839,7 +839,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.RuleComponent> Rule
       {
-        get => _Rule ?? new List<Hl7.Fhir.Model.StructureMap.RuleComponent>();
+        get => _Rule ??= [];
         set { _Rule = value; OnPropertyChanged("Rule"); }
       }
 
@@ -1221,7 +1221,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.SourceComponent> Source
       {
-        get => _Source ?? new List<Hl7.Fhir.Model.StructureMap.SourceComponent>();
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
@@ -1235,7 +1235,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.TargetComponent> Target
       {
-        get => _Target ?? new List<Hl7.Fhir.Model.StructureMap.TargetComponent>();
+        get => _Target ??= [];
         set { _Target = value; OnPropertyChanged("Target"); }
       }
 
@@ -1249,7 +1249,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.RuleComponent> Rule
       {
-        get => _Rule ?? new List<Hl7.Fhir.Model.StructureMap.RuleComponent>();
+        get => _Rule ??= [];
         set { _Rule = value; OnPropertyChanged("Rule"); }
       }
 
@@ -1263,7 +1263,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.DependentComponent> Dependent
       {
-        get => _Dependent ?? new List<Hl7.Fhir.Model.StructureMap.DependentComponent>();
+        get => _Dependent ??= [];
         set { _Dependent = value; OnPropertyChanged("Dependent"); }
       }
 
@@ -1985,7 +1985,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>> ListModeElement
       {
-        get => _ListModeElement ?? new List<Code<Hl7.Fhir.Model.StructureMap.StructureMapTargetListMode>>();
+        get => _ListModeElement ??= [];
         set { _ListModeElement = value; OnPropertyChanged("ListModeElement"); }
       }
 
@@ -2075,7 +2075,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.ParameterComponent> Parameter
       {
-        get => _Parameter ?? new List<Hl7.Fhir.Model.StructureMap.ParameterComponent>();
+        get => _Parameter ??= [];
         set { _Parameter = value; OnPropertyChanged("Parameter"); }
       }
 
@@ -2336,7 +2336,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.ParameterComponent> Parameter
       {
-        get => _Parameter ?? new List<Hl7.Fhir.Model.StructureMap.ParameterComponent>();
+        get => _Parameter ??= [];
         set { _Parameter = value; OnPropertyChanged("Parameter"); }
       }
 
@@ -2449,7 +2449,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -2678,7 +2678,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -2720,7 +2720,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -2735,7 +2735,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -2833,7 +2833,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.StructureMap.StructureComponent> Structure
     {
-      get => _Structure ?? new List<Hl7.Fhir.Model.StructureMap.StructureComponent>();
+      get => _Structure ??= [];
       set { _Structure = value; OnPropertyChanged("Structure"); }
     }
 
@@ -2847,7 +2847,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> ImportElement
     {
-      get => _ImportElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _ImportElement ??= [];
       set { _ImportElement = value; OnPropertyChanged("ImportElement"); }
     }
 
@@ -2879,7 +2879,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.StructureMap.ConstComponent> Const
     {
-      get => _Const ?? new List<Hl7.Fhir.Model.StructureMap.ConstComponent>();
+      get => _Const ??= [];
       set { _Const = value; OnPropertyChanged("Const"); }
     }
 
@@ -2893,7 +2893,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.StructureMap.GroupComponent> Group
     {
-      get => _Group ?? new List<Hl7.Fhir.Model.StructureMap.GroupComponent>();
+      get => _Group ??= [];
       set { _Group = value; OnPropertyChanged("Group"); }
     }
 

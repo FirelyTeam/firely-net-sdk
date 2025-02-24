@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalInstruction
     {
-      get => _AdditionalInstruction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _AdditionalInstruction ??= [];
       set { _AdditionalInstruction = value; OnPropertyChanged("AdditionalInstruction"); }
     }
 

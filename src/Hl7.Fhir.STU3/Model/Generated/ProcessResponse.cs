@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ProcessResponse.ProcessNoteComponent> ProcessNote
     {
-      get => _ProcessNote ?? new List<Hl7.Fhir.Model.ProcessResponse.ProcessNoteComponent>();
+      get => _ProcessNote ??= [];
       set { _ProcessNote = value; OnPropertyChanged("ProcessNote"); }
     }
 
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Error
     {
-      get => _Error ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Error ??= [];
       set { _Error = value; OnPropertyChanged("Error"); }
     }
 
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> CommunicationRequest
     {
-      get => _CommunicationRequest ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _CommunicationRequest ??= [];
       set { _CommunicationRequest = value; OnPropertyChanged("CommunicationRequest"); }
     }
 

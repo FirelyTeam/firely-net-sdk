@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Consent.provisionActorComponent> Actor
       {
-        get => _Actor ?? new List<Hl7.Fhir.Model.Consent.provisionActorComponent>();
+        get => _Actor ??= [];
         set { _Actor = value; OnPropertyChanged("Actor"); }
       }
 
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
       {
-        get => _Action ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
       {
-        get => _SecurityLabel ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _SecurityLabel ??= [];
         set { _SecurityLabel = value; OnPropertyChanged("SecurityLabel"); }
       }
 
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Purpose
       {
-        get => _Purpose ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _Purpose ??= [];
         set { _Purpose = value; OnPropertyChanged("Purpose"); }
       }
 
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Class
       {
-        get => _Class ?? new List<Hl7.Fhir.Model.Coding>();
+        get => _Class ??= [];
         set { _Class = value; OnPropertyChanged("Class"); }
       }
 
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
-        get => _Code ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Code ??= [];
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Consent.provisionDataComponent> Data
       {
-        get => _Data ?? new List<Hl7.Fhir.Model.Consent.provisionDataComponent>();
+        get => _Data ??= [];
         set { _Data = value; OnPropertyChanged("Data"); }
       }
 
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Consent.provisionComponent> Provision
       {
-        get => _Provision ?? new List<Hl7.Fhir.Model.Consent.provisionComponent>();
+        get => _Provision ??= [];
         set { _Provision = value; OnPropertyChanged("Provision"); }
       }
 
@@ -1072,7 +1072,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1133,7 +1133,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1192,7 +1192,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Performer
     {
-      get => _Performer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Performer ??= [];
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
@@ -1208,7 +1208,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Organization
     {
-      get => _Organization ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Organization ??= [];
       set { _Organization = value; OnPropertyChanged("Organization"); }
     }
 
@@ -1238,7 +1238,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Consent.PolicyComponent> Policy
     {
-      get => _Policy ?? new List<Hl7.Fhir.Model.Consent.PolicyComponent>();
+      get => _Policy ??= [];
       set { _Policy = value; OnPropertyChanged("Policy"); }
     }
 
@@ -1266,7 +1266,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Consent.VerificationComponent> Verification
     {
-      get => _Verification ?? new List<Hl7.Fhir.Model.Consent.VerificationComponent>();
+      get => _Verification ??= [];
       set { _Verification = value; OnPropertyChanged("Verification"); }
     }
 

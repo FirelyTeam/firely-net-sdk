@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> OutcomeCodeableConcept
       {
-        get => _OutcomeCodeableConcept ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _OutcomeCodeableConcept ??= [];
         set { _OutcomeCodeableConcept = value; OnPropertyChanged("OutcomeCodeableConcept"); }
       }
 
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> OutcomeReference
       {
-        get => _OutcomeReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _OutcomeReference ??= [];
         set { _OutcomeReference = value; OnPropertyChanged("OutcomeReference"); }
       }
 
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Progress
       {
-        get => _Progress ?? new List<Hl7.Fhir.Model.Annotation>();
+        get => _Progress ??= [];
         set { _Progress = value; OnPropertyChanged("Progress"); }
       }
 
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
       {
-        get => _InstantiatesCanonicalElement ?? new List<Hl7.Fhir.Model.Canonical>();
+        get => _InstantiatesCanonicalElement ??= [];
         set { _InstantiatesCanonicalElement = value; OnPropertyChanged("InstantiatesCanonicalElement"); }
       }
 
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
       {
-        get => _InstantiatesUriElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+        get => _InstantiatesUriElement ??= [];
         set { _InstantiatesUriElement = value; OnPropertyChanged("InstantiatesUriElement"); }
       }
 
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
       {
-        get => _ReasonCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _ReasonCode ??= [];
         set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
       }
 
@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
       {
-        get => _ReasonReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _ReasonReference ??= [];
         set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
       }
 
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Goal
       {
-        get => _Goal ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Goal ??= [];
         set { _Goal = value; OnPropertyChanged("Goal"); }
       }
 
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Performer
       {
-        get => _Performer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Performer ??= [];
         set { _Performer = value; OnPropertyChanged("Performer"); }
       }
 
@@ -977,7 +977,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -991,7 +991,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
     {
-      get => _InstantiatesCanonicalElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _InstantiatesCanonicalElement ??= [];
       set { _InstantiatesCanonicalElement = value; OnPropertyChanged("InstantiatesCanonicalElement"); }
     }
 
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
     {
-      get => _InstantiatesUriElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+      get => _InstantiatesUriElement ??= [];
       set { _InstantiatesUriElement = value; OnPropertyChanged("InstantiatesUriElement"); }
     }
 
@@ -1057,7 +1057,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -1073,7 +1073,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
     {
-      get => _Replaces ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Replaces ??= [];
       set { _Replaces = value; OnPropertyChanged("Replaces"); }
     }
 
@@ -1089,7 +1089,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
-      get => _PartOf ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _PartOf ??= [];
       set { _PartOf = value; OnPropertyChanged("PartOf"); }
     }
 
@@ -1166,7 +1166,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1325,7 +1325,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Contributor
     {
-      get => _Contributor ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Contributor ??= [];
       set { _Contributor = value; OnPropertyChanged("Contributor"); }
     }
 
@@ -1341,7 +1341,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> CareTeam
     {
-      get => _CareTeam ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _CareTeam ??= [];
       set { _CareTeam = value; OnPropertyChanged("CareTeam"); }
     }
 
@@ -1357,7 +1357,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Addresses
     {
-      get => _Addresses ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Addresses ??= [];
       set { _Addresses = value; OnPropertyChanged("Addresses"); }
     }
 
@@ -1373,7 +1373,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInfo
     {
-      get => _SupportingInfo ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _SupportingInfo ??= [];
       set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
     }
 
@@ -1389,7 +1389,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Goal
     {
-      get => _Goal ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Goal ??= [];
       set { _Goal = value; OnPropertyChanged("Goal"); }
     }
 
@@ -1403,7 +1403,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CarePlan.ActivityComponent> Activity
     {
-      get => _Activity ?? new List<Hl7.Fhir.Model.CarePlan.ActivityComponent>();
+      get => _Activity ??= [];
       set { _Activity = value; OnPropertyChanged("Activity"); }
     }
 
@@ -1417,7 +1417,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 

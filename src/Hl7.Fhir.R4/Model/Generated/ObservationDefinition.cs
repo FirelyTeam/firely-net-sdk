@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
       {
-        get => _AppliesTo ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _AppliesTo ??= [];
         set { _AppliesTo = value; OnPropertyChanged("AppliesTo"); }
       }
 
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
     {
-      get => _PermittedDataTypeElement ?? new List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>();
+      get => _PermittedDataTypeElement ??= [];
       set { _PermittedDataTypeElement = value; OnPropertyChanged("PermittedDataTypeElement"); }
     }
 
@@ -820,7 +820,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent> QualifiedInterval
     {
-      get => _QualifiedInterval ?? new List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent>();
+      get => _QualifiedInterval ??= [];
       set { _QualifiedInterval = value; OnPropertyChanged("QualifiedInterval"); }
     }
 

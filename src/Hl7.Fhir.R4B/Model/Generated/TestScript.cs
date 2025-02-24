@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestScript.LinkComponent> Link
       {
-        get => _Link ?? new List<Hl7.Fhir.Model.TestScript.LinkComponent>();
+        get => _Link ??= [];
         set { _Link = value; OnPropertyChanged("Link"); }
       }
 
@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestScript.CapabilityComponent> Capability
       {
-        get => _Capability ?? new List<Hl7.Fhir.Model.TestScript.CapabilityComponent>();
+        get => _Capability ??= [];
         set { _Capability = value; OnPropertyChanged("Capability"); }
       }
 
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Integer> OriginElement
       {
-        get => _OriginElement ?? new List<Hl7.Fhir.Model.Integer>();
+        get => _OriginElement ??= [];
         set { _OriginElement = value; OnPropertyChanged("OriginElement"); }
       }
 
@@ -984,7 +984,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirUri> LinkElement
       {
-        get => _LinkElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+        get => _LinkElement ??= [];
         set { _LinkElement = value; OnPropertyChanged("LinkElement"); }
       }
 
@@ -1707,7 +1707,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestScript.SetupActionComponent> Action
       {
-        get => _Action ?? new List<Hl7.Fhir.Model.TestScript.SetupActionComponent>();
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
@@ -2212,7 +2212,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent> RequestHeader
       {
-        get => _RequestHeader ?? new List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent>();
+        get => _RequestHeader ??= [];
         set { _RequestHeader = value; OnPropertyChanged("RequestHeader"); }
       }
 
@@ -3680,7 +3680,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestScript.TestActionComponent> Action
       {
-        get => _Action ?? new List<Hl7.Fhir.Model.TestScript.TestActionComponent>();
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
@@ -3902,7 +3902,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestScript.TeardownActionComponent> Action
       {
-        get => _Action ?? new List<Hl7.Fhir.Model.TestScript.TeardownActionComponent>();
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
@@ -4311,7 +4311,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -4353,7 +4353,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -4368,7 +4368,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -4438,7 +4438,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.TestScript.OriginComponent> Origin
     {
-      get => _Origin ?? new List<Hl7.Fhir.Model.TestScript.OriginComponent>();
+      get => _Origin ??= [];
       set { _Origin = value; OnPropertyChanged("Origin"); }
     }
 
@@ -4452,7 +4452,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.TestScript.DestinationComponent> Destination
     {
-      get => _Destination ?? new List<Hl7.Fhir.Model.TestScript.DestinationComponent>();
+      get => _Destination ??= [];
       set { _Destination = value; OnPropertyChanged("Destination"); }
     }
 
@@ -4479,7 +4479,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.TestScript.FixtureComponent> Fixture
     {
-      get => _Fixture ?? new List<Hl7.Fhir.Model.TestScript.FixtureComponent>();
+      get => _Fixture ??= [];
       set { _Fixture = value; OnPropertyChanged("Fixture"); }
     }
 
@@ -4495,7 +4495,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Profile
     {
-      get => _Profile ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Profile ??= [];
       set { _Profile = value; OnPropertyChanged("Profile"); }
     }
 
@@ -4509,7 +4509,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.TestScript.VariableComponent> Variable
     {
-      get => _Variable ?? new List<Hl7.Fhir.Model.TestScript.VariableComponent>();
+      get => _Variable ??= [];
       set { _Variable = value; OnPropertyChanged("Variable"); }
     }
 
@@ -4536,7 +4536,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.TestScript.TestComponent> Test
     {
-      get => _Test ?? new List<Hl7.Fhir.Model.TestScript.TestComponent>();
+      get => _Test ??= [];
       set { _Test = value; OnPropertyChanged("Test"); }
     }
 

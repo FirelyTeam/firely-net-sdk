@@ -1579,7 +1579,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1737,7 +1737,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Sequence.VariantComponent> Variant
     {
-      get => _Variant ?? new List<Hl7.Fhir.Model.Sequence.VariantComponent>();
+      get => _Variant ??= [];
       set { _Variant = value; OnPropertyChanged("Variant"); }
     }
 
@@ -1779,7 +1779,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Sequence.QualityComponent> Quality
     {
-      get => _Quality ?? new List<Hl7.Fhir.Model.Sequence.QualityComponent>();
+      get => _Quality ??= [];
       set { _Quality = value; OnPropertyChanged("Quality"); }
     }
 
@@ -1821,7 +1821,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Sequence.RepositoryComponent> Repository
     {
-      get => _Repository ?? new List<Hl7.Fhir.Model.Sequence.RepositoryComponent>();
+      get => _Repository ??= [];
       set { _Repository = value; OnPropertyChanged("Repository"); }
     }
 
@@ -1837,7 +1837,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Pointer
     {
-      get => _Pointer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Pointer ??= [];
       set { _Pointer = value; OnPropertyChanged("Pointer"); }
     }
 

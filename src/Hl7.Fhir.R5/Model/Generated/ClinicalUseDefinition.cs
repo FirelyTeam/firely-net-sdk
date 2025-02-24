@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Comorbidity
       {
-        get => _Comorbidity ?? new List<Hl7.Fhir.Model.CodeableReference>();
+        get => _Comorbidity ??= [];
         set { _Comorbidity = value; OnPropertyChanged("Comorbidity"); }
       }
 
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Indication
       {
-        get => _Indication ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Indication ??= [];
         set { _Indication = value; OnPropertyChanged("Indication"); }
       }
 
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent> OtherTherapy
       {
-        get => _OtherTherapy ?? new List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>();
+        get => _OtherTherapy ??= [];
         set { _OtherTherapy = value; OnPropertyChanged("OtherTherapy"); }
       }
 
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Comorbidity
       {
-        get => _Comorbidity ?? new List<Hl7.Fhir.Model.CodeableReference>();
+        get => _Comorbidity ??= [];
         set { _Comorbidity = value; OnPropertyChanged("Comorbidity"); }
       }
 
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> UndesirableEffect
       {
-        get => _UndesirableEffect ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _UndesirableEffect ??= [];
         set { _UndesirableEffect = value; OnPropertyChanged("UndesirableEffect"); }
       }
 
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent> OtherTherapy
       {
-        get => _OtherTherapy ?? new List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>();
+        get => _OtherTherapy ??= [];
         set { _OtherTherapy = value; OnPropertyChanged("OtherTherapy"); }
       }
 
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent> Interactant
       {
-        get => _Interactant ?? new List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent>();
+        get => _Interactant ??= [];
         set { _Interactant = value; OnPropertyChanged("Interactant"); }
       }
 
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Management
       {
-        get => _Management ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Management ??= [];
         set { _Management = value; OnPropertyChanged("Management"); }
       }
 
@@ -1221,7 +1221,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1267,7 +1267,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1283,7 +1283,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get => _Subject ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
@@ -1352,7 +1352,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Population
     {
-      get => _Population ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Population ??= [];
       set { _Population = value; OnPropertyChanged("Population"); }
     }
 
@@ -1366,7 +1366,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> LibraryElement
     {
-      get => _LibraryElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _LibraryElement ??= [];
       set { _LibraryElement = value; OnPropertyChanged("LibraryElement"); }
     }
 

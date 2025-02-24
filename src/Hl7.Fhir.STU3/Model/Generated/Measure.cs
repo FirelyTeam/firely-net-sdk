@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Measure.PopulationComponent> Population
       {
-        get => _Population ?? new List<Hl7.Fhir.Model.Measure.PopulationComponent>();
+        get => _Population ??= [];
         set { _Population = value; OnPropertyChanged("Population"); }
       }
 
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Measure.StratifierComponent> Stratifier
       {
-        get => _Stratifier ?? new List<Hl7.Fhir.Model.Measure.StratifierComponent>();
+        get => _Stratifier ??= [];
         set { _Stratifier = value; OnPropertyChanged("Stratifier"); }
       }
 
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Usage
       {
-        get => _Usage ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Usage ??= [];
         set { _Usage = value; OnPropertyChanged("Usage"); }
       }
 
@@ -887,7 +887,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1253,7 +1253,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1268,7 +1268,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1283,7 +1283,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
-      get => _Topic ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Topic ??= [];
       set { _Topic = value; OnPropertyChanged("Topic"); }
     }
 
@@ -1297,7 +1297,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contributor> Contributor
     {
-      get => _Contributor ?? new List<Hl7.Fhir.Model.Contributor>();
+      get => _Contributor ??= [];
       set { _Contributor = value; OnPropertyChanged("Contributor"); }
     }
 
@@ -1311,7 +1311,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1353,7 +1353,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
-      get => _RelatedArtifact ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+      get => _RelatedArtifact ??= [];
       set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
     }
 
@@ -1369,7 +1369,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Library
     {
-      get => _Library ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Library ??= [];
       set { _Library = value; OnPropertyChanged("Library"); }
     }
 
@@ -1440,7 +1440,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
@@ -1594,7 +1594,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Markdown> DefinitionElement
     {
-      get => _DefinitionElement ?? new List<Hl7.Fhir.Model.Markdown>();
+      get => _DefinitionElement ??= [];
       set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
     }
 
@@ -1682,7 +1682,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Measure.GroupComponent> Group
     {
-      get => _Group ?? new List<Hl7.Fhir.Model.Measure.GroupComponent>();
+      get => _Group ??= [];
       set { _Group = value; OnPropertyChanged("Group"); }
     }
 
@@ -1696,7 +1696,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Measure.SupplementalDataComponent> SupplementalData
     {
-      get => _SupplementalData ?? new List<Hl7.Fhir.Model.Measure.SupplementalDataComponent>();
+      get => _SupplementalData ??= [];
       set { _SupplementalData = value; OnPropertyChanged("SupplementalData"); }
     }
 

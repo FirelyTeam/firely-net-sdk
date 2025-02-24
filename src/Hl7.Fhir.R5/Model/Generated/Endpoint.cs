@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Code> MimeTypeElement
       {
-        get => _MimeTypeElement ?? new List<Hl7.Fhir.Model.Code>();
+        get => _MimeTypeElement ??= [];
         set { _MimeTypeElement = value; OnPropertyChanged("MimeTypeElement"); }
       }
 
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ConnectionType
     {
-      get => _ConnectionType ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _ConnectionType ??= [];
       set { _ConnectionType = value; OnPropertyChanged("ConnectionType"); }
     }
 
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> EnvironmentType
     {
-      get => _EnvironmentType ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _EnvironmentType ??= [];
       set { _EnvironmentType = value; OnPropertyChanged("EnvironmentType"); }
     }
 
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactPoint>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Endpoint.PayloadComponent> Payload
     {
-      get => _Payload ?? new List<Hl7.Fhir.Model.Endpoint.PayloadComponent>();
+      get => _Payload ??= [];
       set { _Payload = value; OnPropertyChanged("Payload"); }
     }
 
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> HeaderElement
     {
-      get => _HeaderElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _HeaderElement ??= [];
       set { _HeaderElement = value; OnPropertyChanged("HeaderElement"); }
     }
 

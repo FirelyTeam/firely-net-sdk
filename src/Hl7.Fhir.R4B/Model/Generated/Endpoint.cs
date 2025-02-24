@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactPoint>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PayloadType
     {
-      get => _PayloadType ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _PayloadType ??= [];
       set { _PayloadType = value; OnPropertyChanged("PayloadType"); }
     }
 
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Code> PayloadMimeTypeElement
     {
-      get => _PayloadMimeTypeElement ?? new List<Hl7.Fhir.Model.Code>();
+      get => _PayloadMimeTypeElement ??= [];
       set { _PayloadMimeTypeElement = value; OnPropertyChanged("PayloadMimeTypeElement"); }
     }
 
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> HeaderElement
     {
-      get => _HeaderElement ?? new List<Hl7.Fhir.Model.FhirString>();
+      get => _HeaderElement ??= [];
       set { _HeaderElement = value; OnPropertyChanged("HeaderElement"); }
     }
 

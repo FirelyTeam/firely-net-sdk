@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.PopulationComponent> Population
       {
-        get => _Population ?? new List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>();
+        get => _Population ??= [];
         set { _Population = value; OnPropertyChanged("Population"); }
       }
 
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierComponent> Stratifier
       {
-        get => _Stratifier ?? new List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>();
+        get => _Stratifier ??= [];
         set { _Stratifier = value; OnPropertyChanged("Stratifier"); }
       }
 
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> SubjectReport
       {
-        get => _SubjectReport ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _SubjectReport ??= [];
         set { _SubjectReport = value; OnPropertyChanged("SubjectReport"); }
       }
 
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent> Stratum
       {
-        get => _Stratum ?? new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>();
+        get => _Stratum ??= [];
         set { _Stratum = value; OnPropertyChanged("Stratum"); }
       }
 
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.ComponentComponent> Component
       {
-        get => _Component ?? new List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>();
+        get => _Component ??= [];
         set { _Component = value; OnPropertyChanged("Component"); }
       }
 
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent> Population
       {
-        get => _Population ?? new List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>();
+        get => _Population ??= [];
         set { _Population = value; OnPropertyChanged("Population"); }
       }
 
@@ -1186,7 +1186,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> SubjectReport
       {
-        get => _SubjectReport ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _SubjectReport ??= [];
         set { _SubjectReport = value; OnPropertyChanged("SubjectReport"); }
       }
 
@@ -1321,7 +1321,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1600,7 +1600,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MeasureReport.GroupComponent> Group
     {
-      get => _Group ?? new List<Hl7.Fhir.Model.MeasureReport.GroupComponent>();
+      get => _Group ??= [];
       set { _Group = value; OnPropertyChanged("Group"); }
     }
 
@@ -1616,7 +1616,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> SupplementalData
     {
-      get => _SupplementalData ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _SupplementalData ??= [];
       set { _SupplementalData = value; OnPropertyChanged("SupplementalData"); }
     }
 
@@ -1632,7 +1632,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> EvaluatedResource
     {
-      get => _EvaluatedResource ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _EvaluatedResource ??= [];
       set { _EvaluatedResource = value; OnPropertyChanged("EvaluatedResource"); }
     }
 

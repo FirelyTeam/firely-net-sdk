@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.AdverseEvent.CausalityComponent> Causality
       {
-        get => _Causality ?? new List<Hl7.Fhir.Model.AdverseEvent.CausalityComponent>();
+        get => _Causality ??= [];
         set { _Causality = value; OnPropertyChanged("Causality"); }
       }
 
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ResultingCondition
     {
-      get => _ResultingCondition ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ResultingCondition ??= [];
       set { _ResultingCondition = value; OnPropertyChanged("ResultingCondition"); }
     }
 
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Contributor
     {
-      get => _Contributor ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Contributor ??= [];
       set { _Contributor = value; OnPropertyChanged("Contributor"); }
     }
 
@@ -746,7 +746,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> SuspectEntity
     {
-      get => _SuspectEntity ?? new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>();
+      get => _SuspectEntity ??= [];
       set { _SuspectEntity = value; OnPropertyChanged("SuspectEntity"); }
     }
 
@@ -762,7 +762,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> SubjectMedicalHistory
     {
-      get => _SubjectMedicalHistory ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _SubjectMedicalHistory ??= [];
       set { _SubjectMedicalHistory = value; OnPropertyChanged("SubjectMedicalHistory"); }
     }
 
@@ -778,7 +778,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ReferenceDocument
     {
-      get => _ReferenceDocument ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ReferenceDocument ??= [];
       set { _ReferenceDocument = value; OnPropertyChanged("ReferenceDocument"); }
     }
 
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Study
     {
-      get => _Study ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Study ??= [];
       set { _Study = value; OnPropertyChanged("Study"); }
     }
 

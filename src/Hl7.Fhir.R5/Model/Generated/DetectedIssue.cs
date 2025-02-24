@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
-        get => _Code ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Code ??= [];
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Detail
       {
-        get => _Detail ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Detail ??= [];
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
-        get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+        get => _Note ??= [];
         set { _Note = value; OnPropertyChanged("Note"); }
       }
 
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Implicated
     {
-      get => _Implicated ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Implicated ??= [];
       set { _Implicated = value; OnPropertyChanged("Implicated"); }
     }
 
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent> Evidence
     {
-      get => _Evidence ?? new List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent>();
+      get => _Evidence ??= [];
       set { _Evidence = value; OnPropertyChanged("Evidence"); }
     }
 
@@ -675,7 +675,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> Mitigation
     {
-      get => _Mitigation ?? new List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>();
+      get => _Mitigation ??= [];
       set { _Mitigation = value; OnPropertyChanged("Mitigation"); }
     }
 

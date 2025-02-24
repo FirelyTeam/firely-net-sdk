@@ -704,7 +704,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Technique
       {
-        get => _Technique ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Technique ??= [];
         set { _Technique = value; OnPropertyChanged("Technique"); }
       }
 
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> SourceDocument
       {
-        get => _SourceDocument ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _SourceDocument ??= [];
         set { _SourceDocument = value; OnPropertyChanged("SourceDocument"); }
       }
 
@@ -734,7 +734,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceDefinition.RepresentationComponent> Representation
       {
-        get => _Representation ?? new List<Hl7.Fhir.Model.SubstanceDefinition.RepresentationComponent>();
+        get => _Representation ??= [];
         set { _Representation = value; OnPropertyChanged("Representation"); }
       }
 
@@ -1112,7 +1112,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
-        get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+        get => _Note ??= [];
         set { _Note = value; OnPropertyChanged("Note"); }
       }
 
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get => _Source ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
@@ -1338,7 +1338,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Language
       {
-        get => _Language ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Language ??= [];
         set { _Language = value; OnPropertyChanged("Language"); }
       }
 
@@ -1353,7 +1353,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Domain
       {
-        get => _Domain ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Domain ??= [];
         set { _Domain = value; OnPropertyChanged("Domain"); }
       }
 
@@ -1368,7 +1368,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
       {
-        get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Jurisdiction ??= [];
         set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
       }
 
@@ -1382,7 +1382,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent> Synonym
       {
-        get => _Synonym ?? new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>();
+        get => _Synonym ??= [];
         set { _Synonym = value; OnPropertyChanged("Synonym"); }
       }
 
@@ -1396,7 +1396,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent> Translation
       {
-        get => _Translation ?? new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>();
+        get => _Translation ??= [];
         set { _Translation = value; OnPropertyChanged("Translation"); }
       }
 
@@ -1410,7 +1410,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceDefinition.OfficialComponent> Official
       {
-        get => _Official ?? new List<Hl7.Fhir.Model.SubstanceDefinition.OfficialComponent>();
+        get => _Official ??= [];
         set { _Official = value; OnPropertyChanged("Official"); }
       }
 
@@ -1426,7 +1426,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get => _Source ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
@@ -1858,7 +1858,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get => _Source ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
@@ -2060,7 +2060,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> CountryOfOrigin
       {
-        get => _CountryOfOrigin ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _CountryOfOrigin ??= [];
         set { _CountryOfOrigin = value; OnPropertyChanged("CountryOfOrigin"); }
       }
 
@@ -2171,7 +2171,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -2227,7 +2227,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Classification
     {
-      get => _Classification ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Classification ??= [];
       set { _Classification = value; OnPropertyChanged("Classification"); }
     }
 
@@ -2256,7 +2256,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Grade
     {
-      get => _Grade ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Grade ??= [];
       set { _Grade = value; OnPropertyChanged("Grade"); }
     }
 
@@ -2300,7 +2300,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> InformationSource
     {
-      get => _InformationSource ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _InformationSource ??= [];
       set { _InformationSource = value; OnPropertyChanged("InformationSource"); }
     }
 
@@ -2314,7 +2314,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -2330,7 +2330,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get => _Manufacturer ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Manufacturer ??= [];
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
@@ -2346,7 +2346,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Supplier
     {
-      get => _Supplier ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Supplier ??= [];
       set { _Supplier = value; OnPropertyChanged("Supplier"); }
     }
 
@@ -2360,7 +2360,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceDefinition.MoietyComponent> Moiety
     {
-      get => _Moiety ?? new List<Hl7.Fhir.Model.SubstanceDefinition.MoietyComponent>();
+      get => _Moiety ??= [];
       set { _Moiety = value; OnPropertyChanged("Moiety"); }
     }
 
@@ -2374,7 +2374,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceDefinition.PropertyComponent> Property
     {
-      get => _Property ?? new List<Hl7.Fhir.Model.SubstanceDefinition.PropertyComponent>();
+      get => _Property ??= [];
       set { _Property = value; OnPropertyChanged("Property"); }
     }
 
@@ -2388,7 +2388,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent> MolecularWeight
     {
-      get => _MolecularWeight ?? new List<Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent>();
+      get => _MolecularWeight ??= [];
       set { _MolecularWeight = value; OnPropertyChanged("MolecularWeight"); }
     }
 
@@ -2415,7 +2415,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceDefinition.CodeComponent> Code
     {
-      get => _Code ?? new List<Hl7.Fhir.Model.SubstanceDefinition.CodeComponent>();
+      get => _Code ??= [];
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
@@ -2429,7 +2429,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent> Name
     {
-      get => _Name ?? new List<Hl7.Fhir.Model.SubstanceDefinition.NameComponent>();
+      get => _Name ??= [];
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
@@ -2443,7 +2443,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceDefinition.RelationshipComponent> Relationship
     {
-      get => _Relationship ?? new List<Hl7.Fhir.Model.SubstanceDefinition.RelationshipComponent>();
+      get => _Relationship ??= [];
       set { _Relationship = value; OnPropertyChanged("Relationship"); }
     }
 

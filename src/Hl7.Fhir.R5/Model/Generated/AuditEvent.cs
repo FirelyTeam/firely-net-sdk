@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Detail
       {
-        get => _Detail ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Detail ??= [];
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
-        get => _Role ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Role ??= [];
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirUri> PolicyElement
       {
-        get => _PolicyElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+        get => _PolicyElement ??= [];
         set { _PolicyElement = value; OnPropertyChanged("PolicyElement"); }
       }
 
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Authorization
       {
-        get => _Authorization ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Authorization ??= [];
         set { _Authorization = value; OnPropertyChanged("Authorization"); }
       }
 
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
       {
-        get => _SecurityLabel ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _SecurityLabel ??= [];
         set { _SecurityLabel = value; OnPropertyChanged("SecurityLabel"); }
       }
 
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.AuditEvent.DetailComponent> Detail
       {
-        get => _Detail ?? new List<Hl7.Fhir.Model.AuditEvent.DetailComponent>();
+        get => _Detail ??= [];
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
       {
-        get => _Agent ?? new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>();
+        get => _Agent ??= [];
         set { _Agent = value; OnPropertyChanged("Agent"); }
       }
 
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1210,7 +1210,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Authorization
     {
-      get => _Authorization ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Authorization ??= [];
       set { _Authorization = value; OnPropertyChanged("Authorization"); }
     }
 
@@ -1226,7 +1226,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get => _BasedOn ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
@@ -1270,7 +1270,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
     {
-      get => _Agent ?? new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>();
+      get => _Agent ??= [];
       set { _Agent = value; OnPropertyChanged("Agent"); }
     }
 
@@ -1298,7 +1298,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AuditEvent.EntityComponent> Entity
     {
-      get => _Entity ?? new List<Hl7.Fhir.Model.AuditEvent.EntityComponent>();
+      get => _Entity ??= [];
       set { _Entity = value; OnPropertyChanged("Entity"); }
     }
 

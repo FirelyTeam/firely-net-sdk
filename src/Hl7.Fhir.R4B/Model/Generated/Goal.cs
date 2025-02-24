@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Goal.TargetComponent> Target
     {
-      get => _Target ?? new List<Hl7.Fhir.Model.Goal.TargetComponent>();
+      get => _Target ??= [];
       set { _Target = value; OnPropertyChanged("Target"); }
     }
 
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Addresses
     {
-      get => _Addresses ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Addresses ??= [];
       set { _Addresses = value; OnPropertyChanged("Addresses"); }
     }
 
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OutcomeCode
     {
-      get => _OutcomeCode ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _OutcomeCode ??= [];
       set { _OutcomeCode = value; OnPropertyChanged("OutcomeCode"); }
     }
 
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> OutcomeReference
     {
-      get => _OutcomeReference ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _OutcomeReference ??= [];
       set { _OutcomeReference = value; OnPropertyChanged("OutcomeReference"); }
     }
 

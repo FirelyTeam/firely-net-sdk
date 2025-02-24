@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Endpoint
       {
-        get => _Endpoint ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Endpoint ??= [];
         set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
       }
 
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent> Series
       {
-        get => _Series ?? new List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>();
+        get => _Series ??= [];
         set { _Series = value; OnPropertyChanged("Series"); }
       }
 
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Endpoint
       {
-        get => _Endpoint ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Endpoint ??= [];
         set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
       }
 
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent> Instance
       {
-        get => _Instance ?? new List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>();
+        get => _Instance ??= [];
         set { _Instance = value; OnPropertyChanged("Instance"); }
       }
 
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ImagingManifest.StudyComponent> Study
     {
-      get => _Study ?? new List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>();
+      get => _Study ??= [];
       set { _Study = value; OnPropertyChanged("Study"); }
     }
 

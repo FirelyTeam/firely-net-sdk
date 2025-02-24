@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> RejectionCriterion
       {
-        get => _RejectionCriterion ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _RejectionCriterion ??= [];
         set { _RejectionCriterion = value; OnPropertyChanged("RejectionCriterion"); }
       }
 
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SpecimenDefinition.HandlingComponent> Handling
       {
-        get => _Handling ?? new List<Hl7.Fhir.Model.SpecimenDefinition.HandlingComponent>();
+        get => _Handling ??= [];
         set { _Handling = value; OnPropertyChanged("Handling"); }
       }
 
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent> Additive
       {
-        get => _Additive ?? new List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent>();
+        get => _Additive ??= [];
         set { _Additive = value; OnPropertyChanged("Additive"); }
       }
 
@@ -960,7 +960,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PatientPreparation
     {
-      get => _PatientPreparation ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _PatientPreparation ??= [];
       set { _PatientPreparation = value; OnPropertyChanged("PatientPreparation"); }
     }
 
@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Collection
     {
-      get => _Collection ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Collection ??= [];
       set { _Collection = value; OnPropertyChanged("Collection"); }
     }
 
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent> TypeTested
     {
-      get => _TypeTested ?? new List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent>();
+      get => _TypeTested ??= [];
       set { _TypeTested = value; OnPropertyChanged("TypeTested"); }
     }
 

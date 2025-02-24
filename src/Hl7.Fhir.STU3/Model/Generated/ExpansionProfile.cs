@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExpansionProfile.DesignationIncludeDesignationComponent> Designation
       {
-        get => _Designation ?? new List<Hl7.Fhir.Model.ExpansionProfile.DesignationIncludeDesignationComponent>();
+        get => _Designation ??= [];
         set { _Designation = value; OnPropertyChanged("Designation"); }
       }
 
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ExpansionProfile.DesignationExcludeDesignationComponent> Designation
       {
-        get => _Designation ?? new List<Hl7.Fhir.Model.ExpansionProfile.DesignationExcludeDesignationComponent>();
+        get => _Designation ??= [];
         set { _Designation = value; OnPropertyChanged("Designation"); }
       }
 
@@ -1186,7 +1186,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1228,7 +1228,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1243,7 +1243,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1257,7 +1257,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExpansionProfile.FixedVersionComponent> FixedVersion
     {
-      get => _FixedVersion ?? new List<Hl7.Fhir.Model.ExpansionProfile.FixedVersionComponent>();
+      get => _FixedVersion ??= [];
       set { _FixedVersion = value; OnPropertyChanged("FixedVersion"); }
     }
 

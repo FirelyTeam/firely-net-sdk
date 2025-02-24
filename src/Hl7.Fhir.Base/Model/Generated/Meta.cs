@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.PrimitiveType> ProfileElement
     {
-      get => _ProfileElement ?? new List<Hl7.Fhir.Model.PrimitiveType>();
+      get => _ProfileElement ??= [];
       set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
     }
 
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Security
     {
-      get => _Security ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _Security ??= [];
       set { _Security = value; OnPropertyChanged("Security"); }
     }
 
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Tag
     {
-      get => _Tag ?? new List<Hl7.Fhir.Model.Coding>();
+      get => _Tag ??= [];
       set { _Tag = value; OnPropertyChanged("Tag"); }
     }
 

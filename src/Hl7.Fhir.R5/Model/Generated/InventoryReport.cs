@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.InventoryReport.ItemComponent> Item
       {
-        get => _Item ?? new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>();
+        get => _Item ??= [];
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent> InventoryListing
     {
-      get => _InventoryListing ?? new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>();
+      get => _InventoryListing ??= [];
       set { _InventoryListing = value; OnPropertyChanged("InventoryListing"); }
     }
 
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ?? new List<Hl7.Fhir.Model.Annotation>();
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 

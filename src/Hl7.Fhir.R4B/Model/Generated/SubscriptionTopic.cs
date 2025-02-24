@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>> SupportedInteractionElement
       {
-        get => _SupportedInteractionElement ?? new List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>>();
+        get => _SupportedInteractionElement ??= [];
         set { _SupportedInteractionElement = value; OnPropertyChanged("SupportedInteractionElement"); }
       }
 
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>> ModifierElement
       {
-        get => _ModifierElement ?? new List<Code<Hl7.Fhir.Model.SubscriptionTopic.SubscriptionSearchModifier>>();
+        get => _ModifierElement ??= [];
         set { _ModifierElement = value; OnPropertyChanged("ModifierElement"); }
       }
 
@@ -1198,7 +1198,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> IncludeElement
       {
-        get => _IncludeElement ?? new List<Hl7.Fhir.Model.FhirString>();
+        get => _IncludeElement ??= [];
         set { _IncludeElement = value; OnPropertyChanged("IncludeElement"); }
       }
 
@@ -1230,7 +1230,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> RevIncludeElement
       {
-        get => _RevIncludeElement ?? new List<Hl7.Fhir.Model.FhirString>();
+        get => _RevIncludeElement ??= [];
         set { _RevIncludeElement = value; OnPropertyChanged("RevIncludeElement"); }
       }
 
@@ -1370,7 +1370,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1440,7 +1440,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> DerivedFromElement
     {
-      get => _DerivedFromElement ?? new List<Hl7.Fhir.Model.Canonical>();
+      get => _DerivedFromElement ??= [];
       set { _DerivedFromElement = value; OnPropertyChanged("DerivedFromElement"); }
     }
 
@@ -1587,7 +1587,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1629,7 +1629,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1644,7 +1644,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1783,7 +1783,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubscriptionTopic.ResourceTriggerComponent> ResourceTrigger
     {
-      get => _ResourceTrigger ?? new List<Hl7.Fhir.Model.SubscriptionTopic.ResourceTriggerComponent>();
+      get => _ResourceTrigger ??= [];
       set { _ResourceTrigger = value; OnPropertyChanged("ResourceTrigger"); }
     }
 
@@ -1797,7 +1797,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubscriptionTopic.EventTriggerComponent> EventTrigger
     {
-      get => _EventTrigger ?? new List<Hl7.Fhir.Model.SubscriptionTopic.EventTriggerComponent>();
+      get => _EventTrigger ??= [];
       set { _EventTrigger = value; OnPropertyChanged("EventTrigger"); }
     }
 
@@ -1811,7 +1811,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubscriptionTopic.CanFilterByComponent> CanFilterBy
     {
-      get => _CanFilterBy ?? new List<Hl7.Fhir.Model.SubscriptionTopic.CanFilterByComponent>();
+      get => _CanFilterBy ??= [];
       set { _CanFilterBy = value; OnPropertyChanged("CanFilterBy"); }
     }
 
@@ -1825,7 +1825,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubscriptionTopic.NotificationShapeComponent> NotificationShape
     {
-      get => _NotificationShape ?? new List<Hl7.Fhir.Model.SubscriptionTopic.NotificationShapeComponent>();
+      get => _NotificationShape ??= [];
       set { _NotificationShape = value; OnPropertyChanged("NotificationShape"); }
     }
 

@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Resource> Contained
     {
-      get => _Contained ?? new List<Hl7.Fhir.Model.Resource>();
+      get => _Contained ??= [];
       set { _Contained = value; OnPropertyChanged("Contained"); }
     }
 
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
-      get => _Extension ?? new List<Hl7.Fhir.Model.Extension>();
+      get => _Extension ??= [];
       set { _Extension = value; OnPropertyChanged("Extension"); }
     }
 
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
-      get => _ModifierExtension ?? new List<Hl7.Fhir.Model.Extension>();
+      get => _ModifierExtension ??= [];
       set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
     }
 

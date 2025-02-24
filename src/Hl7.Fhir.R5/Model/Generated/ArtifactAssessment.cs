@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Classifier
       {
-        get => _Classifier ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Classifier ??= [];
         set { _Classifier = value; OnPropertyChanged("Classifier"); }
       }
 
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirUri> PathElement
       {
-        get => _PathElement ?? new List<Hl7.Fhir.Model.FhirUri>();
+        get => _PathElement ??= [];
         set { _PathElement = value; OnPropertyChanged("PathElement"); }
       }
 
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
       {
-        get => _RelatedArtifact ?? new List<Hl7.Fhir.Model.RelatedArtifact>();
+        get => _RelatedArtifact ??= [];
         set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
       }
 
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> Component
       {
-        get => _Component ?? new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>();
+        get => _Component ??= [];
         set { _Component = value; OnPropertyChanged("Component"); }
       }
 
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -774,7 +774,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> Content
     {
-      get => _Content ?? new List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>();
+      get => _Content ??= [];
       set { _Content = value; OnPropertyChanged("Content"); }
     }
 

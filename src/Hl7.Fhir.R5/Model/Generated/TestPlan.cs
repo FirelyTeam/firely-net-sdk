@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Scope
       {
-        get => _Scope ?? new List<Hl7.Fhir.Model.ResourceReference>();
+        get => _Scope ??= [];
         set { _Scope = value; OnPropertyChanged("Scope"); }
       }
 
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestPlan.TestCaseDependencyComponent> Dependency
       {
-        get => _Dependency ?? new List<Hl7.Fhir.Model.TestPlan.TestCaseDependencyComponent>();
+        get => _Dependency ??= [];
         set { _Dependency = value; OnPropertyChanged("Dependency"); }
       }
 
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestPlan.TestRunComponent> TestRun
       {
-        get => _TestRun ?? new List<Hl7.Fhir.Model.TestPlan.TestRunComponent>();
+        get => _TestRun ??= [];
         set { _TestRun = value; OnPropertyChanged("TestRun"); }
       }
 
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestPlan.TestDataComponent> TestData
       {
-        get => _TestData ?? new List<Hl7.Fhir.Model.TestPlan.TestDataComponent>();
+        get => _TestData ??= [];
         set { _TestData = value; OnPropertyChanged("TestData"); }
       }
 
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.TestPlan.AssertionComponent> Assertion
       {
-        get => _Assertion ?? new List<Hl7.Fhir.Model.TestPlan.AssertionComponent>();
+        get => _Assertion ??= [];
         set { _Assertion = value; OnPropertyChanged("Assertion"); }
       }
 
@@ -929,7 +929,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get => _Type ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
@@ -943,7 +943,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Object
       {
-        get => _Object ?? new List<Hl7.Fhir.Model.CodeableReference>();
+        get => _Object ??= [];
         set { _Object = value; OnPropertyChanged("Object"); }
       }
 
@@ -957,7 +957,7 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Result
       {
-        get => _Result ?? new List<Hl7.Fhir.Model.CodeableReference>();
+        get => _Result ??= [];
         set { _Result = value; OnPropertyChanged("Result"); }
       }
 
@@ -1078,7 +1078,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -1306,7 +1306,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ?? new List<Hl7.Fhir.Model.ContactDetail>();
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
@@ -1348,7 +1348,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ?? new List<Hl7.Fhir.Model.UsageContext>();
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
@@ -1363,7 +1363,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get => _Jurisdiction ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
@@ -1462,7 +1462,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ?? new List<Hl7.Fhir.Model.CodeableConcept>();
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
@@ -1476,7 +1476,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Scope
     {
-      get => _Scope ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Scope ??= [];
       set { _Scope = value; OnPropertyChanged("Scope"); }
     }
 
@@ -1518,7 +1518,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.TestPlan.DependencyComponent> Dependency
     {
-      get => _Dependency ?? new List<Hl7.Fhir.Model.TestPlan.DependencyComponent>();
+      get => _Dependency ??= [];
       set { _Dependency = value; OnPropertyChanged("Dependency"); }
     }
 
@@ -1560,7 +1560,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.TestPlan.TestCaseComponent> TestCase
     {
-      get => _TestCase ?? new List<Hl7.Fhir.Model.TestPlan.TestCaseComponent>();
+      get => _TestCase ??= [];
       set { _TestCase = value; OnPropertyChanged("TestCase"); }
     }
 

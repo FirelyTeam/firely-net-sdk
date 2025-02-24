@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Parent
     {
-      get => _Parent ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Parent ??= [];
       set { _Parent = value; OnPropertyChanged("Parent"); }
     }
 
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Request
     {
-      get => _Request ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _Request ??= [];
       set { _Request = value; OnPropertyChanged("Request"); }
     }
 
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ?? new List<Hl7.Fhir.Model.Identifier>();
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ProcessingFacility
     {
-      get => _ProcessingFacility ?? new List<Hl7.Fhir.Model.ResourceReference>();
+      get => _ProcessingFacility ??= [];
       set { _ProcessingFacility = value; OnPropertyChanged("ProcessingFacility"); }
     }
 
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent> Property
     {
-      get => _Property ?? new List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent>();
+      get => _Property ??= [];
       set { _Property = value; OnPropertyChanged("Property"); }
     }
 

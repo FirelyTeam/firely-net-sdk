@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
-      get => _ModifierExtension ?? new List<Hl7.Fhir.Model.Extension>();
+      get => _ModifierExtension ??= [];
       set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
     }
 
