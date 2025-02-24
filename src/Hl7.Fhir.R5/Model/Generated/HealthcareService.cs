@@ -139,9 +139,10 @@ namespace Hl7.Fhir.Model
         if(other is not EligibilityComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Code, otherT._Code)) return false;
         if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -640,7 +641,8 @@ namespace Hl7.Fhir.Model
       if(other is not HealthcareService otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
       if(!comparer.Equals(_ProvidedBy, otherT._ProvidedBy)) return false;
       if(!comparer.ListEquals(_OfferedIn, otherT._OfferedIn)) return false;
@@ -663,7 +665,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_AppointmentRequiredElement, otherT._AppointmentRequiredElement)) return false;
       if(!comparer.ListEquals(_Availability, otherT._Availability)) return false;
       if(!comparer.ListEquals(_Endpoint, otherT._Endpoint)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

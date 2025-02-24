@@ -160,11 +160,12 @@ namespace Hl7.Fhir.Model
         if(other is not QualificationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
         if(!comparer.Equals(_Code, otherT._Code)) return false;
         if(!comparer.Equals(_Period, otherT._Period)) return false;
         if(!comparer.Equals(_Issuer, otherT._Issuer)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -460,7 +461,8 @@ namespace Hl7.Fhir.Model
       if(other is not Organization otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
       if(!comparer.ListEquals(_Type, otherT._Type)) return false;
       if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
@@ -470,7 +472,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_PartOf, otherT._PartOf)) return false;
       if(!comparer.ListEquals(_Endpoint, otherT._Endpoint)) return false;
       if(!comparer.ListEquals(_Qualification, otherT._Qualification)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

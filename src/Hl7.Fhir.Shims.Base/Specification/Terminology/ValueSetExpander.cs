@@ -57,11 +57,11 @@ namespace Hl7.Fhir.Specification.Terminology
             // Note we are expanding the valueset in-place, so it's up to the caller to decide whether
             // to clone the valueset, depending on store and performance requirements.
             source.Expansion = ValueSet.ExpansionComponent.Create();
-            setExpansionParameters(source);
+            setExpansionParameters(source.Expansion);
 
             try
             {
-                inclusionChain.Push(source.Url ?? throw new ArgumentException("ValueSet must have a canonical URL to expand", nameof(source)));
+                inclusionChain.Push(source.Url!);
                 await handleCompose(source, inclusionChain).ConfigureAwait(false);
             }
             catch (Exception)
@@ -76,12 +76,11 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
-        private void setExpansionParameters(ValueSet vs)
+        private void setExpansionParameters(ValueSet.ExpansionComponent ec)
         {
-            vs.Expansion ??= new ValueSet.ExpansionComponent();
             if (Settings.IncludeDesignations)
             {
-                vs.Expansion.Parameter.Add(new ValueSet.ParameterComponent
+                ec.Parameter.Add(new ValueSet.ParameterComponent
                 {
                     Name = "includeDesignations",
                     Value = new FhirBoolean(true)
@@ -135,7 +134,7 @@ namespace Hl7.Fhir.Specification.Terminology
             var valueSetResult = await processValueSetGroup(conceptSet, inclusionChain).ConfigureAwait(false);
 
             // > For each compose.include: (...) Add the intersection of the result set from the system(step 1) and all of the result sets from the value sets(step 2) to the expansion.
-            // Most of the time, the expansion contains stuff from either the system (+enumerated concepts) or the valuesets. 
+            // Most of the time, the expansion contains stuff from either the system (+enumerated concepts) or the valuesets.
             // If that is the case, return the result directly. If both were specified, we need to calculate the intersection.
             return (systemResult, valueSetResult) switch
             {
@@ -201,7 +200,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 else if (conceptSet.Concept.Any())
                 {
                     var convertedConcepts = conceptSet.Concept.Select(c =>
-                        ContainsSetExtensions.BuildContainsComponent(conceptSet.System, conceptSet.Version, c.Code, c.Display, Settings.IncludeDesignations ? c.Designation : null));
+                        ContainsSetExtensions.BuildContainsComponent(conceptSet.System, conceptSet.Version!, c.Code!, c.Display!, Settings.IncludeDesignations ? c.Designation : null));
 
                     addCapped(result, convertedConcepts, $"Adding the enumerated concepts to the expansion would result in a valueset larger than the maximum expansion size.");
                 }
@@ -233,16 +232,15 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private async Tasks.Task handleInclude(ValueSet source, Stack<string> inclusionChain)
         {
-            if (!source.Compose?.Include.Any() == true) return;
+            if (source.Compose?.Include.Any() != true) return;
 
             int csIndex = 0;
-            foreach (var include in source.Compose!.Include)
+            foreach (var include in source.Compose.Include)
             {
                 var includedConcepts = await processConceptSet(include, inclusionChain).ConfigureAwait(false);
 
                 // Yes, exclusion could make this smaller again, but alas, before we have processed those we might have run out of memory
-                source.Expansion ??= new ValueSet.ExpansionComponent();
-                addCapped(source.Expansion.Contains, includedConcepts, $"Inclusion of {includedConcepts.Count} concepts from conceptset #{csIndex}' to  " +
+                addCapped(source.Expansion!.Contains, includedConcepts, $"Inclusion of {includedConcepts.Count} concepts from conceptset #{csIndex}' to  " +
                         $"valueset '{source.Url}' ({source.Expansion.Total} concepts) would be larger than the set maximum size ({Settings.MaxExpansionSize})");
 
                 var original = source.Expansion.Total ?? 0;
@@ -253,14 +251,13 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private async Tasks.Task handleExclude(ValueSet source, Stack<string> inclusionChain)
         {
-            if (!source.Compose?.Exclude.Any() == true) return;
+            if (source.Compose?.Exclude.Any() != true) return;
 
-            foreach (var exclude in source.Compose!.Exclude)
+            foreach (var exclude in source.Compose.Exclude)
             {
                 var excludedConcepts = await processConceptSet(exclude, inclusionChain).ConfigureAwait(false);
 
-                source.Expansion ??= new ValueSet.ExpansionComponent();
-                source.Expansion.Contains.Remove(excludedConcepts);
+                source.Expansion!.Contains.Remove(excludedConcepts);
 
                 var original = source.Expansion.Total ?? 0;
                 source.Expansion.Total = original - excludedConcepts.CountConcepts();
@@ -291,18 +288,18 @@ namespace Hl7.Fhir.Specification.Terminology
 
             var importedCs = await Settings.ValueSetSource.AsAsync().FindCodeSystemAsync(uri).ConfigureAwait(false)
                 ?? throw new ValueSetUnknownException($"The ValueSet expander cannot find codesystem '{uri}', so the expansion cannot be completed.");
-            
+
             if(importedCs.Compositional is true)
                 throw new ValueSetExpansionTooComplexException($"The ValueSet expander cannot expand compositional code system '{uri}', so the expansion cannot be completed.");
-            
+
 #if STU3
             var contentNotPresent = importedCs.Content == CodeSystem.CodeSystemContentMode.NotPresent;
-#else 
+#else
             var contentNotPresent = importedCs.Content == CodeSystemContentMode.NotPresent;
 #endif
             if(contentNotPresent)
                 throw new ValueSetExpansionTooComplexException($"The ValueSet expander cannot expand code system '{uri}' without content, so the expansion cannot be completed.");
-            
+
             return importedCs.Concept.Select(c => c.ToContainsComponent(importedCs, Settings));
         }
     }
@@ -310,8 +307,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
     public static class ContainsSetExtensions
     {
-        internal static ValueSet.ContainsComponent BuildContainsComponent(string? system, string? version, string? code,
-            string? display, List<ValueSet.DesignationComponent>? designations = null, IEnumerable<ValueSet.ContainsComponent>? children = null)
+        internal static ValueSet.ContainsComponent BuildContainsComponent(string system, string version, string code, string display, List<ValueSet.DesignationComponent>? designations = null, IEnumerable<ValueSet.ContainsComponent>? children = null)
         {
             return new ValueSet.ContainsComponent
             {
@@ -322,6 +318,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 Designation = designations!,
                 Contains = children?.ToList()!
             };
+
         }
 
         public static ValueSet.ContainsComponent Add(this List<ValueSet.ContainsComponent> dest, string system, string version, string code, string display, List<ValueSet.DesignationComponent>? designations = null, IEnumerable<ValueSet.ContainsComponent>? children = null)

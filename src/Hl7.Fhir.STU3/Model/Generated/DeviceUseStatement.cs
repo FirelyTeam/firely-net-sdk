@@ -331,7 +331,8 @@ namespace Hl7.Fhir.Model
       if(other is not DeviceUseStatement otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_Subject, otherT._Subject)) return false;
       if(!comparer.Equals(_WhenUsed, otherT._WhenUsed)) return false;
@@ -342,7 +343,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_Indication, otherT._Indication)) return false;
       if(!comparer.Equals(_BodySite, otherT._BodySite)) return false;
       if(!comparer.ListEquals(_Note, otherT._Note)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

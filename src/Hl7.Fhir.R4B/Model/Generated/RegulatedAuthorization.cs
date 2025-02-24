@@ -173,12 +173,13 @@ namespace Hl7.Fhir.Model
         if(other is not CaseComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
         if(!comparer.Equals(_Type, otherT._Type)) return false;
         if(!comparer.Equals(_Status, otherT._Status)) return false;
         if(!comparer.Equals(_Date, otherT._Date)) return false;
         if(!comparer.ListEquals(_Application, otherT._Application)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -508,7 +509,8 @@ namespace Hl7.Fhir.Model
       if(other is not RegulatedAuthorization otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.ListEquals(_Subject, otherT._Subject)) return false;
       if(!comparer.Equals(_Type, otherT._Type)) return false;
       if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
@@ -522,7 +524,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_Holder, otherT._Holder)) return false;
       if(!comparer.Equals(_Regulator, otherT._Regulator)) return false;
       if(!comparer.Equals(_Case, otherT._Case)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

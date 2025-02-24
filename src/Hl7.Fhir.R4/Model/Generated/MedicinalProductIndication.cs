@@ -128,9 +128,10 @@ namespace Hl7.Fhir.Model
         if(other is not OtherTherapyComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_TherapyRelationshipType, otherT._TherapyRelationshipType)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_TherapyRelationshipType, otherT._TherapyRelationshipType)) return false;
         if(!comparer.Equals(_Medication, otherT._Medication)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -331,7 +332,8 @@ namespace Hl7.Fhir.Model
       if(other is not MedicinalProductIndication otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Subject, otherT._Subject)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Subject, otherT._Subject)) return false;
       if(!comparer.Equals(_DiseaseSymptomProcedure, otherT._DiseaseSymptomProcedure)) return false;
       if(!comparer.Equals(_DiseaseStatus, otherT._DiseaseStatus)) return false;
       if(!comparer.ListEquals(_Comorbidity, otherT._Comorbidity)) return false;
@@ -340,7 +342,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_OtherTherapy, otherT._OtherTherapy)) return false;
       if(!comparer.ListEquals(_UndesirableEffect, otherT._UndesirableEffect)) return false;
       if(!comparer.ListEquals(_Population, otherT._Population)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

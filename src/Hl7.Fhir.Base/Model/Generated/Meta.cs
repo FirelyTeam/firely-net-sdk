@@ -265,13 +265,14 @@ namespace Hl7.Fhir.Model
       if(other is not Meta otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_VersionIdElement, otherT._VersionIdElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_VersionIdElement, otherT._VersionIdElement)) return false;
       if(!comparer.Equals(_LastUpdatedElement, otherT._LastUpdatedElement)) return false;
       if(!comparer.Equals(_SourceElement, otherT._SourceElement)) return false;
       if(!comparer.ListEquals(_ProfileElement, otherT._ProfileElement)) return false;
       if(!comparer.ListEquals(_Security, otherT._Security)) return false;
       if(!comparer.ListEquals(_Tag, otherT._Tag)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

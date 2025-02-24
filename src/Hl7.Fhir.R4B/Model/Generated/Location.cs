@@ -237,10 +237,11 @@ namespace Hl7.Fhir.Model
         if(other is not PositionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_LongitudeElement, otherT._LongitudeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_LongitudeElement, otherT._LongitudeElement)) return false;
         if(!comparer.Equals(_LatitudeElement, otherT._LatitudeElement)) return false;
         if(!comparer.Equals(_AltitudeElement, otherT._AltitudeElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -452,11 +453,12 @@ namespace Hl7.Fhir.Model
         if(other is not HoursOfOperationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_DaysOfWeekElement, otherT._DaysOfWeekElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_DaysOfWeekElement, otherT._DaysOfWeekElement)) return false;
         if(!comparer.Equals(_AllDayElement, otherT._AllDayElement)) return false;
         if(!comparer.Equals(_OpeningTimeElement, otherT._OpeningTimeElement)) return false;
         if(!comparer.Equals(_ClosingTimeElement, otherT._ClosingTimeElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -888,7 +890,8 @@ namespace Hl7.Fhir.Model
       if(other is not Location otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_OperationalStatus, otherT._OperationalStatus)) return false;
       if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
@@ -905,7 +908,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_HoursOfOperation, otherT._HoursOfOperation)) return false;
       if(!comparer.Equals(_AvailabilityExceptionsElement, otherT._AvailabilityExceptionsElement)) return false;
       if(!comparer.ListEquals(_Endpoint, otherT._Endpoint)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

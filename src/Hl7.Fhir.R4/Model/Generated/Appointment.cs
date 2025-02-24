@@ -302,12 +302,13 @@ namespace Hl7.Fhir.Model
         if(other is not ParticipantComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Type, otherT._Type)) return false;
         if(!comparer.Equals(_Actor, otherT._Actor)) return false;
         if(!comparer.Equals(_RequiredElement, otherT._RequiredElement)) return false;
         if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
         if(!comparer.Equals(_Period, otherT._Period)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -826,7 +827,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => ServiceType; set => ServiceType = value; }
-    IEnumerable<Coding> ICoded.ToCodings() => ServiceType?.ToCodings() ?? [];
+    IReadOnlyCollection<Coding> ICoded.ToCodings() => ServiceType?.ToCodings() ?? [];
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -870,7 +871,8 @@ namespace Hl7.Fhir.Model
       if(other is not Appointment otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_CancelationReason, otherT._CancelationReason)) return false;
       if(!comparer.ListEquals(_ServiceCategory, otherT._ServiceCategory)) return false;
@@ -892,7 +894,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
       if(!comparer.ListEquals(_Participant, otherT._Participant)) return false;
       if(!comparer.ListEquals(_RequestedPeriod, otherT._RequestedPeriod)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

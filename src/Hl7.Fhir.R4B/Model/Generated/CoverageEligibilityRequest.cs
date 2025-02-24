@@ -209,10 +209,11 @@ namespace Hl7.Fhir.Model
         if(other is not SupportingInformationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_SequenceElement, otherT._SequenceElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SequenceElement, otherT._SequenceElement)) return false;
         if(!comparer.Equals(_Information, otherT._Information)) return false;
         if(!comparer.Equals(_AppliesToAllElement, otherT._AppliesToAllElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -377,10 +378,11 @@ namespace Hl7.Fhir.Model
         if(other is not InsuranceComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_FocalElement, otherT._FocalElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_FocalElement, otherT._FocalElement)) return false;
         if(!comparer.Equals(_Coverage, otherT._Coverage)) return false;
         if(!comparer.Equals(_BusinessArrangementElement, otherT._BusinessArrangementElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -640,7 +642,8 @@ namespace Hl7.Fhir.Model
         if(other is not DetailsComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_SupportingInfoSequenceElement, otherT._SupportingInfoSequenceElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_SupportingInfoSequenceElement, otherT._SupportingInfoSequenceElement)) return false;
         if(!comparer.Equals(_Category, otherT._Category)) return false;
         if(!comparer.Equals(_ProductOrService, otherT._ProductOrService)) return false;
         if(!comparer.ListEquals(_Modifier, otherT._Modifier)) return false;
@@ -650,7 +653,7 @@ namespace Hl7.Fhir.Model
         if(!comparer.Equals(_Facility, otherT._Facility)) return false;
         if(!comparer.ListEquals(_Diagnosis, otherT._Diagnosis)) return false;
         if(!comparer.ListEquals(_Detail, otherT._Detail)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -806,8 +809,9 @@ namespace Hl7.Fhir.Model
         if(other is not DiagnosisComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Diagnosis, otherT._Diagnosis)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Diagnosis, otherT._Diagnosis)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -1138,7 +1142,8 @@ namespace Hl7.Fhir.Model
       if(other is not CoverageEligibilityRequest otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_Priority, otherT._Priority)) return false;
       if(!comparer.ListEquals(_PurposeElement, otherT._PurposeElement)) return false;
@@ -1152,7 +1157,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_SupportingInfo, otherT._SupportingInfo)) return false;
       if(!comparer.ListEquals(_Insurance, otherT._Insurance)) return false;
       if(!comparer.ListEquals(_Item, otherT._Item)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

@@ -187,9 +187,10 @@ namespace Hl7.Fhir.Model
         if(other is not SubjectComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Characteristic, otherT._Characteristic)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Characteristic, otherT._Characteristic)) return false;
         if(!comparer.ListEquals(_Note, otherT._Note)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -345,11 +346,12 @@ namespace Hl7.Fhir.Model
         if(other is not CharacteristicComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Code, otherT._Code)) return false;
         if(!comparer.Equals(_Value, otherT._Value)) return false;
         if(!comparer.Equals(_ExcludeElement, otherT._ExcludeElement)) return false;
         if(!comparer.Equals(_Period, otherT._Period)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -493,9 +495,10 @@ namespace Hl7.Fhir.Model
         if(other is not RelatesToComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_CodeElement, otherT._CodeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_CodeElement, otherT._CodeElement)) return false;
         if(!comparer.Equals(_Target, otherT._Target)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -665,11 +668,12 @@ namespace Hl7.Fhir.Model
         if(other is not TargetComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
         if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
         if(!comparer.Equals(_DisplayElement, otherT._DisplayElement)) return false;
         if(!comparer.Equals(_Resource, otherT._Resource)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -980,7 +984,8 @@ namespace Hl7.Fhir.Model
         if(other is not SectionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_TitleElement, otherT._TitleElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_TitleElement, otherT._TitleElement)) return false;
         if(!comparer.Equals(_Focus, otherT._Focus)) return false;
         if(!comparer.Equals(_FocusReference, otherT._FocusReference)) return false;
         if(!comparer.ListEquals(_Author, otherT._Author)) return false;
@@ -992,7 +997,7 @@ namespace Hl7.Fhir.Model
         if(!comparer.ListEquals(_EntryQuantity, otherT._EntryQuantity)) return false;
         if(!comparer.Equals(_EmptyReason, otherT._EmptyReason)) return false;
         if(!comparer.ListEquals(_Section, otherT._Section)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -1447,7 +1452,8 @@ namespace Hl7.Fhir.Model
       if(other is not EvidenceReport otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.ListEquals(_UseContext, otherT._UseContext)) return false;
       if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
@@ -1465,7 +1471,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_Endorser, otherT._Endorser)) return false;
       if(!comparer.ListEquals(_RelatesTo, otherT._RelatesTo)) return false;
       if(!comparer.ListEquals(_Section, otherT._Section)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

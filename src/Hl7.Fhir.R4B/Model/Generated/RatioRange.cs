@@ -125,10 +125,11 @@ namespace Hl7.Fhir.Model
       if(other is not RatioRange otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_LowNumerator, otherT._LowNumerator)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_LowNumerator, otherT._LowNumerator)) return false;
       if(!comparer.Equals(_HighNumerator, otherT._HighNumerator)) return false;
       if(!comparer.Equals(_Denominator, otherT._Denominator)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

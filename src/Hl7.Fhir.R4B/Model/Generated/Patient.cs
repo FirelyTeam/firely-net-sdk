@@ -252,14 +252,15 @@ namespace Hl7.Fhir.Model
         if(other is not ContactComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Relationship, otherT._Relationship)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Relationship, otherT._Relationship)) return false;
         if(!comparer.Equals(_Name, otherT._Name)) return false;
         if(!comparer.ListEquals(_Telecom, otherT._Telecom)) return false;
         if(!comparer.Equals(_Address, otherT._Address)) return false;
         if(!comparer.Equals(_GenderElement, otherT._GenderElement)) return false;
         if(!comparer.Equals(_Organization, otherT._Organization)) return false;
         if(!comparer.Equals(_Period, otherT._Period)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -421,9 +422,10 @@ namespace Hl7.Fhir.Model
         if(other is not CommunicationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Language, otherT._Language)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Language, otherT._Language)) return false;
         if(!comparer.Equals(_PreferredElement, otherT._PreferredElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -555,9 +557,10 @@ namespace Hl7.Fhir.Model
         if(other is not LinkComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Other, otherT._Other)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Other, otherT._Other)) return false;
         if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -914,7 +917,8 @@ namespace Hl7.Fhir.Model
       if(other is not Patient otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
       if(!comparer.ListEquals(_Name, otherT._Name)) return false;
       if(!comparer.ListEquals(_Telecom, otherT._Telecom)) return false;
@@ -930,7 +934,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_GeneralPractitioner, otherT._GeneralPractitioner)) return false;
       if(!comparer.Equals(_ManagingOrganization, otherT._ManagingOrganization)) return false;
       if(!comparer.ListEquals(_Link, otherT._Link)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

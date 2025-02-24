@@ -162,8 +162,9 @@ namespace Hl7.Fhir.Model
         if(other is not ItemsComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_SequenceLinkIdElement, otherT._SequenceLinkIdElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SequenceLinkIdElement, otherT._SequenceLinkIdElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -563,7 +564,8 @@ namespace Hl7.Fhir.Model
       if(other is not ProcessRequest otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_ActionElement, otherT._ActionElement)) return false;
       if(!comparer.Equals(_Target, otherT._Target)) return false;
@@ -578,7 +580,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_IncludeElement, otherT._IncludeElement)) return false;
       if(!comparer.ListEquals(_ExcludeElement, otherT._ExcludeElement)) return false;
       if(!comparer.Equals(_Period, otherT._Period)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

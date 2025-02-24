@@ -186,14 +186,15 @@ namespace Hl7.Fhir.Model
       if(other is not MedicinalProductManufactured otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_ManufacturedDoseForm, otherT._ManufacturedDoseForm)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_ManufacturedDoseForm, otherT._ManufacturedDoseForm)) return false;
       if(!comparer.Equals(_UnitOfPresentation, otherT._UnitOfPresentation)) return false;
       if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
       if(!comparer.ListEquals(_Manufacturer, otherT._Manufacturer)) return false;
       if(!comparer.ListEquals(_Ingredient, otherT._Ingredient)) return false;
       if(!comparer.Equals(_PhysicalCharacteristics, otherT._PhysicalCharacteristics)) return false;
       if(!comparer.ListEquals(_OtherCharacteristics, otherT._OtherCharacteristics)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

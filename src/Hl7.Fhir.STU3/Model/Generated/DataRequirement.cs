@@ -208,12 +208,13 @@ namespace Hl7.Fhir.Model
         if(other is not CodeFilterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_PathElement, otherT._PathElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_PathElement, otherT._PathElement)) return false;
         if(!comparer.Equals(_ValueSet, otherT._ValueSet)) return false;
         if(!comparer.ListEquals(_ValueCodeElement, otherT._ValueCodeElement)) return false;
         if(!comparer.ListEquals(_ValueCoding, otherT._ValueCoding)) return false;
         if(!comparer.ListEquals(_ValueCodeableConcept, otherT._ValueCodeableConcept)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -362,9 +363,10 @@ namespace Hl7.Fhir.Model
         if(other is not DateFilterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_PathElement, otherT._PathElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_PathElement, otherT._PathElement)) return false;
         if(!comparer.Equals(_Value, otherT._Value)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -558,12 +560,13 @@ namespace Hl7.Fhir.Model
       if(other is not DataRequirement otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
       if(!comparer.ListEquals(_ProfileElement, otherT._ProfileElement)) return false;
       if(!comparer.ListEquals(_MustSupportElement, otherT._MustSupportElement)) return false;
       if(!comparer.ListEquals(_CodeFilter, otherT._CodeFilter)) return false;
       if(!comparer.ListEquals(_DateFilter, otherT._DateFilter)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

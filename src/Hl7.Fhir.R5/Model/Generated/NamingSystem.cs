@@ -336,13 +336,14 @@ namespace Hl7.Fhir.Model
         if(other is not UniqueIdComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
         if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
         if(!comparer.Equals(_PreferredElement, otherT._PreferredElement)) return false;
         if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
         if(!comparer.Equals(_Period, otherT._Period)) return false;
         if(!comparer.Equals(_AuthoritativeElement, otherT._AuthoritativeElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -1151,7 +1152,8 @@ namespace Hl7.Fhir.Model
       if(other is not NamingSystem otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
       if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_VersionElement, otherT._VersionElement)) return false;
       if(!comparer.Equals(_VersionAlgorithm, otherT._VersionAlgorithm)) return false;
@@ -1182,7 +1184,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_RelatedArtifact, otherT._RelatedArtifact)) return false;
       if(!comparer.Equals(_UsageElement, otherT._UsageElement)) return false;
       if(!comparer.ListEquals(_UniqueId, otherT._UniqueId)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

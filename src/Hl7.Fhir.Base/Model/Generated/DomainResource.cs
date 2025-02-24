@@ -131,11 +131,12 @@ namespace Hl7.Fhir.Model
       if(other is not DomainResource otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Text, otherT._Text)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Text, otherT._Text)) return false;
       if(!comparer.ListEquals(_Contained, otherT._Contained)) return false;
       if(!comparer.ListEquals(_Extension, otherT._Extension)) return false;
       if(!comparer.ListEquals(_ModifierExtension, otherT._ModifierExtension)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

@@ -299,7 +299,8 @@ namespace Hl7.Fhir.Model
       if(other is not ResearchSubject otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_Period, otherT._Period)) return false;
       if(!comparer.Equals(_Study, otherT._Study)) return false;
@@ -307,7 +308,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_AssignedArmElement, otherT._AssignedArmElement)) return false;
       if(!comparer.Equals(_ActualArmElement, otherT._ActualArmElement)) return false;
       if(!comparer.Equals(_Consent, otherT._Consent)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

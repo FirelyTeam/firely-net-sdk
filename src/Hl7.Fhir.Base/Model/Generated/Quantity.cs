@@ -270,12 +270,13 @@ namespace Hl7.Fhir.Model
       if(other is not Quantity otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
       if(!comparer.Equals(_ComparatorElement, otherT._ComparatorElement)) return false;
       if(!comparer.Equals(_UnitElement, otherT._UnitElement)) return false;
       if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
       if(!comparer.Equals(_CodeElement, otherT._CodeElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

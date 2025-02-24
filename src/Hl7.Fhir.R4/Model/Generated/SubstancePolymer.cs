@@ -121,9 +121,10 @@ namespace Hl7.Fhir.Model
         if(other is not MonomerSetComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_RatioType, otherT._RatioType)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_RatioType, otherT._RatioType)) return false;
         if(!comparer.ListEquals(_StartingMaterial, otherT._StartingMaterial)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -273,11 +274,12 @@ namespace Hl7.Fhir.Model
         if(other is not StartingMaterialComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Material, otherT._Material)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Material, otherT._Material)) return false;
         if(!comparer.Equals(_Type, otherT._Type)) return false;
         if(!comparer.Equals(_IsDefiningElement, otherT._IsDefiningElement)) return false;
         if(!comparer.Equals(_Amount, otherT._Amount)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -457,11 +459,12 @@ namespace Hl7.Fhir.Model
         if(other is not RepeatComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_NumberOfUnitsElement, otherT._NumberOfUnitsElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_NumberOfUnitsElement, otherT._NumberOfUnitsElement)) return false;
         if(!comparer.Equals(_AverageMolecularFormulaElement, otherT._AverageMolecularFormulaElement)) return false;
         if(!comparer.Equals(_RepeatUnitAmountType, otherT._RepeatUnitAmountType)) return false;
         if(!comparer.ListEquals(_RepeatUnit, otherT._RepeatUnit)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -641,12 +644,13 @@ namespace Hl7.Fhir.Model
         if(other is not RepeatUnitComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_OrientationOfPolymerisation, otherT._OrientationOfPolymerisation)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_OrientationOfPolymerisation, otherT._OrientationOfPolymerisation)) return false;
         if(!comparer.Equals(_RepeatUnitElement, otherT._RepeatUnitElement)) return false;
         if(!comparer.Equals(_Amount, otherT._Amount)) return false;
         if(!comparer.ListEquals(_DegreeOfPolymerisation, otherT._DegreeOfPolymerisation)) return false;
         if(!comparer.ListEquals(_StructuralRepresentation, otherT._StructuralRepresentation)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -774,9 +778,10 @@ namespace Hl7.Fhir.Model
         if(other is not DegreeOfPolymerisationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Degree, otherT._Degree)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Degree, otherT._Degree)) return false;
         if(!comparer.Equals(_Amount, otherT._Amount)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -912,10 +917,11 @@ namespace Hl7.Fhir.Model
         if(other is not StructuralRepresentationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
         if(!comparer.Equals(_RepresentationElement, otherT._RepresentationElement)) return false;
         if(!comparer.Equals(_Attachment, otherT._Attachment)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -1094,13 +1100,14 @@ namespace Hl7.Fhir.Model
       if(other is not SubstancePolymer otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Class, otherT._Class)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Class, otherT._Class)) return false;
       if(!comparer.Equals(_Geometry, otherT._Geometry)) return false;
       if(!comparer.ListEquals(_CopolymerConnectivity, otherT._CopolymerConnectivity)) return false;
       if(!comparer.ListEquals(_ModificationElement, otherT._ModificationElement)) return false;
       if(!comparer.ListEquals(_MonomerSet, otherT._MonomerSet)) return false;
       if(!comparer.ListEquals(_Repeat, otherT._Repeat)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

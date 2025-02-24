@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
                 Code = REFERENCE_LITERAL,
                 TargetProfile = targetProfile,
                 Profile = profile,
-                Aggregation = aggregation?.Cast<ElementDefinition.AggregationMode?>()
+                Aggregation = aggregation?.Cast<ElementDefinition.AggregationMode?>()!
             };
 
             ed.Type.Add(newType);

@@ -131,9 +131,10 @@ namespace Hl7.Fhir.Model
         if(other is not LocationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Location, otherT._Location)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Location, otherT._Location)) return false;
         if(!comparer.Equals(_Form, otherT._Form)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -444,7 +445,8 @@ namespace Hl7.Fhir.Model
       if(other is not EncounterHistory otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
       if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_Class, otherT._Class)) return false;
@@ -457,7 +459,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_PlannedEndDateElement, otherT._PlannedEndDateElement)) return false;
       if(!comparer.Equals(_Length, otherT._Length)) return false;
       if(!comparer.ListEquals(_Location, otherT._Location)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

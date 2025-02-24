@@ -264,7 +264,8 @@ namespace Hl7.Fhir.Model
       if(other is not AppointmentResponse otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_Appointment, otherT._Appointment)) return false;
       if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
       if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
@@ -272,7 +273,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_Actor, otherT._Actor)) return false;
       if(!comparer.Equals(_ParticipantStatusElement, otherT._ParticipantStatusElement)) return false;
       if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

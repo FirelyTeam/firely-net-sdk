@@ -760,7 +760,8 @@ namespace Hl7.Fhir.Model
         if(other is not RepeatComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Bounds, otherT._Bounds)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Bounds, otherT._Bounds)) return false;
         if(!comparer.Equals(_CountElement, otherT._CountElement)) return false;
         if(!comparer.Equals(_CountMaxElement, otherT._CountMaxElement)) return false;
         if(!comparer.Equals(_DurationElement, otherT._DurationElement)) return false;
@@ -775,7 +776,7 @@ namespace Hl7.Fhir.Model
         if(!comparer.ListEquals(_TimeOfDayElement, otherT._TimeOfDayElement)) return false;
         if(!comparer.ListEquals(_WhenElement, otherT._WhenElement)) return false;
         if(!comparer.Equals(_OffsetElement, otherT._OffsetElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -994,10 +995,11 @@ namespace Hl7.Fhir.Model
       if(other is not Timing otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_EventElement, otherT._EventElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_EventElement, otherT._EventElement)) return false;
       if(!comparer.Equals(_Repeat, otherT._Repeat)) return false;
       if(!comparer.Equals(_Code, otherT._Code)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

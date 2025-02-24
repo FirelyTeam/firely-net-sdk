@@ -229,12 +229,13 @@ namespace Hl7.Fhir.Model
       if(other is not Expression otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
       if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
       if(!comparer.Equals(_LanguageElement, otherT._LanguageElement)) return false;
       if(!comparer.Equals(_ExpressionElement, otherT._ExpressionElement)) return false;
       if(!comparer.Equals(_ReferenceElement, otherT._ReferenceElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

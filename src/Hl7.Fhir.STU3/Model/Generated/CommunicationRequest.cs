@@ -116,8 +116,9 @@ namespace Hl7.Fhir.Model
         if(other is not PayloadComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Content, otherT._Content)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Content, otherT._Content)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -225,9 +226,10 @@ namespace Hl7.Fhir.Model
         if(other is not RequesterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Agent, otherT._Agent)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Agent, otherT._Agent)) return false;
         if(!comparer.Equals(_OnBehalfOf, otherT._OnBehalfOf)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -657,7 +659,8 @@ namespace Hl7.Fhir.Model
       if(other is not CommunicationRequest otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
       if(!comparer.ListEquals(_Replaces, otherT._Replaces)) return false;
       if(!comparer.Equals(_GroupIdentifier, otherT._GroupIdentifier)) return false;
@@ -677,7 +680,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_ReasonCode, otherT._ReasonCode)) return false;
       if(!comparer.ListEquals(_ReasonReference, otherT._ReasonReference)) return false;
       if(!comparer.ListEquals(_Note, otherT._Note)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

@@ -145,10 +145,11 @@ namespace Hl7.Fhir.Model
         if(other is not DoseAndRateComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
         if(!comparer.Equals(_Dose, otherT._Dose)) return false;
         if(!comparer.Equals(_Rate, otherT._Rate)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -486,7 +487,8 @@ namespace Hl7.Fhir.Model
       if(other is not Dosage otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_SequenceElement, otherT._SequenceElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_SequenceElement, otherT._SequenceElement)) return false;
       if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
       if(!comparer.ListEquals(_AdditionalInstruction, otherT._AdditionalInstruction)) return false;
       if(!comparer.Equals(_PatientInstructionElement, otherT._PatientInstructionElement)) return false;
@@ -500,7 +502,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_MaxDosePerPeriod, otherT._MaxDosePerPeriod)) return false;
       if(!comparer.Equals(_MaxDosePerAdministration, otherT._MaxDosePerAdministration)) return false;
       if(!comparer.Equals(_MaxDosePerLifetime, otherT._MaxDosePerLifetime)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

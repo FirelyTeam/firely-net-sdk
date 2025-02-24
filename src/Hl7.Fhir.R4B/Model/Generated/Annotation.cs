@@ -159,10 +159,11 @@ namespace Hl7.Fhir.Model
       if(other is not Annotation otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Author, otherT._Author)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Author, otherT._Author)) return false;
       if(!comparer.Equals(_TimeElement, otherT._TimeElement)) return false;
       if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

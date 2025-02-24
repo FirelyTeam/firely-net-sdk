@@ -164,12 +164,13 @@ namespace Hl7.Fhir.Model
         if(other is not JurisdictionalAuthorizationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
         if(!comparer.Equals(_Country, otherT._Country)) return false;
         if(!comparer.ListEquals(_Jurisdiction, otherT._Jurisdiction)) return false;
         if(!comparer.Equals(_LegalStatusOfSupply, otherT._LegalStatusOfSupply)) return false;
         if(!comparer.Equals(_ValidityPeriod, otherT._ValidityPeriod)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -329,11 +330,12 @@ namespace Hl7.Fhir.Model
         if(other is not ProcedureComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
         if(!comparer.Equals(_Type, otherT._Type)) return false;
         if(!comparer.Equals(_Date, otherT._Date)) return false;
         if(!comparer.ListEquals(_Application, otherT._Application)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -709,7 +711,8 @@ namespace Hl7.Fhir.Model
       if(other is not MedicinalProductAuthorization otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_Subject, otherT._Subject)) return false;
       if(!comparer.ListEquals(_Country, otherT._Country)) return false;
       if(!comparer.ListEquals(_Jurisdiction, otherT._Jurisdiction)) return false;
@@ -725,7 +728,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_Holder, otherT._Holder)) return false;
       if(!comparer.Equals(_Regulator, otherT._Regulator)) return false;
       if(!comparer.Equals(_Procedure, otherT._Procedure)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

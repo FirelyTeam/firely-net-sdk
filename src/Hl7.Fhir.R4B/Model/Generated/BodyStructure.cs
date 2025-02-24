@@ -235,7 +235,8 @@ namespace Hl7.Fhir.Model
       if(other is not BodyStructure otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
       if(!comparer.Equals(_Morphology, otherT._Morphology)) return false;
       if(!comparer.Equals(_Location, otherT._Location)) return false;
@@ -243,7 +244,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
       if(!comparer.ListEquals(_Image, otherT._Image)) return false;
       if(!comparer.Equals(_Patient, otherT._Patient)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

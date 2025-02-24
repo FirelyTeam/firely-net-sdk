@@ -79,5 +79,5 @@ public partial class CodeableReference : ICoded, P.IToSystemPrimitive
     }
 
     /// <inheritdoc cref="ICoded.ToCodings"/>
-    public IEnumerable<Coding> ToCodings() => Concept?.ToCodings() ?? [];
+    public IReadOnlyCollection<Coding> ToCodings() => Concept?.ToCodings() ?? [];
 }

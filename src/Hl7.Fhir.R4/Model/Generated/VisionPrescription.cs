@@ -507,7 +507,8 @@ namespace Hl7.Fhir.Model
         if(other is not LensSpecificationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Product, otherT._Product)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Product, otherT._Product)) return false;
         if(!comparer.Equals(_EyeElement, otherT._EyeElement)) return false;
         if(!comparer.Equals(_SphereElement, otherT._SphereElement)) return false;
         if(!comparer.Equals(_CylinderElement, otherT._CylinderElement)) return false;
@@ -521,7 +522,7 @@ namespace Hl7.Fhir.Model
         if(!comparer.Equals(_ColorElement, otherT._ColorElement)) return false;
         if(!comparer.Equals(_BrandElement, otherT._BrandElement)) return false;
         if(!comparer.ListEquals(_Note, otherT._Note)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -749,9 +750,10 @@ namespace Hl7.Fhir.Model
         if(other is not PrismComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_AmountElement, otherT._AmountElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_AmountElement, otherT._AmountElement)) return false;
         if(!comparer.Equals(_BaseElement, otherT._BaseElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -991,7 +993,8 @@ namespace Hl7.Fhir.Model
       if(other is not VisionPrescription otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
       if(!comparer.Equals(_CreatedElement, otherT._CreatedElement)) return false;
       if(!comparer.Equals(_Patient, otherT._Patient)) return false;
@@ -999,7 +1002,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_DateWrittenElement, otherT._DateWrittenElement)) return false;
       if(!comparer.Equals(_Prescriber, otherT._Prescriber)) return false;
       if(!comparer.ListEquals(_LensSpecification, otherT._LensSpecification)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

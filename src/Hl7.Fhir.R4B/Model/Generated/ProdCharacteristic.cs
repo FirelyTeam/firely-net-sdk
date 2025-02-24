@@ -287,7 +287,8 @@ namespace Hl7.Fhir.Model
       if(other is not ProdCharacteristic otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Height, otherT._Height)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Height, otherT._Height)) return false;
       if(!comparer.Equals(_Width, otherT._Width)) return false;
       if(!comparer.Equals(_Depth, otherT._Depth)) return false;
       if(!comparer.Equals(_Weight, otherT._Weight)) return false;
@@ -298,7 +299,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_ImprintElement, otherT._ImprintElement)) return false;
       if(!comparer.ListEquals(_Image, otherT._Image)) return false;
       if(!comparer.Equals(_Scoring, otherT._Scoring)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

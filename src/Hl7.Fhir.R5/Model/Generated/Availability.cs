@@ -214,11 +214,12 @@ namespace Hl7.Fhir.Model
         if(other is not AvailableTimeComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.ListEquals(_DaysOfWeekElement, otherT._DaysOfWeekElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_DaysOfWeekElement, otherT._DaysOfWeekElement)) return false;
         if(!comparer.Equals(_AllDayElement, otherT._AllDayElement)) return false;
         if(!comparer.Equals(_AvailableStartTimeElement, otherT._AvailableStartTimeElement)) return false;
         if(!comparer.Equals(_AvailableEndTimeElement, otherT._AvailableEndTimeElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -354,9 +355,10 @@ namespace Hl7.Fhir.Model
         if(other is not NotAvailableTimeComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
         if(!comparer.Equals(_During, otherT._During)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -452,9 +454,10 @@ namespace Hl7.Fhir.Model
       if(other is not Availability otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_AvailableTime, otherT._AvailableTime)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_AvailableTime, otherT._AvailableTime)) return false;
       if(!comparer.ListEquals(_NotAvailableTime, otherT._NotAvailableTime)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

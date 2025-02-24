@@ -233,10 +233,11 @@ namespace Hl7.Fhir.Model
         if(other is not ProductionSpecificationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_SpecType, otherT._SpecType)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SpecType, otherT._SpecType)) return false;
         if(!comparer.Equals(_ComponentId, otherT._ComponentId)) return false;
         if(!comparer.Equals(_ProductionSpecElement, otherT._ProductionSpecElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -495,7 +496,8 @@ namespace Hl7.Fhir.Model
       if(other is not DeviceComponent otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_Type, otherT._Type)) return false;
       if(!comparer.Equals(_LastSystemChangeElement, otherT._LastSystemChangeElement)) return false;
       if(!comparer.Equals(_Source, otherT._Source)) return false;
@@ -505,7 +507,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_MeasurementPrincipleElement, otherT._MeasurementPrincipleElement)) return false;
       if(!comparer.ListEquals(_ProductionSpecification, otherT._ProductionSpecification)) return false;
       if(!comparer.Equals(_LanguageCode, otherT._LanguageCode)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

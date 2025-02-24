@@ -423,14 +423,15 @@ namespace Hl7.Fhir.Model
         if(other is not ReactionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Substance, otherT._Substance)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Substance, otherT._Substance)) return false;
         if(!comparer.ListEquals(_Manifestation, otherT._Manifestation)) return false;
         if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
         if(!comparer.Equals(_OnsetElement, otherT._OnsetElement)) return false;
         if(!comparer.Equals(_SeverityElement, otherT._SeverityElement)) return false;
         if(!comparer.Equals(_ExposureRoute, otherT._ExposureRoute)) return false;
         if(!comparer.ListEquals(_Note, otherT._Note)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -824,7 +825,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     Hl7.Fhir.Model.CodeableConcept? ICoded<Hl7.Fhir.Model.CodeableConcept?>.Code { get => Code; set => Code = value!; }
-    IEnumerable<Coding> ICoded.ToCodings() => Code?.ToCodings() ?? [];
+    IReadOnlyCollection<Coding> ICoded.ToCodings() => Code?.ToCodings() ?? [];
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -862,7 +863,8 @@ namespace Hl7.Fhir.Model
       if(other is not AllergyIntolerance otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_ClinicalStatus, otherT._ClinicalStatus)) return false;
       if(!comparer.Equals(_VerificationStatus, otherT._VerificationStatus)) return false;
       if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
@@ -878,7 +880,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.Equals(_LastOccurrenceElement, otherT._LastOccurrenceElement)) return false;
       if(!comparer.ListEquals(_Note, otherT._Note)) return false;
       if(!comparer.ListEquals(_Reaction, otherT._Reaction)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }

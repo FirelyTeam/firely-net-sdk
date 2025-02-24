@@ -143,9 +143,10 @@ namespace Hl7.Fhir.Model
         if(other is not CommunicationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here        if(!comparer.Equals(_Language, otherT._Language)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Language, otherT._Language)) return false;
         if(!comparer.Equals(_PreferredElement, otherT._PreferredElement)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
@@ -408,7 +409,7 @@ namespace Hl7.Fhir.Model
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     List<Hl7.Fhir.Model.CodeableConcept> ICoded<List<Hl7.Fhir.Model.CodeableConcept>>.Code { get => Relationship; set => Relationship = value; }
-    IEnumerable<Coding> ICoded.ToCodings() => Relationship?.ToCodings() ?? [];
+    IReadOnlyCollection<Coding> ICoded.ToCodings() => Relationship?.ToCodings() ?? [];
 
     protected internal override void CopyToInternal(Base other)
     {
@@ -442,7 +443,8 @@ namespace Hl7.Fhir.Model
       if(other is not RelatedPerson otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
       if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
       if(!comparer.Equals(_Patient, otherT._Patient)) return false;
       if(!comparer.ListEquals(_Relationship, otherT._Relationship)) return false;
@@ -454,7 +456,7 @@ namespace Hl7.Fhir.Model
       if(!comparer.ListEquals(_Photo, otherT._Photo)) return false;
       if(!comparer.Equals(_Period, otherT._Period)) return false;
       if(!comparer.ListEquals(_Communication, otherT._Communication)) return false;
-#pragma warning restore CS8604 // Possible null reference argument.
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
