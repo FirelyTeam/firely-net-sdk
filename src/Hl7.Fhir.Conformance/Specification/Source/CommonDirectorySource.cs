@@ -592,8 +592,16 @@ namespace Hl7.Fhir.Specification.Source
 
             if(summary is null)
                 return ResolverException.ArtifactSummaryNoMatch(uri);
-            
-            var resource = loadResourceInternal<Resource>(summary);
+
+            Resource? resource;
+            try
+            {
+                resource = loadResourceInternal<Resource>(summary);
+            }
+            catch(ArgumentException ex)
+            {
+                return ResolverException.ArtifactSummaryArgumentException(ex);
+            }
 
             if (resource is null)
                 return ResolverException.NotFound();
@@ -609,7 +617,15 @@ namespace Hl7.Fhir.Specification.Source
             if(summary is null)
                 return ResolverException.ArtifactSummaryNoMatch(uri);
             
-            var resource = loadResourceInternal<Resource>(summary);
+            Resource? resource;
+            try
+            {
+                resource = loadResourceInternal<Resource>(summary);
+            }
+            catch(ArgumentException ex)
+            {
+                return ResolverException.ArtifactSummaryArgumentException(ex);
+            }
 
             if (resource is null)
                 return ResolverException.NotFound();

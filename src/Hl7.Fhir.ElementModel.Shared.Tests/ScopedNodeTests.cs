@@ -295,7 +295,7 @@ namespace Hl7.Fhir.ElementModel.Tests
                     new DirectorySource("TestData/TestSd")));
             }
 
-            public async Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri)
+            public async Tasks.Task<Resource?> ResolveByCanonicalUriAsync(string uri)
             {
                 var result = await TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
                 return result.Value;
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             
             public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
 
-            public Tasks.Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+            public Tasks.Task<Resource?> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
         private class TypedElementWithoutDefinition : ITypedElement, IResourceTypeSupplier

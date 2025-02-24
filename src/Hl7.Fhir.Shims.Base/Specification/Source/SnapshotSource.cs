@@ -72,6 +72,20 @@ namespace Hl7.Fhir.Specification.Source
 
         private IAsyncResourceResolver _resolver => Generator.AsyncResolver;
 
+        /// <inheritdoc cref="ResolveByUriAsync(string)"/>
+        [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
+        public Resource ResolveByUri(string uri) => TryResolveByUri(uri).Value;
+
+        /// <inheritdoc cref="ResolveByCanonicalUriAsync(string)"/>
+        [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
+        public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
+
+        [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
+        public ResolverResult TryResolveByUri(string uri) => TaskHelper.Await(() => TryResolveByUriAsync(uri));
+
+        [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
+        public ResolverResult TryResolveByCanonicalUri(string uri)  => TaskHelper.Await(() => TryResolveByCanonicalUriAsync(uri));
+
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component.</remarks>
         public async Tasks.Task<Resource> ResolveByUriAsync(string uri) 
@@ -79,11 +93,7 @@ namespace Hl7.Fhir.Specification.Source
             var result = await TryResolveByUriAsync(uri).ConfigureAwait(false);
             return result.Value;
         }
-
-        /// <inheritdoc cref="ResolveByUriAsync(string)"/>
-        [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use ResolveByUriAsync() instead.")]
-        public Resource ResolveByUri(string uri) => TryResolveByUri(uri).Value;
-
+        
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component.</remarks>
         public async Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri)
@@ -95,14 +105,6 @@ namespace Hl7.Fhir.Specification.Source
         public async  Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => await ensureSnapshot(await _resolver.TryResolveByUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
 
         public async Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => await ensureSnapshot(await _resolver.TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
-
-        /// <inheritdoc cref="ResolveByCanonicalUriAsync(string)"/>
-        [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use ResolveByCanonicalUriAsync() instead.")]
-        public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
-
-        public ResolverResult TryResolveByUri(string uri) => TaskHelper.Await(() => TryResolveByUriAsync(uri));
-
-        public ResolverResult TryResolveByCanonicalUri(string uri)  => TaskHelper.Await(() => TryResolveByCanonicalUriAsync(uri));
 
         #endregion
 

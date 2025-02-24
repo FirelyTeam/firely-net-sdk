@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Specification.Source
         public int CacheDuration { get; }
 
         /// <inheritdoc cref="ResolveByUriAsync(string)"/>
-        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use ResolveByUriAsync() instead.")]
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
         public Resource ResolveByUri(string url) => TryResolveByUri(url).Value;
 
         /// <summary>Retrieve the artifact with the specified url.</summary>
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <inheritdoc cref="ResolveByUriAsync(string, CachedResolverLoadingStrategy)"/>
-        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use ResolveByUriAsync() instead.")]
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
         public Resource ResolveByUri(string url, CachedResolverLoadingStrategy strategy) =>
                 TaskHelper.Await(() => ResolveByUriAsync(url, strategy));
 
@@ -107,11 +107,13 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <inheritdoc cref="ResolveByCanonicalUriAsync(string)" />
-        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use ResolveByCanonicalUriAsync() instead.")]
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public Resource ResolveByCanonicalUri(string url) => TryResolveByCanonicalUri(url).Value;
 
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
         public ResolverResult TryResolveByUri(string uri) => TaskHelper.Await(() => TryResolveByUriAsync(uri));
 
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public ResolverResult TryResolveByCanonicalUri(string uri) => TaskHelper.Await(() => TryResolveByCanonicalUriAsync(uri));
 
         /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
@@ -129,7 +131,7 @@ namespace Hl7.Fhir.Specification.Source
         public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => await TryResolveByCanonicalUriAsync(uri, CachedResolverLoadingStrategy.LoadOnDemand).ConfigureAwait(false);
 
         /// <inheritdoc cref="ResolveByCanonicalUriAsync(string, CachedResolverLoadingStrategy)" />
-        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use ResolveByCanonicalUriAsync() instead.")]
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public Resource ResolveByCanonicalUri(string url, CachedResolverLoadingStrategy strategy) =>
                 TaskHelper.Await(() => ResolveByCanonicalUriAsync(url, strategy));
 

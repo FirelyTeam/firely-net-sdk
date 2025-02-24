@@ -13,7 +13,8 @@ using System.Linq;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
 using System.Threading.Tasks;
-
+    
+#nullable enable
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>
@@ -72,16 +73,10 @@ namespace Hl7.Fhir.Specification.Source
         private IEnumerable<IAsyncResourceResolver> allSourcesAsAsync() => _sources.Select(src => src.AsAsync());
 
 
-        [Obsolete("MultiResolver now works best with asynchronous resolvers. Use ResolveByUriAsync() instead.")]
+        [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
         public Resource ResolveByUri(string uri) => TryResolveByUri(uri).Value;
 
-        public async Task<Resource> ResolveByUriAsync(string uri)
-        {
-            var resource = await TryResolveByUriAsync(uri);
-            return resource.Value;
-        }
-
-        [Obsolete("MultiResolver now works best with asynchronous resolvers. Use ResolveByCanonicalUriAsync() instead.")]
+        [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
         
         [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
@@ -90,7 +85,13 @@ namespace Hl7.Fhir.Specification.Source
         [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public ResolverResult TryResolveByCanonicalUri(string uri) => TaskHelper.Await(() => TryResolveByCanonicalUriAsync(uri));
 
-        public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
+        public async Task<Resource?> ResolveByUriAsync(string uri)
+        {
+            var resource = await TryResolveByUriAsync(uri);
+            return resource.Value;
+        }
+        
+        public async Task<Resource?> ResolveByCanonicalUriAsync(string uri)
         {
             var resource = await TryResolveByCanonicalUriAsync(uri);
             return resource.Value;
