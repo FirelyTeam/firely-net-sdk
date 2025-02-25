@@ -37,32 +37,32 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ResolveByCanonicalFromZip()
         {
-            var extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
+            var extDefn = source.TryResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason").Value;
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
-            extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient");
+            extDefn = source.TryResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient").Value;
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
-            extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient");
+            extDefn = source.TryResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient").Value;
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
             var dirSource = new DirectorySource(Path.Combine("TestData", "validation"));
-            extDefn = dirSource.ResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0");
+            extDefn = dirSource.TryResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0").Value;
 
-            Assert.ThrowsException<ArgumentException>(() => dirSource.ResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|"));
+            Assert.ThrowsException<ArgumentException>(() => dirSource.TryResolveByCanonicalUri("http://example.com/StructureDefinition/patient-telecom-reslice-ek|1.0|"));
         }
 
         [TestMethod]
         public void ResolveByUriFromZip()
         {
-            var extDefn = source.ResolveByUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
+            var extDefn = source.TryResolveByUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason").Value;
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
-            extDefn = source.ResolveByUri("http://hl7.org/fhir/StructureDefinition/Patient");
+            extDefn = source.TryResolveByUri("http://hl7.org/fhir/StructureDefinition/Patient").Value;
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var wa = new WebResolver() { TimeOut = DefaultTimeOut };
 
-            var artifact = wa.ResolveByUri("http://test.fhir.org/r3/StructureDefinition/Observation");
+            var artifact = wa.TryResolveByUri("http://test.fhir.org/r3/StructureDefinition/Observation").Value;
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);

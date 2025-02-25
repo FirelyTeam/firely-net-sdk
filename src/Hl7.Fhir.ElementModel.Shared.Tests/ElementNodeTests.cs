@@ -394,6 +394,12 @@ namespace Hl7.FhirPath.Tests
 
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
             {
+                var resource = await TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+                return resource.Value;
+            }
+
+            public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+            {
                 var sd = await _resolver.FindStructureDefinitionAsync(uri);
                 if (!sd.HasSnapshot)
                 {
@@ -404,6 +410,8 @@ namespace Hl7.FhirPath.Tests
 
                 return sd;
             }
+
+            public Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
 
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }

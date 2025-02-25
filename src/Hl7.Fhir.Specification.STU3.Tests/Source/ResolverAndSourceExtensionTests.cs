@@ -135,20 +135,21 @@ namespace Hl7.Fhir.Specification.Tests
 
         private class LogicalModelTypeResourceResolver : IResourceResolver
         {
-            public Resource ResolveByCanonicalUri(string uri)
+            public ResolverResult TryResolveByCanonicalUri(string uri)
             {
                 var customLogicalModelDataTypeXml = File.ReadAllText(Path.Combine("TestData/ccda", "CCDA_ANY.xml"));
                 var sd = new FhirXmlParser().Parse<StructureDefinition>(customLogicalModelDataTypeXml);
                 if (sd.Type.Equals(uri))
                     return sd;
 
-                return null;
+                return ResolverException.NotFound();
             }
 
-            public Resource ResolveByUri(string uri)
-            {
-                throw new NotImplementedException();
-            }
+            public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
+            
+            public ResolverResult TryResolveByUri(string uri) => throw new NotImplementedException();
+            
+            public Resource ResolveByUri(string uri) => throw new NotImplementedException();
         }
 
     }
