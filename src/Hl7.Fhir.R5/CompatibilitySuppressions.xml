@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<!-- https://learn.microsoft.com/en-us/dotnet/fundamentals/package-validation/diagnostic-ids -->
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Hl7.Fhir.ElementModel.PocoBuilderExtensions</Target>
+    <Left>lib/net8.0/Hl7.Fhir.R5.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.R5.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Hl7.Fhir.ElementModel.TypedElementExtensions</Target>
@@ -10,9 +17,23 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Hl7.Fhir.ElementModel.PocoBuilderExtensions</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.R5.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.R5.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Hl7.Fhir.ElementModel.TypedElementExtensions</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.R5.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.R5.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.FhirPath.FhirPathExtensions.ToFhirPathResolver(System.Func{System.String,Hl7.Fhir.ElementModel.PocoNode})</Target>
+    <Left>lib/net8.0/Hl7.Fhir.R5.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.R5.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
@@ -265,6 +286,13 @@
     <Target>M:Hl7.Fhir.Specification.Source.ZipSource.get_Source</Target>
     <Left>lib/net8.0/Hl7.Fhir.R5.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.R5.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.FhirPath.FhirPathExtensions.ToFhirPathResolver(System.Func{System.String,Hl7.Fhir.ElementModel.PocoNode})</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.R5.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.R5.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>

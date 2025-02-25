@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
 {
-    public class ScopedNode : IScopedNode, IAnnotated, IExceptionSource
+    public class ScopedNode : ITypedElement, IShortPathGenerator, IAnnotated, IExceptionSource
     {
         private class Cache
         {
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// The resource or element which is the direct parent of this node.
         /// </summary>
-        public IScopedNode? Parent { get; }
+        public ScopedNode? Parent { get; }
 
         /// <summary>
         /// Returns the location of the current element within its most direct parent resource or datatype.
@@ -87,19 +87,6 @@ namespace Hl7.Fhir.ElementModel
         /// <inheritdoc/>
         public string Name => Current.Name;
 
-        /// <summary>
-        /// Will be replaced by a different implementation in the future.
-        /// </summary>
-        public NodeType Type => this switch
-        {
-            { AtResource: true } when Current.Children("contained").Any() => NodeType.DomainResource | NodeType.Resource,
-            { InstanceType: FhirTypeNames.BUNDLE } => NodeType.Bundle | NodeType.Resource,
-            { AtResource: true } => NodeType.Resource,
-            { InstanceType: FhirTypeNames.REFERENCE or FhirTypeNames.CANONICAL or FhirTypeNames.CODEABLEREFERENCE } => NodeType.Reference,
-            { Value: not null } => NodeType.Primitive,
-            _ => 0
-        };
-
         /// <inheritdoc/>
         public string? InstanceType => Current.InstanceType;
 
@@ -109,10 +96,10 @@ namespace Hl7.Fhir.ElementModel
         /// <inheritdoc/>
         public string Location => Current.Location;
 
-        public bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out IScopedNode? result)
+        public bool TryResolveBundleEntry(string fullUrl, [NotNullWhen(true)] out ScopedNode? result)
             => (result = ((ReferencedResourceCache)this.BundledResources()).ResolveReference(fullUrl)) is not null;
 
-        public bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out IScopedNode? result) 
+        public bool TryResolveContainedEntry(string id, [NotNullWhen(true)] out ScopedNode? result) 
             => (result = (this.ContainedResourcesWithId()).ResolveReference(id)) is not null;
 
         /// <summary>
@@ -287,7 +274,7 @@ namespace Hl7.Fhir.ElementModel
             Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
         
         /// <inheritdoc />
-        public IEnumerable<IScopedNode> Children(string? name = null) =>
+        public IEnumerable<ScopedNode> Children(string? name = null) =>
             Current.Children(name).Select(c => new ScopedNode(this, ParentResource, c, _fullUrl));
 
         public string ShortPath => Current is ElementNode en ? en.ShortPath : Current.Location;

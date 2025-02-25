@@ -282,19 +282,19 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             fixture.IsTrue(@"(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
                        Patient.identifier.skip(8 div 2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
                         Patient.identifier.first())");
-
+            
             fixture.IsTrue(@"(1|2|3|4|5).where($this > 2 and $this <= 4) = (3|4)");
-
+            
             fixture.IsTrue(@"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
                         3 + Patient.identifier.count()");
-
+            
             fixture.IsTrue(@"(Patient.identifier.where(use='official').last() in Patient.identifier) and
                        (Patient.identifier.first() in Patient.identifier.tail()).not()");
-
+            
             fixture.IsTrue(@"Patient.identifier.any(use='official') and identifier.where(use='usual').exists()");
-
+            
             fixture.IsTrue(@"Patient.descendants().where($this.as(string).contains('222'))[1] = %context.contained.address.line");
-
+            
             fixture.IsTrue(@"Patient.name.select(given|family).count() = 2");
             fixture.IsTrue(@"Patient.identifier.where(use = 'official').select(value + 'yep') = ('7654321yep' | '11223344yep')");
             fixture.IsTrue(@"Patient.descendants().where(($this is code) and ($this.contains('wne'))).trace('them') = contact.relationship.coding.code");
@@ -567,7 +567,6 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
         {
             var expr = "Patient.name.defineVariable('n2', skip(1).first()).defineVariable('res', %n2.given+%n2.given).select(%res)";
             var r = fixture.PatientExample.Select(expr).ToList();
-            foreach (var item in r) { Console.WriteLine(item.ToXml()); }
             Assert.AreEqual(2, r.Count());
             Assert.AreEqual("JimJim", r.First().ToString());
             Assert.AreEqual("JimJim", r.Skip(1).First().ToString());
@@ -607,8 +606,8 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             var exprCompiled = compiler.Compile(expr);
             var r = exprCompiled(fixture.PatientExample.ToPocoNode(), new FhirEvaluationContext());
             Assert.AreEqual(2, r.Count());
-            Assert.AreEqual("r1-v1", r.First().Value);
-            Assert.AreEqual("r1-v2", r.Skip(1).First().Value);
+            Assert.AreEqual("r1-v1", r.First().GetValue());
+            Assert.AreEqual("r1-v2", r.Skip(1).First().GetValue());
             // .toStrictEqual(["r1-v1", "r1-v2"]);
         }
         /*

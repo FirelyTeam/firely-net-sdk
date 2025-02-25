@@ -32,24 +32,24 @@ namespace Hl7.FhirPath.Expressions
             t.Add("exists", (IEnumerable<object> f) => f.Any());
 
             t.Add("count", (IEnumerable<object> f) => f.Count());
-            t.Add("trace", (IEnumerable<IScopedNode> f, string name, EvaluationContext ctx)
+            t.Add("trace", (IEnumerable<PocoNode> f, string name, EvaluationContext ctx)
                     => f.Trace(name, ctx));
 
-            t.Add("allTrue", (IEnumerable<IScopedNode> f) => f.All(e => e.Value as bool? == true));
-            t.Add("anyTrue", (IEnumerable<IScopedNode> f) => f.Any(e => e.Value as bool? == true));
-            t.Add("allFalse", (IEnumerable<IScopedNode> f) => f.All(e => e.Value as bool? == false));
-            t.Add("anyFalse", (IEnumerable<IScopedNode> f) => f.Any(e => e.Value as bool? == false));
-            t.Add("combine", (IEnumerable<IScopedNode> l, IEnumerable<IScopedNode> r) => l.Concat(r));
-            t.Add("binary.|", (object _, IEnumerable<IScopedNode> l, IEnumerable<IScopedNode> r) => l.DistinctUnion(r));
-            t.Add("union", (IEnumerable<IScopedNode> l, IEnumerable<IScopedNode> r) => l.DistinctUnion(r));
-            t.Add("binary.contains", (object _, IEnumerable<IScopedNode> a, IScopedNode b) => a.Contains(b));
-            t.Add("binary.in", (object _, IScopedNode a, IEnumerable<IScopedNode> b) => b.Contains(a));
-            t.Add("distinct", (IEnumerable<IScopedNode> f) => f.Distinct());
-            t.Add("isDistinct", (IEnumerable<IScopedNode> f) => f.IsDistinct());
-            t.Add("subsetOf", (IEnumerable<IScopedNode> f, IEnumerable<IScopedNode> a) => f.SubsetOf(a));
-            t.Add("supersetOf", (IEnumerable<IScopedNode> f, IEnumerable<IScopedNode> a) => a.SubsetOf(f));
-            t.Add("intersect", (IEnumerable<IScopedNode> f, IEnumerable<IScopedNode> a) => f.Intersect(a));
-            t.Add("exclude", (IEnumerable<IScopedNode> f, IEnumerable<IScopedNode> a) => f.Exclude(a));
+            t.Add("allTrue", (IEnumerable<PocoNode> f) => f.All(e => e.GetValue() is true));
+            t.Add("anyTrue", (IEnumerable<PocoNode> f) => f.Any(e => e.GetValue() is true));
+            t.Add("allFalse", (IEnumerable<PocoNode> f) => f.All(e => e.GetValue() is false));
+            t.Add("anyFalse", (IEnumerable<PocoNode> f) => f.Any(e => e.GetValue() is false));
+            t.Add("combine", (IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.Concat(r));
+            t.Add("binary.|", (object _, IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.DistinctUnion(r));
+            t.Add("union", (IEnumerable<PocoNode> l, IEnumerable<PocoNode> r) => l.DistinctUnion(r));
+            t.Add("binary.contains", (object _, IEnumerable<PocoNode> a, PocoNode b) => a.Contains(b));
+            t.Add("binary.in", (object _, PocoNode a, IEnumerable<PocoNode> b) => b.Contains(a));
+            t.Add("distinct", (IEnumerable<PocoNode> f) => f.Distinct());
+            t.Add("isDistinct", (IEnumerable<PocoNode> f) => f.IsDistinct());
+            t.Add("subsetOf", (IEnumerable<PocoNode> f, IEnumerable<PocoNode> a) => f.SubsetOf(a));
+            t.Add("supersetOf", (IEnumerable<PocoNode> f, IEnumerable<PocoNode> a) => a.SubsetOf(f));
+            t.Add("intersect", (IEnumerable<PocoNode> f, IEnumerable<PocoNode> a) => f.Intersect(a));
+            t.Add("exclude", (IEnumerable<PocoNode> f, IEnumerable<PocoNode> a) => f.Exclude(a));
 
             t.Add("today", (object _) => P.Date.Today());
             t.Add("now", (object _) => P.DateTime.Now());
@@ -57,21 +57,21 @@ namespace Hl7.FhirPath.Expressions
 
             t.Add("binary.&", (object _, string a, string b) => (a ?? "") + (b ?? ""));
 
-            t.Add(new CallSignature("iif", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(bool?), typeof(Invokee), typeof(Invokee)), runIif);
-            t.Add(new CallSignature("iif", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(bool?), typeof(Invokee)), runIif);
+            t.Add(new CallSignature("iif", typeof(IEnumerable<PocoNode>), typeof(object), typeof(bool?), typeof(Invokee), typeof(Invokee)), runIif);
+            t.Add(new CallSignature("iif", typeof(IEnumerable<PocoNode>), typeof(object), typeof(bool?), typeof(Invokee)), runIif);
 
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
-            t.Add("not", (IEnumerable<IScopedNode> f) => f.Not(), doNullProp: true);
-            // t.Add("builtin.children", (IEnumerable<IScopedNode> f, string a) => f.Navigate(a), doNullProp: true);
+            t.Add("not", (IEnumerable<PocoNode> f) => f.Not(), doNullProp: true);
+            // t.Add("builtin.children", (IEnumerable<PocoNode> f, string a) => f.Navigate(a), doNullProp: true);
             t.AddBuiltinChildren();
 
-            t.Add("children", (IEnumerable<IScopedNode> f) => f.Children(), doNullProp: true);
-            t.Add("descendants", (IEnumerable<IScopedNode> f) => f.Descendants().ToScopedNodes(), doNullProp: true);
+            t.Add("children", (IEnumerable<PocoNode> f) => f.SelectMany(node => node.Children().SelectMany(n => n)), doNullProp: true);
+            t.Add("descendants", (IEnumerable<PocoNode> f) => f.Descendants(), doNullProp: true);
 
-            t.Add("binary.=", (object f, IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b) => a.IsEqualTo(b), doNullProp: true);
-            t.Add("binary.!=", (object f, IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b) => !a.IsEqualTo(b), doNullProp: true);
-            t.Add("binary.~", (object f, IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b) => a.IsEquivalentTo(b), doNullProp: false);
-            t.Add("binary.!~", (object f, IEnumerable<IScopedNode> a, IEnumerable<IScopedNode> b) => !a.IsEquivalentTo(b), doNullProp: false);
+            t.Add("binary.=", (object f, IEnumerable<PocoNode> a, IEnumerable<PocoNode> b) => a.IsEqualTo(b), doNullProp: true);
+            t.Add("binary.!=", (object f, IEnumerable<PocoNode> a, IEnumerable<PocoNode> b) => !a.IsEqualTo(b), doNullProp: true);
+            t.Add("binary.~", (object f, IEnumerable<PocoNode> a, IEnumerable<PocoNode> b) => a.IsEquivalentTo(b), doNullProp: false);
+            t.Add("binary.!~", (object f, IEnumerable<PocoNode> a, IEnumerable<PocoNode> b) => !a.IsEquivalentTo(b), doNullProp: false);
 
             t.Add("unary.-", (object f, int a) => -a, doNullProp: true);
             t.Add("unary.-", (object f, long a) => -a, doNullProp: true);
@@ -118,13 +118,13 @@ namespace Hl7.FhirPath.Expressions
             t.Add("binary.<=", (object f, P.Any a, P.Any b) => EqualityOperators.Compare(a, b, "<="), doNullProp: true);
             t.Add("binary.>=", (object f, P.Any a, P.Any b) => EqualityOperators.Compare(a, b, ">="), doNullProp: true);
 
-            t.Add("single", (IEnumerable<IScopedNode> f) => f.Single(), doNullProp: true);
-            t.Add("skip", (IEnumerable<IScopedNode> f, long a) => f.Skip((int)a), doNullProp: true);
-            t.Add("first", (IEnumerable<IScopedNode> f) => f.First(), doNullProp: true);
-            t.Add("last", (IEnumerable<IScopedNode> f) => f.Last(), doNullProp: true);
-            t.Add("tail", (IEnumerable<IScopedNode> f) => f.Tail(), doNullProp: true);
-            t.Add("take", (IEnumerable<IScopedNode> f, long a) => f.Take((int)a), doNullProp: true);
-            t.Add("builtin.item", (IEnumerable<IScopedNode> f, long a) => f.Item((int)a), doNullProp: true);
+            t.Add("single", (IEnumerable<PocoNode> f) => f.Single(), doNullProp: true);
+            t.Add("skip", (IEnumerable<PocoNode> f, long a) => f.Skip((int)a), doNullProp: true);
+            t.Add("first", (IEnumerable<PocoNode> f) => f.First(), doNullProp: true);
+            t.Add("last", (IEnumerable<PocoNode> f) => f.Last(), doNullProp: true);
+            t.Add("tail", (IEnumerable<PocoNode> f) => f.Tail(), doNullProp: true);
+            t.Add("take", (IEnumerable<PocoNode> f, long a) => f.Take((int)a), doNullProp: true);
+            t.Add("builtin.item", (IEnumerable<PocoNode> f, long a) => f.Item((int)a), doNullProp: true);
 
             t.Add("toBoolean", (P.Any f) => f.ToBoolean(), doNullProp: true);
             t.Add("convertsToBoolean", (P.Any f) => f.ConvertsToBoolean(), doNullProp: true);
@@ -167,12 +167,12 @@ namespace Hl7.FhirPath.Expressions
             t.Add("replace", (string f, string regex, string subst) => f.FpReplace(regex, subst), doNullProp: true);
             t.Add("length", (string f) => f.Length, doNullProp: true);
             t.Add("split", (string f, string seperator) => f.FpSplit(seperator), doNullProp: true);
-            t.Add("join", (IEnumerable<IScopedNode> f, string separator) => f.FpJoin(separator), doNullProp: true);
-            t.Add("join", (IEnumerable<IScopedNode> f) => f.FpJoin(), doNullProp: true);
-            t.Add("indexOf", (IEnumerable<IScopedNode> f, IScopedNode elem, int start) => f.IndexOf(elem, start), doNullProp: true);
-            t.Add("indexOf", (IEnumerable<IScopedNode> f, IScopedNode elem) => f.IndexOf(elem), doNullProp: true);
-            t.Add("lastIndexOf", (IEnumerable<IScopedNode> f, IScopedNode elem, int start) => f.LastIndexOf(elem, start), doNullProp: true);
-            t.Add("lastIndexOf", (IEnumerable<IScopedNode> f, IScopedNode elem) => f.LastIndexOf(elem), doNullProp: true);
+            t.Add("join", (IEnumerable<PocoNode> f, string separator) => f.FpJoin(separator), doNullProp: true);
+            t.Add("join", (IEnumerable<PocoNode> f) => f.FpJoin(), doNullProp: true);
+            t.Add("indexOf", (IEnumerable<PocoNode> f, PocoNode elem, int start) => f.IndexOf(elem, start), doNullProp: true);
+            t.Add("indexOf", (IEnumerable<PocoNode> f, PocoNode elem) => f.IndexOf(elem), doNullProp: true);
+            t.Add("lastIndexOf", (IEnumerable<PocoNode> f, PocoNode elem, int start) => f.LastIndexOf(elem, start), doNullProp: true);
+            t.Add("lastIndexOf", (IEnumerable<PocoNode> f, PocoNode elem) => f.LastIndexOf(elem), doNullProp: true);
 
             // Math functions
             t.Add("abs", (decimal f) => Math.Abs(f), doNullProp: true);
@@ -189,17 +189,17 @@ namespace Hl7.FhirPath.Expressions
             t.Add("truncate", (decimal f) => Math.Truncate((double)f), doNullProp: true);
 
             // The next two functions existed pre-normative, so we have kept them.
-            t.Add("is", (IScopedNode f, string name) => f.Is(name), doNullProp: true);
-            t.Add("as", (IEnumerable<IScopedNode> f, string name) => f.FilterType(name), doNullProp: true);
+            t.Add("is", (PocoNode f, string name) => f.Is(name), doNullProp: true);
+            t.Add("as", (IEnumerable<PocoNode> f, string name) => f.FilterType(name), doNullProp: true);
 
-            t.Add("ofType", (IEnumerable<IScopedNode> f, string name) => f.FilterType(name), doNullProp: true);
-            t.Add("binary.is", (object f, IScopedNode left, string name) => left.Is(name), doNullProp: true);
-            t.Add("binary.as", (object f, IEnumerable<IScopedNode> left, string name) => left.FilterType(name), doNullProp: true);
+            t.Add("ofType", (IEnumerable<PocoNode> f, string name) => f.FilterType(name), doNullProp: true);
+            t.Add("binary.is", (object f, PocoNode left, string name) => left.Is(name), doNullProp: true);
+            t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name) => left.FilterType(name), doNullProp: true);
 
             // Kept for backwards compatibility, but no longer part of the spec
-            t.Add("binary.as", (object f, IEnumerable<IScopedNode> left, string name) => left.FilterType(name), doNullProp: true);
+            t.Add("binary.as", (object f, IEnumerable<PocoNode> left, string name) => left.FilterType(name), doNullProp: true);
 
-            t.Add("extension", (IEnumerable<IScopedNode> f, string url) => f.Extension(url), doNullProp: true);
+            t.Add("extension", (IEnumerable<PocoNode> f, string url) => f.Extension(url), doNullProp: true);
 
             // Logic operators do not use null propagation and may do short-cut eval
             t.AddLogic("binary.and", (a, b) => a.And(b));
@@ -208,18 +208,18 @@ namespace Hl7.FhirPath.Expressions
             t.AddLogic("binary.implies", (a, b) => a.Implies(b));
 
             // Special late-bound functions
-            t.Add(new CallSignature("where", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(Invokee)), runWhere);
-            t.Add(new CallSignature("select", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(Invokee)), runSelect);
+            t.Add(new CallSignature("where", typeof(IEnumerable<PocoNode>), typeof(object), typeof(Invokee)), runWhere);
+            t.Add(new CallSignature("select", typeof(IEnumerable<PocoNode>), typeof(object), typeof(Invokee)), runSelect);
             t.Add(new CallSignature("all", typeof(bool), typeof(object), typeof(Invokee)), runAll);
             t.Add(new CallSignature("any", typeof(bool), typeof(object), typeof(Invokee)), runAny);
             t.Add(new CallSignature("exists", typeof(bool), typeof(object), typeof(Invokee)), runAny);
-            t.Add(new CallSignature("repeat", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(Invokee)), runRepeat);
-            t.Add(new CallSignature("trace", typeof(IEnumerable<IScopedNode>), typeof(string), typeof(object), typeof(Invokee)), Trace);
-            t.Add(new CallSignature("defineVariable", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(string)), DefineVariable);
-            t.Add(new CallSignature("defineVariable", typeof(IEnumerable<IScopedNode>), typeof(object), typeof(string), typeof(Invokee)), DefineVariable);
+            t.Add(new CallSignature("repeat", typeof(IEnumerable<PocoNode>), typeof(object), typeof(Invokee)), runRepeat);
+            t.Add(new CallSignature("trace", typeof(IEnumerable<PocoNode>), typeof(string), typeof(object), typeof(Invokee)), Trace);
+            t.Add(new CallSignature("defineVariable", typeof(IEnumerable<PocoNode>), typeof(object), typeof(string)), DefineVariable);
+            t.Add(new CallSignature("defineVariable", typeof(IEnumerable<PocoNode>), typeof(object), typeof(string), typeof(Invokee)), DefineVariable);
 
-            t.Add(new CallSignature("aggregate", typeof(IEnumerable<IScopedNode>), typeof(Invokee), typeof(Invokee)), runAggregate);
-            t.Add(new CallSignature("aggregate", typeof(IEnumerable<IScopedNode>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
+            t.Add(new CallSignature("aggregate", typeof(IEnumerable<PocoNode>), typeof(Invokee), typeof(Invokee)), runAggregate);
+            t.Add(new CallSignature("aggregate", typeof(IEnumerable<PocoNode>), typeof(Invokee), typeof(Invokee), typeof(Invokee)), runAggregate);
 
             t.AddVar("sct", "http://snomed.info/sct");
             t.AddVar("loinc", "http://loinc.org");
@@ -232,7 +232,7 @@ namespace Hl7.FhirPath.Expressions
         }
 
         /// <summary>
-        /// With the regular Add extension methods, a Wrap is added to each argument to turn it into IEnumerable&lt;IScopedNode&gt;.
+        /// With the regular Add extension methods, a Wrap is added to each argument to turn it into IEnumerable&lt;PocoNode&gt;.
         /// For 'builtin.children' we know that the focus and the result are already of the correct type,
         /// so we created an optimized implementation avoiding the Wrap.
         /// </summary>
@@ -240,14 +240,14 @@ namespace Hl7.FhirPath.Expressions
         internal static void AddBuiltinChildren(this SymbolTable table)
         {
             table.Add(new CallSignature("builtin.children",
-                typeof(IEnumerable<IScopedNode>),
-                typeof(IEnumerable<IScopedNode>),
+                typeof(IEnumerable<PocoNode>),
+                typeof(IEnumerable<PocoNode>),
                 typeof(string)), (
                 ctx, invokees) =>
             {
                 var iks = invokees.ToArray();
                 var focus = iks[0].Invoke(ctx, InvokeeFactory.EmptyArgs);
-                var name = (string)iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().Value;
+                var name = iks[1].Invoke(ctx, InvokeeFactory.EmptyArgs).First().GetValue() as string;
                 var result= focus.Navigate(name);
 
                 return result;
@@ -264,11 +264,11 @@ namespace Hl7.FhirPath.Expressions
             return "http://hl7.org/fhir/ValueSet/" + id;
         }
 
-        private static IEnumerable<IScopedNode> runAggregate(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<PocoNode> runAggregate(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var incrExpre = arguments.Skip(1).First();
-            IEnumerable<IScopedNode> initialValue = [];
+            IEnumerable<PocoNode> initialValue = [];
             if (arguments.Count() > 2)
             {
                 var initialValueExpr = arguments.Skip(2).First();
@@ -278,9 +278,9 @@ namespace Hl7.FhirPath.Expressions
             var totalContext = ctx.Nest();
             totalContext.SetTotal(initialValue);
 
-            foreach (IScopedNode element in focus)
+            foreach (PocoNode element in focus)
             {
-                IEnumerable<IScopedNode> newFocus = [element];
+                IEnumerable<PocoNode> newFocus = [element];
                 var newContext = totalContext.Nest(newFocus);
                 newContext.SetThis(newFocus);
                 newContext.SetTotal(totalContext.GetTotal());
@@ -291,10 +291,10 @@ namespace Hl7.FhirPath.Expressions
             return totalContext.GetTotal();
         }
 
-        private static IEnumerable<IScopedNode> Trace(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<PocoNode> Trace(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
-            string name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
+            string name = arguments.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.GetValue() as string;
 
             List<Invokee> selectArgs = [arguments.First(), .. arguments.Skip(2)];
             var selectResults = runSelect(ctx, selectArgs);
@@ -303,11 +303,11 @@ namespace Hl7.FhirPath.Expressions
             return focus;
         }
         
-        private static IEnumerable<IScopedNode> DefineVariable(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<PocoNode> DefineVariable(Closure ctx, IEnumerable<Invokee> arguments)
         {
             Invokee[] enumerable = arguments as Invokee[] ?? arguments.ToArray();
             var focus = enumerable[0](ctx, InvokeeFactory.EmptyArgs);
-            string name = enumerable[1](ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.Value as string;
+            string name = enumerable[1](ctx, InvokeeFactory.EmptyArgs).FirstOrDefault()?.GetValue() as string;
             
             if(ctx.ResolveValue(name) is not null) throw new InvalidOperationException($"Variable {name} is already defined in this scope");
             
@@ -326,7 +326,7 @@ namespace Hl7.FhirPath.Expressions
             return focus;
         }
 
-        private static IEnumerable<IScopedNode> runIif(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<PocoNode> runIif(Closure ctx, IEnumerable<Invokee> arguments)
         {
             // iif(criterion: expression, true-result: collection [, otherwise-result: collection]) : collection
             // note: short-circuit behavior is expected in this function
@@ -347,23 +347,23 @@ namespace Hl7.FhirPath.Expressions
                 : otherResult == null ? [] : otherResult(newContext, InvokeeFactory.EmptyArgs);
         }
 
-        private static IEnumerable<IScopedNode> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<PocoNode> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
             return CachedEnumerable.Create(runForeach());
 
-            IEnumerable<IScopedNode> runForeach()
+            IEnumerable<PocoNode> runForeach()
             {
                 var index = 0;
 
-                foreach (IScopedNode element in focus)
+                foreach (PocoNode element in focus)
                 {
-                    IScopedNode[] newFocus = [element];
+                    PocoNode[] newFocus = [element];
                     var newContext = ctx.Nest(newFocus);
                     newContext.SetThis(newFocus);
-                    newContext.SetIndex(PocoNodeOrList.ForPrimitive<Integer>(index));
+                    newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                     index++;
 
                     if (lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval() == true)
@@ -372,23 +372,23 @@ namespace Hl7.FhirPath.Expressions
             }
         }
 
-        private static IEnumerable<IScopedNode> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<PocoNode> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
             return CachedEnumerable.Create(runForeach());
 
-            IEnumerable<IScopedNode> runForeach()
+            IEnumerable<PocoNode> runForeach()
             {
                 var index = 0;
 
-                foreach (IScopedNode element in focus)
+                foreach (PocoNode element in focus)
                 {
-                    IEnumerable<IScopedNode> newFocus = [element];
+                    IEnumerable<PocoNode> newFocus = [element];
                     var newContext = ctx.Nest(newFocus);
                     newContext.SetThis(newFocus);
-                    newContext.SetIndex(PocoNodeOrList.ForPrimitive<Integer>(index));
+                    newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                     index++;
 
                     var result = lambda(newContext, InvokeeFactory.EmptyArgs);
@@ -398,12 +398,12 @@ namespace Hl7.FhirPath.Expressions
             }
         }
         
-        private static IEnumerable<IScopedNode> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<PocoNode> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var newNodes = arguments.First()(ctx, InvokeeFactory.EmptyArgs).ToList();
             var lambda = arguments.Skip(1).First();
 
-            var fullResult = new List<IScopedNode>();
+            var fullResult = new List<PocoNode>();
 
             while (newNodes.Any())
             {
@@ -411,16 +411,16 @@ namespace Hl7.FhirPath.Expressions
                 var current = newNodes;
                 newNodes = [];
 
-                foreach (IScopedNode element in current)
+                foreach (PocoNode element in current)
                 {
-                    IEnumerable<IScopedNode> newFocus = [element];
+                    IEnumerable<PocoNode> newFocus = [element];
                     var newContext = ctx.Nest(newFocus);
                     newContext.SetThis(newFocus);
-                    newContext.SetIndex(PocoNodeOrList.ForPrimitive<Integer>(index));
+                    newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                     index++;
 
                     var candidates = lambda(newContext, InvokeeFactory.EmptyArgs);
-                    var uniqeNewNodes = candidates.Except(fullResult, EqualityOperators.TypedElementEqualityComparer);
+                    var uniqeNewNodes = candidates.Except<PocoNode>(fullResult, EqualityOperators.TypedElementEqualityComparer);
 
                     newNodes.AddRange(uniqeNewNodes);
                 }
@@ -431,48 +431,47 @@ namespace Hl7.FhirPath.Expressions
             return fullResult;
         }
 
-        private static IEnumerable<IScopedNode> runAll(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<PocoNode> runAll(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
             var index = 0;
 
-            foreach (IScopedNode element in focus)
+            foreach (PocoNode element in focus)
             {
-                IEnumerable<IScopedNode> newFocus = [element];
+                IEnumerable<PocoNode> newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
                 newContext.SetThis(newFocus);
-                newContext.SetIndex(PocoNodeOrList.ForPrimitive<Integer>(index));
+                newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                 index++;
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
                 if (result == null) return [];
-                if (result == false) return PocoNodeOrList.ForPrimitive<FhirBoolean>(false);
+                if (result == false) return PocoNode.ForPrimitive<FhirBoolean>(false);
             }
 
-            return PocoNodeOrList.ForPrimitive<FhirBoolean>(true);
+            return PocoNode.ForPrimitive<FhirBoolean>(true);
         }
 
-        private static IEnumerable<IScopedNode> runAny(Closure ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<PocoNode> runAny(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
             var index = 0;
 
-            foreach (IScopedNode element in focus)
+            foreach (PocoNode element in focus)
             {
-                IEnumerable<IScopedNode> newFocus = [element];
+                IEnumerable<PocoNode> newFocus = [element];
                 var newContext = ctx.Nest(newFocus);
                 newContext.SetThis(newFocus);
-                newContext.SetIndex(PocoNodeOrList.ForPrimitive<Integer>(index));
+                newContext.SetIndex(PocoNode.ForPrimitive<Integer>(index));
                 index++;
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
-                if (result == true) return PocoNodeOrList.ForPrimitive<FhirBoolean>(true);
+                if (result == true) return PocoNode.ForPrimitive<FhirBoolean>(true);
             }
-
-            //return PocoNodeOrList.ForPrimitive<FhirBoolean>(false);
-            return PocoNodeOrList.Root(new FhirBoolean(false));
+            
+            return PocoNode.Root(new FhirBoolean(false));
         }
     }
 }

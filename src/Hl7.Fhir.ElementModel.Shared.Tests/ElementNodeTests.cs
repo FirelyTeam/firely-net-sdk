@@ -11,6 +11,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
@@ -38,6 +39,7 @@ namespace Hl7.FhirPath.Tests
             var patientRoot = ElementNode.Root(_provider, "Patient");
 
             var containedObs = ElementNode.Root(_provider, "Observation", "contained");
+            
             containedObs.Add(_provider, "value", true, "boolean");
             patientRoot.Add(_provider, containedObs);
 
@@ -72,6 +74,9 @@ namespace Hl7.FhirPath.Tests
             var obs = ElementNode.Root(_provider, "Observation");
             obs.Add(_provider, "id", "test");
 
+            patient.AddAnnotation(ModelInfo.ModelInspector);
+            obs.AddAnnotation(ModelInfo.ModelInspector);
+            
             patient.Add(_provider, obs, "contained");
 
             // Select on the root of the resource, path should match with resource name included

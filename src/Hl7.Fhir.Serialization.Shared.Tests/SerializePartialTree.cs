@@ -32,7 +32,6 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        [TemporarilyChanged] // We once again cannot do this, as base no longer knows if it has a parent
         public async Tasks.Task CanSerializeSubtree()
         {
             var tpXml = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.xml"));

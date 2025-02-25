@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
@@ -21,7 +22,7 @@ namespace Hl7.FhirPath.Functions
 {
     public static class EqualityOperators
     {
-        public static bool? IsEqualTo(this IEnumerable<IScopedNode> left, IEnumerable<IScopedNode> right, bool compareNames = false)
+        public static bool? IsEqualTo(this IEnumerable<ITypedElement> left, IEnumerable<ITypedElement> right, bool compareNames = false)
         {
             // If one or both of the arguments is an empty collection, a comparison operator will return an empty collection.
             // (though we might handle this more generally with the null-propagating functionality of the compiler
@@ -51,7 +52,7 @@ namespace Hl7.FhirPath.Functions
         // comparison of the elements, while this one does a comparison on equivalence rules from the FhirPath spec,
         // which differ considerably (e.g. names are not compared, FHIR Quantity is compared to System.Quantity,
         // there are specified coercions, etc.)
-        public static bool? IsEqualTo(this IScopedNode left, IScopedNode right, bool compareNames = false)
+        public static bool? IsEqualTo(this ITypedElement left, ITypedElement right, bool compareNames = false)
         {
             // If one or both of the arguments is an empty collection, a comparison operator will return an empty collection.
             // (though we might handle this more generally with the null-propagating functionality of the compiler
@@ -67,10 +68,14 @@ namespace Hl7.FhirPath.Functions
 
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
-            if (left.Type.HasFlag(NodeType.Quantity) && l == null)
-                l = Typecasts.ParseQuantity(left);
-            if (right.Type.HasFlag(NodeType.Quantity) && r == null)
-                r = Typecasts.ParseQuantity(right);
+            if (left.InstanceType == "Quantity" && l == null)
+                l = left is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
+            if (right.InstanceType == "Quantity" && r == null)
+                r = right is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -129,7 +134,7 @@ namespace Hl7.FhirPath.Functions
                 };
         }
 
-        public static bool IsEquivalentTo(this IEnumerable<IScopedNode> left, IEnumerable<IScopedNode> right, bool compareNames = false)
+        public static bool IsEquivalentTo(this IEnumerable<ITypedElement> left, IEnumerable<ITypedElement> right, bool compareNames = false)
         {
             var r = right.ToList();
             int count = 0;
@@ -144,7 +149,7 @@ namespace Hl7.FhirPath.Functions
         }
 
 
-        public static bool IsEquivalentTo(this IScopedNode left, IScopedNode right, bool compareNames = false)
+        public static bool IsEquivalentTo(this ITypedElement left, ITypedElement right, bool compareNames = false)
         {
             // Note that because of this behaviour, we should switch off null-propagating behaviour of IsEquivalent to
             if (left is null && right is null) return true;
@@ -157,10 +162,14 @@ namespace Hl7.FhirPath.Functions
 
             // TODO: this is actually a cast with knowledge of FHIR->System mappings, we don't want that here anymore
             // Convert quantities
-            if (left.Type.HasFlag(NodeType.Quantity) && l == null)
-                l = Typecasts.ParseQuantity(left);
-            if (right.Type.HasFlag(NodeType.Quantity) && r == null)
-                r = Typecasts.ParseQuantity(right);
+            if (left.InstanceType == "Quantity" && l == null)
+                l = left is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+                    : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
+            if (right.InstanceType == "Quantity" && r == null)
+                r = right is PocoNode node 
+                    ? Typecasts.ParseQuantity(node) 
+                    : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -181,7 +190,7 @@ namespace Hl7.FhirPath.Functions
                 return false;
             }
 
-            static bool namesAreEquivalent(IScopedNode le, IScopedNode ri)
+            static bool namesAreEquivalent(ITypedElement le, ITypedElement ri)
             {
                 if (le.Name == "id" && ri.Name == "id") return true;      // IN FHIR: don't compare 'id' elements for equivalence
                 if (le.Name != ri.Name) return false;
@@ -243,11 +252,11 @@ namespace Hl7.FhirPath.Functions
             }
         }
 
-        public static readonly IEqualityComparer<IScopedNode> TypedElementEqualityComparer = new ValueProviderEqualityComparer();
+        public static readonly IEqualityComparer<ITypedElement> TypedElementEqualityComparer = new ValueProviderEqualityComparer();
 
-        private class ValueProviderEqualityComparer : IEqualityComparer<IScopedNode>
+        private class ValueProviderEqualityComparer : IEqualityComparer<ITypedElement>
         {
-            public bool Equals(IScopedNode? x, IScopedNode? y)
+            public bool Equals(ITypedElement? x, ITypedElement? y)
             {
                 if (x is null && y is null) return true;
                 if (x is null || y is null) return false;
@@ -259,11 +268,11 @@ namespace Hl7.FhirPath.Functions
                 return x.IsEqualTo(y) == true;
             }
 
-            public int GetHashCode(IScopedNode element)
+            public int GetHashCode(ITypedElement element)
             {
                 var result = element.Value != null ? element.Value.GetHashCode() : 0;
 
-                if (element is IScopedNode element1)
+                if (element is ITypedElement element1)
                 {
                     var childnames = string.Concat(element1.Children().Select(c => c.Name));
                     if (!string.IsNullOrEmpty(childnames))

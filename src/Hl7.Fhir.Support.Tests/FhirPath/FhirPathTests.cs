@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Support.Tests
         public void HtmlChecks(string xml, bool expected, string because)
         {
             var evaluator = _compiler.Compile("htmlChecks()");
-            evaluator.Predicate(PocoNodeOrList.ForPrimitive<XHtml>(xml), new FhirEvaluationContext()).Should().Be(expected, because);
+            evaluator.Predicate(PocoNode.ForPrimitive<XHtml>(xml), new FhirEvaluationContext()).Should().Be(expected, because);
         }
 
         [DataTestMethod]
@@ -79,7 +79,6 @@ namespace Hl7.Fhir.Support.Tests
 
             var poco = sourceNode.ToPoco<Parameters>(ModelInspector.Base);
             yield return new object[] { poco.ToTypedElement(ModelInspector.Base), "poco to TypedElement" };
-
         }
 
         public static IEnumerable<object[]> LowBoundaryTestCases() =>
@@ -150,11 +149,11 @@ namespace Hl7.Fhir.Support.Tests
         public void AssertFhirPathTestcases(string expression, bool expected)
         {
             var evaluator = _compiler.Compile(expression);
-            var result = evaluator(null, new FhirEvaluationContext());
+            var result = evaluator(PocoNode.ForPrimitive<FhirBoolean>(true), new FhirEvaluationContext());
 
             if (result.Any())
             {
-                result.Should().ContainSingle().Which.Value.Should().Be(expected);
+                result.Should().ContainSingle().Which.GetValue().Should().Be(expected);
             }
             else
             {
