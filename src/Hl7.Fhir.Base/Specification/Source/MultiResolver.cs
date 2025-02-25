@@ -13,7 +13,8 @@ using System.Linq;
 using Hl7.Fhir.Utility;
 using System.Diagnostics;
 using System.Threading.Tasks;
-
+    
+#nullable enable
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>
@@ -72,54 +73,86 @@ namespace Hl7.Fhir.Specification.Source
         private IEnumerable<IAsyncResourceResolver> allSourcesAsAsync() => _sources.Select(src => src.AsAsync());
 
 
-        [Obsolete("MultiResolver now works best with asynchronous resolvers. Use ResolveByUriAsync() instead.")]
-        public Resource ResolveByUri(string uri) => TaskHelper.Await(() => ResolveByUriAsync(uri));
+        [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
+        public Resource ResolveByUri(string uri) => TryResolveByUri(uri).Value;
 
-        public async Task<Resource> ResolveByUriAsync(string uri)
+        [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
+        public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
+        
+        ///<inheritdoc/>
+        [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
+        public ResolverResult TryResolveByUri(string uri) => TaskHelper.Await(() => TryResolveByUriAsync(uri));
+
+        ///<inheritdoc/>
+        [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
+        public ResolverResult TryResolveByCanonicalUri(string uri) => TaskHelper.Await(() => TryResolveByCanonicalUriAsync(uri));
+
+        public async Task<Resource?> ResolveByUriAsync(string uri)
+        {
+            var resource = await TryResolveByUriAsync(uri);
+            return resource.Value;
+        }
+        
+        public async Task<Resource?> ResolveByCanonicalUriAsync(string uri)
+        {
+            var resource = await TryResolveByCanonicalUriAsync(uri);
+            return resource.Value;
+        }
+
+        ///<inheritdoc/>
+        public async Task<ResolverResult> TryResolveByUriAsync(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
 
+            List<ResolverException> innerErrors = new();
             foreach (IAsyncResourceResolver source in allSourcesAsAsync())
             {
                 try
                 {
-                    var result = await source.ResolveByUriAsync(uri).ConfigureAwait(false);
+                    var result = await source.TryResolveByUriAsync(uri).ConfigureAwait(false);
 
-                    if (result != null) return result;
+                    if (result.Success) 
+                        return result;
+                    
+                    innerErrors.Add(result.Error);
                 }
-                catch(NotImplementedException)
+                catch(NotImplementedException ex)
                 {
+                    innerErrors.Add(ResolverException.NotImplemented(ex));
                     // Don't do anything, just try the next IArtifactSource
                 }
             }
 
             // None of the IArtifactSources succeeded in returning a result
-            return null;
+            return ResolverException.MultiResolverNotFound(innerErrors);
         }
 
-        [Obsolete("MultiResolver now works best with asynchronous resolvers. Use ResolveByCanonicalUriAsync() instead.")]
-        public Resource ResolveByCanonicalUri(string uri) => TaskHelper.Await(() => ResolveByCanonicalUriAsync(uri));
-
-        public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
+        ///<inheritdoc/>
+        public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
 
+            List<ResolverException> innerErrors = new();
             foreach (var source in allSourcesAsAsync())
             {
                 try
                 {
-                    var result = await source.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+                    var result = await source.TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
 
-                    if (result != null) return result;
+                    if (result.Success)
+                        return result;
+                    
+                    innerErrors.Add(result.Error);
                 }
-                catch (NotImplementedException)
+                catch (NotImplementedException ex)
                 {
+                    innerErrors.Add(ResolverException.NotImplemented(ex));
                     // Don't do anything, just try the next IArtifactSource
                 }
             }
 
             // None of the IArtifactSources succeeded in returning a result
-            return null;
+            return ResolverException.MultiResolverNotFound(innerErrors);
         }
 
         // Allow derived classes to override
