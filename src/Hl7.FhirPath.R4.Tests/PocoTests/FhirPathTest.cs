@@ -62,7 +62,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
 
             bool traced = false;
-            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<IScopedNode> results) =>
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<PocoNode> results) =>
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.AreEqual("log", name);
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             Assert.IsTrue(traced);
 
             traced = false;
-            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<IScopedNode> results) =>
+            ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<PocoNode> results) =>
             {
                 System.Diagnostics.Trace.WriteLine($"{name}");
                 Assert.IsTrue(name == "id" || name == "log");

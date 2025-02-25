@@ -15,42 +15,42 @@ using System.Linq;
 
 namespace Hl7.FhirPath.Expressions
 {
-    internal delegate IEnumerable<IScopedNode> Invokee(Closure context, IEnumerable<Invokee> arguments);
+    internal delegate IEnumerable<PocoNode> Invokee(Closure context, IEnumerable<Invokee> arguments);
 
     internal static class InvokeeFactory
     {
         public static readonly IEnumerable<Invokee> EmptyArgs = Enumerable.Empty<Invokee>();
 
-        public static IEnumerable<IScopedNode> GetThis(Closure context, IEnumerable<Invokee> _)
+        public static IEnumerable<PocoNode> GetThis(Closure context, IEnumerable<Invokee> _)
         {
             return context.GetThis();
         }
 
-        public static IEnumerable<IScopedNode> GetTotal(Closure context, IEnumerable<Invokee> _)
+        public static IEnumerable<PocoNode> GetTotal(Closure context, IEnumerable<Invokee> _)
         {
             return context.GetTotal();
         }
 
-        public static IEnumerable<IScopedNode> GetContext(Closure context, IEnumerable<Invokee> _)
+        public static IEnumerable<PocoNode> GetContext(Closure context, IEnumerable<Invokee> _)
         {
             return context.GetOriginalContext();
         }
 
-        public static IEnumerable<IScopedNode> GetResource(Closure context, IEnumerable<Invokee> _)
+        public static IEnumerable<PocoNode> GetResource(Closure context, IEnumerable<Invokee> _)
         {
             return context.GetResource();
         }
-        public static IEnumerable<IScopedNode> GetRootResource(Closure context, IEnumerable<Invokee> arguments)
+        public static IEnumerable<PocoNode> GetRootResource(Closure context, IEnumerable<Invokee> arguments)
         {
             return context.GetRootResource();
         }
 
-        public static IEnumerable<IScopedNode> GetThat(Closure context, IEnumerable<Invokee> _)
+        public static IEnumerable<PocoNode> GetThat(Closure context, IEnumerable<Invokee> _)
         {
             return context.GetThat();
         }
 
-        public static IEnumerable<IScopedNode> GetIndex(Closure context, IEnumerable<Invokee> args)
+        public static IEnumerable<PocoNode> GetIndex(Closure context, IEnumerable<Invokee> args)
         {
 
             return context.GetIndex();
@@ -59,7 +59,7 @@ namespace Hl7.FhirPath.Expressions
 
         public static Invokee Wrap<R>(Func<R> func)
         {
-            return (_, _) => Typecasts.CastTo<IEnumerable<IScopedNode>>(func());
+            return (_, _) => Typecasts.CastTo<IEnumerable<PocoNode>>(func());
         }
 
         public static Invokee Wrap<A, R>(Func<A, R> func, bool propNull)
@@ -71,12 +71,12 @@ namespace Hl7.FhirPath.Expressions
                     var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
                     if (propNull && !focus.Any()) return [];
 
-                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus)));
+                    return Typecasts.CastTo<IEnumerable<PocoNode>>(func(Typecasts.CastTo<A>(focus)));
                 }
                 else
                 {
                     A lastPar = (A)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(lastPar));
+                    return Typecasts.CastTo<IEnumerable<PocoNode>>(func(lastPar));
                 }
             };
         }
@@ -105,12 +105,12 @@ namespace Hl7.FhirPath.Expressions
                     var argA = args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs);
                     if (propNull && !argA.Any()) return [];
 
-                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
+                    return Typecasts.CastTo<IEnumerable<PocoNode>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
                 }
                 else
                 {
                     B lastPar = (B)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus), lastPar));
+                    return Typecasts.CastTo<IEnumerable<PocoNode>>(func(Typecasts.CastTo<A>(focus), lastPar));
                 }
             };
         }
@@ -130,13 +130,13 @@ namespace Hl7.FhirPath.Expressions
                     var argB = args.Skip(2).First()(ctx, InvokeeFactory.EmptyArgs);
                     if (propNull && !argB.Any()) return [];
 
-                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
+                    return Typecasts.CastTo<IEnumerable<PocoNode>>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
                         Typecasts.CastTo<C>(argB)));
                 }
                 else
                 {
                     C lastPar = (C)(object)ctx.EvaluationContext;
-                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus),
+                    return Typecasts.CastTo<IEnumerable<PocoNode>>(func(Typecasts.CastTo<A>(focus),
                         Typecasts.CastTo<B>(argA), lastPar));
                 }
             };
@@ -159,14 +159,14 @@ namespace Hl7.FhirPath.Expressions
                     var argC = args.Skip(3).First()(ctx, InvokeeFactory.EmptyArgs);
                     if (propNull && !argC.Any()) return [];
 
-                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus),
+                    return Typecasts.CastTo<IEnumerable<PocoNode>>(func(Typecasts.CastTo<A>(focus),
                                  Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), Typecasts.CastTo<D>(argC)));
                 }
                 else
                 {
                     D lastPar = (D)(object)ctx.EvaluationContext;
 
-                    return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(Typecasts.CastTo<A>(focus),
+                    return Typecasts.CastTo<IEnumerable<PocoNode>>(func(Typecasts.CastTo<A>(focus),
                                 Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), lastPar));
 
                 }
@@ -183,16 +183,16 @@ namespace Hl7.FhirPath.Expressions
                 var right = args.Skip(2).First();
 
                 // Return function that actually executes the Invokee at the last moment
-                return Typecasts.CastTo<IEnumerable<IScopedNode>>(func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
+                return Typecasts.CastTo<IEnumerable<PocoNode>>(func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
             };
         }
 
-        public static Invokee Return(IScopedNode value)
+        public static Invokee Return(PocoNode value)
         {
             return (_, _) => [value];
         }
 
-        public static Invokee Return(IEnumerable<IScopedNode> value)
+        public static Invokee Return(IEnumerable<PocoNode> value)
         {
             return (_, _) => value;
         }

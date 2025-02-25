@@ -160,10 +160,10 @@ namespace Hl7.FhirPath.Expressions
 
         public static void AddVar(this SymbolTable table, string name, object value)
         {
-            table.AddVar(name, ElementNode.ForPrimitive(value).ToScopedNode());
+            table.AddVar(name, PocoNode.ForAnyPrimitive(value));
         }
 
-        public static void AddVar(this SymbolTable table, string name, IScopedNode value)
+        public static void AddVar(this SymbolTable table, string name, PocoNode value)
         {
             table.Add(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value));
         }

@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Model;
 
-public static class BaseExtensions
+public static partial class BaseExtensions
 {
     [Obsolete("Use EnumerateElements() instead. Note that with EnumerateElements(), the elements 'div' and 'id' are not FhirStrings, but XHtml and FhirUri respectively.")]
     public static IEnumerable<Base> Children(this Base instance)

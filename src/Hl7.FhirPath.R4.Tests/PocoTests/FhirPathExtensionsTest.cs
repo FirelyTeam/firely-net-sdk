@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Tests.Introspection
             var result = _bundle.Select(statement, new FhirEvaluationContext() { ElementResolver = resolver });
             Assert.IsTrue(called);
 
-            IScopedNode resolver(string url)
+            PocoNode resolver(string url)
             {
                 called = true;
                 return null;

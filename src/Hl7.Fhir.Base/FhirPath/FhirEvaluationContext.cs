@@ -26,21 +26,9 @@ namespace Hl7.Fhir.FhirPath
 
         public ICodeValidationTerminologyService? TerminologyService { get; set; }
 
-        private static IScopedNode toNearestResource(ScopedNode node)
-        {
-            var scan = node;
+        private Func<string, PocoNode>? _elementResolver;
 
-            while (scan.AtResource == false && scan.ParentResource is not null)
-            {
-                scan = scan.ParentResource;
-            }
-
-            return scan;
-        }
-
-        private Func<string, IScopedNode>? _elementResolver;
-
-        public Func<string, IScopedNode>? ElementResolver
+        public Func<string, PocoNode>? ElementResolver
         {
             get { return _elementResolver; }
             set { _elementResolver = value; }

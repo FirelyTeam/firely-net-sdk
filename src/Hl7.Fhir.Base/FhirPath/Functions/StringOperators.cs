@@ -34,13 +34,13 @@ namespace Hl7.FhirPath.Functions
             return me.Substring((int)start, (int)l);
         }
 
-        public static IScopedNode FpIndexOf(this string me, string fragment)
+        public static PocoNode FpIndexOf(this string me, string fragment)
         {
-            return PocoNodeOrList.ForPrimitive<Integer>(me.IndexOf(fragment, StringComparison.Ordinal));
+            return PocoNode.ForPrimitive<Integer>(me.IndexOf(fragment, StringComparison.Ordinal));
         }
 
-        public static IEnumerable<IScopedNode> ToChars(this string me) =>
-            PocoNodeOrList.FromList<FhirString>(me.Select(c => c.ToString()));
+        public static IEnumerable<PocoNode> ToChars(this string me) =>
+            PocoNode.FromList<FhirString>(me.Select(c => c.ToString()));
 
         public static string FpReplace(this string me, string find, string replace)
         {
@@ -54,10 +54,10 @@ namespace Hl7.FhirPath.Functions
                 return me.Replace(find, replace);
         }
 
-        public static IEnumerable<IScopedNode> FpSplit(this string me, string seperator)
+        public static IEnumerable<PocoNode> FpSplit(this string me, string seperator)
         {
             var results = me.Split(new[] { seperator }, StringSplitOptions.None).ToArray<object>();
-            return PocoNodeOrList.FromList<FhirString>(results);
+            return PocoNode.FromList<FhirString>(results);
         }
 
         public static string FpEncode(this string me, string encoding)
