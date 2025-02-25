@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Specification.Tests
             derivedSD.BaseDefinition = baseSD.Url;
 
             var resourceResolver = Substitute.For<IResourceResolver>();
-            resourceResolver.ResolveByCanonicalUri(Arg.Any<string>()).Returns(baseSD);
+            resourceResolver.TryResolveByCanonicalUri(Arg.Any<string>()).Returns(baseSD);
             var snapshotGenerator = new SnapshotGenerator(resourceResolver, new SnapshotGeneratorSettings());
             await snapshotGenerator.UpdateAsync(derivedSD);
 

@@ -579,20 +579,60 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <param name="uri">A resource uri.</param>
-        public Resource? ResolveByUri(string uri)
-        {
-            if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            var summary = GetSummaries().ResolveByUri(uri, _inspector);
-            return summary is not null ? loadResourceInternal<Resource>(summary) : null;
-        }
+        public Resource? ResolveByUri(string uri) => TryResolveByUri(uri).Value;
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
-        public Resource? ResolveByCanonicalUri(string uri)
+        public Resource? ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
+
+        ///<inheritdoc/>
+        public ResolverResult TryResolveByUri(string uri)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            var summary = GetSummaries().ResolveByUri(uri, _inspector);
+
+            if(summary is null)
+                return ResolverException.ArtifactSummaryNoMatch(uri);
+
+            Resource? resource;
+            try
+            {
+                resource = loadResourceInternal<Resource>(summary);
+            }
+            catch(ArgumentException ex)
+            {
+                return ResolverException.ArtifactSummaryArgumentException(ex);
+            }
+
+            if (resource is null)
+                return ResolverException.NotFound();
+            
+            return resource;
+        }
+
+        ///<inheritdoc/>
+        public ResolverResult TryResolveByCanonicalUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByCanonicalUri(uri, _inspector);
-            return summary is not null ? loadResourceInternal<Resource>(summary) : null;
+
+            if(summary is null)
+                return ResolverException.ArtifactSummaryNoMatch(uri);
+            
+            Resource? resource;
+            try
+            {
+                resource = loadResourceInternal<Resource>(summary);
+            }
+            catch(ArgumentException ex)
+            {
+                return ResolverException.ArtifactSummaryArgumentException(ex);
+            }
+
+            if (resource is null)
+                return ResolverException.NotFound();
+            
+            return resource;
         }
 
         #endregion
@@ -1001,6 +1041,8 @@ namespace Hl7.Fhir.Specification.Source
         public Tasks.Task<Resource?> ResolveByUriAsync(string uri) => Tasks.Task.FromResult(ResolveByUri(uri));
 
         public Tasks.Task<Resource?> ResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(ResolveByCanonicalUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByUri(uri));
+        public Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => Tasks.Task.FromResult(TryResolveByCanonicalUri(uri));
 
         #endregion
 

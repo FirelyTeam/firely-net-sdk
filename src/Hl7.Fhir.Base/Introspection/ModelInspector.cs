@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Introspection
 
         #region IModelInfo
 
-        public Canonical? CanonicalUriForFhirCoreType(string typeName) => Canonical.CanonicalUriForFhirCoreType(typeName);
+        public Canonical? CanonicalUriForFhirCoreType(string typeName) => Canonical.ForCoreType(typeName);
 
         public Canonical? CanonicalUriForFhirCoreType(Type type) => GetFhirTypeNameForType(type) is { } name ? CanonicalUriForFhirCoreType(name) : null;
 
