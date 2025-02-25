@@ -7,19 +7,13 @@
  */
 
 
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization;
 
-public static class FhirJsonBuilderExtensions
+internal static class JsonDocumentExtensions
 {
     internal static void writeTo(this JObject root, JsonWriter destination)
     {

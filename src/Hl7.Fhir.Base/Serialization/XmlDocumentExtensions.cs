@@ -14,7 +14,7 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization;
 
-public static class XDocumentExtensions
+internal static class XDocumentExtensions
 {
     internal static void writeTo(this XDocument doc, XmlWriter destination)
     {

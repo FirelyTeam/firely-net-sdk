@@ -115,6 +115,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Hl7.Fhir.Serialization.FhirJsonConverter`1</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -333,6 +340,13 @@
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Hl7.Fhir.Serialization.CommonFhirXmlSerializer</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -1789,90 +1803,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.BaseFhirXmlPocoSerializer.SerializeToString(Hl7.Fhir.Model.Base,Hl7.Fhir.Serialization.SerializationFilter)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJObject(Hl7.Fhir.ElementModel.ISourceNode,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJObject(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJson(Hl7.Fhir.ElementModel.ISourceNode,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJson(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJsonAsync(Hl7.Fhir.ElementModel.ISourceNode,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJsonAsync(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJsonBytes(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJsonBytesAsync(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.WriteTo(Hl7.Fhir.ElementModel.ISourceNode,Newtonsoft.Json.JsonWriter,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.WriteTo(Hl7.Fhir.ElementModel.ITypedElement,Newtonsoft.Json.JsonWriter,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.WriteToAsync(Hl7.Fhir.ElementModel.ISourceNode,Newtonsoft.Json.JsonWriter,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.WriteToAsync(Hl7.Fhir.ElementModel.ITypedElement,Newtonsoft.Json.JsonWriter,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -3546,90 +3476,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.BaseFhirXmlPocoSerializer.SerializeToString(Hl7.Fhir.Model.Base,Hl7.Fhir.Serialization.SerializationFilter)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJObject(Hl7.Fhir.ElementModel.ISourceNode,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJObject(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJson(Hl7.Fhir.ElementModel.ISourceNode,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJson(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJsonAsync(Hl7.Fhir.ElementModel.ISourceNode,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJsonAsync(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJsonBytes(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.ToJsonBytesAsync(Hl7.Fhir.ElementModel.ITypedElement,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.WriteTo(Hl7.Fhir.ElementModel.ISourceNode,Newtonsoft.Json.JsonWriter,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.WriteTo(Hl7.Fhir.ElementModel.ITypedElement,Newtonsoft.Json.JsonWriter,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.WriteToAsync(Hl7.Fhir.ElementModel.ISourceNode,Newtonsoft.Json.JsonWriter,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonBuilderExtensions.WriteToAsync(Hl7.Fhir.ElementModel.ITypedElement,Newtonsoft.Json.JsonWriter,Hl7.Fhir.Serialization.FhirJsonSerializationSettings)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
