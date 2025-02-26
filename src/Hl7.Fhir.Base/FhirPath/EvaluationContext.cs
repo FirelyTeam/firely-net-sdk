@@ -61,7 +61,7 @@ public class EvaluationContext
     /// <summary>
     /// A delegate that handles the output for the <c>trace()</c> function.
     /// </summary>
-    public Action<string, IEnumerable<PocoNode>>? Tracer { get; set; }
+    public Action<string?, IEnumerable<PocoNode>>? Tracer { get; set; }
 }
 
 public static class EvaluationContextExtensions
