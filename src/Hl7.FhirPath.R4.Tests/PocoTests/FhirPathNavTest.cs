@@ -24,7 +24,7 @@ namespace Hl7.FhirPath.R4.Tests
 {
     public class FhirPathNavTest
     {
-        public IScopedNode getTestData()
+        public PocoNode getTestData()
         {
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
             var engine = FhirSerializationEngineFactory.Ostrich(ModelInfo.ModelInspector);
@@ -40,7 +40,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             var result = values.Navigate("Patient").Navigate("identifier").Navigate("use");
             Assert.Equal(3, result.Count());
-            Assert.Equal("usual", result.First().Value);
+            Assert.Equal("usual", result.First().GetValue());
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             var result = values.Navigate("Patient").Navigate("identifier").Navigate("use");
             Assert.Equal(3, result.Count());
-            Assert.Equal("usual", (string)result.First().Value);
+            Assert.Equal("usual", (string)result.First().GetValue());
         }
 
     }

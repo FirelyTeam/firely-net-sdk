@@ -10,6 +10,8 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Hl7.FhirPath.Expressions
 {
@@ -21,7 +23,7 @@ namespace Hl7.FhirPath.Expressions
 
         public EvaluationContext EvaluationContext { get; private set; }
 
-        public static Closure Root(IScopedNode root, EvaluationContext ctx = null)
+        public static Closure Root([NotNull] PocoNodeOrList root, EvaluationContext ctx = null)
         {
             var newContext = ctx ?? new EvaluationContext();
 
@@ -32,17 +34,15 @@ namespace Hl7.FhirPath.Expressions
             
             var newClosure = new Closure() { EvaluationContext = ctx ?? new EvaluationContext() };
 
-            var input = new[] { root };
-
             foreach (var assignment in newClosure.EvaluationContext.Environment)
             {
                 newClosure.SetValue(assignment.Key, assignment.Value);
             }
             
-            newClosure.SetThis(input);
-            newClosure.SetThat(input);
-            newClosure.SetIndex(PocoNodeOrList.ForPrimitive<Integer>(1));
-            newClosure.SetOriginalContext(input);
+            newClosure.SetThis(root);
+            newClosure.SetThat(root);
+            newClosure.SetIndex(PocoNode.ForPrimitive<Integer>(1));
+            newClosure.SetOriginalContext(root);
             
             if (newContext.Resource != null) newClosure.SetResource(new[] { newContext.Resource });
             if (newContext.RootResource != null) newClosure.SetRootResource(new[] { newContext.RootResource });
@@ -50,9 +50,9 @@ namespace Hl7.FhirPath.Expressions
             return newClosure;
         }
 
-        private Dictionary<string, IEnumerable<IScopedNode>> _namedValues = new ();
+        private Dictionary<string, IEnumerable<PocoNode>> _namedValues = new ();
 
-        public virtual void SetValue(string name, IEnumerable<IScopedNode> value)
+        public virtual void SetValue(string name, IEnumerable<PocoNode> value)
         {
             _namedValues.Remove(name);
             _namedValues.Add(name, value);
@@ -71,10 +71,10 @@ namespace Hl7.FhirPath.Expressions
         }
 
 
-        public virtual IEnumerable<IScopedNode> ResolveValue(string name)
+        public virtual IEnumerable<PocoNode> ResolveValue(string name)
         {
             // First, try to directly get "normal" values
-            _namedValues.TryGetValue(name, out IEnumerable<IScopedNode> result);
+            _namedValues.TryGetValue(name, out IEnumerable<PocoNode> result);
 
             if (result != null) return result;
 

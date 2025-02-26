@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public void CheckBundleEntryNavigation()
         {
             var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.xml"));
-            var node = getXmlNode(bundle);
+            var node = getXmlNode(bundle, new FhirXmlParsingSettings{PermissiveParsing = true});
             ParseDemoPatient.CheckBundleEntryNavigation(node);
         }
 

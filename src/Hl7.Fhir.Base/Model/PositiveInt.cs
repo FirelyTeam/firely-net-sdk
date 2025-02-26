@@ -39,6 +39,7 @@ namespace Hl7.Fhir.Model;
 
 public partial class PositiveInt
 {
+    /// Validates the JsonValue.
     protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
         ObjectValue switch
         {

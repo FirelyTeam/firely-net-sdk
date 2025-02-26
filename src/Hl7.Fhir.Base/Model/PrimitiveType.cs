@@ -62,6 +62,10 @@ public partial class PrimitiveType : IValidatableObject, P.IToSystemPrimitive
     protected virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext) =>
         ValidateObjectValue(validationContext) is { } result ? [result.AsResult(validationContext)] : [];
 
+    /// <summary>
+    /// Validates the JsonValue. Some subclasses will also, as a side-effect, update
+    /// their internal cache if parsing and validating is expensive.
+    /// </summary>
     protected internal abstract CodedValidationException? ValidateObjectValue(ValidationContext? validationContext);
 
     public bool HasValidValue() => ValidateObjectValue(null) is null;

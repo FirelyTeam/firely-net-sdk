@@ -95,9 +95,37 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         ///<inheritdoc/>
+        public ResolverResult TryResolveByUri(string uri)
+        {
+            var resource = _resources
+                .Where(r => r.Uri == uri)
+                .Select(r => r.Resource)
+                .FirstOrDefault();
+
+            if (resource is not null)
+                return resource;
+            
+            return ResolverException.NotFound();
+        }
+
+        ///<inheritdoc/>
+        public ResolverResult TryResolveByCanonicalUri(string uri)
+        {
+            var resource =  _resources
+                .Where(r => r.Url == uri)
+                .Select(r => r.Resource)
+                .FirstOrDefault();
+            
+            if (resource is not null)
+                return resource;
+
+            return ResolverException.NotFound();
+        }
+
+        ///<inheritdoc/>
         public Resource? ResolveByCanonicalUri(string uri)
         {
-            return _resources.Where(r => r.Url == uri)?.Select(r => r.Resource).FirstOrDefault();
+            return TryResolveByCanonicalUri(uri).Value;
         }
 
         ///<inheritdoc/>
@@ -105,17 +133,29 @@ namespace Hl7.Fhir.Specification.Source
         {
             return Task.FromResult(ResolveByCanonicalUri(uri));
         }
-
+        
         ///<inheritdoc/>
         public Resource? ResolveByUri(string uri)
         {
-            return _resources.Where(r => r.Uri == uri)?.Select(r => r.Resource).FirstOrDefault();
+            return TryResolveByUri(uri).Value;
         }
 
         ///<inheritdoc/>
         public Task<Resource?> ResolveByUriAsync(string uri)
         {
             return Task.FromResult(ResolveByUri(uri));
+        }
+
+        ///<inheritdoc/>
+        public Task<ResolverResult> TryResolveByUriAsync(string uri)
+        {
+            return Task.FromResult(TryResolveByUri(uri));
+        }
+
+        ///<inheritdoc/>
+        public Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+        {
+            return Task.FromResult(TryResolveByCanonicalUri(uri));
         }
     }
 }

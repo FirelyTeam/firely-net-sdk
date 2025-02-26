@@ -33,8 +33,7 @@
         ],
         "code": "_text",
         "type": "string",
-        "description": "Search on the narrative of the resource",
-        "xpathUsage": "normal"
+        "description": "Search on the narrative of the resource"
       }
     }
   ]

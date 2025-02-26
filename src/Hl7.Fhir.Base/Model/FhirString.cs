@@ -39,6 +39,9 @@ namespace Hl7.Fhir.Model;
 
 public partial class FhirString : ICoded
 {
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
     protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
         ObjectValue switch
         {

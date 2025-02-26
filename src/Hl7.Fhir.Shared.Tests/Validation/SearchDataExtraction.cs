@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Test.Validation
             }
         }
 
-        private static IScopedNode mockResolver(string url)
+        private static PocoNode mockResolver(string url)
         {
             ResourceIdentity ri = new ResourceIdentity(url);
             if (!string.IsNullOrEmpty(ri.ResourceType))

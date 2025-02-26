@@ -39,16 +39,16 @@ namespace Hl7.Fhir.FhirPath
 
         public static SymbolTable AddFhirExtensions(this SymbolTable t)
         {
-            t.Add("hasValue", (IScopedNode f) => f.HasValue(), doNullProp: false);
-            t.Add("resolve", (IScopedNode f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
-            t.Add("resolve", (IEnumerable<IScopedNode> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)), doNullProp: false);
+            t.Add("hasValue", (PocoNode f) => f.HasValue(), doNullProp: false);
+            t.Add("resolve", (PocoNode f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
+            t.Add("resolve", (IEnumerable<PocoNode> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)), doNullProp: false);
 
-            t.Add("memberOf", (IScopedNode input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
+            t.Add("memberOf", (PocoNode input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
 
             // Pre-normative this function was called htmlchecks, normative is htmlChecks
             // lets keep both to keep everyone happy.
-            t.Add("htmlchecks", (IScopedNode f) => f.HtmlChecks(), doNullProp: false);
-            t.Add("htmlChecks", (IScopedNode f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlchecks", (PocoNode f) => f.HtmlChecks(), doNullProp: false);
+            t.Add("htmlChecks", (PocoNode f) => f.HtmlChecks(), doNullProp: false);
 
             t.Add("lowBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, substract), doNullProp: false);
             t.Add("lowBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, substract), doNullProp: false);
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.FhirPath
 
             return t;
 
-            static IScopedNode? resolver(IScopedNode f, EvaluationContext ctx)
+            static PocoNode? resolver(PocoNode f, EvaluationContext ctx)
             {
                 return ctx is FhirEvaluationContext fctx ? f.Resolve(fctx.ElementResolver) : f.Resolve();
             }
@@ -81,49 +81,20 @@ namespace Hl7.Fhir.FhirPath
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool HasValue(this IScopedNode focus) => focus?.Value is not null;
+        public static bool HasValue(this PocoNode focus) => focus is PrimitiveNode {Value: not null};
 
         /// <summary>
-        /// Check if the node has a value, and not just extensions.
+        /// Check if the node has a valid Xhtml narrative value, and not just extensions.
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool HtmlChecks(this IScopedNode? focus)
+        public static bool HtmlChecks(this PocoNode focus) =>
+            focus is PrimitiveNode {Primitive: XHtml {ObjectValue: string xhtml}} && XHtml.IsValidNarrativeXhtml(xhtml, out _, out _);
+
+        public static IEnumerable<Base?> ToFhirValues(this IEnumerable<PocoNode> results)
         {
-            if (focus?.Value is null) return false;
-
-            // Perform the checking of the content for valid html content
-            return XHtml.IsValidNarrativeXhtml(focus.Value.ToString()!, out _, out _);
+            return results.Select(r => r.Poco);
         }
-
-        public static IEnumerable<Base?> ToFhirValues(this IEnumerable<IScopedNode> results)
-        {
-            return results.Select(r =>
-            {
-                if (r is null)
-                    return null;
-
-                var fhirValue = r.Annotation<IFhirValueProvider>() ?? r as IFhirValueProvider;
-                if (fhirValue != null)
-                {
-                    return fhirValue.FhirValue;
-                }
-
-                return r.Value switch
-                {
-                    bool b => new FhirBoolean(b),
-                    long l => new Integer64(l),
-                    int i => new Integer(i),
-                    decimal dec => new FhirDecimal(dec),
-                    string s => new FhirString(s),
-                    P.Date d => new Date(d.ToString()),
-                    P.Time t => new Time(t.ToString()),
-                    P.DateTime dt => new FhirDateTime(dt.ToDateTimeOffset(TimeSpan.Zero).ToUniversalTime()),
-                    var other => (Base?)other
-                };
-            });
-        }
-
 
         internal static decimal? AdjustBoundaryDecimal(decimal? input, long? precision, Func<decimal, decimal, decimal> op)
         {
@@ -268,7 +239,7 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="ctx">EvaluationContext of the FhirPath compiler</param>
         /// <returns>See summary</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        internal static bool? MemberOf(IScopedNode input, string valueset, EvaluationContext ctx)
+        internal static bool? MemberOf(PocoNode input, string valueset, EvaluationContext ctx)
         {
             var service = (ctx is FhirEvaluationContext fctx ? fctx.TerminologyService : null)
                 ?? throw new ArgumentNullException(nameof(ctx), "The 'memberOf' function cannot be executed because the FhirEvaluationContext does not include a TerminologyService.");
@@ -276,12 +247,12 @@ namespace Hl7.Fhir.FhirPath
             ValidateCodeParameters? inParams = new ValidateCodeParameters()
                         .WithValueSet(valueset);
 
-            inParams = input.InstanceType switch
+            inParams = input switch
             {
-                "code" => inParams.WithCode(code: input.Value as string, context: input.GetLocalLocation()),
-                "Coding" => inParams.WithCoding(input.ParseCoding()),
-                "CodeableConcept" => inParams.WithCodeableConcept(input.ParseCodeableConcept()),
-                "string" or "System.String" => inParams.WithCode(code: input.Value as string, context: "No context available"),
+                { Poco: Code code } => inParams.WithCode(code: code.Value, context: input.GetLocalLocation()),
+                { Poco: Coding coding } => inParams.WithCoding(coding),
+                { Poco: CodeableConcept cc } => inParams.WithCodeableConcept(cc),
+                PrimitiveNode { Value: string s } => inParams.WithCode(code: s, context: "No context available"),
                 _ => null,
             };
 

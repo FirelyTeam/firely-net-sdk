@@ -258,18 +258,18 @@ namespace Hl7.Fhir.Specification.Source
         public static readonly string BaseDefinitionKey = "StructureDefinition.baseDefinition";
         public static readonly string DerivationKey = "StructureDefinition.derivation";
 
-        public static readonly string FmmExtensionUrl = Canonical.CanonicalUriForFhirCoreType("structuredefinition-fmm").Value;
+        public static readonly string FmmExtensionUrl = Canonical.ForCoreType("structuredefinition-fmm").Value;
         public static readonly string MaturityLevelKey = "StructureDefinition.maturityLevel";
 
-        public static readonly string WgExtensionUrl = Canonical.CanonicalUriForFhirCoreType("structuredefinition-wg").Value;
+        public static readonly string WgExtensionUrl = Canonical.ForCoreType("structuredefinition-wg").Value;
         public static readonly string WorkingGroupKey = "StructureDefinition.workingGroup";
 
         // [WMR 20181213] R4 - NEW
-        public static readonly string StandardsStatusExtensionUrl = Canonical.CanonicalUriForFhirCoreType("structuredefinition-standards-status").Value;
+        public static readonly string StandardsStatusExtensionUrl = Canonical.ForCoreType("structuredefinition-standards-status").Value;
         public static readonly string StandardsStatusKey = "StructureDefinition.standardsStatus";
 
         // [WMR 20181213] R4 - NEW
-        public static readonly string NormativeVersionExtensionUrl = Canonical.CanonicalUriForFhirCoreType("structuredefinition-normative-version").Value;
+        public static readonly string NormativeVersionExtensionUrl = Canonical.ForCoreType("structuredefinition-normative-version").Value;
         public static readonly string NormativeVersionKey = "StructureDefinition.normativeVersion";
 
         public static readonly string RootDefinitionKey = "StructureDefinition.rootDefinition";

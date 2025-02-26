@@ -87,6 +87,10 @@ public partial class Base64Binary
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private byte[]? _parsedValue = null;
 
+    /// <summary>
+    /// Validates the JsonValue and updates the internal cached byte[] Value, releasing
+    /// the data in JsonValue to save memory.
+    /// </summary>
     protected internal override COVE? ValidateObjectValue(ValidationContext? context)
     {
         if (_parsedValue is not null || base.ObjectValue is null) return null;

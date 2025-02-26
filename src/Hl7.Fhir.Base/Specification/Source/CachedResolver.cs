@@ -32,8 +32,8 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Default expiration time for cached entries.</summary>
         public const int DEFAULT_CACHE_DURATION = 4 * 3600;     // 4 hours
 
-        readonly Cache<Resource> _resourcesByUri;
-        readonly Cache<Resource> _resourcesByCanonical;
+        private readonly ResolverCache _resourcesByUri;
+        private readonly ResolverCache _resourcesByCanonical;
 
         /// <summary>Creates a new artifact resolver that caches loaded resources in memory.</summary>
         /// <param name="source">Resolver from which artifacts are initially resolved on a cache miss.</param>
@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Specification.Source
             AsyncResolver = source.AsAsync();
             CacheDuration = cacheDuration;
 
-            _resourcesByUri = new Cache<Resource>(id => InternalResolveByUri(id), CacheDuration);
-            _resourcesByCanonical = new Cache<Resource>(id => InternalResolveByCanonicalUri(id), CacheDuration);
+            _resourcesByUri = new(InternalResolveByUri, CacheDuration);
+            _resourcesByCanonical = new(InternalResolveByCanonicalUri, CacheDuration);
         }
 
         /// <summary>
@@ -66,21 +66,21 @@ namespace Hl7.Fhir.Specification.Source
         public int CacheDuration { get; }
 
         /// <inheritdoc cref="ResolveByUriAsync(string)"/>
-        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use ResolveByUriAsync() instead.")]
-        public Resource ResolveByUri(string url) => TaskHelper.Await(() => ResolveByUriAsync(url));
-      
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
+        public Resource ResolveByUri(string url) => TryResolveByUri(url).Value;
+
         /// <summary>Retrieve the artifact with the specified url.</summary>
         /// <param name="url">The url of the target artifact.</param>
         /// <returns>A <see cref="Resource"/> instance, or <c>null</c> if unavailable.</returns>
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<Resource> ResolveByUriAsync(string url)
         {
-            if (url == null) throw Error.ArgumentNull(nameof(url));
-            return await _resourcesByUri.Get(url, CachedResolverLoadingStrategy.LoadOnDemand).ConfigureAwait(false);
+            var result = await TryResolveByUriAsync(url).ConfigureAwait(false);
+            return result.Value;
         }
 
         /// <inheritdoc cref="ResolveByUriAsync(string, CachedResolverLoadingStrategy)"/>
-        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use ResolveByUriAsync() instead.")]
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
         public Resource ResolveByUri(string url, CachedResolverLoadingStrategy strategy) =>
                 TaskHelper.Await(() => ResolveByUriAsync(url, strategy));
 
@@ -91,13 +91,32 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<Resource> ResolveByUriAsync(string url, CachedResolverLoadingStrategy strategy)
         {
+            var result = await TryResolveByUriAsync(url, strategy).ConfigureAwait(false);
+            return result.Value;
+        }
+        
+        /// <summary>Retrieve the artifact with the specified url.</summary>
+        /// <param name="url">The url of the target artifact.</param>
+        /// <param name="strategy">Option flag to control the loading strategy.</param>
+        /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
+        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
+        public async Task<ResolverResult> TryResolveByUriAsync(string url, CachedResolverLoadingStrategy strategy)
+        {
             if (url == null) throw Error.ArgumentNull(nameof(url));
             return await _resourcesByUri.Get(url, strategy).ConfigureAwait(false);
         }
 
         /// <inheritdoc cref="ResolveByCanonicalUriAsync(string)" />
-        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use ResolveByCanonicalUriAsync() instead.")]
-        public Resource ResolveByCanonicalUri(string url) => TaskHelper.Await(() => ResolveByCanonicalUriAsync(url));
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
+        public Resource ResolveByCanonicalUri(string url) => TryResolveByCanonicalUri(url).Value;
+
+        /// <inheritdoc cref="TryResolveByUriAsync(string)" />
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
+        public ResolverResult TryResolveByUri(string uri) => TaskHelper.Await(() => TryResolveByUriAsync(uri));
+
+        /// <inheritdoc cref="TryResolveByCanonicalUriAsync(string)" />
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
+        public ResolverResult TryResolveByCanonicalUri(string uri) => TaskHelper.Await(() => TryResolveByCanonicalUriAsync(uri));
 
         /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
         /// <param name="url">The canonical url of the target conformance resource.</param>
@@ -105,12 +124,24 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<Resource> ResolveByCanonicalUriAsync(string url)
         {
-            if (url == null) throw Error.ArgumentNull(nameof(url));
-            return await _resourcesByCanonical.Get(url, CachedResolverLoadingStrategy.LoadOnDemand).ConfigureAwait(false);
+            var result = await TryResolveByCanonicalUriAsync(url).ConfigureAwait(false);
+            return result.Value;
         }
+        
+        /// <summary>Retrieve the artifact with the specified url.</summary>
+        /// <param name="uri">The url of the target artifact.</param>
+        /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
+        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
+        public async Task<ResolverResult> TryResolveByUriAsync(string uri) => await TryResolveByUriAsync(uri, CachedResolverLoadingStrategy.LoadOnDemand).ConfigureAwait(false);
+
+        /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
+        /// <param name="uri">The canonical url of the target conformance resource.</param>
+        /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
+        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
+        public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri) => await TryResolveByCanonicalUriAsync(uri, CachedResolverLoadingStrategy.LoadOnDemand).ConfigureAwait(false);
 
         /// <inheritdoc cref="ResolveByCanonicalUriAsync(string, CachedResolverLoadingStrategy)" />
-        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use ResolveByCanonicalUriAsync() instead.")]
+        [Obsolete("CachedResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
         public Resource ResolveByCanonicalUri(string url, CachedResolverLoadingStrategy strategy) =>
                 TaskHelper.Await(() => ResolveByCanonicalUriAsync(url, strategy));
 
@@ -121,8 +152,19 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
         public async Task<Resource> ResolveByCanonicalUriAsync(string url, CachedResolverLoadingStrategy strategy)
         {
-            if (url == null) throw Error.ArgumentNull(nameof(url));
-            return await _resourcesByCanonical.Get(url, strategy).ConfigureAwait(false);
+            var result = await TryResolveByCanonicalUriAsync(url, strategy).ConfigureAwait(false);
+            return result.Value;
+        }
+        
+        /// <summary>Retrieve the conformance resource with the specified canonical url.</summary>
+        /// <param name="uri">The canonical url of the target conformance resource.</param>
+        /// <param name="strategy">Option flag to control the loading strategy.</param>
+        /// <returns>A <see cref="ResolverResult"/> instance, with either <see cref="ResolverResult.Value"/> or <see cref="ResolverResult.Error"/>.</returns>
+        /// <remarks>Return data from memory cache if available, otherwise load on demand from the internal artifact source.</remarks>
+        public async Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri, CachedResolverLoadingStrategy strategy)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            return await _resourcesByCanonical.Get(uri, strategy).ConfigureAwait(false);
         }
 
         /// <summary>Clear the cache entry for the artifact with the specified url, if it exists.</summary>
@@ -183,17 +225,17 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Called when an artifact is loaded into the cache.</summary>
         protected virtual void OnLoad(string url, Resource resource) => Load?.Invoke(this, new LoadResourceEventArgs(url, resource));
 
-        internal async Task<Resource> InternalResolveByUri(string url)
+        internal async Task<ResolverResult> InternalResolveByUri(string url)
         {
-            var resource = await AsyncResolver.ResolveByUriAsync(url).ConfigureAwait(false);
-            OnLoad(url, resource);
+            var resource = await AsyncResolver.TryResolveByUriAsync(url).ConfigureAwait(false);
+            OnLoad(url, resource.Value);
             return resource;
         }
 
-        internal async Task<Resource> InternalResolveByCanonicalUri(string url)
+        internal async Task<ResolverResult> InternalResolveByCanonicalUri(string url)
         {
-            var resource = await AsyncResolver.ResolveByCanonicalUriAsync(url).ConfigureAwait(false);
-            OnLoad(url, resource);
+            var resource = await AsyncResolver.TryResolveByCanonicalUriAsync(url).ConfigureAwait(false);
+            OnLoad(url, resource.Value);
             return resource;
         }
 
@@ -203,15 +245,15 @@ namespace Hl7.Fhir.Specification.Source
         internal protected virtual string DebuggerDisplay
             => $"{GetType().Name} for {AsyncResolver.DebuggerDisplayString()}";
 
-        private class Cache<T>
+        private class ResolverCache
         {
-            readonly Func<string, Task<T>> _onCacheMiss;
+            readonly Func<string, Task<ResolverResult>> _onCacheMiss;
             readonly int _duration;
 
             readonly Object _getLock = new Object();
-            readonly Dictionary<string, CacheEntry<T>> _cache = new Dictionary<string, CacheEntry<T>>();
+            readonly Dictionary<string, CacheEntry<ResolverResult>> _cache = new Dictionary<string, CacheEntry<ResolverResult>>();
 
-            public Cache(Func<string, Task<T>> onCacheMiss, int duration)
+            public ResolverCache(Func<string, Task<ResolverResult>> onCacheMiss, int duration)
             {
                 _onCacheMiss = onCacheMiss;
                 _duration = duration;
@@ -219,16 +261,16 @@ namespace Hl7.Fhir.Specification.Source
 
 
             public bool Contains(string identifier) =>
-                _cache.TryGetValue(identifier, out var entry) && !entry.IsExpired && entry.Data != null;
+                _cache.TryGetValue(identifier, out var entry) && !entry.IsExpired && entry.Data.Success;
 
-            public async Task<T> Get(string identifier, CachedResolverLoadingStrategy strategy)
+            public async Task<ResolverResult> Get(string identifier, CachedResolverLoadingStrategy strategy)
             {
                 lock (_getLock)
                 {
                     // Check the cache
                     if (strategy != CachedResolverLoadingStrategy.LoadFromSource)
                     {
-                        if (_cache.TryGetValue(identifier, out CacheEntry<T> entry))
+                        if (_cache.TryGetValue(identifier, out CacheEntry<ResolverResult> entry))
                         {
                             // If we still have a fresh entry, return it
                             if (!entry.IsExpired)
@@ -246,14 +288,14 @@ namespace Hl7.Fhir.Specification.Source
                 if (strategy != CachedResolverLoadingStrategy.LoadFromCache)
                 {
                     // Otherwise, fetch it and cache it.
-                    T newData = await _onCacheMiss(identifier).ConfigureAwait(false);
+                    ResolverResult newData = await _onCacheMiss(identifier).ConfigureAwait(false);
 
                     lock (_getLock)
                     {
                         // finally double check whether some other thread has not created and added it by now, 
                         // since we had to release the lock to run the async onCacheMiss.
                         if (strategy != CachedResolverLoadingStrategy.LoadFromSource &&
-                            _cache.TryGetValue(identifier, out CacheEntry<T> existingEntry))
+                            _cache.TryGetValue(identifier, out CacheEntry<ResolverResult> existingEntry))
                             return existingEntry.Data;
                         else
                         {
@@ -261,7 +303,7 @@ namespace Hl7.Fhir.Specification.Source
                             // Note that an entry is created, even if the newData is null. 
                             // This ensures we don't keep trying to fetch the same url over and over again,
                             // even if the source cannot resolve it.
-                            _cache[identifier] = new CacheEntry<T>(newData, identifier, DateTimeOffset.UtcNow.AddSeconds(_duration));
+                            _cache[identifier] = new CacheEntry<ResolverResult>(newData, identifier, DateTimeOffset.UtcNow.AddSeconds(_duration));
                             return newData;
                         }
                     }

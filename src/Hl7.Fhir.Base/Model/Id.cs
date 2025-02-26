@@ -41,6 +41,9 @@ namespace Hl7.Fhir.Model;
 
 public partial class Id
 {
+    /// <summary>
+    /// Validates the JsonValue and updates the internal cached Date value.
+    /// </summary>
     protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
         ObjectValue switch
         {

@@ -14,13 +14,13 @@ namespace HL7.FhirPath.Tests.Functions
         [TestMethod]
         public void StringSplit()
         {
-            CollectionAssert.AreEqual(new[] { "A", "B", "C" }, StringOperators.FpSplit("A,B,C", ",").Select(r => r.Value.ToString()).ToArray());
+            CollectionAssert.AreEqual(new[] { "A", "B", "C" }, StringOperators.FpSplit("A,B,C", ",").Select(r => r.GetValue()!.ToString()).ToArray());
 
             // verify the empty string
-            CollectionAssert.AreEqual(new[] { "A", "", "C" }, StringOperators.FpSplit("A,,C", ",").Select(r => r.Value.ToString()).ToArray());
+            CollectionAssert.AreEqual(new[] { "A", "", "C" }, StringOperators.FpSplit("A,,C", ",").Select(r => r.GetValue()!.ToString()).ToArray());
 
             // Verify dups aren't removed
-            CollectionAssert.AreEqual(new[] { "A", "B", "C", "C" }, StringOperators.FpSplit("A,B,C,C", ",").Select(r => r.Value.ToString()).ToArray());
+            CollectionAssert.AreEqual(new[] { "A", "B", "C", "C" }, StringOperators.FpSplit("A,B,C,C", ",").Select(r => r.GetValue()!.ToString()).ToArray());
 
             // The test from the spec
             Assert.AreEqual(5, StringOperators.FpSplit("Peter,James,Jim,Peter,James", ",").Count());

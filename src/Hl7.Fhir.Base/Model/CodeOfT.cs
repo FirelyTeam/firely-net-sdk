@@ -108,6 +108,9 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         }
     }
 
+    /// <summary>
+    /// Validates the JsonValue and updates the internal cached enum Value.
+    /// </summary>
     protected internal override COVE? ValidateObjectValue(ValidationContext? context)
     {
         if (_parsedValue is not null || base.ObjectValue is null) return null;

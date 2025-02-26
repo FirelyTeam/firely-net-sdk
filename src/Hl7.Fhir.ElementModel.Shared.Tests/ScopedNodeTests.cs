@@ -182,7 +182,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             Assert.IsNull(_bundleNode!.Resolve("#"));
 
-            var patient = _bundleNode!.Children("entry").Skip(6).First().Children("resource").First();
+            var patient = _bundleNode!.Children("entry").Skip(6).Children("resource").First();
             Assert.IsNull(patient.Resolve("#"));
 
             var containedOrg = patient.Children("contained").First();
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsNull(inner7.Resolve("http://nu.nl/3", externalResolve));
             Assert.AreEqual("http://nu.nl/3", lastUrlResolved);
 
-            IScopedNode? externalResolve(string url)
+            ITypedElement? externalResolve(string url)
             {
                 lastUrlResolved = url;
                 return null;
@@ -271,15 +271,17 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("xhtml", typedElements.First().InstanceType);
             Assert.AreEqual("Section.text[0]", typedElements.First().Location);
             Assert.IsNotNull(typedElements.First().Value);
+
+
         }
         
         [TestMethod]
         public void Bundle_WithEntryWithoutFullUrl_ShouldNotThrow()
         {
-            var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]};
+            var bundle = new Bundle() { Type = Bundle.BundleType.Batch, Entry = [new Bundle.EntryComponent() { Resource = new Patient() }]}.ToTypedElement().ToScopedNode();
 
-            var enumerate = () => bundle.ToPocoNode().BundledResources();
-            enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => !c.Children("fullUrl").Any());
+            var enumerate = () => bundle.BundledResources();
+            enumerate.Should().NotThrow().Subject.Should().ContainSingle(c => c.FullUrl == null);
         }
 
         private class CCDAResourceResolver : IAsyncResourceResolver
@@ -295,8 +297,14 @@ namespace Hl7.Fhir.ElementModel.Tests
                     new DirectorySource("TestData/TestSd")));
             }
 
-            public async Tasks.Task<Resource> ResolveByCanonicalUriAsync(string uri)
+            public async Tasks.Task<Resource?> ResolveByCanonicalUriAsync(string uri)
             {
+                var result = await TryResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+                return result.Value;
+            }
+
+            public async Tasks.Task<ResolverResult> TryResolveByCanonicalUriAsync(string uri)
+            { 
                 if (_cache.TryGetValue(uri, out StructureDefinition? sd))
                     return sd;
 
@@ -310,8 +318,10 @@ namespace Hl7.Fhir.ElementModel.Tests
 
                 return sd;
             }
+            
+            public Tasks.Task<ResolverResult> TryResolveByUriAsync(string uri) => throw new NotImplementedException();
 
-            public Tasks.Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+            public Tasks.Task<Resource?> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
         private class TypedElementWithoutDefinition : ITypedElement, IResourceTypeSupplier

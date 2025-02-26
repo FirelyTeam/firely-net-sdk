@@ -71,6 +71,9 @@ public partial class Date
     [NonSerialized] // To prevent binary serialization from serializing this field
     private P.Date? _parsedValue = null;
 
+    /// <summary>
+    /// Validates the JsonValue and updates the internal cached Date value.
+    /// </summary>
     protected internal override COVE? ValidateObjectValue(ValidationContext? context)
     {
         if (_parsedValue is not null || base.ObjectValue is null) return null;
