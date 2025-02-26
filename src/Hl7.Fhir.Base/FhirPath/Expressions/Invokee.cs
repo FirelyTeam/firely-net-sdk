@@ -13,7 +13,7 @@ using Hl7.FhirPath.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementModel.ITypedElement>;
+using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementModel.PocoNode>;
 // ReSharper disable InconsistentNaming
 
 namespace Hl7.FhirPath.Expressions;
@@ -49,12 +49,7 @@ internal static class InvokeeFactory
     private static readonly Predicate<FocusCollection> PROPAGATE_EMPTY_PRIMITIVE = focus =>
     {
         var first = focus.FirstOrDefault();
-        if (first is null) return true;
-
-        // If this is not a primitive, then it is not empty.
-        if (first.InstanceType is null || !char.IsLower(first.InstanceType[0])) return false;
-
-        return first.Value is null;
+        return first is null or PrimitiveNode { Value: null };
     };
 
     private static Predicate<FocusCollection> getPropagator(bool doNullProp, Type argType) =>
@@ -80,7 +75,7 @@ internal static class InvokeeFactory
             if (typeof(A) != typeof(EvaluationContext))
             {
                 var focus = args.First()(ctx, EmptyArgs);
-                if (getPropagator(propNull, typeof(A))(focus)) return ElementNode.EmptyList;
+                if (getPropagator(propNull, typeof(A))(focus)) return [];
                 return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus)));
             }
 
@@ -98,7 +93,7 @@ internal static class InvokeeFactory
         {
             // propagate only null for focus
             var focus = args.First()(ctx, EmptyArgs);
-            if (getPropagator(true,typeof(A))(focus)) return ElementNode.EmptyList;
+            if (getPropagator(true,typeof(A))(focus)) return [];
 
             return Wrap(func, false)(ctx, args);
         };
@@ -109,12 +104,12 @@ internal static class InvokeeFactory
         return (ctx, args) =>
         {
             var focus = args.First()(ctx, EmptyArgs);
-            if (getPropagator(propNull, typeof(A))(focus)) return ElementNode.EmptyList;
+            if (getPropagator(propNull, typeof(A))(focus)) return [];
 
             if (typeof(B) != typeof(EvaluationContext))
             {
                 var argA = args.Skip(1).First()(ctx, EmptyArgs);
-                if (getPropagator(propNull, typeof(B))(argA)) return ElementNode.EmptyList;
+                if (getPropagator(propNull, typeof(B))(argA)) return [];
 
                 return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA)));
             }
@@ -131,15 +126,15 @@ internal static class InvokeeFactory
         return (ctx, args) =>
         {
             var focus = args.First()(ctx, EmptyArgs);
-            if (getPropagator(propNull,typeof(A))(focus)) return ElementNode.EmptyList;
+            if (getPropagator(propNull,typeof(A))(focus)) return [];
 
             var argA = args.Skip(1).First()(ctx, EmptyArgs);
-            if (getPropagator(propNull, typeof(B))(argA)) return ElementNode.EmptyList;
+            if (getPropagator(propNull, typeof(B))(argA)) return [];
 
             if (typeof(C) != typeof(EvaluationContext))
             {
                 var argB = args.Skip(2).First()(ctx, EmptyArgs);
-                if (getPropagator(propNull, typeof(C))(argB)) return ElementNode.EmptyList;
+                if (getPropagator(propNull, typeof(C))(argB)) return [];
 
                 return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus), Typecasts.CastTo<B>(argA),
                     Typecasts.CastTo<C>(argB)));
@@ -158,17 +153,17 @@ internal static class InvokeeFactory
         return (ctx, args) =>
         {
             var focus = args.First()(ctx, EmptyArgs);
-            if (getPropagator(propNull, typeof(A))(focus)) return ElementNode.EmptyList;
+            if (getPropagator(propNull, typeof(A))(focus)) return [];
 
             var argA = args.Skip(1).First()(ctx, EmptyArgs);
-            if (getPropagator(propNull, typeof(B))(argA)) return ElementNode.EmptyList;
+            if (getPropagator(propNull, typeof(B))(argA)) return [];
             var argB = args.Skip(2).First()(ctx, EmptyArgs);
-            if (getPropagator(propNull, typeof(C))(argB)) return ElementNode.EmptyList;
+            if (getPropagator(propNull, typeof(C))(argB)) return [];
 
             if (typeof(D) != typeof(EvaluationContext))
             {
                 var argC = args.Skip(3).First()(ctx, EmptyArgs);
-                if (getPropagator(propNull, typeof(D))(argC)) return ElementNode.EmptyList;
+                if (getPropagator(propNull, typeof(D))(argC)) return [];
 
                 return Typecasts.CastTo<FocusCollection>(func(Typecasts.CastTo<A>(focus),
                     Typecasts.CastTo<B>(argA), Typecasts.CastTo<C>(argB), Typecasts.CastTo<D>(argC)));
@@ -198,8 +193,6 @@ internal static class InvokeeFactory
                 func(() => left(ctx, EmptyArgs).BooleanEval(), () => right(ctx, EmptyArgs).BooleanEval()));
         };
     }
-
-    public static Invokee Return(ITypedElement value) => (_, _) => [value];
 
     public static Invokee Return(FocusCollection value) => (_, _) => value;
 
