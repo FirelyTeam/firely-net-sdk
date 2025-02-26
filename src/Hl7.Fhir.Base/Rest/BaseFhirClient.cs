@@ -798,8 +798,9 @@ public partial class BaseFhirClient : IDisposable
 
         await verifyServerVersion(cancellation).ConfigureAwait(false);
 
-        var request = tx.Entry[0];
-        var maybeBinaryInteraction = new ResourceIdentity(request.Request.Url).ResourceType == "Binary";
+        var request = tx.Entry.FirstOrDefault() ?? throw new ArgumentException("Should have at least one entry in the bundle", nameof(tx));
+        var maybeBinaryInteraction = request.Request?.Url is not null &&
+                                     new ResourceIdentity(request.Request.Url).ResourceType == "Binary";
         var requestMessage = request.ToHttpRequestMessage(
             Requester.BaseUrl,
             getSerializationEngine(),
@@ -888,7 +889,7 @@ public partial class BaseFhirClient : IDisposable
 
         // NOTE: Since these lines may call GetAsync(), the executeAsync() method we're in might get called "recursively",
         // and all state (e.g. Last Result etc) will be overwritten from this point on.
-        var execResult = shouldFetchFullRepresentation ?
+        var execResult = shouldFetchFullRepresentation && LastResult?.Location is not null ?
             await GetAsync(LastResult.Location).ConfigureAwait(false) : LastBodyAsResource;
 
         // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
@@ -908,7 +909,7 @@ public partial class BaseFhirClient : IDisposable
             _ => throw new FhirOperationException(entryComponent is not null ? unexpectedBodyTypeForBundle(entryComponent.Request, execResult) : unexpectedBodyTypeForMessage(msg!, execResult), responseMessage.StatusCode)
         };
 
-        static string unexpectedBodyTypeForBundle(Bundle.RequestComponent rc, Resource result) => $"Operation {rc.Method} on {rc.Url} " +
+        static string unexpectedBodyTypeForBundle(Bundle.RequestComponent? rc, Resource result) => $"Operation {rc?.Method} on {rc?.Url} " +
                                                                         $"expected a body of type {typeof(TResource).Name} but a {result.GetType().Name} was returned.";
 
         static string unexpectedBodyTypeForMessage(HttpRequestMessage msg, Resource result) => $"Operation {msg.Method} on {msg.RequestUri} " +
@@ -963,7 +964,7 @@ public partial class BaseFhirClient : IDisposable
     }
 
     private static bool isPostOrPutOrPatch(Bundle.EntryComponent interaction) =>
-        interaction.Request.Method is Bundle.HTTPVerb.POST or Bundle.HTTPVerb.PUT or Bundle.HTTPVerb.PATCH;
+        interaction.Request?.Method is Bundle.HTTPVerb.POST or Bundle.HTTPVerb.PUT or Bundle.HTTPVerb.PATCH;
 
     private static bool isPostOrPutOrPatch(HttpMethod method) =>
         method == HttpMethod.Post || method == HttpMethod.Put || method == new HttpMethod("PATCH");

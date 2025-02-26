@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,24 +67,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Whether this organization affiliation record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean ActiveElement
+    public Hl7.Fhir.Model.FhirBoolean? ActiveElement
     {
       get { return _ActiveElement; }
       set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+    private Hl7.Fhir.Model.FhirBoolean? _ActiveElement;
 
     /// <summary>
     /// Whether this organization affiliation record is in active use
@@ -90,13 +93,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get { return ActiveElement != null ? ActiveElement.Value : null; }
+      get => _ActiveElement?.Value;
       set
       {
-        if (value == null)
-          ActiveElement = null;
-        else
-          ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -106,13 +106,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("period", InSummary=true, Order=110, FiveWs="FiveWs.done[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     /// <summary>
     /// Organization where the role is available.
@@ -121,13 +121,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Organization
+    public Hl7.Fhir.Model.ResourceReference? Organization
     {
       get { return _Organization; }
       set { _Organization = value; OnPropertyChanged("Organization"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Organization;
+    private Hl7.Fhir.Model.ResourceReference? _Organization;
 
     /// <summary>
     /// Organization that provides/performs the role (e.g. providing services or is a member of).
@@ -136,13 +136,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ParticipatingOrganization
+    public Hl7.Fhir.Model.ResourceReference? ParticipatingOrganization
     {
       get { return _ParticipatingOrganization; }
       set { _ParticipatingOrganization = value; OnPropertyChanged("ParticipatingOrganization"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ParticipatingOrganization;
+    private Hl7.Fhir.Model.ResourceReference? _ParticipatingOrganization;
 
     /// <summary>
     /// The network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined).
@@ -154,11 +154,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Network
     {
-      get { if(_Network==null) _Network = new List<Hl7.Fhir.Model.ResourceReference>(); return _Network; }
+      get => _Network ??= [];
       set { _Network = value; OnPropertyChanged("Network"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Network;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Network;
 
     /// <summary>
     /// Definition of the role the participatingOrganization plays.
@@ -169,11 +169,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Code
     {
-      get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
+      get => _Code ??= [];
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Code;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Code;
 
     /// <summary>
     /// Specific specialty of the participatingOrganization in the context of the role.
@@ -184,11 +184,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
-      get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
+      get => _Specialty ??= [];
       set { _Specialty = value; OnPropertyChanged("Specialty"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Specialty;
 
     /// <summary>
     /// The location(s) at which the role occurs.
@@ -200,11 +200,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Location
     {
-      get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
+      get => _Location ??= [];
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Location;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Location;
 
     /// <summary>
     /// Healthcare services provided through the role.
@@ -216,11 +216,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> HealthcareService
     {
-      get { if(_HealthcareService==null) _HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(); return _HealthcareService; }
+      get => _HealthcareService ??= [];
       set { _HealthcareService = value; OnPropertyChanged("HealthcareService"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _HealthcareService;
+    private List<Hl7.Fhir.Model.ResourceReference>? _HealthcareService;
 
     /// <summary>
     /// Official contact details at the participatingOrganization relevant to this Affiliation.
@@ -230,11 +230,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ExtendedContactDetail> Contact
     {
-      get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ExtendedContactDetail>(); return _Contact; }
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
-    private List<Hl7.Fhir.Model.ExtendedContactDetail> _Contact;
+    private List<Hl7.Fhir.Model.ExtendedContactDetail>? _Contact;
 
     /// <summary>
     /// Technical endpoints providing access to services operated for this role.
@@ -246,36 +246,32 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
-      get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+      get => _Endpoint ??= [];
       set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Endpoint;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as OrganizationAffiliation;
-
-      if (dest == null)
-      {
+      if(other is not OrganizationAffiliation dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
-      if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopyInternal();
-      if(ParticipatingOrganization != null) dest.ParticipatingOrganization = (Hl7.Fhir.Model.ResourceReference)ParticipatingOrganization.DeepCopyInternal();
-      if(Network.Any()) dest.Network = new List<Hl7.Fhir.Model.ResourceReference>(Network.DeepCopyInternal());
-      if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopyInternal());
-      if(Specialty.Any()) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopyInternal());
-      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopyInternal());
-      if(HealthcareService.Any()) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(HealthcareService.DeepCopyInternal());
-      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ExtendedContactDetail>(Contact.DeepCopyInternal());
-      if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_ActiveElement is not null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)_ActiveElement.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+      if(_Organization is not null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)_Organization.DeepCopyInternal();
+      if(_ParticipatingOrganization is not null) dest.ParticipatingOrganization = (Hl7.Fhir.Model.ResourceReference)_ParticipatingOrganization.DeepCopyInternal();
+      if(_Network is not null) dest.Network = new List<Hl7.Fhir.Model.ResourceReference>(_Network.DeepCopyInternal());
+      if(_Code is not null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(_Code.DeepCopyInternal());
+      if(_Specialty is not null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(_Specialty.DeepCopyInternal());
+      if(_Location is not null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(_Location.DeepCopyInternal());
+      if(_HealthcareService is not null) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(_HealthcareService.DeepCopyInternal());
+      if(_Contact is not null) dest.Contact = new List<Hl7.Fhir.Model.ExtendedContactDetail>(_Contact.DeepCopyInternal());
+      if(_Endpoint is not null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(_Endpoint.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -287,111 +283,112 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as OrganizationAffiliation;
-      if(otherT == null) return false;
+      if(other is not OrganizationAffiliation otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
-      if(!comparer.Equals(Organization, otherT.Organization)) return false;
-      if(!comparer.Equals(ParticipatingOrganization, otherT.ParticipatingOrganization)) return false;
-      if(!comparer.ListEquals(Network, otherT.Network)) return false;
-      if(!comparer.ListEquals(Code, otherT.Code)) return false;
-      if(!comparer.ListEquals(Specialty, otherT.Specialty)) return false;
-      if(!comparer.ListEquals(Location, otherT.Location)) return false;
-      if(!comparer.ListEquals(HealthcareService, otherT.HealthcareService)) return false;
-      if(!comparer.ListEquals(Contact, otherT.Contact)) return false;
-      if(!comparer.ListEquals(Endpoint, otherT.Endpoint)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.Equals(_Organization, otherT._Organization)) return false;
+      if(!comparer.Equals(_ParticipatingOrganization, otherT._ParticipatingOrganization)) return false;
+      if(!comparer.ListEquals(_Network, otherT._Network)) return false;
+      if(!comparer.ListEquals(_Code, otherT._Code)) return false;
+      if(!comparer.ListEquals(_Specialty, otherT._Specialty)) return false;
+      if(!comparer.ListEquals(_Location, otherT._Location)) return false;
+      if(!comparer.ListEquals(_HealthcareService, otherT._HealthcareService)) return false;
+      if(!comparer.ListEquals(_Contact, otherT._Contact)) return false;
+      if(!comparer.ListEquals(_Endpoint, otherT._Endpoint)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "active":
-          value = ActiveElement;
-          return ActiveElement is not null;
+          value = _ActiveElement;
+          return _ActiveElement is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         case "organization":
-          value = Organization;
-          return Organization is not null;
+          value = _Organization;
+          return _Organization is not null;
         case "participatingOrganization":
-          value = ParticipatingOrganization;
-          return ParticipatingOrganization is not null;
+          value = _ParticipatingOrganization;
+          return _ParticipatingOrganization is not null;
         case "network":
-          value = Network;
-          return Network?.Any() == true;
+          value = _Network;
+          return _Network?.Any() == true;
         case "code":
-          value = Code;
-          return Code?.Any() == true;
+          value = _Code;
+          return _Code?.Any() == true;
         case "specialty":
-          value = Specialty;
-          return Specialty?.Any() == true;
+          value = _Specialty;
+          return _Specialty?.Any() == true;
         case "location":
-          value = Location;
-          return Location?.Any() == true;
+          value = _Location;
+          return _Location?.Any() == true;
         case "healthcareService":
-          value = HealthcareService;
-          return HealthcareService?.Any() == true;
+          value = _HealthcareService;
+          return _HealthcareService?.Any() == true;
         case "contact":
-          value = Contact;
-          return Contact?.Any() == true;
+          value = _Contact;
+          return _Contact?.Any() == true;
         case "endpoint":
-          value = Endpoint;
-          return Endpoint?.Any() == true;
+          value = _Endpoint;
+          return _Endpoint?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "active":
-          ActiveElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "organization":
-          Organization = (Hl7.Fhir.Model.ResourceReference)value;
+          Organization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "participatingOrganization":
-          ParticipatingOrganization = (Hl7.Fhir.Model.ResourceReference)value;
+          ParticipatingOrganization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "network":
-          Network = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Network = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "code":
-          Code = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Code = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "specialty":
-          Specialty = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Specialty = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "location":
-          Location = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Location = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "healthcareService":
-          HealthcareService = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          HealthcareService = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "contact":
-          Contact = (List<Hl7.Fhir.Model.ExtendedContactDetail>)value;
+          Contact = (List<Hl7.Fhir.Model.ExtendedContactDetail>?)value!;
           return this;
         case "endpoint":
-          Endpoint = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Endpoint = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -402,18 +399,18 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
-      if (ParticipatingOrganization is not null) yield return new KeyValuePair<string,object>("participatingOrganization",ParticipatingOrganization);
-      if (Network?.Any() == true) yield return new KeyValuePair<string,object>("network",Network);
-      if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
-      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
-      if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
-      if (HealthcareService?.Any() == true) yield return new KeyValuePair<string,object>("healthcareService",HealthcareService);
-      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Organization is not null) yield return new KeyValuePair<string,object>("organization",_Organization);
+      if (_ParticipatingOrganization is not null) yield return new KeyValuePair<string,object>("participatingOrganization",_ParticipatingOrganization);
+      if (_Network?.Any() == true) yield return new KeyValuePair<string,object>("network",_Network);
+      if (_Code?.Any() == true) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",_Specialty);
+      if (_Location?.Any() == true) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_HealthcareService?.Any() == true) yield return new KeyValuePair<string,object>("healthcareService",_HealthcareService);
+      if (_Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
     }
 
   }

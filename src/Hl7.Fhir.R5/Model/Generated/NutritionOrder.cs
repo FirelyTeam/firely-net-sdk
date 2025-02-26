@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -85,24 +88,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Type;
 
       /// <summary>
       /// Scheduling information for oral diets.
       /// </summary>
       [FhirElement("schedule", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent Schedule
+      public Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent? Schedule
       {
         get { return _Schedule; }
         set { _Schedule = value; OnPropertyChanged("Schedule"); }
       }
 
-      private Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent _Schedule;
+      private Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent? _Schedule;
 
       /// <summary>
       /// Required  nutrient modifications.
@@ -112,11 +115,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent> Nutrient
       {
-        get { if(_Nutrient==null) _Nutrient = new List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>(); return _Nutrient; }
+        get => _Nutrient ??= [];
         set { _Nutrient = value; OnPropertyChanged("Nutrient"); }
       }
 
-      private List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent> _Nutrient;
+      private List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>? _Nutrient;
 
       /// <summary>
       /// Required  texture modifications.
@@ -126,11 +129,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.NutritionOrder.TextureComponent> Texture
       {
-        get { if(_Texture==null) _Texture = new List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>(); return _Texture; }
+        get => _Texture ??= [];
         set { _Texture = value; OnPropertyChanged("Texture"); }
       }
 
-      private List<Hl7.Fhir.Model.NutritionOrder.TextureComponent> _Texture;
+      private List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>? _Texture;
 
       /// <summary>
       /// The required consistency of fluids and liquids provided to the patient.
@@ -141,59 +144,52 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> FluidConsistencyType
       {
-        get { if(_FluidConsistencyType==null) _FluidConsistencyType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _FluidConsistencyType; }
+        get => _FluidConsistencyType ??= [];
         set { _FluidConsistencyType = value; OnPropertyChanged("FluidConsistencyType"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _FluidConsistencyType;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _FluidConsistencyType;
 
       /// <summary>
       /// Instructions or additional information about the oral diet.
       /// </summary>
       [FhirElement("instruction", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString InstructionElement
+      public Hl7.Fhir.Model.FhirString? InstructionElement
       {
         get { return _InstructionElement; }
         set { _InstructionElement = value; OnPropertyChanged("InstructionElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _InstructionElement;
+      private Hl7.Fhir.Model.FhirString? _InstructionElement;
 
       /// <summary>
       /// Instructions or additional information about the oral diet
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Instruction
+      public string? Instruction
       {
-        get { return InstructionElement != null ? InstructionElement.Value : null; }
+        get => _InstructionElement?.Value;
         set
         {
-          if (value == null)
-            InstructionElement = null;
-          else
-            InstructionElement = new Hl7.Fhir.Model.FhirString(value);
+          InstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Instruction");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as OralDietComponent;
-
-        if (dest == null)
-        {
+        if(other is not OralDietComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
-        if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent)Schedule.DeepCopyInternal();
-        if(Nutrient.Any()) dest.Nutrient = new List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>(Nutrient.DeepCopyInternal());
-        if(Texture.Any()) dest.Texture = new List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>(Texture.DeepCopyInternal());
-        if(FluidConsistencyType.Any()) dest.FluidConsistencyType = new List<Hl7.Fhir.Model.CodeableConcept>(FluidConsistencyType.DeepCopyInternal());
-        if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopyInternal();
+        if(_Type is not null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(_Type.DeepCopyInternal());
+        if(_Schedule is not null) dest.Schedule = (Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent)_Schedule.DeepCopyInternal();
+        if(_Nutrient is not null) dest.Nutrient = new List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>(_Nutrient.DeepCopyInternal());
+        if(_Texture is not null) dest.Texture = new List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>(_Texture.DeepCopyInternal());
+        if(_FluidConsistencyType is not null) dest.FluidConsistencyType = new List<Hl7.Fhir.Model.CodeableConcept>(_FluidConsistencyType.DeepCopyInternal());
+        if(_InstructionElement is not null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)_InstructionElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -205,69 +201,70 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as OralDietComponent;
-        if(otherT == null) return false;
+        if(other is not OralDietComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Schedule, otherT.Schedule)) return false;
-        if(!comparer.ListEquals(Nutrient, otherT.Nutrient)) return false;
-        if(!comparer.ListEquals(Texture, otherT.Texture)) return false;
-        if(!comparer.ListEquals(FluidConsistencyType, otherT.FluidConsistencyType)) return false;
-        if(!comparer.Equals(InstructionElement, otherT.InstructionElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Schedule, otherT._Schedule)) return false;
+        if(!comparer.ListEquals(_Nutrient, otherT._Nutrient)) return false;
+        if(!comparer.ListEquals(_Texture, otherT._Texture)) return false;
+        if(!comparer.ListEquals(_FluidConsistencyType, otherT._FluidConsistencyType)) return false;
+        if(!comparer.Equals(_InstructionElement, otherT._InstructionElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type?.Any() == true;
+            value = _Type;
+            return _Type?.Any() == true;
           case "schedule":
-            value = Schedule;
-            return Schedule is not null;
+            value = _Schedule;
+            return _Schedule is not null;
           case "nutrient":
-            value = Nutrient;
-            return Nutrient?.Any() == true;
+            value = _Nutrient;
+            return _Nutrient?.Any() == true;
           case "texture":
-            value = Texture;
-            return Texture?.Any() == true;
+            value = _Texture;
+            return _Texture?.Any() == true;
           case "fluidConsistencyType":
-            value = FluidConsistencyType;
-            return FluidConsistencyType?.Any() == true;
+            value = _FluidConsistencyType;
+            return _FluidConsistencyType?.Any() == true;
           case "instruction":
-            value = InstructionElement;
-            return InstructionElement is not null;
+            value = _InstructionElement;
+            return _InstructionElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Type = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "schedule":
-            Schedule = (Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent)value;
+            Schedule = (Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent?)value;
             return this;
           case "nutrient":
-            Nutrient = (List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>)value;
+            Nutrient = (List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>?)value!;
             return this;
           case "texture":
-            Texture = (List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>)value;
+            Texture = (List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>?)value!;
             return this;
           case "fluidConsistencyType":
-            FluidConsistencyType = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            FluidConsistencyType = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "instruction":
-            InstructionElement = (Hl7.Fhir.Model.FhirString)value;
+            InstructionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -278,12 +275,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
-        if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
-        if (Nutrient?.Any() == true) yield return new KeyValuePair<string,object>("nutrient",Nutrient);
-        if (Texture?.Any() == true) yield return new KeyValuePair<string,object>("texture",Texture);
-        if (FluidConsistencyType?.Any() == true) yield return new KeyValuePair<string,object>("fluidConsistencyType",FluidConsistencyType);
-        if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
+        if (_Type?.Any() == true) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Schedule is not null) yield return new KeyValuePair<string,object>("schedule",_Schedule);
+        if (_Nutrient?.Any() == true) yield return new KeyValuePair<string,object>("nutrient",_Nutrient);
+        if (_Texture?.Any() == true) yield return new KeyValuePair<string,object>("texture",_Texture);
+        if (_FluidConsistencyType?.Any() == true) yield return new KeyValuePair<string,object>("fluidConsistencyType",_FluidConsistencyType);
+        if (_InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",_InstructionElement);
       }
 
     }
@@ -312,24 +309,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Timing> Timing
       {
-        get { if(_Timing==null) _Timing = new List<Hl7.Fhir.Model.Timing>(); return _Timing; }
+        get => _Timing ??= [];
         set { _Timing = value; OnPropertyChanged("Timing"); }
       }
 
-      private List<Hl7.Fhir.Model.Timing> _Timing;
+      private List<Hl7.Fhir.Model.Timing>? _Timing;
 
       /// <summary>
       /// Take 'as needed'.
       /// </summary>
       [FhirElement("asNeeded", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean AsNeededElement
+      public Hl7.Fhir.Model.FhirBoolean? AsNeededElement
       {
         get { return _AsNeededElement; }
         set { _AsNeededElement = value; OnPropertyChanged("AsNeededElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _AsNeededElement;
+      private Hl7.Fhir.Model.FhirBoolean? _AsNeededElement;
 
       /// <summary>
       /// Take 'as needed'
@@ -338,13 +335,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AsNeeded
       {
-        get { return AsNeededElement != null ? AsNeededElement.Value : null; }
+        get => _AsNeededElement?.Value;
         set
         {
-          if (value == null)
-            AsNeededElement = null;
-          else
-            AsNeededElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          AsNeededElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AsNeeded");
         }
       }
@@ -355,27 +349,23 @@ namespace Hl7.Fhir.Model
       [FhirElement("asNeededFor", Order=60)]
       [Binding("OralDietAsNeededReason")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept AsNeededFor
+      public Hl7.Fhir.Model.CodeableConcept? AsNeededFor
       {
         get { return _AsNeededFor; }
         set { _AsNeededFor = value; OnPropertyChanged("AsNeededFor"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _AsNeededFor;
+      private Hl7.Fhir.Model.CodeableConcept? _AsNeededFor;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as OralDietScheduleComponent;
-
-        if (dest == null)
-        {
+        if(other is not OralDietScheduleComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Timing.Any()) dest.Timing = new List<Hl7.Fhir.Model.Timing>(Timing.DeepCopyInternal());
-        if(AsNeededElement != null) dest.AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)AsNeededElement.DeepCopyInternal();
-        if(AsNeededFor != null) dest.AsNeededFor = (Hl7.Fhir.Model.CodeableConcept)AsNeededFor.DeepCopyInternal();
+        if(_Timing is not null) dest.Timing = new List<Hl7.Fhir.Model.Timing>(_Timing.DeepCopyInternal());
+        if(_AsNeededElement is not null) dest.AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)_AsNeededElement.DeepCopyInternal();
+        if(_AsNeededFor is not null) dest.AsNeededFor = (Hl7.Fhir.Model.CodeableConcept)_AsNeededFor.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -387,48 +377,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as OralDietScheduleComponent;
-        if(otherT == null) return false;
+        if(other is not OralDietScheduleComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Timing, otherT.Timing)) return false;
-        if(!comparer.Equals(AsNeededElement, otherT.AsNeededElement)) return false;
-        if(!comparer.Equals(AsNeededFor, otherT.AsNeededFor)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Timing, otherT._Timing)) return false;
+        if(!comparer.Equals(_AsNeededElement, otherT._AsNeededElement)) return false;
+        if(!comparer.Equals(_AsNeededFor, otherT._AsNeededFor)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "timing":
-            value = Timing;
-            return Timing?.Any() == true;
+            value = _Timing;
+            return _Timing?.Any() == true;
           case "asNeeded":
-            value = AsNeededElement;
-            return AsNeededElement is not null;
+            value = _AsNeededElement;
+            return _AsNeededElement is not null;
           case "asNeededFor":
-            value = AsNeededFor;
-            return AsNeededFor is not null;
+            value = _AsNeededFor;
+            return _AsNeededFor is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "timing":
-            Timing = (List<Hl7.Fhir.Model.Timing>)value;
+            Timing = (List<Hl7.Fhir.Model.Timing>?)value!;
             return this;
           case "asNeeded":
-            AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            AsNeededElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "asNeededFor":
-            AsNeededFor = (Hl7.Fhir.Model.CodeableConcept)value;
+            AsNeededFor = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -439,9 +430,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Timing?.Any() == true) yield return new KeyValuePair<string,object>("timing",Timing);
-        if (AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",AsNeededElement);
-        if (AsNeededFor is not null) yield return new KeyValuePair<string,object>("asNeededFor",AsNeededFor);
+        if (_Timing?.Any() == true) yield return new KeyValuePair<string,object>("timing",_Timing);
+        if (_AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",_AsNeededElement);
+        if (_AsNeededFor is not null) yield return new KeyValuePair<string,object>("asNeededFor",_AsNeededFor);
       }
 
     }
@@ -468,39 +459,35 @@ namespace Hl7.Fhir.Model
       [FhirElement("modifier", Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("NutrientModifier")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Modifier
+      public Hl7.Fhir.Model.CodeableConcept? Modifier
       {
         get { return _Modifier; }
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Modifier;
+      private Hl7.Fhir.Model.CodeableConcept? _Modifier;
 
       /// <summary>
       /// Quantity of the specified nutrient.
       /// </summary>
       [FhirElement("amount", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Amount
+      public Hl7.Fhir.Model.Quantity? Amount
       {
         get { return _Amount; }
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Amount;
+      private Hl7.Fhir.Model.Quantity? _Amount;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as NutrientComponent;
-
-        if (dest == null)
-        {
+        if(other is not NutrientComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Modifier != null) dest.Modifier = (Hl7.Fhir.Model.CodeableConcept)Modifier.DeepCopyInternal();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopyInternal();
+        if(_Modifier is not null) dest.Modifier = (Hl7.Fhir.Model.CodeableConcept)_Modifier.DeepCopyInternal();
+        if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.Quantity)_Amount.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -512,41 +499,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as NutrientComponent;
-        if(otherT == null) return false;
+        if(other is not NutrientComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Modifier, otherT.Modifier)) return false;
-        if(!comparer.Equals(Amount, otherT.Amount)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Modifier, otherT._Modifier)) return false;
+        if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "modifier":
-            value = Modifier;
-            return Modifier is not null;
+            value = _Modifier;
+            return _Modifier is not null;
           case "amount":
-            value = Amount;
-            return Amount is not null;
+            value = _Amount;
+            return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "modifier":
-            Modifier = (Hl7.Fhir.Model.CodeableConcept)value;
+            Modifier = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.Quantity)value;
+            Amount = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -557,8 +545,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (_Modifier is not null) yield return new KeyValuePair<string,object>("modifier",_Modifier);
+        if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -585,13 +573,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("modifier", Order=40)]
       [Binding("TextureModifier")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Modifier
+      public Hl7.Fhir.Model.CodeableConcept? Modifier
       {
         get { return _Modifier; }
         set { _Modifier = value; OnPropertyChanged("Modifier"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Modifier;
+      private Hl7.Fhir.Model.CodeableConcept? _Modifier;
 
       /// <summary>
       /// Concepts that are used to identify an entity that is ingested for nutritional purposes.
@@ -599,26 +587,22 @@ namespace Hl7.Fhir.Model
       [FhirElement("foodType", Order=50)]
       [Binding("TextureModifiedFoodType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept FoodType
+      public Hl7.Fhir.Model.CodeableConcept? FoodType
       {
         get { return _FoodType; }
         set { _FoodType = value; OnPropertyChanged("FoodType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _FoodType;
+      private Hl7.Fhir.Model.CodeableConcept? _FoodType;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as TextureComponent;
-
-        if (dest == null)
-        {
+        if(other is not TextureComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Modifier != null) dest.Modifier = (Hl7.Fhir.Model.CodeableConcept)Modifier.DeepCopyInternal();
-        if(FoodType != null) dest.FoodType = (Hl7.Fhir.Model.CodeableConcept)FoodType.DeepCopyInternal();
+        if(_Modifier is not null) dest.Modifier = (Hl7.Fhir.Model.CodeableConcept)_Modifier.DeepCopyInternal();
+        if(_FoodType is not null) dest.FoodType = (Hl7.Fhir.Model.CodeableConcept)_FoodType.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -630,41 +614,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as TextureComponent;
-        if(otherT == null) return false;
+        if(other is not TextureComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Modifier, otherT.Modifier)) return false;
-        if(!comparer.Equals(FoodType, otherT.FoodType)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Modifier, otherT._Modifier)) return false;
+        if(!comparer.Equals(_FoodType, otherT._FoodType)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "modifier":
-            value = Modifier;
-            return Modifier is not null;
+            value = _Modifier;
+            return _Modifier is not null;
           case "foodType":
-            value = FoodType;
-            return FoodType is not null;
+            value = _FoodType;
+            return _FoodType is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "modifier":
-            Modifier = (Hl7.Fhir.Model.CodeableConcept)value;
+            Modifier = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "foodType":
-            FoodType = (Hl7.Fhir.Model.CodeableConcept)value;
+            FoodType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -675,8 +660,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
-        if (FoodType is not null) yield return new KeyValuePair<string,object>("foodType",FoodType);
+        if (_Modifier is not null) yield return new KeyValuePair<string,object>("modifier",_Modifier);
+        if (_FoodType is not null) yield return new KeyValuePair<string,object>("foodType",_FoodType);
       }
 
     }
@@ -703,41 +688,38 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("SupplementType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference Type
+      public Hl7.Fhir.Model.CodeableReference? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _Type;
+      private Hl7.Fhir.Model.CodeableReference? _Type;
 
       /// <summary>
       /// Product or brand name of the nutritional supplement.
       /// </summary>
       [FhirElement("productName", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ProductNameElement
+      public Hl7.Fhir.Model.FhirString? ProductNameElement
       {
         get { return _ProductNameElement; }
         set { _ProductNameElement = value; OnPropertyChanged("ProductNameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ProductNameElement;
+      private Hl7.Fhir.Model.FhirString? _ProductNameElement;
 
       /// <summary>
       /// Product or brand name of the nutritional supplement
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ProductName
+      public string? ProductName
       {
-        get { return ProductNameElement != null ? ProductNameElement.Value : null; }
+        get => _ProductNameElement?.Value;
         set
         {
-          if (value == null)
-            ProductNameElement = null;
-          else
-            ProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+          ProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProductName");
         }
       }
@@ -747,73 +729,66 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("schedule", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent Schedule
+      public Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent? Schedule
       {
         get { return _Schedule; }
         set { _Schedule = value; OnPropertyChanged("Schedule"); }
       }
 
-      private Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent _Schedule;
+      private Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent? _Schedule;
 
       /// <summary>
       /// Amount of the nutritional supplement.
       /// </summary>
       [FhirElement("quantity", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Quantity
+      public Hl7.Fhir.Model.Quantity? Quantity
       {
         get { return _Quantity; }
         set { _Quantity = value; OnPropertyChanged("Quantity"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Quantity;
+      private Hl7.Fhir.Model.Quantity? _Quantity;
 
       /// <summary>
       /// Instructions or additional information about the oral supplement.
       /// </summary>
       [FhirElement("instruction", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString InstructionElement
+      public Hl7.Fhir.Model.FhirString? InstructionElement
       {
         get { return _InstructionElement; }
         set { _InstructionElement = value; OnPropertyChanged("InstructionElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _InstructionElement;
+      private Hl7.Fhir.Model.FhirString? _InstructionElement;
 
       /// <summary>
       /// Instructions or additional information about the oral supplement
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Instruction
+      public string? Instruction
       {
-        get { return InstructionElement != null ? InstructionElement.Value : null; }
+        get => _InstructionElement?.Value;
         set
         {
-          if (value == null)
-            InstructionElement = null;
-          else
-            InstructionElement = new Hl7.Fhir.Model.FhirString(value);
+          InstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Instruction");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SupplementComponent;
-
-        if (dest == null)
-        {
+        if(other is not SupplementComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableReference)Type.DeepCopyInternal();
-        if(ProductNameElement != null) dest.ProductNameElement = (Hl7.Fhir.Model.FhirString)ProductNameElement.DeepCopyInternal();
-        if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent)Schedule.DeepCopyInternal();
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
-        if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableReference)_Type.DeepCopyInternal();
+        if(_ProductNameElement is not null) dest.ProductNameElement = (Hl7.Fhir.Model.FhirString)_ProductNameElement.DeepCopyInternal();
+        if(_Schedule is not null) dest.Schedule = (Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent)_Schedule.DeepCopyInternal();
+        if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
+        if(_InstructionElement is not null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)_InstructionElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -825,62 +800,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SupplementComponent;
-        if(otherT == null) return false;
+        if(other is not SupplementComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(ProductNameElement, otherT.ProductNameElement)) return false;
-        if(!comparer.Equals(Schedule, otherT.Schedule)) return false;
-        if(!comparer.Equals(Quantity, otherT.Quantity)) return false;
-        if(!comparer.Equals(InstructionElement, otherT.InstructionElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_ProductNameElement, otherT._ProductNameElement)) return false;
+        if(!comparer.Equals(_Schedule, otherT._Schedule)) return false;
+        if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+        if(!comparer.Equals(_InstructionElement, otherT._InstructionElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "productName":
-            value = ProductNameElement;
-            return ProductNameElement is not null;
+            value = _ProductNameElement;
+            return _ProductNameElement is not null;
           case "schedule":
-            value = Schedule;
-            return Schedule is not null;
+            value = _Schedule;
+            return _Schedule is not null;
           case "quantity":
-            value = Quantity;
-            return Quantity is not null;
+            value = _Quantity;
+            return _Quantity is not null;
           case "instruction":
-            value = InstructionElement;
-            return InstructionElement is not null;
+            value = _InstructionElement;
+            return _InstructionElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableReference)value;
+            Type = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "productName":
-            ProductNameElement = (Hl7.Fhir.Model.FhirString)value;
+            ProductNameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "schedule":
-            Schedule = (Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent)value;
+            Schedule = (Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent?)value;
             return this;
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity)value;
+            Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "instruction":
-            InstructionElement = (Hl7.Fhir.Model.FhirString)value;
+            InstructionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -891,11 +867,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",ProductNameElement);
-        if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
-        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",_ProductNameElement);
+        if (_Schedule is not null) yield return new KeyValuePair<string,object>("schedule",_Schedule);
+        if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",_InstructionElement);
       }
 
     }
@@ -924,24 +900,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Timing> Timing
       {
-        get { if(_Timing==null) _Timing = new List<Hl7.Fhir.Model.Timing>(); return _Timing; }
+        get => _Timing ??= [];
         set { _Timing = value; OnPropertyChanged("Timing"); }
       }
 
-      private List<Hl7.Fhir.Model.Timing> _Timing;
+      private List<Hl7.Fhir.Model.Timing>? _Timing;
 
       /// <summary>
       /// Take 'as needed'.
       /// </summary>
       [FhirElement("asNeeded", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean AsNeededElement
+      public Hl7.Fhir.Model.FhirBoolean? AsNeededElement
       {
         get { return _AsNeededElement; }
         set { _AsNeededElement = value; OnPropertyChanged("AsNeededElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _AsNeededElement;
+      private Hl7.Fhir.Model.FhirBoolean? _AsNeededElement;
 
       /// <summary>
       /// Take 'as needed'
@@ -950,13 +926,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AsNeeded
       {
-        get { return AsNeededElement != null ? AsNeededElement.Value : null; }
+        get => _AsNeededElement?.Value;
         set
         {
-          if (value == null)
-            AsNeededElement = null;
-          else
-            AsNeededElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          AsNeededElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AsNeeded");
         }
       }
@@ -967,27 +940,23 @@ namespace Hl7.Fhir.Model
       [FhirElement("asNeededFor", Order=60)]
       [Binding("SupplementAsNeededReason")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept AsNeededFor
+      public Hl7.Fhir.Model.CodeableConcept? AsNeededFor
       {
         get { return _AsNeededFor; }
         set { _AsNeededFor = value; OnPropertyChanged("AsNeededFor"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _AsNeededFor;
+      private Hl7.Fhir.Model.CodeableConcept? _AsNeededFor;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SupplementScheduleComponent;
-
-        if (dest == null)
-        {
+        if(other is not SupplementScheduleComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Timing.Any()) dest.Timing = new List<Hl7.Fhir.Model.Timing>(Timing.DeepCopyInternal());
-        if(AsNeededElement != null) dest.AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)AsNeededElement.DeepCopyInternal();
-        if(AsNeededFor != null) dest.AsNeededFor = (Hl7.Fhir.Model.CodeableConcept)AsNeededFor.DeepCopyInternal();
+        if(_Timing is not null) dest.Timing = new List<Hl7.Fhir.Model.Timing>(_Timing.DeepCopyInternal());
+        if(_AsNeededElement is not null) dest.AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)_AsNeededElement.DeepCopyInternal();
+        if(_AsNeededFor is not null) dest.AsNeededFor = (Hl7.Fhir.Model.CodeableConcept)_AsNeededFor.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -999,48 +968,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SupplementScheduleComponent;
-        if(otherT == null) return false;
+        if(other is not SupplementScheduleComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Timing, otherT.Timing)) return false;
-        if(!comparer.Equals(AsNeededElement, otherT.AsNeededElement)) return false;
-        if(!comparer.Equals(AsNeededFor, otherT.AsNeededFor)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Timing, otherT._Timing)) return false;
+        if(!comparer.Equals(_AsNeededElement, otherT._AsNeededElement)) return false;
+        if(!comparer.Equals(_AsNeededFor, otherT._AsNeededFor)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "timing":
-            value = Timing;
-            return Timing?.Any() == true;
+            value = _Timing;
+            return _Timing?.Any() == true;
           case "asNeeded":
-            value = AsNeededElement;
-            return AsNeededElement is not null;
+            value = _AsNeededElement;
+            return _AsNeededElement is not null;
           case "asNeededFor":
-            value = AsNeededFor;
-            return AsNeededFor is not null;
+            value = _AsNeededFor;
+            return _AsNeededFor is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "timing":
-            Timing = (List<Hl7.Fhir.Model.Timing>)value;
+            Timing = (List<Hl7.Fhir.Model.Timing>?)value!;
             return this;
           case "asNeeded":
-            AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            AsNeededElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "asNeededFor":
-            AsNeededFor = (Hl7.Fhir.Model.CodeableConcept)value;
+            AsNeededFor = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1051,9 +1021,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Timing?.Any() == true) yield return new KeyValuePair<string,object>("timing",Timing);
-        if (AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",AsNeededElement);
-        if (AsNeededFor is not null) yield return new KeyValuePair<string,object>("asNeededFor",AsNeededFor);
+        if (_Timing?.Any() == true) yield return new KeyValuePair<string,object>("timing",_Timing);
+        if (_AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",_AsNeededElement);
+        if (_AsNeededFor is not null) yield return new KeyValuePair<string,object>("asNeededFor",_AsNeededFor);
       }
 
     }
@@ -1080,41 +1050,38 @@ namespace Hl7.Fhir.Model
       [FhirElement("baseFormulaType", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("EnteralFormulaType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference BaseFormulaType
+      public Hl7.Fhir.Model.CodeableReference? BaseFormulaType
       {
         get { return _BaseFormulaType; }
         set { _BaseFormulaType = value; OnPropertyChanged("BaseFormulaType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _BaseFormulaType;
+      private Hl7.Fhir.Model.CodeableReference? _BaseFormulaType;
 
       /// <summary>
       /// Product or brand name of the enteral or infant formula.
       /// </summary>
       [FhirElement("baseFormulaProductName", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString BaseFormulaProductNameElement
+      public Hl7.Fhir.Model.FhirString? BaseFormulaProductNameElement
       {
         get { return _BaseFormulaProductNameElement; }
         set { _BaseFormulaProductNameElement = value; OnPropertyChanged("BaseFormulaProductNameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _BaseFormulaProductNameElement;
+      private Hl7.Fhir.Model.FhirString? _BaseFormulaProductNameElement;
 
       /// <summary>
       /// Product or brand name of the enteral or infant formula
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string BaseFormulaProductName
+      public string? BaseFormulaProductName
       {
-        get { return BaseFormulaProductNameElement != null ? BaseFormulaProductNameElement.Value : null; }
+        get => _BaseFormulaProductNameElement?.Value;
         set
         {
-          if (value == null)
-            BaseFormulaProductNameElement = null;
-          else
-            BaseFormulaProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+          BaseFormulaProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("BaseFormulaProductName");
         }
       }
@@ -1127,11 +1094,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> DeliveryDevice
       {
-        get { if(_DeliveryDevice==null) _DeliveryDevice = new List<Hl7.Fhir.Model.CodeableReference>(); return _DeliveryDevice; }
+        get => _DeliveryDevice ??= [];
         set { _DeliveryDevice = value; OnPropertyChanged("DeliveryDevice"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableReference> _DeliveryDevice;
+      private List<Hl7.Fhir.Model.CodeableReference>? _DeliveryDevice;
 
       /// <summary>
       /// Components to add to the feeding.
@@ -1141,24 +1108,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent> Additive
       {
-        get { if(_Additive==null) _Additive = new List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent>(); return _Additive; }
+        get => _Additive ??= [];
         set { _Additive = value; OnPropertyChanged("Additive"); }
       }
 
-      private List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent> _Additive;
+      private List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent>? _Additive;
 
       /// <summary>
       /// Amount of energy per specified volume that is required.
       /// </summary>
       [FhirElement("caloricDensity", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity CaloricDensity
+      public Hl7.Fhir.Model.Quantity? CaloricDensity
       {
         get { return _CaloricDensity; }
         set { _CaloricDensity = value; OnPropertyChanged("CaloricDensity"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _CaloricDensity;
+      private Hl7.Fhir.Model.Quantity? _CaloricDensity;
 
       /// <summary>
       /// How the formula should enter the patient's gastrointestinal tract.
@@ -1166,13 +1133,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("routeOfAdministration", Order=90)]
       [Binding("EnteralRouteOfAdministration")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept RouteOfAdministration
+      public Hl7.Fhir.Model.CodeableConcept? RouteOfAdministration
       {
         get { return _RouteOfAdministration; }
         set { _RouteOfAdministration = value; OnPropertyChanged("RouteOfAdministration"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _RouteOfAdministration;
+      private Hl7.Fhir.Model.CodeableConcept? _RouteOfAdministration;
 
       /// <summary>
       /// Formula feeding instruction as structured data.
@@ -1182,75 +1149,68 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent> Administration
       {
-        get { if(_Administration==null) _Administration = new List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>(); return _Administration; }
+        get => _Administration ??= [];
         set { _Administration = value; OnPropertyChanged("Administration"); }
       }
 
-      private List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent> _Administration;
+      private List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>? _Administration;
 
       /// <summary>
       /// Upper limit on formula volume per unit of time.
       /// </summary>
       [FhirElement("maxVolumeToDeliver", Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity MaxVolumeToDeliver
+      public Hl7.Fhir.Model.Quantity? MaxVolumeToDeliver
       {
         get { return _MaxVolumeToDeliver; }
         set { _MaxVolumeToDeliver = value; OnPropertyChanged("MaxVolumeToDeliver"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _MaxVolumeToDeliver;
+      private Hl7.Fhir.Model.Quantity? _MaxVolumeToDeliver;
 
       /// <summary>
       /// Formula feeding instructions expressed as text.
       /// </summary>
       [FhirElement("administrationInstruction", InSummary=true, Order=120)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown AdministrationInstructionElement
+      public Hl7.Fhir.Model.Markdown? AdministrationInstructionElement
       {
         get { return _AdministrationInstructionElement; }
         set { _AdministrationInstructionElement = value; OnPropertyChanged("AdministrationInstructionElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _AdministrationInstructionElement;
+      private Hl7.Fhir.Model.Markdown? _AdministrationInstructionElement;
 
       /// <summary>
       /// Formula feeding instructions expressed as text
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string AdministrationInstruction
+      public string? AdministrationInstruction
       {
-        get { return AdministrationInstructionElement != null ? AdministrationInstructionElement.Value : null; }
+        get => _AdministrationInstructionElement?.Value;
         set
         {
-          if (value == null)
-            AdministrationInstructionElement = null;
-          else
-            AdministrationInstructionElement = new Hl7.Fhir.Model.Markdown(value);
+          AdministrationInstructionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("AdministrationInstruction");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as EnteralFormulaComponent;
-
-        if (dest == null)
-        {
+        if(other is not EnteralFormulaComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(BaseFormulaType != null) dest.BaseFormulaType = (Hl7.Fhir.Model.CodeableReference)BaseFormulaType.DeepCopyInternal();
-        if(BaseFormulaProductNameElement != null) dest.BaseFormulaProductNameElement = (Hl7.Fhir.Model.FhirString)BaseFormulaProductNameElement.DeepCopyInternal();
-        if(DeliveryDevice.Any()) dest.DeliveryDevice = new List<Hl7.Fhir.Model.CodeableReference>(DeliveryDevice.DeepCopyInternal());
-        if(Additive.Any()) dest.Additive = new List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent>(Additive.DeepCopyInternal());
-        if(CaloricDensity != null) dest.CaloricDensity = (Hl7.Fhir.Model.Quantity)CaloricDensity.DeepCopyInternal();
-        if(RouteOfAdministration != null) dest.RouteOfAdministration = (Hl7.Fhir.Model.CodeableConcept)RouteOfAdministration.DeepCopyInternal();
-        if(Administration.Any()) dest.Administration = new List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>(Administration.DeepCopyInternal());
-        if(MaxVolumeToDeliver != null) dest.MaxVolumeToDeliver = (Hl7.Fhir.Model.Quantity)MaxVolumeToDeliver.DeepCopyInternal();
-        if(AdministrationInstructionElement != null) dest.AdministrationInstructionElement = (Hl7.Fhir.Model.Markdown)AdministrationInstructionElement.DeepCopyInternal();
+        if(_BaseFormulaType is not null) dest.BaseFormulaType = (Hl7.Fhir.Model.CodeableReference)_BaseFormulaType.DeepCopyInternal();
+        if(_BaseFormulaProductNameElement is not null) dest.BaseFormulaProductNameElement = (Hl7.Fhir.Model.FhirString)_BaseFormulaProductNameElement.DeepCopyInternal();
+        if(_DeliveryDevice is not null) dest.DeliveryDevice = new List<Hl7.Fhir.Model.CodeableReference>(_DeliveryDevice.DeepCopyInternal());
+        if(_Additive is not null) dest.Additive = new List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent>(_Additive.DeepCopyInternal());
+        if(_CaloricDensity is not null) dest.CaloricDensity = (Hl7.Fhir.Model.Quantity)_CaloricDensity.DeepCopyInternal();
+        if(_RouteOfAdministration is not null) dest.RouteOfAdministration = (Hl7.Fhir.Model.CodeableConcept)_RouteOfAdministration.DeepCopyInternal();
+        if(_Administration is not null) dest.Administration = new List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>(_Administration.DeepCopyInternal());
+        if(_MaxVolumeToDeliver is not null) dest.MaxVolumeToDeliver = (Hl7.Fhir.Model.Quantity)_MaxVolumeToDeliver.DeepCopyInternal();
+        if(_AdministrationInstructionElement is not null) dest.AdministrationInstructionElement = (Hl7.Fhir.Model.Markdown)_AdministrationInstructionElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1262,90 +1222,91 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as EnteralFormulaComponent;
-        if(otherT == null) return false;
+        if(other is not EnteralFormulaComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(BaseFormulaType, otherT.BaseFormulaType)) return false;
-        if(!comparer.Equals(BaseFormulaProductNameElement, otherT.BaseFormulaProductNameElement)) return false;
-        if(!comparer.ListEquals(DeliveryDevice, otherT.DeliveryDevice)) return false;
-        if(!comparer.ListEquals(Additive, otherT.Additive)) return false;
-        if(!comparer.Equals(CaloricDensity, otherT.CaloricDensity)) return false;
-        if(!comparer.Equals(RouteOfAdministration, otherT.RouteOfAdministration)) return false;
-        if(!comparer.ListEquals(Administration, otherT.Administration)) return false;
-        if(!comparer.Equals(MaxVolumeToDeliver, otherT.MaxVolumeToDeliver)) return false;
-        if(!comparer.Equals(AdministrationInstructionElement, otherT.AdministrationInstructionElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_BaseFormulaType, otherT._BaseFormulaType)) return false;
+        if(!comparer.Equals(_BaseFormulaProductNameElement, otherT._BaseFormulaProductNameElement)) return false;
+        if(!comparer.ListEquals(_DeliveryDevice, otherT._DeliveryDevice)) return false;
+        if(!comparer.ListEquals(_Additive, otherT._Additive)) return false;
+        if(!comparer.Equals(_CaloricDensity, otherT._CaloricDensity)) return false;
+        if(!comparer.Equals(_RouteOfAdministration, otherT._RouteOfAdministration)) return false;
+        if(!comparer.ListEquals(_Administration, otherT._Administration)) return false;
+        if(!comparer.Equals(_MaxVolumeToDeliver, otherT._MaxVolumeToDeliver)) return false;
+        if(!comparer.Equals(_AdministrationInstructionElement, otherT._AdministrationInstructionElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "baseFormulaType":
-            value = BaseFormulaType;
-            return BaseFormulaType is not null;
+            value = _BaseFormulaType;
+            return _BaseFormulaType is not null;
           case "baseFormulaProductName":
-            value = BaseFormulaProductNameElement;
-            return BaseFormulaProductNameElement is not null;
+            value = _BaseFormulaProductNameElement;
+            return _BaseFormulaProductNameElement is not null;
           case "deliveryDevice":
-            value = DeliveryDevice;
-            return DeliveryDevice?.Any() == true;
+            value = _DeliveryDevice;
+            return _DeliveryDevice?.Any() == true;
           case "additive":
-            value = Additive;
-            return Additive?.Any() == true;
+            value = _Additive;
+            return _Additive?.Any() == true;
           case "caloricDensity":
-            value = CaloricDensity;
-            return CaloricDensity is not null;
+            value = _CaloricDensity;
+            return _CaloricDensity is not null;
           case "routeOfAdministration":
-            value = RouteOfAdministration;
-            return RouteOfAdministration is not null;
+            value = _RouteOfAdministration;
+            return _RouteOfAdministration is not null;
           case "administration":
-            value = Administration;
-            return Administration?.Any() == true;
+            value = _Administration;
+            return _Administration?.Any() == true;
           case "maxVolumeToDeliver":
-            value = MaxVolumeToDeliver;
-            return MaxVolumeToDeliver is not null;
+            value = _MaxVolumeToDeliver;
+            return _MaxVolumeToDeliver is not null;
           case "administrationInstruction":
-            value = AdministrationInstructionElement;
-            return AdministrationInstructionElement is not null;
+            value = _AdministrationInstructionElement;
+            return _AdministrationInstructionElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "baseFormulaType":
-            BaseFormulaType = (Hl7.Fhir.Model.CodeableReference)value;
+            BaseFormulaType = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "baseFormulaProductName":
-            BaseFormulaProductNameElement = (Hl7.Fhir.Model.FhirString)value;
+            BaseFormulaProductNameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "deliveryDevice":
-            DeliveryDevice = (List<Hl7.Fhir.Model.CodeableReference>)value;
+            DeliveryDevice = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
             return this;
           case "additive":
-            Additive = (List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent>)value;
+            Additive = (List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent>?)value!;
             return this;
           case "caloricDensity":
-            CaloricDensity = (Hl7.Fhir.Model.Quantity)value;
+            CaloricDensity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "routeOfAdministration":
-            RouteOfAdministration = (Hl7.Fhir.Model.CodeableConcept)value;
+            RouteOfAdministration = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "administration":
-            Administration = (List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>)value;
+            Administration = (List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>?)value!;
             return this;
           case "maxVolumeToDeliver":
-            MaxVolumeToDeliver = (Hl7.Fhir.Model.Quantity)value;
+            MaxVolumeToDeliver = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "administrationInstruction":
-            AdministrationInstructionElement = (Hl7.Fhir.Model.Markdown)value;
+            AdministrationInstructionElement = (Hl7.Fhir.Model.Markdown?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1356,15 +1317,15 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (BaseFormulaType is not null) yield return new KeyValuePair<string,object>("baseFormulaType",BaseFormulaType);
-        if (BaseFormulaProductNameElement is not null) yield return new KeyValuePair<string,object>("baseFormulaProductName",BaseFormulaProductNameElement);
-        if (DeliveryDevice?.Any() == true) yield return new KeyValuePair<string,object>("deliveryDevice",DeliveryDevice);
-        if (Additive?.Any() == true) yield return new KeyValuePair<string,object>("additive",Additive);
-        if (CaloricDensity is not null) yield return new KeyValuePair<string,object>("caloricDensity",CaloricDensity);
-        if (RouteOfAdministration is not null) yield return new KeyValuePair<string,object>("routeOfAdministration",RouteOfAdministration);
-        if (Administration?.Any() == true) yield return new KeyValuePair<string,object>("administration",Administration);
-        if (MaxVolumeToDeliver is not null) yield return new KeyValuePair<string,object>("maxVolumeToDeliver",MaxVolumeToDeliver);
-        if (AdministrationInstructionElement is not null) yield return new KeyValuePair<string,object>("administrationInstruction",AdministrationInstructionElement);
+        if (_BaseFormulaType is not null) yield return new KeyValuePair<string,object>("baseFormulaType",_BaseFormulaType);
+        if (_BaseFormulaProductNameElement is not null) yield return new KeyValuePair<string,object>("baseFormulaProductName",_BaseFormulaProductNameElement);
+        if (_DeliveryDevice?.Any() == true) yield return new KeyValuePair<string,object>("deliveryDevice",_DeliveryDevice);
+        if (_Additive?.Any() == true) yield return new KeyValuePair<string,object>("additive",_Additive);
+        if (_CaloricDensity is not null) yield return new KeyValuePair<string,object>("caloricDensity",_CaloricDensity);
+        if (_RouteOfAdministration is not null) yield return new KeyValuePair<string,object>("routeOfAdministration",_RouteOfAdministration);
+        if (_Administration?.Any() == true) yield return new KeyValuePair<string,object>("administration",_Administration);
+        if (_MaxVolumeToDeliver is not null) yield return new KeyValuePair<string,object>("maxVolumeToDeliver",_MaxVolumeToDeliver);
+        if (_AdministrationInstructionElement is not null) yield return new KeyValuePair<string,object>("administrationInstruction",_AdministrationInstructionElement);
       }
 
     }
@@ -1391,41 +1352,38 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("EnteralFormulaAdditiveType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference Type
+      public Hl7.Fhir.Model.CodeableReference? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _Type;
+      private Hl7.Fhir.Model.CodeableReference? _Type;
 
       /// <summary>
       /// Product or brand name of the modular additive.
       /// </summary>
       [FhirElement("productName", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ProductNameElement
+      public Hl7.Fhir.Model.FhirString? ProductNameElement
       {
         get { return _ProductNameElement; }
         set { _ProductNameElement = value; OnPropertyChanged("ProductNameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ProductNameElement;
+      private Hl7.Fhir.Model.FhirString? _ProductNameElement;
 
       /// <summary>
       /// Product or brand name of the modular additive
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ProductName
+      public string? ProductName
       {
-        get { return ProductNameElement != null ? ProductNameElement.Value : null; }
+        get => _ProductNameElement?.Value;
         set
         {
-          if (value == null)
-            ProductNameElement = null;
-          else
-            ProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+          ProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProductName");
         }
       }
@@ -1435,27 +1393,23 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("quantity", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Quantity
+      public Hl7.Fhir.Model.Quantity? Quantity
       {
         get { return _Quantity; }
         set { _Quantity = value; OnPropertyChanged("Quantity"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Quantity;
+      private Hl7.Fhir.Model.Quantity? _Quantity;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as AdditiveComponent;
-
-        if (dest == null)
-        {
+        if(other is not AdditiveComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableReference)Type.DeepCopyInternal();
-        if(ProductNameElement != null) dest.ProductNameElement = (Hl7.Fhir.Model.FhirString)ProductNameElement.DeepCopyInternal();
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableReference)_Type.DeepCopyInternal();
+        if(_ProductNameElement is not null) dest.ProductNameElement = (Hl7.Fhir.Model.FhirString)_ProductNameElement.DeepCopyInternal();
+        if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1467,48 +1421,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as AdditiveComponent;
-        if(otherT == null) return false;
+        if(other is not AdditiveComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(ProductNameElement, otherT.ProductNameElement)) return false;
-        if(!comparer.Equals(Quantity, otherT.Quantity)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_ProductNameElement, otherT._ProductNameElement)) return false;
+        if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "productName":
-            value = ProductNameElement;
-            return ProductNameElement is not null;
+            value = _ProductNameElement;
+            return _ProductNameElement is not null;
           case "quantity":
-            value = Quantity;
-            return Quantity is not null;
+            value = _Quantity;
+            return _Quantity is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableReference)value;
+            Type = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "productName":
-            ProductNameElement = (Hl7.Fhir.Model.FhirString)value;
+            ProductNameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity)value;
+            Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1519,9 +1474,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",ProductNameElement);
-        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",_ProductNameElement);
+        if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
       }
 
     }
@@ -1548,26 +1503,26 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("schedule", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent Schedule
+      public Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent? Schedule
       {
         get { return _Schedule; }
         set { _Schedule = value; OnPropertyChanged("Schedule"); }
       }
 
-      private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent _Schedule;
+      private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent? _Schedule;
 
       /// <summary>
       /// The volume of formula to provide.
       /// </summary>
       [FhirElement("quantity", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Quantity
+      public Hl7.Fhir.Model.Quantity? Quantity
       {
         get { return _Quantity; }
         set { _Quantity = value; OnPropertyChanged("Quantity"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Quantity;
+      private Hl7.Fhir.Model.Quantity? _Quantity;
 
       /// <summary>
       /// Speed with which the formula is provided per period of time.
@@ -1576,27 +1531,23 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Rate
+      public Hl7.Fhir.Model.DataType? Rate
       {
         get { return _Rate; }
         set { _Rate = value; OnPropertyChanged("Rate"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Rate;
+      private Hl7.Fhir.Model.DataType? _Rate;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as AdministrationComponent;
-
-        if (dest == null)
-        {
+        if(other is not AdministrationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent)Schedule.DeepCopyInternal();
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
-        if(Rate != null) dest.Rate = (Hl7.Fhir.Model.DataType)Rate.DeepCopyInternal();
+        if(_Schedule is not null) dest.Schedule = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent)_Schedule.DeepCopyInternal();
+        if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
+        if(_Rate is not null) dest.Rate = (Hl7.Fhir.Model.DataType)_Rate.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1608,48 +1559,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as AdministrationComponent;
-        if(otherT == null) return false;
+        if(other is not AdministrationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Schedule, otherT.Schedule)) return false;
-        if(!comparer.Equals(Quantity, otherT.Quantity)) return false;
-        if(!comparer.Equals(Rate, otherT.Rate)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Schedule, otherT._Schedule)) return false;
+        if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+        if(!comparer.Equals(_Rate, otherT._Rate)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "schedule":
-            value = Schedule;
-            return Schedule is not null;
+            value = _Schedule;
+            return _Schedule is not null;
           case "quantity":
-            value = Quantity;
-            return Quantity is not null;
+            value = _Quantity;
+            return _Quantity is not null;
           case "rate":
-            value = Rate;
-            return Rate is not null;
+            value = _Rate;
+            return _Rate is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "schedule":
-            Schedule = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent)value;
+            Schedule = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent?)value;
             return this;
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity)value;
+            Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "rate":
-            Rate = (Hl7.Fhir.Model.DataType)value;
+            Rate = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1660,9 +1612,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
-        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Rate is not null) yield return new KeyValuePair<string,object>("rate",Rate);
+        if (_Schedule is not null) yield return new KeyValuePair<string,object>("schedule",_Schedule);
+        if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Rate is not null) yield return new KeyValuePair<string,object>("rate",_Rate);
       }
 
     }
@@ -1691,24 +1643,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Timing> Timing
       {
-        get { if(_Timing==null) _Timing = new List<Hl7.Fhir.Model.Timing>(); return _Timing; }
+        get => _Timing ??= [];
         set { _Timing = value; OnPropertyChanged("Timing"); }
       }
 
-      private List<Hl7.Fhir.Model.Timing> _Timing;
+      private List<Hl7.Fhir.Model.Timing>? _Timing;
 
       /// <summary>
       /// Take 'as needed'.
       /// </summary>
       [FhirElement("asNeeded", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean AsNeededElement
+      public Hl7.Fhir.Model.FhirBoolean? AsNeededElement
       {
         get { return _AsNeededElement; }
         set { _AsNeededElement = value; OnPropertyChanged("AsNeededElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _AsNeededElement;
+      private Hl7.Fhir.Model.FhirBoolean? _AsNeededElement;
 
       /// <summary>
       /// Take 'as needed'
@@ -1717,13 +1669,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AsNeeded
       {
-        get { return AsNeededElement != null ? AsNeededElement.Value : null; }
+        get => _AsNeededElement?.Value;
         set
         {
-          if (value == null)
-            AsNeededElement = null;
-          else
-            AsNeededElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          AsNeededElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AsNeeded");
         }
       }
@@ -1734,27 +1683,23 @@ namespace Hl7.Fhir.Model
       [FhirElement("asNeededFor", Order=60)]
       [Binding("EnteralFormulaAsNeededReason")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept AsNeededFor
+      public Hl7.Fhir.Model.CodeableConcept? AsNeededFor
       {
         get { return _AsNeededFor; }
         set { _AsNeededFor = value; OnPropertyChanged("AsNeededFor"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _AsNeededFor;
+      private Hl7.Fhir.Model.CodeableConcept? _AsNeededFor;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as EnteralFormulaScheduleComponent;
-
-        if (dest == null)
-        {
+        if(other is not EnteralFormulaScheduleComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Timing.Any()) dest.Timing = new List<Hl7.Fhir.Model.Timing>(Timing.DeepCopyInternal());
-        if(AsNeededElement != null) dest.AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)AsNeededElement.DeepCopyInternal();
-        if(AsNeededFor != null) dest.AsNeededFor = (Hl7.Fhir.Model.CodeableConcept)AsNeededFor.DeepCopyInternal();
+        if(_Timing is not null) dest.Timing = new List<Hl7.Fhir.Model.Timing>(_Timing.DeepCopyInternal());
+        if(_AsNeededElement is not null) dest.AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)_AsNeededElement.DeepCopyInternal();
+        if(_AsNeededFor is not null) dest.AsNeededFor = (Hl7.Fhir.Model.CodeableConcept)_AsNeededFor.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1766,48 +1711,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as EnteralFormulaScheduleComponent;
-        if(otherT == null) return false;
+        if(other is not EnteralFormulaScheduleComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Timing, otherT.Timing)) return false;
-        if(!comparer.Equals(AsNeededElement, otherT.AsNeededElement)) return false;
-        if(!comparer.Equals(AsNeededFor, otherT.AsNeededFor)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Timing, otherT._Timing)) return false;
+        if(!comparer.Equals(_AsNeededElement, otherT._AsNeededElement)) return false;
+        if(!comparer.Equals(_AsNeededFor, otherT._AsNeededFor)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "timing":
-            value = Timing;
-            return Timing?.Any() == true;
+            value = _Timing;
+            return _Timing?.Any() == true;
           case "asNeeded":
-            value = AsNeededElement;
-            return AsNeededElement is not null;
+            value = _AsNeededElement;
+            return _AsNeededElement is not null;
           case "asNeededFor":
-            value = AsNeededFor;
-            return AsNeededFor is not null;
+            value = _AsNeededFor;
+            return _AsNeededFor is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "timing":
-            Timing = (List<Hl7.Fhir.Model.Timing>)value;
+            Timing = (List<Hl7.Fhir.Model.Timing>?)value!;
             return this;
           case "asNeeded":
-            AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            AsNeededElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "asNeededFor":
-            AsNeededFor = (Hl7.Fhir.Model.CodeableConcept)value;
+            AsNeededFor = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1818,9 +1764,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Timing?.Any() == true) yield return new KeyValuePair<string,object>("timing",Timing);
-        if (AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",AsNeededElement);
-        if (AsNeededFor is not null) yield return new KeyValuePair<string,object>("asNeededFor",AsNeededFor);
+        if (_Timing?.Any() == true) yield return new KeyValuePair<string,object>("timing",_Timing);
+        if (_AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",_AsNeededElement);
+        if (_AsNeededFor is not null) yield return new KeyValuePair<string,object>("asNeededFor",_AsNeededFor);
       }
 
     }
@@ -1833,11 +1779,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Instantiates FHIR protocol or definition.
@@ -1847,24 +1793,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
     {
-      get { if(_InstantiatesCanonicalElement==null) _InstantiatesCanonicalElement = new List<Hl7.Fhir.Model.Canonical>(); return _InstantiatesCanonicalElement; }
+      get => _InstantiatesCanonicalElement ??= [];
       set { _InstantiatesCanonicalElement = value; OnPropertyChanged("InstantiatesCanonicalElement"); }
     }
 
-    private List<Hl7.Fhir.Model.Canonical> _InstantiatesCanonicalElement;
+    private List<Hl7.Fhir.Model.Canonical>? _InstantiatesCanonicalElement;
 
     /// <summary>
     /// Instantiates FHIR protocol or definition
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> InstantiatesCanonical
+    public IEnumerable<string?> InstantiatesCanonical
     {
-      get { return InstantiatesCanonicalElement != null ? InstantiatesCanonicalElement.Select(elem => elem.Value) : null; }
+      get => _InstantiatesCanonicalElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          InstantiatesCanonicalElement = null;
+          InstantiatesCanonicalElement = null!;
         else
           InstantiatesCanonicalElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
         OnPropertyChanged("InstantiatesCanonical");
@@ -1879,24 +1825,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
     {
-      get { if(_InstantiatesUriElement==null) _InstantiatesUriElement = new List<Hl7.Fhir.Model.FhirUri>(); return _InstantiatesUriElement; }
+      get => _InstantiatesUriElement ??= [];
       set { _InstantiatesUriElement = value; OnPropertyChanged("InstantiatesUriElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirUri> _InstantiatesUriElement;
+    private List<Hl7.Fhir.Model.FhirUri>? _InstantiatesUriElement;
 
     /// <summary>
     /// Instantiates external protocol or definition
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> InstantiatesUri
+    public IEnumerable<string?> InstantiatesUri
     {
-      get { return InstantiatesUriElement != null ? InstantiatesUriElement.Select(elem => elem.Value) : null; }
+      get => _InstantiatesUriElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          InstantiatesUriElement = null;
+          InstantiatesUriElement = null!;
         else
           InstantiatesUriElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
         OnPropertyChanged("InstantiatesUri");
@@ -1911,24 +1857,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesElement
     {
-      get { if(_InstantiatesElement==null) _InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(); return _InstantiatesElement; }
+      get => _InstantiatesElement ??= [];
       set { _InstantiatesElement = value; OnPropertyChanged("InstantiatesElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirUri> _InstantiatesElement;
+    private List<Hl7.Fhir.Model.FhirUri>? _InstantiatesElement;
 
     /// <summary>
     /// Instantiates protocol or definition
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Instantiates
+    public IEnumerable<string?> Instantiates
     {
-      get { return InstantiatesElement != null ? InstantiatesElement.Select(elem => elem.Value) : null; }
+      get => _InstantiatesElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          InstantiatesElement = null;
+          InstantiatesElement = null!;
         else
           InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
         OnPropertyChanged("Instantiates");
@@ -1945,24 +1891,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
     /// Composite Request ID.
     /// </summary>
     [FhirElement("groupIdentifier", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier GroupIdentifier
+    public Hl7.Fhir.Model.Identifier? GroupIdentifier
     {
       get { return _GroupIdentifier; }
       set { _GroupIdentifier = value; OnPropertyChanged("GroupIdentifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _GroupIdentifier;
+    private Hl7.Fhir.Model.Identifier? _GroupIdentifier;
 
     /// <summary>
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown.
@@ -1972,13 +1918,13 @@ namespace Hl7.Fhir.Model
     [Binding("NutritionOrderStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
+    public Code<Hl7.Fhir.Model.RequestStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.RequestStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.RequestStatus>? _StatusElement;
 
     /// <summary>
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
@@ -1987,13 +1933,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.RequestStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -2006,13 +1949,13 @@ namespace Hl7.Fhir.Model
     [Binding("NutritiionOrderIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
+    public Code<Hl7.Fhir.Model.RequestIntent>? IntentElement
     {
       get { return _IntentElement; }
       set { _IntentElement = value; OnPropertyChanged("IntentElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.RequestIntent> _IntentElement;
+    private Code<Hl7.Fhir.Model.RequestIntent>? _IntentElement;
 
     /// <summary>
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
@@ -2021,13 +1964,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestIntent? Intent
     {
-      get { return IntentElement != null ? IntentElement.Value : null; }
+      get => _IntentElement?.Value;
       set
       {
-        if (value == null)
-          IntentElement = null;
-        else
-          IntentElement = new Code<Hl7.Fhir.Model.RequestIntent>(value);
+        IntentElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestIntent>(value);
         OnPropertyChanged("Intent");
       }
     }
@@ -2039,13 +1979,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("NutritionOrderPriority")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
+    public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement
     {
       get { return _PriorityElement; }
       set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.RequestPriority> _PriorityElement;
+    private Code<Hl7.Fhir.Model.RequestPriority>? _PriorityElement;
 
     /// <summary>
     /// routine | urgent | asap | stat
@@ -2054,13 +1994,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestPriority? Priority
     {
-      get { return PriorityElement != null ? PriorityElement.Value : null; }
+      get => _PriorityElement?.Value;
       set
       {
-        if (value == null)
-          PriorityElement = null;
-        else
-          PriorityElement = new Code<Hl7.Fhir.Model.RequestPriority>(value);
+        PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
         OnPropertyChanged("Priority");
       }
     }
@@ -2073,13 +2010,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// The encounter associated with this nutrition order.
@@ -2088,13 +2025,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Encounter
+    public Hl7.Fhir.Model.ResourceReference? Encounter
     {
       get { return _Encounter; }
       set { _Encounter = value; OnPropertyChanged("Encounter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Encounter;
+    private Hl7.Fhir.Model.ResourceReference? _Encounter;
 
     /// <summary>
     /// Information to support fulfilling of the nutrition order.
@@ -2106,11 +2043,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
-      get { if(_SupportingInformation==null) _SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInformation; }
+      get => _SupportingInformation ??= [];
       set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
+    private List<Hl7.Fhir.Model.ResourceReference>? _SupportingInformation;
 
     /// <summary>
     /// Date and time the nutrition order was requested.
@@ -2118,28 +2055,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("dateTime", InSummary=true, Order=210, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime DateTimeElement
+    public Hl7.Fhir.Model.FhirDateTime? DateTimeElement
     {
       get { return _DateTimeElement; }
       set { _DateTimeElement = value; OnPropertyChanged("DateTimeElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _DateTimeElement;
+    private Hl7.Fhir.Model.FhirDateTime? _DateTimeElement;
 
     /// <summary>
     /// Date and time the nutrition order was requested
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string DateTime
+    public string? DateTime
     {
-      get { return DateTimeElement != null ? DateTimeElement.Value : null; }
+      get => _DateTimeElement?.Value;
       set
       {
-        if (value == null)
-          DateTimeElement = null;
-        else
-          DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateTime");
       }
     }
@@ -2151,13 +2085,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Orderer
+    public Hl7.Fhir.Model.ResourceReference? Orderer
     {
       get { return _Orderer; }
       set { _Orderer = value; OnPropertyChanged("Orderer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Orderer;
+    private Hl7.Fhir.Model.ResourceReference? _Orderer;
 
     /// <summary>
     /// Who is desired to perform the administration of what is being ordered.
@@ -2167,11 +2101,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Performer
     {
-      get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.CodeableReference>(); return _Performer; }
+      get => _Performer ??= [];
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference> _Performer;
+    private List<Hl7.Fhir.Model.CodeableReference>? _Performer;
 
     /// <summary>
     /// List of the patient's food and nutrition-related allergies and intolerances.
@@ -2183,11 +2117,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> AllergyIntolerance
     {
-      get { if(_AllergyIntolerance==null) _AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(); return _AllergyIntolerance; }
+      get => _AllergyIntolerance ??= [];
       set { _AllergyIntolerance = value; OnPropertyChanged("AllergyIntolerance"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _AllergyIntolerance;
+    private List<Hl7.Fhir.Model.ResourceReference>? _AllergyIntolerance;
 
     /// <summary>
     /// Order-specific modifier about the type of food that should be given.
@@ -2198,11 +2132,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> FoodPreferenceModifier
     {
-      get { if(_FoodPreferenceModifier==null) _FoodPreferenceModifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _FoodPreferenceModifier; }
+      get => _FoodPreferenceModifier ??= [];
       set { _FoodPreferenceModifier = value; OnPropertyChanged("FoodPreferenceModifier"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _FoodPreferenceModifier;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _FoodPreferenceModifier;
 
     /// <summary>
     /// Order-specific modifier about the type of food that should not be given.
@@ -2213,24 +2147,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ExcludeFoodModifier
     {
-      get { if(_ExcludeFoodModifier==null) _ExcludeFoodModifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ExcludeFoodModifier; }
+      get => _ExcludeFoodModifier ??= [];
       set { _ExcludeFoodModifier = value; OnPropertyChanged("ExcludeFoodModifier"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ExcludeFoodModifier;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ExcludeFoodModifier;
 
     /// <summary>
     /// Capture when a food item is brought in by the patient and/or family.
     /// </summary>
     [FhirElement("outsideFoodAllowed", Order=270)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean OutsideFoodAllowedElement
+    public Hl7.Fhir.Model.FhirBoolean? OutsideFoodAllowedElement
     {
       get { return _OutsideFoodAllowedElement; }
       set { _OutsideFoodAllowedElement = value; OnPropertyChanged("OutsideFoodAllowedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _OutsideFoodAllowedElement;
+    private Hl7.Fhir.Model.FhirBoolean? _OutsideFoodAllowedElement;
 
     /// <summary>
     /// Capture when a food item is brought in by the patient and/or family
@@ -2239,13 +2173,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? OutsideFoodAllowed
     {
-      get { return OutsideFoodAllowedElement != null ? OutsideFoodAllowedElement.Value : null; }
+      get => _OutsideFoodAllowedElement?.Value;
       set
       {
-        if (value == null)
-          OutsideFoodAllowedElement = null;
-        else
-          OutsideFoodAllowedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        OutsideFoodAllowedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("OutsideFoodAllowed");
       }
     }
@@ -2255,13 +2186,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("oralDiet", Order=280)]
     [DataMember]
-    public Hl7.Fhir.Model.NutritionOrder.OralDietComponent OralDiet
+    public Hl7.Fhir.Model.NutritionOrder.OralDietComponent? OralDiet
     {
       get { return _OralDiet; }
       set { _OralDiet = value; OnPropertyChanged("OralDiet"); }
     }
 
-    private Hl7.Fhir.Model.NutritionOrder.OralDietComponent _OralDiet;
+    private Hl7.Fhir.Model.NutritionOrder.OralDietComponent? _OralDiet;
 
     /// <summary>
     /// Supplement components.
@@ -2271,24 +2202,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent> Supplement
     {
-      get { if(_Supplement==null) _Supplement = new List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>(); return _Supplement; }
+      get => _Supplement ??= [];
       set { _Supplement = value; OnPropertyChanged("Supplement"); }
     }
 
-    private List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent> _Supplement;
+    private List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>? _Supplement;
 
     /// <summary>
     /// Enteral formula components.
     /// </summary>
     [FhirElement("enteralFormula", Order=300)]
     [DataMember]
-    public Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent EnteralFormula
+    public Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent? EnteralFormula
     {
       get { return _EnteralFormula; }
       set { _EnteralFormula = value; OnPropertyChanged("EnteralFormula"); }
     }
 
-    private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent _EnteralFormula;
+    private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent? _EnteralFormula;
 
     /// <summary>
     /// Comments.
@@ -2298,47 +2229,43 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as NutritionOrder;
-
-      if (dest == null)
-      {
+      if(other is not NutritionOrder dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(InstantiatesCanonicalElement.Any()) dest.InstantiatesCanonicalElement = new List<Hl7.Fhir.Model.Canonical>(InstantiatesCanonicalElement.DeepCopyInternal());
-      if(InstantiatesUriElement.Any()) dest.InstantiatesUriElement = new List<Hl7.Fhir.Model.FhirUri>(InstantiatesUriElement.DeepCopyInternal());
-      if(InstantiatesElement.Any()) dest.InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(InstantiatesElement.DeepCopyInternal());
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
-      if(GroupIdentifier != null) dest.GroupIdentifier = (Hl7.Fhir.Model.Identifier)GroupIdentifier.DeepCopyInternal();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)StatusElement.DeepCopyInternal();
-      if(IntentElement != null) dest.IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>)IntentElement.DeepCopyInternal();
-      if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopyInternal();
-      if(SupportingInformation.Any()) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopyInternal());
-      if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopyInternal();
-      if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopyInternal();
-      if(Performer.Any()) dest.Performer = new List<Hl7.Fhir.Model.CodeableReference>(Performer.DeepCopyInternal());
-      if(AllergyIntolerance.Any()) dest.AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(AllergyIntolerance.DeepCopyInternal());
-      if(FoodPreferenceModifier.Any()) dest.FoodPreferenceModifier = new List<Hl7.Fhir.Model.CodeableConcept>(FoodPreferenceModifier.DeepCopyInternal());
-      if(ExcludeFoodModifier.Any()) dest.ExcludeFoodModifier = new List<Hl7.Fhir.Model.CodeableConcept>(ExcludeFoodModifier.DeepCopyInternal());
-      if(OutsideFoodAllowedElement != null) dest.OutsideFoodAllowedElement = (Hl7.Fhir.Model.FhirBoolean)OutsideFoodAllowedElement.DeepCopyInternal();
-      if(OralDiet != null) dest.OralDiet = (Hl7.Fhir.Model.NutritionOrder.OralDietComponent)OralDiet.DeepCopyInternal();
-      if(Supplement.Any()) dest.Supplement = new List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>(Supplement.DeepCopyInternal());
-      if(EnteralFormula != null) dest.EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent)EnteralFormula.DeepCopyInternal();
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_InstantiatesCanonicalElement is not null) dest.InstantiatesCanonicalElement = new List<Hl7.Fhir.Model.Canonical>(_InstantiatesCanonicalElement.DeepCopyInternal());
+      if(_InstantiatesUriElement is not null) dest.InstantiatesUriElement = new List<Hl7.Fhir.Model.FhirUri>(_InstantiatesUriElement.DeepCopyInternal());
+      if(_InstantiatesElement is not null) dest.InstantiatesElement = new List<Hl7.Fhir.Model.FhirUri>(_InstantiatesElement.DeepCopyInternal());
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_GroupIdentifier is not null) dest.GroupIdentifier = (Hl7.Fhir.Model.Identifier)_GroupIdentifier.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)_StatusElement.DeepCopyInternal();
+      if(_IntentElement is not null) dest.IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>)_IntentElement.DeepCopyInternal();
+      if(_PriorityElement is not null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)_PriorityElement.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Encounter is not null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)_Encounter.DeepCopyInternal();
+      if(_SupportingInformation is not null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(_SupportingInformation.DeepCopyInternal());
+      if(_DateTimeElement is not null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)_DateTimeElement.DeepCopyInternal();
+      if(_Orderer is not null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)_Orderer.DeepCopyInternal();
+      if(_Performer is not null) dest.Performer = new List<Hl7.Fhir.Model.CodeableReference>(_Performer.DeepCopyInternal());
+      if(_AllergyIntolerance is not null) dest.AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(_AllergyIntolerance.DeepCopyInternal());
+      if(_FoodPreferenceModifier is not null) dest.FoodPreferenceModifier = new List<Hl7.Fhir.Model.CodeableConcept>(_FoodPreferenceModifier.DeepCopyInternal());
+      if(_ExcludeFoodModifier is not null) dest.ExcludeFoodModifier = new List<Hl7.Fhir.Model.CodeableConcept>(_ExcludeFoodModifier.DeepCopyInternal());
+      if(_OutsideFoodAllowedElement is not null) dest.OutsideFoodAllowedElement = (Hl7.Fhir.Model.FhirBoolean)_OutsideFoodAllowedElement.DeepCopyInternal();
+      if(_OralDiet is not null) dest.OralDiet = (Hl7.Fhir.Model.NutritionOrder.OralDietComponent)_OralDiet.DeepCopyInternal();
+      if(_Supplement is not null) dest.Supplement = new List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>(_Supplement.DeepCopyInternal());
+      if(_EnteralFormula is not null) dest.EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent)_EnteralFormula.DeepCopyInternal();
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -2350,188 +2277,189 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as NutritionOrder;
-      if(otherT == null) return false;
+      if(other is not NutritionOrder otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.ListEquals(InstantiatesCanonicalElement, otherT.InstantiatesCanonicalElement)) return false;
-      if(!comparer.ListEquals(InstantiatesUriElement, otherT.InstantiatesUriElement)) return false;
-      if(!comparer.ListEquals(InstantiatesElement, otherT.InstantiatesElement)) return false;
-      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
-      if(!comparer.Equals(GroupIdentifier, otherT.GroupIdentifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(IntentElement, otherT.IntentElement)) return false;
-      if(!comparer.Equals(PriorityElement, otherT.PriorityElement)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Encounter, otherT.Encounter)) return false;
-      if(!comparer.ListEquals(SupportingInformation, otherT.SupportingInformation)) return false;
-      if(!comparer.Equals(DateTimeElement, otherT.DateTimeElement)) return false;
-      if(!comparer.Equals(Orderer, otherT.Orderer)) return false;
-      if(!comparer.ListEquals(Performer, otherT.Performer)) return false;
-      if(!comparer.ListEquals(AllergyIntolerance, otherT.AllergyIntolerance)) return false;
-      if(!comparer.ListEquals(FoodPreferenceModifier, otherT.FoodPreferenceModifier)) return false;
-      if(!comparer.ListEquals(ExcludeFoodModifier, otherT.ExcludeFoodModifier)) return false;
-      if(!comparer.Equals(OutsideFoodAllowedElement, otherT.OutsideFoodAllowedElement)) return false;
-      if(!comparer.Equals(OralDiet, otherT.OralDiet)) return false;
-      if(!comparer.ListEquals(Supplement, otherT.Supplement)) return false;
-      if(!comparer.Equals(EnteralFormula, otherT.EnteralFormula)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.ListEquals(_InstantiatesCanonicalElement, otherT._InstantiatesCanonicalElement)) return false;
+      if(!comparer.ListEquals(_InstantiatesUriElement, otherT._InstantiatesUriElement)) return false;
+      if(!comparer.ListEquals(_InstantiatesElement, otherT._InstantiatesElement)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.Equals(_GroupIdentifier, otherT._GroupIdentifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_IntentElement, otherT._IntentElement)) return false;
+      if(!comparer.Equals(_PriorityElement, otherT._PriorityElement)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
+      if(!comparer.ListEquals(_SupportingInformation, otherT._SupportingInformation)) return false;
+      if(!comparer.Equals(_DateTimeElement, otherT._DateTimeElement)) return false;
+      if(!comparer.Equals(_Orderer, otherT._Orderer)) return false;
+      if(!comparer.ListEquals(_Performer, otherT._Performer)) return false;
+      if(!comparer.ListEquals(_AllergyIntolerance, otherT._AllergyIntolerance)) return false;
+      if(!comparer.ListEquals(_FoodPreferenceModifier, otherT._FoodPreferenceModifier)) return false;
+      if(!comparer.ListEquals(_ExcludeFoodModifier, otherT._ExcludeFoodModifier)) return false;
+      if(!comparer.Equals(_OutsideFoodAllowedElement, otherT._OutsideFoodAllowedElement)) return false;
+      if(!comparer.Equals(_OralDiet, otherT._OralDiet)) return false;
+      if(!comparer.ListEquals(_Supplement, otherT._Supplement)) return false;
+      if(!comparer.Equals(_EnteralFormula, otherT._EnteralFormula)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "instantiatesCanonical":
-          value = InstantiatesCanonicalElement;
-          return InstantiatesCanonicalElement?.Any() == true;
+          value = _InstantiatesCanonicalElement;
+          return _InstantiatesCanonicalElement?.Any() == true;
         case "instantiatesUri":
-          value = InstantiatesUriElement;
-          return InstantiatesUriElement?.Any() == true;
+          value = _InstantiatesUriElement;
+          return _InstantiatesUriElement?.Any() == true;
         case "instantiates":
-          value = InstantiatesElement;
-          return InstantiatesElement?.Any() == true;
+          value = _InstantiatesElement;
+          return _InstantiatesElement?.Any() == true;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          value = _BasedOn;
+          return _BasedOn?.Any() == true;
         case "groupIdentifier":
-          value = GroupIdentifier;
-          return GroupIdentifier is not null;
+          value = _GroupIdentifier;
+          return _GroupIdentifier is not null;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "intent":
-          value = IntentElement;
-          return IntentElement is not null;
+          value = _IntentElement;
+          return _IntentElement is not null;
         case "priority":
-          value = PriorityElement;
-          return PriorityElement is not null;
+          value = _PriorityElement;
+          return _PriorityElement is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "encounter":
-          value = Encounter;
-          return Encounter is not null;
+          value = _Encounter;
+          return _Encounter is not null;
         case "supportingInformation":
-          value = SupportingInformation;
-          return SupportingInformation?.Any() == true;
+          value = _SupportingInformation;
+          return _SupportingInformation?.Any() == true;
         case "dateTime":
-          value = DateTimeElement;
-          return DateTimeElement is not null;
+          value = _DateTimeElement;
+          return _DateTimeElement is not null;
         case "orderer":
-          value = Orderer;
-          return Orderer is not null;
+          value = _Orderer;
+          return _Orderer is not null;
         case "performer":
-          value = Performer;
-          return Performer?.Any() == true;
+          value = _Performer;
+          return _Performer?.Any() == true;
         case "allergyIntolerance":
-          value = AllergyIntolerance;
-          return AllergyIntolerance?.Any() == true;
+          value = _AllergyIntolerance;
+          return _AllergyIntolerance?.Any() == true;
         case "foodPreferenceModifier":
-          value = FoodPreferenceModifier;
-          return FoodPreferenceModifier?.Any() == true;
+          value = _FoodPreferenceModifier;
+          return _FoodPreferenceModifier?.Any() == true;
         case "excludeFoodModifier":
-          value = ExcludeFoodModifier;
-          return ExcludeFoodModifier?.Any() == true;
+          value = _ExcludeFoodModifier;
+          return _ExcludeFoodModifier?.Any() == true;
         case "outsideFoodAllowed":
-          value = OutsideFoodAllowedElement;
-          return OutsideFoodAllowedElement is not null;
+          value = _OutsideFoodAllowedElement;
+          return _OutsideFoodAllowedElement is not null;
         case "oralDiet":
-          value = OralDiet;
-          return OralDiet is not null;
+          value = _OralDiet;
+          return _OralDiet is not null;
         case "supplement":
-          value = Supplement;
-          return Supplement?.Any() == true;
+          value = _Supplement;
+          return _Supplement?.Any() == true;
         case "enteralFormula":
-          value = EnteralFormula;
-          return EnteralFormula is not null;
+          value = _EnteralFormula;
+          return _EnteralFormula is not null;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "instantiatesCanonical":
-          InstantiatesCanonicalElement = (List<Hl7.Fhir.Model.Canonical>)value;
+          InstantiatesCanonicalElement = (List<Hl7.Fhir.Model.Canonical>?)value!;
           return this;
         case "instantiatesUri":
-          InstantiatesUriElement = (List<Hl7.Fhir.Model.FhirUri>)value;
+          InstantiatesUriElement = (List<Hl7.Fhir.Model.FhirUri>?)value!;
           return this;
         case "instantiates":
-          InstantiatesElement = (List<Hl7.Fhir.Model.FhirUri>)value;
+          InstantiatesElement = (List<Hl7.Fhir.Model.FhirUri>?)value!;
           return this;
         case "basedOn":
-          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "groupIdentifier":
-          GroupIdentifier = (Hl7.Fhir.Model.Identifier)value;
+          GroupIdentifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>?)value;
           return this;
         case "intent":
-          IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>)value;
+          IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>?)value;
           return this;
         case "priority":
-          PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)value;
+          PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference)value;
+          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "supportingInformation":
-          SupportingInformation = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          SupportingInformation = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "dateTime":
-          DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          DateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "orderer":
-          Orderer = (Hl7.Fhir.Model.ResourceReference)value;
+          Orderer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "performer":
-          Performer = (List<Hl7.Fhir.Model.CodeableReference>)value;
+          Performer = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
           return this;
         case "allergyIntolerance":
-          AllergyIntolerance = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          AllergyIntolerance = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "foodPreferenceModifier":
-          FoodPreferenceModifier = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          FoodPreferenceModifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "excludeFoodModifier":
-          ExcludeFoodModifier = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ExcludeFoodModifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "outsideFoodAllowed":
-          OutsideFoodAllowedElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          OutsideFoodAllowedElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "oralDiet":
-          OralDiet = (Hl7.Fhir.Model.NutritionOrder.OralDietComponent)value;
+          OralDiet = (Hl7.Fhir.Model.NutritionOrder.OralDietComponent?)value;
           return this;
         case "supplement":
-          Supplement = (List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>)value;
+          Supplement = (List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>?)value!;
           return this;
         case "enteralFormula":
-          EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent)value;
+          EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent?)value;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -2542,29 +2470,29 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
-      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
-      if (InstantiatesElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiates",InstantiatesElement);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",GroupIdentifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
-      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
-      if (DateTimeElement is not null) yield return new KeyValuePair<string,object>("dateTime",DateTimeElement);
-      if (Orderer is not null) yield return new KeyValuePair<string,object>("orderer",Orderer);
-      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (AllergyIntolerance?.Any() == true) yield return new KeyValuePair<string,object>("allergyIntolerance",AllergyIntolerance);
-      if (FoodPreferenceModifier?.Any() == true) yield return new KeyValuePair<string,object>("foodPreferenceModifier",FoodPreferenceModifier);
-      if (ExcludeFoodModifier?.Any() == true) yield return new KeyValuePair<string,object>("excludeFoodModifier",ExcludeFoodModifier);
-      if (OutsideFoodAllowedElement is not null) yield return new KeyValuePair<string,object>("outsideFoodAllowed",OutsideFoodAllowedElement);
-      if (OralDiet is not null) yield return new KeyValuePair<string,object>("oralDiet",OralDiet);
-      if (Supplement?.Any() == true) yield return new KeyValuePair<string,object>("supplement",Supplement);
-      if (EnteralFormula is not null) yield return new KeyValuePair<string,object>("enteralFormula",EnteralFormula);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",_InstantiatesCanonicalElement);
+      if (_InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",_InstantiatesUriElement);
+      if (_InstantiatesElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiates",_InstantiatesElement);
+      if (_BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",_GroupIdentifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_IntentElement is not null) yield return new KeyValuePair<string,object>("intent",_IntentElement);
+      if (_PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",_PriorityElement);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",_SupportingInformation);
+      if (_DateTimeElement is not null) yield return new KeyValuePair<string,object>("dateTime",_DateTimeElement);
+      if (_Orderer is not null) yield return new KeyValuePair<string,object>("orderer",_Orderer);
+      if (_Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_AllergyIntolerance?.Any() == true) yield return new KeyValuePair<string,object>("allergyIntolerance",_AllergyIntolerance);
+      if (_FoodPreferenceModifier?.Any() == true) yield return new KeyValuePair<string,object>("foodPreferenceModifier",_FoodPreferenceModifier);
+      if (_ExcludeFoodModifier?.Any() == true) yield return new KeyValuePair<string,object>("excludeFoodModifier",_ExcludeFoodModifier);
+      if (_OutsideFoodAllowedElement is not null) yield return new KeyValuePair<string,object>("outsideFoodAllowed",_OutsideFoodAllowedElement);
+      if (_OralDiet is not null) yield return new KeyValuePair<string,object>("oralDiet",_OralDiet);
+      if (_Supplement?.Any() == true) yield return new KeyValuePair<string,object>("supplement",_Supplement);
+      if (_EnteralFormula is not null) yield return new KeyValuePair<string,object>("enteralFormula",_EnteralFormula);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

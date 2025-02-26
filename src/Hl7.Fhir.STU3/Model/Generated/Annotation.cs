@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -68,41 +71,38 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","Patient","RelatedPerson")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Author
+    public Hl7.Fhir.Model.DataType? Author
     {
       get { return _Author; }
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Author;
+    private Hl7.Fhir.Model.DataType? _Author;
 
     /// <summary>
     /// When the annotation was made.
     /// </summary>
     [FhirElement("time", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime TimeElement
+    public Hl7.Fhir.Model.FhirDateTime? TimeElement
     {
       get { return _TimeElement; }
       set { _TimeElement = value; OnPropertyChanged("TimeElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _TimeElement;
+    private Hl7.Fhir.Model.FhirDateTime? _TimeElement;
 
     /// <summary>
     /// When the annotation was made
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Time
+    public string? Time
     {
-      get { return TimeElement != null ? TimeElement.Value : null; }
+      get => _TimeElement?.Value;
       set
       {
-        if (value == null)
-          TimeElement = null;
-        else
-          TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        TimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Time");
       }
     }
@@ -113,45 +113,38 @@ namespace Hl7.Fhir.Model
     [FhirElement("text", Order=50)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString TextElement
+    public Hl7.Fhir.Model.FhirString? TextElement
     {
       get { return _TextElement; }
       set { _TextElement = value; OnPropertyChanged("TextElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _TextElement;
+    private Hl7.Fhir.Model.FhirString? _TextElement;
 
     /// <summary>
     /// The annotation  - text content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Text
+    public string? Text
     {
-      get { return TextElement != null ? TextElement.Value : null; }
+      get => _TextElement?.Value;
       set
       {
-        if (value == null)
-          TextElement = null;
-        else
-          TextElement = new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Annotation;
-
-      if (dest == null)
-      {
+      if(other is not Annotation dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Author != null) dest.Author = (Hl7.Fhir.Model.DataType)Author.DeepCopyInternal();
-      if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopyInternal();
-      if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopyInternal();
+      if(_Author is not null) dest.Author = (Hl7.Fhir.Model.DataType)_Author.DeepCopyInternal();
+      if(_TimeElement is not null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)_TimeElement.DeepCopyInternal();
+      if(_TextElement is not null) dest.TextElement = (Hl7.Fhir.Model.FhirString)_TextElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -163,48 +156,49 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Annotation;
-      if(otherT == null) return false;
+      if(other is not Annotation otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Author, otherT.Author)) return false;
-      if(!comparer.Equals(TimeElement, otherT.TimeElement)) return false;
-      if(!comparer.Equals(TextElement, otherT.TextElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Author, otherT._Author)) return false;
+      if(!comparer.Equals(_TimeElement, otherT._TimeElement)) return false;
+      if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "author":
-          value = Author;
-          return Author is not null;
+          value = _Author;
+          return _Author is not null;
         case "time":
-          value = TimeElement;
-          return TimeElement is not null;
+          value = _TimeElement;
+          return _TimeElement is not null;
         case "text":
-          value = TextElement;
-          return TextElement is not null;
+          value = _TextElement;
+          return _TextElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "author":
-          Author = (Hl7.Fhir.Model.DataType)value;
+          Author = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "time":
-          TimeElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          TimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "text":
-          TextElement = (Hl7.Fhir.Model.FhirString)value;
+          TextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -215,9 +209,9 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
-      if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
-      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+      if (_Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
+      if (_TimeElement is not null) yield return new KeyValuePair<string,object>("time",_TimeElement);
+      if (_TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
     }
 
   }

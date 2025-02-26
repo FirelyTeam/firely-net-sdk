@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -66,13 +69,13 @@ namespace Hl7.Fhir.Model
     [Binding("UsageContextType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Coding Code
+    public Hl7.Fhir.Model.Coding? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.Coding _Code;
+    private Hl7.Fhir.Model.Coding? _Code;
 
     /// <summary>
     /// Value that defines the context.
@@ -84,26 +87,22 @@ namespace Hl7.Fhir.Model
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Value
+    public Hl7.Fhir.Model.DataType? Value
     {
       get { return _Value; }
       set { _Value = value; OnPropertyChanged("Value"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Value;
+    private Hl7.Fhir.Model.DataType? _Value;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as UsageContext;
-
-      if (dest == null)
-      {
+      if(other is not UsageContext dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopyInternal();
-      if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.Coding)_Code.DeepCopyInternal();
+      if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -115,41 +114,42 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as UsageContext;
-      if(otherT == null) return false;
+      if(other is not UsageContext otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Code, otherT.Code)) return false;
-      if(!comparer.Equals(Value, otherT.Value)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.Equals(_Value, otherT._Value)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "code":
-          value = Code;
-          return Code is not null;
+          value = _Code;
+          return _Code is not null;
         case "value":
-          value = Value;
-          return Value is not null;
+          value = _Value;
+          return _Value is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "code":
-          Code = (Hl7.Fhir.Model.Coding)value;
+          Code = (Hl7.Fhir.Model.Coding?)value;
           return this;
         case "value":
-          Value = (Hl7.Fhir.Model.DataType)value;
+          Value = (Hl7.Fhir.Model.DataType?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -160,8 +160,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
     }
 
   }

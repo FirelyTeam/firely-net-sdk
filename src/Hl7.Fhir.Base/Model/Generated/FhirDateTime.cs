@@ -7,8 +7,11 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -62,12 +65,12 @@ namespace Hl7.Fhir.Model
     /// Must conform to the pattern "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]{1,9})?)?)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)?)?)?"
     public const string PATTERN = @"([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]{1,9})?)?)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)?)?)?";
 
-    public FhirDateTime(string value)
+    public FhirDateTime(string? value)
     {
       Value = value;
     }
 
-    public FhirDateTime(): this((string)null) {}
+    public FhirDateTime(): this((string?)null) {}
 
     /// <summary>
     /// Primitive value of the element
@@ -76,9 +79,9 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(SystemPrimitive.DateTime))]
     [DateTimePattern]
     [DataMember]
-    public string Value
+    public string? Value
     {
-      get { return ObjectValue is string or null ? (string)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
+      get { return ObjectValue is string or null ? (string?)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
       set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 

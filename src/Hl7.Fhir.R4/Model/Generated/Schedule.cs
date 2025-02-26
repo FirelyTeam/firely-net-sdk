@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,24 +67,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Whether this schedule is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean ActiveElement
+    public Hl7.Fhir.Model.FhirBoolean? ActiveElement
     {
       get { return _ActiveElement; }
       set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+    private Hl7.Fhir.Model.FhirBoolean? _ActiveElement;
 
     /// <summary>
     /// Whether this schedule is in active use
@@ -90,13 +93,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get { return ActiveElement != null ? ActiveElement.Value : null; }
+      get => _ActiveElement?.Value;
       set
       {
-        if (value == null)
-          ActiveElement = null;
-        else
-          ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -110,11 +110,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
     {
-      get { if(_ServiceCategory==null) _ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceCategory; }
+      get => _ServiceCategory ??= [];
       set { _ServiceCategory = value; OnPropertyChanged("ServiceCategory"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ServiceCategory;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ServiceCategory;
 
     /// <summary>
     /// Specific service.
@@ -125,11 +125,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
     {
-      get { if(_ServiceType==null) _ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceType; }
+      get => _ServiceType ??= [];
       set { _ServiceType = value; OnPropertyChanged("ServiceType"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ServiceType;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ServiceType;
 
     /// <summary>
     /// Type of specialty needed.
@@ -140,11 +140,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
-      get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
+      get => _Specialty ??= [];
       set { _Specialty = value; OnPropertyChanged("Specialty"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Specialty;
 
     /// <summary>
     /// Resource(s) that availability information is being provided for.
@@ -156,52 +156,49 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Actor
     {
-      get { if(_Actor==null) _Actor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Actor; }
+      get => _Actor ??= [];
       set { _Actor = value; OnPropertyChanged("Actor"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Actor;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Actor;
 
     /// <summary>
     /// Period of time covered by schedule.
     /// </summary>
     [FhirElement("planningHorizon", InSummary=true, Order=150, FiveWs="FiveWs.planned")]
     [DataMember]
-    public Hl7.Fhir.Model.Period PlanningHorizon
+    public Hl7.Fhir.Model.Period? PlanningHorizon
     {
       get { return _PlanningHorizon; }
       set { _PlanningHorizon = value; OnPropertyChanged("PlanningHorizon"); }
     }
 
-    private Hl7.Fhir.Model.Period _PlanningHorizon;
+    private Hl7.Fhir.Model.Period? _PlanningHorizon;
 
     /// <summary>
     /// Comments on availability.
     /// </summary>
     [FhirElement("comment", Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString CommentElement
+    public Hl7.Fhir.Model.FhirString? CommentElement
     {
       get { return _CommentElement; }
       set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _CommentElement;
+    private Hl7.Fhir.Model.FhirString? _CommentElement;
 
     /// <summary>
     /// Comments on availability
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Comment
+    public string? Comment
     {
-      get { return CommentElement != null ? CommentElement.Value : null; }
+      get => _CommentElement?.Value;
       set
       {
-        if (value == null)
-          CommentElement = null;
-        else
-          CommentElement = new Hl7.Fhir.Model.FhirString(value);
+        CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Comment");
       }
     }
@@ -210,22 +207,18 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Schedule;
-
-      if (dest == null)
-      {
+      if(other is not Schedule dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
-      if(ServiceCategory.Any()) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceCategory.DeepCopyInternal());
-      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceType.DeepCopyInternal());
-      if(Specialty.Any()) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopyInternal());
-      if(Actor.Any()) dest.Actor = new List<Hl7.Fhir.Model.ResourceReference>(Actor.DeepCopyInternal());
-      if(PlanningHorizon != null) dest.PlanningHorizon = (Hl7.Fhir.Model.Period)PlanningHorizon.DeepCopyInternal();
-      if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_ActiveElement is not null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)_ActiveElement.DeepCopyInternal();
+      if(_ServiceCategory is not null) dest.ServiceCategory = new List<Hl7.Fhir.Model.CodeableConcept>(_ServiceCategory.DeepCopyInternal());
+      if(_ServiceType is not null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(_ServiceType.DeepCopyInternal());
+      if(_Specialty is not null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(_Specialty.DeepCopyInternal());
+      if(_Actor is not null) dest.Actor = new List<Hl7.Fhir.Model.ResourceReference>(_Actor.DeepCopyInternal());
+      if(_PlanningHorizon is not null) dest.PlanningHorizon = (Hl7.Fhir.Model.Period)_PlanningHorizon.DeepCopyInternal();
+      if(_CommentElement is not null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)_CommentElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -237,83 +230,84 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Schedule;
-      if(otherT == null) return false;
+      if(other is not Schedule otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
-      if(!comparer.ListEquals(ServiceCategory, otherT.ServiceCategory)) return false;
-      if(!comparer.ListEquals(ServiceType, otherT.ServiceType)) return false;
-      if(!comparer.ListEquals(Specialty, otherT.Specialty)) return false;
-      if(!comparer.ListEquals(Actor, otherT.Actor)) return false;
-      if(!comparer.Equals(PlanningHorizon, otherT.PlanningHorizon)) return false;
-      if(!comparer.Equals(CommentElement, otherT.CommentElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
+      if(!comparer.ListEquals(_ServiceCategory, otherT._ServiceCategory)) return false;
+      if(!comparer.ListEquals(_ServiceType, otherT._ServiceType)) return false;
+      if(!comparer.ListEquals(_Specialty, otherT._Specialty)) return false;
+      if(!comparer.ListEquals(_Actor, otherT._Actor)) return false;
+      if(!comparer.Equals(_PlanningHorizon, otherT._PlanningHorizon)) return false;
+      if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "active":
-          value = ActiveElement;
-          return ActiveElement is not null;
+          value = _ActiveElement;
+          return _ActiveElement is not null;
         case "serviceCategory":
-          value = ServiceCategory;
-          return ServiceCategory?.Any() == true;
+          value = _ServiceCategory;
+          return _ServiceCategory?.Any() == true;
         case "serviceType":
-          value = ServiceType;
-          return ServiceType?.Any() == true;
+          value = _ServiceType;
+          return _ServiceType?.Any() == true;
         case "specialty":
-          value = Specialty;
-          return Specialty?.Any() == true;
+          value = _Specialty;
+          return _Specialty?.Any() == true;
         case "actor":
-          value = Actor;
-          return Actor?.Any() == true;
+          value = _Actor;
+          return _Actor?.Any() == true;
         case "planningHorizon":
-          value = PlanningHorizon;
-          return PlanningHorizon is not null;
+          value = _PlanningHorizon;
+          return _PlanningHorizon is not null;
         case "comment":
-          value = CommentElement;
-          return CommentElement is not null;
+          value = _CommentElement;
+          return _CommentElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "active":
-          ActiveElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "serviceCategory":
-          ServiceCategory = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ServiceCategory = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "serviceType":
-          ServiceType = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ServiceType = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "specialty":
-          Specialty = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Specialty = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "actor":
-          Actor = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Actor = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "planningHorizon":
-          PlanningHorizon = (Hl7.Fhir.Model.Period)value;
+          PlanningHorizon = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "comment":
-          CommentElement = (Hl7.Fhir.Model.FhirString)value;
+          CommentElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -324,14 +318,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
-      if (ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
-      if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
-      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
-      if (Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",Actor);
-      if (PlanningHorizon is not null) yield return new KeyValuePair<string,object>("planningHorizon",PlanningHorizon);
-      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (_ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",_ServiceCategory);
+      if (_ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",_ServiceType);
+      if (_Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",_Specialty);
+      if (_Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",_Actor);
+      if (_PlanningHorizon is not null) yield return new KeyValuePair<string,object>("planningHorizon",_PlanningHorizon);
+      if (_CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
     }
 
   }

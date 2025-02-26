@@ -22,7 +22,7 @@ public interface ICoded
     /// <summary>
     /// Maps a FHIR datatype to a (list of) Coding, according to https://hl7.org/fhir/terminologies.html#4.1
     /// </summary>
-    IEnumerable<Coding> ToCodings();
+    IReadOnlyCollection<Coding> ToCodings();
 }
 
 /// <summary>
@@ -45,10 +45,10 @@ public static class CodedExtensions
     /// <summary>
     /// Maps a list of FHIR datatypes to a list of <see cref="Coding"/>.
     /// </summary>
-    public static IEnumerable<Coding> ToCodings(this IEnumerable<DataType>? dts) => dts?.SelectMany(dt => dt.ToCodings()) ?? [];
+    public static IReadOnlyCollection<Coding> ToCodings(this IEnumerable<DataType>? dts) => dts?.SelectMany(dt => dt.ToCodings()).ToList() ?? [];
 
     /// <inheritdoc cref="ICoded.ToCodings()"/>
-    public static IEnumerable<Coding> ToCodings(this DataType? dt) => dt switch
+    public static IReadOnlyCollection<Coding> ToCodings(this DataType? dt) => dt switch
     {
         ICoded c => c.ToCodings(),
         _ => []

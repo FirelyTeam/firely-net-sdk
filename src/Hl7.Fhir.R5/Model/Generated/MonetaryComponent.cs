@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -110,13 +113,13 @@ namespace Hl7.Fhir.Model
     [Binding("PriceComponentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType> TypeElement
+    public Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType> _TypeElement;
+    private Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>? _TypeElement;
 
     /// <summary>
     /// base | surcharge | deduction | discount | tax | informational
@@ -125,13 +128,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MonetaryComponent.PriceComponentType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -142,26 +142,26 @@ namespace Hl7.Fhir.Model
     [FhirElement("code", InSummary=true, Order=40)]
     [Binding("PriceComponentCode")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Code
+    public Hl7.Fhir.Model.CodeableConcept? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Code;
+    private Hl7.Fhir.Model.CodeableConcept? _Code;
 
     /// <summary>
     /// Factor used for calculating this component.
     /// </summary>
     [FhirElement("factor", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal FactorElement
+    public Hl7.Fhir.Model.FhirDecimal? FactorElement
     {
       get { return _FactorElement; }
       set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDecimal _FactorElement;
+    private Hl7.Fhir.Model.FhirDecimal? _FactorElement;
 
     /// <summary>
     /// Factor used for calculating this component
@@ -170,13 +170,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Factor
     {
-      get { return FactorElement != null ? FactorElement.Value : null; }
+      get => _FactorElement?.Value;
       set
       {
-        if (value == null)
-          FactorElement = null;
-        else
-          FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+        FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Factor");
       }
     }
@@ -186,28 +183,24 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("amount", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.Money Amount
+    public Hl7.Fhir.Model.Money? Amount
     {
       get { return _Amount; }
       set { _Amount = value; OnPropertyChanged("Amount"); }
     }
 
-    private Hl7.Fhir.Model.Money _Amount;
+    private Hl7.Fhir.Model.Money? _Amount;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as MonetaryComponent;
-
-      if (dest == null)
-      {
+      if(other is not MonetaryComponent dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>)TypeElement.DeepCopyInternal();
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-      if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopyInternal();
-      if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Money)Amount.DeepCopyInternal();
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>)_TypeElement.DeepCopyInternal();
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+      if(_FactorElement is not null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)_FactorElement.DeepCopyInternal();
+      if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.Money)_Amount.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -219,55 +212,56 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as MonetaryComponent;
-      if(otherT == null) return false;
+      if(other is not MonetaryComponent otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(Code, otherT.Code)) return false;
-      if(!comparer.Equals(FactorElement, otherT.FactorElement)) return false;
-      if(!comparer.Equals(Amount, otherT.Amount)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.Equals(_FactorElement, otherT._FactorElement)) return false;
+      if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "code":
-          value = Code;
-          return Code is not null;
+          value = _Code;
+          return _Code is not null;
         case "factor":
-          value = FactorElement;
-          return FactorElement is not null;
+          value = _FactorElement;
+          return _FactorElement is not null;
         case "amount":
-          value = Amount;
-          return Amount is not null;
+          value = _Amount;
+          return _Amount is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>?)value;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept)value;
+          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "factor":
-          FactorElement = (Hl7.Fhir.Model.FhirDecimal)value;
+          FactorElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "amount":
-          Amount = (Hl7.Fhir.Model.Money)value;
+          Amount = (Hl7.Fhir.Model.Money?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -278,10 +272,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
-      if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_FactorElement is not null) yield return new KeyValuePair<string,object>("factor",_FactorElement);
+      if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
     }
 
   }

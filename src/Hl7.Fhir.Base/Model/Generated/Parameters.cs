@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -82,28 +85,25 @@ namespace Hl7.Fhir.Model
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString NameElement
+      public Hl7.Fhir.Model.FhirString? NameElement
       {
         get { return _NameElement; }
         set { _NameElement = value; OnPropertyChanged("NameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _NameElement;
+      private Hl7.Fhir.Model.FhirString? _NameElement;
 
       /// <summary>
       /// Name from the definition
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => _NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -113,13 +113,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Value
+      public Hl7.Fhir.Model.DataType? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Value;
+      private Hl7.Fhir.Model.DataType? _Value;
 
       /// <summary>
       /// If parameter is a whole resource.
@@ -128,13 +128,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
-      public Hl7.Fhir.Model.Resource Resource
+      public Hl7.Fhir.Model.Resource? Resource
       {
         get { return _Resource; }
         set { _Resource = value; OnPropertyChanged("Resource"); }
       }
 
-      private Hl7.Fhir.Model.Resource _Resource;
+      private Hl7.Fhir.Model.Resource? _Resource;
 
       /// <summary>
       /// Named part of a multi-part parameter.
@@ -144,26 +144,22 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Part
       {
-        get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(); return _Part; }
+        get => _Part ??= [];
         set { _Part = value; OnPropertyChanged("Part"); }
       }
 
-      private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Part;
+      private List<Hl7.Fhir.Model.Parameters.ParameterComponent>? _Part;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ParameterComponent;
-
-        if (dest == null)
-        {
+        if(other is not ParameterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
-        if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopyInternal();
-        if(Part.Any()) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Part.DeepCopyInternal());
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
+        if(_Resource is not null) dest.Resource = (Hl7.Fhir.Model.Resource)_Resource.DeepCopyInternal();
+        if(_Part is not null) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(_Part.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -175,55 +171,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ParameterComponent;
-        if(otherT == null) return false;
+        if(other is not ParameterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
-        if(!comparer.Equals(Resource, otherT.Resource)) return false;
-        if(!comparer.ListEquals(Part, otherT.Part)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+        if(!comparer.Equals(_Resource, otherT._Resource)) return false;
+        if(!comparer.ListEquals(_Part, otherT._Part)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "name":
-            value = NameElement;
-            return NameElement is not null;
+            value = _NameElement;
+            return _NameElement is not null;
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           case "resource":
-            value = Resource;
-            return Resource is not null;
+            value = _Resource;
+            return _Resource is not null;
           case "part":
-            value = Part;
-            return Part?.Any() == true;
+            value = _Part;
+            return _Part?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString)value;
+            NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType)value;
+            Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "resource":
-            Resource = (Hl7.Fhir.Model.Resource)value;
+            Resource = (Hl7.Fhir.Model.Resource?)value;
             return this;
           case "part":
-            Part = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>)value;
+            Part = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -234,10 +231,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
-        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
-        if (Part?.Any() == true) yield return new KeyValuePair<string,object>("part",Part);
+        if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (_Part?.Any() == true) yield return new KeyValuePair<string,object>("part",_Part);
       }
 
     }
@@ -250,23 +247,19 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Parameter
     {
-      get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(); return _Parameter; }
+      get => _Parameter ??= [];
       set { _Parameter = value; OnPropertyChanged("Parameter"); }
     }
 
-    private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Parameter;
+    private List<Hl7.Fhir.Model.Parameters.ParameterComponent>? _Parameter;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Parameters;
-
-      if (dest == null)
-      {
+      if(other is not Parameters dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Parameter.Any()) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Parameter.DeepCopyInternal());
+      if(_Parameter is not null) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(_Parameter.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -278,34 +271,35 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Parameters;
-      if(otherT == null) return false;
+      if(other is not Parameters otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Parameter, otherT.Parameter)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Parameter, otherT._Parameter)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "parameter":
-          value = Parameter;
-          return Parameter?.Any() == true;
+          value = _Parameter;
+          return _Parameter?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "parameter":
-          Parameter = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>)value;
+          Parameter = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -316,7 +310,7 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
+      if (_Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",_Parameter);
     }
 
   }

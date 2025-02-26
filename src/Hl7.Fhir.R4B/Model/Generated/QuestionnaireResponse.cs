@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -53,7 +56,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("QuestionnaireResponse","http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse")]
-  public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
+  public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier?>
   {
     /// <summary>
     /// FHIR Type Name
@@ -123,28 +126,25 @@ namespace Hl7.Fhir.Model
       [FhirElement("linkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString LinkIdElement
+      public Hl7.Fhir.Model.FhirString? LinkIdElement
       {
         get { return _LinkIdElement; }
         set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _LinkIdElement;
+      private Hl7.Fhir.Model.FhirString? _LinkIdElement;
 
       /// <summary>
       /// Pointer to specific item from Questionnaire
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string LinkId
+      public string? LinkId
       {
-        get { return LinkIdElement != null ? LinkIdElement.Value : null; }
+        get => _LinkIdElement?.Value;
         set
         {
-          if (value == null)
-            LinkIdElement = null;
-          else
-            LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
+          LinkIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("LinkId");
         }
       }
@@ -154,28 +154,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("definition", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri DefinitionElement
+      public Hl7.Fhir.Model.FhirUri? DefinitionElement
       {
         get { return _DefinitionElement; }
         set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirUri _DefinitionElement;
+      private Hl7.Fhir.Model.FhirUri? _DefinitionElement;
 
       /// <summary>
       /// ElementDefinition - details for the item
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Definition
+      public string? Definition
       {
-        get { return DefinitionElement != null ? DefinitionElement.Value : null; }
+        get => _DefinitionElement?.Value;
         set
         {
-          if (value == null)
-            DefinitionElement = null;
-          else
-            DefinitionElement = new Hl7.Fhir.Model.FhirUri(value);
+          DefinitionElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Definition");
         }
       }
@@ -185,28 +182,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("text", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString TextElement
+      public Hl7.Fhir.Model.FhirString? TextElement
       {
         get { return _TextElement; }
         set { _TextElement = value; OnPropertyChanged("TextElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _TextElement;
+      private Hl7.Fhir.Model.FhirString? _TextElement;
 
       /// <summary>
       /// Name for group or question text
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Text
+      public string? Text
       {
-        get { return TextElement != null ? TextElement.Value : null; }
+        get => _TextElement?.Value;
         set
         {
-          if (value == null)
-            TextElement = null;
-          else
-            TextElement = new Hl7.Fhir.Model.FhirString(value);
+          TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Text");
         }
       }
@@ -219,11 +213,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> Answer
       {
-        get { if(_Answer==null) _Answer = new List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>(); return _Answer; }
+        get => _Answer ??= [];
         set { _Answer = value; OnPropertyChanged("Answer"); }
       }
 
-      private List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> _Answer;
+      private List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>? _Answer;
 
       /// <summary>
       /// Nested questionnaire response items.
@@ -233,27 +227,23 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
       {
-        get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(); return _Item; }
+        get => _Item ??= [];
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> _Item;
+      private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ItemComponent;
-
-        if (dest == null)
-        {
+        if(other is not ItemComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopyInternal();
-        if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirUri)DefinitionElement.DeepCopyInternal();
-        if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopyInternal();
-        if(Answer.Any()) dest.Answer = new List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>(Answer.DeepCopyInternal());
-        if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(Item.DeepCopyInternal());
+        if(_LinkIdElement is not null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)_LinkIdElement.DeepCopyInternal();
+        if(_DefinitionElement is not null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirUri)_DefinitionElement.DeepCopyInternal();
+        if(_TextElement is not null) dest.TextElement = (Hl7.Fhir.Model.FhirString)_TextElement.DeepCopyInternal();
+        if(_Answer is not null) dest.Answer = new List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>(_Answer.DeepCopyInternal());
+        if(_Item is not null) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(_Item.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -265,62 +255,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ItemComponent;
-        if(otherT == null) return false;
+        if(other is not ItemComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(LinkIdElement, otherT.LinkIdElement)) return false;
-        if(!comparer.Equals(DefinitionElement, otherT.DefinitionElement)) return false;
-        if(!comparer.Equals(TextElement, otherT.TextElement)) return false;
-        if(!comparer.ListEquals(Answer, otherT.Answer)) return false;
-        if(!comparer.ListEquals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_LinkIdElement, otherT._LinkIdElement)) return false;
+        if(!comparer.Equals(_DefinitionElement, otherT._DefinitionElement)) return false;
+        if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
+        if(!comparer.ListEquals(_Answer, otherT._Answer)) return false;
+        if(!comparer.ListEquals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "linkId":
-            value = LinkIdElement;
-            return LinkIdElement is not null;
+            value = _LinkIdElement;
+            return _LinkIdElement is not null;
           case "definition":
-            value = DefinitionElement;
-            return DefinitionElement is not null;
+            value = _DefinitionElement;
+            return _DefinitionElement is not null;
           case "text":
-            value = TextElement;
-            return TextElement is not null;
+            value = _TextElement;
+            return _TextElement is not null;
           case "answer":
-            value = Answer;
-            return Answer?.Any() == true;
+            value = _Answer;
+            return _Answer?.Any() == true;
           case "item":
-            value = Item;
-            return Item?.Any() == true;
+            value = _Item;
+            return _Item?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "linkId":
-            LinkIdElement = (Hl7.Fhir.Model.FhirString)value;
+            LinkIdElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "definition":
-            DefinitionElement = (Hl7.Fhir.Model.FhirUri)value;
+            DefinitionElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "text":
-            TextElement = (Hl7.Fhir.Model.FhirString)value;
+            TextElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "answer":
-            Answer = (List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>)value;
+            Answer = (List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>?)value!;
             return this;
           case "item":
-            Item = (List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>)value;
+            Item = (List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -331,11 +322,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (LinkIdElement is not null) yield return new KeyValuePair<string,object>("linkId",LinkIdElement);
-        if (DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
-        if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
-        if (Answer?.Any() == true) yield return new KeyValuePair<string,object>("answer",Answer);
-        if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+        if (_LinkIdElement is not null) yield return new KeyValuePair<string,object>("linkId",_LinkIdElement);
+        if (_DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",_DefinitionElement);
+        if (_TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
+        if (_Answer?.Any() == true) yield return new KeyValuePair<string,object>("answer",_Answer);
+        if (_Item?.Any() == true) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -366,13 +357,13 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Value
+      public Hl7.Fhir.Model.DataType? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Value;
+      private Hl7.Fhir.Model.DataType? _Value;
 
       /// <summary>
       /// Nested groups and questions.
@@ -382,24 +373,20 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
       {
-        get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(); return _Item; }
+        get => _Item ??= [];
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> _Item;
+      private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as AnswerComponent;
-
-        if (dest == null)
-        {
+        if(other is not AnswerComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
-        if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(Item.DeepCopyInternal());
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
+        if(_Item is not null) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(_Item.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -411,41 +398,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as AnswerComponent;
-        if(otherT == null) return false;
+        if(other is not AnswerComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
-        if(!comparer.ListEquals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+        if(!comparer.ListEquals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           case "item":
-            value = Item;
-            return Item?.Any() == true;
+            value = _Item;
+            return _Item?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "value":
-            Value = (Hl7.Fhir.Model.DataType)value;
+            Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "item":
-            Item = (List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>)value;
+            Item = (List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -456,8 +444,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
-        if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_Item?.Any() == true) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -467,13 +455,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier Identifier
+    public Hl7.Fhir.Model.Identifier? Identifier
     {
       get { return _Identifier; }
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _Identifier;
+    private Hl7.Fhir.Model.Identifier? _Identifier;
 
     /// <summary>
     /// Request fulfilled by this QuestionnaireResponse.
@@ -485,11 +473,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
-      get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+      get => _BasedOn ??= [];
       set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+    private List<Hl7.Fhir.Model.ResourceReference>? _BasedOn;
 
     /// <summary>
     /// Part of this action.
@@ -501,39 +489,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
-      get { if(_PartOf==null) _PartOf = new List<Hl7.Fhir.Model.ResourceReference>(); return _PartOf; }
+      get => _PartOf ??= [];
       set { _PartOf = value; OnPropertyChanged("PartOf"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
+    private List<Hl7.Fhir.Model.ResourceReference>? _PartOf;
 
     /// <summary>
     /// Form being answered.
     /// </summary>
     [FhirElement("questionnaire", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Canonical QuestionnaireElement
+    public Hl7.Fhir.Model.Canonical? QuestionnaireElement
     {
       get { return _QuestionnaireElement; }
       set { _QuestionnaireElement = value; OnPropertyChanged("QuestionnaireElement"); }
     }
 
-    private Hl7.Fhir.Model.Canonical _QuestionnaireElement;
+    private Hl7.Fhir.Model.Canonical? _QuestionnaireElement;
 
     /// <summary>
     /// Form being answered
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Questionnaire
+    public string? Questionnaire
     {
-      get { return QuestionnaireElement != null ? QuestionnaireElement.Value : null; }
+      get => _QuestionnaireElement?.Value;
       set
       {
-        if (value == null)
-          QuestionnaireElement = null;
-        else
-          QuestionnaireElement = new Hl7.Fhir.Model.Canonical(value);
+        QuestionnaireElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("Questionnaire");
       }
     }
@@ -546,13 +531,13 @@ namespace Hl7.Fhir.Model
     [Binding("QuestionnaireResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> StatusElement
+    public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>? _StatusElement;
 
     /// <summary>
     /// in-progress | completed | amended | entered-in-error | stopped
@@ -561,13 +546,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -579,13 +561,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// Encounter created as part of.
@@ -594,41 +576,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Encounter
+    public Hl7.Fhir.Model.ResourceReference? Encounter
     {
       get { return _Encounter; }
       set { _Encounter = value; OnPropertyChanged("Encounter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Encounter;
+    private Hl7.Fhir.Model.ResourceReference? _Encounter;
 
     /// <summary>
     /// Date the answers were gathered.
     /// </summary>
     [FhirElement("authored", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime AuthoredElement
+    public Hl7.Fhir.Model.FhirDateTime? AuthoredElement
     {
       get { return _AuthoredElement; }
       set { _AuthoredElement = value; OnPropertyChanged("AuthoredElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _AuthoredElement;
+    private Hl7.Fhir.Model.FhirDateTime? _AuthoredElement;
 
     /// <summary>
     /// Date the answers were gathered
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Authored
+    public string? Authored
     {
-      get { return AuthoredElement != null ? AuthoredElement.Value : null; }
+      get => _AuthoredElement?.Value;
       set
       {
-        if (value == null)
-          AuthoredElement = null;
-        else
-          AuthoredElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoredElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Authored");
       }
     }
@@ -640,13 +619,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Device","Practitioner","PractitionerRole","Patient","RelatedPerson","Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Author
+    public Hl7.Fhir.Model.ResourceReference? Author
     {
       get { return _Author; }
       set { _Author = value; OnPropertyChanged("Author"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Author;
+    private Hl7.Fhir.Model.ResourceReference? _Author;
 
     /// <summary>
     /// The person who answered the questions.
@@ -655,13 +634,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Source
+    public Hl7.Fhir.Model.ResourceReference? Source
     {
       get { return _Source; }
       set { _Source = value; OnPropertyChanged("Source"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Source;
+    private Hl7.Fhir.Model.ResourceReference? _Source;
 
     /// <summary>
     /// Groups and questions.
@@ -671,35 +650,31 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
     {
-      get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(); return _Item; }
+      get => _Item ??= [];
       set { _Item = value; OnPropertyChanged("Item"); }
     }
 
-    private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> _Item;
+    private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>? _Item;
 
-    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as QuestionnaireResponse;
-
-      if (dest == null)
-      {
+      if(other is not QuestionnaireResponse dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-      if(BasedOn.Any()) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopyInternal());
-      if(PartOf.Any()) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopyInternal());
-      if(QuestionnaireElement != null) dest.QuestionnaireElement = (Hl7.Fhir.Model.Canonical)QuestionnaireElement.DeepCopyInternal();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>)StatusElement.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopyInternal();
-      if(AuthoredElement != null) dest.AuthoredElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredElement.DeepCopyInternal();
-      if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopyInternal();
-      if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopyInternal();
-      if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(Item.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+      if(_BasedOn is not null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(_BasedOn.DeepCopyInternal());
+      if(_PartOf is not null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(_PartOf.DeepCopyInternal());
+      if(_QuestionnaireElement is not null) dest.QuestionnaireElement = (Hl7.Fhir.Model.Canonical)_QuestionnaireElement.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>)_StatusElement.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Encounter is not null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)_Encounter.DeepCopyInternal();
+      if(_AuthoredElement is not null) dest.AuthoredElement = (Hl7.Fhir.Model.FhirDateTime)_AuthoredElement.DeepCopyInternal();
+      if(_Author is not null) dest.Author = (Hl7.Fhir.Model.ResourceReference)_Author.DeepCopyInternal();
+      if(_Source is not null) dest.Source = (Hl7.Fhir.Model.ResourceReference)_Source.DeepCopyInternal();
+      if(_Item is not null) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(_Item.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -711,104 +686,105 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as QuestionnaireResponse;
-      if(otherT == null) return false;
+      if(other is not QuestionnaireResponse otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.ListEquals(BasedOn, otherT.BasedOn)) return false;
-      if(!comparer.ListEquals(PartOf, otherT.PartOf)) return false;
-      if(!comparer.Equals(QuestionnaireElement, otherT.QuestionnaireElement)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Encounter, otherT.Encounter)) return false;
-      if(!comparer.Equals(AuthoredElement, otherT.AuthoredElement)) return false;
-      if(!comparer.Equals(Author, otherT.Author)) return false;
-      if(!comparer.Equals(Source, otherT.Source)) return false;
-      if(!comparer.ListEquals(Item, otherT.Item)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.ListEquals(_BasedOn, otherT._BasedOn)) return false;
+      if(!comparer.ListEquals(_PartOf, otherT._PartOf)) return false;
+      if(!comparer.Equals(_QuestionnaireElement, otherT._QuestionnaireElement)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
+      if(!comparer.Equals(_AuthoredElement, otherT._AuthoredElement)) return false;
+      if(!comparer.Equals(_Author, otherT._Author)) return false;
+      if(!comparer.Equals(_Source, otherT._Source)) return false;
+      if(!comparer.ListEquals(_Item, otherT._Item)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier is not null;
+          value = _Identifier;
+          return _Identifier is not null;
         case "basedOn":
-          value = BasedOn;
-          return BasedOn?.Any() == true;
+          value = _BasedOn;
+          return _BasedOn?.Any() == true;
         case "partOf":
-          value = PartOf;
-          return PartOf?.Any() == true;
+          value = _PartOf;
+          return _PartOf?.Any() == true;
         case "questionnaire":
-          value = QuestionnaireElement;
-          return QuestionnaireElement is not null;
+          value = _QuestionnaireElement;
+          return _QuestionnaireElement is not null;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "encounter":
-          value = Encounter;
-          return Encounter is not null;
+          value = _Encounter;
+          return _Encounter is not null;
         case "authored":
-          value = AuthoredElement;
-          return AuthoredElement is not null;
+          value = _AuthoredElement;
+          return _AuthoredElement is not null;
         case "author":
-          value = Author;
-          return Author is not null;
+          value = _Author;
+          return _Author is not null;
         case "source":
-          value = Source;
-          return Source is not null;
+          value = _Source;
+          return _Source is not null;
         case "item":
-          value = Item;
-          return Item?.Any() == true;
+          value = _Item;
+          return _Item?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier)value;
+          Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "basedOn":
-          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          BasedOn = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "partOf":
-          PartOf = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          PartOf = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "questionnaire":
-          QuestionnaireElement = (Hl7.Fhir.Model.Canonical)value;
+          QuestionnaireElement = (Hl7.Fhir.Model.Canonical?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference)value;
+          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "authored":
-          AuthoredElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          AuthoredElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "author":
-          Author = (Hl7.Fhir.Model.ResourceReference)value;
+          Author = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "source":
-          Source = (Hl7.Fhir.Model.ResourceReference)value;
+          Source = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "item":
-          Item = (List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>)value;
+          Item = (List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -819,17 +795,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
-      if (QuestionnaireElement is not null) yield return new KeyValuePair<string,object>("questionnaire",QuestionnaireElement);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (AuthoredElement is not null) yield return new KeyValuePair<string,object>("authored",AuthoredElement);
-      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
-      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-      if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+      if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",_PartOf);
+      if (_QuestionnaireElement is not null) yield return new KeyValuePair<string,object>("questionnaire",_QuestionnaireElement);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_AuthoredElement is not null) yield return new KeyValuePair<string,object>("authored",_AuthoredElement);
+      if (_Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
+      if (_Source is not null) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_Item?.Any() == true) yield return new KeyValuePair<string,object>("item",_Item);
     }
 
   }

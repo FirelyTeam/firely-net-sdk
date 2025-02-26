@@ -313,7 +313,7 @@ namespace Hl7.Fhir.ElementModel.Tests
                 {
                     var snapShotGenerator = new SnapshotGenerator(_coreResolver);
                     await snapShotGenerator.UpdateAsync(sd);
-                    _cache.Add(sd.Url, sd);
+                    _cache.Add(sd.Url ?? throw new InvalidOperationException("SD without url, which has just been resolved by url?"), sd);
                 }
 
                 return sd;

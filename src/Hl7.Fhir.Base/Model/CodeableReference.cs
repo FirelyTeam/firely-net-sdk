@@ -43,7 +43,7 @@ public partial class CodeableReference : ICoded, P.IToSystemPrimitive
                                             "and can therefore not be converted to a System Concept.");
 
     internal P.Concept? ToSystemConceptInternal() =>
-        ((P.IToSystemPrimitive)Concept)?.TryConvertToSystemType(out var result) == true ? (P.Concept)result : null;
+        ((P.IToSystemPrimitive?)Concept)?.TryConvertToSystemType(out var result) == true ? (P.Concept)result : null;
 
     /// <summary>
     /// Converts the reference part of this CodeableReference to a <see cref="P.String" />.
@@ -79,5 +79,5 @@ public partial class CodeableReference : ICoded, P.IToSystemPrimitive
     }
 
     /// <inheritdoc cref="ICoded.ToCodings"/>
-    public IEnumerable<Coding> ToCodings() => Concept?.ToCodings() ?? [];
+    public IReadOnlyCollection<Coding> ToCodings() => Concept?.ToCodings() ?? [];
 }

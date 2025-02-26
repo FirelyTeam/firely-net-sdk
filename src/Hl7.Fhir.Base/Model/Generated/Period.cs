@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -66,28 +69,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("start", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime StartElement
+    public Hl7.Fhir.Model.FhirDateTime? StartElement
     {
       get { return _StartElement; }
       set { _StartElement = value; OnPropertyChanged("StartElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _StartElement;
+    private Hl7.Fhir.Model.FhirDateTime? _StartElement;
 
     /// <summary>
     /// Starting time with inclusive boundary
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Start
+    public string? Start
     {
-      get { return StartElement != null ? StartElement.Value : null; }
+      get => _StartElement?.Value;
       set
       {
-        if (value == null)
-          StartElement = null;
-        else
-          StartElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        StartElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Start");
       }
     }
@@ -97,44 +97,37 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("end", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime EndElement
+    public Hl7.Fhir.Model.FhirDateTime? EndElement
     {
       get { return _EndElement; }
       set { _EndElement = value; OnPropertyChanged("EndElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _EndElement;
+    private Hl7.Fhir.Model.FhirDateTime? _EndElement;
 
     /// <summary>
     /// End time with inclusive boundary, if not ongoing
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string End
+    public string? End
     {
-      get { return EndElement != null ? EndElement.Value : null; }
+      get => _EndElement?.Value;
       set
       {
-        if (value == null)
-          EndElement = null;
-        else
-          EndElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        EndElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("End");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Period;
-
-      if (dest == null)
-      {
+      if(other is not Period dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.FhirDateTime)StartElement.DeepCopyInternal();
-      if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.FhirDateTime)EndElement.DeepCopyInternal();
+      if(_StartElement is not null) dest.StartElement = (Hl7.Fhir.Model.FhirDateTime)_StartElement.DeepCopyInternal();
+      if(_EndElement is not null) dest.EndElement = (Hl7.Fhir.Model.FhirDateTime)_EndElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -146,41 +139,42 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Period;
-      if(otherT == null) return false;
+      if(other is not Period otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(StartElement, otherT.StartElement)) return false;
-      if(!comparer.Equals(EndElement, otherT.EndElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
+      if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "start":
-          value = StartElement;
-          return StartElement is not null;
+          value = _StartElement;
+          return _StartElement is not null;
         case "end":
-          value = EndElement;
-          return EndElement is not null;
+          value = _EndElement;
+          return _EndElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "start":
-          StartElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          StartElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "end":
-          EndElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          EndElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -191,8 +185,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
-      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
+      if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
     }
 
   }

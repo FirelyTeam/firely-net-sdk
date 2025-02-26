@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -81,28 +84,25 @@ namespace Hl7.Fhir.Model
       [FhirElement("path", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString PathElement
+      public Hl7.Fhir.Model.FhirString? PathElement
       {
         get { return _PathElement; }
         set { _PathElement = value; OnPropertyChanged("PathElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _PathElement;
+      private Hl7.Fhir.Model.FhirString? _PathElement;
 
       /// <summary>
       /// The code-valued attribute of the filter
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Path
+      public string? Path
       {
-        get { return PathElement != null ? PathElement.Value : null; }
+        get => _PathElement?.Value;
         set
         {
-          if (value == null)
-            PathElement = null;
-          else
-            PathElement = new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -115,13 +115,13 @@ namespace Hl7.Fhir.Model
       [References("ValueSet")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType ValueSet
+      public Hl7.Fhir.Model.DataType? ValueSet
       {
         get { return _ValueSet; }
         set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
       }
 
-      private Hl7.Fhir.Model.DataType _ValueSet;
+      private Hl7.Fhir.Model.DataType? _ValueSet;
 
       /// <summary>
       /// What code is expected.
@@ -131,24 +131,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Code> ValueCodeElement
       {
-        get { if(_ValueCodeElement==null) _ValueCodeElement = new List<Hl7.Fhir.Model.Code>(); return _ValueCodeElement; }
+        get => _ValueCodeElement ??= [];
         set { _ValueCodeElement = value; OnPropertyChanged("ValueCodeElement"); }
       }
 
-      private List<Hl7.Fhir.Model.Code> _ValueCodeElement;
+      private List<Hl7.Fhir.Model.Code>? _ValueCodeElement;
 
       /// <summary>
       /// What code is expected
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string> ValueCode
+      public IEnumerable<string?> ValueCode
       {
-        get { return ValueCodeElement != null ? ValueCodeElement.Select(elem => elem.Value) : null; }
+        get => _ValueCodeElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            ValueCodeElement = null;
+            ValueCodeElement = null!;
           else
             ValueCodeElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
           OnPropertyChanged("ValueCode");
@@ -163,11 +163,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> ValueCoding
       {
-        get { if(_ValueCoding==null) _ValueCoding = new List<Hl7.Fhir.Model.Coding>(); return _ValueCoding; }
+        get => _ValueCoding ??= [];
         set { _ValueCoding = value; OnPropertyChanged("ValueCoding"); }
       }
 
-      private List<Hl7.Fhir.Model.Coding> _ValueCoding;
+      private List<Hl7.Fhir.Model.Coding>? _ValueCoding;
 
       /// <summary>
       /// What CodeableConcept is expected.
@@ -177,27 +177,23 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ValueCodeableConcept
       {
-        get { if(_ValueCodeableConcept==null) _ValueCodeableConcept = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ValueCodeableConcept; }
+        get => _ValueCodeableConcept ??= [];
         set { _ValueCodeableConcept = value; OnPropertyChanged("ValueCodeableConcept"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _ValueCodeableConcept;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _ValueCodeableConcept;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as CodeFilterComponent;
-
-        if (dest == null)
-        {
+        if(other is not CodeFilterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopyInternal();
-        if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.DataType)ValueSet.DeepCopyInternal();
-        if(ValueCodeElement.Any()) dest.ValueCodeElement = new List<Hl7.Fhir.Model.Code>(ValueCodeElement.DeepCopyInternal());
-        if(ValueCoding.Any()) dest.ValueCoding = new List<Hl7.Fhir.Model.Coding>(ValueCoding.DeepCopyInternal());
-        if(ValueCodeableConcept.Any()) dest.ValueCodeableConcept = new List<Hl7.Fhir.Model.CodeableConcept>(ValueCodeableConcept.DeepCopyInternal());
+        if(_PathElement is not null) dest.PathElement = (Hl7.Fhir.Model.FhirString)_PathElement.DeepCopyInternal();
+        if(_ValueSet is not null) dest.ValueSet = (Hl7.Fhir.Model.DataType)_ValueSet.DeepCopyInternal();
+        if(_ValueCodeElement is not null) dest.ValueCodeElement = new List<Hl7.Fhir.Model.Code>(_ValueCodeElement.DeepCopyInternal());
+        if(_ValueCoding is not null) dest.ValueCoding = new List<Hl7.Fhir.Model.Coding>(_ValueCoding.DeepCopyInternal());
+        if(_ValueCodeableConcept is not null) dest.ValueCodeableConcept = new List<Hl7.Fhir.Model.CodeableConcept>(_ValueCodeableConcept.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -209,62 +205,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CodeFilterComponent;
-        if(otherT == null) return false;
+        if(other is not CodeFilterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(PathElement, otherT.PathElement)) return false;
-        if(!comparer.Equals(ValueSet, otherT.ValueSet)) return false;
-        if(!comparer.ListEquals(ValueCodeElement, otherT.ValueCodeElement)) return false;
-        if(!comparer.ListEquals(ValueCoding, otherT.ValueCoding)) return false;
-        if(!comparer.ListEquals(ValueCodeableConcept, otherT.ValueCodeableConcept)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_PathElement, otherT._PathElement)) return false;
+        if(!comparer.Equals(_ValueSet, otherT._ValueSet)) return false;
+        if(!comparer.ListEquals(_ValueCodeElement, otherT._ValueCodeElement)) return false;
+        if(!comparer.ListEquals(_ValueCoding, otherT._ValueCoding)) return false;
+        if(!comparer.ListEquals(_ValueCodeableConcept, otherT._ValueCodeableConcept)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "path":
-            value = PathElement;
-            return PathElement is not null;
+            value = _PathElement;
+            return _PathElement is not null;
           case "valueSet":
-            value = ValueSet;
-            return ValueSet is not null;
+            value = _ValueSet;
+            return _ValueSet is not null;
           case "valueCode":
-            value = ValueCodeElement;
-            return ValueCodeElement?.Any() == true;
+            value = _ValueCodeElement;
+            return _ValueCodeElement?.Any() == true;
           case "valueCoding":
-            value = ValueCoding;
-            return ValueCoding?.Any() == true;
+            value = _ValueCoding;
+            return _ValueCoding?.Any() == true;
           case "valueCodeableConcept":
-            value = ValueCodeableConcept;
-            return ValueCodeableConcept?.Any() == true;
+            value = _ValueCodeableConcept;
+            return _ValueCodeableConcept?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "path":
-            PathElement = (Hl7.Fhir.Model.FhirString)value;
+            PathElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "valueSet":
-            ValueSet = (Hl7.Fhir.Model.DataType)value;
+            ValueSet = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "valueCode":
-            ValueCodeElement = (List<Hl7.Fhir.Model.Code>)value;
+            ValueCodeElement = (List<Hl7.Fhir.Model.Code>?)value!;
             return this;
           case "valueCoding":
-            ValueCoding = (List<Hl7.Fhir.Model.Coding>)value;
+            ValueCoding = (List<Hl7.Fhir.Model.Coding>?)value!;
             return this;
           case "valueCodeableConcept":
-            ValueCodeableConcept = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            ValueCodeableConcept = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -275,11 +272,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
-        if (ValueSet is not null) yield return new KeyValuePair<string,object>("valueSet",ValueSet);
-        if (ValueCodeElement?.Any() == true) yield return new KeyValuePair<string,object>("valueCode",ValueCodeElement);
-        if (ValueCoding?.Any() == true) yield return new KeyValuePair<string,object>("valueCoding",ValueCoding);
-        if (ValueCodeableConcept?.Any() == true) yield return new KeyValuePair<string,object>("valueCodeableConcept",ValueCodeableConcept);
+        if (_PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_ValueSet is not null) yield return new KeyValuePair<string,object>("valueSet",_ValueSet);
+        if (_ValueCodeElement?.Any() == true) yield return new KeyValuePair<string,object>("valueCode",_ValueCodeElement);
+        if (_ValueCoding?.Any() == true) yield return new KeyValuePair<string,object>("valueCoding",_ValueCoding);
+        if (_ValueCodeableConcept?.Any() == true) yield return new KeyValuePair<string,object>("valueCodeableConcept",_ValueCodeableConcept);
       }
 
     }
@@ -306,28 +303,25 @@ namespace Hl7.Fhir.Model
       [FhirElement("path", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString PathElement
+      public Hl7.Fhir.Model.FhirString? PathElement
       {
         get { return _PathElement; }
         set { _PathElement = value; OnPropertyChanged("PathElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _PathElement;
+      private Hl7.Fhir.Model.FhirString? _PathElement;
 
       /// <summary>
       /// The date-valued attribute of the filter
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Path
+      public string? Path
       {
-        get { return PathElement != null ? PathElement.Value : null; }
+        get => _PathElement?.Value;
         set
         {
-          if (value == null)
-            PathElement = null;
-          else
-            PathElement = new Hl7.Fhir.Model.FhirString(value);
+          PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Path");
         }
       }
@@ -339,26 +333,22 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Value
+      public Hl7.Fhir.Model.DataType? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Value;
+      private Hl7.Fhir.Model.DataType? _Value;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as DateFilterComponent;
-
-        if (dest == null)
-        {
+        if(other is not DateFilterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopyInternal();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
+        if(_PathElement is not null) dest.PathElement = (Hl7.Fhir.Model.FhirString)_PathElement.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -370,41 +360,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DateFilterComponent;
-        if(otherT == null) return false;
+        if(other is not DateFilterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(PathElement, otherT.PathElement)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_PathElement, otherT._PathElement)) return false;
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "path":
-            value = PathElement;
-            return PathElement is not null;
+            value = _PathElement;
+            return _PathElement is not null;
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "path":
-            PathElement = (Hl7.Fhir.Model.FhirString)value;
+            PathElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType)value;
+            Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -415,8 +406,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (_PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -429,13 +420,13 @@ namespace Hl7.Fhir.Model
     [Binding("FHIRAllTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement
+    public Code<Hl7.Fhir.Model.FHIRAllTypes>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.FHIRAllTypes> _TypeElement;
+    private Code<Hl7.Fhir.Model.FHIRAllTypes>? _TypeElement;
 
     /// <summary>
     /// The type of the required data
@@ -444,13 +435,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FHIRAllTypes? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -463,24 +451,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> ProfileElement
     {
-      get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ProfileElement; }
+      get => _ProfileElement ??= [];
       set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirUri> _ProfileElement;
+    private List<Hl7.Fhir.Model.FhirUri>? _ProfileElement;
 
     /// <summary>
     /// The profile of the required data
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Profile
+    public IEnumerable<string?> Profile
     {
-      get { return ProfileElement != null ? ProfileElement.Select(elem => elem.Value) : null; }
+      get => _ProfileElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          ProfileElement = null;
+          ProfileElement = null!;
         else
           ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
         OnPropertyChanged("Profile");
@@ -495,24 +483,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> MustSupportElement
     {
-      get { if(_MustSupportElement==null) _MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(); return _MustSupportElement; }
+      get => _MustSupportElement ??= [];
       set { _MustSupportElement = value; OnPropertyChanged("MustSupportElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _MustSupportElement;
+    private List<Hl7.Fhir.Model.FhirString>? _MustSupportElement;
 
     /// <summary>
     /// Indicates that specific structure elements are referenced by the knowledge module
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> MustSupport
+    public IEnumerable<string?> MustSupport
     {
-      get { return MustSupportElement != null ? MustSupportElement.Select(elem => elem.Value) : null; }
+      get => _MustSupportElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          MustSupportElement = null;
+          MustSupportElement = null!;
         else
           MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("MustSupport");
@@ -527,11 +515,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> CodeFilter
     {
-      get { if(_CodeFilter==null) _CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(); return _CodeFilter; }
+      get => _CodeFilter ??= [];
       set { _CodeFilter = value; OnPropertyChanged("CodeFilter"); }
     }
 
-    private List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> _CodeFilter;
+    private List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>? _CodeFilter;
 
     /// <summary>
     /// What dates/date ranges are expected.
@@ -541,27 +529,23 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> DateFilter
     {
-      get { if(_DateFilter==null) _DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(); return _DateFilter; }
+      get => _DateFilter ??= [];
       set { _DateFilter = value; OnPropertyChanged("DateFilter"); }
     }
 
-    private List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> _DateFilter;
+    private List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>? _DateFilter;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DataRequirement;
-
-      if (dest == null)
-      {
+      if(other is not DataRequirement dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)TypeElement.DeepCopyInternal();
-      if(ProfileElement.Any()) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopyInternal());
-      if(MustSupportElement.Any()) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(MustSupportElement.DeepCopyInternal());
-      if(CodeFilter.Any()) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(CodeFilter.DeepCopyInternal());
-      if(DateFilter.Any()) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(DateFilter.DeepCopyInternal());
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)_TypeElement.DeepCopyInternal();
+      if(_ProfileElement is not null) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(_ProfileElement.DeepCopyInternal());
+      if(_MustSupportElement is not null) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(_MustSupportElement.DeepCopyInternal());
+      if(_CodeFilter is not null) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(_CodeFilter.DeepCopyInternal());
+      if(_DateFilter is not null) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(_DateFilter.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -573,62 +557,63 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DataRequirement;
-      if(otherT == null) return false;
+      if(other is not DataRequirement otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.ListEquals(ProfileElement, otherT.ProfileElement)) return false;
-      if(!comparer.ListEquals(MustSupportElement, otherT.MustSupportElement)) return false;
-      if(!comparer.ListEquals(CodeFilter, otherT.CodeFilter)) return false;
-      if(!comparer.ListEquals(DateFilter, otherT.DateFilter)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.ListEquals(_ProfileElement, otherT._ProfileElement)) return false;
+      if(!comparer.ListEquals(_MustSupportElement, otherT._MustSupportElement)) return false;
+      if(!comparer.ListEquals(_CodeFilter, otherT._CodeFilter)) return false;
+      if(!comparer.ListEquals(_DateFilter, otherT._DateFilter)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "profile":
-          value = ProfileElement;
-          return ProfileElement?.Any() == true;
+          value = _ProfileElement;
+          return _ProfileElement?.Any() == true;
         case "mustSupport":
-          value = MustSupportElement;
-          return MustSupportElement?.Any() == true;
+          value = _MustSupportElement;
+          return _MustSupportElement?.Any() == true;
         case "codeFilter":
-          value = CodeFilter;
-          return CodeFilter?.Any() == true;
+          value = _CodeFilter;
+          return _CodeFilter?.Any() == true;
         case "dateFilter":
-          value = DateFilter;
-          return DateFilter?.Any() == true;
+          value = _DateFilter;
+          return _DateFilter?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>?)value;
           return this;
         case "profile":
-          ProfileElement = (List<Hl7.Fhir.Model.FhirUri>)value;
+          ProfileElement = (List<Hl7.Fhir.Model.FhirUri>?)value!;
           return this;
         case "mustSupport":
-          MustSupportElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          MustSupportElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "codeFilter":
-          CodeFilter = (List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>)value;
+          CodeFilter = (List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>?)value!;
           return this;
         case "dateFilter":
-          DateFilter = (List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>)value;
+          DateFilter = (List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -639,11 +624,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",ProfileElement);
-      if (MustSupportElement?.Any() == true) yield return new KeyValuePair<string,object>("mustSupport",MustSupportElement);
-      if (CodeFilter?.Any() == true) yield return new KeyValuePair<string,object>("codeFilter",CodeFilter);
-      if (DateFilter?.Any() == true) yield return new KeyValuePair<string,object>("dateFilter",DateFilter);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
+      if (_MustSupportElement?.Any() == true) yield return new KeyValuePair<string,object>("mustSupport",_MustSupportElement);
+      if (_CodeFilter?.Any() == true) yield return new KeyValuePair<string,object>("codeFilter",_CodeFilter);
+      if (_DateFilter?.Any() == true) yield return new KeyValuePair<string,object>("dateFilter",_DateFilter);
     }
 
   }

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -81,13 +84,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", InSummary=true, Order=30)]
       [Binding("DoseAndRateType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// Amount of medication per dose.
@@ -96,13 +99,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Dose
+      public Hl7.Fhir.Model.DataType? Dose
       {
         get { return _Dose; }
         set { _Dose = value; OnPropertyChanged("Dose"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Dose;
+      private Hl7.Fhir.Model.DataType? _Dose;
 
       /// <summary>
       /// Amount of medication per unit of time.
@@ -111,27 +114,23 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Rate
+      public Hl7.Fhir.Model.DataType? Rate
       {
         get { return _Rate; }
         set { _Rate = value; OnPropertyChanged("Rate"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Rate;
+      private Hl7.Fhir.Model.DataType? _Rate;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as DoseAndRateComponent;
-
-        if (dest == null)
-        {
+        if(other is not DoseAndRateComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Dose != null) dest.Dose = (Hl7.Fhir.Model.DataType)Dose.DeepCopyInternal();
-        if(Rate != null) dest.Rate = (Hl7.Fhir.Model.DataType)Rate.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Dose is not null) dest.Dose = (Hl7.Fhir.Model.DataType)_Dose.DeepCopyInternal();
+        if(_Rate is not null) dest.Rate = (Hl7.Fhir.Model.DataType)_Rate.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -143,48 +142,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DoseAndRateComponent;
-        if(otherT == null) return false;
+        if(other is not DoseAndRateComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Dose, otherT.Dose)) return false;
-        if(!comparer.Equals(Rate, otherT.Rate)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Dose, otherT._Dose)) return false;
+        if(!comparer.Equals(_Rate, otherT._Rate)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "dose":
-            value = Dose;
-            return Dose is not null;
+            value = _Dose;
+            return _Dose is not null;
           case "rate":
-            value = Rate;
-            return Rate is not null;
+            value = _Rate;
+            return _Rate is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "dose":
-            Dose = (Hl7.Fhir.Model.DataType)value;
+            Dose = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "rate":
-            Rate = (Hl7.Fhir.Model.DataType)value;
+            Rate = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -195,9 +195,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Dose is not null) yield return new KeyValuePair<string,object>("dose",Dose);
-        if (Rate is not null) yield return new KeyValuePair<string,object>("rate",Rate);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Dose is not null) yield return new KeyValuePair<string,object>("dose",_Dose);
+        if (_Rate is not null) yield return new KeyValuePair<string,object>("rate",_Rate);
       }
 
     }
@@ -207,13 +207,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("sequence", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Integer SequenceElement
+    public Hl7.Fhir.Model.Integer? SequenceElement
     {
       get { return _SequenceElement; }
       set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
     }
 
-    private Hl7.Fhir.Model.Integer _SequenceElement;
+    private Hl7.Fhir.Model.Integer? _SequenceElement;
 
     /// <summary>
     /// The order of the dosage instructions
@@ -222,13 +222,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Sequence
     {
-      get { return SequenceElement != null ? SequenceElement.Value : null; }
+      get => _SequenceElement?.Value;
       set
       {
-        if (value == null)
-          SequenceElement = null;
-        else
-          SequenceElement = new Hl7.Fhir.Model.Integer(value);
+        SequenceElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("Sequence");
       }
     }
@@ -238,28 +235,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("text", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString TextElement
+    public Hl7.Fhir.Model.FhirString? TextElement
     {
       get { return _TextElement; }
       set { _TextElement = value; OnPropertyChanged("TextElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _TextElement;
+    private Hl7.Fhir.Model.FhirString? _TextElement;
 
     /// <summary>
     /// Free text dosage instructions e.g. SIG
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Text
+    public string? Text
     {
-      get { return TextElement != null ? TextElement.Value : null; }
+      get => _TextElement?.Value;
       set
       {
-        if (value == null)
-          TextElement = null;
-        else
-          TextElement = new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }
@@ -273,39 +267,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalInstruction
     {
-      get { if(_AdditionalInstruction==null) _AdditionalInstruction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _AdditionalInstruction; }
+      get => _AdditionalInstruction ??= [];
       set { _AdditionalInstruction = value; OnPropertyChanged("AdditionalInstruction"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _AdditionalInstruction;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _AdditionalInstruction;
 
     /// <summary>
     /// Patient or consumer oriented instructions.
     /// </summary>
     [FhirElement("patientInstruction", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString PatientInstructionElement
+    public Hl7.Fhir.Model.FhirString? PatientInstructionElement
     {
       get { return _PatientInstructionElement; }
       set { _PatientInstructionElement = value; OnPropertyChanged("PatientInstructionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _PatientInstructionElement;
+    private Hl7.Fhir.Model.FhirString? _PatientInstructionElement;
 
     /// <summary>
     /// Patient or consumer oriented instructions
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string PatientInstruction
+    public string? PatientInstruction
     {
-      get { return PatientInstructionElement != null ? PatientInstructionElement.Value : null; }
+      get => _PatientInstructionElement?.Value;
       set
       {
-        if (value == null)
-          PatientInstructionElement = null;
-        else
-          PatientInstructionElement = new Hl7.Fhir.Model.FhirString(value);
+        PatientInstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("PatientInstruction");
       }
     }
@@ -315,26 +306,26 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("timing", InSummary=true, Order=80)]
     [DataMember]
-    public Hl7.Fhir.Model.Timing Timing
+    public Hl7.Fhir.Model.Timing? Timing
     {
       get { return _Timing; }
       set { _Timing = value; OnPropertyChanged("Timing"); }
     }
 
-    private Hl7.Fhir.Model.Timing _Timing;
+    private Hl7.Fhir.Model.Timing? _Timing;
 
     /// <summary>
     /// Take "as needed".
     /// </summary>
     [FhirElement("asNeeded", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean AsNeededElement
+    public Hl7.Fhir.Model.FhirBoolean? AsNeededElement
     {
       get { return _AsNeededElement; }
       set { _AsNeededElement = value; OnPropertyChanged("AsNeededElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _AsNeededElement;
+    private Hl7.Fhir.Model.FhirBoolean? _AsNeededElement;
 
     /// <summary>
     /// Take "as needed"
@@ -343,13 +334,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? AsNeeded
     {
-      get { return AsNeededElement != null ? AsNeededElement.Value : null; }
+      get => _AsNeededElement?.Value;
       set
       {
-        if (value == null)
-          AsNeededElement = null;
-        else
-          AsNeededElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        AsNeededElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("AsNeeded");
       }
     }
@@ -363,11 +351,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> AsNeededFor
     {
-      get { if(_AsNeededFor==null) _AsNeededFor = new List<Hl7.Fhir.Model.CodeableConcept>(); return _AsNeededFor; }
+      get => _AsNeededFor ??= [];
       set { _AsNeededFor = value; OnPropertyChanged("AsNeededFor"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _AsNeededFor;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _AsNeededFor;
 
     /// <summary>
     /// Body site to administer to.
@@ -375,13 +363,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("site", InSummary=true, Order=110)]
     [Binding("MedicationAdministrationSite")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Site
+    public Hl7.Fhir.Model.CodeableConcept? Site
     {
       get { return _Site; }
       set { _Site = value; OnPropertyChanged("Site"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Site;
+    private Hl7.Fhir.Model.CodeableConcept? _Site;
 
     /// <summary>
     /// How drug should enter body.
@@ -389,13 +377,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("route", InSummary=true, Order=120)]
     [Binding("RouteOfAdministration")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Route
+    public Hl7.Fhir.Model.CodeableConcept? Route
     {
       get { return _Route; }
       set { _Route = value; OnPropertyChanged("Route"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Route;
+    private Hl7.Fhir.Model.CodeableConcept? _Route;
 
     /// <summary>
     /// Technique for administering medication.
@@ -403,13 +391,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("method", InSummary=true, Order=130)]
     [Binding("MedicationAdministrationMethod")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Method
+    public Hl7.Fhir.Model.CodeableConcept? Method
     {
       get { return _Method; }
       set { _Method = value; OnPropertyChanged("Method"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Method;
+    private Hl7.Fhir.Model.CodeableConcept? _Method;
 
     /// <summary>
     /// Amount of medication administered, to be administered or typical amount to be administered.
@@ -419,11 +407,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent> DoseAndRate
     {
-      get { if(_DoseAndRate==null) _DoseAndRate = new List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>(); return _DoseAndRate; }
+      get => _DoseAndRate ??= [];
       set { _DoseAndRate = value; OnPropertyChanged("DoseAndRate"); }
     }
 
-    private List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent> _DoseAndRate;
+    private List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>? _DoseAndRate;
 
     /// <summary>
     /// Upper limit on medication per unit of time.
@@ -433,62 +421,58 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Ratio> MaxDosePerPeriod
     {
-      get { if(_MaxDosePerPeriod==null) _MaxDosePerPeriod = new List<Hl7.Fhir.Model.Ratio>(); return _MaxDosePerPeriod; }
+      get => _MaxDosePerPeriod ??= [];
       set { _MaxDosePerPeriod = value; OnPropertyChanged("MaxDosePerPeriod"); }
     }
 
-    private List<Hl7.Fhir.Model.Ratio> _MaxDosePerPeriod;
+    private List<Hl7.Fhir.Model.Ratio>? _MaxDosePerPeriod;
 
     /// <summary>
     /// Upper limit on medication per administration.
     /// </summary>
     [FhirElement("maxDosePerAdministration", InSummary=true, Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity MaxDosePerAdministration
+    public Hl7.Fhir.Model.Quantity? MaxDosePerAdministration
     {
       get { return _MaxDosePerAdministration; }
       set { _MaxDosePerAdministration = value; OnPropertyChanged("MaxDosePerAdministration"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _MaxDosePerAdministration;
+    private Hl7.Fhir.Model.Quantity? _MaxDosePerAdministration;
 
     /// <summary>
     /// Upper limit on medication per lifetime of the patient.
     /// </summary>
     [FhirElement("maxDosePerLifetime", InSummary=true, Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity MaxDosePerLifetime
+    public Hl7.Fhir.Model.Quantity? MaxDosePerLifetime
     {
       get { return _MaxDosePerLifetime; }
       set { _MaxDosePerLifetime = value; OnPropertyChanged("MaxDosePerLifetime"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _MaxDosePerLifetime;
+    private Hl7.Fhir.Model.Quantity? _MaxDosePerLifetime;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Dosage;
-
-      if (dest == null)
-      {
+      if(other is not Dosage dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)SequenceElement.DeepCopyInternal();
-      if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopyInternal();
-      if(AdditionalInstruction.Any()) dest.AdditionalInstruction = new List<Hl7.Fhir.Model.CodeableConcept>(AdditionalInstruction.DeepCopyInternal());
-      if(PatientInstructionElement != null) dest.PatientInstructionElement = (Hl7.Fhir.Model.FhirString)PatientInstructionElement.DeepCopyInternal();
-      if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Timing)Timing.DeepCopyInternal();
-      if(AsNeededElement != null) dest.AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)AsNeededElement.DeepCopyInternal();
-      if(AsNeededFor.Any()) dest.AsNeededFor = new List<Hl7.Fhir.Model.CodeableConcept>(AsNeededFor.DeepCopyInternal());
-      if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopyInternal();
-      if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopyInternal();
-      if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopyInternal();
-      if(DoseAndRate.Any()) dest.DoseAndRate = new List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>(DoseAndRate.DeepCopyInternal());
-      if(MaxDosePerPeriod.Any()) dest.MaxDosePerPeriod = new List<Hl7.Fhir.Model.Ratio>(MaxDosePerPeriod.DeepCopyInternal());
-      if(MaxDosePerAdministration != null) dest.MaxDosePerAdministration = (Hl7.Fhir.Model.Quantity)MaxDosePerAdministration.DeepCopyInternal();
-      if(MaxDosePerLifetime != null) dest.MaxDosePerLifetime = (Hl7.Fhir.Model.Quantity)MaxDosePerLifetime.DeepCopyInternal();
+      if(_SequenceElement is not null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)_SequenceElement.DeepCopyInternal();
+      if(_TextElement is not null) dest.TextElement = (Hl7.Fhir.Model.FhirString)_TextElement.DeepCopyInternal();
+      if(_AdditionalInstruction is not null) dest.AdditionalInstruction = new List<Hl7.Fhir.Model.CodeableConcept>(_AdditionalInstruction.DeepCopyInternal());
+      if(_PatientInstructionElement is not null) dest.PatientInstructionElement = (Hl7.Fhir.Model.FhirString)_PatientInstructionElement.DeepCopyInternal();
+      if(_Timing is not null) dest.Timing = (Hl7.Fhir.Model.Timing)_Timing.DeepCopyInternal();
+      if(_AsNeededElement is not null) dest.AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)_AsNeededElement.DeepCopyInternal();
+      if(_AsNeededFor is not null) dest.AsNeededFor = new List<Hl7.Fhir.Model.CodeableConcept>(_AsNeededFor.DeepCopyInternal());
+      if(_Site is not null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)_Site.DeepCopyInternal();
+      if(_Route is not null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)_Route.DeepCopyInternal();
+      if(_Method is not null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)_Method.DeepCopyInternal();
+      if(_DoseAndRate is not null) dest.DoseAndRate = new List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>(_DoseAndRate.DeepCopyInternal());
+      if(_MaxDosePerPeriod is not null) dest.MaxDosePerPeriod = new List<Hl7.Fhir.Model.Ratio>(_MaxDosePerPeriod.DeepCopyInternal());
+      if(_MaxDosePerAdministration is not null) dest.MaxDosePerAdministration = (Hl7.Fhir.Model.Quantity)_MaxDosePerAdministration.DeepCopyInternal();
+      if(_MaxDosePerLifetime is not null) dest.MaxDosePerLifetime = (Hl7.Fhir.Model.Quantity)_MaxDosePerLifetime.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -500,125 +484,126 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Dosage;
-      if(otherT == null) return false;
+      if(other is not Dosage otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(SequenceElement, otherT.SequenceElement)) return false;
-      if(!comparer.Equals(TextElement, otherT.TextElement)) return false;
-      if(!comparer.ListEquals(AdditionalInstruction, otherT.AdditionalInstruction)) return false;
-      if(!comparer.Equals(PatientInstructionElement, otherT.PatientInstructionElement)) return false;
-      if(!comparer.Equals(Timing, otherT.Timing)) return false;
-      if(!comparer.Equals(AsNeededElement, otherT.AsNeededElement)) return false;
-      if(!comparer.ListEquals(AsNeededFor, otherT.AsNeededFor)) return false;
-      if(!comparer.Equals(Site, otherT.Site)) return false;
-      if(!comparer.Equals(Route, otherT.Route)) return false;
-      if(!comparer.Equals(Method, otherT.Method)) return false;
-      if(!comparer.ListEquals(DoseAndRate, otherT.DoseAndRate)) return false;
-      if(!comparer.ListEquals(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
-      if(!comparer.Equals(MaxDosePerAdministration, otherT.MaxDosePerAdministration)) return false;
-      if(!comparer.Equals(MaxDosePerLifetime, otherT.MaxDosePerLifetime)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_SequenceElement, otherT._SequenceElement)) return false;
+      if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
+      if(!comparer.ListEquals(_AdditionalInstruction, otherT._AdditionalInstruction)) return false;
+      if(!comparer.Equals(_PatientInstructionElement, otherT._PatientInstructionElement)) return false;
+      if(!comparer.Equals(_Timing, otherT._Timing)) return false;
+      if(!comparer.Equals(_AsNeededElement, otherT._AsNeededElement)) return false;
+      if(!comparer.ListEquals(_AsNeededFor, otherT._AsNeededFor)) return false;
+      if(!comparer.Equals(_Site, otherT._Site)) return false;
+      if(!comparer.Equals(_Route, otherT._Route)) return false;
+      if(!comparer.Equals(_Method, otherT._Method)) return false;
+      if(!comparer.ListEquals(_DoseAndRate, otherT._DoseAndRate)) return false;
+      if(!comparer.ListEquals(_MaxDosePerPeriod, otherT._MaxDosePerPeriod)) return false;
+      if(!comparer.Equals(_MaxDosePerAdministration, otherT._MaxDosePerAdministration)) return false;
+      if(!comparer.Equals(_MaxDosePerLifetime, otherT._MaxDosePerLifetime)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "sequence":
-          value = SequenceElement;
-          return SequenceElement is not null;
+          value = _SequenceElement;
+          return _SequenceElement is not null;
         case "text":
-          value = TextElement;
-          return TextElement is not null;
+          value = _TextElement;
+          return _TextElement is not null;
         case "additionalInstruction":
-          value = AdditionalInstruction;
-          return AdditionalInstruction?.Any() == true;
+          value = _AdditionalInstruction;
+          return _AdditionalInstruction?.Any() == true;
         case "patientInstruction":
-          value = PatientInstructionElement;
-          return PatientInstructionElement is not null;
+          value = _PatientInstructionElement;
+          return _PatientInstructionElement is not null;
         case "timing":
-          value = Timing;
-          return Timing is not null;
+          value = _Timing;
+          return _Timing is not null;
         case "asNeeded":
-          value = AsNeededElement;
-          return AsNeededElement is not null;
+          value = _AsNeededElement;
+          return _AsNeededElement is not null;
         case "asNeededFor":
-          value = AsNeededFor;
-          return AsNeededFor?.Any() == true;
+          value = _AsNeededFor;
+          return _AsNeededFor?.Any() == true;
         case "site":
-          value = Site;
-          return Site is not null;
+          value = _Site;
+          return _Site is not null;
         case "route":
-          value = Route;
-          return Route is not null;
+          value = _Route;
+          return _Route is not null;
         case "method":
-          value = Method;
-          return Method is not null;
+          value = _Method;
+          return _Method is not null;
         case "doseAndRate":
-          value = DoseAndRate;
-          return DoseAndRate?.Any() == true;
+          value = _DoseAndRate;
+          return _DoseAndRate?.Any() == true;
         case "maxDosePerPeriod":
-          value = MaxDosePerPeriod;
-          return MaxDosePerPeriod?.Any() == true;
+          value = _MaxDosePerPeriod;
+          return _MaxDosePerPeriod?.Any() == true;
         case "maxDosePerAdministration":
-          value = MaxDosePerAdministration;
-          return MaxDosePerAdministration is not null;
+          value = _MaxDosePerAdministration;
+          return _MaxDosePerAdministration is not null;
         case "maxDosePerLifetime":
-          value = MaxDosePerLifetime;
-          return MaxDosePerLifetime is not null;
+          value = _MaxDosePerLifetime;
+          return _MaxDosePerLifetime is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "sequence":
-          SequenceElement = (Hl7.Fhir.Model.Integer)value;
+          SequenceElement = (Hl7.Fhir.Model.Integer?)value;
           return this;
         case "text":
-          TextElement = (Hl7.Fhir.Model.FhirString)value;
+          TextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "additionalInstruction":
-          AdditionalInstruction = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          AdditionalInstruction = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "patientInstruction":
-          PatientInstructionElement = (Hl7.Fhir.Model.FhirString)value;
+          PatientInstructionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "timing":
-          Timing = (Hl7.Fhir.Model.Timing)value;
+          Timing = (Hl7.Fhir.Model.Timing?)value;
           return this;
         case "asNeeded":
-          AsNeededElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          AsNeededElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "asNeededFor":
-          AsNeededFor = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          AsNeededFor = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "site":
-          Site = (Hl7.Fhir.Model.CodeableConcept)value;
+          Site = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "route":
-          Route = (Hl7.Fhir.Model.CodeableConcept)value;
+          Route = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "method":
-          Method = (Hl7.Fhir.Model.CodeableConcept)value;
+          Method = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "doseAndRate":
-          DoseAndRate = (List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>)value;
+          DoseAndRate = (List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>?)value!;
           return this;
         case "maxDosePerPeriod":
-          MaxDosePerPeriod = (List<Hl7.Fhir.Model.Ratio>)value;
+          MaxDosePerPeriod = (List<Hl7.Fhir.Model.Ratio>?)value!;
           return this;
         case "maxDosePerAdministration":
-          MaxDosePerAdministration = (Hl7.Fhir.Model.Quantity)value;
+          MaxDosePerAdministration = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "maxDosePerLifetime":
-          MaxDosePerLifetime = (Hl7.Fhir.Model.Quantity)value;
+          MaxDosePerLifetime = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -629,20 +614,20 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
-      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
-      if (AdditionalInstruction?.Any() == true) yield return new KeyValuePair<string,object>("additionalInstruction",AdditionalInstruction);
-      if (PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",PatientInstructionElement);
-      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
-      if (AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",AsNeededElement);
-      if (AsNeededFor?.Any() == true) yield return new KeyValuePair<string,object>("asNeededFor",AsNeededFor);
-      if (Site is not null) yield return new KeyValuePair<string,object>("site",Site);
-      if (Route is not null) yield return new KeyValuePair<string,object>("route",Route);
-      if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
-      if (DoseAndRate?.Any() == true) yield return new KeyValuePair<string,object>("doseAndRate",DoseAndRate);
-      if (MaxDosePerPeriod?.Any() == true) yield return new KeyValuePair<string,object>("maxDosePerPeriod",MaxDosePerPeriod);
-      if (MaxDosePerAdministration is not null) yield return new KeyValuePair<string,object>("maxDosePerAdministration",MaxDosePerAdministration);
-      if (MaxDosePerLifetime is not null) yield return new KeyValuePair<string,object>("maxDosePerLifetime",MaxDosePerLifetime);
+      if (_SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
+      if (_TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (_AdditionalInstruction?.Any() == true) yield return new KeyValuePair<string,object>("additionalInstruction",_AdditionalInstruction);
+      if (_PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",_PatientInstructionElement);
+      if (_Timing is not null) yield return new KeyValuePair<string,object>("timing",_Timing);
+      if (_AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",_AsNeededElement);
+      if (_AsNeededFor?.Any() == true) yield return new KeyValuePair<string,object>("asNeededFor",_AsNeededFor);
+      if (_Site is not null) yield return new KeyValuePair<string,object>("site",_Site);
+      if (_Route is not null) yield return new KeyValuePair<string,object>("route",_Route);
+      if (_Method is not null) yield return new KeyValuePair<string,object>("method",_Method);
+      if (_DoseAndRate?.Any() == true) yield return new KeyValuePair<string,object>("doseAndRate",_DoseAndRate);
+      if (_MaxDosePerPeriod?.Any() == true) yield return new KeyValuePair<string,object>("maxDosePerPeriod",_MaxDosePerPeriod);
+      if (_MaxDosePerAdministration is not null) yield return new KeyValuePair<string,object>("maxDosePerAdministration",_MaxDosePerAdministration);
+      if (_MaxDosePerLifetime is not null) yield return new KeyValuePair<string,object>("maxDosePerLifetime",_MaxDosePerLifetime);
     }
 
   }

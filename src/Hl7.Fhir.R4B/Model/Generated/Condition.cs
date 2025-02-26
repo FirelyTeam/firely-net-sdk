@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -173,13 +176,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("summary", Order=40)]
       [Binding("ConditionStage")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Summary
+      public Hl7.Fhir.Model.CodeableConcept? Summary
       {
         get { return _Summary; }
         set { _Summary = value; OnPropertyChanged("Summary"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Summary;
+      private Hl7.Fhir.Model.CodeableConcept? _Summary;
 
       /// <summary>
       /// Formal record of assessment.
@@ -191,11 +194,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Assessment
       {
-        get { if(_Assessment==null) _Assessment = new List<Hl7.Fhir.Model.ResourceReference>(); return _Assessment; }
+        get => _Assessment ??= [];
         set { _Assessment = value; OnPropertyChanged("Assessment"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Assessment;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Assessment;
 
       /// <summary>
       /// Kind of staging.
@@ -203,27 +206,23 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=60)]
       [Binding("ConditionStageType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StageComponent;
-
-        if (dest == null)
-        {
+        if(other is not StageComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Summary != null) dest.Summary = (Hl7.Fhir.Model.CodeableConcept)Summary.DeepCopyInternal();
-        if(Assessment.Any()) dest.Assessment = new List<Hl7.Fhir.Model.ResourceReference>(Assessment.DeepCopyInternal());
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
+        if(_Summary is not null) dest.Summary = (Hl7.Fhir.Model.CodeableConcept)_Summary.DeepCopyInternal();
+        if(_Assessment is not null) dest.Assessment = new List<Hl7.Fhir.Model.ResourceReference>(_Assessment.DeepCopyInternal());
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -235,48 +234,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StageComponent;
-        if(otherT == null) return false;
+        if(other is not StageComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Summary, otherT.Summary)) return false;
-        if(!comparer.ListEquals(Assessment, otherT.Assessment)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Summary, otherT._Summary)) return false;
+        if(!comparer.ListEquals(_Assessment, otherT._Assessment)) return false;
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "summary":
-            value = Summary;
-            return Summary is not null;
+            value = _Summary;
+            return _Summary is not null;
           case "assessment":
-            value = Assessment;
-            return Assessment?.Any() == true;
+            value = _Assessment;
+            return _Assessment?.Any() == true;
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "summary":
-            Summary = (Hl7.Fhir.Model.CodeableConcept)value;
+            Summary = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "assessment":
-            Assessment = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Assessment = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -287,9 +287,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Summary is not null) yield return new KeyValuePair<string,object>("summary",Summary);
-        if (Assessment?.Any() == true) yield return new KeyValuePair<string,object>("assessment",Assessment);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (_Summary is not null) yield return new KeyValuePair<string,object>("summary",_Summary);
+        if (_Assessment?.Any() == true) yield return new KeyValuePair<string,object>("assessment",_Assessment);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
       }
 
     }
@@ -320,11 +320,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
-        get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Code; }
+        get => _Code ??= [];
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Code;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Code;
 
       /// <summary>
       /// Supporting information found elsewhere.
@@ -336,24 +336,20 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Detail
       {
-        get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.ResourceReference>(); return _Detail; }
+        get => _Detail ??= [];
         set { _Detail = value; OnPropertyChanged("Detail"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Detail;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Detail;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as EvidenceComponent;
-
-        if (dest == null)
-        {
+        if(other is not EvidenceComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(Code.DeepCopyInternal());
-        if(Detail.Any()) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopyInternal());
+        if(_Code is not null) dest.Code = new List<Hl7.Fhir.Model.CodeableConcept>(_Code.DeepCopyInternal());
+        if(_Detail is not null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(_Detail.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -365,41 +361,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as EvidenceComponent;
-        if(otherT == null) return false;
+        if(other is not EvidenceComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Code, otherT.Code)) return false;
-        if(!comparer.ListEquals(Detail, otherT.Detail)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Code, otherT._Code)) return false;
+        if(!comparer.ListEquals(_Detail, otherT._Detail)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "code":
-            value = Code;
-            return Code?.Any() == true;
+            value = _Code;
+            return _Code?.Any() == true;
           case "detail":
-            value = Detail;
-            return Detail?.Any() == true;
+            value = _Detail;
+            return _Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "code":
-            Code = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Code = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "detail":
-            Detail = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Detail = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -410,8 +407,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
-        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (_Code?.Any() == true) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",_Detail);
       }
 
     }
@@ -424,11 +421,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// active | recurrence | relapse | inactive | remission | resolved.
@@ -436,13 +433,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [Binding("ConditionClinicalStatus")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept ClinicalStatus
+    public Hl7.Fhir.Model.CodeableConcept? ClinicalStatus
     {
       get { return _ClinicalStatus; }
       set { _ClinicalStatus = value; OnPropertyChanged("ClinicalStatus"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _ClinicalStatus;
+    private Hl7.Fhir.Model.CodeableConcept? _ClinicalStatus;
 
     /// <summary>
     /// unconfirmed | provisional | differential | confirmed | refuted | entered-in-error.
@@ -450,13 +447,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [Binding("ConditionVerificationStatus")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept VerificationStatus
+    public Hl7.Fhir.Model.CodeableConcept? VerificationStatus
     {
       get { return _VerificationStatus; }
       set { _VerificationStatus = value; OnPropertyChanged("VerificationStatus"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _VerificationStatus;
+    private Hl7.Fhir.Model.CodeableConcept? _VerificationStatus;
 
     /// <summary>
     /// problem-list-item | encounter-diagnosis.
@@ -467,11 +464,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
 
     /// <summary>
     /// Subjective severity of condition.
@@ -479,13 +476,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("severity", Order=130, FiveWs="FiveWs.grade")]
     [Binding("ConditionSeverity")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Severity
+    public Hl7.Fhir.Model.CodeableConcept? Severity
     {
       get { return _Severity; }
       set { _Severity = value; OnPropertyChanged("Severity"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Severity;
+    private Hl7.Fhir.Model.CodeableConcept? _Severity;
 
     /// <summary>
     /// Identification of the condition, problem or diagnosis.
@@ -493,13 +490,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [Binding("ConditionKind")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Code
+    public Hl7.Fhir.Model.CodeableConcept? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Code;
+    private Hl7.Fhir.Model.CodeableConcept? _Code;
 
     /// <summary>
     /// Anatomical location, if relevant.
@@ -510,11 +507,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
     {
-      get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
+      get => _BodySite ??= [];
       set { _BodySite = value; OnPropertyChanged("BodySite"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _BodySite;
 
     /// <summary>
     /// Who has the condition?.
@@ -524,13 +521,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// Encounter created as part of.
@@ -539,13 +536,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Encounter
+    public Hl7.Fhir.Model.ResourceReference? Encounter
     {
       get { return _Encounter; }
       set { _Encounter = value; OnPropertyChanged("Encounter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Encounter;
+    private Hl7.Fhir.Model.ResourceReference? _Encounter;
 
     /// <summary>
     /// Estimated or actual date,  date-time, or age.
@@ -554,13 +551,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Onset
+    public Hl7.Fhir.Model.DataType? Onset
     {
       get { return _Onset; }
       set { _Onset = value; OnPropertyChanged("Onset"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Onset;
+    private Hl7.Fhir.Model.DataType? _Onset;
 
     /// <summary>
     /// When in resolution/remission.
@@ -569,41 +566,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Abatement
+    public Hl7.Fhir.Model.DataType? Abatement
     {
       get { return _Abatement; }
       set { _Abatement = value; OnPropertyChanged("Abatement"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Abatement;
+    private Hl7.Fhir.Model.DataType? _Abatement;
 
     /// <summary>
     /// Date record was first recorded.
     /// </summary>
     [FhirElement("recordedDate", InSummary=true, Order=200, FiveWs="FiveWs.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
+    public Hl7.Fhir.Model.FhirDateTime? RecordedDateElement
     {
       get { return _RecordedDateElement; }
       set { _RecordedDateElement = value; OnPropertyChanged("RecordedDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _RecordedDateElement;
 
     /// <summary>
     /// Date record was first recorded
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string RecordedDate
+    public string? RecordedDate
     {
-      get { return RecordedDateElement != null ? RecordedDateElement.Value : null; }
+      get => _RecordedDateElement?.Value;
       set
       {
-        if (value == null)
-          RecordedDateElement = null;
-        else
-          RecordedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RecordedDate");
       }
     }
@@ -615,13 +609,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Patient","RelatedPerson")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Recorder
+    public Hl7.Fhir.Model.ResourceReference? Recorder
     {
       get { return _Recorder; }
       set { _Recorder = value; OnPropertyChanged("Recorder"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Recorder;
+    private Hl7.Fhir.Model.ResourceReference? _Recorder;
 
     /// <summary>
     /// Person who asserts this condition.
@@ -630,13 +624,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Patient","RelatedPerson")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Asserter
+    public Hl7.Fhir.Model.ResourceReference? Asserter
     {
       get { return _Asserter; }
       set { _Asserter = value; OnPropertyChanged("Asserter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Asserter;
+    private Hl7.Fhir.Model.ResourceReference? _Asserter;
 
     /// <summary>
     /// Stage/grade, usually assessed formally.
@@ -646,11 +640,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Condition.StageComponent> Stage
     {
-      get { if(_Stage==null) _Stage = new List<Hl7.Fhir.Model.Condition.StageComponent>(); return _Stage; }
+      get => _Stage ??= [];
       set { _Stage = value; OnPropertyChanged("Stage"); }
     }
 
-    private List<Hl7.Fhir.Model.Condition.StageComponent> _Stage;
+    private List<Hl7.Fhir.Model.Condition.StageComponent>? _Stage;
 
     /// <summary>
     /// Supporting evidence.
@@ -660,11 +654,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Condition.EvidenceComponent> Evidence
     {
-      get { if(_Evidence==null) _Evidence = new List<Hl7.Fhir.Model.Condition.EvidenceComponent>(); return _Evidence; }
+      get => _Evidence ??= [];
       set { _Evidence = value; OnPropertyChanged("Evidence"); }
     }
 
-    private List<Hl7.Fhir.Model.Condition.EvidenceComponent> _Evidence;
+    private List<Hl7.Fhir.Model.Condition.EvidenceComponent>? _Evidence;
 
     /// <summary>
     /// Additional information about the Condition.
@@ -674,41 +668,37 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Condition;
-
-      if (dest == null)
-      {
+      if(other is not Condition dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(ClinicalStatus != null) dest.ClinicalStatus = (Hl7.Fhir.Model.CodeableConcept)ClinicalStatus.DeepCopyInternal();
-      if(VerificationStatus != null) dest.VerificationStatus = (Hl7.Fhir.Model.CodeableConcept)VerificationStatus.DeepCopyInternal();
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopyInternal());
-      if(Severity != null) dest.Severity = (Hl7.Fhir.Model.CodeableConcept)Severity.DeepCopyInternal();
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-      if(BodySite.Any()) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopyInternal());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopyInternal();
-      if(Onset != null) dest.Onset = (Hl7.Fhir.Model.DataType)Onset.DeepCopyInternal();
-      if(Abatement != null) dest.Abatement = (Hl7.Fhir.Model.DataType)Abatement.DeepCopyInternal();
-      if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopyInternal();
-      if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopyInternal();
-      if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopyInternal();
-      if(Stage.Any()) dest.Stage = new List<Hl7.Fhir.Model.Condition.StageComponent>(Stage.DeepCopyInternal());
-      if(Evidence.Any()) dest.Evidence = new List<Hl7.Fhir.Model.Condition.EvidenceComponent>(Evidence.DeepCopyInternal());
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_ClinicalStatus is not null) dest.ClinicalStatus = (Hl7.Fhir.Model.CodeableConcept)_ClinicalStatus.DeepCopyInternal();
+      if(_VerificationStatus is not null) dest.VerificationStatus = (Hl7.Fhir.Model.CodeableConcept)_VerificationStatus.DeepCopyInternal();
+      if(_Category is not null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(_Category.DeepCopyInternal());
+      if(_Severity is not null) dest.Severity = (Hl7.Fhir.Model.CodeableConcept)_Severity.DeepCopyInternal();
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+      if(_BodySite is not null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(_BodySite.DeepCopyInternal());
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Encounter is not null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)_Encounter.DeepCopyInternal();
+      if(_Onset is not null) dest.Onset = (Hl7.Fhir.Model.DataType)_Onset.DeepCopyInternal();
+      if(_Abatement is not null) dest.Abatement = (Hl7.Fhir.Model.DataType)_Abatement.DeepCopyInternal();
+      if(_RecordedDateElement is not null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)_RecordedDateElement.DeepCopyInternal();
+      if(_Recorder is not null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)_Recorder.DeepCopyInternal();
+      if(_Asserter is not null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)_Asserter.DeepCopyInternal();
+      if(_Stage is not null) dest.Stage = new List<Hl7.Fhir.Model.Condition.StageComponent>(_Stage.DeepCopyInternal());
+      if(_Evidence is not null) dest.Evidence = new List<Hl7.Fhir.Model.Condition.EvidenceComponent>(_Evidence.DeepCopyInternal());
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -720,146 +710,147 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Condition;
-      if(otherT == null) return false;
+      if(other is not Condition otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(ClinicalStatus, otherT.ClinicalStatus)) return false;
-      if(!comparer.Equals(VerificationStatus, otherT.VerificationStatus)) return false;
-      if(!comparer.ListEquals(Category, otherT.Category)) return false;
-      if(!comparer.Equals(Severity, otherT.Severity)) return false;
-      if(!comparer.Equals(Code, otherT.Code)) return false;
-      if(!comparer.ListEquals(BodySite, otherT.BodySite)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Encounter, otherT.Encounter)) return false;
-      if(!comparer.Equals(Onset, otherT.Onset)) return false;
-      if(!comparer.Equals(Abatement, otherT.Abatement)) return false;
-      if(!comparer.Equals(RecordedDateElement, otherT.RecordedDateElement)) return false;
-      if(!comparer.Equals(Recorder, otherT.Recorder)) return false;
-      if(!comparer.Equals(Asserter, otherT.Asserter)) return false;
-      if(!comparer.ListEquals(Stage, otherT.Stage)) return false;
-      if(!comparer.ListEquals(Evidence, otherT.Evidence)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_ClinicalStatus, otherT._ClinicalStatus)) return false;
+      if(!comparer.Equals(_VerificationStatus, otherT._VerificationStatus)) return false;
+      if(!comparer.ListEquals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_Severity, otherT._Severity)) return false;
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.ListEquals(_BodySite, otherT._BodySite)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
+      if(!comparer.Equals(_Onset, otherT._Onset)) return false;
+      if(!comparer.Equals(_Abatement, otherT._Abatement)) return false;
+      if(!comparer.Equals(_RecordedDateElement, otherT._RecordedDateElement)) return false;
+      if(!comparer.Equals(_Recorder, otherT._Recorder)) return false;
+      if(!comparer.Equals(_Asserter, otherT._Asserter)) return false;
+      if(!comparer.ListEquals(_Stage, otherT._Stage)) return false;
+      if(!comparer.ListEquals(_Evidence, otherT._Evidence)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "clinicalStatus":
-          value = ClinicalStatus;
-          return ClinicalStatus is not null;
+          value = _ClinicalStatus;
+          return _ClinicalStatus is not null;
         case "verificationStatus":
-          value = VerificationStatus;
-          return VerificationStatus is not null;
+          value = _VerificationStatus;
+          return _VerificationStatus is not null;
         case "category":
-          value = Category;
-          return Category?.Any() == true;
+          value = _Category;
+          return _Category?.Any() == true;
         case "severity":
-          value = Severity;
-          return Severity is not null;
+          value = _Severity;
+          return _Severity is not null;
         case "code":
-          value = Code;
-          return Code is not null;
+          value = _Code;
+          return _Code is not null;
         case "bodySite":
-          value = BodySite;
-          return BodySite?.Any() == true;
+          value = _BodySite;
+          return _BodySite?.Any() == true;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "encounter":
-          value = Encounter;
-          return Encounter is not null;
+          value = _Encounter;
+          return _Encounter is not null;
         case "onset":
-          value = Onset;
-          return Onset is not null;
+          value = _Onset;
+          return _Onset is not null;
         case "abatement":
-          value = Abatement;
-          return Abatement is not null;
+          value = _Abatement;
+          return _Abatement is not null;
         case "recordedDate":
-          value = RecordedDateElement;
-          return RecordedDateElement is not null;
+          value = _RecordedDateElement;
+          return _RecordedDateElement is not null;
         case "recorder":
-          value = Recorder;
-          return Recorder is not null;
+          value = _Recorder;
+          return _Recorder is not null;
         case "asserter":
-          value = Asserter;
-          return Asserter is not null;
+          value = _Asserter;
+          return _Asserter is not null;
         case "stage":
-          value = Stage;
-          return Stage?.Any() == true;
+          value = _Stage;
+          return _Stage?.Any() == true;
         case "evidence":
-          value = Evidence;
-          return Evidence?.Any() == true;
+          value = _Evidence;
+          return _Evidence?.Any() == true;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "clinicalStatus":
-          ClinicalStatus = (Hl7.Fhir.Model.CodeableConcept)value;
+          ClinicalStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "verificationStatus":
-          VerificationStatus = (Hl7.Fhir.Model.CodeableConcept)value;
+          VerificationStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "category":
-          Category = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "severity":
-          Severity = (Hl7.Fhir.Model.CodeableConcept)value;
+          Severity = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept)value;
+          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "bodySite":
-          BodySite = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          BodySite = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference)value;
+          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "onset":
-          Onset = (Hl7.Fhir.Model.DataType)value;
+          Onset = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "abatement":
-          Abatement = (Hl7.Fhir.Model.DataType)value;
+          Abatement = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "recordedDate":
-          RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "recorder":
-          Recorder = (Hl7.Fhir.Model.ResourceReference)value;
+          Recorder = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "asserter":
-          Asserter = (Hl7.Fhir.Model.ResourceReference)value;
+          Asserter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "stage":
-          Stage = (List<Hl7.Fhir.Model.Condition.StageComponent>)value;
+          Stage = (List<Hl7.Fhir.Model.Condition.StageComponent>?)value!;
           return this;
         case "evidence":
-          Evidence = (List<Hl7.Fhir.Model.Condition.EvidenceComponent>)value;
+          Evidence = (List<Hl7.Fhir.Model.Condition.EvidenceComponent>?)value!;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -870,23 +861,23 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (ClinicalStatus is not null) yield return new KeyValuePair<string,object>("clinicalStatus",ClinicalStatus);
-      if (VerificationStatus is not null) yield return new KeyValuePair<string,object>("verificationStatus",VerificationStatus);
-      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
-      if (Severity is not null) yield return new KeyValuePair<string,object>("severity",Severity);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Onset is not null) yield return new KeyValuePair<string,object>("onset",Onset);
-      if (Abatement is not null) yield return new KeyValuePair<string,object>("abatement",Abatement);
-      if (RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",RecordedDateElement);
-      if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
-      if (Asserter is not null) yield return new KeyValuePair<string,object>("asserter",Asserter);
-      if (Stage?.Any() == true) yield return new KeyValuePair<string,object>("stage",Stage);
-      if (Evidence?.Any() == true) yield return new KeyValuePair<string,object>("evidence",Evidence);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ClinicalStatus is not null) yield return new KeyValuePair<string,object>("clinicalStatus",_ClinicalStatus);
+      if (_VerificationStatus is not null) yield return new KeyValuePair<string,object>("verificationStatus",_VerificationStatus);
+      if (_Category?.Any() == true) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Severity is not null) yield return new KeyValuePair<string,object>("severity",_Severity);
+      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_Onset is not null) yield return new KeyValuePair<string,object>("onset",_Onset);
+      if (_Abatement is not null) yield return new KeyValuePair<string,object>("abatement",_Abatement);
+      if (_RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",_RecordedDateElement);
+      if (_Recorder is not null) yield return new KeyValuePair<string,object>("recorder",_Recorder);
+      if (_Asserter is not null) yield return new KeyValuePair<string,object>("asserter",_Asserter);
+      if (_Stage?.Any() == true) yield return new KeyValuePair<string,object>("stage",_Stage);
+      if (_Evidence?.Any() == true) yield return new KeyValuePair<string,object>("evidence",_Evidence);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

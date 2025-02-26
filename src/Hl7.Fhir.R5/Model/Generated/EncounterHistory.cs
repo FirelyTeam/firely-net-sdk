@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -84,13 +87,13 @@ namespace Hl7.Fhir.Model
       [References("Location")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Location
+      public Hl7.Fhir.Model.ResourceReference? Location
       {
         get { return _Location; }
         set { _Location = value; OnPropertyChanged("Location"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Location;
+      private Hl7.Fhir.Model.ResourceReference? _Location;
 
       /// <summary>
       /// The physical type of the location (usually the level in the location hierarchy - bed, room, ward, virtual etc.).
@@ -98,26 +101,22 @@ namespace Hl7.Fhir.Model
       [FhirElement("form", Order=50)]
       [Binding("LocationForm")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Form
+      public Hl7.Fhir.Model.CodeableConcept? Form
       {
         get { return _Form; }
         set { _Form = value; OnPropertyChanged("Form"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Form;
+      private Hl7.Fhir.Model.CodeableConcept? _Form;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as LocationComponent;
-
-        if (dest == null)
-        {
+        if(other is not LocationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
-        if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopyInternal();
+        if(_Location is not null) dest.Location = (Hl7.Fhir.Model.ResourceReference)_Location.DeepCopyInternal();
+        if(_Form is not null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)_Form.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -129,41 +128,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as LocationComponent;
-        if(otherT == null) return false;
+        if(other is not LocationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Location, otherT.Location)) return false;
-        if(!comparer.Equals(Form, otherT.Form)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Location, otherT._Location)) return false;
+        if(!comparer.Equals(_Form, otherT._Form)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "location":
-            value = Location;
-            return Location is not null;
+            value = _Location;
+            return _Location is not null;
           case "form":
-            value = Form;
-            return Form is not null;
+            value = _Form;
+            return _Form is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "location":
-            Location = (Hl7.Fhir.Model.ResourceReference)value;
+            Location = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "form":
-            Form = (Hl7.Fhir.Model.CodeableConcept)value;
+            Form = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -174,8 +174,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-        if (Form is not null) yield return new KeyValuePair<string,object>("form",Form);
+        if (_Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
+        if (_Form is not null) yield return new KeyValuePair<string,object>("form",_Form);
       }
 
     }
@@ -187,13 +187,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Encounter
+    public Hl7.Fhir.Model.ResourceReference? Encounter
     {
       get { return _Encounter; }
       set { _Encounter = value; OnPropertyChanged("Encounter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Encounter;
+    private Hl7.Fhir.Model.ResourceReference? _Encounter;
 
     /// <summary>
     /// Identifier(s) by which this encounter is known.
@@ -203,11 +203,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// planned | in-progress | on-hold | discharged | completed | cancelled | discontinued | entered-in-error | unknown.
@@ -217,13 +217,13 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.EncounterStatus> StatusElement
+    public Code<Hl7.Fhir.Model.EncounterStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.EncounterStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.EncounterStatus>? _StatusElement;
 
     /// <summary>
     /// planned | in-progress | on-hold | discharged | completed | cancelled | discontinued | entered-in-error | unknown
@@ -232,13 +232,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EncounterStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.EncounterStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EncounterStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -250,13 +247,13 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterClass")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Class
+    public Hl7.Fhir.Model.CodeableConcept? Class
     {
       get { return _Class; }
       set { _Class = value; OnPropertyChanged("Class"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Class;
+    private Hl7.Fhir.Model.CodeableConcept? _Class;
 
     /// <summary>
     /// Specific type of encounter.
@@ -267,11 +264,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Type;
 
     /// <summary>
     /// Specific type of service.
@@ -282,11 +279,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
     {
-      get { if(_ServiceType==null) _ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(); return _ServiceType; }
+      get => _ServiceType ??= [];
       set { _ServiceType = value; OnPropertyChanged("ServiceType"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableReference> _ServiceType;
+    private List<Hl7.Fhir.Model.CodeableReference>? _ServiceType;
 
     /// <summary>
     /// The patient or group related to this encounter.
@@ -295,13 +292,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// The current status of the subject in relation to the Encounter.
@@ -309,54 +306,51 @@ namespace Hl7.Fhir.Model
     [FhirElement("subjectStatus", Order=160)]
     [Binding("SubjectStatus")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept SubjectStatus
+    public Hl7.Fhir.Model.CodeableConcept? SubjectStatus
     {
       get { return _SubjectStatus; }
       set { _SubjectStatus = value; OnPropertyChanged("SubjectStatus"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _SubjectStatus;
+    private Hl7.Fhir.Model.CodeableConcept? _SubjectStatus;
 
     /// <summary>
     /// The actual start and end time associated with this set of values associated with the encounter.
     /// </summary>
     [FhirElement("actualPeriod", Order=170, FiveWs="FiveWs.done[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.Period ActualPeriod
+    public Hl7.Fhir.Model.Period? ActualPeriod
     {
       get { return _ActualPeriod; }
       set { _ActualPeriod = value; OnPropertyChanged("ActualPeriod"); }
     }
 
-    private Hl7.Fhir.Model.Period _ActualPeriod;
+    private Hl7.Fhir.Model.Period? _ActualPeriod;
 
     /// <summary>
     /// The planned start date/time (or admission date) of the encounter.
     /// </summary>
     [FhirElement("plannedStartDate", Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime PlannedStartDateElement
+    public Hl7.Fhir.Model.FhirDateTime? PlannedStartDateElement
     {
       get { return _PlannedStartDateElement; }
       set { _PlannedStartDateElement = value; OnPropertyChanged("PlannedStartDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _PlannedStartDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _PlannedStartDateElement;
 
     /// <summary>
     /// The planned start date/time (or admission date) of the encounter
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string PlannedStartDate
+    public string? PlannedStartDate
     {
-      get { return PlannedStartDateElement != null ? PlannedStartDateElement.Value : null; }
+      get => _PlannedStartDateElement?.Value;
       set
       {
-        if (value == null)
-          PlannedStartDateElement = null;
-        else
-          PlannedStartDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        PlannedStartDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("PlannedStartDate");
       }
     }
@@ -366,28 +360,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("plannedEndDate", Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime PlannedEndDateElement
+    public Hl7.Fhir.Model.FhirDateTime? PlannedEndDateElement
     {
       get { return _PlannedEndDateElement; }
       set { _PlannedEndDateElement = value; OnPropertyChanged("PlannedEndDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _PlannedEndDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _PlannedEndDateElement;
 
     /// <summary>
     /// The planned end date/time (or discharge date) of the encounter
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string PlannedEndDate
+    public string? PlannedEndDate
     {
-      get { return PlannedEndDateElement != null ? PlannedEndDateElement.Value : null; }
+      get => _PlannedEndDateElement?.Value;
       set
       {
-        if (value == null)
-          PlannedEndDateElement = null;
-        else
-          PlannedEndDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        PlannedEndDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("PlannedEndDate");
       }
     }
@@ -397,13 +388,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("length", Order=200)]
     [DataMember]
-    public Hl7.Fhir.Model.Duration Length
+    public Hl7.Fhir.Model.Duration? Length
     {
       get { return _Length; }
       set { _Length = value; OnPropertyChanged("Length"); }
     }
 
-    private Hl7.Fhir.Model.Duration _Length;
+    private Hl7.Fhir.Model.Duration? _Length;
 
     /// <summary>
     /// Location of the patient at this point in the encounter.
@@ -413,37 +404,33 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EncounterHistory.LocationComponent> Location
     {
-      get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.EncounterHistory.LocationComponent>(); return _Location; }
+      get => _Location ??= [];
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 
-    private List<Hl7.Fhir.Model.EncounterHistory.LocationComponent> _Location;
+    private List<Hl7.Fhir.Model.EncounterHistory.LocationComponent>? _Location;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as EncounterHistory;
-
-      if (dest == null)
-      {
+      if(other is not EncounterHistory dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopyInternal();
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>)StatusElement.DeepCopyInternal();
-      if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopyInternal();
-      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
-      if(ServiceType.Any()) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(ServiceType.DeepCopyInternal());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(SubjectStatus != null) dest.SubjectStatus = (Hl7.Fhir.Model.CodeableConcept)SubjectStatus.DeepCopyInternal();
-      if(ActualPeriod != null) dest.ActualPeriod = (Hl7.Fhir.Model.Period)ActualPeriod.DeepCopyInternal();
-      if(PlannedStartDateElement != null) dest.PlannedStartDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedStartDateElement.DeepCopyInternal();
-      if(PlannedEndDateElement != null) dest.PlannedEndDateElement = (Hl7.Fhir.Model.FhirDateTime)PlannedEndDateElement.DeepCopyInternal();
-      if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopyInternal();
-      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.EncounterHistory.LocationComponent>(Location.DeepCopyInternal());
+      if(_Encounter is not null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)_Encounter.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>)_StatusElement.DeepCopyInternal();
+      if(_Class is not null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)_Class.DeepCopyInternal();
+      if(_Type is not null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(_Type.DeepCopyInternal());
+      if(_ServiceType is not null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableReference>(_ServiceType.DeepCopyInternal());
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_SubjectStatus is not null) dest.SubjectStatus = (Hl7.Fhir.Model.CodeableConcept)_SubjectStatus.DeepCopyInternal();
+      if(_ActualPeriod is not null) dest.ActualPeriod = (Hl7.Fhir.Model.Period)_ActualPeriod.DeepCopyInternal();
+      if(_PlannedStartDateElement is not null) dest.PlannedStartDateElement = (Hl7.Fhir.Model.FhirDateTime)_PlannedStartDateElement.DeepCopyInternal();
+      if(_PlannedEndDateElement is not null) dest.PlannedEndDateElement = (Hl7.Fhir.Model.FhirDateTime)_PlannedEndDateElement.DeepCopyInternal();
+      if(_Length is not null) dest.Length = (Hl7.Fhir.Model.Duration)_Length.DeepCopyInternal();
+      if(_Location is not null) dest.Location = new List<Hl7.Fhir.Model.EncounterHistory.LocationComponent>(_Location.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -455,118 +442,119 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as EncounterHistory;
-      if(otherT == null) return false;
+      if(other is not EncounterHistory otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Encounter, otherT.Encounter)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Class, otherT.Class)) return false;
-      if(!comparer.ListEquals(Type, otherT.Type)) return false;
-      if(!comparer.ListEquals(ServiceType, otherT.ServiceType)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(SubjectStatus, otherT.SubjectStatus)) return false;
-      if(!comparer.Equals(ActualPeriod, otherT.ActualPeriod)) return false;
-      if(!comparer.Equals(PlannedStartDateElement, otherT.PlannedStartDateElement)) return false;
-      if(!comparer.Equals(PlannedEndDateElement, otherT.PlannedEndDateElement)) return false;
-      if(!comparer.Equals(Length, otherT.Length)) return false;
-      if(!comparer.ListEquals(Location, otherT.Location)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Class, otherT._Class)) return false;
+      if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+      if(!comparer.ListEquals(_ServiceType, otherT._ServiceType)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_SubjectStatus, otherT._SubjectStatus)) return false;
+      if(!comparer.Equals(_ActualPeriod, otherT._ActualPeriod)) return false;
+      if(!comparer.Equals(_PlannedStartDateElement, otherT._PlannedStartDateElement)) return false;
+      if(!comparer.Equals(_PlannedEndDateElement, otherT._PlannedEndDateElement)) return false;
+      if(!comparer.Equals(_Length, otherT._Length)) return false;
+      if(!comparer.ListEquals(_Location, otherT._Location)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "encounter":
-          value = Encounter;
-          return Encounter is not null;
+          value = _Encounter;
+          return _Encounter is not null;
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "class":
-          value = Class;
-          return Class is not null;
+          value = _Class;
+          return _Class is not null;
         case "type":
-          value = Type;
-          return Type?.Any() == true;
+          value = _Type;
+          return _Type?.Any() == true;
         case "serviceType":
-          value = ServiceType;
-          return ServiceType?.Any() == true;
+          value = _ServiceType;
+          return _ServiceType?.Any() == true;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "subjectStatus":
-          value = SubjectStatus;
-          return SubjectStatus is not null;
+          value = _SubjectStatus;
+          return _SubjectStatus is not null;
         case "actualPeriod":
-          value = ActualPeriod;
-          return ActualPeriod is not null;
+          value = _ActualPeriod;
+          return _ActualPeriod is not null;
         case "plannedStartDate":
-          value = PlannedStartDateElement;
-          return PlannedStartDateElement is not null;
+          value = _PlannedStartDateElement;
+          return _PlannedStartDateElement is not null;
         case "plannedEndDate":
-          value = PlannedEndDateElement;
-          return PlannedEndDateElement is not null;
+          value = _PlannedEndDateElement;
+          return _PlannedEndDateElement is not null;
         case "length":
-          value = Length;
-          return Length is not null;
+          value = _Length;
+          return _Length is not null;
         case "location":
-          value = Location;
-          return Location?.Any() == true;
+          value = _Location;
+          return _Location?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference)value;
+          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.EncounterStatus>?)value;
           return this;
         case "class":
-          Class = (Hl7.Fhir.Model.CodeableConcept)value;
+          Class = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "type":
-          Type = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Type = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "serviceType":
-          ServiceType = (List<Hl7.Fhir.Model.CodeableReference>)value;
+          ServiceType = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "subjectStatus":
-          SubjectStatus = (Hl7.Fhir.Model.CodeableConcept)value;
+          SubjectStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "actualPeriod":
-          ActualPeriod = (Hl7.Fhir.Model.Period)value;
+          ActualPeriod = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "plannedStartDate":
-          PlannedStartDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          PlannedStartDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "plannedEndDate":
-          PlannedEndDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          PlannedEndDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "length":
-          Length = (Hl7.Fhir.Model.Duration)value;
+          Length = (Hl7.Fhir.Model.Duration?)value;
           return this;
         case "location":
-          Location = (List<Hl7.Fhir.Model.EncounterHistory.LocationComponent>)value;
+          Location = (List<Hl7.Fhir.Model.EncounterHistory.LocationComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -577,19 +565,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Class is not null) yield return new KeyValuePair<string,object>("class",Class);
-      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
-      if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (SubjectStatus is not null) yield return new KeyValuePair<string,object>("subjectStatus",SubjectStatus);
-      if (ActualPeriod is not null) yield return new KeyValuePair<string,object>("actualPeriod",ActualPeriod);
-      if (PlannedStartDateElement is not null) yield return new KeyValuePair<string,object>("plannedStartDate",PlannedStartDateElement);
-      if (PlannedEndDateElement is not null) yield return new KeyValuePair<string,object>("plannedEndDate",PlannedEndDateElement);
-      if (Length is not null) yield return new KeyValuePair<string,object>("length",Length);
-      if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
+      if (_Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Class is not null) yield return new KeyValuePair<string,object>("class",_Class);
+      if (_Type?.Any() == true) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",_ServiceType);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_SubjectStatus is not null) yield return new KeyValuePair<string,object>("subjectStatus",_SubjectStatus);
+      if (_ActualPeriod is not null) yield return new KeyValuePair<string,object>("actualPeriod",_ActualPeriod);
+      if (_PlannedStartDateElement is not null) yield return new KeyValuePair<string,object>("plannedStartDate",_PlannedStartDateElement);
+      if (_PlannedEndDateElement is not null) yield return new KeyValuePair<string,object>("plannedEndDate",_PlannedEndDateElement);
+      if (_Length is not null) yield return new KeyValuePair<string,object>("length",_Length);
+      if (_Location?.Any() == true) yield return new KeyValuePair<string,object>("location",_Location);
     }
 
   }

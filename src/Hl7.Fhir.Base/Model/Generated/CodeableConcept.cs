@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -68,55 +71,48 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Coding
     {
-      get { if(_Coding==null) _Coding = new List<Hl7.Fhir.Model.Coding>(); return _Coding; }
+      get => _Coding ??= [];
       set { _Coding = value; OnPropertyChanged("Coding"); }
     }
 
-    private List<Hl7.Fhir.Model.Coding> _Coding;
+    private List<Hl7.Fhir.Model.Coding>? _Coding;
 
     /// <summary>
     /// Plain text representation of the concept.
     /// </summary>
     [FhirElement("text", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString TextElement
+    public Hl7.Fhir.Model.FhirString? TextElement
     {
       get { return _TextElement; }
       set { _TextElement = value; OnPropertyChanged("TextElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _TextElement;
+    private Hl7.Fhir.Model.FhirString? _TextElement;
 
     /// <summary>
     /// Plain text representation of the concept
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Text
+    public string? Text
     {
-      get { return TextElement != null ? TextElement.Value : null; }
+      get => _TextElement?.Value;
       set
       {
-        if (value == null)
-          TextElement = null;
-        else
-          TextElement = new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as CodeableConcept;
-
-      if (dest == null)
-      {
+      if(other is not CodeableConcept dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Coding.Any()) dest.Coding = new List<Hl7.Fhir.Model.Coding>(Coding.DeepCopyInternal());
-      if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopyInternal();
+      if(_Coding is not null) dest.Coding = new List<Hl7.Fhir.Model.Coding>(_Coding.DeepCopyInternal());
+      if(_TextElement is not null) dest.TextElement = (Hl7.Fhir.Model.FhirString)_TextElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -128,41 +124,42 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as CodeableConcept;
-      if(otherT == null) return false;
+      if(other is not CodeableConcept otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Coding, otherT.Coding)) return false;
-      if(!comparer.Equals(TextElement, otherT.TextElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Coding, otherT._Coding)) return false;
+      if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "coding":
-          value = Coding;
-          return Coding?.Any() == true;
+          value = _Coding;
+          return _Coding?.Any() == true;
         case "text":
-          value = TextElement;
-          return TextElement is not null;
+          value = _TextElement;
+          return _TextElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "coding":
-          Coding = (List<Hl7.Fhir.Model.Coding>)value;
+          Coding = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         case "text":
-          TextElement = (Hl7.Fhir.Model.FhirString)value;
+          TextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -173,8 +170,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Coding?.Any() == true) yield return new KeyValuePair<string,object>("coding",Coding);
-      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+      if (_Coding?.Any() == true) yield return new KeyValuePair<string,object>("coding",_Coding);
+      if (_TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
     }
 
   }
