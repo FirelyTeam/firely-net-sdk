@@ -15,15 +15,6 @@ namespace Hl7.Fhir.Serialization
 {
     public class BaseFhirParser
     {
-        public readonly ParserSettings Settings;
-        private readonly ModelInspector _inspector;
-
-        public BaseFhirParser(ModelInspector inspector, ParserSettings settings = null)
-        {
-            Settings = settings?.Clone() ?? new ParserSettings();
-            _inspector = inspector;
-        }
-
         internal static PocoBuilderSettings BuildPocoBuilderSettings(ParserSettings ps) =>
             new()
             {
@@ -43,20 +34,7 @@ namespace Hl7.Fhir.Serialization
             };
 
         internal static FhirJsonParsingSettings BuildJsonParserSettings(ParserSettings settings) =>
-            new()
-            {
-                AllowJsonComments = false,
-                PermissiveParsing = settings.PermissiveParsing
-            };
-
-
-        public Base Parse(ITypedElement element) => element.ToPoco(_inspector, BuildPocoBuilderSettings(Settings));
-
-        public T Parse<T>(ITypedElement element) where T : Base => element.ToPoco<T>(_inspector, BuildPocoBuilderSettings(Settings));
-
-        public Base Parse(ISourceNode node, Type type = null) => node.ToPoco(_inspector, type, BuildPocoBuilderSettings(Settings));
-
-        public T Parse<T>(ISourceNode node) where T : Base => node.ToPoco<T>(_inspector, BuildPocoBuilderSettings(Settings));
+            new() { AllowJsonComments = false, PermissiveParsing = settings.PermissiveParsing };
     }
 
 }

@@ -16,11 +16,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-#pragma warning disable CS1580 // Invalid type for parameter in XML comment cref attribute
-#pragma warning disable CS1584 // XML comment has syntactically incorrect cref attribute
 
 namespace Hl7.Fhir.Serialization;
-
 
 
 /// <summary>
@@ -32,26 +29,12 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
 {
     public static readonly DataAnnotationDeserialzationValidator Default = new();
 
-    /// <summary>
-    /// For performance reasons, validation of Xhtml again the rules specified in the FHIR
-    /// specification for Narrative (http://hl7.org/fhir/narrative.html#2.4.0) is turned off by
-    /// default. Set this property to any other value than <see cref="NarrativeValidationKind.None"/>
-    /// to perform validation.
-    /// </summary>
-    public NarrativeValidationKind NarrativeValidation { get; } = NarrativeValidationKind.None;
-
-    public DataAnnotationDeserialzationValidator(
-        NarrativeValidationKind narrativeValidation = NarrativeValidationKind.None)
-    {
-        NarrativeValidation = narrativeValidation;
-    }
-
     /// <inheritdoc />
     public virtual void ValidateProperty(object? propertyValue, in PropertyDeserializationContext context, out CodedValidationException[]? reportedErrors)
     {
         var validationContext = new ValidationContext(context.ObjectInstance)
             .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
-            .SetNarrativeValidationKind(NarrativeValidation)
+            .SetNarrativeValidationKind(context.NarrativeValidation)
             .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
             .SetLocationProducer(context.PathStack.GetInstancePath);
 
@@ -64,7 +47,7 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
     {
         var validationContext = new ValidationContext(instance)
             .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
-            .SetNarrativeValidationKind(NarrativeValidation)
+            .SetNarrativeValidationKind(context.NarrativeValidation)
             .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
             .SetLocationProducer(context.PathStack.GetInstancePath);
 

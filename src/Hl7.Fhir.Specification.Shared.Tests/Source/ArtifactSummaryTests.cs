@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         // Parse target resource from navigator
                         var parser = new FhirXmlParser();
-                        var corePatient = parser.Parse<StructureDefinition>(nav);
+                        var corePatient = nav.ToPoco<StructureDefinition>();
                         Assert.IsNotNull(corePatient);
                         Assert.AreEqual(corePatientUrl, corePatient.Url);
                     }

@@ -1,6 +1,8 @@
 ﻿#nullable enable
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Validation;
+using Hl7.FhirPath.Sprache;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -31,6 +33,15 @@ namespace Hl7.Fhir.Serialization
         /// resource was clean and possibly ok to process).
         /// </remarks>
         public bool AnnotateResourceParseExceptions { get; init; } = false;
+
+
+        /// <summary>
+        /// For performance reasons, validation of Xhtml again the rules specified in the FHIR
+        /// specification for Narrative (http://hl7.org/fhir/narrative.html#2.4.0) is turned off by
+        /// default. Set this property to any other value than <see cref="None{T}"/>
+        /// to perform validation.
+        /// </summary>
+        public NarrativeValidationKind NarrativeValidation { get; } = NarrativeValidationKind.None;
     }
 }
 

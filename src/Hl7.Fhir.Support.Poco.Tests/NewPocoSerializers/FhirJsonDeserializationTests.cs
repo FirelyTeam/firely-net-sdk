@@ -266,8 +266,7 @@ public class FhirJsonDeserializationTests
         var (result, errors) = deserializeComplex(t, testObject, out var readerState,
             new FhirJsonConverterOptions
             {
-                Validator = new DataAnnotationDeserialzationValidator(
-                    narrativeValidation: NarrativeValidationKind.FhirXhtml)
+                NarrativeValidation = NarrativeValidationKind.FhirXhtml
             });
 
         assertErrors(errors, expectedErrors);

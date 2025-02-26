@@ -308,7 +308,7 @@ public class BaseFhirJsonPocoDeserializer
         // to avoid spurious error messages.
         if (Settings.Validator is not null && kind != DeserializedObjectKind.FhirPrimitive && (Settings.ValidateOnFailedParse || state.Errors.Count == oldErrorCount))
         {
-            var context = new InstanceDeserializationContext(state.Path, line, pos, mapping);
+            var context = new InstanceDeserializationContext(state.Path, line, pos, mapping, Settings.NarrativeValidation);
             PocoDeserializationHelper.RunInstanceValidation(target, Settings.Validator, context, state.Errors);
         }
     }
@@ -397,7 +397,8 @@ public class BaseFhirJsonPocoDeserializer
                 state.Path,
                 propertyName,
                 line, pos,
-                propertyMapping);
+                propertyMapping,
+                Settings.NarrativeValidation);
 
             // If this is a FhirPrimitive, make sure we delay validation until we had the
             // chance to encounter both the `name` and `_name` property.
@@ -650,7 +651,7 @@ public class BaseFhirJsonPocoDeserializer
         // the `name` and `_name` property.
         if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
         {
-            var context = new InstanceDeserializationContext(state.Path, line, pos, propertyValueMapping);
+            var context = new InstanceDeserializationContext(state.Path, line, pos, propertyValueMapping, Settings.NarrativeValidation);
             if (parsingState is null)
                 PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors);
             else

@@ -291,7 +291,8 @@ public class BaseFhirXmlPocoDeserializer
             var context = new InstanceDeserializationContext(
                 state.Path,
                 lineNumber, position,
-                mapping!);
+                mapping,
+                Settings.NarrativeValidation);
 
             PocoDeserializationHelper.RunInstanceValidation(target, Settings.Validator, context, state.Errors);
         }
@@ -336,7 +337,8 @@ public class BaseFhirXmlPocoDeserializer
                 state.Path, // should this path GetPath or this?
                 name,
                 lineNumber, position,
-                propMapping);
+                propMapping,
+                Settings.NarrativeValidation);
 
             PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator, context, state.Errors);
         }

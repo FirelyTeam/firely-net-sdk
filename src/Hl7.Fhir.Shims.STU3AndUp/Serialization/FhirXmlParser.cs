@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using System;
 using System.Xml;
@@ -14,12 +15,10 @@ using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirXmlParser : BaseFhirParser
+    public class FhirXmlParser(ParserSettings settings = null) : BaseFhirParser
     {
-        public FhirXmlParser(ParserSettings settings = null) : base(ModelInfo.ModelInspector, settings)
-        {
-            //
-        }
+        public ParserSettings Settings { get; set; } = settings ?? new ParserSettings();
+
 
         /// <inheritdoc cref="ParseAsync{T}(XmlReader)" />
         public T Parse<T>(XmlReader reader) where T : Base => (T)Parse(reader, typeof(T));
@@ -37,27 +36,29 @@ namespace Hl7.Fhir.Serialization
         public Base Parse(string xml, Type dataType = null)
         {
             var xmlReader = FhirXmlNode.Parse(xml, BuildXmlParsingSettings(Settings));
-            return Parse(xmlReader, dataType);
+            return parse(xmlReader, dataType);
         }
 
         public async Tasks.Task<Base> ParseAsync(string xml, Type dataType = null)
         {
-            var xmlReader = await FhirXmlNode.ParseAsync(xml, BuildXmlParsingSettings(Settings)).ConfigureAwait(false);
-            return Parse(xmlReader, dataType);
+            var xmlReader = await FhirXmlNode.ParseAsync(xml, BuildXmlParsingSettings(settings)).ConfigureAwait(false);
+            return parse(xmlReader, dataType);
         }
 
         /// <inheritdoc cref="ParseAsync(XmlReader, Type)" />
         public Base Parse(XmlReader reader, Type dataType = null)
         {
             var xmlReader = FhirXmlNode.Read(reader, BuildXmlParsingSettings(Settings));
-            return Parse(xmlReader, dataType);
+            return parse(xmlReader, dataType);
         }
 
         public async Tasks.Task<Base> ParseAsync(XmlReader reader, Type dataType = null)
         {
             var xmlReader = await FhirXmlNode.ReadAsync(reader, BuildXmlParsingSettings(Settings)).ConfigureAwait(false);
-            return Parse(xmlReader, dataType);
+            return parse(xmlReader, dataType);
         }
-    }
 
+        private Base parse(ISourceNode node, Type type = null) =>
+            node.ToPoco(ModelInfo.ModelInspector, type, BuildPocoBuilderSettings(Settings));
+    }
 }
