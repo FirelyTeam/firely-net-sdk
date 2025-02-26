@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.FhirPath.Functions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -13,7 +14,7 @@ public class StringFunctionsTests
     [TestMethod]
     public void StringSplit()
     {
-        CollectionAssert.AreEqual(new[] { "A", "B", "C" }, StringOperators.FpSplit("A,B,C", ",").Select(r => r.Value.ToString()).ToArray());
+        CollectionAssert.AreEqual(new[] { "A", "B", "C" }, StringOperators.FpSplit("A,B,C", ",").Select(r => r.GetValue()!.ToString()).ToArray());
 
             // verify the empty string
             CollectionAssert.AreEqual(new[] { "A", "", "C" }, StringOperators.FpSplit("A,,C", ",").Select(r => r.GetValue()!.ToString()).ToArray());
