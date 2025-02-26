@@ -39,13 +39,13 @@ public class FhirJsonConverterFactory(ModelInspector inspector, FhirJsonConverte
     internal void SetEnforcedErrors(IEnumerable<string> toEnforce)
     {
         Engine ??= createDefaultEngine();
-        Engine.IgnoreFilter = Engine.IgnoreFilter.And(toEnforce.ToPredicate().Negate());
+        Engine.IgnoreFilter = Engine.IgnoreFilter.And(toEnforce.IsInList().Negate());
     }
 
     internal void SetIgnoredErrors(IEnumerable<string> toIgnore)
     {
         Engine ??= createDefaultEngine();
-        Engine.IgnoreFilter = Engine.IgnoreFilter.Or(toIgnore.ToPredicate());
+        Engine.IgnoreFilter = Engine.IgnoreFilter.Or(toIgnore.IsInList());
     }
 
     internal void SetMode(DeserializerModes mode)

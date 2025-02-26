@@ -53,7 +53,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         {
             var objectValue = newInstance is DynamicPrimitive ?
                 value :
-                convertTypedElementValue(value, node.InstanceType);
+                convertTypedElementValue(value);
 
             if(newInstance is PrimitiveType pt)
                 pt.ObjectValue = objectValue;
@@ -289,29 +289,25 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         }
         catch (InvalidCastException)
         {
-            throw Error.InvalidOperation($"Cannot assign data of type {convertedValue.GetType()} to to property '{node.Name}'.");
+            var typeString = convertedValue is IDynamicType it ? it.DynamicTypeName : convertedValue.GetType().Name;
+            throw Error.InvalidOperation($"Cannot assign data of type {typeString} to property '{node.Name}'.");
         }
     }
 
     /// <summary>
     /// Convert the value of a typed element to a value that can be set on a POCO property.
     /// </summary>
-    private static object convertTypedElementValue(object value, string? instanceType)
+    private static object convertTypedElementValue(object value)
     {
         return value switch
         {
-            // Instants are converted to DateTimeOffset, and should by definition have a timezone in their
-            // serialization, but if it does not, we'll use UTC.
-            ET.DateTime inst when instanceType == "instant" => inst.ToDateTimeOffset(TimeSpan.Zero),
-
-            // all "other" date/time types are just strings, since that is how the POCO's represent the
-            // partial date/time types in ObjectValue.
+            // Some ITypedElement date/time values are strings in the POCO's ObjectValue.
             ET.DateTime => value.ToString()!,
             ET.Time => value.ToString()!,
             ET.Date => value.ToString()!,
 
-            // Base64Binary is a string of base64 encoded data, and the POCO's use byte[] for this.
-            string uuenc when instanceType == "base64Binary" => Convert.FromBase64String(uuenc),
+            // Integer64 uses string in the POCOs
+            long l => new ET.Long(l).ToString(),
 
             // All other primitives are one-on-one convertible to their .NET counterparts.
             _ => value

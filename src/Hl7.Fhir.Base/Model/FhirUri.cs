@@ -32,7 +32,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
@@ -42,6 +44,18 @@ public partial class FhirUri : ICoded
     {
         Value = uri.OriginalString;
     }
+
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null => null,
+            string unparsed when IsValidValue(unparsed) => null,
+            string unparsed => COVE.LITERAL_INVALID(context, unparsed, this.TypeName),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
 
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
@@ -61,15 +75,14 @@ public partial class FhirUri : ICoded
             return false;
         }
 
-        if (uri.IsAbsoluteUri)
-        {
-            var uris = uri.ToString();
+        if (!uri.IsAbsoluteUri) return true;
 
-            if (uris.StartsWith("urn:oid:") && !Oid.IsValidValue(uris))
-                return false;
-            else if (uris.StartsWith("urn:uuid:") && !Uuid.IsValidValue(uris))
-                return false;
-        }
+        var uris = uri.ToString();
+
+        if (uris.StartsWith("urn:oid:") && !Oid.IsValidValue(uris))
+            return false;
+        if (uris.StartsWith("urn:uuid:") && !Uuid.IsValidValue(uris))
+            return false;
 
         return true;
     }

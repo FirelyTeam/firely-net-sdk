@@ -28,6 +28,7 @@
 
 */
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
@@ -63,7 +64,7 @@ public sealed class FhirElementAttribute : VersionedValidationAttribute
     /// <summary>
     /// The name of the element in FHIR this property represents.
     /// </summary>
-    public string Name { get; private set; }
+    public string Name { get; }
 
     /// <summary>
     /// The element represents the primitive `value` attribute/property in the FHIR serialization
@@ -123,10 +124,13 @@ public sealed class FhirElementAttribute : VersionedValidationAttribute
         return result.FirstOrDefault();
     }
 
-    private void validateElement(object value, ValidationContext validationContext, List<ValidationResult> result)
+    private void validateElement(object value, ValidationContext validationContext, List<ValidationResult> results)
     {
-        DotNetAttributeValidation.TryValidate(value, validationContext.IntoPath(value, validationContext.MemberName ?? Name), result);
+        // We will only validate the element's value recursively if it is a POCO, otherwise, this attribute
+        // will do nothing.
+        if (value is not Base b) return;
+
+        var nestedContext = validationContext.IntoPath(b, validationContext.MemberName ?? Name);
+        _ = Validator.TryValidateObject(b, nestedContext, results, validateAllProperties: true);
     }
 }
-
-#nullable restore

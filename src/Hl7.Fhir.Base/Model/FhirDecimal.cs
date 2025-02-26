@@ -31,16 +31,23 @@
 #nullable enable
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
 public partial class FhirDecimal
 {
     /// <summary>
-    /// Checks whether the given literal is correctly formatted.
+    /// Validates the JsonValue.
     /// </summary>
-    public static bool IsValidValue(string value) => P.Decimal.TryParse(value, out _);
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null or decimal => null,
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
 
     /// <summary>
     /// Converts this FhirDecimal to a <see cref="P.Decimal" />.

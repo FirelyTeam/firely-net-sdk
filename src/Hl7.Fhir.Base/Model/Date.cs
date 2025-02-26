@@ -30,24 +30,29 @@
 #nullable enable
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
 public partial class Date
 {
     public Date(int year, int month, int day)
-        : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEARMONTHDAY, year, month, day))
+        : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEARMONTHDAY, year,
+            month, day))
     {
     }
 
     public Date(int year, int month)
-        : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEARMONTH, year, month))
+        : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEARMONTH, year,
+            month))
     {
     }
 
-    public Date(int year) : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEAR, year))
+    public Date(int year) : this(string.Format(System.Globalization.CultureInfo.InvariantCulture, FhirDateTime.FMT_YEAR,
+        year))
     {
     }
 
@@ -63,13 +68,32 @@ public partial class Date
     /// </summary>
     public static Date UtcToday() => FromDateTimeOffset(DateTimeOffset.UtcNow);
 
-    [NonSerialized]  // To prevent binary serialization from serializing this field
+    [NonSerialized] // To prevent binary serialization from serializing this field
     private P.Date? _parsedValue = null;
 
-    // This is a sentinel value that marks that the current string representation is
-    // not parseable, so we don't have to try again. It's value is never used, it's just
-    // checked by reference.
-    private static readonly P.Date INVALID_VALUE = P.Date.FromDateTimeOffset(DateTimeOffset.MinValue);
+    /// <summary>
+    /// Validates the JsonValue and updates the internal cached Date value.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context)
+    {
+        if (_parsedValue is not null || base.ObjectValue is null) return null;
+
+        _parsedValue = null;
+
+        if (base.ObjectValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.ObjectValue, this.TypeName);
+
+        _parsedValue = doParse(unparsed);
+        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.ObjectValue, this.TypeName) : null;
+    }
+
+    private static P.Date? doParse(string value) =>
+        P.Date.TryParse(value, out var v) && !v.HasOffset ? v : null;
+
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => doParse(value) is not null;
 
     /// <summary>
     /// Converts a Fhir Date to a CQL <see cref="P.Date"/>.
@@ -77,22 +101,14 @@ public partial class Date
     /// <returns>true if the Fhir Date contains a valid date string, false otherwise.</returns>
     public bool TryToSystemDate([NotNullWhen(true)] out P.Date? date)
     {
-        if (_parsedValue is null)
-        {
-            if (Value is not null && !(P.Date.TryParse(Value, out _parsedValue) && !_parsedValue!.HasOffset))
-                _parsedValue = INVALID_VALUE;
-        }
-
-        if (hasInvalidParsedValue())
+        if (ValidateObjectValue(null) is not null || _parsedValue is null)
         {
             date = null;
             return false;
         }
 
-        date = _parsedValue!;
+        date = _parsedValue;
         return true;
-
-        bool hasInvalidParsedValue() => ReferenceEquals(_parsedValue, INVALID_VALUE);
     }
 
     /// <summary>
@@ -102,21 +118,16 @@ public partial class Date
     /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR Date.</exception>
     public P.Date ToSystemDate()
     {
-        if(Value is null)
-            throw new InvalidOperationException("Value is null.");
+        if (ValidateObjectValue(null) is {} error)
+            throw error;
 
-        return TryToSystemDate(out var dt)
-            ? dt
-            : throw new FormatException($"String '{Value}' was not recognized as a valid date.");
+        if(_parsedValue is null)
+            throw new InvalidOperationException("Value is null");
+
+        return _parsedValue;
     }
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemDate(out var date) ? date : null;
-
-    protected override void OnObjectValueChanged()
-    {
-        _parsedValue = null;
-        base.OnObjectValueChanged();
-    }
 
     /// <summary>
     /// Converts this Fhir Fhir Date to a <see cref="DateTimeOffset"/>.
@@ -124,11 +135,7 @@ public partial class Date
     /// <returns>A DateTimeOffset filled out to midnight, january 1 (UTC) in case of a partial date.</returns>
     public DateTimeOffset ToDateTimeOffset()
     {
-        if (Value == null) throw new InvalidOperationException("Date's value is null.");
-
-        // TryToDate() will convert partial date/times by filling out to midnight/january 1 UTC
-        if (!TryToSystemDate(out var dt))
-            throw new FormatException($"Date '{Value}' was not recognized as a valid datetime.");
+        var dt = ToSystemDate();
 
         // Since Value is not null and the parsed value is valid, dto will not be null
         return dt.ToDateTimeOffset(TimeSpan.Zero);
@@ -140,7 +147,7 @@ public partial class Date
     /// <returns>True if the value of the Fhir Date is not null and can be parsed as a DateTimeOffset, false otherwise.</returns>
     public bool TryToDateTimeOffset(out DateTimeOffset dto)
     {
-        if (Value is not null && TryToSystemDate(out var dt))
+        if (TryToSystemDate(out var dt))
         {
             dto = dt.ToDateTimeOffset(TimeSpan.Zero);
             return true;
@@ -150,8 +157,14 @@ public partial class Date
         return false;
     }
 
-    /// <summary>
-    /// Checks whether the given literal is correctly formatted.
-    /// </summary>
-    public static bool IsValidValue(string value) => P.Date.TryParse(value, out var parsed) && !parsed.HasOffset;
+
+    public override object? ObjectValue
+    {
+        get => base.ObjectValue;
+        set
+        {
+            base.ObjectValue = value;
+            _parsedValue = null;
+        }
+    }
 }

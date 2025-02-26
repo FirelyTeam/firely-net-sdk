@@ -29,13 +29,41 @@
 
 #nullable enable
 
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
 public partial class Instant
 {
+    [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(P.DateTime))]
+    [DataMember]
+    public DateTimeOffset? Value
+    {
+        get
+        {
+            if (ValidateObjectValue(null) is {} error)
+                throw error;
+
+            return _parsedValue?.ToDateTimeOffset(TimeSpan.Zero);
+        }
+
+        set
+        {
+            _parsedValue = value is null ? null : P.DateTime.FromDateTimeOffset(value.Value);
+            base.ObjectValue = null;
+            OnPropertyChanged("Value");
+        }
+    }
+
+
     public static Instant FromLocalDateTime(int year, int month, int day,
         int hour, int min, int sec, int millis = 0) =>
         new(new DateTimeOffset(year, month, day, hour, min, sec, millis, DateTimeOffset.Now.Offset));
@@ -51,19 +79,80 @@ public partial class Instant
     /// <returns></returns>
     public static Instant Now() => new(DateTimeOffset.Now);
 
+    [NonSerialized]  // To prevent binary serialization from serializing this field
+    private P.DateTime? _parsedValue = null;
+
+    /// <summary>
+    /// Validates the JsonValue and updates the internal cached CQL DateTime value.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context)
+    {
+        if (_parsedValue is not null || base.ObjectValue is null) return null;
+
+        _parsedValue = null;
+
+        if (base.ObjectValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.ObjectValue, this.TypeName);
+
+        _parsedValue = doParse(unparsed);
+        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.ObjectValue, this.TypeName) : null;
+    }
+
+    private static P.DateTime? doParse(string literal) =>
+        P.DateTime.TryParse(literal, out var parsed) && parsed.IsInstant ? parsed : null;
+
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>
-    public static bool IsValidValue(string value) => P.DateTime.TryParse(value, out var dateTime) &&
-                                                     dateTime is { Precision: >= P.DateTimePrecision.Second, HasOffset: true };
-    /// <summary>
-    /// Converts this Instant to a <see cref="P.DateTime" />.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">The Value of this DateTime is null.</exception>
-    public P.DateTime ToSystemDateTime() =>
-        (P.DateTime?)TryConvertToSystemTypeInternal() ??
-           throw new InvalidOperationException("Instant's value is null and can therefore not be converted to a System DateTime.");
+    public static bool IsValidValue(string value) => doParse(value) is not null;
 
-    protected internal override P.Any? TryConvertToSystemTypeInternal() =>
-        Value is not null ? P.DateTime.FromDateTimeOffset(Value.Value) : null;
+    public override object? ObjectValue
+    {
+        get
+        {
+            if (_parsedValue is not null && base.ObjectValue is null)
+                base.ObjectValue = _parsedValue.ToString();
+
+            return base.ObjectValue;
+        }
+        set
+        {
+            base.ObjectValue = value;
+            _parsedValue = null;
+        }
+    }
+
+    /// <summary>
+    /// Converts an Instant to a <see cref="P.DateTime"/>.
+    /// </summary>
+    /// <returns>true if the Instant contains a valid date/time string, false otherwise.</returns>
+    public bool TryToSystemDateTime([NotNullWhen(true)] out P.DateTime? dateTime)
+    {
+        if (ValidateObjectValue(null) is not null || _parsedValue is null)
+        {
+            dateTime = null;
+            return false;
+        }
+
+        dateTime = _parsedValue;
+        return true;
+    }
+
+/// <summary>
+/// Converts this Instant to a <see cref="P.DateTime" />.
+/// </summary>
+/// <exception cref="InvalidOperationException">The Value of this DateTime is null.</exception>
+
+    public P.DateTime ToSystemDateTime()
+    {
+        if (ValidateObjectValue(null) is { } error)
+            throw error;
+
+        if (_parsedValue is null)
+            throw new InvalidOperationException("Value is null.");
+
+        return _parsedValue;
+    }
+
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemDateTime(out var date) ? date : null;
 }

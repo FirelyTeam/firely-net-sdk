@@ -1,15 +1,14 @@
 ﻿using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Linq;
 using System.Xml;
-using Date = Hl7.Fhir.ElementModel.Types.Date;
-using DateTime = Hl7.Fhir.ElementModel.Types.DateTime;
 using ERR = Hl7.Fhir.Serialization.FhirXmlException;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Support.Poco.Tests
 {
@@ -35,48 +34,43 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         [DataTestMethod]
-        [DataRow("<foo value =\"true\"/>", typeof(bool), true, null, DisplayName = "XmlBool1")]
-        [DataRow("<foo value =\"1\"/>", typeof(bool), "1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlBool2")]
-        [DataRow("<foo value =\"treu\"/>", typeof(bool), "treu", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlBool3")]
-        [DataRow("<foo value =\"2000-01-01\"/>", typeof(DateTimeOffset), "2000-01-01", null, DisplayName = "XmlInstant1")]
-        [DataRow("<foo value =\"foo\"/>", typeof(DateTimeOffset), "foo", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlInstant2")]
-        [DataRow("<foo value =\"foo\"/>", typeof(byte[]), "foo", ERR.INCORRECT_BASE64_DATA_CODE, DisplayName = "XmlByteArray")]
-        [DataRow("<foo value =\"1\"/>", typeof(int), 1, null, DisplayName = "XmlInteger1")]
-        [DataRow("<foo value =\"1.1\"/>", typeof(int), "1.1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlInteger2")]
-        [DataRow("<foo value =\"1\"/>", typeof(long), 1, null, DisplayName = "XmlLong1")]
-        [DataRow("<foo value =\"1.1\"/>", typeof(long), "1.1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlLong2")]
-        [DataRow("<foo value =\"1\"/>", typeof(uint), 1, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlUint1")]
-        [DataRow("<foo value =\"-1\"/>", typeof(uint), "-1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlUint2")]
-        [DataRow("<foo value =\"3.14\"/>", typeof(decimal), 3.14, null, DisplayName = "XmlDecimal1")]
-        [DataRow("<foo value =\"3.14e2\"/>", typeof(decimal), 3.14e2, null, DisplayName = "XmlDecimal1")]
-        [DataRow("<foo value =\"3.14e500\"/>", typeof(decimal), "3.14e500", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlDecimal2")]
-        [DataRow("<foo value =\"3.14\"/>", typeof(double), 3.14, null, DisplayName = "XmlDouble1")]
-        [DataRow("<foo value =\"1\"/>", typeof(ulong), 1, ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlUlong1")]
-        [DataRow("<foo value =\"-1\"/>", typeof(ulong), "-1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlUlong2")]
-        [DataRow("<foo value =\"1\"/>", typeof(float), 1, null, DisplayName = "XmlFloat1")]
-        public void TryDeserializePrimitiveValue(string xmlPrimitive, Type implementingType, object expectedValue, string expectedErrorCode)
+        [DataRow("<foo value =\"true\"/>", typeof(FhirBoolean), true, null, DisplayName = "XmlBool1")]
+        [DataRow("<foo value =\"1\"/>", typeof(FhirBoolean), "1", COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, DisplayName = "XmlBool2")]
+        [DataRow("<foo value =\"treu\"/>", typeof(FhirBoolean), "treu", COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, DisplayName = "XmlBool3")]
+        [DataRow("<foo value =\"2000-01-01T12:00:00Z\"/>", typeof(Instant), "2000-01-01T12:00:00Z", null, DisplayName = "XmlInstant1")]
+        [DataRow("<foo value =\"foo\"/>", typeof(Instant), "foo", COVE.LITERAL_INVALID_CODE, DisplayName = "XmlInstant2")]
+        [DataRow("<foo value =\"foo\"/>", typeof(Base64Binary), "foo", COVE.INVALID_BASE64_VALUE_CODE, DisplayName = "XmlByteArray")]
+        [DataRow("<foo value =\"1\"/>", typeof(Integer), 1, null, DisplayName = "XmlInteger1")]
+        [DataRow("<foo value =\"1.1\"/>", typeof(Integer), "1.1", COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, DisplayName = "XmlInteger2")]
+        [DataRow("<foo value =\"1\"/>", typeof(Integer64), "1", null, DisplayName = "XmlLong1")]
+        [DataRow("<foo value =\"1.1\"/>", typeof(Integer64), "1.1", COVE.LITERAL_INVALID_CODE, DisplayName = "XmlLong2")]
+        [DataRow("<foo value =\"3.14\"/>", typeof(FhirDecimal), 3.14, null, DisplayName = "XmlDecimal1")]
+        [DataRow("<foo value =\"3.14e2\"/>", typeof(FhirDecimal), 3.14e2, null, DisplayName = "XmlDecimal1")]
+        [DataRow("<foo value =\"3.14e500\"/>", typeof(FhirDecimal), "3.14e500", COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, DisplayName = "XmlDecimal2")]
+
+        public void TryDeserializePrimitiveValue(string xmlPrimitive, Type fhirTargetType, object expectedValue, string expectedErrorCode)
         {
             var reader = constructReader(xmlPrimitive);
             reader.MoveToContent();
-            reader.MoveToFirstAttribute();
+            //reader.MoveToFirstAttribute();
 
-            var deserializer = getTestDeserializer(new());
-            var ps = new PathStack();
-            ps.EnterElement("Patient", 0, false);
-            var (value, error) = deserializer.ParsePrimitiveValue(reader, implementingType, ps);
+            var deserializer = getTestDeserializer(new FhirXmlPocoDeserializerSettings());
+            var classMapping = ModelInfo.ModelInspector.ImportType(fhirTargetType)!;
+            var target = (PrimitiveType)classMapping.Factory()!;
+            var state = new FhirXmlPocoDeserializerState();
+            deserializer.DeserializeElementInto(target, classMapping, reader, state);
 
-            error?.ErrorCode.Should().Be(expectedErrorCode);
+            state.Errors.Should().HaveCount(expectedErrorCode == null ? 0 : 1);
 
-            if (implementingType == typeof(DateTimeOffset) && expectedErrorCode is null)
+            if(state.Errors.Count > 0)
             {
-                value.Should().BeOfType<DateTimeOffset>().Which.ToFhirDate().Should().Be((string)expectedValue);
+                state.Errors.First().ErrorCode.Should().Be(expectedErrorCode);
             }
             else
             {
-                value.Should().Be(expectedValue);
+                target.ObjectValue.Should().Be(expectedValue);
             }
         }
-
 
         [TestMethod]
         public void TryDeserializeResourceSinglePrimitive()
@@ -234,7 +228,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var resource = deserializer.DeserializeResource(reader);
 
             resource.Should().BeOfType<Patient>();
-            resource.As<Patient>().Active.Value.Should().Be(true);
+            resource.As<Patient>().Active!.Should().Be(true);
             resource.As<Patient>().Extension.Should().HaveCount(1);
             resource.As<Patient>().Extension[0].Url.Should().Be("http://fire.ly/fhir/StructureDefinition/extension-test");
             resource.As<Patient>().Extension[0].Value.As<FhirString>().Value.Should().Be("foo");
@@ -477,30 +471,21 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         [TestMethod]
-        public void TestCustomValidators()
+        public void TestValidatorIsCalledDuringDeserialization()
         {
-            test(new FhirJsonDeserializationTests.CustomComplexValidator());
-            test(new FhirJsonDeserializationTests.CustomDataTypeValidator());
-            test(new FhirJsonDeserializationTests.CustomPropertyValueValidator());
+            var validator = new FhirJsonDeserializationTests.CustomComplexValidator();
 
-            static void test(IDeserializationValidator validator)
-            {
-                var xml = "<Patient xmlns=\"http://hl7.org/fhir\"><deceasedDateTime value=\"2070-01-01T12:01:02Z\"/></Patient>";
-                var reader = constructReader(xml);
-                reader.Read();
+            const string xml = "<Patient xmlns=\"http://hl7.org/fhir\"><deceasedDateTime value=\"2070-01-01T12:01:02Z\"/></Patient>";
+            var reader = constructReader(xml);
+            reader.Read();
 
-                var serializer = getTestDeserializer(new FhirXmlPocoDeserializerSettings { Validator = validator });
-                var state = new FhirXmlPocoDeserializerState();
+            var serializer = getTestDeserializer(new FhirXmlPocoDeserializerSettings { Validator = validator });
+            serializer.TryDeserializeResource(reader, out _, out var issues);
 
-                var result = serializer.DeserializeResourceInternal(reader, state);
-
-                state.Errors.HasExceptions.Should().BeTrue();
-                state.Errors.Should().AllBeOfType<CodedValidationException>()
-                    .And.ContainSingle(e => ((CodedValidationException)e).ErrorCode == CodedValidationException.DATETIME_LITERAL_INVALID_CODE);
-                result.Should().BeOfType<Patient>()
-                    .Which.Deceased.Should().BeOfType<FhirDateTime>()
-                    .Which.Value.Should().EndWith("+00:00");
-            }
+            var errors = issues.ToList();
+            errors.Should().HaveCount(1);
+            errors.Single().Should().BeOfType<CodedValidationException>().Which.ErrorCode.Should().Be(CodedValidationException.LITERAL_INVALID_CODE);
+            validator.DateTimeSeenByInstanceValidator?.Value.Should().Be("1972-11-30T12:00:00Z");
         }
 
         [TestMethod]

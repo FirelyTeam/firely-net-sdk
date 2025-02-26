@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- https://learn.microsoft.com/en-us/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
@@ -479,7 +479,126 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.INCORRECT_BASE64_DATA_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.LONG_CANNOT_BE_PARSED_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.LONG_INCORRECT_FORMAT_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.STRING_ISNOTAN_INSTANT_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.UNEXPECTED_JSON_TOKEN_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>F:Hl7.Fhir.Serialization.FhirXmlException.ENCOUNTERED_DTP_REFERENCES_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirXmlException.INCORRECT_BASE64_DATA_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirXmlException.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.CODE_LITERAL_INVALID_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.DATE_LITERAL_INVALID_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.DATETIME_LITERAL_INVALID_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.ID_LITERAL_INVALID_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.OID_LITERAL_INVALID_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.TIME_LITERAL_INVALID_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.URI_LITERAL_INVALID_CODE</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.UUID_LITERAL_INVALID_CODE</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -892,6 +1011,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.Base.Validate(System.ComponentModel.DataAnnotations.ValidationContext)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.Canonical.CanonicalUriForFhirCoreType(System.String)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -955,6 +1081,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.FhirBoolean.IsValidValue(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.FhirDateTime.op_Equality(Hl7.Fhir.Model.FhirDateTime,Hl7.Fhir.Model.FhirDateTime)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -1011,6 +1144,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.FhirDecimal.IsValidValue(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.Instant.op_Equality(Hl7.Fhir.Model.Instant,Hl7.Fhir.Model.Instant)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -1053,6 +1193,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.Integer.IsValidValue(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.IScopedNode.Children(System.String)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -1089,6 +1236,20 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.IScopedNode.TryResolveLocalReference(System.String,Hl7.Fhir.Model.IScopedNode@)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PositiveInt.IsValidValue(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PrimitiveType.OnObjectValueChanged</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -1166,6 +1327,27 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.Time.TryToTime(Hl7.Fhir.ElementModel.Types.Time@)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.UnsignedInt.IsValidValue(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.XHtml.IsValidNarrativeXhtml(System.String,System.String[]@)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.XHtml.IsValidNarrativeXhtml(System.String)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -1816,6 +1998,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.DataAnnotationDeserialzationValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonConverterFactory.#ctor(Hl7.Fhir.Introspection.ModelInspector,Hl7.Fhir.Serialization.FhirJsonPocoSerializerSettings,Hl7.Fhir.Serialization.FhirJsonPocoDeserializerSettings)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -1865,6 +2054,34 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.FhirXmlPocoDeserializerSettings.get_DisableBase64Decoding</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.FhirXmlPocoDeserializerSettings.set_DisableBase64Decoding(System.Boolean)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.IDeserializationValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.PropertyDeserializationContext.get_InstancePath</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.SerializationFilter.ForElements(System.String[])</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -1901,6 +2118,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Utility.SerializationUtil.JObjectFromJsonTextAsync(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Utility.SerializationUtil.RunFhirXhtmlSchemaValidation(System.String)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -1964,6 +2188,20 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Utility.SerializationUtil.WriteXmlToStringAsync(System.Func{System.Xml.XmlWriter,System.Threading.Tasks.Task},System.Boolean,System.Boolean)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Validation.NarrativeXhtmlPatternAttribute.IsValid(System.Object,Hl7.Fhir.Validation.NarrativeValidationKind,System.ComponentModel.DataAnnotations.ValidationContext)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Validation.ValidationContextExtensions.SetLocation(System.ComponentModel.DataAnnotations.ValidationContext,System.String)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -2159,7 +2397,126 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.INCORRECT_BASE64_DATA_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.LONG_CANNOT_BE_PARSED_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.LONG_INCORRECT_FORMAT_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.STRING_ISNOTAN_INSTANT_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirJsonException.UNEXPECTED_JSON_TOKEN_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>F:Hl7.Fhir.Serialization.FhirXmlException.ENCOUNTERED_DTP_REFERENCES_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirXmlException.INCORRECT_BASE64_DATA_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Serialization.FhirXmlException.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.CODE_LITERAL_INVALID_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.DATE_LITERAL_INVALID_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.DATETIME_LITERAL_INVALID_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.ID_LITERAL_INVALID_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.OID_LITERAL_INVALID_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.TIME_LITERAL_INVALID_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.URI_LITERAL_INVALID_CODE</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>F:Hl7.Fhir.Validation.CodedValidationException.UUID_LITERAL_INVALID_CODE</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -2572,6 +2929,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.Base.Validate(System.ComponentModel.DataAnnotations.ValidationContext)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.Canonical.CanonicalUriForFhirCoreType(System.String)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
@@ -2635,6 +2999,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.FhirBoolean.IsValidValue(System.String)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.FhirDateTime.op_Equality(Hl7.Fhir.Model.FhirDateTime,Hl7.Fhir.Model.FhirDateTime)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
@@ -2691,6 +3062,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.FhirDecimal.IsValidValue(System.String)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.Instant.op_Equality(Hl7.Fhir.Model.Instant,Hl7.Fhir.Model.Instant)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
@@ -2733,6 +3111,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.Integer.IsValidValue(System.String)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.IScopedNode.Children(System.String)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
@@ -2769,6 +3154,20 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.IScopedNode.TryResolveLocalReference(System.String,Hl7.Fhir.Model.IScopedNode@)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PositiveInt.IsValidValue(System.String)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PrimitiveType.OnObjectValueChanged</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -2846,6 +3245,27 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.Time.TryToTime(Hl7.Fhir.ElementModel.Types.Time@)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.UnsignedInt.IsValidValue(System.String)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.XHtml.IsValidNarrativeXhtml(System.String,System.String[]@)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.XHtml.IsValidNarrativeXhtml(System.String)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -3496,6 +3916,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.DataAnnotationDeserialzationValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonConverterFactory.#ctor(Hl7.Fhir.Introspection.ModelInspector,Hl7.Fhir.Serialization.FhirJsonPocoSerializerSettings,Hl7.Fhir.Serialization.FhirJsonPocoDeserializerSettings)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
@@ -3545,6 +3972,34 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.FhirXmlPocoDeserializerSettings.get_DisableBase64Decoding</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.FhirXmlPocoDeserializerSettings.set_DisableBase64Decoding(System.Boolean)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.IDeserializationValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.PropertyDeserializationContext.get_InstancePath</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.SerializationFilter.ForElements(System.String[])</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
@@ -3581,6 +4036,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Utility.SerializationUtil.JObjectFromJsonTextAsync(System.String)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Utility.SerializationUtil.RunFhirXhtmlSchemaValidation(System.String)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -3644,6 +4106,20 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Utility.SerializationUtil.WriteXmlToStringAsync(System.Func{System.Xml.XmlWriter,System.Threading.Tasks.Task},System.Boolean,System.Boolean)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Validation.NarrativeXhtmlPatternAttribute.IsValid(System.Object,Hl7.Fhir.Validation.NarrativeValidationKind,System.ComponentModel.DataAnnotations.ValidationContext)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Validation.ValidationContextExtensions.SetLocation(System.ComponentModel.DataAnnotations.ValidationContext,System.String)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -3853,6 +4329,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0005</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PrimitiveType.ValidateObjectValue(System.ComponentModel.DataAnnotations.ValidationContext)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0005</DiagnosticId>
     <Target>P:Hl7.Fhir.ElementModel.PocoNodeOrList.Parent</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -3888,7 +4371,28 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0005</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PrimitiveType.ValidateObjectValue(System.ComponentModel.DataAnnotations.ValidationContext)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0005</DiagnosticId>
     <Target>P:Hl7.Fhir.ElementModel.PocoNodeOrList.Parent</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0006</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.IDeserializationValidator.ValidateInstance(Hl7.Fhir.Model.Base,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0006</DiagnosticId>
+    <Target>M:Hl7.Fhir.Serialization.IDeserializationValidator.ValidateInstance(Hl7.Fhir.Model.Base,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

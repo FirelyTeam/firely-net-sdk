@@ -31,6 +31,8 @@
 #nullable enable
 
 using System;
+using System.ComponentModel.DataAnnotations;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
@@ -38,9 +40,14 @@ namespace Hl7.Fhir.Model;
 public partial class FhirBoolean
 {
     /// <summary>
-    /// Checks whether the given literal is correctly formatted.
+    /// Validates the JsonValue.
     /// </summary>
-    public static bool IsValidValue(string value) => P.Boolean.TryParse(value, out _);
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null or bool => null,
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
 
     /// <summary>
     /// Converts this FhirBoolean to a <see cref="P.Boolean" />.

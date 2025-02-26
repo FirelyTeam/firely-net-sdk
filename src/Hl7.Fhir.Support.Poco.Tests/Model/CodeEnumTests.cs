@@ -6,67 +6,72 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
-namespace Hl7.Fhir.Tests.Model
+namespace Hl7.Fhir.Tests.Model;
+
+[TestClass]
+public class CodeEnumTests
 {
-    [TestClass]
-    public class CodeEnumTests
+    [TestMethod]
+    public void SetValueUpdatesRawValue()
     {
-        [TestMethod]
-        public void SetValueUpdatesRawValue()
-        {
-            var c = new Code<AdministrativeGender>();
-            Assert.IsNull(c.ObjectValue);
-            Assert.IsNull(c.Value);
+        var c = new Code<AdministrativeGender>();
+        Assert.IsNull(c.ObjectValue);
+        Assert.IsNull(c.Value);
 
-            c = new Code<AdministrativeGender>(AdministrativeGender.Female);
-            Assert.AreEqual("female", c.ObjectValue);
-            Assert.AreEqual(AdministrativeGender.Female, c.Value);
+        c = new Code<AdministrativeGender>(AdministrativeGender.Female);
+        Assert.AreEqual("female", c.ObjectValue);
+        Assert.AreEqual(AdministrativeGender.Female, c.Value);
 
-            c.Value = AdministrativeGender.Unknown;
-            Assert.AreEqual("unknown", c.ObjectValue);
-            Assert.AreEqual(AdministrativeGender.Unknown, c.Value);
-        }
+        c.Value = AdministrativeGender.Unknown;
+        Assert.AreEqual("unknown", c.ObjectValue);
+        Assert.AreEqual(AdministrativeGender.Unknown, c.Value);
+    }
 
 
-        [TestMethod]
-        public void SetRawValueUpdatesValue()
-        {
-            var c = new Code<AdministrativeGender>(AdministrativeGender.Female);
-            c.ObjectValue = "male";
-            Assert.AreEqual(AdministrativeGender.Male, c.Value);
+    [TestMethod]
+    public void SetRawValueUpdatesValue()
+    {
+        var c = new Code<AdministrativeGender>(AdministrativeGender.Female) { ObjectValue = "male" };
+        Assert.AreEqual(AdministrativeGender.Male, c.Value);
 
-            c.ObjectValue = "maleX";
-            Assert.ThrowsException<InvalidCastException>(() => c.Value);
+        c.ObjectValue = "other";
+        Assert.AreEqual(AdministrativeGender.Other, c.Value);
 
-            c.Value = AdministrativeGender.Other;
-            Assert.AreEqual("other", c.ObjectValue);
+        c.ObjectValue = null;
+        Assert.IsNull(c.Value);
 
-            c.ObjectValue = null;
-            Assert.IsNull(c.Value);
-        }
+        c.ObjectValue = "maleX";
+        Assert.ThrowsException<COVE>(() => c.Value);
+        c.HasValidValue().Should().BeFalse();
 
-        [TestMethod]
-        public void TestToSystemCode()
-        {
-            var c = new Code<AdministrativeGender>(AdministrativeGender.Female).ToSystemCode();
+        c.ObjectValue = 314;
+        Assert.ThrowsException<COVE>(() => c.Value).Message.Should().Contain("integer 314 is not the right type of literal for a code.");
+        c.HasValidValue().Should().BeFalse();
+    }
 
-            Assert.AreEqual("female", c.Value);
-            Assert.AreEqual("http://hl7.org/fhir/administrative-gender", c.System);
+    [TestMethod]
+    public void TestToSystemCode()
+    {
+        var c = new Code<AdministrativeGender>(AdministrativeGender.Female).ToSystemCode();
 
-            c = new Code<TestEnum>(TestEnum.IHaveNoSystem).ToSystemCode();
-            Assert.AreEqual("IHaveNoSystem", c.Value);
-            Assert.IsNull(c.System);
-        }
+        Assert.AreEqual("female", c.Value);
+        Assert.AreEqual("http://hl7.org/fhir/administrative-gender", c.System);
 
-        [FhirEnumeration("TestEnum")]
-        private enum TestEnum
-        {
-            IHaveNoSystem = 4
-        }
+        c = new Code<TestEnum>(TestEnum.IHaveNoSystem).ToSystemCode();
+        Assert.AreEqual("IHaveNoSystem", c.Value);
+        Assert.IsNull(c.System);
+    }
+
+    [FhirEnumeration("TestEnum")]
+    private enum TestEnum
+    {
+        IHaveNoSystem = 4
     }
 }

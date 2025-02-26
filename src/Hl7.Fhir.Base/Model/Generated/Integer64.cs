@@ -8,6 +8,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -67,26 +68,6 @@ namespace Hl7.Fhir.Model
     }
 
     public Integer64(): this((long?)null) {}
-
-    /// <summary>
-    /// Primitive value of the element
-    /// </summary>
-    [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(SystemPrimitive.Long))]
-    [DataMember]
-    public long? Value
-    {
-      get
-{
-    return ObjectValue switch
-    {
-        null => null,
-        long l => l,
-        _ => Convert.ToInt64(ObjectValue)
-    };
-}
-      set { ObjectValue = value; OnPropertyChanged("Value"); }
-    }
 
     protected internal override Base DeepCopyInternal()
     {

@@ -58,6 +58,11 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
 
     public Date TruncateToDate() => Date.FromDateTimeOffset(_value, Precision > DateTimePrecision.Day ? DateTimePrecision.Day : Precision, HasOffset);
 
+    /// <summary>
+    /// Whether this DateTime represents a precise instant in time, according to FHIR rules.
+    /// </summary>
+    public bool IsInstant => HasOffset && Precision >= DateTimePrecision.Second;
+
     public int? Years => Precision >= DateTimePrecision.Year ? _value.Year : null;
     public int? Months => Precision >= DateTimePrecision.Month ? _value.Month : null;
     public int? Days => Precision >= DateTimePrecision.Day ? _value.Day : null;
@@ -79,7 +84,7 @@ public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable
     /// <summary>
     /// Whether the time specifies an offset to UTC
     /// </summary>
-    public bool HasOffset { get; private set; }
+    public bool HasOffset { get; }
 
     /// <summary>
     /// If this instance was constructed using Parse(), this is the original

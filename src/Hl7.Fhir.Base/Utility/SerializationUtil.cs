@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -114,19 +113,24 @@ public static class SerializationUtil
         }
     }
 
+    /// <summary>
+    /// Reads a string of Xml and returns a XDocument.
+    /// </summary>
+    /// <exception cref="FormatException">Thrown when the Xml parser detects an error.</exception>
+    /// <remarks>Microsoft's Xml parsing infrastructure normally throws XmlExceptions when it encounters invalid Xml,
+    /// but in this method specifically, we catch those exceptions and rethrow them as FormatExceptions. In retrospect,
+    /// this is a potential source of confusion, but would be a breaking change to fix.</remarks>
     public static XDocument XDocumentFromXmlText(string xml, bool ignoreComments = true)
     {
-        using (var reader = XmlReaderFromXmlText(xml))
-        {
-            return xDocumentFromReaderInternal(reader);
-        }
+        using var reader = XmlReaderFromXmlText(xml, ignoreComments);
+        return xDocumentFromReaderInternal(reader);
     }
 
     public static XmlReader XmlReaderFromXmlText(string xml, bool ignoreComments = true)
-        => WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))), ignoreComments);
+        => WrapXmlReader(XmlReader.Create(new StringReader(SanitizeXml(xml))), ignoreComments);
 
     public static Task<XmlReader> XmlReaderFromXmlTextAsync(string xml, bool ignoreComments = true)
-        => Task.FromResult(WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))), ignoreComments, async: true));
+        => Task.FromResult(WrapXmlReader(XmlReader.Create(new StringReader(SanitizeXml(xml))), ignoreComments, async: true));
 
     public static JsonReader JsonReaderFromJsonText(string json)
         => jsonReaderFromTextReader(new StringReader(json));
@@ -147,7 +151,6 @@ public static class SerializationUtil
         };
     }
 
-
     public static XmlReader WrapXmlReader(XmlReader xmlReader, bool ignoreComments = true, bool async = false)
     {
         var settings = new XmlReaderSettings
@@ -165,46 +168,38 @@ public static class SerializationUtil
     public static byte[] WriteXmlToBytes(Action<XmlWriter> serializer, bool pretty = false)
     {
         // [WMR 20160421] Explicit disposal
-        using (MemoryStream stream = new MemoryStream())
+        using var stream = new MemoryStream();
+        var settings = new XmlWriterSettings
         {
-            XmlWriterSettings settings = new XmlWriterSettings
-            {
-                Encoding = new UTF8Encoding(false),
-                OmitXmlDeclaration = true,
-                NewLineHandling = NewLineHandling.Entitize,
-                Indent = pretty
-            };
+            Encoding = new UTF8Encoding(false),
+            OmitXmlDeclaration = true,
+            NewLineHandling = NewLineHandling.Entitize,
+            Indent = pretty
+        };
 
-            using (XmlWriter xw = XmlWriter.Create(stream, settings))
-            {
-                serializer(xw);
-                xw.Flush();
-                return stream.ToArray();
-            }
-        }
+        using XmlWriter xw = XmlWriter.Create(stream, settings);
+        serializer(xw);
+        xw.Flush();
+        return stream.ToArray();
     }
 
     public static async Task<byte[]> WriteXmlToBytesAsync(Func<XmlWriter, Task> serializer, bool pretty = false)
     {
         // [WMR 20160421] Explicit disposal
-        using (MemoryStream stream = new MemoryStream())
+        using var stream = new MemoryStream();
+        var settings = new XmlWriterSettings
         {
-            XmlWriterSettings settings = new XmlWriterSettings
-            {
-                Encoding = new UTF8Encoding(false),
-                OmitXmlDeclaration = true,
-                NewLineHandling = NewLineHandling.Entitize,
-                Async = true,
-                Indent = pretty
-            };
+            Encoding = new UTF8Encoding(false),
+            OmitXmlDeclaration = true,
+            NewLineHandling = NewLineHandling.Entitize,
+            Async = true,
+            Indent = pretty
+        };
 
-            using (XmlWriter xw = XmlWriter.Create(stream, settings))
-            {
-                await serializer(xw).ConfigureAwait(false);
-                await xw.FlushAsync().ConfigureAwait(false);
-                return stream.ToArray();
-            }
-        }
+        using var xw = XmlWriter.Create(stream, settings);
+        await serializer(xw).ConfigureAwait(false);
+        await xw.FlushAsync().ConfigureAwait(false);
+        return stream.ToArray();
     }
 
     public static string WriteXmlToString(Action<XmlWriter> serializer, bool pretty = false)
@@ -423,20 +418,20 @@ public static class SerializationUtil
         var matches = RE.Matches(xml);
         if (matches.Count > 0)
         {
-            StringBuilder sbRE = new StringBuilder();
+            var sbRe = new StringBuilder();
             int currentPosition = 0;
             foreach (Match m in matches)
             {
                 if (xr.TryGetValue(m.Value, out string? value))
                 {
-                    sbRE.Append(xml.Substring(currentPosition, m.Index - currentPosition));
-                    sbRE.Append(value);
+                    sbRe.Append(xml.Substring(currentPosition, m.Index - currentPosition));
+                    sbRe.Append(value);
                     currentPosition = m.Index + m.Length;
                 }
                 // System.Diagnostics.Trace.WriteLine(String.Format("{0} - {1}: {2}", m.Index, m.Length, m.Value));
             }
-            sbRE.Append(xml.Substring(currentPosition));
-            resultRe = sbRE.ToString();
+            sbRe.Append(xml.Substring(currentPosition));
+            resultRe = sbRe.ToString();
         }
         else
         {
@@ -446,37 +441,22 @@ public static class SerializationUtil
         return resultRe;
     }
 
-    public static string[] RunFhirXhtmlSchemaValidation(string xmlText)
-    {
-        try
-        {
-            var doc = SerializationUtil.XDocumentFromXmlText(xmlText);
-            return RunFhirXhtmlSchemaValidation(doc);
-        }
-        catch (FormatException fe)
-        {
-            return new[] { fe.Message };
-        }
-    }
-
     public static string[] RunFhirXhtmlSchemaValidation(XDocument doc)
     {
-        var result = new List<string>();
-
         if (!doc.Root!.AtXhtmlDiv())
-            return new[] { $"Root element of XHTML is not a <div> from the XHTML namespace ({XmlNs.XHTML})." };
+            return [$"Root element of XHTML is not a <div> from the XHTML namespace ({XmlNs.XHTML})."];
 
         if (!hasContent(doc.Root!))
-            return new[] { $"The narrative SHALL have some non-whitespace content." };
+            return [$"The narrative SHALL have some non-whitespace content."];
 
-        doc.Validate(BASEFHIRSCHEMAS.CompiledSchemas, (s, a) => result.Add(a.Message));
+        var result = new List<string>();
+        doc.Validate(BASEFHIRSCHEMAS.CompiledSchemas, (_, a) => result.Add(a.Message));
         return result.ToArray();
 
         // content consist of xml elements with non-whitespace content (text or an image)
         static bool hasContent(XElement el)
             => el.DescendantsAndSelf().Any(e => !string.IsNullOrWhiteSpace(e.Value) || e.Name.LocalName == "img");
     }
-
 
     private static readonly Regex RE = new("(&[a-zA-Z0-9]+;)", RegexOptions.Compiled | RegexOptions.CultureInvariant);
     private static Dictionary<string, string>? _xmlReplacements;
@@ -754,7 +734,7 @@ public static class SerializationUtil
     /// </summary>
     internal static Base MakeSubsettedClone(Base source)
     {
-        var clone = (Base)source.DeepCopy();
+        var clone = source.DeepCopy();
         MarkSubsetted(clone);
         return clone;
     }

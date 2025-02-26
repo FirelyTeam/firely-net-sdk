@@ -23,20 +23,7 @@ public record FhirJsonConverterOptions
     /// <summary>
     /// Specifies the filter to use for summary serialization.
     /// </summary>
-    public SerializationFilter? SummaryFilter { get; set; } = default;
-
-    /// <summary>
-    /// If the caller will not access base64 data in the deserialized resources, base64 decoding
-    /// of <see cref="Base64Binary"/> values can be turned off to increase performance.
-    /// </summary>
-    /// <remarks>The <see cref="Base64Binary" /> element's <see cref="PrimitiveType.ObjectValue" /> will
-    /// still contain the unparsed base64 data and will therefore be retained and round-tripped.</remarks>
-    public bool DisableBase64Decoding { get; init; } = false;
-
-    /// <summary>
-    /// If set, this delegate is called when the deserializer fails to parse a primitive json value.
-    /// </summary>
-    public PrimitiveParseHandler? OnPrimitiveParseFailed { get; init; } = null;
+    public SerializationFilter? SummaryFilter { get; set; } = null;
 
     /// <summary>
     /// If set, this validator is invoked before the value is set in the object under construction to validate

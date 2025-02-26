@@ -40,8 +40,7 @@ using System.Threading;
 
 namespace Hl7.Fhir.Model;
 
-public abstract partial class Base : IAnnotatable,
-    IValidatableObject, INotifyPropertyChanged
+public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
 {
     /// <summary>
     /// FHIR Type Name
@@ -55,8 +54,6 @@ public abstract partial class Base : IAnnotatable,
     /// </summary>
     protected Dictionary<string, object> Overflow =>
         LazyInitializer.EnsureInitialized(ref _overflow, () => new Dictionary<string, object>())!;
-
-    public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext) => [];
 
     #region << Annotations >>
 

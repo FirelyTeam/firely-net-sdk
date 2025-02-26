@@ -29,10 +29,13 @@
 */
 
 using Hl7.Fhir.Utility;
+using System;
+using Hl7.Fhir.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Xml;
-using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
-
+using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 #nullable enable
 
 namespace Hl7.Fhir.Model;
@@ -43,35 +46,74 @@ namespace Hl7.Fhir.Model;
 public partial class XHtml
 {
     /// <summary>
-    /// Verifies the given string of XML against the FHIR narrative requirements from https://www.hl7.org/fhir/narrative.html.
+    /// Validates the JsonValue.
     /// </summary>
-    public static bool IsValidNarrativeXhtml(string value, out string[] errors)
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null => null,
+            string xml => ValidateXmlLiteral(xml, context),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
+
+    internal static COVE? ValidateXmlLiteral(string xml, ValidationContext? context)
     {
-        errors = SerializationUtil.RunFhirXhtmlSchemaValidation(value);
-        return !errors.Any();
+        return context?.GetNarrativeValidationKind() switch
+        {
+            null => null,
+            NarrativeValidationKind.None => null,
+            NarrativeValidationKind.Xml => IsValidXml(xml, out var error) ? null : make(error, null),
+            NarrativeValidationKind.FhirXhtml => IsValidNarrativeXhtml(xml, out var malformedXmlError,
+                    out var invalidNarrativeErrors) ? null : make(malformedXmlError, invalidNarrativeErrors),
+            var kind => throw new NotSupportedException($"Encountered unknown narrative validation kind '{kind}'.")
+        };
+
+        COVE? make(string? malformedXmlError, string[]? invalidNarrativeErrors) =>
+            malformedXmlError is not null
+                ? COVE.NARRATIVE_XML_IS_MALFORMED(context, malformedXmlError)
+                : invalidNarrativeErrors?.Any() == true
+                    ? COVE.NARRATIVE_XML_IS_INVALID(context, string.Concat(", ", invalidNarrativeErrors))
+                    : null;
     }
 
-    /// <inheritdoc cref="IsValidNarrativeXhtml(string, out string[])"/>
-    public static bool IsValidNarrativeXhtml(string value) => IsValidNarrativeXhtml(value, out _);
+    /// <summary>
+    /// Verifies the given string of XML against the FHIR narrative requirements from https://www.hl7.org/fhir/narrative.html.
+    /// </summary>
+    public static bool IsValidNarrativeXhtml(string text, out string? malformedXmlError, out string[] invalidNarrativeErrors)
+    {
+        try
+        {
+            var doc = SerializationUtil.XDocumentFromXmlText(text);
+            malformedXmlError = null;
+            invalidNarrativeErrors = SerializationUtil.RunFhirXhtmlSchemaValidation(doc);
+            return !invalidNarrativeErrors.Any();
+        }
+        catch (FormatException fe)
+        {
+            malformedXmlError = fe.Message;
+            invalidNarrativeErrors = [];
+            return false;
+        }
+    }
 
     /// <summary>
     /// Validates whether the given string of Xml is well-formatted.
     /// </summary>
-    public static bool IsValidXml(string value, out string? error)
+    public static bool IsValidXml(string value, out string? malformedXmlError)
     {
         try
         {
             using var reader = SerializationUtil.XmlReaderFromXmlText(value);
             while (reader.Read()) ;
-            error = null;
+            malformedXmlError = null;
             return true;
         }
         catch (XmlException xmlE)
         {
-            error = xmlE.Message;
+            malformedXmlError = xmlE.Message;
             return false;
         }
     }
 
-    protected internal override SystemPrimitive.Any? TryConvertToSystemTypeInternal() => null;
+    protected internal override P.Any? TryConvertToSystemTypeInternal() => Value is not null ? new P.String(Value) : null;
 }

@@ -73,10 +73,9 @@ namespace Hl7.Fhir.Tests.Rest
             // Ignore SSL certificate errors
             ServicePointManager.ServerCertificateValidationCallback += (a, b, c, d) => true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-               | SecurityProtocolType.Tls12
-               | SecurityProtocolType.Tls11
-               | SecurityProtocolType.Tls13;
-
+                                                   | SecurityProtocolType.Tls12
+                                                   | SecurityProtocolType.Tls11
+                                                   | SecurityProtocolType.Tls13;
             CreateItems();
         }
 

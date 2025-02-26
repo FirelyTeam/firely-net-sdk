@@ -61,7 +61,6 @@ namespace Hl7.Fhir.Tests.Rest
                | SecurityProtocolType.Tls12
                | SecurityProtocolType.Tls11
                | SecurityProtocolType.Tls13;
-
             CreateItems().WaitNoResult();
         }
 

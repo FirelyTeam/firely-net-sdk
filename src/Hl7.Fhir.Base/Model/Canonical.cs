@@ -31,6 +31,8 @@ using P = Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Rest;
 using System;
+using System.ComponentModel.DataAnnotations;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 #nullable enable
 
@@ -92,6 +94,19 @@ public partial class Canonical
     /// </summary>
     /// <param name="value"></param>
     public static implicit operator string?(Canonical? value) => value?.Value;
+
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null => null,
+            string unparsed when IsValidValue(unparsed) => null,
+            string unparsed => COVE.LITERAL_INVALID(context, unparsed, this.TypeName),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
+
 
     /// <summary>
     /// Checks whether the given literal is correctly formatted.

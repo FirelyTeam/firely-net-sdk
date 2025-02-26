@@ -8,108 +8,105 @@
 
 
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 
 #nullable enable
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+
+/// <summary>
+/// Contains contextual information for the property that is currently being deserialized and is passed
+/// to delegate methods implementing parts of user-definable deserialization and validation logic.
+/// </summary>
+public readonly struct PropertyDeserializationContext
 {
-    /// <summary>
-    /// Contains contextual information for the property that is currently being deserialized and is passed 
-    /// to delegate methods implementing parts of user-definable deserialization and validation logic.
-    /// </summary>
-    public readonly struct PropertyDeserializationContext
+    internal PropertyDeserializationContext(
+        Base objectInstance,
+        PathStack path,
+        string propertyName,
+        long lineNumber,
+        long linePosition,
+        PropertyMapping propMapping)
     {
-        internal PropertyDeserializationContext(
-            PathStack path,
-            string propertyName,
-            long lineNumber,
-            long linePosition,
-            PropertyMapping propMapping)
-        {
-            _path = path;
-            PropertyName = propertyName;
-            LineNumber = lineNumber;
-            LinePosition = linePosition;
-            ElementMapping = propMapping;
-        }
-
-        private readonly PathStack _path;
-
-        internal PathStack PathStack { get { return _path; } }
-
-        /// <summary>
-        /// The dotted path leading to this element from the root (has no indexers and includes the value virtual property on primitives)
-        /// </summary>
-        public string Path { get { return _path.GetPath(); } }
-
-        /// <summary>
-        /// The dotted FhirPath path leading to this element from the root with indexers (and no value property on primitives).
-        /// </summary>
-        public string InstancePath { get { return _path.GetInstancePath(); } }
-
-        /// <summary>
-        /// The property name for which an instance is currently being deserialized.
-        /// </summary>
-        public string PropertyName { get; }
-
-        /// <summary>
-        /// The approximate line number in the source data that is being deserialized.
-        /// </summary>
-        public long LineNumber { get; }
-
-        /// <summary>
-        /// The approximate line position in the source data that is being deserialized.
-        /// </summary>
-        public long LinePosition { get; }
-
-        /// <summary>
-        /// The metadata for the element that is currently being deserialized.
-        /// </summary>
-        public PropertyMapping ElementMapping { get; }
+        PathStack = path;
+        ObjectInstance = objectInstance;
+        PropertyName = propertyName;
+        LineNumber = lineNumber;
+        LinePosition = linePosition;
+        ElementMapping = propMapping;
     }
 
+    internal PathStack PathStack { get; }
+
     /// <summary>
-    /// Contains contextual information for the instance that is currently being deserialized and is passed 
-    /// to delegate methods implementing parts of user-definable deserialization and validation logic.
+    /// The dotted path leading to this element from the root (has no indexers and includes the value virtual property on primitives)
     /// </summary>
-    public readonly struct InstanceDeserializationContext
-    {
-        internal InstanceDeserializationContext(
-            PathStack path,
-            long lineNumber,
-            long linePosition,
-            ClassMapping instanceMapping)
-        {
-            _path = path;
-            LineNumber = lineNumber;
-            LinePosition = linePosition;
-            InstanceMapping = instanceMapping;
-        }
+    public string Path => PathStack.GetPath();
 
-        private readonly PathStack _path;
+    /// <summary>
+    /// The POCO this property is an element of.
+    /// </summary>
+    public Base ObjectInstance { get; }
 
-        internal PathStack PathStack { get { return _path; } }
+    /// <summary>
+    /// The property name for which an instance is currently being deserialized.
+    /// </summary>
+    public string PropertyName { get; }
 
-        /// <summary>
-        /// The dotted FhirPath path leading to this element from the root.
-        /// </summary>
-        public string Path { get { return _path.GetInstancePath(); } }
+    /// <summary>
+    /// The approximate line number in the source data that is being deserialized.
+    /// </summary>
+    public long LineNumber { get; }
 
-        /// <summary>
-        /// The approximate line number in the source data that is being deserialized.
-        /// </summary>
-        public long LineNumber { get; }
+    /// <summary>
+    /// The approximate line position in the source data that is being deserialized.
+    /// </summary>
+    public long LinePosition { get; }
 
-        /// <summary>
-        /// The approximate line position in the source data that is being deserialized.
-        /// </summary>
-        public long LinePosition { get; }
-
-        /// <summary>
-        /// The metadata for the type of which the current property is part of.
-        /// </summary>
-        public ClassMapping InstanceMapping { get; }
-    }
+    /// <summary>
+    /// The metadata for the element that is currently being deserialized.
+    /// </summary>
+    public PropertyMapping ElementMapping { get; }
 }
 
-#nullable restore
+/// <summary>
+/// Contains contextual information for the instance that is currently being deserialized and is passed
+/// to delegate methods implementing parts of user-definable deserialization and validation logic.
+/// </summary>
+public readonly struct InstanceDeserializationContext
+{
+    internal InstanceDeserializationContext(
+        PathStack path,
+        long lineNumber,
+        long linePosition,
+        ClassMapping instanceMapping)
+    {
+        PathStack = path;
+        LineNumber = lineNumber;
+        LinePosition = linePosition;
+        InstanceMapping = instanceMapping;
+    }
+
+    internal PathStack PathStack { get; }
+
+    /// <summary>
+    /// The dotted FhirPath path leading to this element from the root.
+    /// </summary>
+    public string Path => PathStack.GetPath();
+
+    /// <summary>
+    /// The approximate line number in the source data that is being deserialized.
+    /// </summary>
+    public long LineNumber { get; }
+
+    /// <summary>
+    /// The approximate line position in the source data that is being deserialized.
+    /// </summary>
+    public long LinePosition { get; }
+
+    /// <summary>
+    /// The metadata for the type of which the current property is part of.
+    /// </summary>
+    public ClassMapping InstanceMapping { get; }
+}

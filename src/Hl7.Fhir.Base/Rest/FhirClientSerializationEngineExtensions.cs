@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Rest
 
         public static BaseFhirClient WithCustomIgnoreListSerializer(this BaseFhirClient client, string[] ignoreList)
         {
-            client.Settings.SerializationEngine = FhirSerializationEngineFactory.Custom(client.Inspector, ignoreList.ToPredicate());
+            client.Settings.SerializationEngine = FhirSerializationEngineFactory.Custom(client.Inspector, ignoreList.IsInList());
             return client;
         }
 
@@ -113,4 +113,3 @@ namespace Hl7.Fhir.Rest
 }
 
 #nullable restore
-

@@ -195,7 +195,7 @@ namespace Hl7.Fhir.ElementModel
                     Integer64 fint64 => fint64.Value,
                     PositiveInt pint => pint.Value,
                     UnsignedInt unsint => unsint.Value,
-                    Base64Binary { Value: { } b64 } => PrimitiveTypeConverter.ConvertTo<string>(b64),
+                    Base64Binary { ObjectValue: { } b64 } => b64,
                     PrimitiveType prim => prim.ObjectValue,
                     _ => null
                 };

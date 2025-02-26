@@ -23,13 +23,7 @@ namespace Hl7.Fhir.Validation
     public class UuidPatternAttribute : ValidationAttribute
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) =>
-            value switch
-            {
-                null => ValidationResult.Success,
-                string s when Uuid.IsValidValue(s) => ValidationResult.Success,
-                string s => COVE.UUID_LITERAL_INVALID(validationContext, s).AsResult(validationContext),
-                _ => throw new ArgumentException($"{nameof(UuidPatternAttribute)} attributes can only be applied to string properties.")
-            };
+            new Uuid { ObjectValue = value }.ValidateObjectValue(validationContext)?.AsResult(validationContext);
     }
 }
 

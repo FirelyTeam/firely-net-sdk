@@ -37,7 +37,7 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual(complex, Typecasts.UnboxTo(singleC, typeof(PocoNode)));
 
             Assert.AreEqual(4L, Typecasts.UnboxTo(singleV, typeof(long)));
-            Assert.AreEqual(4L, Typecasts.UnboxTo(PocoNode.ForPrimitive<Integer64>(4L), typeof(long)));
+            Assert.AreEqual(4L, Typecasts.UnboxTo(PocoNode.ForPrimitive<Integer64>("4"), typeof(long)));
 
             Assert.AreEqual(complex, Typecasts.UnboxTo(complex, typeof(PocoNode)));
             Assert.IsNull(Typecasts.UnboxTo(null, typeof(string)));

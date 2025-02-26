@@ -10,6 +10,7 @@ using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -234,7 +235,7 @@ namespace Hl7.Fhir.Tests.Serialization
             try
             {
                 pser.Settings.AllowUnrecognizedEnums = false;
-                p = await pser.ParseAsync<Patient>(xml2);
+                await pser.ParseAsync<Patient>(xml2);
                 Assert.Fail();
             }
             catch (FormatException)
@@ -245,7 +246,7 @@ namespace Hl7.Fhir.Tests.Serialization
             // Now, allow unknown enums and check support
             pser.Settings.AllowUnrecognizedEnums = true;
             p = await pser.ParseAsync<Patient>(xml2);
-            Assert.ThrowsException<InvalidCastException>(() => p.Gender);
+            Assert.ThrowsException<CodedValidationException>(() => p.Gender);
             Assert.AreEqual("superman", p.GenderElement.ObjectValue);
         }
 

@@ -88,13 +88,13 @@ namespace Hl7.Fhir.FhirPath
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool HtmlChecks(this PocoNode focus) => focus is PrimitiveNode {Primitive: XHtml xhtml} && XHtml.IsValidNarrativeXhtml(xhtml.Value);
+        public static bool HtmlChecks(this PocoNode focus) =>
+            focus is PrimitiveNode {Primitive: XHtml {ObjectValue: string xhtml}} && XHtml.IsValidNarrativeXhtml(xhtml, out _, out _);
 
         public static IEnumerable<Base?> ToFhirValues(this IEnumerable<PocoNode> results)
         {
             return results.Select(r => r.Poco);
         }
-
 
         internal static decimal? AdjustBoundaryDecimal(decimal? input, long? precision, Func<decimal, decimal, decimal> op)
         {

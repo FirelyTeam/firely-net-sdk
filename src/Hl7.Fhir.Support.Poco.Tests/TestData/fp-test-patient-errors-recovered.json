@@ -16,7 +16,7 @@
       "id": "1",
       "identifier": [
         {
-          "id": "true",
+          "id": true,
           "system": "http://hl7.org/fhir/sid/us-ssn",
           "value": "444222222"
         }
@@ -223,7 +223,7 @@
       "system": "phone",
       "value": "555-555-2003",
       "use": "work",
-      "rank": "true"
+      "rank": true
     }
   ],
   "gender": "male",
@@ -234,7 +234,7 @@
       },
       {
         "url": "http://example.org/StructureDefinition/extension-with-number-as-code",
-        "valueCode": "28"
+        "valueCode": 28
       },
       { "url": "http://example.org/StructureDefinition/extension-without-type" },
       { "url": "http://example.org/StructureDefinition/extension-with-unknown-type" }
@@ -250,7 +250,7 @@
     ]
   },
   "deceasedBoolean": "false",
-  "multipleBirthInteger": "3.14",
+  "multipleBirthInteger": 3.14,
   "photo": [
     {
       "contentType": "image/gif",

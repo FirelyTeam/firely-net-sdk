@@ -31,16 +31,23 @@
 #nullable enable
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
 public partial class Integer
 {
     /// <summary>
-    /// Checks whether the given literal is correctly formatted.
+    /// Validates the JsonValue.
     /// </summary>
-    public static bool IsValidValue(string value) => P.Integer.TryParse(value, out _);
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null or int => null,
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
 
     /// <summary>
     /// Converts this Integer to a <see cref="P.Integer" />.

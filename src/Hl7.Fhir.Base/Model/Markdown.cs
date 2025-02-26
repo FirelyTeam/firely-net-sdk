@@ -31,16 +31,25 @@
 #nullable enable
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
 public partial class Markdown
 {
     /// <summary>
-    /// Checks whether the given literal is correctly formatted.
+    /// Validates the JsonValue.
     /// </summary>
-    public static bool IsValidValue(string value) => FhirString.IsValidValue(value);
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null => null,
+            string s when IsValidValue(s) => null,
+            string s => COVE.LITERAL_INVALID(context, s, this.TypeName),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
 
     public static implicit operator string?(Markdown? md) => md?.Value;
     public static implicit operator Markdown?(string? s) => s is not null ? new Markdown(s) : null;
@@ -55,4 +64,8 @@ public partial class Markdown
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() => Value is not null ? new P.String(Value) : null;
 
+    /// <summary>
+    /// Checks whether the given literal is correctly formatted.
+    /// </summary>
+    public static bool IsValidValue(string value) => FhirString.IsValidValue(value);
 }

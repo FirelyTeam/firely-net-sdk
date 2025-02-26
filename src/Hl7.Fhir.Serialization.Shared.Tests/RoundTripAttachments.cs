@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
+using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Serialization.Tests;
 
@@ -19,11 +20,11 @@ public class RoundTripAttachments
         private static IEnumerable<object[]> attachmentSource()
         {
             yield return ["{\"size\":\"12\", \"title\": \"Correct Attachment\"}", 12L, null!];
-            yield return ["{\"size\":12, \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_INCORRECT_FORMAT_CODE
+            yield return ["{\"size\":12, \"title\": \"An incorrect Attachment\"}", null!, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE
             ];
-            yield return ["{\"size\":25.345, \"title\": \"An incorrect Attachment\"}", null!, ERR.NUMBER_CANNOT_BE_PARSED_CODE
+            yield return ["{\"size\":25.345, \"title\": \"An incorrect Attachment\"}", null!, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE
             ];
-            yield return ["{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_CANNOT_BE_PARSED_CODE
+            yield return ["{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!, COVE.LITERAL_INVALID_CODE
             ];
         }
 #else
@@ -34,16 +35,11 @@ public class RoundTripAttachments
         yield return ["{\"size\":12, \"title\": \"Correct Attachment\"}", 12, null!];
         yield return
         [
-            "{\"size\":12.345, \"title\": \"An incorrect Attachment\"}", null!, ERR.NUMBER_CANNOT_BE_PARSED_CODE
+            "{\"size\":12.345, \"title\": \"An incorrect Attachment\"}", null!, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE
         ];
         yield return
         [
-            "{\"size\":\"12\", \"title\": \"An incorrect Attachment\"}", null!, ERR.UNEXPECTED_JSON_TOKEN_CODE
-        ];
-        yield return
-        [
-            "{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!,
-            ERR.UNEXPECTED_JSON_TOKEN_CODE
+            "{\"size\":\"12\", \"title\": \"An incorrect Attachment\"}", null!, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE
         ];
     }
 #endif

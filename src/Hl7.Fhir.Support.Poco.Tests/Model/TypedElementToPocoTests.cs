@@ -48,7 +48,7 @@ public class TypedElementToPocoTests
             [
                 [typeof(FhirString), "hi!", null],
                 [typeof(Integer), 42, null],
-                [typeof(Integer64), 42L, null],
+                [typeof(Integer64), 42L, "42"],
                 [typeof(FhirBoolean), true, null],
                 [typeof(FhirDecimal), 3.14m, null],
                 [typeof(DynamicPrimitive), 3.14, null],

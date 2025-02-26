@@ -31,12 +31,26 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using P = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Model;
 
 public partial class FhirString : ICoded
 {
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
+    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+        ObjectValue switch
+        {
+            null => null,
+            string s when IsValidValue(s) => null,
+            string s => COVE.LITERAL_INVALID(context, s, this.TypeName),
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+        };
+
     /// <summary>
     /// Checks whether the given literal is correctly formatted.
     /// </summary>

@@ -8,6 +8,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+using COVE=Hl7.Fhir.Validation.CodedValidationException;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -76,7 +77,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public decimal? Value
     {
-      get { return (decimal?)ObjectValue; }
+      get { return ObjectValue is decimal or null ? (decimal?)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
       set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 
