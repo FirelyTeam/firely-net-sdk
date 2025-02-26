@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -74,28 +77,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("fraction", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString FractionElement
+      public Hl7.Fhir.Model.FhirString? FractionElement
       {
         get { return _FractionElement; }
         set { _FractionElement = value; OnPropertyChanged("FractionElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _FractionElement;
+      private Hl7.Fhir.Model.FhirString? _FractionElement;
 
       /// <summary>
       /// This element is capturing information about the fraction of a plant part, or human plasma for fractionation
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Fraction
+      public string? Fraction
       {
-        get { return FractionElement != null ? FractionElement.Value : null; }
+        get => _FractionElement?.Value;
         set
         {
-          if (value == null)
-            FractionElement = null;
-          else
-            FractionElement = new Hl7.Fhir.Model.FhirString(value);
+          FractionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Fraction");
         }
       }
@@ -105,26 +105,22 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("materialType", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept MaterialType
+      public Hl7.Fhir.Model.CodeableConcept? MaterialType
       {
         get { return _MaterialType; }
         set { _MaterialType = value; OnPropertyChanged("MaterialType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _MaterialType;
+      private Hl7.Fhir.Model.CodeableConcept? _MaterialType;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as FractionDescriptionComponent;
-
-        if (dest == null)
-        {
+        if(other is not FractionDescriptionComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(FractionElement != null) dest.FractionElement = (Hl7.Fhir.Model.FhirString)FractionElement.DeepCopyInternal();
-        if(MaterialType != null) dest.MaterialType = (Hl7.Fhir.Model.CodeableConcept)MaterialType.DeepCopyInternal();
+        if(_FractionElement is not null) dest.FractionElement = (Hl7.Fhir.Model.FhirString)_FractionElement.DeepCopyInternal();
+        if(_MaterialType is not null) dest.MaterialType = (Hl7.Fhir.Model.CodeableConcept)_MaterialType.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -136,41 +132,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as FractionDescriptionComponent;
-        if(otherT == null) return false;
+        if(other is not FractionDescriptionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(FractionElement, otherT.FractionElement)) return false;
-        if(!comparer.Equals(MaterialType, otherT.MaterialType)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_FractionElement, otherT._FractionElement)) return false;
+        if(!comparer.Equals(_MaterialType, otherT._MaterialType)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "fraction":
-            value = FractionElement;
-            return FractionElement is not null;
+            value = _FractionElement;
+            return _FractionElement is not null;
           case "materialType":
-            value = MaterialType;
-            return MaterialType is not null;
+            value = _MaterialType;
+            return _MaterialType is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "fraction":
-            FractionElement = (Hl7.Fhir.Model.FhirString)value;
+            FractionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "materialType":
-            MaterialType = (Hl7.Fhir.Model.CodeableConcept)value;
+            MaterialType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -181,8 +178,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (FractionElement is not null) yield return new KeyValuePair<string,object>("fraction",FractionElement);
-        if (MaterialType is not null) yield return new KeyValuePair<string,object>("materialType",MaterialType);
+        if (_FractionElement is not null) yield return new KeyValuePair<string,object>("fraction",_FractionElement);
+        if (_MaterialType is not null) yield return new KeyValuePair<string,object>("materialType",_MaterialType);
       }
 
     }
@@ -205,80 +202,77 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("family", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Family
+      public Hl7.Fhir.Model.CodeableConcept? Family
       {
         get { return _Family; }
         set { _Family = value; OnPropertyChanged("Family"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Family;
+      private Hl7.Fhir.Model.CodeableConcept? _Family;
 
       /// <summary>
       /// The genus of an organism shall be specified; refers to the Latin epithet of the genus element of the plant/animal scientific name; it is present in names for genera, species and infraspecies.
       /// </summary>
       [FhirElement("genus", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Genus
+      public Hl7.Fhir.Model.CodeableConcept? Genus
       {
         get { return _Genus; }
         set { _Genus = value; OnPropertyChanged("Genus"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Genus;
+      private Hl7.Fhir.Model.CodeableConcept? _Genus;
 
       /// <summary>
       /// The species of an organism shall be specified; refers to the Latin epithet of the species of the plant/animal; it is present in names for species and infraspecies.
       /// </summary>
       [FhirElement("species", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Species
+      public Hl7.Fhir.Model.CodeableConcept? Species
       {
         get { return _Species; }
         set { _Species = value; OnPropertyChanged("Species"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Species;
+      private Hl7.Fhir.Model.CodeableConcept? _Species;
 
       /// <summary>
       /// The Intraspecific type of an organism shall be specified.
       /// </summary>
       [FhirElement("intraspecificType", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept IntraspecificType
+      public Hl7.Fhir.Model.CodeableConcept? IntraspecificType
       {
         get { return _IntraspecificType; }
         set { _IntraspecificType = value; OnPropertyChanged("IntraspecificType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _IntraspecificType;
+      private Hl7.Fhir.Model.CodeableConcept? _IntraspecificType;
 
       /// <summary>
       /// The intraspecific description of an organism shall be specified based on a controlled vocabulary. For Influenza Vaccine, the intraspecific description shall contain the syntax of the antigen in line with the WHO convention.
       /// </summary>
       [FhirElement("intraspecificDescription", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString IntraspecificDescriptionElement
+      public Hl7.Fhir.Model.FhirString? IntraspecificDescriptionElement
       {
         get { return _IntraspecificDescriptionElement; }
         set { _IntraspecificDescriptionElement = value; OnPropertyChanged("IntraspecificDescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _IntraspecificDescriptionElement;
+      private Hl7.Fhir.Model.FhirString? _IntraspecificDescriptionElement;
 
       /// <summary>
       /// The intraspecific description of an organism shall be specified based on a controlled vocabulary. For Influenza Vaccine, the intraspecific description shall contain the syntax of the antigen in line with the WHO convention
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string IntraspecificDescription
+      public string? IntraspecificDescription
       {
-        get { return IntraspecificDescriptionElement != null ? IntraspecificDescriptionElement.Value : null; }
+        get => _IntraspecificDescriptionElement?.Value;
         set
         {
-          if (value == null)
-            IntraspecificDescriptionElement = null;
-          else
-            IntraspecificDescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+          IntraspecificDescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("IntraspecificDescription");
         }
       }
@@ -291,56 +285,52 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent> Author
       {
-        get { if(_Author==null) _Author = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>(); return _Author; }
+        get => _Author ??= [];
         set { _Author = value; OnPropertyChanged("Author"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent> _Author;
+      private List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>? _Author;
 
       /// <summary>
       /// 4.9.13.8.1 Hybrid species maternal organism ID (Optional).
       /// </summary>
       [FhirElement("hybrid", InSummary=true, Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent Hybrid
+      public Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent? Hybrid
       {
         get { return _Hybrid; }
         set { _Hybrid = value; OnPropertyChanged("Hybrid"); }
       }
 
-      private Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent _Hybrid;
+      private Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent? _Hybrid;
 
       /// <summary>
       /// 4.9.13.7.1 Kingdom (Conditional).
       /// </summary>
       [FhirElement("organismGeneral", InSummary=true, Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent OrganismGeneral
+      public Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent? OrganismGeneral
       {
         get { return _OrganismGeneral; }
         set { _OrganismGeneral = value; OnPropertyChanged("OrganismGeneral"); }
       }
 
-      private Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent _OrganismGeneral;
+      private Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent? _OrganismGeneral;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as OrganismComponent;
-
-        if (dest == null)
-        {
+        if(other is not OrganismComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Family != null) dest.Family = (Hl7.Fhir.Model.CodeableConcept)Family.DeepCopyInternal();
-        if(Genus != null) dest.Genus = (Hl7.Fhir.Model.CodeableConcept)Genus.DeepCopyInternal();
-        if(Species != null) dest.Species = (Hl7.Fhir.Model.CodeableConcept)Species.DeepCopyInternal();
-        if(IntraspecificType != null) dest.IntraspecificType = (Hl7.Fhir.Model.CodeableConcept)IntraspecificType.DeepCopyInternal();
-        if(IntraspecificDescriptionElement != null) dest.IntraspecificDescriptionElement = (Hl7.Fhir.Model.FhirString)IntraspecificDescriptionElement.DeepCopyInternal();
-        if(Author.Any()) dest.Author = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>(Author.DeepCopyInternal());
-        if(Hybrid != null) dest.Hybrid = (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent)Hybrid.DeepCopyInternal();
-        if(OrganismGeneral != null) dest.OrganismGeneral = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent)OrganismGeneral.DeepCopyInternal();
+        if(_Family is not null) dest.Family = (Hl7.Fhir.Model.CodeableConcept)_Family.DeepCopyInternal();
+        if(_Genus is not null) dest.Genus = (Hl7.Fhir.Model.CodeableConcept)_Genus.DeepCopyInternal();
+        if(_Species is not null) dest.Species = (Hl7.Fhir.Model.CodeableConcept)_Species.DeepCopyInternal();
+        if(_IntraspecificType is not null) dest.IntraspecificType = (Hl7.Fhir.Model.CodeableConcept)_IntraspecificType.DeepCopyInternal();
+        if(_IntraspecificDescriptionElement is not null) dest.IntraspecificDescriptionElement = (Hl7.Fhir.Model.FhirString)_IntraspecificDescriptionElement.DeepCopyInternal();
+        if(_Author is not null) dest.Author = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>(_Author.DeepCopyInternal());
+        if(_Hybrid is not null) dest.Hybrid = (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent)_Hybrid.DeepCopyInternal();
+        if(_OrganismGeneral is not null) dest.OrganismGeneral = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent)_OrganismGeneral.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -352,83 +342,84 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as OrganismComponent;
-        if(otherT == null) return false;
+        if(other is not OrganismComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Family, otherT.Family)) return false;
-        if(!comparer.Equals(Genus, otherT.Genus)) return false;
-        if(!comparer.Equals(Species, otherT.Species)) return false;
-        if(!comparer.Equals(IntraspecificType, otherT.IntraspecificType)) return false;
-        if(!comparer.Equals(IntraspecificDescriptionElement, otherT.IntraspecificDescriptionElement)) return false;
-        if(!comparer.ListEquals(Author, otherT.Author)) return false;
-        if(!comparer.Equals(Hybrid, otherT.Hybrid)) return false;
-        if(!comparer.Equals(OrganismGeneral, otherT.OrganismGeneral)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Family, otherT._Family)) return false;
+        if(!comparer.Equals(_Genus, otherT._Genus)) return false;
+        if(!comparer.Equals(_Species, otherT._Species)) return false;
+        if(!comparer.Equals(_IntraspecificType, otherT._IntraspecificType)) return false;
+        if(!comparer.Equals(_IntraspecificDescriptionElement, otherT._IntraspecificDescriptionElement)) return false;
+        if(!comparer.ListEquals(_Author, otherT._Author)) return false;
+        if(!comparer.Equals(_Hybrid, otherT._Hybrid)) return false;
+        if(!comparer.Equals(_OrganismGeneral, otherT._OrganismGeneral)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "family":
-            value = Family;
-            return Family is not null;
+            value = _Family;
+            return _Family is not null;
           case "genus":
-            value = Genus;
-            return Genus is not null;
+            value = _Genus;
+            return _Genus is not null;
           case "species":
-            value = Species;
-            return Species is not null;
+            value = _Species;
+            return _Species is not null;
           case "intraspecificType":
-            value = IntraspecificType;
-            return IntraspecificType is not null;
+            value = _IntraspecificType;
+            return _IntraspecificType is not null;
           case "intraspecificDescription":
-            value = IntraspecificDescriptionElement;
-            return IntraspecificDescriptionElement is not null;
+            value = _IntraspecificDescriptionElement;
+            return _IntraspecificDescriptionElement is not null;
           case "author":
-            value = Author;
-            return Author?.Any() == true;
+            value = _Author;
+            return _Author?.Any() == true;
           case "hybrid":
-            value = Hybrid;
-            return Hybrid is not null;
+            value = _Hybrid;
+            return _Hybrid is not null;
           case "organismGeneral":
-            value = OrganismGeneral;
-            return OrganismGeneral is not null;
+            value = _OrganismGeneral;
+            return _OrganismGeneral is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "family":
-            Family = (Hl7.Fhir.Model.CodeableConcept)value;
+            Family = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "genus":
-            Genus = (Hl7.Fhir.Model.CodeableConcept)value;
+            Genus = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "species":
-            Species = (Hl7.Fhir.Model.CodeableConcept)value;
+            Species = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "intraspecificType":
-            IntraspecificType = (Hl7.Fhir.Model.CodeableConcept)value;
+            IntraspecificType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "intraspecificDescription":
-            IntraspecificDescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+            IntraspecificDescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "author":
-            Author = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>)value;
+            Author = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>?)value!;
             return this;
           case "hybrid":
-            Hybrid = (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent)value;
+            Hybrid = (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent?)value;
             return this;
           case "organismGeneral":
-            OrganismGeneral = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent)value;
+            OrganismGeneral = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -439,14 +430,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Family is not null) yield return new KeyValuePair<string,object>("family",Family);
-        if (Genus is not null) yield return new KeyValuePair<string,object>("genus",Genus);
-        if (Species is not null) yield return new KeyValuePair<string,object>("species",Species);
-        if (IntraspecificType is not null) yield return new KeyValuePair<string,object>("intraspecificType",IntraspecificType);
-        if (IntraspecificDescriptionElement is not null) yield return new KeyValuePair<string,object>("intraspecificDescription",IntraspecificDescriptionElement);
-        if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
-        if (Hybrid is not null) yield return new KeyValuePair<string,object>("hybrid",Hybrid);
-        if (OrganismGeneral is not null) yield return new KeyValuePair<string,object>("organismGeneral",OrganismGeneral);
+        if (_Family is not null) yield return new KeyValuePair<string,object>("family",_Family);
+        if (_Genus is not null) yield return new KeyValuePair<string,object>("genus",_Genus);
+        if (_Species is not null) yield return new KeyValuePair<string,object>("species",_Species);
+        if (_IntraspecificType is not null) yield return new KeyValuePair<string,object>("intraspecificType",_IntraspecificType);
+        if (_IntraspecificDescriptionElement is not null) yield return new KeyValuePair<string,object>("intraspecificDescription",_IntraspecificDescriptionElement);
+        if (_Author?.Any() == true) yield return new KeyValuePair<string,object>("author",_Author);
+        if (_Hybrid is not null) yield return new KeyValuePair<string,object>("hybrid",_Hybrid);
+        if (_OrganismGeneral is not null) yield return new KeyValuePair<string,object>("organismGeneral",_OrganismGeneral);
       }
 
     }
@@ -469,57 +460,50 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("authorType", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept AuthorType
+      public Hl7.Fhir.Model.CodeableConcept? AuthorType
       {
         get { return _AuthorType; }
         set { _AuthorType = value; OnPropertyChanged("AuthorType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _AuthorType;
+      private Hl7.Fhir.Model.CodeableConcept? _AuthorType;
 
       /// <summary>
       /// The author of an organism species shall be specified. The author year of an organism shall also be specified when applicable; refers to the year in which the first author(s) published the infraspecific plant/animal name (of any rank).
       /// </summary>
       [FhirElement("authorDescription", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString AuthorDescriptionElement
+      public Hl7.Fhir.Model.FhirString? AuthorDescriptionElement
       {
         get { return _AuthorDescriptionElement; }
         set { _AuthorDescriptionElement = value; OnPropertyChanged("AuthorDescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _AuthorDescriptionElement;
+      private Hl7.Fhir.Model.FhirString? _AuthorDescriptionElement;
 
       /// <summary>
       /// The author of an organism species shall be specified. The author year of an organism shall also be specified when applicable; refers to the year in which the first author(s) published the infraspecific plant/animal name (of any rank)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string AuthorDescription
+      public string? AuthorDescription
       {
-        get { return AuthorDescriptionElement != null ? AuthorDescriptionElement.Value : null; }
+        get => _AuthorDescriptionElement?.Value;
         set
         {
-          if (value == null)
-            AuthorDescriptionElement = null;
-          else
-            AuthorDescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+          AuthorDescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("AuthorDescription");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as AuthorComponent;
-
-        if (dest == null)
-        {
+        if(other is not AuthorComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(AuthorType != null) dest.AuthorType = (Hl7.Fhir.Model.CodeableConcept)AuthorType.DeepCopyInternal();
-        if(AuthorDescriptionElement != null) dest.AuthorDescriptionElement = (Hl7.Fhir.Model.FhirString)AuthorDescriptionElement.DeepCopyInternal();
+        if(_AuthorType is not null) dest.AuthorType = (Hl7.Fhir.Model.CodeableConcept)_AuthorType.DeepCopyInternal();
+        if(_AuthorDescriptionElement is not null) dest.AuthorDescriptionElement = (Hl7.Fhir.Model.FhirString)_AuthorDescriptionElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -531,41 +515,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as AuthorComponent;
-        if(otherT == null) return false;
+        if(other is not AuthorComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(AuthorType, otherT.AuthorType)) return false;
-        if(!comparer.Equals(AuthorDescriptionElement, otherT.AuthorDescriptionElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_AuthorType, otherT._AuthorType)) return false;
+        if(!comparer.Equals(_AuthorDescriptionElement, otherT._AuthorDescriptionElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "authorType":
-            value = AuthorType;
-            return AuthorType is not null;
+            value = _AuthorType;
+            return _AuthorType is not null;
           case "authorDescription":
-            value = AuthorDescriptionElement;
-            return AuthorDescriptionElement is not null;
+            value = _AuthorDescriptionElement;
+            return _AuthorDescriptionElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "authorType":
-            AuthorType = (Hl7.Fhir.Model.CodeableConcept)value;
+            AuthorType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "authorDescription":
-            AuthorDescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+            AuthorDescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -576,8 +561,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (AuthorType is not null) yield return new KeyValuePair<string,object>("authorType",AuthorType);
-        if (AuthorDescriptionElement is not null) yield return new KeyValuePair<string,object>("authorDescription",AuthorDescriptionElement);
+        if (_AuthorType is not null) yield return new KeyValuePair<string,object>("authorType",_AuthorType);
+        if (_AuthorDescriptionElement is not null) yield return new KeyValuePair<string,object>("authorDescription",_AuthorDescriptionElement);
       }
 
     }
@@ -600,28 +585,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("maternalOrganismId", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString MaternalOrganismIdElement
+      public Hl7.Fhir.Model.FhirString? MaternalOrganismIdElement
       {
         get { return _MaternalOrganismIdElement; }
         set { _MaternalOrganismIdElement = value; OnPropertyChanged("MaternalOrganismIdElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _MaternalOrganismIdElement;
+      private Hl7.Fhir.Model.FhirString? _MaternalOrganismIdElement;
 
       /// <summary>
       /// The identifier of the maternal species constituting the hybrid organism shall be specified based on a controlled vocabulary. For plants, the parents aren’t always known, and it is unlikely that it will be known which is maternal and which is paternal
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string MaternalOrganismId
+      public string? MaternalOrganismId
       {
-        get { return MaternalOrganismIdElement != null ? MaternalOrganismIdElement.Value : null; }
+        get => _MaternalOrganismIdElement?.Value;
         set
         {
-          if (value == null)
-            MaternalOrganismIdElement = null;
-          else
-            MaternalOrganismIdElement = new Hl7.Fhir.Model.FhirString(value);
+          MaternalOrganismIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MaternalOrganismId");
         }
       }
@@ -631,28 +613,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("maternalOrganismName", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString MaternalOrganismNameElement
+      public Hl7.Fhir.Model.FhirString? MaternalOrganismNameElement
       {
         get { return _MaternalOrganismNameElement; }
         set { _MaternalOrganismNameElement = value; OnPropertyChanged("MaternalOrganismNameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _MaternalOrganismNameElement;
+      private Hl7.Fhir.Model.FhirString? _MaternalOrganismNameElement;
 
       /// <summary>
       /// The name of the maternal species constituting the hybrid organism shall be specified. For plants, the parents aren’t always known, and it is unlikely that it will be known which is maternal and which is paternal
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string MaternalOrganismName
+      public string? MaternalOrganismName
       {
-        get { return MaternalOrganismNameElement != null ? MaternalOrganismNameElement.Value : null; }
+        get => _MaternalOrganismNameElement?.Value;
         set
         {
-          if (value == null)
-            MaternalOrganismNameElement = null;
-          else
-            MaternalOrganismNameElement = new Hl7.Fhir.Model.FhirString(value);
+          MaternalOrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MaternalOrganismName");
         }
       }
@@ -662,28 +641,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("paternalOrganismId", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString PaternalOrganismIdElement
+      public Hl7.Fhir.Model.FhirString? PaternalOrganismIdElement
       {
         get { return _PaternalOrganismIdElement; }
         set { _PaternalOrganismIdElement = value; OnPropertyChanged("PaternalOrganismIdElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _PaternalOrganismIdElement;
+      private Hl7.Fhir.Model.FhirString? _PaternalOrganismIdElement;
 
       /// <summary>
       /// The identifier of the paternal species constituting the hybrid organism shall be specified based on a controlled vocabulary
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string PaternalOrganismId
+      public string? PaternalOrganismId
       {
-        get { return PaternalOrganismIdElement != null ? PaternalOrganismIdElement.Value : null; }
+        get => _PaternalOrganismIdElement?.Value;
         set
         {
-          if (value == null)
-            PaternalOrganismIdElement = null;
-          else
-            PaternalOrganismIdElement = new Hl7.Fhir.Model.FhirString(value);
+          PaternalOrganismIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("PaternalOrganismId");
         }
       }
@@ -693,28 +669,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("paternalOrganismName", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString PaternalOrganismNameElement
+      public Hl7.Fhir.Model.FhirString? PaternalOrganismNameElement
       {
         get { return _PaternalOrganismNameElement; }
         set { _PaternalOrganismNameElement = value; OnPropertyChanged("PaternalOrganismNameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _PaternalOrganismNameElement;
+      private Hl7.Fhir.Model.FhirString? _PaternalOrganismNameElement;
 
       /// <summary>
       /// The name of the paternal species constituting the hybrid organism shall be specified
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string PaternalOrganismName
+      public string? PaternalOrganismName
       {
-        get { return PaternalOrganismNameElement != null ? PaternalOrganismNameElement.Value : null; }
+        get => _PaternalOrganismNameElement?.Value;
         set
         {
-          if (value == null)
-            PaternalOrganismNameElement = null;
-          else
-            PaternalOrganismNameElement = new Hl7.Fhir.Model.FhirString(value);
+          PaternalOrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("PaternalOrganismName");
         }
       }
@@ -724,29 +697,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("hybridType", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept HybridType
+      public Hl7.Fhir.Model.CodeableConcept? HybridType
       {
         get { return _HybridType; }
         set { _HybridType = value; OnPropertyChanged("HybridType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _HybridType;
+      private Hl7.Fhir.Model.CodeableConcept? _HybridType;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as HybridComponent;
-
-        if (dest == null)
-        {
+        if(other is not HybridComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(MaternalOrganismIdElement != null) dest.MaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString)MaternalOrganismIdElement.DeepCopyInternal();
-        if(MaternalOrganismNameElement != null) dest.MaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString)MaternalOrganismNameElement.DeepCopyInternal();
-        if(PaternalOrganismIdElement != null) dest.PaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString)PaternalOrganismIdElement.DeepCopyInternal();
-        if(PaternalOrganismNameElement != null) dest.PaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString)PaternalOrganismNameElement.DeepCopyInternal();
-        if(HybridType != null) dest.HybridType = (Hl7.Fhir.Model.CodeableConcept)HybridType.DeepCopyInternal();
+        if(_MaternalOrganismIdElement is not null) dest.MaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString)_MaternalOrganismIdElement.DeepCopyInternal();
+        if(_MaternalOrganismNameElement is not null) dest.MaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString)_MaternalOrganismNameElement.DeepCopyInternal();
+        if(_PaternalOrganismIdElement is not null) dest.PaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString)_PaternalOrganismIdElement.DeepCopyInternal();
+        if(_PaternalOrganismNameElement is not null) dest.PaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString)_PaternalOrganismNameElement.DeepCopyInternal();
+        if(_HybridType is not null) dest.HybridType = (Hl7.Fhir.Model.CodeableConcept)_HybridType.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -758,62 +727,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as HybridComponent;
-        if(otherT == null) return false;
+        if(other is not HybridComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(MaternalOrganismIdElement, otherT.MaternalOrganismIdElement)) return false;
-        if(!comparer.Equals(MaternalOrganismNameElement, otherT.MaternalOrganismNameElement)) return false;
-        if(!comparer.Equals(PaternalOrganismIdElement, otherT.PaternalOrganismIdElement)) return false;
-        if(!comparer.Equals(PaternalOrganismNameElement, otherT.PaternalOrganismNameElement)) return false;
-        if(!comparer.Equals(HybridType, otherT.HybridType)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_MaternalOrganismIdElement, otherT._MaternalOrganismIdElement)) return false;
+        if(!comparer.Equals(_MaternalOrganismNameElement, otherT._MaternalOrganismNameElement)) return false;
+        if(!comparer.Equals(_PaternalOrganismIdElement, otherT._PaternalOrganismIdElement)) return false;
+        if(!comparer.Equals(_PaternalOrganismNameElement, otherT._PaternalOrganismNameElement)) return false;
+        if(!comparer.Equals(_HybridType, otherT._HybridType)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "maternalOrganismId":
-            value = MaternalOrganismIdElement;
-            return MaternalOrganismIdElement is not null;
+            value = _MaternalOrganismIdElement;
+            return _MaternalOrganismIdElement is not null;
           case "maternalOrganismName":
-            value = MaternalOrganismNameElement;
-            return MaternalOrganismNameElement is not null;
+            value = _MaternalOrganismNameElement;
+            return _MaternalOrganismNameElement is not null;
           case "paternalOrganismId":
-            value = PaternalOrganismIdElement;
-            return PaternalOrganismIdElement is not null;
+            value = _PaternalOrganismIdElement;
+            return _PaternalOrganismIdElement is not null;
           case "paternalOrganismName":
-            value = PaternalOrganismNameElement;
-            return PaternalOrganismNameElement is not null;
+            value = _PaternalOrganismNameElement;
+            return _PaternalOrganismNameElement is not null;
           case "hybridType":
-            value = HybridType;
-            return HybridType is not null;
+            value = _HybridType;
+            return _HybridType is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "maternalOrganismId":
-            MaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString)value;
+            MaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "maternalOrganismName":
-            MaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString)value;
+            MaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "paternalOrganismId":
-            PaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString)value;
+            PaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "paternalOrganismName":
-            PaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString)value;
+            PaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "hybridType":
-            HybridType = (Hl7.Fhir.Model.CodeableConcept)value;
+            HybridType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -824,11 +794,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (MaternalOrganismIdElement is not null) yield return new KeyValuePair<string,object>("maternalOrganismId",MaternalOrganismIdElement);
-        if (MaternalOrganismNameElement is not null) yield return new KeyValuePair<string,object>("maternalOrganismName",MaternalOrganismNameElement);
-        if (PaternalOrganismIdElement is not null) yield return new KeyValuePair<string,object>("paternalOrganismId",PaternalOrganismIdElement);
-        if (PaternalOrganismNameElement is not null) yield return new KeyValuePair<string,object>("paternalOrganismName",PaternalOrganismNameElement);
-        if (HybridType is not null) yield return new KeyValuePair<string,object>("hybridType",HybridType);
+        if (_MaternalOrganismIdElement is not null) yield return new KeyValuePair<string,object>("maternalOrganismId",_MaternalOrganismIdElement);
+        if (_MaternalOrganismNameElement is not null) yield return new KeyValuePair<string,object>("maternalOrganismName",_MaternalOrganismNameElement);
+        if (_PaternalOrganismIdElement is not null) yield return new KeyValuePair<string,object>("paternalOrganismId",_PaternalOrganismIdElement);
+        if (_PaternalOrganismNameElement is not null) yield return new KeyValuePair<string,object>("paternalOrganismName",_PaternalOrganismNameElement);
+        if (_HybridType is not null) yield return new KeyValuePair<string,object>("hybridType",_HybridType);
       }
 
     }
@@ -851,67 +821,63 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("kingdom", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Kingdom
+      public Hl7.Fhir.Model.CodeableConcept? Kingdom
       {
         get { return _Kingdom; }
         set { _Kingdom = value; OnPropertyChanged("Kingdom"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Kingdom;
+      private Hl7.Fhir.Model.CodeableConcept? _Kingdom;
 
       /// <summary>
       /// The phylum of an organism shall be specified.
       /// </summary>
       [FhirElement("phylum", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Phylum
+      public Hl7.Fhir.Model.CodeableConcept? Phylum
       {
         get { return _Phylum; }
         set { _Phylum = value; OnPropertyChanged("Phylum"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Phylum;
+      private Hl7.Fhir.Model.CodeableConcept? _Phylum;
 
       /// <summary>
       /// The class of an organism shall be specified.
       /// </summary>
       [FhirElement("class", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Class
+      public Hl7.Fhir.Model.CodeableConcept? Class
       {
         get { return _Class; }
         set { _Class = value; OnPropertyChanged("Class"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Class;
+      private Hl7.Fhir.Model.CodeableConcept? _Class;
 
       /// <summary>
       /// The order of an organism shall be specified,.
       /// </summary>
       [FhirElement("order", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Order
+      public Hl7.Fhir.Model.CodeableConcept? Order
       {
         get { return _Order; }
         set { _Order = value; OnPropertyChanged("Order"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Order;
+      private Hl7.Fhir.Model.CodeableConcept? _Order;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as OrganismGeneralComponent;
-
-        if (dest == null)
-        {
+        if(other is not OrganismGeneralComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Kingdom != null) dest.Kingdom = (Hl7.Fhir.Model.CodeableConcept)Kingdom.DeepCopyInternal();
-        if(Phylum != null) dest.Phylum = (Hl7.Fhir.Model.CodeableConcept)Phylum.DeepCopyInternal();
-        if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopyInternal();
-        if(Order != null) dest.Order = (Hl7.Fhir.Model.CodeableConcept)Order.DeepCopyInternal();
+        if(_Kingdom is not null) dest.Kingdom = (Hl7.Fhir.Model.CodeableConcept)_Kingdom.DeepCopyInternal();
+        if(_Phylum is not null) dest.Phylum = (Hl7.Fhir.Model.CodeableConcept)_Phylum.DeepCopyInternal();
+        if(_Class is not null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)_Class.DeepCopyInternal();
+        if(_Order is not null) dest.Order = (Hl7.Fhir.Model.CodeableConcept)_Order.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -923,55 +889,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as OrganismGeneralComponent;
-        if(otherT == null) return false;
+        if(other is not OrganismGeneralComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Kingdom, otherT.Kingdom)) return false;
-        if(!comparer.Equals(Phylum, otherT.Phylum)) return false;
-        if(!comparer.Equals(Class, otherT.Class)) return false;
-        if(!comparer.Equals(Order, otherT.Order)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Kingdom, otherT._Kingdom)) return false;
+        if(!comparer.Equals(_Phylum, otherT._Phylum)) return false;
+        if(!comparer.Equals(_Class, otherT._Class)) return false;
+        if(!comparer.Equals(_Order, otherT._Order)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "kingdom":
-            value = Kingdom;
-            return Kingdom is not null;
+            value = _Kingdom;
+            return _Kingdom is not null;
           case "phylum":
-            value = Phylum;
-            return Phylum is not null;
+            value = _Phylum;
+            return _Phylum is not null;
           case "class":
-            value = Class;
-            return Class is not null;
+            value = _Class;
+            return _Class is not null;
           case "order":
-            value = Order;
-            return Order is not null;
+            value = _Order;
+            return _Order is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "kingdom":
-            Kingdom = (Hl7.Fhir.Model.CodeableConcept)value;
+            Kingdom = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "phylum":
-            Phylum = (Hl7.Fhir.Model.CodeableConcept)value;
+            Phylum = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "class":
-            Class = (Hl7.Fhir.Model.CodeableConcept)value;
+            Class = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "order":
-            Order = (Hl7.Fhir.Model.CodeableConcept)value;
+            Order = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -982,10 +949,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Kingdom is not null) yield return new KeyValuePair<string,object>("kingdom",Kingdom);
-        if (Phylum is not null) yield return new KeyValuePair<string,object>("phylum",Phylum);
-        if (Class is not null) yield return new KeyValuePair<string,object>("class",Class);
-        if (Order is not null) yield return new KeyValuePair<string,object>("order",Order);
+        if (_Kingdom is not null) yield return new KeyValuePair<string,object>("kingdom",_Kingdom);
+        if (_Phylum is not null) yield return new KeyValuePair<string,object>("phylum",_Phylum);
+        if (_Class is not null) yield return new KeyValuePair<string,object>("class",_Class);
+        if (_Order is not null) yield return new KeyValuePair<string,object>("order",_Order);
       }
 
     }
@@ -1008,39 +975,35 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("part", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Part
+      public Hl7.Fhir.Model.CodeableConcept? Part
       {
         get { return _Part; }
         set { _Part = value; OnPropertyChanged("Part"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Part;
+      private Hl7.Fhir.Model.CodeableConcept? _Part;
 
       /// <summary>
       /// The detailed anatomic location when the part can be extracted from different anatomical locations of the organism. Multiple alternative locations may apply.
       /// </summary>
       [FhirElement("partLocation", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept PartLocation
+      public Hl7.Fhir.Model.CodeableConcept? PartLocation
       {
         get { return _PartLocation; }
         set { _PartLocation = value; OnPropertyChanged("PartLocation"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _PartLocation;
+      private Hl7.Fhir.Model.CodeableConcept? _PartLocation;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PartDescriptionComponent;
-
-        if (dest == null)
-        {
+        if(other is not PartDescriptionComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Part != null) dest.Part = (Hl7.Fhir.Model.CodeableConcept)Part.DeepCopyInternal();
-        if(PartLocation != null) dest.PartLocation = (Hl7.Fhir.Model.CodeableConcept)PartLocation.DeepCopyInternal();
+        if(_Part is not null) dest.Part = (Hl7.Fhir.Model.CodeableConcept)_Part.DeepCopyInternal();
+        if(_PartLocation is not null) dest.PartLocation = (Hl7.Fhir.Model.CodeableConcept)_PartLocation.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1052,41 +1015,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PartDescriptionComponent;
-        if(otherT == null) return false;
+        if(other is not PartDescriptionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Part, otherT.Part)) return false;
-        if(!comparer.Equals(PartLocation, otherT.PartLocation)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Part, otherT._Part)) return false;
+        if(!comparer.Equals(_PartLocation, otherT._PartLocation)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "part":
-            value = Part;
-            return Part is not null;
+            value = _Part;
+            return _Part is not null;
           case "partLocation":
-            value = PartLocation;
-            return PartLocation is not null;
+            value = _PartLocation;
+            return _PartLocation is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "part":
-            Part = (Hl7.Fhir.Model.CodeableConcept)value;
+            Part = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "partLocation":
-            PartLocation = (Hl7.Fhir.Model.CodeableConcept)value;
+            PartLocation = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1097,8 +1061,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Part is not null) yield return new KeyValuePair<string,object>("part",Part);
-        if (PartLocation is not null) yield return new KeyValuePair<string,object>("partLocation",PartLocation);
+        if (_Part is not null) yield return new KeyValuePair<string,object>("part",_Part);
+        if (_PartLocation is not null) yield return new KeyValuePair<string,object>("partLocation",_PartLocation);
       }
 
     }
@@ -1108,80 +1072,77 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("sourceMaterialClass", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept SourceMaterialClass
+    public Hl7.Fhir.Model.CodeableConcept? SourceMaterialClass
     {
       get { return _SourceMaterialClass; }
       set { _SourceMaterialClass = value; OnPropertyChanged("SourceMaterialClass"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _SourceMaterialClass;
+    private Hl7.Fhir.Model.CodeableConcept? _SourceMaterialClass;
 
     /// <summary>
     /// The type of the source material shall be specified based on a controlled vocabulary. For vaccines, this subclause refers to the class of infectious agent.
     /// </summary>
     [FhirElement("sourceMaterialType", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept SourceMaterialType
+    public Hl7.Fhir.Model.CodeableConcept? SourceMaterialType
     {
       get { return _SourceMaterialType; }
       set { _SourceMaterialType = value; OnPropertyChanged("SourceMaterialType"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _SourceMaterialType;
+    private Hl7.Fhir.Model.CodeableConcept? _SourceMaterialType;
 
     /// <summary>
     /// The state of the source material when extracted.
     /// </summary>
     [FhirElement("sourceMaterialState", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept SourceMaterialState
+    public Hl7.Fhir.Model.CodeableConcept? SourceMaterialState
     {
       get { return _SourceMaterialState; }
       set { _SourceMaterialState = value; OnPropertyChanged("SourceMaterialState"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _SourceMaterialState;
+    private Hl7.Fhir.Model.CodeableConcept? _SourceMaterialState;
 
     /// <summary>
     /// The unique identifier associated with the source material parent organism shall be specified.
     /// </summary>
     [FhirElement("organismId", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier OrganismId
+    public Hl7.Fhir.Model.Identifier? OrganismId
     {
       get { return _OrganismId; }
       set { _OrganismId = value; OnPropertyChanged("OrganismId"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _OrganismId;
+    private Hl7.Fhir.Model.Identifier? _OrganismId;
 
     /// <summary>
     /// The organism accepted Scientific name shall be provided based on the organism taxonomy.
     /// </summary>
     [FhirElement("organismName", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString OrganismNameElement
+    public Hl7.Fhir.Model.FhirString? OrganismNameElement
     {
       get { return _OrganismNameElement; }
       set { _OrganismNameElement = value; OnPropertyChanged("OrganismNameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _OrganismNameElement;
+    private Hl7.Fhir.Model.FhirString? _OrganismNameElement;
 
     /// <summary>
     /// The organism accepted Scientific name shall be provided based on the organism taxonomy
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string OrganismName
+    public string? OrganismName
     {
-      get { return OrganismNameElement != null ? OrganismNameElement.Value : null; }
+      get => _OrganismNameElement?.Value;
       set
       {
-        if (value == null)
-          OrganismNameElement = null;
-        else
-          OrganismNameElement = new Hl7.Fhir.Model.FhirString(value);
+        OrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("OrganismName");
       }
     }
@@ -1194,11 +1155,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> ParentSubstanceId
     {
-      get { if(_ParentSubstanceId==null) _ParentSubstanceId = new List<Hl7.Fhir.Model.Identifier>(); return _ParentSubstanceId; }
+      get => _ParentSubstanceId ??= [];
       set { _ParentSubstanceId = value; OnPropertyChanged("ParentSubstanceId"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _ParentSubstanceId;
+    private List<Hl7.Fhir.Model.Identifier>? _ParentSubstanceId;
 
     /// <summary>
     /// The parent substance of the Herbal Drug, or Herbal preparation.
@@ -1208,24 +1169,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ParentSubstanceNameElement
     {
-      get { if(_ParentSubstanceNameElement==null) _ParentSubstanceNameElement = new List<Hl7.Fhir.Model.FhirString>(); return _ParentSubstanceNameElement; }
+      get => _ParentSubstanceNameElement ??= [];
       set { _ParentSubstanceNameElement = value; OnPropertyChanged("ParentSubstanceNameElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _ParentSubstanceNameElement;
+    private List<Hl7.Fhir.Model.FhirString>? _ParentSubstanceNameElement;
 
     /// <summary>
     /// The parent substance of the Herbal Drug, or Herbal preparation
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> ParentSubstanceName
+    public IEnumerable<string?> ParentSubstanceName
     {
-      get { return ParentSubstanceNameElement != null ? ParentSubstanceNameElement.Select(elem => elem.Value) : null; }
+      get => _ParentSubstanceNameElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          ParentSubstanceNameElement = null;
+          ParentSubstanceNameElement = null!;
         else
           ParentSubstanceNameElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("ParentSubstanceName");
@@ -1240,11 +1201,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CountryOfOrigin
     {
-      get { if(_CountryOfOrigin==null) _CountryOfOrigin = new List<Hl7.Fhir.Model.CodeableConcept>(); return _CountryOfOrigin; }
+      get => _CountryOfOrigin ??= [];
       set { _CountryOfOrigin = value; OnPropertyChanged("CountryOfOrigin"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _CountryOfOrigin;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _CountryOfOrigin;
 
     /// <summary>
     /// The place/region where the plant is harvested or the places/regions where the animal source material has its habitat.
@@ -1254,24 +1215,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> GeographicalLocationElement
     {
-      get { if(_GeographicalLocationElement==null) _GeographicalLocationElement = new List<Hl7.Fhir.Model.FhirString>(); return _GeographicalLocationElement; }
+      get => _GeographicalLocationElement ??= [];
       set { _GeographicalLocationElement = value; OnPropertyChanged("GeographicalLocationElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _GeographicalLocationElement;
+    private List<Hl7.Fhir.Model.FhirString>? _GeographicalLocationElement;
 
     /// <summary>
     /// The place/region where the plant is harvested or the places/regions where the animal source material has its habitat
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> GeographicalLocation
+    public IEnumerable<string?> GeographicalLocation
     {
-      get { return GeographicalLocationElement != null ? GeographicalLocationElement.Select(elem => elem.Value) : null; }
+      get => _GeographicalLocationElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          GeographicalLocationElement = null;
+          GeographicalLocationElement = null!;
         else
           GeographicalLocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("GeographicalLocation");
@@ -1283,13 +1244,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("developmentStage", InSummary=true, Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept DevelopmentStage
+    public Hl7.Fhir.Model.CodeableConcept? DevelopmentStage
     {
       get { return _DevelopmentStage; }
       set { _DevelopmentStage = value; OnPropertyChanged("DevelopmentStage"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _DevelopmentStage;
+    private Hl7.Fhir.Model.CodeableConcept? _DevelopmentStage;
 
     /// <summary>
     /// Many complex materials are fractions of parts of plants, animals, or minerals. Fraction elements are often necessary to define both Substances and Specified Group 1 Substances. For substances derived from Plants, fraction information will be captured at the Substance information level ( . Oils, Juices and Exudates). Additional information for Extracts, such as extraction solvent composition, will be captured at the Specified Substance Group 1 information level. For plasma-derived products fraction information will be captured at the Substance and the Specified Substance Group 1 levels.
@@ -1299,24 +1260,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent> FractionDescription
     {
-      get { if(_FractionDescription==null) _FractionDescription = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>(); return _FractionDescription; }
+      get => _FractionDescription ??= [];
       set { _FractionDescription = value; OnPropertyChanged("FractionDescription"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent> _FractionDescription;
+    private List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>? _FractionDescription;
 
     /// <summary>
     /// This subclause describes the organism which the substance is derived from. For vaccines, the parent organism shall be specified based on these subclause elements. As an example, full taxonomy will be described for the Substance Name: ., Leaf.
     /// </summary>
     [FhirElement("organism", InSummary=true, Order=200)]
     [DataMember]
-    public Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent Organism
+    public Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent? Organism
     {
       get { return _Organism; }
       set { _Organism = value; OnPropertyChanged("Organism"); }
     }
 
-    private Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent _Organism;
+    private Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent? _Organism;
 
     /// <summary>
     /// To do.
@@ -1326,35 +1287,31 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent> PartDescription
     {
-      get { if(_PartDescription==null) _PartDescription = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>(); return _PartDescription; }
+      get => _PartDescription ??= [];
       set { _PartDescription = value; OnPropertyChanged("PartDescription"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent> _PartDescription;
+    private List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>? _PartDescription;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as SubstanceSourceMaterial;
-
-      if (dest == null)
-      {
+      if(other is not SubstanceSourceMaterial dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(SourceMaterialClass != null) dest.SourceMaterialClass = (Hl7.Fhir.Model.CodeableConcept)SourceMaterialClass.DeepCopyInternal();
-      if(SourceMaterialType != null) dest.SourceMaterialType = (Hl7.Fhir.Model.CodeableConcept)SourceMaterialType.DeepCopyInternal();
-      if(SourceMaterialState != null) dest.SourceMaterialState = (Hl7.Fhir.Model.CodeableConcept)SourceMaterialState.DeepCopyInternal();
-      if(OrganismId != null) dest.OrganismId = (Hl7.Fhir.Model.Identifier)OrganismId.DeepCopyInternal();
-      if(OrganismNameElement != null) dest.OrganismNameElement = (Hl7.Fhir.Model.FhirString)OrganismNameElement.DeepCopyInternal();
-      if(ParentSubstanceId.Any()) dest.ParentSubstanceId = new List<Hl7.Fhir.Model.Identifier>(ParentSubstanceId.DeepCopyInternal());
-      if(ParentSubstanceNameElement.Any()) dest.ParentSubstanceNameElement = new List<Hl7.Fhir.Model.FhirString>(ParentSubstanceNameElement.DeepCopyInternal());
-      if(CountryOfOrigin.Any()) dest.CountryOfOrigin = new List<Hl7.Fhir.Model.CodeableConcept>(CountryOfOrigin.DeepCopyInternal());
-      if(GeographicalLocationElement.Any()) dest.GeographicalLocationElement = new List<Hl7.Fhir.Model.FhirString>(GeographicalLocationElement.DeepCopyInternal());
-      if(DevelopmentStage != null) dest.DevelopmentStage = (Hl7.Fhir.Model.CodeableConcept)DevelopmentStage.DeepCopyInternal();
-      if(FractionDescription.Any()) dest.FractionDescription = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>(FractionDescription.DeepCopyInternal());
-      if(Organism != null) dest.Organism = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent)Organism.DeepCopyInternal();
-      if(PartDescription.Any()) dest.PartDescription = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>(PartDescription.DeepCopyInternal());
+      if(_SourceMaterialClass is not null) dest.SourceMaterialClass = (Hl7.Fhir.Model.CodeableConcept)_SourceMaterialClass.DeepCopyInternal();
+      if(_SourceMaterialType is not null) dest.SourceMaterialType = (Hl7.Fhir.Model.CodeableConcept)_SourceMaterialType.DeepCopyInternal();
+      if(_SourceMaterialState is not null) dest.SourceMaterialState = (Hl7.Fhir.Model.CodeableConcept)_SourceMaterialState.DeepCopyInternal();
+      if(_OrganismId is not null) dest.OrganismId = (Hl7.Fhir.Model.Identifier)_OrganismId.DeepCopyInternal();
+      if(_OrganismNameElement is not null) dest.OrganismNameElement = (Hl7.Fhir.Model.FhirString)_OrganismNameElement.DeepCopyInternal();
+      if(_ParentSubstanceId is not null) dest.ParentSubstanceId = new List<Hl7.Fhir.Model.Identifier>(_ParentSubstanceId.DeepCopyInternal());
+      if(_ParentSubstanceNameElement is not null) dest.ParentSubstanceNameElement = new List<Hl7.Fhir.Model.FhirString>(_ParentSubstanceNameElement.DeepCopyInternal());
+      if(_CountryOfOrigin is not null) dest.CountryOfOrigin = new List<Hl7.Fhir.Model.CodeableConcept>(_CountryOfOrigin.DeepCopyInternal());
+      if(_GeographicalLocationElement is not null) dest.GeographicalLocationElement = new List<Hl7.Fhir.Model.FhirString>(_GeographicalLocationElement.DeepCopyInternal());
+      if(_DevelopmentStage is not null) dest.DevelopmentStage = (Hl7.Fhir.Model.CodeableConcept)_DevelopmentStage.DeepCopyInternal();
+      if(_FractionDescription is not null) dest.FractionDescription = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>(_FractionDescription.DeepCopyInternal());
+      if(_Organism is not null) dest.Organism = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent)_Organism.DeepCopyInternal();
+      if(_PartDescription is not null) dest.PartDescription = new List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>(_PartDescription.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1366,118 +1323,119 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as SubstanceSourceMaterial;
-      if(otherT == null) return false;
+      if(other is not SubstanceSourceMaterial otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(SourceMaterialClass, otherT.SourceMaterialClass)) return false;
-      if(!comparer.Equals(SourceMaterialType, otherT.SourceMaterialType)) return false;
-      if(!comparer.Equals(SourceMaterialState, otherT.SourceMaterialState)) return false;
-      if(!comparer.Equals(OrganismId, otherT.OrganismId)) return false;
-      if(!comparer.Equals(OrganismNameElement, otherT.OrganismNameElement)) return false;
-      if(!comparer.ListEquals(ParentSubstanceId, otherT.ParentSubstanceId)) return false;
-      if(!comparer.ListEquals(ParentSubstanceNameElement, otherT.ParentSubstanceNameElement)) return false;
-      if(!comparer.ListEquals(CountryOfOrigin, otherT.CountryOfOrigin)) return false;
-      if(!comparer.ListEquals(GeographicalLocationElement, otherT.GeographicalLocationElement)) return false;
-      if(!comparer.Equals(DevelopmentStage, otherT.DevelopmentStage)) return false;
-      if(!comparer.ListEquals(FractionDescription, otherT.FractionDescription)) return false;
-      if(!comparer.Equals(Organism, otherT.Organism)) return false;
-      if(!comparer.ListEquals(PartDescription, otherT.PartDescription)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_SourceMaterialClass, otherT._SourceMaterialClass)) return false;
+      if(!comparer.Equals(_SourceMaterialType, otherT._SourceMaterialType)) return false;
+      if(!comparer.Equals(_SourceMaterialState, otherT._SourceMaterialState)) return false;
+      if(!comparer.Equals(_OrganismId, otherT._OrganismId)) return false;
+      if(!comparer.Equals(_OrganismNameElement, otherT._OrganismNameElement)) return false;
+      if(!comparer.ListEquals(_ParentSubstanceId, otherT._ParentSubstanceId)) return false;
+      if(!comparer.ListEquals(_ParentSubstanceNameElement, otherT._ParentSubstanceNameElement)) return false;
+      if(!comparer.ListEquals(_CountryOfOrigin, otherT._CountryOfOrigin)) return false;
+      if(!comparer.ListEquals(_GeographicalLocationElement, otherT._GeographicalLocationElement)) return false;
+      if(!comparer.Equals(_DevelopmentStage, otherT._DevelopmentStage)) return false;
+      if(!comparer.ListEquals(_FractionDescription, otherT._FractionDescription)) return false;
+      if(!comparer.Equals(_Organism, otherT._Organism)) return false;
+      if(!comparer.ListEquals(_PartDescription, otherT._PartDescription)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "sourceMaterialClass":
-          value = SourceMaterialClass;
-          return SourceMaterialClass is not null;
+          value = _SourceMaterialClass;
+          return _SourceMaterialClass is not null;
         case "sourceMaterialType":
-          value = SourceMaterialType;
-          return SourceMaterialType is not null;
+          value = _SourceMaterialType;
+          return _SourceMaterialType is not null;
         case "sourceMaterialState":
-          value = SourceMaterialState;
-          return SourceMaterialState is not null;
+          value = _SourceMaterialState;
+          return _SourceMaterialState is not null;
         case "organismId":
-          value = OrganismId;
-          return OrganismId is not null;
+          value = _OrganismId;
+          return _OrganismId is not null;
         case "organismName":
-          value = OrganismNameElement;
-          return OrganismNameElement is not null;
+          value = _OrganismNameElement;
+          return _OrganismNameElement is not null;
         case "parentSubstanceId":
-          value = ParentSubstanceId;
-          return ParentSubstanceId?.Any() == true;
+          value = _ParentSubstanceId;
+          return _ParentSubstanceId?.Any() == true;
         case "parentSubstanceName":
-          value = ParentSubstanceNameElement;
-          return ParentSubstanceNameElement?.Any() == true;
+          value = _ParentSubstanceNameElement;
+          return _ParentSubstanceNameElement?.Any() == true;
         case "countryOfOrigin":
-          value = CountryOfOrigin;
-          return CountryOfOrigin?.Any() == true;
+          value = _CountryOfOrigin;
+          return _CountryOfOrigin?.Any() == true;
         case "geographicalLocation":
-          value = GeographicalLocationElement;
-          return GeographicalLocationElement?.Any() == true;
+          value = _GeographicalLocationElement;
+          return _GeographicalLocationElement?.Any() == true;
         case "developmentStage":
-          value = DevelopmentStage;
-          return DevelopmentStage is not null;
+          value = _DevelopmentStage;
+          return _DevelopmentStage is not null;
         case "fractionDescription":
-          value = FractionDescription;
-          return FractionDescription?.Any() == true;
+          value = _FractionDescription;
+          return _FractionDescription?.Any() == true;
         case "organism":
-          value = Organism;
-          return Organism is not null;
+          value = _Organism;
+          return _Organism is not null;
         case "partDescription":
-          value = PartDescription;
-          return PartDescription?.Any() == true;
+          value = _PartDescription;
+          return _PartDescription?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "sourceMaterialClass":
-          SourceMaterialClass = (Hl7.Fhir.Model.CodeableConcept)value;
+          SourceMaterialClass = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "sourceMaterialType":
-          SourceMaterialType = (Hl7.Fhir.Model.CodeableConcept)value;
+          SourceMaterialType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "sourceMaterialState":
-          SourceMaterialState = (Hl7.Fhir.Model.CodeableConcept)value;
+          SourceMaterialState = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "organismId":
-          OrganismId = (Hl7.Fhir.Model.Identifier)value;
+          OrganismId = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "organismName":
-          OrganismNameElement = (Hl7.Fhir.Model.FhirString)value;
+          OrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "parentSubstanceId":
-          ParentSubstanceId = (List<Hl7.Fhir.Model.Identifier>)value;
+          ParentSubstanceId = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "parentSubstanceName":
-          ParentSubstanceNameElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          ParentSubstanceNameElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "countryOfOrigin":
-          CountryOfOrigin = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          CountryOfOrigin = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "geographicalLocation":
-          GeographicalLocationElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          GeographicalLocationElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "developmentStage":
-          DevelopmentStage = (Hl7.Fhir.Model.CodeableConcept)value;
+          DevelopmentStage = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "fractionDescription":
-          FractionDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>)value;
+          FractionDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>?)value!;
           return this;
         case "organism":
-          Organism = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent)value;
+          Organism = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent?)value;
           return this;
         case "partDescription":
-          PartDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>)value;
+          PartDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1488,19 +1446,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (SourceMaterialClass is not null) yield return new KeyValuePair<string,object>("sourceMaterialClass",SourceMaterialClass);
-      if (SourceMaterialType is not null) yield return new KeyValuePair<string,object>("sourceMaterialType",SourceMaterialType);
-      if (SourceMaterialState is not null) yield return new KeyValuePair<string,object>("sourceMaterialState",SourceMaterialState);
-      if (OrganismId is not null) yield return new KeyValuePair<string,object>("organismId",OrganismId);
-      if (OrganismNameElement is not null) yield return new KeyValuePair<string,object>("organismName",OrganismNameElement);
-      if (ParentSubstanceId?.Any() == true) yield return new KeyValuePair<string,object>("parentSubstanceId",ParentSubstanceId);
-      if (ParentSubstanceNameElement?.Any() == true) yield return new KeyValuePair<string,object>("parentSubstanceName",ParentSubstanceNameElement);
-      if (CountryOfOrigin?.Any() == true) yield return new KeyValuePair<string,object>("countryOfOrigin",CountryOfOrigin);
-      if (GeographicalLocationElement?.Any() == true) yield return new KeyValuePair<string,object>("geographicalLocation",GeographicalLocationElement);
-      if (DevelopmentStage is not null) yield return new KeyValuePair<string,object>("developmentStage",DevelopmentStage);
-      if (FractionDescription?.Any() == true) yield return new KeyValuePair<string,object>("fractionDescription",FractionDescription);
-      if (Organism is not null) yield return new KeyValuePair<string,object>("organism",Organism);
-      if (PartDescription?.Any() == true) yield return new KeyValuePair<string,object>("partDescription",PartDescription);
+      if (_SourceMaterialClass is not null) yield return new KeyValuePair<string,object>("sourceMaterialClass",_SourceMaterialClass);
+      if (_SourceMaterialType is not null) yield return new KeyValuePair<string,object>("sourceMaterialType",_SourceMaterialType);
+      if (_SourceMaterialState is not null) yield return new KeyValuePair<string,object>("sourceMaterialState",_SourceMaterialState);
+      if (_OrganismId is not null) yield return new KeyValuePair<string,object>("organismId",_OrganismId);
+      if (_OrganismNameElement is not null) yield return new KeyValuePair<string,object>("organismName",_OrganismNameElement);
+      if (_ParentSubstanceId?.Any() == true) yield return new KeyValuePair<string,object>("parentSubstanceId",_ParentSubstanceId);
+      if (_ParentSubstanceNameElement?.Any() == true) yield return new KeyValuePair<string,object>("parentSubstanceName",_ParentSubstanceNameElement);
+      if (_CountryOfOrigin?.Any() == true) yield return new KeyValuePair<string,object>("countryOfOrigin",_CountryOfOrigin);
+      if (_GeographicalLocationElement?.Any() == true) yield return new KeyValuePair<string,object>("geographicalLocation",_GeographicalLocationElement);
+      if (_DevelopmentStage is not null) yield return new KeyValuePair<string,object>("developmentStage",_DevelopmentStage);
+      if (_FractionDescription?.Any() == true) yield return new KeyValuePair<string,object>("fractionDescription",_FractionDescription);
+      if (_Organism is not null) yield return new KeyValuePair<string,object>("organism",_Organism);
+      if (_PartDescription?.Any() == true) yield return new KeyValuePair<string,object>("partDescription",_PartDescription);
     }
 
   }

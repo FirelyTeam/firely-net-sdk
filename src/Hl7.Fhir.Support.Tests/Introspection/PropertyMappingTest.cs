@@ -137,7 +137,7 @@ public class ModelInspectorMembersTest
     [FhirType("BindableClass")]
     public class BindableClass : ICoded
     {
-        public IEnumerable<Coding> ToCodings() => throw new NotImplementedException();
+        public IReadOnlyCollection<Coding> ToCodings() => throw new NotImplementedException();
     }
 
     [FhirType("NonBindableClass")]

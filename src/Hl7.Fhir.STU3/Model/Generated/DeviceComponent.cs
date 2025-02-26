@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -53,7 +56,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DeviceComponent","http://hl7.org/fhir/StructureDefinition/DeviceComponent")]
-  public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
+  public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier?>
   {
     /// <summary>
     /// FHIR Type Name
@@ -158,71 +161,64 @@ namespace Hl7.Fhir.Model
       [FhirElement("specType", InSummary=true, Order=40)]
       [Binding("DeviceSpecificationSpecType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept SpecType
+      public Hl7.Fhir.Model.CodeableConcept? SpecType
       {
         get { return _SpecType; }
         set { _SpecType = value; OnPropertyChanged("SpecType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _SpecType;
+      private Hl7.Fhir.Model.CodeableConcept? _SpecType;
 
       /// <summary>
       /// Internal component unique identification.
       /// </summary>
       [FhirElement("componentId", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier ComponentId
+      public Hl7.Fhir.Model.Identifier? ComponentId
       {
         get { return _ComponentId; }
         set { _ComponentId = value; OnPropertyChanged("ComponentId"); }
       }
 
-      private Hl7.Fhir.Model.Identifier _ComponentId;
+      private Hl7.Fhir.Model.Identifier? _ComponentId;
 
       /// <summary>
       /// A printable string defining the component.
       /// </summary>
       [FhirElement("productionSpec", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ProductionSpecElement
+      public Hl7.Fhir.Model.FhirString? ProductionSpecElement
       {
         get { return _ProductionSpecElement; }
         set { _ProductionSpecElement = value; OnPropertyChanged("ProductionSpecElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ProductionSpecElement;
+      private Hl7.Fhir.Model.FhirString? _ProductionSpecElement;
 
       /// <summary>
       /// A printable string defining the component
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ProductionSpec
+      public string? ProductionSpec
       {
-        get { return ProductionSpecElement != null ? ProductionSpecElement.Value : null; }
+        get => _ProductionSpecElement?.Value;
         set
         {
-          if (value == null)
-            ProductionSpecElement = null;
-          else
-            ProductionSpecElement = new Hl7.Fhir.Model.FhirString(value);
+          ProductionSpecElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ProductionSpec");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ProductionSpecificationComponent;
-
-        if (dest == null)
-        {
+        if(other is not ProductionSpecificationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(SpecType != null) dest.SpecType = (Hl7.Fhir.Model.CodeableConcept)SpecType.DeepCopyInternal();
-        if(ComponentId != null) dest.ComponentId = (Hl7.Fhir.Model.Identifier)ComponentId.DeepCopyInternal();
-        if(ProductionSpecElement != null) dest.ProductionSpecElement = (Hl7.Fhir.Model.FhirString)ProductionSpecElement.DeepCopyInternal();
+        if(_SpecType is not null) dest.SpecType = (Hl7.Fhir.Model.CodeableConcept)_SpecType.DeepCopyInternal();
+        if(_ComponentId is not null) dest.ComponentId = (Hl7.Fhir.Model.Identifier)_ComponentId.DeepCopyInternal();
+        if(_ProductionSpecElement is not null) dest.ProductionSpecElement = (Hl7.Fhir.Model.FhirString)_ProductionSpecElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -234,48 +230,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ProductionSpecificationComponent;
-        if(otherT == null) return false;
+        if(other is not ProductionSpecificationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(SpecType, otherT.SpecType)) return false;
-        if(!comparer.Equals(ComponentId, otherT.ComponentId)) return false;
-        if(!comparer.Equals(ProductionSpecElement, otherT.ProductionSpecElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SpecType, otherT._SpecType)) return false;
+        if(!comparer.Equals(_ComponentId, otherT._ComponentId)) return false;
+        if(!comparer.Equals(_ProductionSpecElement, otherT._ProductionSpecElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "specType":
-            value = SpecType;
-            return SpecType is not null;
+            value = _SpecType;
+            return _SpecType is not null;
           case "componentId":
-            value = ComponentId;
-            return ComponentId is not null;
+            value = _ComponentId;
+            return _ComponentId is not null;
           case "productionSpec":
-            value = ProductionSpecElement;
-            return ProductionSpecElement is not null;
+            value = _ProductionSpecElement;
+            return _ProductionSpecElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "specType":
-            SpecType = (Hl7.Fhir.Model.CodeableConcept)value;
+            SpecType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "componentId":
-            ComponentId = (Hl7.Fhir.Model.Identifier)value;
+            ComponentId = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "productionSpec":
-            ProductionSpecElement = (Hl7.Fhir.Model.FhirString)value;
+            ProductionSpecElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -286,9 +283,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (SpecType is not null) yield return new KeyValuePair<string,object>("specType",SpecType);
-        if (ComponentId is not null) yield return new KeyValuePair<string,object>("componentId",ComponentId);
-        if (ProductionSpecElement is not null) yield return new KeyValuePair<string,object>("productionSpec",ProductionSpecElement);
+        if (_SpecType is not null) yield return new KeyValuePair<string,object>("specType",_SpecType);
+        if (_ComponentId is not null) yield return new KeyValuePair<string,object>("componentId",_ComponentId);
+        if (_ProductionSpecElement is not null) yield return new KeyValuePair<string,object>("productionSpec",_ProductionSpecElement);
       }
 
     }
@@ -299,13 +296,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier Identifier
+    public Hl7.Fhir.Model.Identifier? Identifier
     {
       get { return _Identifier; }
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _Identifier;
+    private Hl7.Fhir.Model.Identifier? _Identifier;
 
     /// <summary>
     /// What kind of component it is.
@@ -314,26 +311,26 @@ namespace Hl7.Fhir.Model
     [Binding("ComponentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Type
+    public Hl7.Fhir.Model.CodeableConcept? Type
     {
       get { return _Type; }
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
     /// Recent system change timestamp.
     /// </summary>
     [FhirElement("lastSystemChange", InSummary=true, Order=110, FiveWs="when.init")]
     [DataMember]
-    public Hl7.Fhir.Model.Instant LastSystemChangeElement
+    public Hl7.Fhir.Model.Instant? LastSystemChangeElement
     {
       get { return _LastSystemChangeElement; }
       set { _LastSystemChangeElement = value; OnPropertyChanged("LastSystemChangeElement"); }
     }
 
-    private Hl7.Fhir.Model.Instant _LastSystemChangeElement;
+    private Hl7.Fhir.Model.Instant? _LastSystemChangeElement;
 
     /// <summary>
     /// Recent system change timestamp
@@ -342,13 +339,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? LastSystemChange
     {
-      get { return LastSystemChangeElement != null ? LastSystemChangeElement.Value : null; }
+      get => _LastSystemChangeElement?.Value;
       set
       {
-        if (value == null)
-          LastSystemChangeElement = null;
-        else
-          LastSystemChangeElement = new Hl7.Fhir.Model.Instant(value);
+        LastSystemChangeElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
         OnPropertyChanged("LastSystemChange");
       }
     }
@@ -360,13 +354,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Source
+    public Hl7.Fhir.Model.ResourceReference? Source
     {
       get { return _Source; }
       set { _Source = value; OnPropertyChanged("Source"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Source;
+    private Hl7.Fhir.Model.ResourceReference? _Source;
 
     /// <summary>
     /// Parent resource link.
@@ -375,13 +369,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("DeviceComponent")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Parent
+    public Hl7.Fhir.Model.ResourceReference? Parent
     {
       get { return _Parent; }
       set { _Parent = value; OnPropertyChanged("Parent"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Parent;
+    private Hl7.Fhir.Model.ResourceReference? _Parent;
 
     /// <summary>
     /// Current operational status of the component, for example On, Off or Standby.
@@ -392,11 +386,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OperationalStatus
     {
-      get { if(_OperationalStatus==null) _OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(); return _OperationalStatus; }
+      get => _OperationalStatus ??= [];
       set { _OperationalStatus = value; OnPropertyChanged("OperationalStatus"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _OperationalStatus;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _OperationalStatus;
 
     /// <summary>
     /// Current supported parameter group.
@@ -404,13 +398,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("parameterGroup", InSummary=true, Order=150)]
     [Binding("DeviceComponentParameterGroup")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept ParameterGroup
+    public Hl7.Fhir.Model.CodeableConcept? ParameterGroup
     {
       get { return _ParameterGroup; }
       set { _ParameterGroup = value; OnPropertyChanged("ParameterGroup"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _ParameterGroup;
+    private Hl7.Fhir.Model.CodeableConcept? _ParameterGroup;
 
     /// <summary>
     /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+.
@@ -419,13 +413,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("MeasmntPrinciple")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> MeasurementPrincipleElement
+    public Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>? MeasurementPrincipleElement
     {
       get { return _MeasurementPrincipleElement; }
       set { _MeasurementPrincipleElement = value; OnPropertyChanged("MeasurementPrincipleElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> _MeasurementPrincipleElement;
+    private Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>? _MeasurementPrincipleElement;
 
     /// <summary>
     /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+
@@ -434,13 +428,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple? MeasurementPrinciple
     {
-      get { return MeasurementPrincipleElement != null ? MeasurementPrincipleElement.Value : null; }
+      get => _MeasurementPrincipleElement?.Value;
       set
       {
-        if (value == null)
-          MeasurementPrincipleElement = null;
-        else
-          MeasurementPrincipleElement = new Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>(value);
+        MeasurementPrincipleElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>(value);
         OnPropertyChanged("MeasurementPrinciple");
       }
     }
@@ -453,11 +444,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent> ProductionSpecification
     {
-      get { if(_ProductionSpecification==null) _ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>(); return _ProductionSpecification; }
+      get => _ProductionSpecification ??= [];
       set { _ProductionSpecification = value; OnPropertyChanged("ProductionSpecification"); }
     }
 
-    private List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent> _ProductionSpecification;
+    private List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>? _ProductionSpecification;
 
     /// <summary>
     /// Language code for the human-readable text strings produced by the device.
@@ -465,36 +456,32 @@ namespace Hl7.Fhir.Model
     [FhirElement("languageCode", InSummary=true, Order=180)]
     [Binding("Language")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept LanguageCode
+    public Hl7.Fhir.Model.CodeableConcept? LanguageCode
     {
       get { return _LanguageCode; }
       set { _LanguageCode = value; OnPropertyChanged("LanguageCode"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _LanguageCode;
+    private Hl7.Fhir.Model.CodeableConcept? _LanguageCode;
 
-    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DeviceComponent;
-
-      if (dest == null)
-      {
+      if(other is not DeviceComponent dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-      if(LastSystemChangeElement != null) dest.LastSystemChangeElement = (Hl7.Fhir.Model.Instant)LastSystemChangeElement.DeepCopyInternal();
-      if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopyInternal();
-      if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopyInternal();
-      if(OperationalStatus.Any()) dest.OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(OperationalStatus.DeepCopyInternal());
-      if(ParameterGroup != null) dest.ParameterGroup = (Hl7.Fhir.Model.CodeableConcept)ParameterGroup.DeepCopyInternal();
-      if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>)MeasurementPrincipleElement.DeepCopyInternal();
-      if(ProductionSpecification.Any()) dest.ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>(ProductionSpecification.DeepCopyInternal());
-      if(LanguageCode != null) dest.LanguageCode = (Hl7.Fhir.Model.CodeableConcept)LanguageCode.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_LastSystemChangeElement is not null) dest.LastSystemChangeElement = (Hl7.Fhir.Model.Instant)_LastSystemChangeElement.DeepCopyInternal();
+      if(_Source is not null) dest.Source = (Hl7.Fhir.Model.ResourceReference)_Source.DeepCopyInternal();
+      if(_Parent is not null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)_Parent.DeepCopyInternal();
+      if(_OperationalStatus is not null) dest.OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(_OperationalStatus.DeepCopyInternal());
+      if(_ParameterGroup is not null) dest.ParameterGroup = (Hl7.Fhir.Model.CodeableConcept)_ParameterGroup.DeepCopyInternal();
+      if(_MeasurementPrincipleElement is not null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>)_MeasurementPrincipleElement.DeepCopyInternal();
+      if(_ProductionSpecification is not null) dest.ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>(_ProductionSpecification.DeepCopyInternal());
+      if(_LanguageCode is not null) dest.LanguageCode = (Hl7.Fhir.Model.CodeableConcept)_LanguageCode.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -506,97 +493,98 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DeviceComponent;
-      if(otherT == null) return false;
+      if(other is not DeviceComponent otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(Type, otherT.Type)) return false;
-      if(!comparer.Equals(LastSystemChangeElement, otherT.LastSystemChangeElement)) return false;
-      if(!comparer.Equals(Source, otherT.Source)) return false;
-      if(!comparer.Equals(Parent, otherT.Parent)) return false;
-      if(!comparer.ListEquals(OperationalStatus, otherT.OperationalStatus)) return false;
-      if(!comparer.Equals(ParameterGroup, otherT.ParameterGroup)) return false;
-      if(!comparer.Equals(MeasurementPrincipleElement, otherT.MeasurementPrincipleElement)) return false;
-      if(!comparer.ListEquals(ProductionSpecification, otherT.ProductionSpecification)) return false;
-      if(!comparer.Equals(LanguageCode, otherT.LanguageCode)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_LastSystemChangeElement, otherT._LastSystemChangeElement)) return false;
+      if(!comparer.Equals(_Source, otherT._Source)) return false;
+      if(!comparer.Equals(_Parent, otherT._Parent)) return false;
+      if(!comparer.ListEquals(_OperationalStatus, otherT._OperationalStatus)) return false;
+      if(!comparer.Equals(_ParameterGroup, otherT._ParameterGroup)) return false;
+      if(!comparer.Equals(_MeasurementPrincipleElement, otherT._MeasurementPrincipleElement)) return false;
+      if(!comparer.ListEquals(_ProductionSpecification, otherT._ProductionSpecification)) return false;
+      if(!comparer.Equals(_LanguageCode, otherT._LanguageCode)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier is not null;
+          value = _Identifier;
+          return _Identifier is not null;
         case "type":
-          value = Type;
-          return Type is not null;
+          value = _Type;
+          return _Type is not null;
         case "lastSystemChange":
-          value = LastSystemChangeElement;
-          return LastSystemChangeElement is not null;
+          value = _LastSystemChangeElement;
+          return _LastSystemChangeElement is not null;
         case "source":
-          value = Source;
-          return Source is not null;
+          value = _Source;
+          return _Source is not null;
         case "parent":
-          value = Parent;
-          return Parent is not null;
+          value = _Parent;
+          return _Parent is not null;
         case "operationalStatus":
-          value = OperationalStatus;
-          return OperationalStatus?.Any() == true;
+          value = _OperationalStatus;
+          return _OperationalStatus?.Any() == true;
         case "parameterGroup":
-          value = ParameterGroup;
-          return ParameterGroup is not null;
+          value = _ParameterGroup;
+          return _ParameterGroup is not null;
         case "measurementPrinciple":
-          value = MeasurementPrincipleElement;
-          return MeasurementPrincipleElement is not null;
+          value = _MeasurementPrincipleElement;
+          return _MeasurementPrincipleElement is not null;
         case "productionSpecification":
-          value = ProductionSpecification;
-          return ProductionSpecification?.Any() == true;
+          value = _ProductionSpecification;
+          return _ProductionSpecification?.Any() == true;
         case "languageCode":
-          value = LanguageCode;
-          return LanguageCode is not null;
+          value = _LanguageCode;
+          return _LanguageCode is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier)value;
+          Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept)value;
+          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "lastSystemChange":
-          LastSystemChangeElement = (Hl7.Fhir.Model.Instant)value;
+          LastSystemChangeElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "source":
-          Source = (Hl7.Fhir.Model.ResourceReference)value;
+          Source = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "parent":
-          Parent = (Hl7.Fhir.Model.ResourceReference)value;
+          Parent = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "operationalStatus":
-          OperationalStatus = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          OperationalStatus = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "parameterGroup":
-          ParameterGroup = (Hl7.Fhir.Model.CodeableConcept)value;
+          ParameterGroup = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "measurementPrinciple":
-          MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>)value;
+          MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>?)value;
           return this;
         case "productionSpecification":
-          ProductionSpecification = (List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>)value;
+          ProductionSpecification = (List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>?)value!;
           return this;
         case "languageCode":
-          LanguageCode = (Hl7.Fhir.Model.CodeableConcept)value;
+          LanguageCode = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -607,16 +595,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (LastSystemChangeElement is not null) yield return new KeyValuePair<string,object>("lastSystemChange",LastSystemChangeElement);
-      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-      if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
-      if (OperationalStatus?.Any() == true) yield return new KeyValuePair<string,object>("operationalStatus",OperationalStatus);
-      if (ParameterGroup is not null) yield return new KeyValuePair<string,object>("parameterGroup",ParameterGroup);
-      if (MeasurementPrincipleElement is not null) yield return new KeyValuePair<string,object>("measurementPrinciple",MeasurementPrincipleElement);
-      if (ProductionSpecification?.Any() == true) yield return new KeyValuePair<string,object>("productionSpecification",ProductionSpecification);
-      if (LanguageCode is not null) yield return new KeyValuePair<string,object>("languageCode",LanguageCode);
+      if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_LastSystemChangeElement is not null) yield return new KeyValuePair<string,object>("lastSystemChange",_LastSystemChangeElement);
+      if (_Source is not null) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_Parent is not null) yield return new KeyValuePair<string,object>("parent",_Parent);
+      if (_OperationalStatus?.Any() == true) yield return new KeyValuePair<string,object>("operationalStatus",_OperationalStatus);
+      if (_ParameterGroup is not null) yield return new KeyValuePair<string,object>("parameterGroup",_ParameterGroup);
+      if (_MeasurementPrincipleElement is not null) yield return new KeyValuePair<string,object>("measurementPrinciple",_MeasurementPrincipleElement);
+      if (_ProductionSpecification?.Any() == true) yield return new KeyValuePair<string,object>("productionSpecification",_ProductionSpecification);
+      if (_LanguageCode is not null) yield return new KeyValuePair<string,object>("languageCode",_LanguageCode);
     }
 
   }

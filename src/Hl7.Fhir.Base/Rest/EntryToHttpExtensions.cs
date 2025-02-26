@@ -30,11 +30,11 @@ namespace Hl7.Fhir.Rest
         {
             var request = entry.Request;
             var interaction = entry.Annotation<InteractionType>();
-            var method = request.Method?.toHttpMethod(interaction)
+            var method = request?.Method?.toHttpMethod(interaction)
                         ?? throw new ArgumentException("EntryComponent should specify a Request.Method.", nameof(request));
             var serialization = settings.PreferredFormat;
 
-            var uri = getRequestUrl(baseUrl, request.Url);
+            var uri = getRequestUrl(baseUrl, request.Url ?? throw new ArgumentException("EntryComponent should specify a Request.Url.", nameof(request.Url)));
 
             var message = new HttpRequestMessage(method, uri);
 

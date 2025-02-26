@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -52,12 +55,12 @@ namespace Hl7.Fhir.Model
     /// Canonical identifier for this CanonicalResource, represented as an absolute URI (globally unique)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string Url { get; set; }
+    string? Url { get; set; }
 
     /// <summary>
     /// Canonical identifier for this CanonicalResource, represented as an absolute URI (globally unique).
     /// </summary>
-    Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
+    Hl7.Fhir.Model.FhirUri? UrlElement { get; set; }
 
     /// <summary>
     /// Additional identifier for the CanonicalResource.
@@ -68,39 +71,39 @@ namespace Hl7.Fhir.Model
     /// Business version of the CanonicalResource
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string Version { get; set; }
+    string? Version { get; set; }
 
     /// <summary>
     /// Business version of the CanonicalResource.
     /// </summary>
-    Hl7.Fhir.Model.FhirString VersionElement { get; set; }
+    Hl7.Fhir.Model.FhirString? VersionElement { get; set; }
 
     /// <summary>
     /// How to compare versions.
     /// </summary>
-    Hl7.Fhir.Model.DataType VersionAlgorithm { get; set; }
+    Hl7.Fhir.Model.DataType? VersionAlgorithm { get; set; }
 
     /// <summary>
     /// Name for this CanonicalResource (computer friendly)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string Name { get; set; }
+    string? Name { get; set; }
 
     /// <summary>
     /// Name for this CanonicalResource (computer friendly).
     /// </summary>
-    Hl7.Fhir.Model.FhirString NameElement { get; set; }
+    Hl7.Fhir.Model.FhirString? NameElement { get; set; }
 
     /// <summary>
     /// Name for this CanonicalResource (human friendly)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string Title { get; set; }
+    string? Title { get; set; }
 
     /// <summary>
     /// Name for this CanonicalResource (human friendly).
     /// </summary>
-    Hl7.Fhir.Model.FhirString TitleElement { get; set; }
+    Hl7.Fhir.Model.FhirString? TitleElement { get; set; }
 
     /// <summary>
     /// draft | active | retired | unknown
@@ -111,7 +114,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    Code<Hl7.Fhir.Model.PublicationStatus> StatusElement { get; set; }
+    Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement { get; set; }
 
     /// <summary>
     /// For testing purposes, not real usage
@@ -122,29 +125,29 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
+    Hl7.Fhir.Model.FhirBoolean? ExperimentalElement { get; set; }
 
     /// <summary>
     /// Date last changed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string Date { get; set; }
+    string? Date { get; set; }
 
     /// <summary>
     /// Date last changed.
     /// </summary>
-    Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
+    Hl7.Fhir.Model.FhirDateTime? DateElement { get; set; }
 
     /// <summary>
     /// Name of the publisher/steward (organization or individual)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string Publisher { get; set; }
+    string? Publisher { get; set; }
 
     /// <summary>
     /// Name of the publisher/steward (organization or individual).
     /// </summary>
-    Hl7.Fhir.Model.FhirString PublisherElement { get; set; }
+    Hl7.Fhir.Model.FhirString? PublisherElement { get; set; }
 
     /// <summary>
     /// Contact details for the publisher.
@@ -155,12 +158,12 @@ namespace Hl7.Fhir.Model
     /// Natural language description of the CanonicalResource
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string Description { get; set; }
+    string? Description { get; set; }
 
     /// <summary>
     /// Natural language description of the CanonicalResource.
     /// </summary>
-    Hl7.Fhir.Model.Markdown DescriptionElement { get; set; }
+    Hl7.Fhir.Model.Markdown? DescriptionElement { get; set; }
 
     /// <summary>
     /// The context that the content is intended to support.
@@ -176,512 +179,1068 @@ namespace Hl7.Fhir.Model
     /// Why this CanonicalResource is defined
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string Purpose { get; set; }
+    string? Purpose { get; set; }
 
     /// <summary>
     /// Why this CanonicalResource is defined.
     /// </summary>
-    Hl7.Fhir.Model.Markdown PurposeElement { get; set; }
+    Hl7.Fhir.Model.Markdown? PurposeElement { get; set; }
 
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string Copyright { get; set; }
+    string? Copyright { get; set; }
 
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    Hl7.Fhir.Model.Markdown CopyrightElement { get; set; }
+    Hl7.Fhir.Model.Markdown? CopyrightElement { get; set; }
 
     /// <summary>
     /// Copyright holder and year(s)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    string CopyrightLabel { get; set; }
+    string? CopyrightLabel { get; set; }
 
     /// <summary>
     /// Copyright holder and year(s).
     /// </summary>
-    Hl7.Fhir.Model.FhirString CopyrightLabelElement { get; set; }
+    Hl7.Fhir.Model.FhirString? CopyrightLabelElement { get; set; }
 
   }
 
   public partial class ActivityDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class ActorDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class ChargeItemDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class Citation : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class CompartmentDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.identifier");}
+      get => [];
+      set => throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.identifier");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.jurisdiction");}
+      get => [];
+      set => throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.jurisdiction");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.copyright");}
+      get => PurposeElement;
+      set => PurposeElement = value;
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright
+    string? ICanonicalResource.Purpose
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.copyright");}
+      get => Purpose;
+      set => Purpose = value;
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.copyrightLabel");}
+      get => null;
+      set => throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.copyright");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel
+    string? ICanonicalResource.Copyright
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.copyrightLabel");}
+      get => null;
+      set => throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.copyright");
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.copyrightLabel");
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource CompartmentDefinition does not implement ICanonicalResource.copyrightLabel");
     }
 
   }
@@ -689,205 +1248,413 @@ namespace Hl7.Fhir.Model
   public partial class ConceptMap : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class ConditionDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
-
-    [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
-
-    [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
-
-    [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
-
-    [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
-
-    [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
-
-    [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.purpose");}
+      get => UrlElement;
+      set => UrlElement = value;
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose
+    string? ICanonicalResource.Url
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.purpose");}
+      get => Url;
+      set => Url = value;
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.copyright");}
+      get => Identifier;
+      set => Identifier = value;
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.copyright");}
+      get => VersionElement;
+      set => VersionElement = value;
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement
+    string? ICanonicalResource.Version
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.copyrightLabel");}
+      get => Version;
+      set => Version = value;
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.copyrightLabel");}
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
+
+    [IgnoreDataMember]
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
+
+    [IgnoreDataMember]
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
+
+    [IgnoreDataMember]
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
+
+    [IgnoreDataMember]
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
+
+    [IgnoreDataMember]
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.purpose");
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.Purpose
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.purpose");
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.copyright");
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.Copyright
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.copyright");
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.copyrightLabel");
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource ConditionDefinition does not implement ICanonicalResource.copyrightLabel");
     }
 
   }
@@ -895,356 +1662,620 @@ namespace Hl7.Fhir.Model
   public partial class EventDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class Evidence : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource Evidence does not implement ICanonicalResource.jurisdiction");}
+      get => [];
+      set => throw new NotImplementedException("Resource Evidence does not implement ICanonicalResource.jurisdiction");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class EvidenceReport : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
-
-    [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.version");}
+      get => UrlElement;
+      set => UrlElement = value;
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version
+    string? ICanonicalResource.Url
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.version");}
+      get => Url;
+      set => Url = value;
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.versionAlgorithm");}
+      get => Identifier;
+      set => Identifier = value;
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.name");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.version");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name
+    string? ICanonicalResource.Version
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.name");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.version");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.title");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.versionAlgorithm");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.title");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.name");
     }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement
+    string? ICanonicalResource.Name
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.experimental");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.name");
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.title");
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.Title
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.title");
+    }
+
+    [IgnoreDataMember]
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.experimental");
     }
 
     [IgnoreDataMember]
     bool? ICanonicalResource.Experimental
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.experimental");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.experimental");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.date");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.date");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date
+    string? ICanonicalResource.Date
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.date");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.date");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
-
-    [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.description");}
+      get => PublisherElement;
+      set => PublisherElement = value;
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description
+    string? ICanonicalResource.Publisher
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.description");}
+      get => Publisher;
+      set => Publisher = value;
     }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.description");
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.Description
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.description");
+    }
+
+    [IgnoreDataMember]
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.jurisdiction");}
+      get => [];
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.jurisdiction");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.purpose");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.purpose");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose
+    string? ICanonicalResource.Purpose
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.purpose");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.purpose");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.copyright");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.copyright");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright
+    string? ICanonicalResource.Copyright
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.copyright");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.copyright");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.copyrightLabel");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.copyrightLabel");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel
+    string? ICanonicalResource.CopyrightLabel
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.copyrightLabel");}
+      get => null;
+      set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.copyrightLabel");
     }
 
   }
@@ -1252,762 +2283,1460 @@ namespace Hl7.Fhir.Model
   public partial class EvidenceVariable : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource EvidenceVariable does not implement ICanonicalResource.jurisdiction");}
+      get => [];
+      set => throw new NotImplementedException("Resource EvidenceVariable does not implement ICanonicalResource.jurisdiction");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class ExampleScenario : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class GraphDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class ImplementationGuide : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class Library : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class Measure : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class MedicationKnowledge : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.url");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.url");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url
+    string? ICanonicalResource.Url
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.url");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.url");
     }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
-
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.version");}
+      get => Identifier;
+      set => Identifier = value;
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.version");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.version");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm
+    string? ICanonicalResource.Version
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.versionAlgorithm");}
-    }
-
-    /// <remarks>
-    /// MedicationKnowledge.NameElement (List&lt;Hl7.Fhir.Model.FhirString&gt;) is incompatible with
-    /// ICanonicalResource.name (Hl7.Fhir.Model.FhirString)
-    /// </remarks>
-    [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement
-    {
-      get { return null; }
-      set { throw new NotImplementedException("MedicationKnowledge.NameElement (List<Hl7.Fhir.Model.FhirString>) is incompatible with ICanonicalResource.name (Hl7.Fhir.Model.FhirString)");}
-    }
-
-    // MedicationKnowledge.NameElement () is incompatible with ICanonicalResource.name (string)
-    [IgnoreDataMember]
-     string ICanonicalResource.Name
-    {
-      get { return null; }
-      set { throw new NotImplementedException("MedicationKnowledge.NameElement (List<Hl7.Fhir.Model.FhirString>) is incompatible with ICanonicalResource.name (Hl7.Fhir.Model.FhirString)");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.version");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.title");}
-    }
-
-    [IgnoreDataMember]
-    string ICanonicalResource.Title
-    {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.title");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.versionAlgorithm");
     }
 
     /// <remarks>
-    /// MedicationKnowledge.StatusElement (Code&lt;Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes&gt;) is incompatible with
-    /// ICanonicalResource.status (Code&lt;Hl7.Fhir.Model.PublicationStatus&gt;)
+    /// MedicationKnowledge.NameElement is incompatible with ICanonicalResource.name.
     /// </remarks>
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("MedicationKnowledge.StatusElement (Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>) is incompatible with ICanonicalResource.status (Code<Hl7.Fhir.Model.PublicationStatus>)");}
+      get => null;
+      set => throw new NotImplementedException("MedicationKnowledge.NameElement is incompatible with ICanonicalResource.name.");
     }
 
-    // MedicationKnowledge.StatusElement (Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes?) is incompatible with ICanonicalResource.status (Hl7.Fhir.Model.PublicationStatus?)
+    /// <remarks>
+    /// MedicationKnowledge.NameElement is incompatible with ICanonicalResource.name.
+    /// </remarks>
     [IgnoreDataMember]
-     Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    string? ICanonicalResource.Name
     {
-      get { return null; }
-      set { throw new NotImplementedException("MedicationKnowledge.StatusElement (Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>) is incompatible with ICanonicalResource.status (Code<Hl7.Fhir.Model.PublicationStatus>)");}
+      get => null;
+      set => throw new NotImplementedException("MedicationKnowledge.NameElement is incompatible with ICanonicalResource.name.");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.experimental");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.title");
+    }
+
+    [IgnoreDataMember]
+    string? ICanonicalResource.Title
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.title");
+    }
+
+    /// <remarks>
+    /// MedicationKnowledge.StatusElement is incompatible with ICanonicalResource.status.
+    /// </remarks>
+    [IgnoreDataMember]
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => null;
+      set => throw new NotImplementedException("MedicationKnowledge.StatusElement is incompatible with ICanonicalResource.status.");
+    }
+
+    /// <remarks>
+    /// MedicationKnowledge.StatusElement is incompatible with ICanonicalResource.status.
+    /// </remarks>
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => null;
+      set => throw new NotImplementedException("MedicationKnowledge.StatusElement is incompatible with ICanonicalResource.status.");
+    }
+
+    [IgnoreDataMember]
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.experimental");
     }
 
     [IgnoreDataMember]
     bool? ICanonicalResource.Experimental
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.experimental");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.experimental");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.date");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.date");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date
+    string? ICanonicalResource.Date
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.date");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.date");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.publisher");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.publisher");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher
+    string? ICanonicalResource.Publisher
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.publisher");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.publisher");
     }
 
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.contact");}
+      get => [];
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.contact");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.description");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.description");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description
+    string? ICanonicalResource.Description
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.description");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.description");
     }
 
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.useContext");}
+      get => [];
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.useContext");
     }
 
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.jurisdiction");}
+      get => [];
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.jurisdiction");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.purpose");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.purpose");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose
+    string? ICanonicalResource.Purpose
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.purpose");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.purpose");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.copyright");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.copyright");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright
+    string? ICanonicalResource.Copyright
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.copyright");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.copyright");
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.copyrightLabel");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.copyrightLabel");
     }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel
+    string? ICanonicalResource.CopyrightLabel
     {
-      get { return null; }
-      set { throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.copyrightLabel");}
+      get => null;
+      set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.copyrightLabel");
     }
 
   }
@@ -2015,1304 +3744,2914 @@ namespace Hl7.Fhir.Model
   public partial class MessageDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class NamingSystem : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class ObservationDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
-      get
-      {
-        if (Identifier == null) return new List<Hl7.Fhir.Model.Identifier>();
-        return new List<Hl7.Fhir.Model.Identifier>() { Identifier };
-      }
-
+      get => Identifier is null ? [] : [Identifier];
       set
       {
-        if (value.Count == 0) { Identifier = null; }
-        else if (value.Count == 1) { Identifier = value.First(); }
-        else { throw new NotImplementedException("Resource ObservationDefinition can only have a single ICanonicalResource.Identifier value"); }
+        Identifier = value switch
+        {
+          { Count: 0 } => null,
+          { Count: 1 } => value.First(),
+          _ => throw new NotImplementedException("Resource ObservationDefinition can only have a single Identifier value")
+        };
       }
-
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class OperationDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class PlanDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class Questionnaire : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class Requirements : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class SearchParameter : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class SpecimenDefinition : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
-      get
-      {
-        if (Identifier == null) return new List<Hl7.Fhir.Model.Identifier>();
-        return new List<Hl7.Fhir.Model.Identifier>() { Identifier };
-      }
-
+      get => Identifier is null ? [] : [Identifier];
       set
       {
-        if (value.Count == 0) { Identifier = null; }
-        else if (value.Count == 1) { Identifier = value.First(); }
-        else { throw new NotImplementedException("Resource SpecimenDefinition can only have a single ICanonicalResource.Identifier value"); }
+        Identifier = value switch
+        {
+          { Count: 0 } => null,
+          { Count: 1 } => value.First(),
+          _ => throw new NotImplementedException("Resource SpecimenDefinition can only have a single Identifier value")
+        };
       }
-
     }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class StructureMap : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class SubscriptionTopic : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class TerminologyCapabilities : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class TestPlan : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 
   public partial class TestScript : ICanonicalResource
   {
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirUri ICanonicalResource.UrlElement { get => UrlElement; set { UrlElement =  value; } }
+    Hl7.Fhir.Model.FhirUri? ICanonicalResource.UrlElement
+    {
+      get => UrlElement;
+      set => UrlElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Url { get => Url; set { Url =  value; } }
+    string? ICanonicalResource.Url
+    {
+      get => Url;
+      set => Url = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier { get => Identifier; set { Identifier =  value; } }
+    List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
+    {
+      get => Identifier;
+      set => Identifier = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.VersionElement { get => VersionElement; set { VersionElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.VersionElement
+    {
+      get => VersionElement;
+      set => VersionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Version { get => Version; set { Version =  value; } }
+    string? ICanonicalResource.Version
+    {
+      get => Version;
+      set => Version = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.DataType ICanonicalResource.VersionAlgorithm { get => VersionAlgorithm; set { VersionAlgorithm =  value; } }
+    Hl7.Fhir.Model.DataType? ICanonicalResource.VersionAlgorithm
+    {
+      get => VersionAlgorithm;
+      set => VersionAlgorithm = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.NameElement { get => NameElement; set { NameElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.NameElement
+    {
+      get => NameElement;
+      set => NameElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Name { get => Name; set { Name =  value; } }
+    string? ICanonicalResource.Name
+    {
+      get => Name;
+      set => Name = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.TitleElement { get => TitleElement; set { TitleElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.TitleElement
+    {
+      get => TitleElement;
+      set => TitleElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Title { get => Title; set { Title =  value; } }
+    string? ICanonicalResource.Title
+    {
+      get => Title;
+      set => Title = value;
+    }
 
     [IgnoreDataMember]
-    Code<Hl7.Fhir.Model.PublicationStatus> ICanonicalResource.StatusElement { get => StatusElement; set { StatusElement =  value; } }
+    Code<Hl7.Fhir.Model.PublicationStatus>? ICanonicalResource.StatusElement
+    {
+      get => StatusElement;
+      set => StatusElement = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status { get => Status; set { Status =  value; } }
+    Hl7.Fhir.Model.PublicationStatus? ICanonicalResource.Status
+    {
+      get => Status;
+      set => Status = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirBoolean ICanonicalResource.ExperimentalElement { get => ExperimentalElement; set { ExperimentalElement =  value; } }
+    Hl7.Fhir.Model.FhirBoolean? ICanonicalResource.ExperimentalElement
+    {
+      get => ExperimentalElement;
+      set => ExperimentalElement = value;
+    }
 
     [IgnoreDataMember]
-    bool? ICanonicalResource.Experimental { get => Experimental; set { Experimental =  value; } }
+    bool? ICanonicalResource.Experimental
+    {
+      get => Experimental;
+      set => Experimental = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirDateTime ICanonicalResource.DateElement { get => DateElement; set { DateElement =  value; } }
+    Hl7.Fhir.Model.FhirDateTime? ICanonicalResource.DateElement
+    {
+      get => DateElement;
+      set => DateElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Date { get => Date; set { Date =  value; } }
+    string? ICanonicalResource.Date
+    {
+      get => Date;
+      set => Date = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.PublisherElement { get => PublisherElement; set { PublisherElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.PublisherElement
+    {
+      get => PublisherElement;
+      set => PublisherElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Publisher { get => Publisher; set { Publisher =  value; } }
+    string? ICanonicalResource.Publisher
+    {
+      get => Publisher;
+      set => Publisher = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact { get => Contact; set { Contact =  value; } }
+    List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
+    {
+      get => Contact;
+      set => Contact = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.DescriptionElement { get => DescriptionElement; set { DescriptionElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.DescriptionElement
+    {
+      get => DescriptionElement;
+      set => DescriptionElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Description { get => Description; set { Description =  value; } }
+    string? ICanonicalResource.Description
+    {
+      get => Description;
+      set => Description = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext { get => UseContext; set { UseContext =  value; } }
+    List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
+    {
+      get => UseContext;
+      set => UseContext = value;
+    }
 
     [IgnoreDataMember]
-    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction { get => Jurisdiction; set { Jurisdiction =  value; } }
+    List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
+    {
+      get => Jurisdiction;
+      set => Jurisdiction = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.PurposeElement { get => PurposeElement; set { PurposeElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.PurposeElement
+    {
+      get => PurposeElement;
+      set => PurposeElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Purpose { get => Purpose; set { Purpose =  value; } }
+    string? ICanonicalResource.Purpose
+    {
+      get => Purpose;
+      set => Purpose = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.Markdown ICanonicalResource.CopyrightElement { get => CopyrightElement; set { CopyrightElement =  value; } }
+    Hl7.Fhir.Model.Markdown? ICanonicalResource.CopyrightElement
+    {
+      get => CopyrightElement;
+      set => CopyrightElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.Copyright { get => Copyright; set { Copyright =  value; } }
+    string? ICanonicalResource.Copyright
+    {
+      get => Copyright;
+      set => Copyright = value;
+    }
 
     [IgnoreDataMember]
-    Hl7.Fhir.Model.FhirString ICanonicalResource.CopyrightLabelElement { get => CopyrightLabelElement; set { CopyrightLabelElement =  value; } }
+    Hl7.Fhir.Model.FhirString? ICanonicalResource.CopyrightLabelElement
+    {
+      get => CopyrightLabelElement;
+      set => CopyrightLabelElement = value;
+    }
 
     [IgnoreDataMember]
-    string ICanonicalResource.CopyrightLabel { get => CopyrightLabel; set { CopyrightLabel =  value; } }
+    string? ICanonicalResource.CopyrightLabel
+    {
+      get => CopyrightLabel;
+      set => CopyrightLabel = value;
+    }
 
   }
 

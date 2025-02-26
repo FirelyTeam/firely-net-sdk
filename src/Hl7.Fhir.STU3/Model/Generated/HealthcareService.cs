@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -83,11 +86,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
-        get { if(_DaysOfWeekElement==null) _DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(); return _DaysOfWeekElement; }
+        get => _DaysOfWeekElement ??= [];
         set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
       }
 
-      private List<Code<Hl7.Fhir.Model.DaysOfWeek>> _DaysOfWeekElement;
+      private List<Code<Hl7.Fhir.Model.DaysOfWeek>>? _DaysOfWeekElement;
 
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun
@@ -96,11 +99,11 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<Hl7.Fhir.Model.DaysOfWeek?> DaysOfWeek
       {
-        get { return DaysOfWeekElement != null ? DaysOfWeekElement.Select(elem => elem.Value) : null; }
+        get => _DaysOfWeekElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            DaysOfWeekElement = null;
+            DaysOfWeekElement = null!;
           else
             DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
           OnPropertyChanged("DaysOfWeek");
@@ -112,13 +115,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("allDay", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean AllDayElement
+      public Hl7.Fhir.Model.FhirBoolean? AllDayElement
       {
         get { return _AllDayElement; }
         set { _AllDayElement = value; OnPropertyChanged("AllDayElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _AllDayElement;
+      private Hl7.Fhir.Model.FhirBoolean? _AllDayElement;
 
       /// <summary>
       /// Always available? e.g. 24 hour service
@@ -127,13 +130,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AllDay
       {
-        get { return AllDayElement != null ? AllDayElement.Value : null; }
+        get => _AllDayElement?.Value;
         set
         {
-          if (value == null)
-            AllDayElement = null;
-          else
-            AllDayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          AllDayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("AllDay");
         }
       }
@@ -143,28 +143,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("availableStartTime", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Time AvailableStartTimeElement
+      public Hl7.Fhir.Model.Time? AvailableStartTimeElement
       {
         get { return _AvailableStartTimeElement; }
         set { _AvailableStartTimeElement = value; OnPropertyChanged("AvailableStartTimeElement"); }
       }
 
-      private Hl7.Fhir.Model.Time _AvailableStartTimeElement;
+      private Hl7.Fhir.Model.Time? _AvailableStartTimeElement;
 
       /// <summary>
       /// Opening time of day (ignored if allDay = true)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string AvailableStartTime
+      public string? AvailableStartTime
       {
-        get { return AvailableStartTimeElement != null ? AvailableStartTimeElement.Value : null; }
+        get => _AvailableStartTimeElement?.Value;
         set
         {
-          if (value == null)
-            AvailableStartTimeElement = null;
-          else
-            AvailableStartTimeElement = new Hl7.Fhir.Model.Time(value);
+          AvailableStartTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("AvailableStartTime");
         }
       }
@@ -174,46 +171,39 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("availableEndTime", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Time AvailableEndTimeElement
+      public Hl7.Fhir.Model.Time? AvailableEndTimeElement
       {
         get { return _AvailableEndTimeElement; }
         set { _AvailableEndTimeElement = value; OnPropertyChanged("AvailableEndTimeElement"); }
       }
 
-      private Hl7.Fhir.Model.Time _AvailableEndTimeElement;
+      private Hl7.Fhir.Model.Time? _AvailableEndTimeElement;
 
       /// <summary>
       /// Closing time of day (ignored if allDay = true)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string AvailableEndTime
+      public string? AvailableEndTime
       {
-        get { return AvailableEndTimeElement != null ? AvailableEndTimeElement.Value : null; }
+        get => _AvailableEndTimeElement?.Value;
         set
         {
-          if (value == null)
-            AvailableEndTimeElement = null;
-          else
-            AvailableEndTimeElement = new Hl7.Fhir.Model.Time(value);
+          AvailableEndTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
           OnPropertyChanged("AvailableEndTime");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as AvailableTimeComponent;
-
-        if (dest == null)
-        {
+        if(other is not AvailableTimeComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(DaysOfWeekElement.Any()) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(DaysOfWeekElement.DeepCopyInternal());
-        if(AllDayElement != null) dest.AllDayElement = (Hl7.Fhir.Model.FhirBoolean)AllDayElement.DeepCopyInternal();
-        if(AvailableStartTimeElement != null) dest.AvailableStartTimeElement = (Hl7.Fhir.Model.Time)AvailableStartTimeElement.DeepCopyInternal();
-        if(AvailableEndTimeElement != null) dest.AvailableEndTimeElement = (Hl7.Fhir.Model.Time)AvailableEndTimeElement.DeepCopyInternal();
+        if(_DaysOfWeekElement is not null) dest.DaysOfWeekElement = new List<Code<Hl7.Fhir.Model.DaysOfWeek>>(_DaysOfWeekElement.DeepCopyInternal());
+        if(_AllDayElement is not null) dest.AllDayElement = (Hl7.Fhir.Model.FhirBoolean)_AllDayElement.DeepCopyInternal();
+        if(_AvailableStartTimeElement is not null) dest.AvailableStartTimeElement = (Hl7.Fhir.Model.Time)_AvailableStartTimeElement.DeepCopyInternal();
+        if(_AvailableEndTimeElement is not null) dest.AvailableEndTimeElement = (Hl7.Fhir.Model.Time)_AvailableEndTimeElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -225,55 +215,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as AvailableTimeComponent;
-        if(otherT == null) return false;
+        if(other is not AvailableTimeComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(DaysOfWeekElement, otherT.DaysOfWeekElement)) return false;
-        if(!comparer.Equals(AllDayElement, otherT.AllDayElement)) return false;
-        if(!comparer.Equals(AvailableStartTimeElement, otherT.AvailableStartTimeElement)) return false;
-        if(!comparer.Equals(AvailableEndTimeElement, otherT.AvailableEndTimeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_DaysOfWeekElement, otherT._DaysOfWeekElement)) return false;
+        if(!comparer.Equals(_AllDayElement, otherT._AllDayElement)) return false;
+        if(!comparer.Equals(_AvailableStartTimeElement, otherT._AvailableStartTimeElement)) return false;
+        if(!comparer.Equals(_AvailableEndTimeElement, otherT._AvailableEndTimeElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "daysOfWeek":
-            value = DaysOfWeekElement;
-            return DaysOfWeekElement?.Any() == true;
+            value = _DaysOfWeekElement;
+            return _DaysOfWeekElement?.Any() == true;
           case "allDay":
-            value = AllDayElement;
-            return AllDayElement is not null;
+            value = _AllDayElement;
+            return _AllDayElement is not null;
           case "availableStartTime":
-            value = AvailableStartTimeElement;
-            return AvailableStartTimeElement is not null;
+            value = _AvailableStartTimeElement;
+            return _AvailableStartTimeElement is not null;
           case "availableEndTime":
-            value = AvailableEndTimeElement;
-            return AvailableEndTimeElement is not null;
+            value = _AvailableEndTimeElement;
+            return _AvailableEndTimeElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "daysOfWeek":
-            DaysOfWeekElement = (List<Code<Hl7.Fhir.Model.DaysOfWeek>>)value;
+            DaysOfWeekElement = (List<Code<Hl7.Fhir.Model.DaysOfWeek>>?)value!;
             return this;
           case "allDay":
-            AllDayElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            AllDayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "availableStartTime":
-            AvailableStartTimeElement = (Hl7.Fhir.Model.Time)value;
+            AvailableStartTimeElement = (Hl7.Fhir.Model.Time?)value;
             return this;
           case "availableEndTime":
-            AvailableEndTimeElement = (Hl7.Fhir.Model.Time)value;
+            AvailableEndTimeElement = (Hl7.Fhir.Model.Time?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -284,10 +275,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (DaysOfWeekElement?.Any() == true) yield return new KeyValuePair<string,object>("daysOfWeek",DaysOfWeekElement);
-        if (AllDayElement is not null) yield return new KeyValuePair<string,object>("allDay",AllDayElement);
-        if (AvailableStartTimeElement is not null) yield return new KeyValuePair<string,object>("availableStartTime",AvailableStartTimeElement);
-        if (AvailableEndTimeElement is not null) yield return new KeyValuePair<string,object>("availableEndTime",AvailableEndTimeElement);
+        if (_DaysOfWeekElement?.Any() == true) yield return new KeyValuePair<string,object>("daysOfWeek",_DaysOfWeekElement);
+        if (_AllDayElement is not null) yield return new KeyValuePair<string,object>("allDay",_AllDayElement);
+        if (_AvailableStartTimeElement is not null) yield return new KeyValuePair<string,object>("availableStartTime",_AvailableStartTimeElement);
+        if (_AvailableEndTimeElement is not null) yield return new KeyValuePair<string,object>("availableEndTime",_AvailableEndTimeElement);
       }
 
     }
@@ -314,28 +305,25 @@ namespace Hl7.Fhir.Model
       [FhirElement("description", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString DescriptionElement
+      public Hl7.Fhir.Model.FhirString? DescriptionElement
       {
         get { return _DescriptionElement; }
         set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _DescriptionElement;
+      private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
       /// <summary>
       /// Reason presented to the user explaining why time not available
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Description
+      public string? Description
       {
-        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+        get => _DescriptionElement?.Value;
         set
         {
-          if (value == null)
-            DescriptionElement = null;
-          else
-            DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Description");
         }
       }
@@ -345,26 +333,22 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("during", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Period During
+      public Hl7.Fhir.Model.Period? During
       {
         get { return _During; }
         set { _During = value; OnPropertyChanged("During"); }
       }
 
-      private Hl7.Fhir.Model.Period _During;
+      private Hl7.Fhir.Model.Period? _During;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as NotAvailableComponent;
-
-        if (dest == null)
-        {
+        if(other is not NotAvailableComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
-        if(During != null) dest.During = (Hl7.Fhir.Model.Period)During.DeepCopyInternal();
+        if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+        if(_During is not null) dest.During = (Hl7.Fhir.Model.Period)_During.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -376,41 +360,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as NotAvailableComponent;
-        if(otherT == null) return false;
+        if(other is not NotAvailableComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-        if(!comparer.Equals(During, otherT.During)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+        if(!comparer.Equals(_During, otherT._During)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "description":
-            value = DescriptionElement;
-            return DescriptionElement is not null;
+            value = _DescriptionElement;
+            return _DescriptionElement is not null;
           case "during":
-            value = During;
-            return During is not null;
+            value = _During;
+            return _During is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "description":
-            DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+            DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "during":
-            During = (Hl7.Fhir.Model.Period)value;
+            During = (Hl7.Fhir.Model.Period?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -421,8 +406,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (During is not null) yield return new KeyValuePair<string,object>("during",During);
+        if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_During is not null) yield return new KeyValuePair<string,object>("during",_During);
       }
 
     }
@@ -435,24 +420,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Whether this healthcareservice is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean ActiveElement
+    public Hl7.Fhir.Model.FhirBoolean? ActiveElement
     {
       get { return _ActiveElement; }
       set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+    private Hl7.Fhir.Model.FhirBoolean? _ActiveElement;
 
     /// <summary>
     /// Whether this healthcareservice is in active use
@@ -461,13 +446,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get { return ActiveElement != null ? ActiveElement.Value : null; }
+      get => _ActiveElement?.Value;
       set
       {
-        if (value == null)
-          ActiveElement = null;
-        else
-          ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -479,13 +461,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ProvidedBy
+    public Hl7.Fhir.Model.ResourceReference? ProvidedBy
     {
       get { return _ProvidedBy; }
       set { _ProvidedBy = value; OnPropertyChanged("ProvidedBy"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ProvidedBy;
+    private Hl7.Fhir.Model.ResourceReference? _ProvidedBy;
 
     /// <summary>
     /// Broad category of service being performed or delivered.
@@ -493,13 +475,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("category", InSummary=true, Order=120, FiveWs="class")]
     [Binding("service-category")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Category
+    public Hl7.Fhir.Model.CodeableConcept? Category
     {
       get { return _Category; }
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Category;
+    private Hl7.Fhir.Model.CodeableConcept? _Category;
 
     /// <summary>
     /// Type of service that may be delivered or performed.
@@ -510,11 +492,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
-      get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+      get => _Type ??= [];
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Type;
 
     /// <summary>
     /// Specialties handled by the HealthcareService.
@@ -525,11 +507,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
     {
-      get { if(_Specialty==null) _Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Specialty; }
+      get => _Specialty ??= [];
       set { _Specialty = value; OnPropertyChanged("Specialty"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Specialty;
 
     /// <summary>
     /// Location(s) where service may be provided.
@@ -541,39 +523,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Location
     {
-      get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.ResourceReference>(); return _Location; }
+      get => _Location ??= [];
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Location;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Location;
 
     /// <summary>
     /// Description of service as presented to a consumer while searching.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString NameElement
+    public Hl7.Fhir.Model.FhirString? NameElement
     {
       get { return _NameElement; }
       set { _NameElement = value; OnPropertyChanged("NameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _NameElement;
+    private Hl7.Fhir.Model.FhirString? _NameElement;
 
     /// <summary>
     /// Description of service as presented to a consumer while searching
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Name
+    public string? Name
     {
-      get { return NameElement != null ? NameElement.Value : null; }
+      get => _NameElement?.Value;
       set
       {
-        if (value == null)
-          NameElement = null;
-        else
-          NameElement = new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -583,28 +562,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("comment", InSummary=true, Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString CommentElement
+    public Hl7.Fhir.Model.FhirString? CommentElement
     {
       get { return _CommentElement; }
       set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _CommentElement;
+    private Hl7.Fhir.Model.FhirString? _CommentElement;
 
     /// <summary>
     /// Additional description and/or any specific issues not covered elsewhere
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Comment
+    public string? Comment
     {
-      get { return CommentElement != null ? CommentElement.Value : null; }
+      get => _CommentElement?.Value;
       set
       {
-        if (value == null)
-          CommentElement = null;
-        else
-          CommentElement = new Hl7.Fhir.Model.FhirString(value);
+        CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Comment");
       }
     }
@@ -614,28 +590,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("extraDetails", Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ExtraDetailsElement
+    public Hl7.Fhir.Model.FhirString? ExtraDetailsElement
     {
       get { return _ExtraDetailsElement; }
       set { _ExtraDetailsElement = value; OnPropertyChanged("ExtraDetailsElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ExtraDetailsElement;
+    private Hl7.Fhir.Model.FhirString? _ExtraDetailsElement;
 
     /// <summary>
     /// Extra details about the service that can't be placed in the other fields
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ExtraDetails
+    public string? ExtraDetails
     {
-      get { return ExtraDetailsElement != null ? ExtraDetailsElement.Value : null; }
+      get => _ExtraDetailsElement?.Value;
       set
       {
-        if (value == null)
-          ExtraDetailsElement = null;
-        else
-          ExtraDetailsElement = new Hl7.Fhir.Model.FhirString(value);
+        ExtraDetailsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("ExtraDetails");
       }
     }
@@ -645,13 +618,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("photo", InSummary=true, Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.Attachment Photo
+    public Hl7.Fhir.Model.Attachment? Photo
     {
       get { return _Photo; }
       set { _Photo = value; OnPropertyChanged("Photo"); }
     }
 
-    private Hl7.Fhir.Model.Attachment _Photo;
+    private Hl7.Fhir.Model.Attachment? _Photo;
 
     /// <summary>
     /// Contacts related to the healthcare service.
@@ -661,11 +634,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
-      get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+      get => _Telecom ??= [];
       set { _Telecom = value; OnPropertyChanged("Telecom"); }
     }
 
-    private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+    private List<Hl7.Fhir.Model.ContactPoint>? _Telecom;
 
     /// <summary>
     /// Location(s) service is inteded for/available to.
@@ -677,11 +650,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
     {
-      get { if(_CoverageArea==null) _CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(); return _CoverageArea; }
+      get => _CoverageArea ??= [];
       set { _CoverageArea = value; OnPropertyChanged("CoverageArea"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _CoverageArea;
+    private List<Hl7.Fhir.Model.ResourceReference>? _CoverageArea;
 
     /// <summary>
     /// Conditions under which service is available/offered.
@@ -692,11 +665,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceProvisionCode
     {
-      get { if(_ServiceProvisionCode==null) _ServiceProvisionCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceProvisionCode; }
+      get => _ServiceProvisionCode ??= [];
       set { _ServiceProvisionCode = value; OnPropertyChanged("ServiceProvisionCode"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ServiceProvisionCode;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ServiceProvisionCode;
 
     /// <summary>
     /// Specific eligibility requirements required to use the service.
@@ -704,41 +677,38 @@ namespace Hl7.Fhir.Model
     [FhirElement("eligibility", Order=230)]
     [Binding("ServiceEligibility")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Eligibility
+    public Hl7.Fhir.Model.CodeableConcept? Eligibility
     {
       get { return _Eligibility; }
       set { _Eligibility = value; OnPropertyChanged("Eligibility"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Eligibility;
+    private Hl7.Fhir.Model.CodeableConcept? _Eligibility;
 
     /// <summary>
     /// Describes the eligibility conditions for the service.
     /// </summary>
     [FhirElement("eligibilityNote", Order=240)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString EligibilityNoteElement
+    public Hl7.Fhir.Model.FhirString? EligibilityNoteElement
     {
       get { return _EligibilityNoteElement; }
       set { _EligibilityNoteElement = value; OnPropertyChanged("EligibilityNoteElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _EligibilityNoteElement;
+    private Hl7.Fhir.Model.FhirString? _EligibilityNoteElement;
 
     /// <summary>
     /// Describes the eligibility conditions for the service
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string EligibilityNote
+    public string? EligibilityNote
     {
-      get { return EligibilityNoteElement != null ? EligibilityNoteElement.Value : null; }
+      get => _EligibilityNoteElement?.Value;
       set
       {
-        if (value == null)
-          EligibilityNoteElement = null;
-        else
-          EligibilityNoteElement = new Hl7.Fhir.Model.FhirString(value);
+        EligibilityNoteElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("EligibilityNote");
       }
     }
@@ -751,24 +721,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ProgramNameElement
     {
-      get { if(_ProgramNameElement==null) _ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(); return _ProgramNameElement; }
+      get => _ProgramNameElement ??= [];
       set { _ProgramNameElement = value; OnPropertyChanged("ProgramNameElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _ProgramNameElement;
+    private List<Hl7.Fhir.Model.FhirString>? _ProgramNameElement;
 
     /// <summary>
     /// Program Names that categorize the service
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> ProgramName
+    public IEnumerable<string?> ProgramName
     {
-      get { return ProgramNameElement != null ? ProgramNameElement.Select(elem => elem.Value) : null; }
+      get => _ProgramNameElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          ProgramNameElement = null;
+          ProgramNameElement = null!;
         else
           ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("ProgramName");
@@ -784,11 +754,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
     {
-      get { if(_Characteristic==null) _Characteristic = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Characteristic; }
+      get => _Characteristic ??= [];
       set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Characteristic;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Characteristic;
 
     /// <summary>
     /// Ways that the service accepts referrals.
@@ -799,24 +769,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReferralMethod
     {
-      get { if(_ReferralMethod==null) _ReferralMethod = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReferralMethod; }
+      get => _ReferralMethod ??= [];
       set { _ReferralMethod = value; OnPropertyChanged("ReferralMethod"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ReferralMethod;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ReferralMethod;
 
     /// <summary>
     /// If an appointment is required for access to this service.
     /// </summary>
     [FhirElement("appointmentRequired", Order=280)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean AppointmentRequiredElement
+    public Hl7.Fhir.Model.FhirBoolean? AppointmentRequiredElement
     {
       get { return _AppointmentRequiredElement; }
       set { _AppointmentRequiredElement = value; OnPropertyChanged("AppointmentRequiredElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _AppointmentRequiredElement;
+    private Hl7.Fhir.Model.FhirBoolean? _AppointmentRequiredElement;
 
     /// <summary>
     /// If an appointment is required for access to this service
@@ -825,13 +795,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? AppointmentRequired
     {
-      get { return AppointmentRequiredElement != null ? AppointmentRequiredElement.Value : null; }
+      get => _AppointmentRequiredElement?.Value;
       set
       {
-        if (value == null)
-          AppointmentRequiredElement = null;
-        else
-          AppointmentRequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        AppointmentRequiredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("AppointmentRequired");
       }
     }
@@ -844,11 +811,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent> AvailableTime
     {
-      get { if(_AvailableTime==null) _AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>(); return _AvailableTime; }
+      get => _AvailableTime ??= [];
       set { _AvailableTime = value; OnPropertyChanged("AvailableTime"); }
     }
 
-    private List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent> _AvailableTime;
+    private List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>? _AvailableTime;
 
     /// <summary>
     /// Not available during this time due to provided reason.
@@ -858,39 +825,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent> NotAvailable
     {
-      get { if(_NotAvailable==null) _NotAvailable = new List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>(); return _NotAvailable; }
+      get => _NotAvailable ??= [];
       set { _NotAvailable = value; OnPropertyChanged("NotAvailable"); }
     }
 
-    private List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent> _NotAvailable;
+    private List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>? _NotAvailable;
 
     /// <summary>
     /// Description of availability exceptions.
     /// </summary>
     [FhirElement("availabilityExceptions", Order=310)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString AvailabilityExceptionsElement
+    public Hl7.Fhir.Model.FhirString? AvailabilityExceptionsElement
     {
       get { return _AvailabilityExceptionsElement; }
       set { _AvailabilityExceptionsElement = value; OnPropertyChanged("AvailabilityExceptionsElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _AvailabilityExceptionsElement;
+    private Hl7.Fhir.Model.FhirString? _AvailabilityExceptionsElement;
 
     /// <summary>
     /// Description of availability exceptions
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string AvailabilityExceptions
+    public string? AvailabilityExceptions
     {
-      get { return AvailabilityExceptionsElement != null ? AvailabilityExceptionsElement.Value : null; }
+      get => _AvailabilityExceptionsElement?.Value;
       set
       {
-        if (value == null)
-          AvailabilityExceptionsElement = null;
-        else
-          AvailabilityExceptionsElement = new Hl7.Fhir.Model.FhirString(value);
+        AvailabilityExceptionsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AvailabilityExceptions");
       }
     }
@@ -905,48 +869,44 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
-      get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+      get => _Endpoint ??= [];
       set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Endpoint;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as HealthcareService;
-
-      if (dest == null)
-      {
+      if(other is not HealthcareService dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
-      if(ProvidedBy != null) dest.ProvidedBy = (Hl7.Fhir.Model.ResourceReference)ProvidedBy.DeepCopyInternal();
-      if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopyInternal();
-      if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
-      if(Specialty.Any()) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopyInternal());
-      if(Location.Any()) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopyInternal());
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-      if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopyInternal();
-      if(ExtraDetailsElement != null) dest.ExtraDetailsElement = (Hl7.Fhir.Model.FhirString)ExtraDetailsElement.DeepCopyInternal();
-      if(Photo != null) dest.Photo = (Hl7.Fhir.Model.Attachment)Photo.DeepCopyInternal();
-      if(Telecom.Any()) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopyInternal());
-      if(CoverageArea.Any()) dest.CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(CoverageArea.DeepCopyInternal());
-      if(ServiceProvisionCode.Any()) dest.ServiceProvisionCode = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceProvisionCode.DeepCopyInternal());
-      if(Eligibility != null) dest.Eligibility = (Hl7.Fhir.Model.CodeableConcept)Eligibility.DeepCopyInternal();
-      if(EligibilityNoteElement != null) dest.EligibilityNoteElement = (Hl7.Fhir.Model.FhirString)EligibilityNoteElement.DeepCopyInternal();
-      if(ProgramNameElement.Any()) dest.ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(ProgramNameElement.DeepCopyInternal());
-      if(Characteristic.Any()) dest.Characteristic = new List<Hl7.Fhir.Model.CodeableConcept>(Characteristic.DeepCopyInternal());
-      if(ReferralMethod.Any()) dest.ReferralMethod = new List<Hl7.Fhir.Model.CodeableConcept>(ReferralMethod.DeepCopyInternal());
-      if(AppointmentRequiredElement != null) dest.AppointmentRequiredElement = (Hl7.Fhir.Model.FhirBoolean)AppointmentRequiredElement.DeepCopyInternal();
-      if(AvailableTime.Any()) dest.AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>(AvailableTime.DeepCopyInternal());
-      if(NotAvailable.Any()) dest.NotAvailable = new List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>(NotAvailable.DeepCopyInternal());
-      if(AvailabilityExceptionsElement != null) dest.AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)AvailabilityExceptionsElement.DeepCopyInternal();
-      if(Endpoint.Any()) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_ActiveElement is not null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)_ActiveElement.DeepCopyInternal();
+      if(_ProvidedBy is not null) dest.ProvidedBy = (Hl7.Fhir.Model.ResourceReference)_ProvidedBy.DeepCopyInternal();
+      if(_Category is not null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)_Category.DeepCopyInternal();
+      if(_Type is not null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(_Type.DeepCopyInternal());
+      if(_Specialty is not null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(_Specialty.DeepCopyInternal());
+      if(_Location is not null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(_Location.DeepCopyInternal());
+      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+      if(_CommentElement is not null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)_CommentElement.DeepCopyInternal();
+      if(_ExtraDetailsElement is not null) dest.ExtraDetailsElement = (Hl7.Fhir.Model.FhirString)_ExtraDetailsElement.DeepCopyInternal();
+      if(_Photo is not null) dest.Photo = (Hl7.Fhir.Model.Attachment)_Photo.DeepCopyInternal();
+      if(_Telecom is not null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(_Telecom.DeepCopyInternal());
+      if(_CoverageArea is not null) dest.CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(_CoverageArea.DeepCopyInternal());
+      if(_ServiceProvisionCode is not null) dest.ServiceProvisionCode = new List<Hl7.Fhir.Model.CodeableConcept>(_ServiceProvisionCode.DeepCopyInternal());
+      if(_Eligibility is not null) dest.Eligibility = (Hl7.Fhir.Model.CodeableConcept)_Eligibility.DeepCopyInternal();
+      if(_EligibilityNoteElement is not null) dest.EligibilityNoteElement = (Hl7.Fhir.Model.FhirString)_EligibilityNoteElement.DeepCopyInternal();
+      if(_ProgramNameElement is not null) dest.ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(_ProgramNameElement.DeepCopyInternal());
+      if(_Characteristic is not null) dest.Characteristic = new List<Hl7.Fhir.Model.CodeableConcept>(_Characteristic.DeepCopyInternal());
+      if(_ReferralMethod is not null) dest.ReferralMethod = new List<Hl7.Fhir.Model.CodeableConcept>(_ReferralMethod.DeepCopyInternal());
+      if(_AppointmentRequiredElement is not null) dest.AppointmentRequiredElement = (Hl7.Fhir.Model.FhirBoolean)_AppointmentRequiredElement.DeepCopyInternal();
+      if(_AvailableTime is not null) dest.AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>(_AvailableTime.DeepCopyInternal());
+      if(_NotAvailable is not null) dest.NotAvailable = new List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>(_NotAvailable.DeepCopyInternal());
+      if(_AvailabilityExceptionsElement is not null) dest.AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)_AvailabilityExceptionsElement.DeepCopyInternal();
+      if(_Endpoint is not null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(_Endpoint.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -958,195 +918,196 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as HealthcareService;
-      if(otherT == null) return false;
+      if(other is not HealthcareService otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
-      if(!comparer.Equals(ProvidedBy, otherT.ProvidedBy)) return false;
-      if(!comparer.Equals(Category, otherT.Category)) return false;
-      if(!comparer.ListEquals(Type, otherT.Type)) return false;
-      if(!comparer.ListEquals(Specialty, otherT.Specialty)) return false;
-      if(!comparer.ListEquals(Location, otherT.Location)) return false;
-      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-      if(!comparer.Equals(CommentElement, otherT.CommentElement)) return false;
-      if(!comparer.Equals(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
-      if(!comparer.Equals(Photo, otherT.Photo)) return false;
-      if(!comparer.ListEquals(Telecom, otherT.Telecom)) return false;
-      if(!comparer.ListEquals(CoverageArea, otherT.CoverageArea)) return false;
-      if(!comparer.ListEquals(ServiceProvisionCode, otherT.ServiceProvisionCode)) return false;
-      if(!comparer.Equals(Eligibility, otherT.Eligibility)) return false;
-      if(!comparer.Equals(EligibilityNoteElement, otherT.EligibilityNoteElement)) return false;
-      if(!comparer.ListEquals(ProgramNameElement, otherT.ProgramNameElement)) return false;
-      if(!comparer.ListEquals(Characteristic, otherT.Characteristic)) return false;
-      if(!comparer.ListEquals(ReferralMethod, otherT.ReferralMethod)) return false;
-      if(!comparer.Equals(AppointmentRequiredElement, otherT.AppointmentRequiredElement)) return false;
-      if(!comparer.ListEquals(AvailableTime, otherT.AvailableTime)) return false;
-      if(!comparer.ListEquals(NotAvailable, otherT.NotAvailable)) return false;
-      if(!comparer.Equals(AvailabilityExceptionsElement, otherT.AvailabilityExceptionsElement)) return false;
-      if(!comparer.ListEquals(Endpoint, otherT.Endpoint)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
+      if(!comparer.Equals(_ProvidedBy, otherT._ProvidedBy)) return false;
+      if(!comparer.Equals(_Category, otherT._Category)) return false;
+      if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+      if(!comparer.ListEquals(_Specialty, otherT._Specialty)) return false;
+      if(!comparer.ListEquals(_Location, otherT._Location)) return false;
+      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
+      if(!comparer.Equals(_ExtraDetailsElement, otherT._ExtraDetailsElement)) return false;
+      if(!comparer.Equals(_Photo, otherT._Photo)) return false;
+      if(!comparer.ListEquals(_Telecom, otherT._Telecom)) return false;
+      if(!comparer.ListEquals(_CoverageArea, otherT._CoverageArea)) return false;
+      if(!comparer.ListEquals(_ServiceProvisionCode, otherT._ServiceProvisionCode)) return false;
+      if(!comparer.Equals(_Eligibility, otherT._Eligibility)) return false;
+      if(!comparer.Equals(_EligibilityNoteElement, otherT._EligibilityNoteElement)) return false;
+      if(!comparer.ListEquals(_ProgramNameElement, otherT._ProgramNameElement)) return false;
+      if(!comparer.ListEquals(_Characteristic, otherT._Characteristic)) return false;
+      if(!comparer.ListEquals(_ReferralMethod, otherT._ReferralMethod)) return false;
+      if(!comparer.Equals(_AppointmentRequiredElement, otherT._AppointmentRequiredElement)) return false;
+      if(!comparer.ListEquals(_AvailableTime, otherT._AvailableTime)) return false;
+      if(!comparer.ListEquals(_NotAvailable, otherT._NotAvailable)) return false;
+      if(!comparer.Equals(_AvailabilityExceptionsElement, otherT._AvailabilityExceptionsElement)) return false;
+      if(!comparer.ListEquals(_Endpoint, otherT._Endpoint)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "active":
-          value = ActiveElement;
-          return ActiveElement is not null;
+          value = _ActiveElement;
+          return _ActiveElement is not null;
         case "providedBy":
-          value = ProvidedBy;
-          return ProvidedBy is not null;
+          value = _ProvidedBy;
+          return _ProvidedBy is not null;
         case "category":
-          value = Category;
-          return Category is not null;
+          value = _Category;
+          return _Category is not null;
         case "type":
-          value = Type;
-          return Type?.Any() == true;
+          value = _Type;
+          return _Type?.Any() == true;
         case "specialty":
-          value = Specialty;
-          return Specialty?.Any() == true;
+          value = _Specialty;
+          return _Specialty?.Any() == true;
         case "location":
-          value = Location;
-          return Location?.Any() == true;
+          value = _Location;
+          return _Location?.Any() == true;
         case "name":
-          value = NameElement;
-          return NameElement is not null;
+          value = _NameElement;
+          return _NameElement is not null;
         case "comment":
-          value = CommentElement;
-          return CommentElement is not null;
+          value = _CommentElement;
+          return _CommentElement is not null;
         case "extraDetails":
-          value = ExtraDetailsElement;
-          return ExtraDetailsElement is not null;
+          value = _ExtraDetailsElement;
+          return _ExtraDetailsElement is not null;
         case "photo":
-          value = Photo;
-          return Photo is not null;
+          value = _Photo;
+          return _Photo is not null;
         case "telecom":
-          value = Telecom;
-          return Telecom?.Any() == true;
+          value = _Telecom;
+          return _Telecom?.Any() == true;
         case "coverageArea":
-          value = CoverageArea;
-          return CoverageArea?.Any() == true;
+          value = _CoverageArea;
+          return _CoverageArea?.Any() == true;
         case "serviceProvisionCode":
-          value = ServiceProvisionCode;
-          return ServiceProvisionCode?.Any() == true;
+          value = _ServiceProvisionCode;
+          return _ServiceProvisionCode?.Any() == true;
         case "eligibility":
-          value = Eligibility;
-          return Eligibility is not null;
+          value = _Eligibility;
+          return _Eligibility is not null;
         case "eligibilityNote":
-          value = EligibilityNoteElement;
-          return EligibilityNoteElement is not null;
+          value = _EligibilityNoteElement;
+          return _EligibilityNoteElement is not null;
         case "programName":
-          value = ProgramNameElement;
-          return ProgramNameElement?.Any() == true;
+          value = _ProgramNameElement;
+          return _ProgramNameElement?.Any() == true;
         case "characteristic":
-          value = Characteristic;
-          return Characteristic?.Any() == true;
+          value = _Characteristic;
+          return _Characteristic?.Any() == true;
         case "referralMethod":
-          value = ReferralMethod;
-          return ReferralMethod?.Any() == true;
+          value = _ReferralMethod;
+          return _ReferralMethod?.Any() == true;
         case "appointmentRequired":
-          value = AppointmentRequiredElement;
-          return AppointmentRequiredElement is not null;
+          value = _AppointmentRequiredElement;
+          return _AppointmentRequiredElement is not null;
         case "availableTime":
-          value = AvailableTime;
-          return AvailableTime?.Any() == true;
+          value = _AvailableTime;
+          return _AvailableTime?.Any() == true;
         case "notAvailable":
-          value = NotAvailable;
-          return NotAvailable?.Any() == true;
+          value = _NotAvailable;
+          return _NotAvailable?.Any() == true;
         case "availabilityExceptions":
-          value = AvailabilityExceptionsElement;
-          return AvailabilityExceptionsElement is not null;
+          value = _AvailabilityExceptionsElement;
+          return _AvailabilityExceptionsElement is not null;
         case "endpoint":
-          value = Endpoint;
-          return Endpoint?.Any() == true;
+          value = _Endpoint;
+          return _Endpoint?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "active":
-          ActiveElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "providedBy":
-          ProvidedBy = (Hl7.Fhir.Model.ResourceReference)value;
+          ProvidedBy = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "category":
-          Category = (Hl7.Fhir.Model.CodeableConcept)value;
+          Category = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "type":
-          Type = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Type = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "specialty":
-          Specialty = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Specialty = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "location":
-          Location = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Location = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "name":
-          NameElement = (Hl7.Fhir.Model.FhirString)value;
+          NameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "comment":
-          CommentElement = (Hl7.Fhir.Model.FhirString)value;
+          CommentElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "extraDetails":
-          ExtraDetailsElement = (Hl7.Fhir.Model.FhirString)value;
+          ExtraDetailsElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "photo":
-          Photo = (Hl7.Fhir.Model.Attachment)value;
+          Photo = (Hl7.Fhir.Model.Attachment?)value;
           return this;
         case "telecom":
-          Telecom = (List<Hl7.Fhir.Model.ContactPoint>)value;
+          Telecom = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         case "coverageArea":
-          CoverageArea = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          CoverageArea = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "serviceProvisionCode":
-          ServiceProvisionCode = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ServiceProvisionCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "eligibility":
-          Eligibility = (Hl7.Fhir.Model.CodeableConcept)value;
+          Eligibility = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "eligibilityNote":
-          EligibilityNoteElement = (Hl7.Fhir.Model.FhirString)value;
+          EligibilityNoteElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "programName":
-          ProgramNameElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          ProgramNameElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "characteristic":
-          Characteristic = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Characteristic = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "referralMethod":
-          ReferralMethod = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ReferralMethod = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "appointmentRequired":
-          AppointmentRequiredElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          AppointmentRequiredElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "availableTime":
-          AvailableTime = (List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>)value;
+          AvailableTime = (List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>?)value!;
           return this;
         case "notAvailable":
-          NotAvailable = (List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>)value;
+          NotAvailable = (List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>?)value!;
           return this;
         case "availabilityExceptions":
-          AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)value;
+          AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "endpoint":
-          Endpoint = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Endpoint = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1157,30 +1118,30 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
-      if (ProvidedBy is not null) yield return new KeyValuePair<string,object>("providedBy",ProvidedBy);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
-      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
-      if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
-      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
-      if (ExtraDetailsElement is not null) yield return new KeyValuePair<string,object>("extraDetails",ExtraDetailsElement);
-      if (Photo is not null) yield return new KeyValuePair<string,object>("photo",Photo);
-      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
-      if (CoverageArea?.Any() == true) yield return new KeyValuePair<string,object>("coverageArea",CoverageArea);
-      if (ServiceProvisionCode?.Any() == true) yield return new KeyValuePair<string,object>("serviceProvisionCode",ServiceProvisionCode);
-      if (Eligibility is not null) yield return new KeyValuePair<string,object>("eligibility",Eligibility);
-      if (EligibilityNoteElement is not null) yield return new KeyValuePair<string,object>("eligibilityNote",EligibilityNoteElement);
-      if (ProgramNameElement?.Any() == true) yield return new KeyValuePair<string,object>("programName",ProgramNameElement);
-      if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
-      if (ReferralMethod?.Any() == true) yield return new KeyValuePair<string,object>("referralMethod",ReferralMethod);
-      if (AppointmentRequiredElement is not null) yield return new KeyValuePair<string,object>("appointmentRequired",AppointmentRequiredElement);
-      if (AvailableTime?.Any() == true) yield return new KeyValuePair<string,object>("availableTime",AvailableTime);
-      if (NotAvailable?.Any() == true) yield return new KeyValuePair<string,object>("notAvailable",NotAvailable);
-      if (AvailabilityExceptionsElement is not null) yield return new KeyValuePair<string,object>("availabilityExceptions",AvailabilityExceptionsElement);
-      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (_ProvidedBy is not null) yield return new KeyValuePair<string,object>("providedBy",_ProvidedBy);
+      if (_Category is not null) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Type?.Any() == true) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",_Specialty);
+      if (_Location?.Any() == true) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+      if (_ExtraDetailsElement is not null) yield return new KeyValuePair<string,object>("extraDetails",_ExtraDetailsElement);
+      if (_Photo is not null) yield return new KeyValuePair<string,object>("photo",_Photo);
+      if (_Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",_Telecom);
+      if (_CoverageArea?.Any() == true) yield return new KeyValuePair<string,object>("coverageArea",_CoverageArea);
+      if (_ServiceProvisionCode?.Any() == true) yield return new KeyValuePair<string,object>("serviceProvisionCode",_ServiceProvisionCode);
+      if (_Eligibility is not null) yield return new KeyValuePair<string,object>("eligibility",_Eligibility);
+      if (_EligibilityNoteElement is not null) yield return new KeyValuePair<string,object>("eligibilityNote",_EligibilityNoteElement);
+      if (_ProgramNameElement?.Any() == true) yield return new KeyValuePair<string,object>("programName",_ProgramNameElement);
+      if (_Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",_Characteristic);
+      if (_ReferralMethod?.Any() == true) yield return new KeyValuePair<string,object>("referralMethod",_ReferralMethod);
+      if (_AppointmentRequiredElement is not null) yield return new KeyValuePair<string,object>("appointmentRequired",_AppointmentRequiredElement);
+      if (_AvailableTime?.Any() == true) yield return new KeyValuePair<string,object>("availableTime",_AvailableTime);
+      if (_NotAvailable?.Any() == true) yield return new KeyValuePair<string,object>("notAvailable",_NotAvailable);
+      if (_AvailabilityExceptionsElement is not null) yield return new KeyValuePair<string,object>("availabilityExceptions",_AvailabilityExceptionsElement);
+      if (_Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
     }
 
   }

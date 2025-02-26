@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -52,7 +55,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SupplyRequest","http://hl7.org/fhir/StructureDefinition/SupplyRequest")]
-  public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
+  public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier?>
   {
     /// <summary>
     /// FHIR Type Name
@@ -130,13 +133,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("quantity", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Quantity
+      public Hl7.Fhir.Model.Quantity? Quantity
       {
         get { return _Quantity; }
         set { _Quantity = value; OnPropertyChanged("Quantity"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Quantity;
+      private Hl7.Fhir.Model.Quantity? _Quantity;
 
       /// <summary>
       /// Medication, Substance, or Device requested to be supplied.
@@ -147,26 +150,22 @@ namespace Hl7.Fhir.Model
       [References("Medication","Substance","Device")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Item
+      public Hl7.Fhir.Model.DataType? Item
       {
         get { return _Item; }
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Item;
+      private Hl7.Fhir.Model.DataType? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as OrderedItemComponent;
-
-        if (dest == null)
-        {
+        if(other is not OrderedItemComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
-        if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopyInternal();
+        if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
+        if(_Item is not null) dest.Item = (Hl7.Fhir.Model.DataType)_Item.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -178,41 +177,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as OrderedItemComponent;
-        if(otherT == null) return false;
+        if(other is not OrderedItemComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Quantity, otherT.Quantity)) return false;
-        if(!comparer.Equals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+        if(!comparer.Equals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "quantity":
-            value = Quantity;
-            return Quantity is not null;
+            value = _Quantity;
+            return _Quantity is not null;
           case "item":
-            value = Item;
-            return Item is not null;
+            value = _Item;
+            return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity)value;
+            Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "item":
-            Item = (Hl7.Fhir.Model.DataType)value;
+            Item = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -223,8 +223,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -253,13 +253,13 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","Organization","Patient","RelatedPerson","Device")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Agent
+      public Hl7.Fhir.Model.ResourceReference? Agent
       {
         get { return _Agent; }
         set { _Agent = value; OnPropertyChanged("Agent"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Agent;
+      private Hl7.Fhir.Model.ResourceReference? _Agent;
 
       /// <summary>
       /// Organization agent is acting for.
@@ -268,26 +268,22 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference OnBehalfOf
+      public Hl7.Fhir.Model.ResourceReference? OnBehalfOf
       {
         get { return _OnBehalfOf; }
         set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+      private Hl7.Fhir.Model.ResourceReference? _OnBehalfOf;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RequesterComponent;
-
-        if (dest == null)
-        {
+        if(other is not RequesterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Agent != null) dest.Agent = (Hl7.Fhir.Model.ResourceReference)Agent.DeepCopyInternal();
-        if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopyInternal();
+        if(_Agent is not null) dest.Agent = (Hl7.Fhir.Model.ResourceReference)_Agent.DeepCopyInternal();
+        if(_OnBehalfOf is not null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)_OnBehalfOf.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -299,41 +295,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RequesterComponent;
-        if(otherT == null) return false;
+        if(other is not RequesterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Agent, otherT.Agent)) return false;
-        if(!comparer.Equals(OnBehalfOf, otherT.OnBehalfOf)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Agent, otherT._Agent)) return false;
+        if(!comparer.Equals(_OnBehalfOf, otherT._OnBehalfOf)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "agent":
-            value = Agent;
-            return Agent is not null;
+            value = _Agent;
+            return _Agent is not null;
           case "onBehalfOf":
-            value = OnBehalfOf;
-            return OnBehalfOf is not null;
+            value = _OnBehalfOf;
+            return _OnBehalfOf is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "agent":
-            Agent = (Hl7.Fhir.Model.ResourceReference)value;
+            Agent = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "onBehalfOf":
-            OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)value;
+            OnBehalfOf = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -344,8 +341,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Agent is not null) yield return new KeyValuePair<string,object>("agent",Agent);
-        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
+        if (_Agent is not null) yield return new KeyValuePair<string,object>("agent",_Agent);
+        if (_OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
       }
 
     }
@@ -355,13 +352,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier Identifier
+    public Hl7.Fhir.Model.Identifier? Identifier
     {
       get { return _Identifier; }
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _Identifier;
+    private Hl7.Fhir.Model.Identifier? _Identifier;
 
     /// <summary>
     /// draft | active | suspended +.
@@ -370,13 +367,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("SupplyRequestStatus")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus> StatusElement
+    public Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>? _StatusElement;
 
     /// <summary>
     /// draft | active | suspended +
@@ -385,13 +382,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -402,13 +396,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
     [Binding("SupplyRequestKind")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Category
+    public Hl7.Fhir.Model.CodeableConcept? Category
     {
       get { return _Category; }
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Category;
+    private Hl7.Fhir.Model.CodeableConcept? _Category;
 
     /// <summary>
     /// routine | urgent | asap | stat.
@@ -417,13 +411,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("RequestPriority")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
+    public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement
     {
       get { return _PriorityElement; }
       set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.RequestPriority> _PriorityElement;
+    private Code<Hl7.Fhir.Model.RequestPriority>? _PriorityElement;
 
     /// <summary>
     /// routine | urgent | asap | stat
@@ -432,13 +426,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestPriority? Priority
     {
-      get { return PriorityElement != null ? PriorityElement.Value : null; }
+      get => _PriorityElement?.Value;
       set
       {
-        if (value == null)
-          PriorityElement = null;
-        else
-          PriorityElement = new Code<Hl7.Fhir.Model.RequestPriority>(value);
+        PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
         OnPropertyChanged("Priority");
       }
     }
@@ -448,13 +439,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("orderedItem", InSummary=true, Order=130, FiveWs="what")]
     [DataMember]
-    public Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent OrderedItem
+    public Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent? OrderedItem
     {
       get { return _OrderedItem; }
       set { _OrderedItem = value; OnPropertyChanged("OrderedItem"); }
     }
 
-    private Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent _OrderedItem;
+    private Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent? _OrderedItem;
 
     /// <summary>
     /// When the request should be fulfilled.
@@ -463,41 +454,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Occurrence
+    public Hl7.Fhir.Model.DataType? Occurrence
     {
       get { return _Occurrence; }
       set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Occurrence;
+    private Hl7.Fhir.Model.DataType? _Occurrence;
 
     /// <summary>
     /// When the request was made.
     /// </summary>
     [FhirElement("authoredOn", InSummary=true, Order=150, FiveWs="when.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
+    public Hl7.Fhir.Model.FhirDateTime? AuthoredOnElement
     {
       get { return _AuthoredOnElement; }
       set { _AuthoredOnElement = value; OnPropertyChanged("AuthoredOnElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _AuthoredOnElement;
+    private Hl7.Fhir.Model.FhirDateTime? _AuthoredOnElement;
 
     /// <summary>
     /// When the request was made
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string AuthoredOn
+    public string? AuthoredOn
     {
-      get { return AuthoredOnElement != null ? AuthoredOnElement.Value : null; }
+      get => _AuthoredOnElement?.Value;
       set
       {
-        if (value == null)
-          AuthoredOnElement = null;
-        else
-          AuthoredOnElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        AuthoredOnElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("AuthoredOn");
       }
     }
@@ -507,13 +495,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("requester", InSummary=true, Order=160, FiveWs="who.author")]
     [DataMember]
-    public Hl7.Fhir.Model.SupplyRequest.RequesterComponent Requester
+    public Hl7.Fhir.Model.SupplyRequest.RequesterComponent? Requester
     {
       get { return _Requester; }
       set { _Requester = value; OnPropertyChanged("Requester"); }
     }
 
-    private Hl7.Fhir.Model.SupplyRequest.RequesterComponent _Requester;
+    private Hl7.Fhir.Model.SupplyRequest.RequesterComponent? _Requester;
 
     /// <summary>
     /// Who is intended to fulfill the request.
@@ -525,11 +513,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Supplier
     {
-      get { if(_Supplier==null) _Supplier = new List<Hl7.Fhir.Model.ResourceReference>(); return _Supplier; }
+      get => _Supplier ??= [];
       set { _Supplier = value; OnPropertyChanged("Supplier"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Supplier;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Supplier;
 
     /// <summary>
     /// Why the supply item was requested.
@@ -540,13 +528,13 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Reason
+    public Hl7.Fhir.Model.DataType? Reason
     {
       get { return _Reason; }
       set { _Reason = value; OnPropertyChanged("Reason"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Reason;
+    private Hl7.Fhir.Model.DataType? _Reason;
 
     /// <summary>
     /// The origin of the supply.
@@ -555,13 +543,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization","Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference DeliverFrom
+    public Hl7.Fhir.Model.ResourceReference? DeliverFrom
     {
       get { return _DeliverFrom; }
       set { _DeliverFrom = value; OnPropertyChanged("DeliverFrom"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _DeliverFrom;
+    private Hl7.Fhir.Model.ResourceReference? _DeliverFrom;
 
     /// <summary>
     /// The destination of the supply.
@@ -570,38 +558,34 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization","Location","Patient")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference DeliverTo
+    public Hl7.Fhir.Model.ResourceReference? DeliverTo
     {
       get { return _DeliverTo; }
       set { _DeliverTo = value; OnPropertyChanged("DeliverTo"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _DeliverTo;
+    private Hl7.Fhir.Model.ResourceReference? _DeliverTo;
 
-    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as SupplyRequest;
-
-      if (dest == null)
-      {
+      if(other is not SupplyRequest dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>)StatusElement.DeepCopyInternal();
-      if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopyInternal();
-      if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopyInternal();
-      if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent)OrderedItem.DeepCopyInternal();
-      if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopyInternal();
-      if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopyInternal();
-      if(Requester != null) dest.Requester = (Hl7.Fhir.Model.SupplyRequest.RequesterComponent)Requester.DeepCopyInternal();
-      if(Supplier.Any()) dest.Supplier = new List<Hl7.Fhir.Model.ResourceReference>(Supplier.DeepCopyInternal());
-      if(Reason != null) dest.Reason = (Hl7.Fhir.Model.DataType)Reason.DeepCopyInternal();
-      if(DeliverFrom != null) dest.DeliverFrom = (Hl7.Fhir.Model.ResourceReference)DeliverFrom.DeepCopyInternal();
-      if(DeliverTo != null) dest.DeliverTo = (Hl7.Fhir.Model.ResourceReference)DeliverTo.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>)_StatusElement.DeepCopyInternal();
+      if(_Category is not null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)_Category.DeepCopyInternal();
+      if(_PriorityElement is not null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)_PriorityElement.DeepCopyInternal();
+      if(_OrderedItem is not null) dest.OrderedItem = (Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent)_OrderedItem.DeepCopyInternal();
+      if(_Occurrence is not null) dest.Occurrence = (Hl7.Fhir.Model.DataType)_Occurrence.DeepCopyInternal();
+      if(_AuthoredOnElement is not null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)_AuthoredOnElement.DeepCopyInternal();
+      if(_Requester is not null) dest.Requester = (Hl7.Fhir.Model.SupplyRequest.RequesterComponent)_Requester.DeepCopyInternal();
+      if(_Supplier is not null) dest.Supplier = new List<Hl7.Fhir.Model.ResourceReference>(_Supplier.DeepCopyInternal());
+      if(_Reason is not null) dest.Reason = (Hl7.Fhir.Model.DataType)_Reason.DeepCopyInternal();
+      if(_DeliverFrom is not null) dest.DeliverFrom = (Hl7.Fhir.Model.ResourceReference)_DeliverFrom.DeepCopyInternal();
+      if(_DeliverTo is not null) dest.DeliverTo = (Hl7.Fhir.Model.ResourceReference)_DeliverTo.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -613,111 +597,112 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as SupplyRequest;
-      if(otherT == null) return false;
+      if(other is not SupplyRequest otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Category, otherT.Category)) return false;
-      if(!comparer.Equals(PriorityElement, otherT.PriorityElement)) return false;
-      if(!comparer.Equals(OrderedItem, otherT.OrderedItem)) return false;
-      if(!comparer.Equals(Occurrence, otherT.Occurrence)) return false;
-      if(!comparer.Equals(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
-      if(!comparer.Equals(Requester, otherT.Requester)) return false;
-      if(!comparer.ListEquals(Supplier, otherT.Supplier)) return false;
-      if(!comparer.Equals(Reason, otherT.Reason)) return false;
-      if(!comparer.Equals(DeliverFrom, otherT.DeliverFrom)) return false;
-      if(!comparer.Equals(DeliverTo, otherT.DeliverTo)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_PriorityElement, otherT._PriorityElement)) return false;
+      if(!comparer.Equals(_OrderedItem, otherT._OrderedItem)) return false;
+      if(!comparer.Equals(_Occurrence, otherT._Occurrence)) return false;
+      if(!comparer.Equals(_AuthoredOnElement, otherT._AuthoredOnElement)) return false;
+      if(!comparer.Equals(_Requester, otherT._Requester)) return false;
+      if(!comparer.ListEquals(_Supplier, otherT._Supplier)) return false;
+      if(!comparer.Equals(_Reason, otherT._Reason)) return false;
+      if(!comparer.Equals(_DeliverFrom, otherT._DeliverFrom)) return false;
+      if(!comparer.Equals(_DeliverTo, otherT._DeliverTo)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier is not null;
+          value = _Identifier;
+          return _Identifier is not null;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "category":
-          value = Category;
-          return Category is not null;
+          value = _Category;
+          return _Category is not null;
         case "priority":
-          value = PriorityElement;
-          return PriorityElement is not null;
+          value = _PriorityElement;
+          return _PriorityElement is not null;
         case "orderedItem":
-          value = OrderedItem;
-          return OrderedItem is not null;
+          value = _OrderedItem;
+          return _OrderedItem is not null;
         case "occurrence":
-          value = Occurrence;
-          return Occurrence is not null;
+          value = _Occurrence;
+          return _Occurrence is not null;
         case "authoredOn":
-          value = AuthoredOnElement;
-          return AuthoredOnElement is not null;
+          value = _AuthoredOnElement;
+          return _AuthoredOnElement is not null;
         case "requester":
-          value = Requester;
-          return Requester is not null;
+          value = _Requester;
+          return _Requester is not null;
         case "supplier":
-          value = Supplier;
-          return Supplier?.Any() == true;
+          value = _Supplier;
+          return _Supplier?.Any() == true;
         case "reason":
-          value = Reason;
-          return Reason is not null;
+          value = _Reason;
+          return _Reason is not null;
         case "deliverFrom":
-          value = DeliverFrom;
-          return DeliverFrom is not null;
+          value = _DeliverFrom;
+          return _DeliverFrom is not null;
         case "deliverTo":
-          value = DeliverTo;
-          return DeliverTo is not null;
+          value = _DeliverTo;
+          return _DeliverTo is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier)value;
+          Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>?)value;
           return this;
         case "category":
-          Category = (Hl7.Fhir.Model.CodeableConcept)value;
+          Category = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "priority":
-          PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)value;
+          PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>?)value;
           return this;
         case "orderedItem":
-          OrderedItem = (Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent)value;
+          OrderedItem = (Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent?)value;
           return this;
         case "occurrence":
-          Occurrence = (Hl7.Fhir.Model.DataType)value;
+          Occurrence = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "authoredOn":
-          AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "requester":
-          Requester = (Hl7.Fhir.Model.SupplyRequest.RequesterComponent)value;
+          Requester = (Hl7.Fhir.Model.SupplyRequest.RequesterComponent?)value;
           return this;
         case "supplier":
-          Supplier = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Supplier = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "reason":
-          Reason = (Hl7.Fhir.Model.DataType)value;
+          Reason = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "deliverFrom":
-          DeliverFrom = (Hl7.Fhir.Model.ResourceReference)value;
+          DeliverFrom = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "deliverTo":
-          DeliverTo = (Hl7.Fhir.Model.ResourceReference)value;
+          DeliverTo = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -728,18 +713,18 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
-      if (OrderedItem is not null) yield return new KeyValuePair<string,object>("orderedItem",OrderedItem);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
-      if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
-      if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
-      if (Supplier?.Any() == true) yield return new KeyValuePair<string,object>("supplier",Supplier);
-      if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
-      if (DeliverFrom is not null) yield return new KeyValuePair<string,object>("deliverFrom",DeliverFrom);
-      if (DeliverTo is not null) yield return new KeyValuePair<string,object>("deliverTo",DeliverTo);
+      if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Category is not null) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",_PriorityElement);
+      if (_OrderedItem is not null) yield return new KeyValuePair<string,object>("orderedItem",_OrderedItem);
+      if (_Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",_Occurrence);
+      if (_AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",_AuthoredOnElement);
+      if (_Requester is not null) yield return new KeyValuePair<string,object>("requester",_Requester);
+      if (_Supplier?.Any() == true) yield return new KeyValuePair<string,object>("supplier",_Supplier);
+      if (_Reason is not null) yield return new KeyValuePair<string,object>("reason",_Reason);
+      if (_DeliverFrom is not null) yield return new KeyValuePair<string,object>("deliverFrom",_DeliverFrom);
+      if (_DeliverTo is not null) yield return new KeyValuePair<string,object>("deliverTo",_DeliverTo);
     }
 
   }

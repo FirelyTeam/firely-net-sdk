@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -65,53 +68,49 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("lowNumerator", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity LowNumerator
+    public Hl7.Fhir.Model.Quantity? LowNumerator
     {
       get { return _LowNumerator; }
       set { _LowNumerator = value; OnPropertyChanged("LowNumerator"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _LowNumerator;
+    private Hl7.Fhir.Model.Quantity? _LowNumerator;
 
     /// <summary>
     /// High Numerator limit.
     /// </summary>
     [FhirElement("highNumerator", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity HighNumerator
+    public Hl7.Fhir.Model.Quantity? HighNumerator
     {
       get { return _HighNumerator; }
       set { _HighNumerator = value; OnPropertyChanged("HighNumerator"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _HighNumerator;
+    private Hl7.Fhir.Model.Quantity? _HighNumerator;
 
     /// <summary>
     /// Denominator value.
     /// </summary>
     [FhirElement("denominator", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Denominator
+    public Hl7.Fhir.Model.Quantity? Denominator
     {
       get { return _Denominator; }
       set { _Denominator = value; OnPropertyChanged("Denominator"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Denominator;
+    private Hl7.Fhir.Model.Quantity? _Denominator;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as RatioRange;
-
-      if (dest == null)
-      {
+      if(other is not RatioRange dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(LowNumerator != null) dest.LowNumerator = (Hl7.Fhir.Model.Quantity)LowNumerator.DeepCopyInternal();
-      if(HighNumerator != null) dest.HighNumerator = (Hl7.Fhir.Model.Quantity)HighNumerator.DeepCopyInternal();
-      if(Denominator != null) dest.Denominator = (Hl7.Fhir.Model.Quantity)Denominator.DeepCopyInternal();
+      if(_LowNumerator is not null) dest.LowNumerator = (Hl7.Fhir.Model.Quantity)_LowNumerator.DeepCopyInternal();
+      if(_HighNumerator is not null) dest.HighNumerator = (Hl7.Fhir.Model.Quantity)_HighNumerator.DeepCopyInternal();
+      if(_Denominator is not null) dest.Denominator = (Hl7.Fhir.Model.Quantity)_Denominator.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -123,48 +122,49 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as RatioRange;
-      if(otherT == null) return false;
+      if(other is not RatioRange otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(LowNumerator, otherT.LowNumerator)) return false;
-      if(!comparer.Equals(HighNumerator, otherT.HighNumerator)) return false;
-      if(!comparer.Equals(Denominator, otherT.Denominator)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_LowNumerator, otherT._LowNumerator)) return false;
+      if(!comparer.Equals(_HighNumerator, otherT._HighNumerator)) return false;
+      if(!comparer.Equals(_Denominator, otherT._Denominator)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "lowNumerator":
-          value = LowNumerator;
-          return LowNumerator is not null;
+          value = _LowNumerator;
+          return _LowNumerator is not null;
         case "highNumerator":
-          value = HighNumerator;
-          return HighNumerator is not null;
+          value = _HighNumerator;
+          return _HighNumerator is not null;
         case "denominator":
-          value = Denominator;
-          return Denominator is not null;
+          value = _Denominator;
+          return _Denominator is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "lowNumerator":
-          LowNumerator = (Hl7.Fhir.Model.Quantity)value;
+          LowNumerator = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "highNumerator":
-          HighNumerator = (Hl7.Fhir.Model.Quantity)value;
+          HighNumerator = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "denominator":
-          Denominator = (Hl7.Fhir.Model.Quantity)value;
+          Denominator = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -175,9 +175,9 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (LowNumerator is not null) yield return new KeyValuePair<string,object>("lowNumerator",LowNumerator);
-      if (HighNumerator is not null) yield return new KeyValuePair<string,object>("highNumerator",HighNumerator);
-      if (Denominator is not null) yield return new KeyValuePair<string,object>("denominator",Denominator);
+      if (_LowNumerator is not null) yield return new KeyValuePair<string,object>("lowNumerator",_LowNumerator);
+      if (_HighNumerator is not null) yield return new KeyValuePair<string,object>("highNumerator",_HighNumerator);
+      if (_Denominator is not null) yield return new KeyValuePair<string,object>("denominator",_Denominator);
     }
 
   }

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -161,28 +164,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("deviceIdentifier", InSummary=true, Order=40, FiveWs="what")]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString DeviceIdentifierElement
+      public Hl7.Fhir.Model.FhirString? DeviceIdentifierElement
       {
         get { return _DeviceIdentifierElement; }
         set { _DeviceIdentifierElement = value; OnPropertyChanged("DeviceIdentifierElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _DeviceIdentifierElement;
+      private Hl7.Fhir.Model.FhirString? _DeviceIdentifierElement;
 
       /// <summary>
       /// Mandatory fixed portion of UDI
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string DeviceIdentifier
+      public string? DeviceIdentifier
       {
-        get { return DeviceIdentifierElement != null ? DeviceIdentifierElement.Value : null; }
+        get => _DeviceIdentifierElement?.Value;
         set
         {
-          if (value == null)
-            DeviceIdentifierElement = null;
-          else
-            DeviceIdentifierElement = new Hl7.Fhir.Model.FhirString(value);
+          DeviceIdentifierElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("DeviceIdentifier");
         }
       }
@@ -192,28 +192,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("name", InSummary=true, Order=50, FiveWs="what")]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString NameElement
+      public Hl7.Fhir.Model.FhirString? NameElement
       {
         get { return _NameElement; }
         set { _NameElement = value; OnPropertyChanged("NameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _NameElement;
+      private Hl7.Fhir.Model.FhirString? _NameElement;
 
       /// <summary>
       /// Device Name as appears on UDI label
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => _NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -223,28 +220,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("jurisdiction", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri JurisdictionElement
+      public Hl7.Fhir.Model.FhirUri? JurisdictionElement
       {
         get { return _JurisdictionElement; }
         set { _JurisdictionElement = value; OnPropertyChanged("JurisdictionElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirUri _JurisdictionElement;
+      private Hl7.Fhir.Model.FhirUri? _JurisdictionElement;
 
       /// <summary>
       /// Regional UDI authority
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Jurisdiction
+      public string? Jurisdiction
       {
-        get { return JurisdictionElement != null ? JurisdictionElement.Value : null; }
+        get => _JurisdictionElement?.Value;
         set
         {
-          if (value == null)
-            JurisdictionElement = null;
-          else
-            JurisdictionElement = new Hl7.Fhir.Model.FhirUri(value);
+          JurisdictionElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Jurisdiction");
         }
       }
@@ -254,28 +248,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("carrierHRF", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString CarrierHRFElement
+      public Hl7.Fhir.Model.FhirString? CarrierHRFElement
       {
         get { return _CarrierHRFElement; }
         set { _CarrierHRFElement = value; OnPropertyChanged("CarrierHRFElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _CarrierHRFElement;
+      private Hl7.Fhir.Model.FhirString? _CarrierHRFElement;
 
       /// <summary>
       /// UDI Human Readable Barcode String
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string CarrierHRF
+      public string? CarrierHRF
       {
-        get { return CarrierHRFElement != null ? CarrierHRFElement.Value : null; }
+        get => _CarrierHRFElement?.Value;
         set
         {
-          if (value == null)
-            CarrierHRFElement = null;
-          else
-            CarrierHRFElement = new Hl7.Fhir.Model.FhirString(value);
+          CarrierHRFElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("CarrierHRF");
         }
       }
@@ -285,28 +276,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("carrierAIDC", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Base64Binary CarrierAIDCElement
+      public Hl7.Fhir.Model.Base64Binary? CarrierAIDCElement
       {
         get { return _CarrierAIDCElement; }
         set { _CarrierAIDCElement = value; OnPropertyChanged("CarrierAIDCElement"); }
       }
 
-      private Hl7.Fhir.Model.Base64Binary _CarrierAIDCElement;
+      private Hl7.Fhir.Model.Base64Binary? _CarrierAIDCElement;
 
       /// <summary>
       /// UDI Machine Readable Barcode String
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public byte[] CarrierAIDC
+      public byte[]? CarrierAIDC
       {
-        get { return CarrierAIDCElement != null ? CarrierAIDCElement.Value : null; }
+        get => _CarrierAIDCElement?.Value;
         set
         {
-          if (value == null)
-            CarrierAIDCElement = null;
-          else
-            CarrierAIDCElement = new Hl7.Fhir.Model.Base64Binary(value);
+          CarrierAIDCElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
           OnPropertyChanged("CarrierAIDC");
         }
       }
@@ -316,28 +304,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("issuer", Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri IssuerElement
+      public Hl7.Fhir.Model.FhirUri? IssuerElement
       {
         get { return _IssuerElement; }
         set { _IssuerElement = value; OnPropertyChanged("IssuerElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirUri _IssuerElement;
+      private Hl7.Fhir.Model.FhirUri? _IssuerElement;
 
       /// <summary>
       /// UDI Issuing Organization
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Issuer
+      public string? Issuer
       {
-        get { return IssuerElement != null ? IssuerElement.Value : null; }
+        get => _IssuerElement?.Value;
         set
         {
-          if (value == null)
-            IssuerElement = null;
-          else
-            IssuerElement = new Hl7.Fhir.Model.FhirUri(value);
+          IssuerElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Issuer");
         }
       }
@@ -349,13 +334,13 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Binding("UDIEntryType")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Device.UDIEntryType> EntryTypeElement
+      public Code<Hl7.Fhir.Model.Device.UDIEntryType>? EntryTypeElement
       {
         get { return _EntryTypeElement; }
         set { _EntryTypeElement = value; OnPropertyChanged("EntryTypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.Device.UDIEntryType> _EntryTypeElement;
+      private Code<Hl7.Fhir.Model.Device.UDIEntryType>? _EntryTypeElement;
 
       /// <summary>
       /// barcode | rfid | manual +
@@ -364,34 +349,27 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Device.UDIEntryType? EntryType
       {
-        get { return EntryTypeElement != null ? EntryTypeElement.Value : null; }
+        get => _EntryTypeElement?.Value;
         set
         {
-          if (value == null)
-            EntryTypeElement = null;
-          else
-            EntryTypeElement = new Code<Hl7.Fhir.Model.Device.UDIEntryType>(value);
+          EntryTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Device.UDIEntryType>(value);
           OnPropertyChanged("EntryType");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as UdiComponent;
-
-        if (dest == null)
-        {
+        if(other is not UdiComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(DeviceIdentifierElement != null) dest.DeviceIdentifierElement = (Hl7.Fhir.Model.FhirString)DeviceIdentifierElement.DeepCopyInternal();
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-        if(JurisdictionElement != null) dest.JurisdictionElement = (Hl7.Fhir.Model.FhirUri)JurisdictionElement.DeepCopyInternal();
-        if(CarrierHRFElement != null) dest.CarrierHRFElement = (Hl7.Fhir.Model.FhirString)CarrierHRFElement.DeepCopyInternal();
-        if(CarrierAIDCElement != null) dest.CarrierAIDCElement = (Hl7.Fhir.Model.Base64Binary)CarrierAIDCElement.DeepCopyInternal();
-        if(IssuerElement != null) dest.IssuerElement = (Hl7.Fhir.Model.FhirUri)IssuerElement.DeepCopyInternal();
-        if(EntryTypeElement != null) dest.EntryTypeElement = (Code<Hl7.Fhir.Model.Device.UDIEntryType>)EntryTypeElement.DeepCopyInternal();
+        if(_DeviceIdentifierElement is not null) dest.DeviceIdentifierElement = (Hl7.Fhir.Model.FhirString)_DeviceIdentifierElement.DeepCopyInternal();
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_JurisdictionElement is not null) dest.JurisdictionElement = (Hl7.Fhir.Model.FhirUri)_JurisdictionElement.DeepCopyInternal();
+        if(_CarrierHRFElement is not null) dest.CarrierHRFElement = (Hl7.Fhir.Model.FhirString)_CarrierHRFElement.DeepCopyInternal();
+        if(_CarrierAIDCElement is not null) dest.CarrierAIDCElement = (Hl7.Fhir.Model.Base64Binary)_CarrierAIDCElement.DeepCopyInternal();
+        if(_IssuerElement is not null) dest.IssuerElement = (Hl7.Fhir.Model.FhirUri)_IssuerElement.DeepCopyInternal();
+        if(_EntryTypeElement is not null) dest.EntryTypeElement = (Code<Hl7.Fhir.Model.Device.UDIEntryType>)_EntryTypeElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -403,76 +381,77 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as UdiComponent;
-        if(otherT == null) return false;
+        if(other is not UdiComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(DeviceIdentifierElement, otherT.DeviceIdentifierElement)) return false;
-        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-        if(!comparer.Equals(JurisdictionElement, otherT.JurisdictionElement)) return false;
-        if(!comparer.Equals(CarrierHRFElement, otherT.CarrierHRFElement)) return false;
-        if(!comparer.Equals(CarrierAIDCElement, otherT.CarrierAIDCElement)) return false;
-        if(!comparer.Equals(IssuerElement, otherT.IssuerElement)) return false;
-        if(!comparer.Equals(EntryTypeElement, otherT.EntryTypeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_DeviceIdentifierElement, otherT._DeviceIdentifierElement)) return false;
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_JurisdictionElement, otherT._JurisdictionElement)) return false;
+        if(!comparer.Equals(_CarrierHRFElement, otherT._CarrierHRFElement)) return false;
+        if(!comparer.Equals(_CarrierAIDCElement, otherT._CarrierAIDCElement)) return false;
+        if(!comparer.Equals(_IssuerElement, otherT._IssuerElement)) return false;
+        if(!comparer.Equals(_EntryTypeElement, otherT._EntryTypeElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "deviceIdentifier":
-            value = DeviceIdentifierElement;
-            return DeviceIdentifierElement is not null;
+            value = _DeviceIdentifierElement;
+            return _DeviceIdentifierElement is not null;
           case "name":
-            value = NameElement;
-            return NameElement is not null;
+            value = _NameElement;
+            return _NameElement is not null;
           case "jurisdiction":
-            value = JurisdictionElement;
-            return JurisdictionElement is not null;
+            value = _JurisdictionElement;
+            return _JurisdictionElement is not null;
           case "carrierHRF":
-            value = CarrierHRFElement;
-            return CarrierHRFElement is not null;
+            value = _CarrierHRFElement;
+            return _CarrierHRFElement is not null;
           case "carrierAIDC":
-            value = CarrierAIDCElement;
-            return CarrierAIDCElement is not null;
+            value = _CarrierAIDCElement;
+            return _CarrierAIDCElement is not null;
           case "issuer":
-            value = IssuerElement;
-            return IssuerElement is not null;
+            value = _IssuerElement;
+            return _IssuerElement is not null;
           case "entryType":
-            value = EntryTypeElement;
-            return EntryTypeElement is not null;
+            value = _EntryTypeElement;
+            return _EntryTypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "deviceIdentifier":
-            DeviceIdentifierElement = (Hl7.Fhir.Model.FhirString)value;
+            DeviceIdentifierElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString)value;
+            NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "jurisdiction":
-            JurisdictionElement = (Hl7.Fhir.Model.FhirUri)value;
+            JurisdictionElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "carrierHRF":
-            CarrierHRFElement = (Hl7.Fhir.Model.FhirString)value;
+            CarrierHRFElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "carrierAIDC":
-            CarrierAIDCElement = (Hl7.Fhir.Model.Base64Binary)value;
+            CarrierAIDCElement = (Hl7.Fhir.Model.Base64Binary?)value;
             return this;
           case "issuer":
-            IssuerElement = (Hl7.Fhir.Model.FhirUri)value;
+            IssuerElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "entryType":
-            EntryTypeElement = (Code<Hl7.Fhir.Model.Device.UDIEntryType>)value;
+            EntryTypeElement = (Code<Hl7.Fhir.Model.Device.UDIEntryType>?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -483,13 +462,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (DeviceIdentifierElement is not null) yield return new KeyValuePair<string,object>("deviceIdentifier",DeviceIdentifierElement);
-        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (JurisdictionElement is not null) yield return new KeyValuePair<string,object>("jurisdiction",JurisdictionElement);
-        if (CarrierHRFElement is not null) yield return new KeyValuePair<string,object>("carrierHRF",CarrierHRFElement);
-        if (CarrierAIDCElement is not null) yield return new KeyValuePair<string,object>("carrierAIDC",CarrierAIDCElement);
-        if (IssuerElement is not null) yield return new KeyValuePair<string,object>("issuer",IssuerElement);
-        if (EntryTypeElement is not null) yield return new KeyValuePair<string,object>("entryType",EntryTypeElement);
+        if (_DeviceIdentifierElement is not null) yield return new KeyValuePair<string,object>("deviceIdentifier",_DeviceIdentifierElement);
+        if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_JurisdictionElement is not null) yield return new KeyValuePair<string,object>("jurisdiction",_JurisdictionElement);
+        if (_CarrierHRFElement is not null) yield return new KeyValuePair<string,object>("carrierHRF",_CarrierHRFElement);
+        if (_CarrierAIDCElement is not null) yield return new KeyValuePair<string,object>("carrierAIDC",_CarrierAIDCElement);
+        if (_IssuerElement is not null) yield return new KeyValuePair<string,object>("issuer",_IssuerElement);
+        if (_EntryTypeElement is not null) yield return new KeyValuePair<string,object>("entryType",_EntryTypeElement);
       }
 
     }
@@ -502,24 +481,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Unique Device Identifier (UDI) Barcode string.
     /// </summary>
     [FhirElement("udi", InSummary=true, Order=100, FiveWs="id")]
     [DataMember]
-    public Hl7.Fhir.Model.Device.UdiComponent Udi
+    public Hl7.Fhir.Model.Device.UdiComponent? Udi
     {
       get { return _Udi; }
       set { _Udi = value; OnPropertyChanged("Udi"); }
     }
 
-    private Hl7.Fhir.Model.Device.UdiComponent _Udi;
+    private Hl7.Fhir.Model.Device.UdiComponent? _Udi;
 
     /// <summary>
     /// active | inactive | entered-in-error | unknown.
@@ -528,13 +507,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("FHIRDeviceStatus")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus> StatusElement
+    public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>? _StatusElement;
 
     /// <summary>
     /// active | inactive | entered-in-error | unknown
@@ -543,13 +522,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Device.FHIRDeviceStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -560,41 +536,38 @@ namespace Hl7.Fhir.Model
     [FhirElement("type", Order=120, FiveWs="what")]
     [Binding("DeviceKind")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Type
+    public Hl7.Fhir.Model.CodeableConcept? Type
     {
       get { return _Type; }
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
     /// Lot number of manufacture.
     /// </summary>
     [FhirElement("lotNumber", Order=130, FiveWs="what")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString LotNumberElement
+    public Hl7.Fhir.Model.FhirString? LotNumberElement
     {
       get { return _LotNumberElement; }
       set { _LotNumberElement = value; OnPropertyChanged("LotNumberElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _LotNumberElement;
+    private Hl7.Fhir.Model.FhirString? _LotNumberElement;
 
     /// <summary>
     /// Lot number of manufacture
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string LotNumber
+    public string? LotNumber
     {
-      get { return LotNumberElement != null ? LotNumberElement.Value : null; }
+      get => _LotNumberElement?.Value;
       set
       {
-        if (value == null)
-          LotNumberElement = null;
-        else
-          LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
+        LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("LotNumber");
       }
     }
@@ -604,28 +577,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("manufacturer", Order=140, FiveWs="what")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ManufacturerElement
+    public Hl7.Fhir.Model.FhirString? ManufacturerElement
     {
       get { return _ManufacturerElement; }
       set { _ManufacturerElement = value; OnPropertyChanged("ManufacturerElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ManufacturerElement;
+    private Hl7.Fhir.Model.FhirString? _ManufacturerElement;
 
     /// <summary>
     /// Name of device manufacturer
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Manufacturer
+    public string? Manufacturer
     {
-      get { return ManufacturerElement != null ? ManufacturerElement.Value : null; }
+      get => _ManufacturerElement?.Value;
       set
       {
-        if (value == null)
-          ManufacturerElement = null;
-        else
-          ManufacturerElement = new Hl7.Fhir.Model.FhirString(value);
+        ManufacturerElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Manufacturer");
       }
     }
@@ -635,28 +605,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("manufactureDate", Order=150, FiveWs="what")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime ManufactureDateElement
+    public Hl7.Fhir.Model.FhirDateTime? ManufactureDateElement
     {
       get { return _ManufactureDateElement; }
       set { _ManufactureDateElement = value; OnPropertyChanged("ManufactureDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _ManufactureDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _ManufactureDateElement;
 
     /// <summary>
     /// Date when the device was made
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ManufactureDate
+    public string? ManufactureDate
     {
-      get { return ManufactureDateElement != null ? ManufactureDateElement.Value : null; }
+      get => _ManufactureDateElement?.Value;
       set
       {
-        if (value == null)
-          ManufactureDateElement = null;
-        else
-          ManufactureDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        ManufactureDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ManufactureDate");
       }
     }
@@ -666,28 +633,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("expirationDate", Order=160, FiveWs="what")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime ExpirationDateElement
+    public Hl7.Fhir.Model.FhirDateTime? ExpirationDateElement
     {
       get { return _ExpirationDateElement; }
       set { _ExpirationDateElement = value; OnPropertyChanged("ExpirationDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _ExpirationDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _ExpirationDateElement;
 
     /// <summary>
     /// Date and time of expiry of this device (if applicable)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ExpirationDate
+    public string? ExpirationDate
     {
-      get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
+      get => _ExpirationDateElement?.Value;
       set
       {
-        if (value == null)
-          ExpirationDateElement = null;
-        else
-          ExpirationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ExpirationDate");
       }
     }
@@ -697,28 +661,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("model", Order=170, FiveWs="what")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ModelElement
+    public Hl7.Fhir.Model.FhirString? ModelElement
     {
       get { return _ModelElement; }
       set { _ModelElement = value; OnPropertyChanged("ModelElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ModelElement;
+    private Hl7.Fhir.Model.FhirString? _ModelElement;
 
     /// <summary>
     /// Model id assigned by the manufacturer
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Model
+    public string? Model
     {
-      get { return ModelElement != null ? ModelElement.Value : null; }
+      get => _ModelElement?.Value;
       set
       {
-        if (value == null)
-          ModelElement = null;
-        else
-          ModelElement = new Hl7.Fhir.Model.FhirString(value);
+        ModelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Model");
       }
     }
@@ -728,28 +689,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("version", Order=180, FiveWs="what")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString VersionElement
+    public Hl7.Fhir.Model.FhirString? VersionElement
     {
       get { return _VersionElement; }
       set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _VersionElement;
+    private Hl7.Fhir.Model.FhirString? _VersionElement;
 
     /// <summary>
     /// Version number (i.e. software)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Version
+    public string? Version
     {
-      get { return VersionElement != null ? VersionElement.Value : null; }
+      get => _VersionElement?.Value;
       set
       {
-        if (value == null)
-          VersionElement = null;
-        else
-          VersionElement = new Hl7.Fhir.Model.FhirString(value);
+        VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Version");
       }
     }
@@ -761,13 +719,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     /// <summary>
     /// Organization responsible for device.
@@ -776,13 +734,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Owner
+    public Hl7.Fhir.Model.ResourceReference? Owner
     {
       get { return _Owner; }
       set { _Owner = value; OnPropertyChanged("Owner"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Owner;
+    private Hl7.Fhir.Model.ResourceReference? _Owner;
 
     /// <summary>
     /// Details for human/organization for support.
@@ -792,11 +750,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
-      get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactPoint>(); return _Contact; }
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
-    private List<Hl7.Fhir.Model.ContactPoint> _Contact;
+    private List<Hl7.Fhir.Model.ContactPoint>? _Contact;
 
     /// <summary>
     /// Where the resource is found.
@@ -805,41 +763,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Location
+    public Hl7.Fhir.Model.ResourceReference? Location
     {
       get { return _Location; }
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Location;
+    private Hl7.Fhir.Model.ResourceReference? _Location;
 
     /// <summary>
     /// Network address to contact device.
     /// </summary>
     [FhirElement("url", Order=230, FiveWs="where")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri UrlElement
+    public Hl7.Fhir.Model.FhirUri? UrlElement
     {
       get { return _UrlElement; }
       set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _UrlElement;
+    private Hl7.Fhir.Model.FhirUri? _UrlElement;
 
     /// <summary>
     /// Network address to contact device
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Url
+    public string? Url
     {
-      get { return UrlElement != null ? UrlElement.Value : null; }
+      get => _UrlElement?.Value;
       set
       {
-        if (value == null)
-          UrlElement = null;
-        else
-          UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
@@ -852,11 +807,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     /// <summary>
     /// Safety Characteristics of Device.
@@ -867,41 +822,37 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Safety
     {
-      get { if(_Safety==null) _Safety = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Safety; }
+      get => _Safety ??= [];
       set { _Safety = value; OnPropertyChanged("Safety"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Safety;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Safety;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Device;
-
-      if (dest == null)
-      {
+      if(other is not Device dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(Udi != null) dest.Udi = (Hl7.Fhir.Model.Device.UdiComponent)Udi.DeepCopyInternal();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>)StatusElement.DeepCopyInternal();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-      if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopyInternal();
-      if(ManufacturerElement != null) dest.ManufacturerElement = (Hl7.Fhir.Model.FhirString)ManufacturerElement.DeepCopyInternal();
-      if(ManufactureDateElement != null) dest.ManufactureDateElement = (Hl7.Fhir.Model.FhirDateTime)ManufactureDateElement.DeepCopyInternal();
-      if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)ExpirationDateElement.DeepCopyInternal();
-      if(ModelElement != null) dest.ModelElement = (Hl7.Fhir.Model.FhirString)ModelElement.DeepCopyInternal();
-      if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopyInternal();
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
-      if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopyInternal();
-      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopyInternal());
-      if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
-      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopyInternal();
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
-      if(Safety.Any()) dest.Safety = new List<Hl7.Fhir.Model.CodeableConcept>(Safety.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_Udi is not null) dest.Udi = (Hl7.Fhir.Model.Device.UdiComponent)_Udi.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>)_StatusElement.DeepCopyInternal();
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_LotNumberElement is not null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)_LotNumberElement.DeepCopyInternal();
+      if(_ManufacturerElement is not null) dest.ManufacturerElement = (Hl7.Fhir.Model.FhirString)_ManufacturerElement.DeepCopyInternal();
+      if(_ManufactureDateElement is not null) dest.ManufactureDateElement = (Hl7.Fhir.Model.FhirDateTime)_ManufactureDateElement.DeepCopyInternal();
+      if(_ExpirationDateElement is not null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)_ExpirationDateElement.DeepCopyInternal();
+      if(_ModelElement is not null) dest.ModelElement = (Hl7.Fhir.Model.FhirString)_ModelElement.DeepCopyInternal();
+      if(_VersionElement is not null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)_VersionElement.DeepCopyInternal();
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
+      if(_Owner is not null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)_Owner.DeepCopyInternal();
+      if(_Contact is not null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(_Contact.DeepCopyInternal());
+      if(_Location is not null) dest.Location = (Hl7.Fhir.Model.ResourceReference)_Location.DeepCopyInternal();
+      if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)_UrlElement.DeepCopyInternal();
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
+      if(_Safety is not null) dest.Safety = new List<Hl7.Fhir.Model.CodeableConcept>(_Safety.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -913,146 +864,147 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Device;
-      if(otherT == null) return false;
+      if(other is not Device otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(Udi, otherT.Udi)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Type, otherT.Type)) return false;
-      if(!comparer.Equals(LotNumberElement, otherT.LotNumberElement)) return false;
-      if(!comparer.Equals(ManufacturerElement, otherT.ManufacturerElement)) return false;
-      if(!comparer.Equals(ManufactureDateElement, otherT.ManufactureDateElement)) return false;
-      if(!comparer.Equals(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
-      if(!comparer.Equals(ModelElement, otherT.ModelElement)) return false;
-      if(!comparer.Equals(VersionElement, otherT.VersionElement)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
-      if(!comparer.Equals(Owner, otherT.Owner)) return false;
-      if(!comparer.ListEquals(Contact, otherT.Contact)) return false;
-      if(!comparer.Equals(Location, otherT.Location)) return false;
-      if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
-      if(!comparer.ListEquals(Safety, otherT.Safety)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_Udi, otherT._Udi)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_LotNumberElement, otherT._LotNumberElement)) return false;
+      if(!comparer.Equals(_ManufacturerElement, otherT._ManufacturerElement)) return false;
+      if(!comparer.Equals(_ManufactureDateElement, otherT._ManufactureDateElement)) return false;
+      if(!comparer.Equals(_ExpirationDateElement, otherT._ExpirationDateElement)) return false;
+      if(!comparer.Equals(_ModelElement, otherT._ModelElement)) return false;
+      if(!comparer.Equals(_VersionElement, otherT._VersionElement)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+      if(!comparer.Equals(_Owner, otherT._Owner)) return false;
+      if(!comparer.ListEquals(_Contact, otherT._Contact)) return false;
+      if(!comparer.Equals(_Location, otherT._Location)) return false;
+      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      if(!comparer.ListEquals(_Safety, otherT._Safety)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "udi":
-          value = Udi;
-          return Udi is not null;
+          value = _Udi;
+          return _Udi is not null;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "type":
-          value = Type;
-          return Type is not null;
+          value = _Type;
+          return _Type is not null;
         case "lotNumber":
-          value = LotNumberElement;
-          return LotNumberElement is not null;
+          value = _LotNumberElement;
+          return _LotNumberElement is not null;
         case "manufacturer":
-          value = ManufacturerElement;
-          return ManufacturerElement is not null;
+          value = _ManufacturerElement;
+          return _ManufacturerElement is not null;
         case "manufactureDate":
-          value = ManufactureDateElement;
-          return ManufactureDateElement is not null;
+          value = _ManufactureDateElement;
+          return _ManufactureDateElement is not null;
         case "expirationDate":
-          value = ExpirationDateElement;
-          return ExpirationDateElement is not null;
+          value = _ExpirationDateElement;
+          return _ExpirationDateElement is not null;
         case "model":
-          value = ModelElement;
-          return ModelElement is not null;
+          value = _ModelElement;
+          return _ModelElement is not null;
         case "version":
-          value = VersionElement;
-          return VersionElement is not null;
+          value = _VersionElement;
+          return _VersionElement is not null;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         case "owner":
-          value = Owner;
-          return Owner is not null;
+          value = _Owner;
+          return _Owner is not null;
         case "contact":
-          value = Contact;
-          return Contact?.Any() == true;
+          value = _Contact;
+          return _Contact?.Any() == true;
         case "location":
-          value = Location;
-          return Location is not null;
+          value = _Location;
+          return _Location is not null;
         case "url":
-          value = UrlElement;
-          return UrlElement is not null;
+          value = _UrlElement;
+          return _UrlElement is not null;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         case "safety":
-          value = Safety;
-          return Safety?.Any() == true;
+          value = _Safety;
+          return _Safety?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "udi":
-          Udi = (Hl7.Fhir.Model.Device.UdiComponent)value;
+          Udi = (Hl7.Fhir.Model.Device.UdiComponent?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>?)value;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept)value;
+          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "lotNumber":
-          LotNumberElement = (Hl7.Fhir.Model.FhirString)value;
+          LotNumberElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "manufacturer":
-          ManufacturerElement = (Hl7.Fhir.Model.FhirString)value;
+          ManufacturerElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "manufactureDate":
-          ManufactureDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          ManufactureDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "expirationDate":
-          ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "model":
-          ModelElement = (Hl7.Fhir.Model.FhirString)value;
+          ModelElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "version":
-          VersionElement = (Hl7.Fhir.Model.FhirString)value;
+          VersionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "owner":
-          Owner = (Hl7.Fhir.Model.ResourceReference)value;
+          Owner = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "contact":
-          Contact = (List<Hl7.Fhir.Model.ContactPoint>)value;
+          Contact = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         case "location":
-          Location = (Hl7.Fhir.Model.ResourceReference)value;
+          Location = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "url":
-          UrlElement = (Hl7.Fhir.Model.FhirUri)value;
+          UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         case "safety":
-          Safety = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Safety = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1063,23 +1015,23 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Udi is not null) yield return new KeyValuePair<string,object>("udi",Udi);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
-      if (ManufacturerElement is not null) yield return new KeyValuePair<string,object>("manufacturer",ManufacturerElement);
-      if (ManufactureDateElement is not null) yield return new KeyValuePair<string,object>("manufactureDate",ManufactureDateElement);
-      if (ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",ExpirationDateElement);
-      if (ModelElement is not null) yield return new KeyValuePair<string,object>("model",ModelElement);
-      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Owner is not null) yield return new KeyValuePair<string,object>("owner",Owner);
-      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
-      if (Safety?.Any() == true) yield return new KeyValuePair<string,object>("safety",Safety);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Udi is not null) yield return new KeyValuePair<string,object>("udi",_Udi);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",_LotNumberElement);
+      if (_ManufacturerElement is not null) yield return new KeyValuePair<string,object>("manufacturer",_ManufacturerElement);
+      if (_ManufactureDateElement is not null) yield return new KeyValuePair<string,object>("manufactureDate",_ManufactureDateElement);
+      if (_ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",_ExpirationDateElement);
+      if (_ModelElement is not null) yield return new KeyValuePair<string,object>("model",_ModelElement);
+      if (_VersionElement is not null) yield return new KeyValuePair<string,object>("version",_VersionElement);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Owner is not null) yield return new KeyValuePair<string,object>("owner",_Owner);
+      if (_Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_Safety?.Any() == true) yield return new KeyValuePair<string,object>("safety",_Safety);
     }
 
   }

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -66,67 +69,63 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Age
+    public Hl7.Fhir.Model.DataType? Age
     {
       get { return _Age; }
       set { _Age = value; OnPropertyChanged("Age"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Age;
+    private Hl7.Fhir.Model.DataType? _Age;
 
     /// <summary>
     /// The gender of the specific population.
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Gender
+    public Hl7.Fhir.Model.CodeableConcept? Gender
     {
       get { return _Gender; }
       set { _Gender = value; OnPropertyChanged("Gender"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Gender;
+    private Hl7.Fhir.Model.CodeableConcept? _Gender;
 
     /// <summary>
     /// Race of the specific population.
     /// </summary>
     [FhirElement("race", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Race
+    public Hl7.Fhir.Model.CodeableConcept? Race
     {
       get { return _Race; }
       set { _Race = value; OnPropertyChanged("Race"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Race;
+    private Hl7.Fhir.Model.CodeableConcept? _Race;
 
     /// <summary>
     /// The existing physiological conditions of the specific population to which this applies.
     /// </summary>
     [FhirElement("physiologicalCondition", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept PhysiologicalCondition
+    public Hl7.Fhir.Model.CodeableConcept? PhysiologicalCondition
     {
       get { return _PhysiologicalCondition; }
       set { _PhysiologicalCondition = value; OnPropertyChanged("PhysiologicalCondition"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _PhysiologicalCondition;
+    private Hl7.Fhir.Model.CodeableConcept? _PhysiologicalCondition;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Population;
-
-      if (dest == null)
-      {
+      if(other is not Population dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Age != null) dest.Age = (Hl7.Fhir.Model.DataType)Age.DeepCopyInternal();
-      if(Gender != null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)Gender.DeepCopyInternal();
-      if(Race != null) dest.Race = (Hl7.Fhir.Model.CodeableConcept)Race.DeepCopyInternal();
-      if(PhysiologicalCondition != null) dest.PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept)PhysiologicalCondition.DeepCopyInternal();
+      if(_Age is not null) dest.Age = (Hl7.Fhir.Model.DataType)_Age.DeepCopyInternal();
+      if(_Gender is not null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)_Gender.DeepCopyInternal();
+      if(_Race is not null) dest.Race = (Hl7.Fhir.Model.CodeableConcept)_Race.DeepCopyInternal();
+      if(_PhysiologicalCondition is not null) dest.PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept)_PhysiologicalCondition.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -138,55 +137,56 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Population;
-      if(otherT == null) return false;
+      if(other is not Population otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Age, otherT.Age)) return false;
-      if(!comparer.Equals(Gender, otherT.Gender)) return false;
-      if(!comparer.Equals(Race, otherT.Race)) return false;
-      if(!comparer.Equals(PhysiologicalCondition, otherT.PhysiologicalCondition)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Age, otherT._Age)) return false;
+      if(!comparer.Equals(_Gender, otherT._Gender)) return false;
+      if(!comparer.Equals(_Race, otherT._Race)) return false;
+      if(!comparer.Equals(_PhysiologicalCondition, otherT._PhysiologicalCondition)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "age":
-          value = Age;
-          return Age is not null;
+          value = _Age;
+          return _Age is not null;
         case "gender":
-          value = Gender;
-          return Gender is not null;
+          value = _Gender;
+          return _Gender is not null;
         case "race":
-          value = Race;
-          return Race is not null;
+          value = _Race;
+          return _Race is not null;
         case "physiologicalCondition":
-          value = PhysiologicalCondition;
-          return PhysiologicalCondition is not null;
+          value = _PhysiologicalCondition;
+          return _PhysiologicalCondition is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "age":
-          Age = (Hl7.Fhir.Model.DataType)value;
+          Age = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "gender":
-          Gender = (Hl7.Fhir.Model.CodeableConcept)value;
+          Gender = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "race":
-          Race = (Hl7.Fhir.Model.CodeableConcept)value;
+          Race = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "physiologicalCondition":
-          PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept)value;
+          PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -197,10 +197,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
-      if (Gender is not null) yield return new KeyValuePair<string,object>("gender",Gender);
-      if (Race is not null) yield return new KeyValuePair<string,object>("race",Race);
-      if (PhysiologicalCondition is not null) yield return new KeyValuePair<string,object>("physiologicalCondition",PhysiologicalCondition);
+      if (_Age is not null) yield return new KeyValuePair<string,object>("age",_Age);
+      if (_Gender is not null) yield return new KeyValuePair<string,object>("gender",_Gender);
+      if (_Race is not null) yield return new KeyValuePair<string,object>("race",_Race);
+      if (_PhysiologicalCondition is not null) yield return new KeyValuePair<string,object>("physiologicalCondition",_PhysiologicalCondition);
     }
 
   }

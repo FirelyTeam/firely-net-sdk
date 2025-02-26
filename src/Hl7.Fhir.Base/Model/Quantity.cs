@@ -69,5 +69,5 @@ public partial class Quantity : ICoded, P.IToSystemPrimitive
     }
 
     /// <inheritdoc cref="ICoded.ToCodings"/>
-    public IEnumerable<Coding> ToCodings() => [new(System, Code)];
+    public IReadOnlyCollection<Coding> ToCodings() => [new(System, Code)];
 }

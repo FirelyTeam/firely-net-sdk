@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -221,41 +224,38 @@ namespace Hl7.Fhir.Model
       [FhirElement("chromosome", InSummary=true, Order=40)]
       [Binding("chromosome-human")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Chromosome
+      public Hl7.Fhir.Model.CodeableConcept? Chromosome
       {
         get { return _Chromosome; }
         set { _Chromosome = value; OnPropertyChanged("Chromosome"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Chromosome;
+      private Hl7.Fhir.Model.CodeableConcept? _Chromosome;
 
       /// <summary>
       /// The Genome Build used for reference, following GRCh build versions e.g. 'GRCh 37'.
       /// </summary>
       [FhirElement("genomeBuild", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString GenomeBuildElement
+      public Hl7.Fhir.Model.FhirString? GenomeBuildElement
       {
         get { return _GenomeBuildElement; }
         set { _GenomeBuildElement = value; OnPropertyChanged("GenomeBuildElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _GenomeBuildElement;
+      private Hl7.Fhir.Model.FhirString? _GenomeBuildElement;
 
       /// <summary>
       /// The Genome Build used for reference, following GRCh build versions e.g. 'GRCh 37'
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string GenomeBuild
+      public string? GenomeBuild
       {
-        get { return GenomeBuildElement != null ? GenomeBuildElement.Value : null; }
+        get => _GenomeBuildElement?.Value;
         set
         {
-          if (value == null)
-            GenomeBuildElement = null;
-          else
-            GenomeBuildElement = new Hl7.Fhir.Model.FhirString(value);
+          GenomeBuildElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("GenomeBuild");
         }
       }
@@ -267,13 +267,13 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Binding("orientationType")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MolecularSequence.OrientationType> OrientationElement
+      public Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>? OrientationElement
       {
         get { return _OrientationElement; }
         set { _OrientationElement = value; OnPropertyChanged("OrientationElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.MolecularSequence.OrientationType> _OrientationElement;
+      private Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>? _OrientationElement;
 
       /// <summary>
       /// sense | antisense
@@ -282,13 +282,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MolecularSequence.OrientationType? Orientation
       {
-        get { return OrientationElement != null ? OrientationElement.Value : null; }
+        get => _OrientationElement?.Value;
         set
         {
-          if (value == null)
-            OrientationElement = null;
-          else
-            OrientationElement = new Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>(value);
+          OrientationElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>(value);
           OnPropertyChanged("Orientation");
         }
       }
@@ -299,13 +296,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("referenceSeqId", InSummary=true, Order=70)]
       [Binding("sequenceReference")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept ReferenceSeqId
+      public Hl7.Fhir.Model.CodeableConcept? ReferenceSeqId
       {
         get { return _ReferenceSeqId; }
         set { _ReferenceSeqId = value; OnPropertyChanged("ReferenceSeqId"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _ReferenceSeqId;
+      private Hl7.Fhir.Model.CodeableConcept? _ReferenceSeqId;
 
       /// <summary>
       /// A pointer to another MolecularSequence entity as reference sequence.
@@ -314,41 +311,38 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("MolecularSequence")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference ReferenceSeqPointer
+      public Hl7.Fhir.Model.ResourceReference? ReferenceSeqPointer
       {
         get { return _ReferenceSeqPointer; }
         set { _ReferenceSeqPointer = value; OnPropertyChanged("ReferenceSeqPointer"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _ReferenceSeqPointer;
+      private Hl7.Fhir.Model.ResourceReference? _ReferenceSeqPointer;
 
       /// <summary>
       /// A string to represent reference sequence.
       /// </summary>
       [FhirElement("referenceSeqString", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ReferenceSeqStringElement
+      public Hl7.Fhir.Model.FhirString? ReferenceSeqStringElement
       {
         get { return _ReferenceSeqStringElement; }
         set { _ReferenceSeqStringElement = value; OnPropertyChanged("ReferenceSeqStringElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ReferenceSeqStringElement;
+      private Hl7.Fhir.Model.FhirString? _ReferenceSeqStringElement;
 
       /// <summary>
       /// A string to represent reference sequence
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ReferenceSeqString
+      public string? ReferenceSeqString
       {
-        get { return ReferenceSeqStringElement != null ? ReferenceSeqStringElement.Value : null; }
+        get => _ReferenceSeqStringElement?.Value;
         set
         {
-          if (value == null)
-            ReferenceSeqStringElement = null;
-          else
-            ReferenceSeqStringElement = new Hl7.Fhir.Model.FhirString(value);
+          ReferenceSeqStringElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ReferenceSeqString");
         }
       }
@@ -360,13 +354,13 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Binding("strandType")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MolecularSequence.StrandType> StrandElement
+      public Code<Hl7.Fhir.Model.MolecularSequence.StrandType>? StrandElement
       {
         get { return _StrandElement; }
         set { _StrandElement = value; OnPropertyChanged("StrandElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.MolecularSequence.StrandType> _StrandElement;
+      private Code<Hl7.Fhir.Model.MolecularSequence.StrandType>? _StrandElement;
 
       /// <summary>
       /// watson | crick
@@ -375,13 +369,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MolecularSequence.StrandType? Strand
       {
-        get { return StrandElement != null ? StrandElement.Value : null; }
+        get => _StrandElement?.Value;
         set
         {
-          if (value == null)
-            StrandElement = null;
-          else
-            StrandElement = new Code<Hl7.Fhir.Model.MolecularSequence.StrandType>(value);
+          StrandElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.StrandType>(value);
           OnPropertyChanged("Strand");
         }
       }
@@ -391,13 +382,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("windowStart", InSummary=true, Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer WindowStartElement
+      public Hl7.Fhir.Model.Integer? WindowStartElement
       {
         get { return _WindowStartElement; }
         set { _WindowStartElement = value; OnPropertyChanged("WindowStartElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _WindowStartElement;
+      private Hl7.Fhir.Model.Integer? _WindowStartElement;
 
       /// <summary>
       /// Start position of the window on the  reference sequence
@@ -406,13 +397,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? WindowStart
       {
-        get { return WindowStartElement != null ? WindowStartElement.Value : null; }
+        get => _WindowStartElement?.Value;
         set
         {
-          if (value == null)
-            WindowStartElement = null;
-          else
-            WindowStartElement = new Hl7.Fhir.Model.Integer(value);
+          WindowStartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("WindowStart");
         }
       }
@@ -422,13 +410,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("windowEnd", InSummary=true, Order=120)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer WindowEndElement
+      public Hl7.Fhir.Model.Integer? WindowEndElement
       {
         get { return _WindowEndElement; }
         set { _WindowEndElement = value; OnPropertyChanged("WindowEndElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _WindowEndElement;
+      private Hl7.Fhir.Model.Integer? _WindowEndElement;
 
       /// <summary>
       /// End position of the window on the reference sequence
@@ -437,36 +425,29 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? WindowEnd
       {
-        get { return WindowEndElement != null ? WindowEndElement.Value : null; }
+        get => _WindowEndElement?.Value;
         set
         {
-          if (value == null)
-            WindowEndElement = null;
-          else
-            WindowEndElement = new Hl7.Fhir.Model.Integer(value);
+          WindowEndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("WindowEnd");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ReferenceSeqComponent;
-
-        if (dest == null)
-        {
+        if(other is not ReferenceSeqComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Chromosome != null) dest.Chromosome = (Hl7.Fhir.Model.CodeableConcept)Chromosome.DeepCopyInternal();
-        if(GenomeBuildElement != null) dest.GenomeBuildElement = (Hl7.Fhir.Model.FhirString)GenomeBuildElement.DeepCopyInternal();
-        if(OrientationElement != null) dest.OrientationElement = (Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>)OrientationElement.DeepCopyInternal();
-        if(ReferenceSeqId != null) dest.ReferenceSeqId = (Hl7.Fhir.Model.CodeableConcept)ReferenceSeqId.DeepCopyInternal();
-        if(ReferenceSeqPointer != null) dest.ReferenceSeqPointer = (Hl7.Fhir.Model.ResourceReference)ReferenceSeqPointer.DeepCopyInternal();
-        if(ReferenceSeqStringElement != null) dest.ReferenceSeqStringElement = (Hl7.Fhir.Model.FhirString)ReferenceSeqStringElement.DeepCopyInternal();
-        if(StrandElement != null) dest.StrandElement = (Code<Hl7.Fhir.Model.MolecularSequence.StrandType>)StrandElement.DeepCopyInternal();
-        if(WindowStartElement != null) dest.WindowStartElement = (Hl7.Fhir.Model.Integer)WindowStartElement.DeepCopyInternal();
-        if(WindowEndElement != null) dest.WindowEndElement = (Hl7.Fhir.Model.Integer)WindowEndElement.DeepCopyInternal();
+        if(_Chromosome is not null) dest.Chromosome = (Hl7.Fhir.Model.CodeableConcept)_Chromosome.DeepCopyInternal();
+        if(_GenomeBuildElement is not null) dest.GenomeBuildElement = (Hl7.Fhir.Model.FhirString)_GenomeBuildElement.DeepCopyInternal();
+        if(_OrientationElement is not null) dest.OrientationElement = (Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>)_OrientationElement.DeepCopyInternal();
+        if(_ReferenceSeqId is not null) dest.ReferenceSeqId = (Hl7.Fhir.Model.CodeableConcept)_ReferenceSeqId.DeepCopyInternal();
+        if(_ReferenceSeqPointer is not null) dest.ReferenceSeqPointer = (Hl7.Fhir.Model.ResourceReference)_ReferenceSeqPointer.DeepCopyInternal();
+        if(_ReferenceSeqStringElement is not null) dest.ReferenceSeqStringElement = (Hl7.Fhir.Model.FhirString)_ReferenceSeqStringElement.DeepCopyInternal();
+        if(_StrandElement is not null) dest.StrandElement = (Code<Hl7.Fhir.Model.MolecularSequence.StrandType>)_StrandElement.DeepCopyInternal();
+        if(_WindowStartElement is not null) dest.WindowStartElement = (Hl7.Fhir.Model.Integer)_WindowStartElement.DeepCopyInternal();
+        if(_WindowEndElement is not null) dest.WindowEndElement = (Hl7.Fhir.Model.Integer)_WindowEndElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -478,90 +459,91 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ReferenceSeqComponent;
-        if(otherT == null) return false;
+        if(other is not ReferenceSeqComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Chromosome, otherT.Chromosome)) return false;
-        if(!comparer.Equals(GenomeBuildElement, otherT.GenomeBuildElement)) return false;
-        if(!comparer.Equals(OrientationElement, otherT.OrientationElement)) return false;
-        if(!comparer.Equals(ReferenceSeqId, otherT.ReferenceSeqId)) return false;
-        if(!comparer.Equals(ReferenceSeqPointer, otherT.ReferenceSeqPointer)) return false;
-        if(!comparer.Equals(ReferenceSeqStringElement, otherT.ReferenceSeqStringElement)) return false;
-        if(!comparer.Equals(StrandElement, otherT.StrandElement)) return false;
-        if(!comparer.Equals(WindowStartElement, otherT.WindowStartElement)) return false;
-        if(!comparer.Equals(WindowEndElement, otherT.WindowEndElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Chromosome, otherT._Chromosome)) return false;
+        if(!comparer.Equals(_GenomeBuildElement, otherT._GenomeBuildElement)) return false;
+        if(!comparer.Equals(_OrientationElement, otherT._OrientationElement)) return false;
+        if(!comparer.Equals(_ReferenceSeqId, otherT._ReferenceSeqId)) return false;
+        if(!comparer.Equals(_ReferenceSeqPointer, otherT._ReferenceSeqPointer)) return false;
+        if(!comparer.Equals(_ReferenceSeqStringElement, otherT._ReferenceSeqStringElement)) return false;
+        if(!comparer.Equals(_StrandElement, otherT._StrandElement)) return false;
+        if(!comparer.Equals(_WindowStartElement, otherT._WindowStartElement)) return false;
+        if(!comparer.Equals(_WindowEndElement, otherT._WindowEndElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "chromosome":
-            value = Chromosome;
-            return Chromosome is not null;
+            value = _Chromosome;
+            return _Chromosome is not null;
           case "genomeBuild":
-            value = GenomeBuildElement;
-            return GenomeBuildElement is not null;
+            value = _GenomeBuildElement;
+            return _GenomeBuildElement is not null;
           case "orientation":
-            value = OrientationElement;
-            return OrientationElement is not null;
+            value = _OrientationElement;
+            return _OrientationElement is not null;
           case "referenceSeqId":
-            value = ReferenceSeqId;
-            return ReferenceSeqId is not null;
+            value = _ReferenceSeqId;
+            return _ReferenceSeqId is not null;
           case "referenceSeqPointer":
-            value = ReferenceSeqPointer;
-            return ReferenceSeqPointer is not null;
+            value = _ReferenceSeqPointer;
+            return _ReferenceSeqPointer is not null;
           case "referenceSeqString":
-            value = ReferenceSeqStringElement;
-            return ReferenceSeqStringElement is not null;
+            value = _ReferenceSeqStringElement;
+            return _ReferenceSeqStringElement is not null;
           case "strand":
-            value = StrandElement;
-            return StrandElement is not null;
+            value = _StrandElement;
+            return _StrandElement is not null;
           case "windowStart":
-            value = WindowStartElement;
-            return WindowStartElement is not null;
+            value = _WindowStartElement;
+            return _WindowStartElement is not null;
           case "windowEnd":
-            value = WindowEndElement;
-            return WindowEndElement is not null;
+            value = _WindowEndElement;
+            return _WindowEndElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "chromosome":
-            Chromosome = (Hl7.Fhir.Model.CodeableConcept)value;
+            Chromosome = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "genomeBuild":
-            GenomeBuildElement = (Hl7.Fhir.Model.FhirString)value;
+            GenomeBuildElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "orientation":
-            OrientationElement = (Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>)value;
+            OrientationElement = (Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>?)value;
             return this;
           case "referenceSeqId":
-            ReferenceSeqId = (Hl7.Fhir.Model.CodeableConcept)value;
+            ReferenceSeqId = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "referenceSeqPointer":
-            ReferenceSeqPointer = (Hl7.Fhir.Model.ResourceReference)value;
+            ReferenceSeqPointer = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "referenceSeqString":
-            ReferenceSeqStringElement = (Hl7.Fhir.Model.FhirString)value;
+            ReferenceSeqStringElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "strand":
-            StrandElement = (Code<Hl7.Fhir.Model.MolecularSequence.StrandType>)value;
+            StrandElement = (Code<Hl7.Fhir.Model.MolecularSequence.StrandType>?)value;
             return this;
           case "windowStart":
-            WindowStartElement = (Hl7.Fhir.Model.Integer)value;
+            WindowStartElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "windowEnd":
-            WindowEndElement = (Hl7.Fhir.Model.Integer)value;
+            WindowEndElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -572,15 +554,15 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Chromosome is not null) yield return new KeyValuePair<string,object>("chromosome",Chromosome);
-        if (GenomeBuildElement is not null) yield return new KeyValuePair<string,object>("genomeBuild",GenomeBuildElement);
-        if (OrientationElement is not null) yield return new KeyValuePair<string,object>("orientation",OrientationElement);
-        if (ReferenceSeqId is not null) yield return new KeyValuePair<string,object>("referenceSeqId",ReferenceSeqId);
-        if (ReferenceSeqPointer is not null) yield return new KeyValuePair<string,object>("referenceSeqPointer",ReferenceSeqPointer);
-        if (ReferenceSeqStringElement is not null) yield return new KeyValuePair<string,object>("referenceSeqString",ReferenceSeqStringElement);
-        if (StrandElement is not null) yield return new KeyValuePair<string,object>("strand",StrandElement);
-        if (WindowStartElement is not null) yield return new KeyValuePair<string,object>("windowStart",WindowStartElement);
-        if (WindowEndElement is not null) yield return new KeyValuePair<string,object>("windowEnd",WindowEndElement);
+        if (_Chromosome is not null) yield return new KeyValuePair<string,object>("chromosome",_Chromosome);
+        if (_GenomeBuildElement is not null) yield return new KeyValuePair<string,object>("genomeBuild",_GenomeBuildElement);
+        if (_OrientationElement is not null) yield return new KeyValuePair<string,object>("orientation",_OrientationElement);
+        if (_ReferenceSeqId is not null) yield return new KeyValuePair<string,object>("referenceSeqId",_ReferenceSeqId);
+        if (_ReferenceSeqPointer is not null) yield return new KeyValuePair<string,object>("referenceSeqPointer",_ReferenceSeqPointer);
+        if (_ReferenceSeqStringElement is not null) yield return new KeyValuePair<string,object>("referenceSeqString",_ReferenceSeqStringElement);
+        if (_StrandElement is not null) yield return new KeyValuePair<string,object>("strand",_StrandElement);
+        if (_WindowStartElement is not null) yield return new KeyValuePair<string,object>("windowStart",_WindowStartElement);
+        if (_WindowEndElement is not null) yield return new KeyValuePair<string,object>("windowEnd",_WindowEndElement);
       }
 
     }
@@ -606,13 +588,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("start", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer StartElement
+      public Hl7.Fhir.Model.Integer? StartElement
       {
         get { return _StartElement; }
         set { _StartElement = value; OnPropertyChanged("StartElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _StartElement;
+      private Hl7.Fhir.Model.Integer? _StartElement;
 
       /// <summary>
       /// Start position of the variant on the  reference sequence
@@ -621,13 +603,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Start
       {
-        get { return StartElement != null ? StartElement.Value : null; }
+        get => _StartElement?.Value;
         set
         {
-          if (value == null)
-            StartElement = null;
-          else
-            StartElement = new Hl7.Fhir.Model.Integer(value);
+          StartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Start");
         }
       }
@@ -637,13 +616,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("end", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer EndElement
+      public Hl7.Fhir.Model.Integer? EndElement
       {
         get { return _EndElement; }
         set { _EndElement = value; OnPropertyChanged("EndElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _EndElement;
+      private Hl7.Fhir.Model.Integer? _EndElement;
 
       /// <summary>
       /// End position of the variant on the reference sequence
@@ -652,13 +631,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? End
       {
-        get { return EndElement != null ? EndElement.Value : null; }
+        get => _EndElement?.Value;
         set
         {
-          if (value == null)
-            EndElement = null;
-          else
-            EndElement = new Hl7.Fhir.Model.Integer(value);
+          EndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("End");
         }
       }
@@ -668,28 +644,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("observedAllele", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ObservedAlleleElement
+      public Hl7.Fhir.Model.FhirString? ObservedAlleleElement
       {
         get { return _ObservedAlleleElement; }
         set { _ObservedAlleleElement = value; OnPropertyChanged("ObservedAlleleElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ObservedAlleleElement;
+      private Hl7.Fhir.Model.FhirString? _ObservedAlleleElement;
 
       /// <summary>
       /// Allele that was observed
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ObservedAllele
+      public string? ObservedAllele
       {
-        get { return ObservedAlleleElement != null ? ObservedAlleleElement.Value : null; }
+        get => _ObservedAlleleElement?.Value;
         set
         {
-          if (value == null)
-            ObservedAlleleElement = null;
-          else
-            ObservedAlleleElement = new Hl7.Fhir.Model.FhirString(value);
+          ObservedAlleleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ObservedAllele");
         }
       }
@@ -699,28 +672,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("referenceAllele", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ReferenceAlleleElement
+      public Hl7.Fhir.Model.FhirString? ReferenceAlleleElement
       {
         get { return _ReferenceAlleleElement; }
         set { _ReferenceAlleleElement = value; OnPropertyChanged("ReferenceAlleleElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ReferenceAlleleElement;
+      private Hl7.Fhir.Model.FhirString? _ReferenceAlleleElement;
 
       /// <summary>
       /// Allele in the reference sequence
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ReferenceAllele
+      public string? ReferenceAllele
       {
-        get { return ReferenceAlleleElement != null ? ReferenceAlleleElement.Value : null; }
+        get => _ReferenceAlleleElement?.Value;
         set
         {
-          if (value == null)
-            ReferenceAlleleElement = null;
-          else
-            ReferenceAlleleElement = new Hl7.Fhir.Model.FhirString(value);
+          ReferenceAlleleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ReferenceAllele");
         }
       }
@@ -730,28 +700,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("cigar", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString CigarElement
+      public Hl7.Fhir.Model.FhirString? CigarElement
       {
         get { return _CigarElement; }
         set { _CigarElement = value; OnPropertyChanged("CigarElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _CigarElement;
+      private Hl7.Fhir.Model.FhirString? _CigarElement;
 
       /// <summary>
       /// Extended CIGAR string for aligning the sequence with reference bases
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Cigar
+      public string? Cigar
       {
-        get { return CigarElement != null ? CigarElement.Value : null; }
+        get => _CigarElement?.Value;
         set
         {
-          if (value == null)
-            CigarElement = null;
-          else
-            CigarElement = new Hl7.Fhir.Model.FhirString(value);
+          CigarElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Cigar");
         }
       }
@@ -763,30 +730,26 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Observation")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference VariantPointer
+      public Hl7.Fhir.Model.ResourceReference? VariantPointer
       {
         get { return _VariantPointer; }
         set { _VariantPointer = value; OnPropertyChanged("VariantPointer"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _VariantPointer;
+      private Hl7.Fhir.Model.ResourceReference? _VariantPointer;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as VariantComponent;
-
-        if (dest == null)
-        {
+        if(other is not VariantComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopyInternal();
-        if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopyInternal();
-        if(ObservedAlleleElement != null) dest.ObservedAlleleElement = (Hl7.Fhir.Model.FhirString)ObservedAlleleElement.DeepCopyInternal();
-        if(ReferenceAlleleElement != null) dest.ReferenceAlleleElement = (Hl7.Fhir.Model.FhirString)ReferenceAlleleElement.DeepCopyInternal();
-        if(CigarElement != null) dest.CigarElement = (Hl7.Fhir.Model.FhirString)CigarElement.DeepCopyInternal();
-        if(VariantPointer != null) dest.VariantPointer = (Hl7.Fhir.Model.ResourceReference)VariantPointer.DeepCopyInternal();
+        if(_StartElement is not null) dest.StartElement = (Hl7.Fhir.Model.Integer)_StartElement.DeepCopyInternal();
+        if(_EndElement is not null) dest.EndElement = (Hl7.Fhir.Model.Integer)_EndElement.DeepCopyInternal();
+        if(_ObservedAlleleElement is not null) dest.ObservedAlleleElement = (Hl7.Fhir.Model.FhirString)_ObservedAlleleElement.DeepCopyInternal();
+        if(_ReferenceAlleleElement is not null) dest.ReferenceAlleleElement = (Hl7.Fhir.Model.FhirString)_ReferenceAlleleElement.DeepCopyInternal();
+        if(_CigarElement is not null) dest.CigarElement = (Hl7.Fhir.Model.FhirString)_CigarElement.DeepCopyInternal();
+        if(_VariantPointer is not null) dest.VariantPointer = (Hl7.Fhir.Model.ResourceReference)_VariantPointer.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -798,69 +761,70 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as VariantComponent;
-        if(otherT == null) return false;
+        if(other is not VariantComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(StartElement, otherT.StartElement)) return false;
-        if(!comparer.Equals(EndElement, otherT.EndElement)) return false;
-        if(!comparer.Equals(ObservedAlleleElement, otherT.ObservedAlleleElement)) return false;
-        if(!comparer.Equals(ReferenceAlleleElement, otherT.ReferenceAlleleElement)) return false;
-        if(!comparer.Equals(CigarElement, otherT.CigarElement)) return false;
-        if(!comparer.Equals(VariantPointer, otherT.VariantPointer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
+        if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
+        if(!comparer.Equals(_ObservedAlleleElement, otherT._ObservedAlleleElement)) return false;
+        if(!comparer.Equals(_ReferenceAlleleElement, otherT._ReferenceAlleleElement)) return false;
+        if(!comparer.Equals(_CigarElement, otherT._CigarElement)) return false;
+        if(!comparer.Equals(_VariantPointer, otherT._VariantPointer)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "start":
-            value = StartElement;
-            return StartElement is not null;
+            value = _StartElement;
+            return _StartElement is not null;
           case "end":
-            value = EndElement;
-            return EndElement is not null;
+            value = _EndElement;
+            return _EndElement is not null;
           case "observedAllele":
-            value = ObservedAlleleElement;
-            return ObservedAlleleElement is not null;
+            value = _ObservedAlleleElement;
+            return _ObservedAlleleElement is not null;
           case "referenceAllele":
-            value = ReferenceAlleleElement;
-            return ReferenceAlleleElement is not null;
+            value = _ReferenceAlleleElement;
+            return _ReferenceAlleleElement is not null;
           case "cigar":
-            value = CigarElement;
-            return CigarElement is not null;
+            value = _CigarElement;
+            return _CigarElement is not null;
           case "variantPointer":
-            value = VariantPointer;
-            return VariantPointer is not null;
+            value = _VariantPointer;
+            return _VariantPointer is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "start":
-            StartElement = (Hl7.Fhir.Model.Integer)value;
+            StartElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "end":
-            EndElement = (Hl7.Fhir.Model.Integer)value;
+            EndElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "observedAllele":
-            ObservedAlleleElement = (Hl7.Fhir.Model.FhirString)value;
+            ObservedAlleleElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "referenceAllele":
-            ReferenceAlleleElement = (Hl7.Fhir.Model.FhirString)value;
+            ReferenceAlleleElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "cigar":
-            CigarElement = (Hl7.Fhir.Model.FhirString)value;
+            CigarElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "variantPointer":
-            VariantPointer = (Hl7.Fhir.Model.ResourceReference)value;
+            VariantPointer = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -871,12 +835,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
-        if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
-        if (ObservedAlleleElement is not null) yield return new KeyValuePair<string,object>("observedAllele",ObservedAlleleElement);
-        if (ReferenceAlleleElement is not null) yield return new KeyValuePair<string,object>("referenceAllele",ReferenceAlleleElement);
-        if (CigarElement is not null) yield return new KeyValuePair<string,object>("cigar",CigarElement);
-        if (VariantPointer is not null) yield return new KeyValuePair<string,object>("variantPointer",VariantPointer);
+        if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
+        if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
+        if (_ObservedAlleleElement is not null) yield return new KeyValuePair<string,object>("observedAllele",_ObservedAlleleElement);
+        if (_ReferenceAlleleElement is not null) yield return new KeyValuePair<string,object>("referenceAllele",_ReferenceAlleleElement);
+        if (_CigarElement is not null) yield return new KeyValuePair<string,object>("cigar",_CigarElement);
+        if (_VariantPointer is not null) yield return new KeyValuePair<string,object>("variantPointer",_VariantPointer);
       }
 
     }
@@ -905,13 +869,13 @@ namespace Hl7.Fhir.Model
       [Binding("qualityType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MolecularSequence.QualityType> TypeElement
+      public Code<Hl7.Fhir.Model.MolecularSequence.QualityType>? TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.MolecularSequence.QualityType> _TypeElement;
+      private Code<Hl7.Fhir.Model.MolecularSequence.QualityType>? _TypeElement;
 
       /// <summary>
       /// indel | snp | unknown
@@ -920,13 +884,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MolecularSequence.QualityType? Type
       {
-        get { return TypeElement != null ? TypeElement.Value : null; }
+        get => _TypeElement?.Value;
         set
         {
-          if (value == null)
-            TypeElement = null;
-          else
-            TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.QualityType>(value);
+          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.QualityType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -937,26 +898,26 @@ namespace Hl7.Fhir.Model
       [FhirElement("standardSequence", InSummary=true, Order=50)]
       [Binding("qualityStandardSequence")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept StandardSequence
+      public Hl7.Fhir.Model.CodeableConcept? StandardSequence
       {
         get { return _StandardSequence; }
         set { _StandardSequence = value; OnPropertyChanged("StandardSequence"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _StandardSequence;
+      private Hl7.Fhir.Model.CodeableConcept? _StandardSequence;
 
       /// <summary>
       /// Start position of the sequence.
       /// </summary>
       [FhirElement("start", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer StartElement
+      public Hl7.Fhir.Model.Integer? StartElement
       {
         get { return _StartElement; }
         set { _StartElement = value; OnPropertyChanged("StartElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _StartElement;
+      private Hl7.Fhir.Model.Integer? _StartElement;
 
       /// <summary>
       /// Start position of the sequence
@@ -965,13 +926,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Start
       {
-        get { return StartElement != null ? StartElement.Value : null; }
+        get => _StartElement?.Value;
         set
         {
-          if (value == null)
-            StartElement = null;
-          else
-            StartElement = new Hl7.Fhir.Model.Integer(value);
+          StartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Start");
         }
       }
@@ -981,13 +939,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("end", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer EndElement
+      public Hl7.Fhir.Model.Integer? EndElement
       {
         get { return _EndElement; }
         set { _EndElement = value; OnPropertyChanged("EndElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _EndElement;
+      private Hl7.Fhir.Model.Integer? _EndElement;
 
       /// <summary>
       /// End position of the sequence
@@ -996,13 +954,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? End
       {
-        get { return EndElement != null ? EndElement.Value : null; }
+        get => _EndElement?.Value;
         set
         {
-          if (value == null)
-            EndElement = null;
-          else
-            EndElement = new Hl7.Fhir.Model.Integer(value);
+          EndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("End");
         }
       }
@@ -1012,13 +967,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("score", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Score
+      public Hl7.Fhir.Model.Quantity? Score
       {
         get { return _Score; }
         set { _Score = value; OnPropertyChanged("Score"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Score;
+      private Hl7.Fhir.Model.Quantity? _Score;
 
       /// <summary>
       /// Method to get quality.
@@ -1026,26 +981,26 @@ namespace Hl7.Fhir.Model
       [FhirElement("method", InSummary=true, Order=90)]
       [Binding("qualityMethod")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Method
+      public Hl7.Fhir.Model.CodeableConcept? Method
       {
         get { return _Method; }
         set { _Method = value; OnPropertyChanged("Method"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Method;
+      private Hl7.Fhir.Model.CodeableConcept? _Method;
 
       /// <summary>
       /// True positives from the perspective of the truth data.
       /// </summary>
       [FhirElement("truthTP", InSummary=true, Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal TruthTPElement
+      public Hl7.Fhir.Model.FhirDecimal? TruthTPElement
       {
         get { return _TruthTPElement; }
         set { _TruthTPElement = value; OnPropertyChanged("TruthTPElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _TruthTPElement;
+      private Hl7.Fhir.Model.FhirDecimal? _TruthTPElement;
 
       /// <summary>
       /// True positives from the perspective of the truth data
@@ -1054,13 +1009,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? TruthTP
       {
-        get { return TruthTPElement != null ? TruthTPElement.Value : null; }
+        get => _TruthTPElement?.Value;
         set
         {
-          if (value == null)
-            TruthTPElement = null;
-          else
-            TruthTPElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          TruthTPElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("TruthTP");
         }
       }
@@ -1070,13 +1022,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("queryTP", InSummary=true, Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal QueryTPElement
+      public Hl7.Fhir.Model.FhirDecimal? QueryTPElement
       {
         get { return _QueryTPElement; }
         set { _QueryTPElement = value; OnPropertyChanged("QueryTPElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _QueryTPElement;
+      private Hl7.Fhir.Model.FhirDecimal? _QueryTPElement;
 
       /// <summary>
       /// True positives from the perspective of the query data
@@ -1085,13 +1037,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? QueryTP
       {
-        get { return QueryTPElement != null ? QueryTPElement.Value : null; }
+        get => _QueryTPElement?.Value;
         set
         {
-          if (value == null)
-            QueryTPElement = null;
-          else
-            QueryTPElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          QueryTPElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("QueryTP");
         }
       }
@@ -1101,13 +1050,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("truthFN", InSummary=true, Order=120)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal TruthFNElement
+      public Hl7.Fhir.Model.FhirDecimal? TruthFNElement
       {
         get { return _TruthFNElement; }
         set { _TruthFNElement = value; OnPropertyChanged("TruthFNElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _TruthFNElement;
+      private Hl7.Fhir.Model.FhirDecimal? _TruthFNElement;
 
       /// <summary>
       /// False negatives
@@ -1116,13 +1065,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? TruthFN
       {
-        get { return TruthFNElement != null ? TruthFNElement.Value : null; }
+        get => _TruthFNElement?.Value;
         set
         {
-          if (value == null)
-            TruthFNElement = null;
-          else
-            TruthFNElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          TruthFNElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("TruthFN");
         }
       }
@@ -1132,13 +1078,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("queryFP", InSummary=true, Order=130)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal QueryFPElement
+      public Hl7.Fhir.Model.FhirDecimal? QueryFPElement
       {
         get { return _QueryFPElement; }
         set { _QueryFPElement = value; OnPropertyChanged("QueryFPElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _QueryFPElement;
+      private Hl7.Fhir.Model.FhirDecimal? _QueryFPElement;
 
       /// <summary>
       /// False positives
@@ -1147,13 +1093,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? QueryFP
       {
-        get { return QueryFPElement != null ? QueryFPElement.Value : null; }
+        get => _QueryFPElement?.Value;
         set
         {
-          if (value == null)
-            QueryFPElement = null;
-          else
-            QueryFPElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          QueryFPElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("QueryFP");
         }
       }
@@ -1163,13 +1106,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("gtFP", InSummary=true, Order=140)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal GtFPElement
+      public Hl7.Fhir.Model.FhirDecimal? GtFPElement
       {
         get { return _GtFPElement; }
         set { _GtFPElement = value; OnPropertyChanged("GtFPElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _GtFPElement;
+      private Hl7.Fhir.Model.FhirDecimal? _GtFPElement;
 
       /// <summary>
       /// False positives where the non-REF alleles in the Truth and Query Call Sets match
@@ -1178,13 +1121,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? GtFP
       {
-        get { return GtFPElement != null ? GtFPElement.Value : null; }
+        get => _GtFPElement?.Value;
         set
         {
-          if (value == null)
-            GtFPElement = null;
-          else
-            GtFPElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          GtFPElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("GtFP");
         }
       }
@@ -1194,13 +1134,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("precision", InSummary=true, Order=150)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal PrecisionElement
+      public Hl7.Fhir.Model.FhirDecimal? PrecisionElement
       {
         get { return _PrecisionElement; }
         set { _PrecisionElement = value; OnPropertyChanged("PrecisionElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _PrecisionElement;
+      private Hl7.Fhir.Model.FhirDecimal? _PrecisionElement;
 
       /// <summary>
       /// Precision of comparison
@@ -1209,13 +1149,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Precision
       {
-        get { return PrecisionElement != null ? PrecisionElement.Value : null; }
+        get => _PrecisionElement?.Value;
         set
         {
-          if (value == null)
-            PrecisionElement = null;
-          else
-            PrecisionElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          PrecisionElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Precision");
         }
       }
@@ -1225,13 +1162,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("recall", InSummary=true, Order=160)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal RecallElement
+      public Hl7.Fhir.Model.FhirDecimal? RecallElement
       {
         get { return _RecallElement; }
         set { _RecallElement = value; OnPropertyChanged("RecallElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _RecallElement;
+      private Hl7.Fhir.Model.FhirDecimal? _RecallElement;
 
       /// <summary>
       /// Recall of comparison
@@ -1240,13 +1177,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Recall
       {
-        get { return RecallElement != null ? RecallElement.Value : null; }
+        get => _RecallElement?.Value;
         set
         {
-          if (value == null)
-            RecallElement = null;
-          else
-            RecallElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          RecallElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Recall");
         }
       }
@@ -1256,13 +1190,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("fScore", InSummary=true, Order=170)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal FScoreElement
+      public Hl7.Fhir.Model.FhirDecimal? FScoreElement
       {
         get { return _FScoreElement; }
         set { _FScoreElement = value; OnPropertyChanged("FScoreElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _FScoreElement;
+      private Hl7.Fhir.Model.FhirDecimal? _FScoreElement;
 
       /// <summary>
       /// F-score
@@ -1271,13 +1205,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? FScore
       {
-        get { return FScoreElement != null ? FScoreElement.Value : null; }
+        get => _FScoreElement?.Value;
         set
         {
-          if (value == null)
-            FScoreElement = null;
-          else
-            FScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          FScoreElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("FScore");
         }
       }
@@ -1287,39 +1218,35 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("roc", InSummary=true, Order=180)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularSequence.RocComponent Roc
+      public Hl7.Fhir.Model.MolecularSequence.RocComponent? Roc
       {
         get { return _Roc; }
         set { _Roc = value; OnPropertyChanged("Roc"); }
       }
 
-      private Hl7.Fhir.Model.MolecularSequence.RocComponent _Roc;
+      private Hl7.Fhir.Model.MolecularSequence.RocComponent? _Roc;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as QualityComponent;
-
-        if (dest == null)
-        {
+        if(other is not QualityComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.QualityType>)TypeElement.DeepCopyInternal();
-        if(StandardSequence != null) dest.StandardSequence = (Hl7.Fhir.Model.CodeableConcept)StandardSequence.DeepCopyInternal();
-        if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopyInternal();
-        if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopyInternal();
-        if(Score != null) dest.Score = (Hl7.Fhir.Model.Quantity)Score.DeepCopyInternal();
-        if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopyInternal();
-        if(TruthTPElement != null) dest.TruthTPElement = (Hl7.Fhir.Model.FhirDecimal)TruthTPElement.DeepCopyInternal();
-        if(QueryTPElement != null) dest.QueryTPElement = (Hl7.Fhir.Model.FhirDecimal)QueryTPElement.DeepCopyInternal();
-        if(TruthFNElement != null) dest.TruthFNElement = (Hl7.Fhir.Model.FhirDecimal)TruthFNElement.DeepCopyInternal();
-        if(QueryFPElement != null) dest.QueryFPElement = (Hl7.Fhir.Model.FhirDecimal)QueryFPElement.DeepCopyInternal();
-        if(GtFPElement != null) dest.GtFPElement = (Hl7.Fhir.Model.FhirDecimal)GtFPElement.DeepCopyInternal();
-        if(PrecisionElement != null) dest.PrecisionElement = (Hl7.Fhir.Model.FhirDecimal)PrecisionElement.DeepCopyInternal();
-        if(RecallElement != null) dest.RecallElement = (Hl7.Fhir.Model.FhirDecimal)RecallElement.DeepCopyInternal();
-        if(FScoreElement != null) dest.FScoreElement = (Hl7.Fhir.Model.FhirDecimal)FScoreElement.DeepCopyInternal();
-        if(Roc != null) dest.Roc = (Hl7.Fhir.Model.MolecularSequence.RocComponent)Roc.DeepCopyInternal();
+        if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.QualityType>)_TypeElement.DeepCopyInternal();
+        if(_StandardSequence is not null) dest.StandardSequence = (Hl7.Fhir.Model.CodeableConcept)_StandardSequence.DeepCopyInternal();
+        if(_StartElement is not null) dest.StartElement = (Hl7.Fhir.Model.Integer)_StartElement.DeepCopyInternal();
+        if(_EndElement is not null) dest.EndElement = (Hl7.Fhir.Model.Integer)_EndElement.DeepCopyInternal();
+        if(_Score is not null) dest.Score = (Hl7.Fhir.Model.Quantity)_Score.DeepCopyInternal();
+        if(_Method is not null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)_Method.DeepCopyInternal();
+        if(_TruthTPElement is not null) dest.TruthTPElement = (Hl7.Fhir.Model.FhirDecimal)_TruthTPElement.DeepCopyInternal();
+        if(_QueryTPElement is not null) dest.QueryTPElement = (Hl7.Fhir.Model.FhirDecimal)_QueryTPElement.DeepCopyInternal();
+        if(_TruthFNElement is not null) dest.TruthFNElement = (Hl7.Fhir.Model.FhirDecimal)_TruthFNElement.DeepCopyInternal();
+        if(_QueryFPElement is not null) dest.QueryFPElement = (Hl7.Fhir.Model.FhirDecimal)_QueryFPElement.DeepCopyInternal();
+        if(_GtFPElement is not null) dest.GtFPElement = (Hl7.Fhir.Model.FhirDecimal)_GtFPElement.DeepCopyInternal();
+        if(_PrecisionElement is not null) dest.PrecisionElement = (Hl7.Fhir.Model.FhirDecimal)_PrecisionElement.DeepCopyInternal();
+        if(_RecallElement is not null) dest.RecallElement = (Hl7.Fhir.Model.FhirDecimal)_RecallElement.DeepCopyInternal();
+        if(_FScoreElement is not null) dest.FScoreElement = (Hl7.Fhir.Model.FhirDecimal)_FScoreElement.DeepCopyInternal();
+        if(_Roc is not null) dest.Roc = (Hl7.Fhir.Model.MolecularSequence.RocComponent)_Roc.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1331,132 +1258,133 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as QualityComponent;
-        if(otherT == null) return false;
+        if(other is not QualityComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-        if(!comparer.Equals(StandardSequence, otherT.StandardSequence)) return false;
-        if(!comparer.Equals(StartElement, otherT.StartElement)) return false;
-        if(!comparer.Equals(EndElement, otherT.EndElement)) return false;
-        if(!comparer.Equals(Score, otherT.Score)) return false;
-        if(!comparer.Equals(Method, otherT.Method)) return false;
-        if(!comparer.Equals(TruthTPElement, otherT.TruthTPElement)) return false;
-        if(!comparer.Equals(QueryTPElement, otherT.QueryTPElement)) return false;
-        if(!comparer.Equals(TruthFNElement, otherT.TruthFNElement)) return false;
-        if(!comparer.Equals(QueryFPElement, otherT.QueryFPElement)) return false;
-        if(!comparer.Equals(GtFPElement, otherT.GtFPElement)) return false;
-        if(!comparer.Equals(PrecisionElement, otherT.PrecisionElement)) return false;
-        if(!comparer.Equals(RecallElement, otherT.RecallElement)) return false;
-        if(!comparer.Equals(FScoreElement, otherT.FScoreElement)) return false;
-        if(!comparer.Equals(Roc, otherT.Roc)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+        if(!comparer.Equals(_StandardSequence, otherT._StandardSequence)) return false;
+        if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
+        if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
+        if(!comparer.Equals(_Score, otherT._Score)) return false;
+        if(!comparer.Equals(_Method, otherT._Method)) return false;
+        if(!comparer.Equals(_TruthTPElement, otherT._TruthTPElement)) return false;
+        if(!comparer.Equals(_QueryTPElement, otherT._QueryTPElement)) return false;
+        if(!comparer.Equals(_TruthFNElement, otherT._TruthFNElement)) return false;
+        if(!comparer.Equals(_QueryFPElement, otherT._QueryFPElement)) return false;
+        if(!comparer.Equals(_GtFPElement, otherT._GtFPElement)) return false;
+        if(!comparer.Equals(_PrecisionElement, otherT._PrecisionElement)) return false;
+        if(!comparer.Equals(_RecallElement, otherT._RecallElement)) return false;
+        if(!comparer.Equals(_FScoreElement, otherT._FScoreElement)) return false;
+        if(!comparer.Equals(_Roc, otherT._Roc)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = TypeElement;
-            return TypeElement is not null;
+            value = _TypeElement;
+            return _TypeElement is not null;
           case "standardSequence":
-            value = StandardSequence;
-            return StandardSequence is not null;
+            value = _StandardSequence;
+            return _StandardSequence is not null;
           case "start":
-            value = StartElement;
-            return StartElement is not null;
+            value = _StartElement;
+            return _StartElement is not null;
           case "end":
-            value = EndElement;
-            return EndElement is not null;
+            value = _EndElement;
+            return _EndElement is not null;
           case "score":
-            value = Score;
-            return Score is not null;
+            value = _Score;
+            return _Score is not null;
           case "method":
-            value = Method;
-            return Method is not null;
+            value = _Method;
+            return _Method is not null;
           case "truthTP":
-            value = TruthTPElement;
-            return TruthTPElement is not null;
+            value = _TruthTPElement;
+            return _TruthTPElement is not null;
           case "queryTP":
-            value = QueryTPElement;
-            return QueryTPElement is not null;
+            value = _QueryTPElement;
+            return _QueryTPElement is not null;
           case "truthFN":
-            value = TruthFNElement;
-            return TruthFNElement is not null;
+            value = _TruthFNElement;
+            return _TruthFNElement is not null;
           case "queryFP":
-            value = QueryFPElement;
-            return QueryFPElement is not null;
+            value = _QueryFPElement;
+            return _QueryFPElement is not null;
           case "gtFP":
-            value = GtFPElement;
-            return GtFPElement is not null;
+            value = _GtFPElement;
+            return _GtFPElement is not null;
           case "precision":
-            value = PrecisionElement;
-            return PrecisionElement is not null;
+            value = _PrecisionElement;
+            return _PrecisionElement is not null;
           case "recall":
-            value = RecallElement;
-            return RecallElement is not null;
+            value = _RecallElement;
+            return _RecallElement is not null;
           case "fScore":
-            value = FScoreElement;
-            return FScoreElement is not null;
+            value = _FScoreElement;
+            return _FScoreElement is not null;
           case "roc":
-            value = Roc;
-            return Roc is not null;
+            value = _Roc;
+            return _Roc is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.QualityType>)value;
+            TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.QualityType>?)value;
             return this;
           case "standardSequence":
-            StandardSequence = (Hl7.Fhir.Model.CodeableConcept)value;
+            StandardSequence = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "start":
-            StartElement = (Hl7.Fhir.Model.Integer)value;
+            StartElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "end":
-            EndElement = (Hl7.Fhir.Model.Integer)value;
+            EndElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "score":
-            Score = (Hl7.Fhir.Model.Quantity)value;
+            Score = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "method":
-            Method = (Hl7.Fhir.Model.CodeableConcept)value;
+            Method = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "truthTP":
-            TruthTPElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            TruthTPElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "queryTP":
-            QueryTPElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            QueryTPElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "truthFN":
-            TruthFNElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            TruthFNElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "queryFP":
-            QueryFPElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            QueryFPElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "gtFP":
-            GtFPElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            GtFPElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "precision":
-            PrecisionElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            PrecisionElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "recall":
-            RecallElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            RecallElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "fScore":
-            FScoreElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            FScoreElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "roc":
-            Roc = (Hl7.Fhir.Model.MolecularSequence.RocComponent)value;
+            Roc = (Hl7.Fhir.Model.MolecularSequence.RocComponent?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1467,21 +1395,21 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-        if (StandardSequence is not null) yield return new KeyValuePair<string,object>("standardSequence",StandardSequence);
-        if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
-        if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
-        if (Score is not null) yield return new KeyValuePair<string,object>("score",Score);
-        if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
-        if (TruthTPElement is not null) yield return new KeyValuePair<string,object>("truthTP",TruthTPElement);
-        if (QueryTPElement is not null) yield return new KeyValuePair<string,object>("queryTP",QueryTPElement);
-        if (TruthFNElement is not null) yield return new KeyValuePair<string,object>("truthFN",TruthFNElement);
-        if (QueryFPElement is not null) yield return new KeyValuePair<string,object>("queryFP",QueryFPElement);
-        if (GtFPElement is not null) yield return new KeyValuePair<string,object>("gtFP",GtFPElement);
-        if (PrecisionElement is not null) yield return new KeyValuePair<string,object>("precision",PrecisionElement);
-        if (RecallElement is not null) yield return new KeyValuePair<string,object>("recall",RecallElement);
-        if (FScoreElement is not null) yield return new KeyValuePair<string,object>("fScore",FScoreElement);
-        if (Roc is not null) yield return new KeyValuePair<string,object>("roc",Roc);
+        if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_StandardSequence is not null) yield return new KeyValuePair<string,object>("standardSequence",_StandardSequence);
+        if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
+        if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
+        if (_Score is not null) yield return new KeyValuePair<string,object>("score",_Score);
+        if (_Method is not null) yield return new KeyValuePair<string,object>("method",_Method);
+        if (_TruthTPElement is not null) yield return new KeyValuePair<string,object>("truthTP",_TruthTPElement);
+        if (_QueryTPElement is not null) yield return new KeyValuePair<string,object>("queryTP",_QueryTPElement);
+        if (_TruthFNElement is not null) yield return new KeyValuePair<string,object>("truthFN",_TruthFNElement);
+        if (_QueryFPElement is not null) yield return new KeyValuePair<string,object>("queryFP",_QueryFPElement);
+        if (_GtFPElement is not null) yield return new KeyValuePair<string,object>("gtFP",_GtFPElement);
+        if (_PrecisionElement is not null) yield return new KeyValuePair<string,object>("precision",_PrecisionElement);
+        if (_RecallElement is not null) yield return new KeyValuePair<string,object>("recall",_RecallElement);
+        if (_FScoreElement is not null) yield return new KeyValuePair<string,object>("fScore",_FScoreElement);
+        if (_Roc is not null) yield return new KeyValuePair<string,object>("roc",_Roc);
       }
 
     }
@@ -1510,11 +1438,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Integer> ScoreElement
       {
-        get { if(_ScoreElement==null) _ScoreElement = new List<Hl7.Fhir.Model.Integer>(); return _ScoreElement; }
+        get => _ScoreElement ??= [];
         set { _ScoreElement = value; OnPropertyChanged("ScoreElement"); }
       }
 
-      private List<Hl7.Fhir.Model.Integer> _ScoreElement;
+      private List<Hl7.Fhir.Model.Integer>? _ScoreElement;
 
       /// <summary>
       /// Genotype quality score
@@ -1523,11 +1451,11 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<int?> Score
       {
-        get { return ScoreElement != null ? ScoreElement.Select(elem => elem.Value) : null; }
+        get => _ScoreElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            ScoreElement = null;
+            ScoreElement = null!;
           else
             ScoreElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
           OnPropertyChanged("Score");
@@ -1542,11 +1470,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Integer> NumTPElement
       {
-        get { if(_NumTPElement==null) _NumTPElement = new List<Hl7.Fhir.Model.Integer>(); return _NumTPElement; }
+        get => _NumTPElement ??= [];
         set { _NumTPElement = value; OnPropertyChanged("NumTPElement"); }
       }
 
-      private List<Hl7.Fhir.Model.Integer> _NumTPElement;
+      private List<Hl7.Fhir.Model.Integer>? _NumTPElement;
 
       /// <summary>
       /// Roc score true positive numbers
@@ -1555,11 +1483,11 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<int?> NumTP
       {
-        get { return NumTPElement != null ? NumTPElement.Select(elem => elem.Value) : null; }
+        get => _NumTPElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            NumTPElement = null;
+            NumTPElement = null!;
           else
             NumTPElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
           OnPropertyChanged("NumTP");
@@ -1574,11 +1502,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Integer> NumFPElement
       {
-        get { if(_NumFPElement==null) _NumFPElement = new List<Hl7.Fhir.Model.Integer>(); return _NumFPElement; }
+        get => _NumFPElement ??= [];
         set { _NumFPElement = value; OnPropertyChanged("NumFPElement"); }
       }
 
-      private List<Hl7.Fhir.Model.Integer> _NumFPElement;
+      private List<Hl7.Fhir.Model.Integer>? _NumFPElement;
 
       /// <summary>
       /// Roc score false positive numbers
@@ -1587,11 +1515,11 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<int?> NumFP
       {
-        get { return NumFPElement != null ? NumFPElement.Select(elem => elem.Value) : null; }
+        get => _NumFPElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            NumFPElement = null;
+            NumFPElement = null!;
           else
             NumFPElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
           OnPropertyChanged("NumFP");
@@ -1606,11 +1534,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Integer> NumFNElement
       {
-        get { if(_NumFNElement==null) _NumFNElement = new List<Hl7.Fhir.Model.Integer>(); return _NumFNElement; }
+        get => _NumFNElement ??= [];
         set { _NumFNElement = value; OnPropertyChanged("NumFNElement"); }
       }
 
-      private List<Hl7.Fhir.Model.Integer> _NumFNElement;
+      private List<Hl7.Fhir.Model.Integer>? _NumFNElement;
 
       /// <summary>
       /// Roc score false negative numbers
@@ -1619,11 +1547,11 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<int?> NumFN
       {
-        get { return NumFNElement != null ? NumFNElement.Select(elem => elem.Value) : null; }
+        get => _NumFNElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            NumFNElement = null;
+            NumFNElement = null!;
           else
             NumFNElement = new List<Hl7.Fhir.Model.Integer>(value.Select(elem=>new Hl7.Fhir.Model.Integer(elem)));
           OnPropertyChanged("NumFN");
@@ -1638,11 +1566,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirDecimal> PrecisionElement
       {
-        get { if(_PrecisionElement==null) _PrecisionElement = new List<Hl7.Fhir.Model.FhirDecimal>(); return _PrecisionElement; }
+        get => _PrecisionElement ??= [];
         set { _PrecisionElement = value; OnPropertyChanged("PrecisionElement"); }
       }
 
-      private List<Hl7.Fhir.Model.FhirDecimal> _PrecisionElement;
+      private List<Hl7.Fhir.Model.FhirDecimal>? _PrecisionElement;
 
       /// <summary>
       /// Precision of the GQ score
@@ -1651,11 +1579,11 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<decimal?> Precision
       {
-        get { return PrecisionElement != null ? PrecisionElement.Select(elem => elem.Value) : null; }
+        get => _PrecisionElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            PrecisionElement = null;
+            PrecisionElement = null!;
           else
             PrecisionElement = new List<Hl7.Fhir.Model.FhirDecimal>(value.Select(elem=>new Hl7.Fhir.Model.FhirDecimal(elem)));
           OnPropertyChanged("Precision");
@@ -1670,11 +1598,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirDecimal> SensitivityElement
       {
-        get { if(_SensitivityElement==null) _SensitivityElement = new List<Hl7.Fhir.Model.FhirDecimal>(); return _SensitivityElement; }
+        get => _SensitivityElement ??= [];
         set { _SensitivityElement = value; OnPropertyChanged("SensitivityElement"); }
       }
 
-      private List<Hl7.Fhir.Model.FhirDecimal> _SensitivityElement;
+      private List<Hl7.Fhir.Model.FhirDecimal>? _SensitivityElement;
 
       /// <summary>
       /// Sensitivity of the GQ score
@@ -1683,11 +1611,11 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<decimal?> Sensitivity
       {
-        get { return SensitivityElement != null ? SensitivityElement.Select(elem => elem.Value) : null; }
+        get => _SensitivityElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            SensitivityElement = null;
+            SensitivityElement = null!;
           else
             SensitivityElement = new List<Hl7.Fhir.Model.FhirDecimal>(value.Select(elem=>new Hl7.Fhir.Model.FhirDecimal(elem)));
           OnPropertyChanged("Sensitivity");
@@ -1702,11 +1630,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.FhirDecimal> FMeasureElement
       {
-        get { if(_FMeasureElement==null) _FMeasureElement = new List<Hl7.Fhir.Model.FhirDecimal>(); return _FMeasureElement; }
+        get => _FMeasureElement ??= [];
         set { _FMeasureElement = value; OnPropertyChanged("FMeasureElement"); }
       }
 
-      private List<Hl7.Fhir.Model.FhirDecimal> _FMeasureElement;
+      private List<Hl7.Fhir.Model.FhirDecimal>? _FMeasureElement;
 
       /// <summary>
       /// FScore of the GQ score
@@ -1715,11 +1643,11 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public IEnumerable<decimal?> FMeasure
       {
-        get { return FMeasureElement != null ? FMeasureElement.Select(elem => elem.Value) : null; }
+        get => _FMeasureElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            FMeasureElement = null;
+            FMeasureElement = null!;
           else
             FMeasureElement = new List<Hl7.Fhir.Model.FhirDecimal>(value.Select(elem=>new Hl7.Fhir.Model.FhirDecimal(elem)));
           OnPropertyChanged("FMeasure");
@@ -1728,21 +1656,17 @@ namespace Hl7.Fhir.Model
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RocComponent;
-
-        if (dest == null)
-        {
+        if(other is not RocComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(ScoreElement.Any()) dest.ScoreElement = new List<Hl7.Fhir.Model.Integer>(ScoreElement.DeepCopyInternal());
-        if(NumTPElement.Any()) dest.NumTPElement = new List<Hl7.Fhir.Model.Integer>(NumTPElement.DeepCopyInternal());
-        if(NumFPElement.Any()) dest.NumFPElement = new List<Hl7.Fhir.Model.Integer>(NumFPElement.DeepCopyInternal());
-        if(NumFNElement.Any()) dest.NumFNElement = new List<Hl7.Fhir.Model.Integer>(NumFNElement.DeepCopyInternal());
-        if(PrecisionElement.Any()) dest.PrecisionElement = new List<Hl7.Fhir.Model.FhirDecimal>(PrecisionElement.DeepCopyInternal());
-        if(SensitivityElement.Any()) dest.SensitivityElement = new List<Hl7.Fhir.Model.FhirDecimal>(SensitivityElement.DeepCopyInternal());
-        if(FMeasureElement.Any()) dest.FMeasureElement = new List<Hl7.Fhir.Model.FhirDecimal>(FMeasureElement.DeepCopyInternal());
+        if(_ScoreElement is not null) dest.ScoreElement = new List<Hl7.Fhir.Model.Integer>(_ScoreElement.DeepCopyInternal());
+        if(_NumTPElement is not null) dest.NumTPElement = new List<Hl7.Fhir.Model.Integer>(_NumTPElement.DeepCopyInternal());
+        if(_NumFPElement is not null) dest.NumFPElement = new List<Hl7.Fhir.Model.Integer>(_NumFPElement.DeepCopyInternal());
+        if(_NumFNElement is not null) dest.NumFNElement = new List<Hl7.Fhir.Model.Integer>(_NumFNElement.DeepCopyInternal());
+        if(_PrecisionElement is not null) dest.PrecisionElement = new List<Hl7.Fhir.Model.FhirDecimal>(_PrecisionElement.DeepCopyInternal());
+        if(_SensitivityElement is not null) dest.SensitivityElement = new List<Hl7.Fhir.Model.FhirDecimal>(_SensitivityElement.DeepCopyInternal());
+        if(_FMeasureElement is not null) dest.FMeasureElement = new List<Hl7.Fhir.Model.FhirDecimal>(_FMeasureElement.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1754,76 +1678,77 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RocComponent;
-        if(otherT == null) return false;
+        if(other is not RocComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(ScoreElement, otherT.ScoreElement)) return false;
-        if(!comparer.ListEquals(NumTPElement, otherT.NumTPElement)) return false;
-        if(!comparer.ListEquals(NumFPElement, otherT.NumFPElement)) return false;
-        if(!comparer.ListEquals(NumFNElement, otherT.NumFNElement)) return false;
-        if(!comparer.ListEquals(PrecisionElement, otherT.PrecisionElement)) return false;
-        if(!comparer.ListEquals(SensitivityElement, otherT.SensitivityElement)) return false;
-        if(!comparer.ListEquals(FMeasureElement, otherT.FMeasureElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_ScoreElement, otherT._ScoreElement)) return false;
+        if(!comparer.ListEquals(_NumTPElement, otherT._NumTPElement)) return false;
+        if(!comparer.ListEquals(_NumFPElement, otherT._NumFPElement)) return false;
+        if(!comparer.ListEquals(_NumFNElement, otherT._NumFNElement)) return false;
+        if(!comparer.ListEquals(_PrecisionElement, otherT._PrecisionElement)) return false;
+        if(!comparer.ListEquals(_SensitivityElement, otherT._SensitivityElement)) return false;
+        if(!comparer.ListEquals(_FMeasureElement, otherT._FMeasureElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "score":
-            value = ScoreElement;
-            return ScoreElement?.Any() == true;
+            value = _ScoreElement;
+            return _ScoreElement?.Any() == true;
           case "numTP":
-            value = NumTPElement;
-            return NumTPElement?.Any() == true;
+            value = _NumTPElement;
+            return _NumTPElement?.Any() == true;
           case "numFP":
-            value = NumFPElement;
-            return NumFPElement?.Any() == true;
+            value = _NumFPElement;
+            return _NumFPElement?.Any() == true;
           case "numFN":
-            value = NumFNElement;
-            return NumFNElement?.Any() == true;
+            value = _NumFNElement;
+            return _NumFNElement?.Any() == true;
           case "precision":
-            value = PrecisionElement;
-            return PrecisionElement?.Any() == true;
+            value = _PrecisionElement;
+            return _PrecisionElement?.Any() == true;
           case "sensitivity":
-            value = SensitivityElement;
-            return SensitivityElement?.Any() == true;
+            value = _SensitivityElement;
+            return _SensitivityElement?.Any() == true;
           case "fMeasure":
-            value = FMeasureElement;
-            return FMeasureElement?.Any() == true;
+            value = _FMeasureElement;
+            return _FMeasureElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "score":
-            ScoreElement = (List<Hl7.Fhir.Model.Integer>)value;
+            ScoreElement = (List<Hl7.Fhir.Model.Integer>?)value!;
             return this;
           case "numTP":
-            NumTPElement = (List<Hl7.Fhir.Model.Integer>)value;
+            NumTPElement = (List<Hl7.Fhir.Model.Integer>?)value!;
             return this;
           case "numFP":
-            NumFPElement = (List<Hl7.Fhir.Model.Integer>)value;
+            NumFPElement = (List<Hl7.Fhir.Model.Integer>?)value!;
             return this;
           case "numFN":
-            NumFNElement = (List<Hl7.Fhir.Model.Integer>)value;
+            NumFNElement = (List<Hl7.Fhir.Model.Integer>?)value!;
             return this;
           case "precision":
-            PrecisionElement = (List<Hl7.Fhir.Model.FhirDecimal>)value;
+            PrecisionElement = (List<Hl7.Fhir.Model.FhirDecimal>?)value!;
             return this;
           case "sensitivity":
-            SensitivityElement = (List<Hl7.Fhir.Model.FhirDecimal>)value;
+            SensitivityElement = (List<Hl7.Fhir.Model.FhirDecimal>?)value!;
             return this;
           case "fMeasure":
-            FMeasureElement = (List<Hl7.Fhir.Model.FhirDecimal>)value;
+            FMeasureElement = (List<Hl7.Fhir.Model.FhirDecimal>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1834,13 +1759,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (ScoreElement?.Any() == true) yield return new KeyValuePair<string,object>("score",ScoreElement);
-        if (NumTPElement?.Any() == true) yield return new KeyValuePair<string,object>("numTP",NumTPElement);
-        if (NumFPElement?.Any() == true) yield return new KeyValuePair<string,object>("numFP",NumFPElement);
-        if (NumFNElement?.Any() == true) yield return new KeyValuePair<string,object>("numFN",NumFNElement);
-        if (PrecisionElement?.Any() == true) yield return new KeyValuePair<string,object>("precision",PrecisionElement);
-        if (SensitivityElement?.Any() == true) yield return new KeyValuePair<string,object>("sensitivity",SensitivityElement);
-        if (FMeasureElement?.Any() == true) yield return new KeyValuePair<string,object>("fMeasure",FMeasureElement);
+        if (_ScoreElement?.Any() == true) yield return new KeyValuePair<string,object>("score",_ScoreElement);
+        if (_NumTPElement?.Any() == true) yield return new KeyValuePair<string,object>("numTP",_NumTPElement);
+        if (_NumFPElement?.Any() == true) yield return new KeyValuePair<string,object>("numFP",_NumFPElement);
+        if (_NumFNElement?.Any() == true) yield return new KeyValuePair<string,object>("numFN",_NumFNElement);
+        if (_PrecisionElement?.Any() == true) yield return new KeyValuePair<string,object>("precision",_PrecisionElement);
+        if (_SensitivityElement?.Any() == true) yield return new KeyValuePair<string,object>("sensitivity",_SensitivityElement);
+        if (_FMeasureElement?.Any() == true) yield return new KeyValuePair<string,object>("fMeasure",_FMeasureElement);
       }
 
     }
@@ -1869,13 +1794,13 @@ namespace Hl7.Fhir.Model
       [Binding("repositoryType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType> TypeElement
+      public Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>? TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType> _TypeElement;
+      private Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>? _TypeElement;
 
       /// <summary>
       /// directlink | openapi | login | oauth | other
@@ -1884,13 +1809,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MolecularSequence.RepositoryType? Type
       {
-        get { return TypeElement != null ? TypeElement.Value : null; }
+        get => _TypeElement?.Value;
         set
         {
-          if (value == null)
-            TypeElement = null;
-          else
-            TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>(value);
+          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -1900,28 +1822,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("url", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirUri UrlElement
+      public Hl7.Fhir.Model.FhirUri? UrlElement
       {
         get { return _UrlElement; }
         set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirUri _UrlElement;
+      private Hl7.Fhir.Model.FhirUri? _UrlElement;
 
       /// <summary>
       /// URI of the repository
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Url
+      public string? Url
       {
-        get { return UrlElement != null ? UrlElement.Value : null; }
+        get => _UrlElement?.Value;
         set
         {
-          if (value == null)
-            UrlElement = null;
-          else
-            UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+          UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
           OnPropertyChanged("Url");
         }
       }
@@ -1931,28 +1850,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("name", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString NameElement
+      public Hl7.Fhir.Model.FhirString? NameElement
       {
         get { return _NameElement; }
         set { _NameElement = value; OnPropertyChanged("NameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _NameElement;
+      private Hl7.Fhir.Model.FhirString? _NameElement;
 
       /// <summary>
       /// Repository's name
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => _NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -1962,28 +1878,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("datasetId", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString DatasetIdElement
+      public Hl7.Fhir.Model.FhirString? DatasetIdElement
       {
         get { return _DatasetIdElement; }
         set { _DatasetIdElement = value; OnPropertyChanged("DatasetIdElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _DatasetIdElement;
+      private Hl7.Fhir.Model.FhirString? _DatasetIdElement;
 
       /// <summary>
       /// Id of the dataset that used to call for dataset in repository
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string DatasetId
+      public string? DatasetId
       {
-        get { return DatasetIdElement != null ? DatasetIdElement.Value : null; }
+        get => _DatasetIdElement?.Value;
         set
         {
-          if (value == null)
-            DatasetIdElement = null;
-          else
-            DatasetIdElement = new Hl7.Fhir.Model.FhirString(value);
+          DatasetIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("DatasetId");
         }
       }
@@ -1993,28 +1906,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("variantsetId", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString VariantsetIdElement
+      public Hl7.Fhir.Model.FhirString? VariantsetIdElement
       {
         get { return _VariantsetIdElement; }
         set { _VariantsetIdElement = value; OnPropertyChanged("VariantsetIdElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _VariantsetIdElement;
+      private Hl7.Fhir.Model.FhirString? _VariantsetIdElement;
 
       /// <summary>
       /// Id of the variantset that used to call for variantset in repository
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string VariantsetId
+      public string? VariantsetId
       {
-        get { return VariantsetIdElement != null ? VariantsetIdElement.Value : null; }
+        get => _VariantsetIdElement?.Value;
         set
         {
-          if (value == null)
-            VariantsetIdElement = null;
-          else
-            VariantsetIdElement = new Hl7.Fhir.Model.FhirString(value);
+          VariantsetIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("VariantsetId");
         }
       }
@@ -2024,48 +1934,41 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("readsetId", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ReadsetIdElement
+      public Hl7.Fhir.Model.FhirString? ReadsetIdElement
       {
         get { return _ReadsetIdElement; }
         set { _ReadsetIdElement = value; OnPropertyChanged("ReadsetIdElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ReadsetIdElement;
+      private Hl7.Fhir.Model.FhirString? _ReadsetIdElement;
 
       /// <summary>
       /// Id of the read
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ReadsetId
+      public string? ReadsetId
       {
-        get { return ReadsetIdElement != null ? ReadsetIdElement.Value : null; }
+        get => _ReadsetIdElement?.Value;
         set
         {
-          if (value == null)
-            ReadsetIdElement = null;
-          else
-            ReadsetIdElement = new Hl7.Fhir.Model.FhirString(value);
+          ReadsetIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ReadsetId");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RepositoryComponent;
-
-        if (dest == null)
-        {
+        if(other is not RepositoryComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>)TypeElement.DeepCopyInternal();
-        if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopyInternal();
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-        if(DatasetIdElement != null) dest.DatasetIdElement = (Hl7.Fhir.Model.FhirString)DatasetIdElement.DeepCopyInternal();
-        if(VariantsetIdElement != null) dest.VariantsetIdElement = (Hl7.Fhir.Model.FhirString)VariantsetIdElement.DeepCopyInternal();
-        if(ReadsetIdElement != null) dest.ReadsetIdElement = (Hl7.Fhir.Model.FhirString)ReadsetIdElement.DeepCopyInternal();
+        if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>)_TypeElement.DeepCopyInternal();
+        if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)_UrlElement.DeepCopyInternal();
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_DatasetIdElement is not null) dest.DatasetIdElement = (Hl7.Fhir.Model.FhirString)_DatasetIdElement.DeepCopyInternal();
+        if(_VariantsetIdElement is not null) dest.VariantsetIdElement = (Hl7.Fhir.Model.FhirString)_VariantsetIdElement.DeepCopyInternal();
+        if(_ReadsetIdElement is not null) dest.ReadsetIdElement = (Hl7.Fhir.Model.FhirString)_ReadsetIdElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -2077,69 +1980,70 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RepositoryComponent;
-        if(otherT == null) return false;
+        if(other is not RepositoryComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-        if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
-        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-        if(!comparer.Equals(DatasetIdElement, otherT.DatasetIdElement)) return false;
-        if(!comparer.Equals(VariantsetIdElement, otherT.VariantsetIdElement)) return false;
-        if(!comparer.Equals(ReadsetIdElement, otherT.ReadsetIdElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+        if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_DatasetIdElement, otherT._DatasetIdElement)) return false;
+        if(!comparer.Equals(_VariantsetIdElement, otherT._VariantsetIdElement)) return false;
+        if(!comparer.Equals(_ReadsetIdElement, otherT._ReadsetIdElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = TypeElement;
-            return TypeElement is not null;
+            value = _TypeElement;
+            return _TypeElement is not null;
           case "url":
-            value = UrlElement;
-            return UrlElement is not null;
+            value = _UrlElement;
+            return _UrlElement is not null;
           case "name":
-            value = NameElement;
-            return NameElement is not null;
+            value = _NameElement;
+            return _NameElement is not null;
           case "datasetId":
-            value = DatasetIdElement;
-            return DatasetIdElement is not null;
+            value = _DatasetIdElement;
+            return _DatasetIdElement is not null;
           case "variantsetId":
-            value = VariantsetIdElement;
-            return VariantsetIdElement is not null;
+            value = _VariantsetIdElement;
+            return _VariantsetIdElement is not null;
           case "readsetId":
-            value = ReadsetIdElement;
-            return ReadsetIdElement is not null;
+            value = _ReadsetIdElement;
+            return _ReadsetIdElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>)value;
+            TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>?)value;
             return this;
           case "url":
-            UrlElement = (Hl7.Fhir.Model.FhirUri)value;
+            UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString)value;
+            NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "datasetId":
-            DatasetIdElement = (Hl7.Fhir.Model.FhirString)value;
+            DatasetIdElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "variantsetId":
-            VariantsetIdElement = (Hl7.Fhir.Model.FhirString)value;
+            VariantsetIdElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "readsetId":
-            ReadsetIdElement = (Hl7.Fhir.Model.FhirString)value;
+            ReadsetIdElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2150,12 +2054,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-        if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (DatasetIdElement is not null) yield return new KeyValuePair<string,object>("datasetId",DatasetIdElement);
-        if (VariantsetIdElement is not null) yield return new KeyValuePair<string,object>("variantsetId",VariantsetIdElement);
-        if (ReadsetIdElement is not null) yield return new KeyValuePair<string,object>("readsetId",ReadsetIdElement);
+        if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+        if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_DatasetIdElement is not null) yield return new KeyValuePair<string,object>("datasetId",_DatasetIdElement);
+        if (_VariantsetIdElement is not null) yield return new KeyValuePair<string,object>("variantsetId",_VariantsetIdElement);
+        if (_ReadsetIdElement is not null) yield return new KeyValuePair<string,object>("readsetId",_ReadsetIdElement);
       }
 
     }
@@ -2182,26 +2086,26 @@ namespace Hl7.Fhir.Model
       [FhirElement("variantType", InSummary=true, Order=40)]
       [Binding("LOINC LL379-9 answerlist")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept VariantType
+      public Hl7.Fhir.Model.CodeableConcept? VariantType
       {
         get { return _VariantType; }
         set { _VariantType = value; OnPropertyChanged("VariantType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _VariantType;
+      private Hl7.Fhir.Model.CodeableConcept? _VariantType;
 
       /// <summary>
       /// Does the structural variant have base pair resolution breakpoints?.
       /// </summary>
       [FhirElement("exact", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean ExactElement
+      public Hl7.Fhir.Model.FhirBoolean? ExactElement
       {
         get { return _ExactElement; }
         set { _ExactElement = value; OnPropertyChanged("ExactElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _ExactElement;
+      private Hl7.Fhir.Model.FhirBoolean? _ExactElement;
 
       /// <summary>
       /// Does the structural variant have base pair resolution breakpoints?
@@ -2210,13 +2114,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Exact
       {
-        get { return ExactElement != null ? ExactElement.Value : null; }
+        get => _ExactElement?.Value;
         set
         {
-          if (value == null)
-            ExactElement = null;
-          else
-            ExactElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          ExactElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Exact");
         }
       }
@@ -2226,13 +2127,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("length", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer LengthElement
+      public Hl7.Fhir.Model.Integer? LengthElement
       {
         get { return _LengthElement; }
         set { _LengthElement = value; OnPropertyChanged("LengthElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _LengthElement;
+      private Hl7.Fhir.Model.Integer? _LengthElement;
 
       /// <summary>
       /// Structural variant length
@@ -2241,13 +2142,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Length
       {
-        get { return LengthElement != null ? LengthElement.Value : null; }
+        get => _LengthElement?.Value;
         set
         {
-          if (value == null)
-            LengthElement = null;
-          else
-            LengthElement = new Hl7.Fhir.Model.Integer(value);
+          LengthElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Length");
         }
       }
@@ -2257,42 +2155,38 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("outer", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularSequence.OuterComponent Outer
+      public Hl7.Fhir.Model.MolecularSequence.OuterComponent? Outer
       {
         get { return _Outer; }
         set { _Outer = value; OnPropertyChanged("Outer"); }
       }
 
-      private Hl7.Fhir.Model.MolecularSequence.OuterComponent _Outer;
+      private Hl7.Fhir.Model.MolecularSequence.OuterComponent? _Outer;
 
       /// <summary>
       /// Structural variant inner.
       /// </summary>
       [FhirElement("inner", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.MolecularSequence.InnerComponent Inner
+      public Hl7.Fhir.Model.MolecularSequence.InnerComponent? Inner
       {
         get { return _Inner; }
         set { _Inner = value; OnPropertyChanged("Inner"); }
       }
 
-      private Hl7.Fhir.Model.MolecularSequence.InnerComponent _Inner;
+      private Hl7.Fhir.Model.MolecularSequence.InnerComponent? _Inner;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StructureVariantComponent;
-
-        if (dest == null)
-        {
+        if(other is not StructureVariantComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(VariantType != null) dest.VariantType = (Hl7.Fhir.Model.CodeableConcept)VariantType.DeepCopyInternal();
-        if(ExactElement != null) dest.ExactElement = (Hl7.Fhir.Model.FhirBoolean)ExactElement.DeepCopyInternal();
-        if(LengthElement != null) dest.LengthElement = (Hl7.Fhir.Model.Integer)LengthElement.DeepCopyInternal();
-        if(Outer != null) dest.Outer = (Hl7.Fhir.Model.MolecularSequence.OuterComponent)Outer.DeepCopyInternal();
-        if(Inner != null) dest.Inner = (Hl7.Fhir.Model.MolecularSequence.InnerComponent)Inner.DeepCopyInternal();
+        if(_VariantType is not null) dest.VariantType = (Hl7.Fhir.Model.CodeableConcept)_VariantType.DeepCopyInternal();
+        if(_ExactElement is not null) dest.ExactElement = (Hl7.Fhir.Model.FhirBoolean)_ExactElement.DeepCopyInternal();
+        if(_LengthElement is not null) dest.LengthElement = (Hl7.Fhir.Model.Integer)_LengthElement.DeepCopyInternal();
+        if(_Outer is not null) dest.Outer = (Hl7.Fhir.Model.MolecularSequence.OuterComponent)_Outer.DeepCopyInternal();
+        if(_Inner is not null) dest.Inner = (Hl7.Fhir.Model.MolecularSequence.InnerComponent)_Inner.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -2304,62 +2198,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StructureVariantComponent;
-        if(otherT == null) return false;
+        if(other is not StructureVariantComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(VariantType, otherT.VariantType)) return false;
-        if(!comparer.Equals(ExactElement, otherT.ExactElement)) return false;
-        if(!comparer.Equals(LengthElement, otherT.LengthElement)) return false;
-        if(!comparer.Equals(Outer, otherT.Outer)) return false;
-        if(!comparer.Equals(Inner, otherT.Inner)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_VariantType, otherT._VariantType)) return false;
+        if(!comparer.Equals(_ExactElement, otherT._ExactElement)) return false;
+        if(!comparer.Equals(_LengthElement, otherT._LengthElement)) return false;
+        if(!comparer.Equals(_Outer, otherT._Outer)) return false;
+        if(!comparer.Equals(_Inner, otherT._Inner)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "variantType":
-            value = VariantType;
-            return VariantType is not null;
+            value = _VariantType;
+            return _VariantType is not null;
           case "exact":
-            value = ExactElement;
-            return ExactElement is not null;
+            value = _ExactElement;
+            return _ExactElement is not null;
           case "length":
-            value = LengthElement;
-            return LengthElement is not null;
+            value = _LengthElement;
+            return _LengthElement is not null;
           case "outer":
-            value = Outer;
-            return Outer is not null;
+            value = _Outer;
+            return _Outer is not null;
           case "inner":
-            value = Inner;
-            return Inner is not null;
+            value = _Inner;
+            return _Inner is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "variantType":
-            VariantType = (Hl7.Fhir.Model.CodeableConcept)value;
+            VariantType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "exact":
-            ExactElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            ExactElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "length":
-            LengthElement = (Hl7.Fhir.Model.Integer)value;
+            LengthElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "outer":
-            Outer = (Hl7.Fhir.Model.MolecularSequence.OuterComponent)value;
+            Outer = (Hl7.Fhir.Model.MolecularSequence.OuterComponent?)value;
             return this;
           case "inner":
-            Inner = (Hl7.Fhir.Model.MolecularSequence.InnerComponent)value;
+            Inner = (Hl7.Fhir.Model.MolecularSequence.InnerComponent?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2370,11 +2265,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (VariantType is not null) yield return new KeyValuePair<string,object>("variantType",VariantType);
-        if (ExactElement is not null) yield return new KeyValuePair<string,object>("exact",ExactElement);
-        if (LengthElement is not null) yield return new KeyValuePair<string,object>("length",LengthElement);
-        if (Outer is not null) yield return new KeyValuePair<string,object>("outer",Outer);
-        if (Inner is not null) yield return new KeyValuePair<string,object>("inner",Inner);
+        if (_VariantType is not null) yield return new KeyValuePair<string,object>("variantType",_VariantType);
+        if (_ExactElement is not null) yield return new KeyValuePair<string,object>("exact",_ExactElement);
+        if (_LengthElement is not null) yield return new KeyValuePair<string,object>("length",_LengthElement);
+        if (_Outer is not null) yield return new KeyValuePair<string,object>("outer",_Outer);
+        if (_Inner is not null) yield return new KeyValuePair<string,object>("inner",_Inner);
       }
 
     }
@@ -2397,13 +2292,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("start", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer StartElement
+      public Hl7.Fhir.Model.Integer? StartElement
       {
         get { return _StartElement; }
         set { _StartElement = value; OnPropertyChanged("StartElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _StartElement;
+      private Hl7.Fhir.Model.Integer? _StartElement;
 
       /// <summary>
       /// Structural variant outer start
@@ -2412,13 +2307,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Start
       {
-        get { return StartElement != null ? StartElement.Value : null; }
+        get => _StartElement?.Value;
         set
         {
-          if (value == null)
-            StartElement = null;
-          else
-            StartElement = new Hl7.Fhir.Model.Integer(value);
+          StartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Start");
         }
       }
@@ -2428,13 +2320,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("end", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer EndElement
+      public Hl7.Fhir.Model.Integer? EndElement
       {
         get { return _EndElement; }
         set { _EndElement = value; OnPropertyChanged("EndElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _EndElement;
+      private Hl7.Fhir.Model.Integer? _EndElement;
 
       /// <summary>
       /// Structural variant outer end
@@ -2443,29 +2335,22 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? End
       {
-        get { return EndElement != null ? EndElement.Value : null; }
+        get => _EndElement?.Value;
         set
         {
-          if (value == null)
-            EndElement = null;
-          else
-            EndElement = new Hl7.Fhir.Model.Integer(value);
+          EndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("End");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as OuterComponent;
-
-        if (dest == null)
-        {
+        if(other is not OuterComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopyInternal();
-        if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopyInternal();
+        if(_StartElement is not null) dest.StartElement = (Hl7.Fhir.Model.Integer)_StartElement.DeepCopyInternal();
+        if(_EndElement is not null) dest.EndElement = (Hl7.Fhir.Model.Integer)_EndElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -2477,41 +2362,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as OuterComponent;
-        if(otherT == null) return false;
+        if(other is not OuterComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(StartElement, otherT.StartElement)) return false;
-        if(!comparer.Equals(EndElement, otherT.EndElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
+        if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "start":
-            value = StartElement;
-            return StartElement is not null;
+            value = _StartElement;
+            return _StartElement is not null;
           case "end":
-            value = EndElement;
-            return EndElement is not null;
+            value = _EndElement;
+            return _EndElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "start":
-            StartElement = (Hl7.Fhir.Model.Integer)value;
+            StartElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "end":
-            EndElement = (Hl7.Fhir.Model.Integer)value;
+            EndElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2522,8 +2408,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
-        if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+        if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
+        if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
       }
 
     }
@@ -2546,13 +2432,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("start", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer StartElement
+      public Hl7.Fhir.Model.Integer? StartElement
       {
         get { return _StartElement; }
         set { _StartElement = value; OnPropertyChanged("StartElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _StartElement;
+      private Hl7.Fhir.Model.Integer? _StartElement;
 
       /// <summary>
       /// Structural variant inner start
@@ -2561,13 +2447,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Start
       {
-        get { return StartElement != null ? StartElement.Value : null; }
+        get => _StartElement?.Value;
         set
         {
-          if (value == null)
-            StartElement = null;
-          else
-            StartElement = new Hl7.Fhir.Model.Integer(value);
+          StartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Start");
         }
       }
@@ -2577,13 +2460,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("end", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer EndElement
+      public Hl7.Fhir.Model.Integer? EndElement
       {
         get { return _EndElement; }
         set { _EndElement = value; OnPropertyChanged("EndElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _EndElement;
+      private Hl7.Fhir.Model.Integer? _EndElement;
 
       /// <summary>
       /// Structural variant inner end
@@ -2592,29 +2475,22 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? End
       {
-        get { return EndElement != null ? EndElement.Value : null; }
+        get => _EndElement?.Value;
         set
         {
-          if (value == null)
-            EndElement = null;
-          else
-            EndElement = new Hl7.Fhir.Model.Integer(value);
+          EndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("End");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as InnerComponent;
-
-        if (dest == null)
-        {
+        if(other is not InnerComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopyInternal();
-        if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopyInternal();
+        if(_StartElement is not null) dest.StartElement = (Hl7.Fhir.Model.Integer)_StartElement.DeepCopyInternal();
+        if(_EndElement is not null) dest.EndElement = (Hl7.Fhir.Model.Integer)_EndElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -2626,41 +2502,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as InnerComponent;
-        if(otherT == null) return false;
+        if(other is not InnerComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(StartElement, otherT.StartElement)) return false;
-        if(!comparer.Equals(EndElement, otherT.EndElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_StartElement, otherT._StartElement)) return false;
+        if(!comparer.Equals(_EndElement, otherT._EndElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "start":
-            value = StartElement;
-            return StartElement is not null;
+            value = _StartElement;
+            return _StartElement is not null;
           case "end":
-            value = EndElement;
-            return EndElement is not null;
+            value = _EndElement;
+            return _EndElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "start":
-            StartElement = (Hl7.Fhir.Model.Integer)value;
+            StartElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "end":
-            EndElement = (Hl7.Fhir.Model.Integer)value;
+            EndElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2671,8 +2548,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
-        if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+        if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
+        if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
       }
 
     }
@@ -2685,11 +2562,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// aa | dna | rna.
@@ -2698,13 +2575,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("sequenceType")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MolecularSequence.SequenceType> TypeElement
+    public Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.MolecularSequence.SequenceType> _TypeElement;
+    private Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>? _TypeElement;
 
     /// <summary>
     /// aa | dna | rna
@@ -2713,13 +2590,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MolecularSequence.SequenceType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -2730,13 +2604,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("coordinateSystem", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Integer CoordinateSystemElement
+    public Hl7.Fhir.Model.Integer? CoordinateSystemElement
     {
       get { return _CoordinateSystemElement; }
       set { _CoordinateSystemElement = value; OnPropertyChanged("CoordinateSystemElement"); }
     }
 
-    private Hl7.Fhir.Model.Integer _CoordinateSystemElement;
+    private Hl7.Fhir.Model.Integer? _CoordinateSystemElement;
 
     /// <summary>
     /// Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end)
@@ -2745,13 +2619,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? CoordinateSystem
     {
-      get { return CoordinateSystemElement != null ? CoordinateSystemElement.Value : null; }
+      get => _CoordinateSystemElement?.Value;
       set
       {
-        if (value == null)
-          CoordinateSystemElement = null;
-        else
-          CoordinateSystemElement = new Hl7.Fhir.Model.Integer(value);
+        CoordinateSystemElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("CoordinateSystem");
       }
     }
@@ -2763,13 +2634,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     /// <summary>
     /// Specimen used for sequencing.
@@ -2778,13 +2649,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Specimen")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Specimen
+    public Hl7.Fhir.Model.ResourceReference? Specimen
     {
       get { return _Specimen; }
       set { _Specimen = value; OnPropertyChanged("Specimen"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Specimen;
+    private Hl7.Fhir.Model.ResourceReference? _Specimen;
 
     /// <summary>
     /// The method for sequencing.
@@ -2793,13 +2664,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Device
+    public Hl7.Fhir.Model.ResourceReference? Device
     {
       get { return _Device; }
       set { _Device = value; OnPropertyChanged("Device"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Device;
+    private Hl7.Fhir.Model.ResourceReference? _Device;
 
     /// <summary>
     /// Who should be responsible for test result.
@@ -2808,39 +2679,39 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Performer
+    public Hl7.Fhir.Model.ResourceReference? Performer
     {
       get { return _Performer; }
       set { _Performer = value; OnPropertyChanged("Performer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Performer;
+    private Hl7.Fhir.Model.ResourceReference? _Performer;
 
     /// <summary>
     /// The number of copies of the sequence of interest.  (RNASeq).
     /// </summary>
     [FhirElement("quantity", InSummary=true, Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Quantity
+    public Hl7.Fhir.Model.Quantity? Quantity
     {
       get { return _Quantity; }
       set { _Quantity = value; OnPropertyChanged("Quantity"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Quantity;
+    private Hl7.Fhir.Model.Quantity? _Quantity;
 
     /// <summary>
     /// A sequence used as reference.
     /// </summary>
     [FhirElement("referenceSeq", InSummary=true, Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent ReferenceSeq
+    public Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent? ReferenceSeq
     {
       get { return _ReferenceSeq; }
       set { _ReferenceSeq = value; OnPropertyChanged("ReferenceSeq"); }
     }
 
-    private Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent _ReferenceSeq;
+    private Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent? _ReferenceSeq;
 
     /// <summary>
     /// Variant in sequence.
@@ -2850,39 +2721,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MolecularSequence.VariantComponent> Variant
     {
-      get { if(_Variant==null) _Variant = new List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>(); return _Variant; }
+      get => _Variant ??= [];
       set { _Variant = value; OnPropertyChanged("Variant"); }
     }
 
-    private List<Hl7.Fhir.Model.MolecularSequence.VariantComponent> _Variant;
+    private List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>? _Variant;
 
     /// <summary>
     /// Sequence that was observed.
     /// </summary>
     [FhirElement("observedSeq", InSummary=true, Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ObservedSeqElement
+    public Hl7.Fhir.Model.FhirString? ObservedSeqElement
     {
       get { return _ObservedSeqElement; }
       set { _ObservedSeqElement = value; OnPropertyChanged("ObservedSeqElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ObservedSeqElement;
+    private Hl7.Fhir.Model.FhirString? _ObservedSeqElement;
 
     /// <summary>
     /// Sequence that was observed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ObservedSeq
+    public string? ObservedSeq
     {
-      get { return ObservedSeqElement != null ? ObservedSeqElement.Value : null; }
+      get => _ObservedSeqElement?.Value;
       set
       {
-        if (value == null)
-          ObservedSeqElement = null;
-        else
-          ObservedSeqElement = new Hl7.Fhir.Model.FhirString(value);
+        ObservedSeqElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("ObservedSeq");
       }
     }
@@ -2895,24 +2763,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MolecularSequence.QualityComponent> Quality
     {
-      get { if(_Quality==null) _Quality = new List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>(); return _Quality; }
+      get => _Quality ??= [];
       set { _Quality = value; OnPropertyChanged("Quality"); }
     }
 
-    private List<Hl7.Fhir.Model.MolecularSequence.QualityComponent> _Quality;
+    private List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>? _Quality;
 
     /// <summary>
     /// Average number of reads representing a given nucleotide in the reconstructed sequence.
     /// </summary>
     [FhirElement("readCoverage", InSummary=true, Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.Integer ReadCoverageElement
+    public Hl7.Fhir.Model.Integer? ReadCoverageElement
     {
       get { return _ReadCoverageElement; }
       set { _ReadCoverageElement = value; OnPropertyChanged("ReadCoverageElement"); }
     }
 
-    private Hl7.Fhir.Model.Integer _ReadCoverageElement;
+    private Hl7.Fhir.Model.Integer? _ReadCoverageElement;
 
     /// <summary>
     /// Average number of reads representing a given nucleotide in the reconstructed sequence
@@ -2921,13 +2789,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? ReadCoverage
     {
-      get { return ReadCoverageElement != null ? ReadCoverageElement.Value : null; }
+      get => _ReadCoverageElement?.Value;
       set
       {
-        if (value == null)
-          ReadCoverageElement = null;
-        else
-          ReadCoverageElement = new Hl7.Fhir.Model.Integer(value);
+        ReadCoverageElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("ReadCoverage");
       }
     }
@@ -2940,11 +2805,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent> Repository
     {
-      get { if(_Repository==null) _Repository = new List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>(); return _Repository; }
+      get => _Repository ??= [];
       set { _Repository = value; OnPropertyChanged("Repository"); }
     }
 
-    private List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent> _Repository;
+    private List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>? _Repository;
 
     /// <summary>
     /// Pointer to next atomic sequence.
@@ -2956,11 +2821,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Pointer
     {
-      get { if(_Pointer==null) _Pointer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Pointer; }
+      get => _Pointer ??= [];
       set { _Pointer = value; OnPropertyChanged("Pointer"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Pointer;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Pointer;
 
     /// <summary>
     /// Structural variant.
@@ -2970,40 +2835,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent> StructureVariant
     {
-      get { if(_StructureVariant==null) _StructureVariant = new List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>(); return _StructureVariant; }
+      get => _StructureVariant ??= [];
       set { _StructureVariant = value; OnPropertyChanged("StructureVariant"); }
     }
 
-    private List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent> _StructureVariant;
+    private List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>? _StructureVariant;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as MolecularSequence;
-
-      if (dest == null)
-      {
+      if(other is not MolecularSequence dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>)TypeElement.DeepCopyInternal();
-      if(CoordinateSystemElement != null) dest.CoordinateSystemElement = (Hl7.Fhir.Model.Integer)CoordinateSystemElement.DeepCopyInternal();
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
-      if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopyInternal();
-      if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopyInternal();
-      if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopyInternal();
-      if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
-      if(ReferenceSeq != null) dest.ReferenceSeq = (Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent)ReferenceSeq.DeepCopyInternal();
-      if(Variant.Any()) dest.Variant = new List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>(Variant.DeepCopyInternal());
-      if(ObservedSeqElement != null) dest.ObservedSeqElement = (Hl7.Fhir.Model.FhirString)ObservedSeqElement.DeepCopyInternal();
-      if(Quality.Any()) dest.Quality = new List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>(Quality.DeepCopyInternal());
-      if(ReadCoverageElement != null) dest.ReadCoverageElement = (Hl7.Fhir.Model.Integer)ReadCoverageElement.DeepCopyInternal();
-      if(Repository.Any()) dest.Repository = new List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>(Repository.DeepCopyInternal());
-      if(Pointer.Any()) dest.Pointer = new List<Hl7.Fhir.Model.ResourceReference>(Pointer.DeepCopyInternal());
-      if(StructureVariant.Any()) dest.StructureVariant = new List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>(StructureVariant.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>)_TypeElement.DeepCopyInternal();
+      if(_CoordinateSystemElement is not null) dest.CoordinateSystemElement = (Hl7.Fhir.Model.Integer)_CoordinateSystemElement.DeepCopyInternal();
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
+      if(_Specimen is not null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)_Specimen.DeepCopyInternal();
+      if(_Device is not null) dest.Device = (Hl7.Fhir.Model.ResourceReference)_Device.DeepCopyInternal();
+      if(_Performer is not null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)_Performer.DeepCopyInternal();
+      if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
+      if(_ReferenceSeq is not null) dest.ReferenceSeq = (Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent)_ReferenceSeq.DeepCopyInternal();
+      if(_Variant is not null) dest.Variant = new List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>(_Variant.DeepCopyInternal());
+      if(_ObservedSeqElement is not null) dest.ObservedSeqElement = (Hl7.Fhir.Model.FhirString)_ObservedSeqElement.DeepCopyInternal();
+      if(_Quality is not null) dest.Quality = new List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>(_Quality.DeepCopyInternal());
+      if(_ReadCoverageElement is not null) dest.ReadCoverageElement = (Hl7.Fhir.Model.Integer)_ReadCoverageElement.DeepCopyInternal();
+      if(_Repository is not null) dest.Repository = new List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>(_Repository.DeepCopyInternal());
+      if(_Pointer is not null) dest.Pointer = new List<Hl7.Fhir.Model.ResourceReference>(_Pointer.DeepCopyInternal());
+      if(_StructureVariant is not null) dest.StructureVariant = new List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>(_StructureVariant.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -3015,139 +2876,140 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as MolecularSequence;
-      if(otherT == null) return false;
+      if(other is not MolecularSequence otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(CoordinateSystemElement, otherT.CoordinateSystemElement)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
-      if(!comparer.Equals(Specimen, otherT.Specimen)) return false;
-      if(!comparer.Equals(Device, otherT.Device)) return false;
-      if(!comparer.Equals(Performer, otherT.Performer)) return false;
-      if(!comparer.Equals(Quantity, otherT.Quantity)) return false;
-      if(!comparer.Equals(ReferenceSeq, otherT.ReferenceSeq)) return false;
-      if(!comparer.ListEquals(Variant, otherT.Variant)) return false;
-      if(!comparer.Equals(ObservedSeqElement, otherT.ObservedSeqElement)) return false;
-      if(!comparer.ListEquals(Quality, otherT.Quality)) return false;
-      if(!comparer.Equals(ReadCoverageElement, otherT.ReadCoverageElement)) return false;
-      if(!comparer.ListEquals(Repository, otherT.Repository)) return false;
-      if(!comparer.ListEquals(Pointer, otherT.Pointer)) return false;
-      if(!comparer.ListEquals(StructureVariant, otherT.StructureVariant)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_CoordinateSystemElement, otherT._CoordinateSystemElement)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+      if(!comparer.Equals(_Specimen, otherT._Specimen)) return false;
+      if(!comparer.Equals(_Device, otherT._Device)) return false;
+      if(!comparer.Equals(_Performer, otherT._Performer)) return false;
+      if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+      if(!comparer.Equals(_ReferenceSeq, otherT._ReferenceSeq)) return false;
+      if(!comparer.ListEquals(_Variant, otherT._Variant)) return false;
+      if(!comparer.Equals(_ObservedSeqElement, otherT._ObservedSeqElement)) return false;
+      if(!comparer.ListEquals(_Quality, otherT._Quality)) return false;
+      if(!comparer.Equals(_ReadCoverageElement, otherT._ReadCoverageElement)) return false;
+      if(!comparer.ListEquals(_Repository, otherT._Repository)) return false;
+      if(!comparer.ListEquals(_Pointer, otherT._Pointer)) return false;
+      if(!comparer.ListEquals(_StructureVariant, otherT._StructureVariant)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "coordinateSystem":
-          value = CoordinateSystemElement;
-          return CoordinateSystemElement is not null;
+          value = _CoordinateSystemElement;
+          return _CoordinateSystemElement is not null;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         case "specimen":
-          value = Specimen;
-          return Specimen is not null;
+          value = _Specimen;
+          return _Specimen is not null;
         case "device":
-          value = Device;
-          return Device is not null;
+          value = _Device;
+          return _Device is not null;
         case "performer":
-          value = Performer;
-          return Performer is not null;
+          value = _Performer;
+          return _Performer is not null;
         case "quantity":
-          value = Quantity;
-          return Quantity is not null;
+          value = _Quantity;
+          return _Quantity is not null;
         case "referenceSeq":
-          value = ReferenceSeq;
-          return ReferenceSeq is not null;
+          value = _ReferenceSeq;
+          return _ReferenceSeq is not null;
         case "variant":
-          value = Variant;
-          return Variant?.Any() == true;
+          value = _Variant;
+          return _Variant?.Any() == true;
         case "observedSeq":
-          value = ObservedSeqElement;
-          return ObservedSeqElement is not null;
+          value = _ObservedSeqElement;
+          return _ObservedSeqElement is not null;
         case "quality":
-          value = Quality;
-          return Quality?.Any() == true;
+          value = _Quality;
+          return _Quality?.Any() == true;
         case "readCoverage":
-          value = ReadCoverageElement;
-          return ReadCoverageElement is not null;
+          value = _ReadCoverageElement;
+          return _ReadCoverageElement is not null;
         case "repository":
-          value = Repository;
-          return Repository?.Any() == true;
+          value = _Repository;
+          return _Repository?.Any() == true;
         case "pointer":
-          value = Pointer;
-          return Pointer?.Any() == true;
+          value = _Pointer;
+          return _Pointer?.Any() == true;
         case "structureVariant":
-          value = StructureVariant;
-          return StructureVariant?.Any() == true;
+          value = _StructureVariant;
+          return _StructureVariant?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>?)value;
           return this;
         case "coordinateSystem":
-          CoordinateSystemElement = (Hl7.Fhir.Model.Integer)value;
+          CoordinateSystemElement = (Hl7.Fhir.Model.Integer?)value;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "specimen":
-          Specimen = (Hl7.Fhir.Model.ResourceReference)value;
+          Specimen = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "device":
-          Device = (Hl7.Fhir.Model.ResourceReference)value;
+          Device = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "performer":
-          Performer = (Hl7.Fhir.Model.ResourceReference)value;
+          Performer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "quantity":
-          Quantity = (Hl7.Fhir.Model.Quantity)value;
+          Quantity = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "referenceSeq":
-          ReferenceSeq = (Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent)value;
+          ReferenceSeq = (Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent?)value;
           return this;
         case "variant":
-          Variant = (List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>)value;
+          Variant = (List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>?)value!;
           return this;
         case "observedSeq":
-          ObservedSeqElement = (Hl7.Fhir.Model.FhirString)value;
+          ObservedSeqElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "quality":
-          Quality = (List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>)value;
+          Quality = (List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>?)value!;
           return this;
         case "readCoverage":
-          ReadCoverageElement = (Hl7.Fhir.Model.Integer)value;
+          ReadCoverageElement = (Hl7.Fhir.Model.Integer?)value;
           return this;
         case "repository":
-          Repository = (List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>)value;
+          Repository = (List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>?)value!;
           return this;
         case "pointer":
-          Pointer = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Pointer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "structureVariant":
-          StructureVariant = (List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>)value;
+          StructureVariant = (List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -3158,22 +3020,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (CoordinateSystemElement is not null) yield return new KeyValuePair<string,object>("coordinateSystem",CoordinateSystemElement);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Specimen is not null) yield return new KeyValuePair<string,object>("specimen",Specimen);
-      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
-      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-      if (ReferenceSeq is not null) yield return new KeyValuePair<string,object>("referenceSeq",ReferenceSeq);
-      if (Variant?.Any() == true) yield return new KeyValuePair<string,object>("variant",Variant);
-      if (ObservedSeqElement is not null) yield return new KeyValuePair<string,object>("observedSeq",ObservedSeqElement);
-      if (Quality?.Any() == true) yield return new KeyValuePair<string,object>("quality",Quality);
-      if (ReadCoverageElement is not null) yield return new KeyValuePair<string,object>("readCoverage",ReadCoverageElement);
-      if (Repository?.Any() == true) yield return new KeyValuePair<string,object>("repository",Repository);
-      if (Pointer?.Any() == true) yield return new KeyValuePair<string,object>("pointer",Pointer);
-      if (StructureVariant?.Any() == true) yield return new KeyValuePair<string,object>("structureVariant",StructureVariant);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_CoordinateSystemElement is not null) yield return new KeyValuePair<string,object>("coordinateSystem",_CoordinateSystemElement);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Specimen is not null) yield return new KeyValuePair<string,object>("specimen",_Specimen);
+      if (_Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
+      if (_Performer is not null) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+      if (_ReferenceSeq is not null) yield return new KeyValuePair<string,object>("referenceSeq",_ReferenceSeq);
+      if (_Variant?.Any() == true) yield return new KeyValuePair<string,object>("variant",_Variant);
+      if (_ObservedSeqElement is not null) yield return new KeyValuePair<string,object>("observedSeq",_ObservedSeqElement);
+      if (_Quality?.Any() == true) yield return new KeyValuePair<string,object>("quality",_Quality);
+      if (_ReadCoverageElement is not null) yield return new KeyValuePair<string,object>("readCoverage",_ReadCoverageElement);
+      if (_Repository?.Any() == true) yield return new KeyValuePair<string,object>("repository",_Repository);
+      if (_Pointer?.Any() == true) yield return new KeyValuePair<string,object>("pointer",_Pointer);
+      if (_StructureVariant?.Any() == true) yield return new KeyValuePair<string,object>("structureVariant",_StructureVariant);
     }
 
   }

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -138,13 +141,13 @@ namespace Hl7.Fhir.Model
       [Binding("VisionProduct")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Product
+      public Hl7.Fhir.Model.CodeableConcept? Product
       {
         get { return _Product; }
         set { _Product = value; OnPropertyChanged("Product"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Product;
+      private Hl7.Fhir.Model.CodeableConcept? _Product;
 
       /// <summary>
       /// right | left.
@@ -154,13 +157,13 @@ namespace Hl7.Fhir.Model
       [Binding("VisionEyes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> EyeElement
+      public Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>? EyeElement
       {
         get { return _EyeElement; }
         set { _EyeElement = value; OnPropertyChanged("EyeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> _EyeElement;
+      private Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>? _EyeElement;
 
       /// <summary>
       /// right | left
@@ -169,13 +172,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.VisionPrescription.VisionEyes? Eye
       {
-        get { return EyeElement != null ? EyeElement.Value : null; }
+        get => _EyeElement?.Value;
         set
         {
-          if (value == null)
-            EyeElement = null;
-          else
-            EyeElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>(value);
+          EyeElement = value is null ? null : new Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>(value);
           OnPropertyChanged("Eye");
         }
       }
@@ -185,13 +185,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("sphere", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal SphereElement
+      public Hl7.Fhir.Model.FhirDecimal? SphereElement
       {
         get { return _SphereElement; }
         set { _SphereElement = value; OnPropertyChanged("SphereElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _SphereElement;
+      private Hl7.Fhir.Model.FhirDecimal? _SphereElement;
 
       /// <summary>
       /// Power of the lens
@@ -200,13 +200,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Sphere
       {
-        get { return SphereElement != null ? SphereElement.Value : null; }
+        get => _SphereElement?.Value;
         set
         {
-          if (value == null)
-            SphereElement = null;
-          else
-            SphereElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          SphereElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Sphere");
         }
       }
@@ -216,13 +213,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("cylinder", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal CylinderElement
+      public Hl7.Fhir.Model.FhirDecimal? CylinderElement
       {
         get { return _CylinderElement; }
         set { _CylinderElement = value; OnPropertyChanged("CylinderElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _CylinderElement;
+      private Hl7.Fhir.Model.FhirDecimal? _CylinderElement;
 
       /// <summary>
       /// Lens power for astigmatism
@@ -231,13 +228,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Cylinder
       {
-        get { return CylinderElement != null ? CylinderElement.Value : null; }
+        get => _CylinderElement?.Value;
         set
         {
-          if (value == null)
-            CylinderElement = null;
-          else
-            CylinderElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          CylinderElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Cylinder");
         }
       }
@@ -247,13 +241,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("axis", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer AxisElement
+      public Hl7.Fhir.Model.Integer? AxisElement
       {
         get { return _AxisElement; }
         set { _AxisElement = value; OnPropertyChanged("AxisElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _AxisElement;
+      private Hl7.Fhir.Model.Integer? _AxisElement;
 
       /// <summary>
       /// Lens meridian which contain no power for astigmatism
@@ -262,13 +256,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Axis
       {
-        get { return AxisElement != null ? AxisElement.Value : null; }
+        get => _AxisElement?.Value;
         set
         {
-          if (value == null)
-            AxisElement = null;
-          else
-            AxisElement = new Hl7.Fhir.Model.Integer(value);
+          AxisElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Axis");
         }
       }
@@ -281,24 +272,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.VisionPrescription.PrismComponent> Prism
       {
-        get { if(_Prism==null) _Prism = new List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>(); return _Prism; }
+        get => _Prism ??= [];
         set { _Prism = value; OnPropertyChanged("Prism"); }
       }
 
-      private List<Hl7.Fhir.Model.VisionPrescription.PrismComponent> _Prism;
+      private List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>? _Prism;
 
       /// <summary>
       /// Added power for multifocal levels.
       /// </summary>
       [FhirElement("add", Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal AddElement
+      public Hl7.Fhir.Model.FhirDecimal? AddElement
       {
         get { return _AddElement; }
         set { _AddElement = value; OnPropertyChanged("AddElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _AddElement;
+      private Hl7.Fhir.Model.FhirDecimal? _AddElement;
 
       /// <summary>
       /// Added power for multifocal levels
@@ -307,13 +298,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Add
       {
-        get { return AddElement != null ? AddElement.Value : null; }
+        get => _AddElement?.Value;
         set
         {
-          if (value == null)
-            AddElement = null;
-          else
-            AddElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          AddElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Add");
         }
       }
@@ -323,13 +311,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("power", Order=110)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal PowerElement
+      public Hl7.Fhir.Model.FhirDecimal? PowerElement
       {
         get { return _PowerElement; }
         set { _PowerElement = value; OnPropertyChanged("PowerElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _PowerElement;
+      private Hl7.Fhir.Model.FhirDecimal? _PowerElement;
 
       /// <summary>
       /// Contact lens power
@@ -338,13 +326,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Power
       {
-        get { return PowerElement != null ? PowerElement.Value : null; }
+        get => _PowerElement?.Value;
         set
         {
-          if (value == null)
-            PowerElement = null;
-          else
-            PowerElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          PowerElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Power");
         }
       }
@@ -354,13 +339,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("backCurve", Order=120)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal BackCurveElement
+      public Hl7.Fhir.Model.FhirDecimal? BackCurveElement
       {
         get { return _BackCurveElement; }
         set { _BackCurveElement = value; OnPropertyChanged("BackCurveElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _BackCurveElement;
+      private Hl7.Fhir.Model.FhirDecimal? _BackCurveElement;
 
       /// <summary>
       /// Contact lens back curvature
@@ -369,13 +354,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? BackCurve
       {
-        get { return BackCurveElement != null ? BackCurveElement.Value : null; }
+        get => _BackCurveElement?.Value;
         set
         {
-          if (value == null)
-            BackCurveElement = null;
-          else
-            BackCurveElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          BackCurveElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("BackCurve");
         }
       }
@@ -385,13 +367,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("diameter", Order=130)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal DiameterElement
+      public Hl7.Fhir.Model.FhirDecimal? DiameterElement
       {
         get { return _DiameterElement; }
         set { _DiameterElement = value; OnPropertyChanged("DiameterElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _DiameterElement;
+      private Hl7.Fhir.Model.FhirDecimal? _DiameterElement;
 
       /// <summary>
       /// Contact lens diameter
@@ -400,13 +382,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Diameter
       {
-        get { return DiameterElement != null ? DiameterElement.Value : null; }
+        get => _DiameterElement?.Value;
         set
         {
-          if (value == null)
-            DiameterElement = null;
-          else
-            DiameterElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          DiameterElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Diameter");
         }
       }
@@ -416,41 +395,38 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("duration", Order=140)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Duration
+      public Hl7.Fhir.Model.Quantity? Duration
       {
         get { return _Duration; }
         set { _Duration = value; OnPropertyChanged("Duration"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Duration;
+      private Hl7.Fhir.Model.Quantity? _Duration;
 
       /// <summary>
       /// Color required.
       /// </summary>
       [FhirElement("color", Order=150)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ColorElement
+      public Hl7.Fhir.Model.FhirString? ColorElement
       {
         get { return _ColorElement; }
         set { _ColorElement = value; OnPropertyChanged("ColorElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ColorElement;
+      private Hl7.Fhir.Model.FhirString? _ColorElement;
 
       /// <summary>
       /// Color required
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Color
+      public string? Color
       {
-        get { return ColorElement != null ? ColorElement.Value : null; }
+        get => _ColorElement?.Value;
         set
         {
-          if (value == null)
-            ColorElement = null;
-          else
-            ColorElement = new Hl7.Fhir.Model.FhirString(value);
+          ColorElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Color");
         }
       }
@@ -460,28 +436,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("brand", Order=160)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString BrandElement
+      public Hl7.Fhir.Model.FhirString? BrandElement
       {
         get { return _BrandElement; }
         set { _BrandElement = value; OnPropertyChanged("BrandElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _BrandElement;
+      private Hl7.Fhir.Model.FhirString? _BrandElement;
 
       /// <summary>
       /// Brand required
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Brand
+      public string? Brand
       {
-        get { return BrandElement != null ? BrandElement.Value : null; }
+        get => _BrandElement?.Value;
         set
         {
-          if (value == null)
-            BrandElement = null;
-          else
-            BrandElement = new Hl7.Fhir.Model.FhirString(value);
+          BrandElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Brand");
         }
       }
@@ -494,36 +467,32 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
-        get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+        get => _Note ??= [];
         set { _Note = value; OnPropertyChanged("Note"); }
       }
 
-      private List<Hl7.Fhir.Model.Annotation> _Note;
+      private List<Hl7.Fhir.Model.Annotation>? _Note;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as LensSpecificationComponent;
-
-        if (dest == null)
-        {
+        if(other is not LensSpecificationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Product != null) dest.Product = (Hl7.Fhir.Model.CodeableConcept)Product.DeepCopyInternal();
-        if(EyeElement != null) dest.EyeElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>)EyeElement.DeepCopyInternal();
-        if(SphereElement != null) dest.SphereElement = (Hl7.Fhir.Model.FhirDecimal)SphereElement.DeepCopyInternal();
-        if(CylinderElement != null) dest.CylinderElement = (Hl7.Fhir.Model.FhirDecimal)CylinderElement.DeepCopyInternal();
-        if(AxisElement != null) dest.AxisElement = (Hl7.Fhir.Model.Integer)AxisElement.DeepCopyInternal();
-        if(Prism.Any()) dest.Prism = new List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>(Prism.DeepCopyInternal());
-        if(AddElement != null) dest.AddElement = (Hl7.Fhir.Model.FhirDecimal)AddElement.DeepCopyInternal();
-        if(PowerElement != null) dest.PowerElement = (Hl7.Fhir.Model.FhirDecimal)PowerElement.DeepCopyInternal();
-        if(BackCurveElement != null) dest.BackCurveElement = (Hl7.Fhir.Model.FhirDecimal)BackCurveElement.DeepCopyInternal();
-        if(DiameterElement != null) dest.DiameterElement = (Hl7.Fhir.Model.FhirDecimal)DiameterElement.DeepCopyInternal();
-        if(Duration != null) dest.Duration = (Hl7.Fhir.Model.Quantity)Duration.DeepCopyInternal();
-        if(ColorElement != null) dest.ColorElement = (Hl7.Fhir.Model.FhirString)ColorElement.DeepCopyInternal();
-        if(BrandElement != null) dest.BrandElement = (Hl7.Fhir.Model.FhirString)BrandElement.DeepCopyInternal();
-        if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+        if(_Product is not null) dest.Product = (Hl7.Fhir.Model.CodeableConcept)_Product.DeepCopyInternal();
+        if(_EyeElement is not null) dest.EyeElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>)_EyeElement.DeepCopyInternal();
+        if(_SphereElement is not null) dest.SphereElement = (Hl7.Fhir.Model.FhirDecimal)_SphereElement.DeepCopyInternal();
+        if(_CylinderElement is not null) dest.CylinderElement = (Hl7.Fhir.Model.FhirDecimal)_CylinderElement.DeepCopyInternal();
+        if(_AxisElement is not null) dest.AxisElement = (Hl7.Fhir.Model.Integer)_AxisElement.DeepCopyInternal();
+        if(_Prism is not null) dest.Prism = new List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>(_Prism.DeepCopyInternal());
+        if(_AddElement is not null) dest.AddElement = (Hl7.Fhir.Model.FhirDecimal)_AddElement.DeepCopyInternal();
+        if(_PowerElement is not null) dest.PowerElement = (Hl7.Fhir.Model.FhirDecimal)_PowerElement.DeepCopyInternal();
+        if(_BackCurveElement is not null) dest.BackCurveElement = (Hl7.Fhir.Model.FhirDecimal)_BackCurveElement.DeepCopyInternal();
+        if(_DiameterElement is not null) dest.DiameterElement = (Hl7.Fhir.Model.FhirDecimal)_DiameterElement.DeepCopyInternal();
+        if(_Duration is not null) dest.Duration = (Hl7.Fhir.Model.Quantity)_Duration.DeepCopyInternal();
+        if(_ColorElement is not null) dest.ColorElement = (Hl7.Fhir.Model.FhirString)_ColorElement.DeepCopyInternal();
+        if(_BrandElement is not null) dest.BrandElement = (Hl7.Fhir.Model.FhirString)_BrandElement.DeepCopyInternal();
+        if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -535,125 +504,126 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as LensSpecificationComponent;
-        if(otherT == null) return false;
+        if(other is not LensSpecificationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Product, otherT.Product)) return false;
-        if(!comparer.Equals(EyeElement, otherT.EyeElement)) return false;
-        if(!comparer.Equals(SphereElement, otherT.SphereElement)) return false;
-        if(!comparer.Equals(CylinderElement, otherT.CylinderElement)) return false;
-        if(!comparer.Equals(AxisElement, otherT.AxisElement)) return false;
-        if(!comparer.ListEquals(Prism, otherT.Prism)) return false;
-        if(!comparer.Equals(AddElement, otherT.AddElement)) return false;
-        if(!comparer.Equals(PowerElement, otherT.PowerElement)) return false;
-        if(!comparer.Equals(BackCurveElement, otherT.BackCurveElement)) return false;
-        if(!comparer.Equals(DiameterElement, otherT.DiameterElement)) return false;
-        if(!comparer.Equals(Duration, otherT.Duration)) return false;
-        if(!comparer.Equals(ColorElement, otherT.ColorElement)) return false;
-        if(!comparer.Equals(BrandElement, otherT.BrandElement)) return false;
-        if(!comparer.ListEquals(Note, otherT.Note)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Product, otherT._Product)) return false;
+        if(!comparer.Equals(_EyeElement, otherT._EyeElement)) return false;
+        if(!comparer.Equals(_SphereElement, otherT._SphereElement)) return false;
+        if(!comparer.Equals(_CylinderElement, otherT._CylinderElement)) return false;
+        if(!comparer.Equals(_AxisElement, otherT._AxisElement)) return false;
+        if(!comparer.ListEquals(_Prism, otherT._Prism)) return false;
+        if(!comparer.Equals(_AddElement, otherT._AddElement)) return false;
+        if(!comparer.Equals(_PowerElement, otherT._PowerElement)) return false;
+        if(!comparer.Equals(_BackCurveElement, otherT._BackCurveElement)) return false;
+        if(!comparer.Equals(_DiameterElement, otherT._DiameterElement)) return false;
+        if(!comparer.Equals(_Duration, otherT._Duration)) return false;
+        if(!comparer.Equals(_ColorElement, otherT._ColorElement)) return false;
+        if(!comparer.Equals(_BrandElement, otherT._BrandElement)) return false;
+        if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "product":
-            value = Product;
-            return Product is not null;
+            value = _Product;
+            return _Product is not null;
           case "eye":
-            value = EyeElement;
-            return EyeElement is not null;
+            value = _EyeElement;
+            return _EyeElement is not null;
           case "sphere":
-            value = SphereElement;
-            return SphereElement is not null;
+            value = _SphereElement;
+            return _SphereElement is not null;
           case "cylinder":
-            value = CylinderElement;
-            return CylinderElement is not null;
+            value = _CylinderElement;
+            return _CylinderElement is not null;
           case "axis":
-            value = AxisElement;
-            return AxisElement is not null;
+            value = _AxisElement;
+            return _AxisElement is not null;
           case "prism":
-            value = Prism;
-            return Prism?.Any() == true;
+            value = _Prism;
+            return _Prism?.Any() == true;
           case "add":
-            value = AddElement;
-            return AddElement is not null;
+            value = _AddElement;
+            return _AddElement is not null;
           case "power":
-            value = PowerElement;
-            return PowerElement is not null;
+            value = _PowerElement;
+            return _PowerElement is not null;
           case "backCurve":
-            value = BackCurveElement;
-            return BackCurveElement is not null;
+            value = _BackCurveElement;
+            return _BackCurveElement is not null;
           case "diameter":
-            value = DiameterElement;
-            return DiameterElement is not null;
+            value = _DiameterElement;
+            return _DiameterElement is not null;
           case "duration":
-            value = Duration;
-            return Duration is not null;
+            value = _Duration;
+            return _Duration is not null;
           case "color":
-            value = ColorElement;
-            return ColorElement is not null;
+            value = _ColorElement;
+            return _ColorElement is not null;
           case "brand":
-            value = BrandElement;
-            return BrandElement is not null;
+            value = _BrandElement;
+            return _BrandElement is not null;
           case "note":
-            value = Note;
-            return Note?.Any() == true;
+            value = _Note;
+            return _Note?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "product":
-            Product = (Hl7.Fhir.Model.CodeableConcept)value;
+            Product = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "eye":
-            EyeElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>)value;
+            EyeElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>?)value;
             return this;
           case "sphere":
-            SphereElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            SphereElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "cylinder":
-            CylinderElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            CylinderElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "axis":
-            AxisElement = (Hl7.Fhir.Model.Integer)value;
+            AxisElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "prism":
-            Prism = (List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>)value;
+            Prism = (List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>?)value!;
             return this;
           case "add":
-            AddElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            AddElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "power":
-            PowerElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            PowerElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "backCurve":
-            BackCurveElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            BackCurveElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "diameter":
-            DiameterElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            DiameterElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "duration":
-            Duration = (Hl7.Fhir.Model.Quantity)value;
+            Duration = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "color":
-            ColorElement = (Hl7.Fhir.Model.FhirString)value;
+            ColorElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "brand":
-            BrandElement = (Hl7.Fhir.Model.FhirString)value;
+            BrandElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "note":
-            Note = (List<Hl7.Fhir.Model.Annotation>)value;
+            Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -664,20 +634,20 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
-        if (EyeElement is not null) yield return new KeyValuePair<string,object>("eye",EyeElement);
-        if (SphereElement is not null) yield return new KeyValuePair<string,object>("sphere",SphereElement);
-        if (CylinderElement is not null) yield return new KeyValuePair<string,object>("cylinder",CylinderElement);
-        if (AxisElement is not null) yield return new KeyValuePair<string,object>("axis",AxisElement);
-        if (Prism?.Any() == true) yield return new KeyValuePair<string,object>("prism",Prism);
-        if (AddElement is not null) yield return new KeyValuePair<string,object>("add",AddElement);
-        if (PowerElement is not null) yield return new KeyValuePair<string,object>("power",PowerElement);
-        if (BackCurveElement is not null) yield return new KeyValuePair<string,object>("backCurve",BackCurveElement);
-        if (DiameterElement is not null) yield return new KeyValuePair<string,object>("diameter",DiameterElement);
-        if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
-        if (ColorElement is not null) yield return new KeyValuePair<string,object>("color",ColorElement);
-        if (BrandElement is not null) yield return new KeyValuePair<string,object>("brand",BrandElement);
-        if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+        if (_Product is not null) yield return new KeyValuePair<string,object>("product",_Product);
+        if (_EyeElement is not null) yield return new KeyValuePair<string,object>("eye",_EyeElement);
+        if (_SphereElement is not null) yield return new KeyValuePair<string,object>("sphere",_SphereElement);
+        if (_CylinderElement is not null) yield return new KeyValuePair<string,object>("cylinder",_CylinderElement);
+        if (_AxisElement is not null) yield return new KeyValuePair<string,object>("axis",_AxisElement);
+        if (_Prism?.Any() == true) yield return new KeyValuePair<string,object>("prism",_Prism);
+        if (_AddElement is not null) yield return new KeyValuePair<string,object>("add",_AddElement);
+        if (_PowerElement is not null) yield return new KeyValuePair<string,object>("power",_PowerElement);
+        if (_BackCurveElement is not null) yield return new KeyValuePair<string,object>("backCurve",_BackCurveElement);
+        if (_DiameterElement is not null) yield return new KeyValuePair<string,object>("diameter",_DiameterElement);
+        if (_Duration is not null) yield return new KeyValuePair<string,object>("duration",_Duration);
+        if (_ColorElement is not null) yield return new KeyValuePair<string,object>("color",_ColorElement);
+        if (_BrandElement is not null) yield return new KeyValuePair<string,object>("brand",_BrandElement);
+        if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
       }
 
     }
@@ -704,13 +674,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("amount", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal AmountElement
+      public Hl7.Fhir.Model.FhirDecimal? AmountElement
       {
         get { return _AmountElement; }
         set { _AmountElement = value; OnPropertyChanged("AmountElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _AmountElement;
+      private Hl7.Fhir.Model.FhirDecimal? _AmountElement;
 
       /// <summary>
       /// Amount of adjustment
@@ -719,13 +689,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Amount
       {
-        get { return AmountElement != null ? AmountElement.Value : null; }
+        get => _AmountElement?.Value;
         set
         {
-          if (value == null)
-            AmountElement = null;
-          else
-            AmountElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          AmountElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Amount");
         }
       }
@@ -738,13 +705,13 @@ namespace Hl7.Fhir.Model
       [Binding("VisionBase")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> BaseElement
+      public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>? BaseElement
       {
         get { return _BaseElement; }
         set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> _BaseElement;
+      private Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>? _BaseElement;
 
       /// <summary>
       /// up | down | in | out
@@ -753,29 +720,22 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.VisionPrescription.VisionBase? Base
       {
-        get { return BaseElement != null ? BaseElement.Value : null; }
+        get => _BaseElement?.Value;
         set
         {
-          if (value == null)
-            BaseElement = null;
-          else
-            BaseElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
+          BaseElement = value is null ? null : new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
           OnPropertyChanged("Base");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PrismComponent;
-
-        if (dest == null)
-        {
+        if(other is not PrismComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(AmountElement != null) dest.AmountElement = (Hl7.Fhir.Model.FhirDecimal)AmountElement.DeepCopyInternal();
-        if(BaseElement != null) dest.BaseElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>)BaseElement.DeepCopyInternal();
+        if(_AmountElement is not null) dest.AmountElement = (Hl7.Fhir.Model.FhirDecimal)_AmountElement.DeepCopyInternal();
+        if(_BaseElement is not null) dest.BaseElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>)_BaseElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -787,41 +747,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PrismComponent;
-        if(otherT == null) return false;
+        if(other is not PrismComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(AmountElement, otherT.AmountElement)) return false;
-        if(!comparer.Equals(BaseElement, otherT.BaseElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_AmountElement, otherT._AmountElement)) return false;
+        if(!comparer.Equals(_BaseElement, otherT._BaseElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "amount":
-            value = AmountElement;
-            return AmountElement is not null;
+            value = _AmountElement;
+            return _AmountElement is not null;
           case "base":
-            value = BaseElement;
-            return BaseElement is not null;
+            value = _BaseElement;
+            return _BaseElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "amount":
-            AmountElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            AmountElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "base":
-            BaseElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>)value;
+            BaseElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -832,8 +793,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (AmountElement is not null) yield return new KeyValuePair<string,object>("amount",AmountElement);
-        if (BaseElement is not null) yield return new KeyValuePair<string,object>("base",BaseElement);
+        if (_AmountElement is not null) yield return new KeyValuePair<string,object>("amount",_AmountElement);
+        if (_BaseElement is not null) yield return new KeyValuePair<string,object>("base",_BaseElement);
       }
 
     }
@@ -846,11 +807,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
@@ -860,13 +821,13 @@ namespace Hl7.Fhir.Model
     [Binding("VisionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
+    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
+    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? _StatusElement;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error
@@ -875,13 +836,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -892,28 +850,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("created", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime CreatedElement
+    public Hl7.Fhir.Model.FhirDateTime? CreatedElement
     {
       get { return _CreatedElement; }
       set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
+    private Hl7.Fhir.Model.FhirDateTime? _CreatedElement;
 
     /// <summary>
     /// Response creation date
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Created
+    public string? Created
     {
-      get { return CreatedElement != null ? CreatedElement.Value : null; }
+      get => _CreatedElement?.Value;
       set
       {
-        if (value == null)
-          CreatedElement = null;
-        else
-          CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -926,13 +881,13 @@ namespace Hl7.Fhir.Model
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Patient
+    public Hl7.Fhir.Model.ResourceReference? Patient
     {
       get { return _Patient; }
       set { _Patient = value; OnPropertyChanged("Patient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Patient;
+    private Hl7.Fhir.Model.ResourceReference? _Patient;
 
     /// <summary>
     /// Created during encounter / admission / stay.
@@ -941,13 +896,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Encounter
+    public Hl7.Fhir.Model.ResourceReference? Encounter
     {
       get { return _Encounter; }
       set { _Encounter = value; OnPropertyChanged("Encounter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Encounter;
+    private Hl7.Fhir.Model.ResourceReference? _Encounter;
 
     /// <summary>
     /// When prescription was authorized.
@@ -955,28 +910,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("dateWritten", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime DateWrittenElement
+    public Hl7.Fhir.Model.FhirDateTime? DateWrittenElement
     {
       get { return _DateWrittenElement; }
       set { _DateWrittenElement = value; OnPropertyChanged("DateWrittenElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _DateWrittenElement;
+    private Hl7.Fhir.Model.FhirDateTime? _DateWrittenElement;
 
     /// <summary>
     /// When prescription was authorized
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string DateWritten
+    public string? DateWritten
     {
-      get { return DateWrittenElement != null ? DateWrittenElement.Value : null; }
+      get => _DateWrittenElement?.Value;
       set
       {
-        if (value == null)
-          DateWrittenElement = null;
-        else
-          DateWrittenElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateWrittenElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateWritten");
       }
     }
@@ -989,13 +941,13 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Prescriber
+    public Hl7.Fhir.Model.ResourceReference? Prescriber
     {
       get { return _Prescriber; }
       set { _Prescriber = value; OnPropertyChanged("Prescriber"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Prescriber;
+    private Hl7.Fhir.Model.ResourceReference? _Prescriber;
 
     /// <summary>
     /// Vision lens authorization.
@@ -1005,32 +957,28 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent> LensSpecification
     {
-      get { if(_LensSpecification==null) _LensSpecification = new List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>(); return _LensSpecification; }
+      get => _LensSpecification ??= [];
       set { _LensSpecification = value; OnPropertyChanged("LensSpecification"); }
     }
 
-    private List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent> _LensSpecification;
+    private List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>? _LensSpecification;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as VisionPrescription;
-
-      if (dest == null)
-      {
+      if(other is not VisionPrescription dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopyInternal();
-      if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopyInternal();
-      if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopyInternal();
-      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopyInternal();
-      if(DateWrittenElement != null) dest.DateWrittenElement = (Hl7.Fhir.Model.FhirDateTime)DateWrittenElement.DeepCopyInternal();
-      if(Prescriber != null) dest.Prescriber = (Hl7.Fhir.Model.ResourceReference)Prescriber.DeepCopyInternal();
-      if(LensSpecification.Any()) dest.LensSpecification = new List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>(LensSpecification.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)_StatusElement.DeepCopyInternal();
+      if(_CreatedElement is not null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)_CreatedElement.DeepCopyInternal();
+      if(_Patient is not null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)_Patient.DeepCopyInternal();
+      if(_Encounter is not null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)_Encounter.DeepCopyInternal();
+      if(_DateWrittenElement is not null) dest.DateWrittenElement = (Hl7.Fhir.Model.FhirDateTime)_DateWrittenElement.DeepCopyInternal();
+      if(_Prescriber is not null) dest.Prescriber = (Hl7.Fhir.Model.ResourceReference)_Prescriber.DeepCopyInternal();
+      if(_LensSpecification is not null) dest.LensSpecification = new List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>(_LensSpecification.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1042,83 +990,84 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as VisionPrescription;
-      if(otherT == null) return false;
+      if(other is not VisionPrescription otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(CreatedElement, otherT.CreatedElement)) return false;
-      if(!comparer.Equals(Patient, otherT.Patient)) return false;
-      if(!comparer.Equals(Encounter, otherT.Encounter)) return false;
-      if(!comparer.Equals(DateWrittenElement, otherT.DateWrittenElement)) return false;
-      if(!comparer.Equals(Prescriber, otherT.Prescriber)) return false;
-      if(!comparer.ListEquals(LensSpecification, otherT.LensSpecification)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_CreatedElement, otherT._CreatedElement)) return false;
+      if(!comparer.Equals(_Patient, otherT._Patient)) return false;
+      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
+      if(!comparer.Equals(_DateWrittenElement, otherT._DateWrittenElement)) return false;
+      if(!comparer.Equals(_Prescriber, otherT._Prescriber)) return false;
+      if(!comparer.ListEquals(_LensSpecification, otherT._LensSpecification)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "created":
-          value = CreatedElement;
-          return CreatedElement is not null;
+          value = _CreatedElement;
+          return _CreatedElement is not null;
         case "patient":
-          value = Patient;
-          return Patient is not null;
+          value = _Patient;
+          return _Patient is not null;
         case "encounter":
-          value = Encounter;
-          return Encounter is not null;
+          value = _Encounter;
+          return _Encounter is not null;
         case "dateWritten":
-          value = DateWrittenElement;
-          return DateWrittenElement is not null;
+          value = _DateWrittenElement;
+          return _DateWrittenElement is not null;
         case "prescriber":
-          value = Prescriber;
-          return Prescriber is not null;
+          value = _Prescriber;
+          return _Prescriber is not null;
         case "lensSpecification":
-          value = LensSpecification;
-          return LensSpecification?.Any() == true;
+          value = _LensSpecification;
+          return _LensSpecification?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
           return this;
         case "created":
-          CreatedElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference)value;
+          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference)value;
+          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "dateWritten":
-          DateWrittenElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          DateWrittenElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "prescriber":
-          Prescriber = (Hl7.Fhir.Model.ResourceReference)value;
+          Prescriber = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "lensSpecification":
-          LensSpecification = (List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>)value;
+          LensSpecification = (List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1129,14 +1078,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
-      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (DateWrittenElement is not null) yield return new KeyValuePair<string,object>("dateWritten",DateWrittenElement);
-      if (Prescriber is not null) yield return new KeyValuePair<string,object>("prescriber",Prescriber);
-      if (LensSpecification?.Any() == true) yield return new KeyValuePair<string,object>("lensSpecification",LensSpecification);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_CreatedElement is not null) yield return new KeyValuePair<string,object>("created",_CreatedElement);
+      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_DateWrittenElement is not null) yield return new KeyValuePair<string,object>("dateWritten",_DateWrittenElement);
+      if (_Prescriber is not null) yield return new KeyValuePair<string,object>("prescriber",_Prescriber);
+      if (_LensSpecification?.Any() == true) yield return new KeyValuePair<string,object>("lensSpecification",_LensSpecification);
     }
 
   }

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -65,39 +68,35 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("low", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Low
+    public Hl7.Fhir.Model.Quantity? Low
     {
       get { return _Low; }
       set { _Low = value; OnPropertyChanged("Low"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Low;
+    private Hl7.Fhir.Model.Quantity? _Low;
 
     /// <summary>
     /// High limit.
     /// </summary>
     [FhirElement("high", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity High
+    public Hl7.Fhir.Model.Quantity? High
     {
       get { return _High; }
       set { _High = value; OnPropertyChanged("High"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _High;
+    private Hl7.Fhir.Model.Quantity? _High;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Range;
-
-      if (dest == null)
-      {
+      if(other is not Range dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Low != null) dest.Low = (Hl7.Fhir.Model.Quantity)Low.DeepCopyInternal();
-      if(High != null) dest.High = (Hl7.Fhir.Model.Quantity)High.DeepCopyInternal();
+      if(_Low is not null) dest.Low = (Hl7.Fhir.Model.Quantity)_Low.DeepCopyInternal();
+      if(_High is not null) dest.High = (Hl7.Fhir.Model.Quantity)_High.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -109,41 +108,42 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Range;
-      if(otherT == null) return false;
+      if(other is not Range otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Low, otherT.Low)) return false;
-      if(!comparer.Equals(High, otherT.High)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Low, otherT._Low)) return false;
+      if(!comparer.Equals(_High, otherT._High)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "low":
-          value = Low;
-          return Low is not null;
+          value = _Low;
+          return _Low is not null;
         case "high":
-          value = High;
-          return High is not null;
+          value = _High;
+          return _High is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "low":
-          Low = (Hl7.Fhir.Model.Quantity)value;
+          Low = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "high":
-          High = (Hl7.Fhir.Model.Quantity)value;
+          High = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -154,8 +154,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Low is not null) yield return new KeyValuePair<string,object>("low",Low);
-      if (High is not null) yield return new KeyValuePair<string,object>("high",High);
+      if (_Low is not null) yield return new KeyValuePair<string,object>("low",_Low);
+      if (_High is not null) yield return new KeyValuePair<string,object>("high",_High);
     }
 
   }

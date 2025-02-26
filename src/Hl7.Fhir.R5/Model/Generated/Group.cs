@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -176,13 +179,13 @@ namespace Hl7.Fhir.Model
       [Binding("GroupCharacteristicKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Code
+      public Hl7.Fhir.Model.CodeableConcept? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Code;
+      private Hl7.Fhir.Model.CodeableConcept? _Code;
 
       /// <summary>
       /// Value held by characteristic.
@@ -193,13 +196,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Value
+      public Hl7.Fhir.Model.DataType? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Value;
+      private Hl7.Fhir.Model.DataType? _Value;
 
       /// <summary>
       /// Group includes or excludes.
@@ -207,13 +210,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("exclude", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean ExcludeElement
+      public Hl7.Fhir.Model.FhirBoolean? ExcludeElement
       {
         get { return _ExcludeElement; }
         set { _ExcludeElement = value; OnPropertyChanged("ExcludeElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _ExcludeElement;
+      private Hl7.Fhir.Model.FhirBoolean? _ExcludeElement;
 
       /// <summary>
       /// Group includes or excludes
@@ -222,13 +225,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Exclude
       {
-        get { return ExcludeElement != null ? ExcludeElement.Value : null; }
+        get => _ExcludeElement?.Value;
         set
         {
-          if (value == null)
-            ExcludeElement = null;
-          else
-            ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          ExcludeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Exclude");
         }
       }
@@ -238,28 +238,24 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("period", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Period Period
+      public Hl7.Fhir.Model.Period? Period
       {
         get { return _Period; }
         set { _Period = value; OnPropertyChanged("Period"); }
       }
 
-      private Hl7.Fhir.Model.Period _Period;
+      private Hl7.Fhir.Model.Period? _Period;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as CharacteristicComponent;
-
-        if (dest == null)
-        {
+        if(other is not CharacteristicComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
-        if(ExcludeElement != null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)ExcludeElement.DeepCopyInternal();
-        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
+        if(_ExcludeElement is not null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)_ExcludeElement.DeepCopyInternal();
+        if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -271,55 +267,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CharacteristicComponent;
-        if(otherT == null) return false;
+        if(other is not CharacteristicComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
-        if(!comparer.Equals(ExcludeElement, otherT.ExcludeElement)) return false;
-        if(!comparer.Equals(Period, otherT.Period)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+        if(!comparer.Equals(_ExcludeElement, otherT._ExcludeElement)) return false;
+        if(!comparer.Equals(_Period, otherT._Period)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           case "exclude":
-            value = ExcludeElement;
-            return ExcludeElement is not null;
+            value = _ExcludeElement;
+            return _ExcludeElement is not null;
           case "period":
-            value = Period;
-            return Period is not null;
+            value = _Period;
+            return _Period is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept)value;
+            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType)value;
+            Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "exclude":
-            ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            ExcludeElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "period":
-            Period = (Hl7.Fhir.Model.Period)value;
+            Period = (Hl7.Fhir.Model.Period?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -330,10 +327,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
-        if (ExcludeElement is not null) yield return new KeyValuePair<string,object>("exclude",ExcludeElement);
-        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_ExcludeElement is not null) yield return new KeyValuePair<string,object>("exclude",_ExcludeElement);
+        if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
       }
 
     }
@@ -362,39 +359,39 @@ namespace Hl7.Fhir.Model
       [References("CareTeam","Device","Group","HealthcareService","Location","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson","Specimen")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Entity
+      public Hl7.Fhir.Model.ResourceReference? Entity
       {
         get { return _Entity; }
         set { _Entity = value; OnPropertyChanged("Entity"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Entity;
+      private Hl7.Fhir.Model.ResourceReference? _Entity;
 
       /// <summary>
       /// Period member belonged to the group.
       /// </summary>
       [FhirElement("period", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Period Period
+      public Hl7.Fhir.Model.Period? Period
       {
         get { return _Period; }
         set { _Period = value; OnPropertyChanged("Period"); }
       }
 
-      private Hl7.Fhir.Model.Period _Period;
+      private Hl7.Fhir.Model.Period? _Period;
 
       /// <summary>
       /// If member is no longer in group.
       /// </summary>
       [FhirElement("inactive", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean InactiveElement
+      public Hl7.Fhir.Model.FhirBoolean? InactiveElement
       {
         get { return _InactiveElement; }
         set { _InactiveElement = value; OnPropertyChanged("InactiveElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _InactiveElement;
+      private Hl7.Fhir.Model.FhirBoolean? _InactiveElement;
 
       /// <summary>
       /// If member is no longer in group
@@ -403,30 +400,23 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Inactive
       {
-        get { return InactiveElement != null ? InactiveElement.Value : null; }
+        get => _InactiveElement?.Value;
         set
         {
-          if (value == null)
-            InactiveElement = null;
-          else
-            InactiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          InactiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Inactive");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as MemberComponent;
-
-        if (dest == null)
-        {
+        if(other is not MemberComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Entity != null) dest.Entity = (Hl7.Fhir.Model.ResourceReference)Entity.DeepCopyInternal();
-        if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
-        if(InactiveElement != null) dest.InactiveElement = (Hl7.Fhir.Model.FhirBoolean)InactiveElement.DeepCopyInternal();
+        if(_Entity is not null) dest.Entity = (Hl7.Fhir.Model.ResourceReference)_Entity.DeepCopyInternal();
+        if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+        if(_InactiveElement is not null) dest.InactiveElement = (Hl7.Fhir.Model.FhirBoolean)_InactiveElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -438,48 +428,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as MemberComponent;
-        if(otherT == null) return false;
+        if(other is not MemberComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Entity, otherT.Entity)) return false;
-        if(!comparer.Equals(Period, otherT.Period)) return false;
-        if(!comparer.Equals(InactiveElement, otherT.InactiveElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Entity, otherT._Entity)) return false;
+        if(!comparer.Equals(_Period, otherT._Period)) return false;
+        if(!comparer.Equals(_InactiveElement, otherT._InactiveElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "entity":
-            value = Entity;
-            return Entity is not null;
+            value = _Entity;
+            return _Entity is not null;
           case "period":
-            value = Period;
-            return Period is not null;
+            value = _Period;
+            return _Period is not null;
           case "inactive":
-            value = InactiveElement;
-            return InactiveElement is not null;
+            value = _InactiveElement;
+            return _InactiveElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "entity":
-            Entity = (Hl7.Fhir.Model.ResourceReference)value;
+            Entity = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "period":
-            Period = (Hl7.Fhir.Model.Period)value;
+            Period = (Hl7.Fhir.Model.Period?)value;
             return this;
           case "inactive":
-            InactiveElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            InactiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -490,9 +481,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Entity is not null) yield return new KeyValuePair<string,object>("entity",Entity);
-        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-        if (InactiveElement is not null) yield return new KeyValuePair<string,object>("inactive",InactiveElement);
+        if (_Entity is not null) yield return new KeyValuePair<string,object>("entity",_Entity);
+        if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+        if (_InactiveElement is not null) yield return new KeyValuePair<string,object>("inactive",_InactiveElement);
       }
 
     }
@@ -505,24 +496,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Whether this group's record is in active use.
     /// </summary>
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean ActiveElement
+    public Hl7.Fhir.Model.FhirBoolean? ActiveElement
     {
       get { return _ActiveElement; }
       set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+    private Hl7.Fhir.Model.FhirBoolean? _ActiveElement;
 
     /// <summary>
     /// Whether this group's record is in active use
@@ -531,13 +522,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get { return ActiveElement != null ? ActiveElement.Value : null; }
+      get => _ActiveElement?.Value;
       set
       {
-        if (value == null)
-          ActiveElement = null;
-        else
-          ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Active");
       }
     }
@@ -550,13 +538,13 @@ namespace Hl7.Fhir.Model
     [Binding("GroupType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement
+    public Code<Hl7.Fhir.Model.Group.GroupType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Group.GroupType> _TypeElement;
+    private Code<Hl7.Fhir.Model.Group.GroupType>? _TypeElement;
 
     /// <summary>
     /// person | animal | practitioner | device | careteam | healthcareservice | location | organization | relatedperson | specimen
@@ -565,13 +553,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Group.GroupType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.Group.GroupType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Group.GroupType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -583,13 +568,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Group.GroupMembershipBasis> MembershipElement
+    public Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>? MembershipElement
     {
       get { return _MembershipElement; }
       set { _MembershipElement = value; OnPropertyChanged("MembershipElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Group.GroupMembershipBasis> _MembershipElement;
+    private Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>? _MembershipElement;
 
     /// <summary>
     /// definitional | enumerated
@@ -598,13 +583,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Group.GroupMembershipBasis? Membership
     {
-      get { return MembershipElement != null ? MembershipElement.Value : null; }
+      get => _MembershipElement?.Value;
       set
       {
-        if (value == null)
-          MembershipElement = null;
-        else
-          MembershipElement = new Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>(value);
+        MembershipElement = value is null ? null : new Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>(value);
         OnPropertyChanged("Membership");
       }
     }
@@ -615,41 +597,38 @@ namespace Hl7.Fhir.Model
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("GroupKind")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Code
+    public Hl7.Fhir.Model.CodeableConcept? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Code;
+    private Hl7.Fhir.Model.CodeableConcept? _Code;
 
     /// <summary>
     /// Label for Group.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString NameElement
+    public Hl7.Fhir.Model.FhirString? NameElement
     {
       get { return _NameElement; }
       set { _NameElement = value; OnPropertyChanged("NameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _NameElement;
+    private Hl7.Fhir.Model.FhirString? _NameElement;
 
     /// <summary>
     /// Label for Group
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Name
+    public string? Name
     {
-      get { return NameElement != null ? NameElement.Value : null; }
+      get => _NameElement?.Value;
       set
       {
-        if (value == null)
-          NameElement = null;
-        else
-          NameElement = new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -659,28 +638,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown DescriptionElement
+    public Hl7.Fhir.Model.Markdown? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+    private Hl7.Fhir.Model.Markdown? _DescriptionElement;
 
     /// <summary>
     /// Natural language description of the group
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -690,13 +666,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("quantity", InSummary=true, Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.UnsignedInt QuantityElement
+    public Hl7.Fhir.Model.UnsignedInt? QuantityElement
     {
       get { return _QuantityElement; }
       set { _QuantityElement = value; OnPropertyChanged("QuantityElement"); }
     }
 
-    private Hl7.Fhir.Model.UnsignedInt _QuantityElement;
+    private Hl7.Fhir.Model.UnsignedInt? _QuantityElement;
 
     /// <summary>
     /// Number of members
@@ -705,13 +681,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Quantity
     {
-      get { return QuantityElement != null ? QuantityElement.Value : null; }
+      get => _QuantityElement?.Value;
       set
       {
-        if (value == null)
-          QuantityElement = null;
-        else
-          QuantityElement = new Hl7.Fhir.Model.UnsignedInt(value);
+        QuantityElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
         OnPropertyChanged("Quantity");
       }
     }
@@ -723,13 +696,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization","RelatedPerson","Practitioner","PractitionerRole")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ManagingEntity
+    public Hl7.Fhir.Model.ResourceReference? ManagingEntity
     {
       get { return _ManagingEntity; }
       set { _ManagingEntity = value; OnPropertyChanged("ManagingEntity"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ManagingEntity;
+    private Hl7.Fhir.Model.ResourceReference? _ManagingEntity;
 
     /// <summary>
     /// Include / Exclude group members by Trait.
@@ -739,11 +712,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Group.CharacteristicComponent> Characteristic
     {
-      get { if(_Characteristic==null) _Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(); return _Characteristic; }
+      get => _Characteristic ??= [];
       set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
     }
 
-    private List<Hl7.Fhir.Model.Group.CharacteristicComponent> _Characteristic;
+    private List<Hl7.Fhir.Model.Group.CharacteristicComponent>? _Characteristic;
 
     /// <summary>
     /// Who or what is in group.
@@ -753,35 +726,31 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Group.MemberComponent> Member
     {
-      get { if(_Member==null) _Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(); return _Member; }
+      get => _Member ??= [];
       set { _Member = value; OnPropertyChanged("Member"); }
     }
 
-    private List<Hl7.Fhir.Model.Group.MemberComponent> _Member;
+    private List<Hl7.Fhir.Model.Group.MemberComponent>? _Member;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Group;
-
-      if (dest == null)
-      {
+      if(other is not Group dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopyInternal();
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Group.GroupType>)TypeElement.DeepCopyInternal();
-      if(MembershipElement != null) dest.MembershipElement = (Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>)MembershipElement.DeepCopyInternal();
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopyInternal();
-      if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)QuantityElement.DeepCopyInternal();
-      if(ManagingEntity != null) dest.ManagingEntity = (Hl7.Fhir.Model.ResourceReference)ManagingEntity.DeepCopyInternal();
-      if(Characteristic.Any()) dest.Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(Characteristic.DeepCopyInternal());
-      if(Member.Any()) dest.Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(Member.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_ActiveElement is not null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)_ActiveElement.DeepCopyInternal();
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.Group.GroupType>)_TypeElement.DeepCopyInternal();
+      if(_MembershipElement is not null) dest.MembershipElement = (Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>)_MembershipElement.DeepCopyInternal();
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)_DescriptionElement.DeepCopyInternal();
+      if(_QuantityElement is not null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)_QuantityElement.DeepCopyInternal();
+      if(_ManagingEntity is not null) dest.ManagingEntity = (Hl7.Fhir.Model.ResourceReference)_ManagingEntity.DeepCopyInternal();
+      if(_Characteristic is not null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(_Characteristic.DeepCopyInternal());
+      if(_Member is not null) dest.Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(_Member.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -793,104 +762,105 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Group;
-      if(otherT == null) return false;
+      if(other is not Group otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(ActiveElement, otherT.ActiveElement)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(MembershipElement, otherT.MembershipElement)) return false;
-      if(!comparer.Equals(Code, otherT.Code)) return false;
-      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.Equals(QuantityElement, otherT.QuantityElement)) return false;
-      if(!comparer.Equals(ManagingEntity, otherT.ManagingEntity)) return false;
-      if(!comparer.ListEquals(Characteristic, otherT.Characteristic)) return false;
-      if(!comparer.ListEquals(Member, otherT.Member)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_ActiveElement, otherT._ActiveElement)) return false;
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_MembershipElement, otherT._MembershipElement)) return false;
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.Equals(_QuantityElement, otherT._QuantityElement)) return false;
+      if(!comparer.Equals(_ManagingEntity, otherT._ManagingEntity)) return false;
+      if(!comparer.ListEquals(_Characteristic, otherT._Characteristic)) return false;
+      if(!comparer.ListEquals(_Member, otherT._Member)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "active":
-          value = ActiveElement;
-          return ActiveElement is not null;
+          value = _ActiveElement;
+          return _ActiveElement is not null;
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "membership":
-          value = MembershipElement;
-          return MembershipElement is not null;
+          value = _MembershipElement;
+          return _MembershipElement is not null;
         case "code":
-          value = Code;
-          return Code is not null;
+          value = _Code;
+          return _Code is not null;
         case "name":
-          value = NameElement;
-          return NameElement is not null;
+          value = _NameElement;
+          return _NameElement is not null;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "quantity":
-          value = QuantityElement;
-          return QuantityElement is not null;
+          value = _QuantityElement;
+          return _QuantityElement is not null;
         case "managingEntity":
-          value = ManagingEntity;
-          return ManagingEntity is not null;
+          value = _ManagingEntity;
+          return _ManagingEntity is not null;
         case "characteristic":
-          value = Characteristic;
-          return Characteristic?.Any() == true;
+          value = _Characteristic;
+          return _Characteristic?.Any() == true;
         case "member":
-          value = Member;
-          return Member?.Any() == true;
+          value = _Member;
+          return _Member?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "active":
-          ActiveElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.Group.GroupType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.Group.GroupType>?)value;
           return this;
         case "membership":
-          MembershipElement = (Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>)value;
+          MembershipElement = (Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>?)value;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept)value;
+          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "name":
-          NameElement = (Hl7.Fhir.Model.FhirString)value;
+          NameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.Markdown)value;
+          DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "quantity":
-          QuantityElement = (Hl7.Fhir.Model.UnsignedInt)value;
+          QuantityElement = (Hl7.Fhir.Model.UnsignedInt?)value;
           return this;
         case "managingEntity":
-          ManagingEntity = (Hl7.Fhir.Model.ResourceReference)value;
+          ManagingEntity = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "characteristic":
-          Characteristic = (List<Hl7.Fhir.Model.Group.CharacteristicComponent>)value;
+          Characteristic = (List<Hl7.Fhir.Model.Group.CharacteristicComponent>?)value!;
           return this;
         case "member":
-          Member = (List<Hl7.Fhir.Model.Group.MemberComponent>)value;
+          Member = (List<Hl7.Fhir.Model.Group.MemberComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -901,17 +871,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (MembershipElement is not null) yield return new KeyValuePair<string,object>("membership",MembershipElement);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (QuantityElement is not null) yield return new KeyValuePair<string,object>("quantity",QuantityElement);
-      if (ManagingEntity is not null) yield return new KeyValuePair<string,object>("managingEntity",ManagingEntity);
-      if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
-      if (Member?.Any() == true) yield return new KeyValuePair<string,object>("member",Member);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_MembershipElement is not null) yield return new KeyValuePair<string,object>("membership",_MembershipElement);
+      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_QuantityElement is not null) yield return new KeyValuePair<string,object>("quantity",_QuantityElement);
+      if (_ManagingEntity is not null) yield return new KeyValuePair<string,object>("managingEntity",_ManagingEntity);
+      if (_Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",_Characteristic);
+      if (_Member?.Any() == true) yield return new KeyValuePair<string,object>("member",_Member);
     }
 
   }

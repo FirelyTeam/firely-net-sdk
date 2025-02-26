@@ -316,11 +316,11 @@ public class ModelTests
         //         "Extension.url" => $"new FhirUri({info.PropertyName})",
         var n = new Narrative("<p>bla</p>") { ElementId = "id1", Status = Narrative.NarrativeStatus.Additional };
 
-        n.Children().IsExactly([new FhirString("id1"), new Code<Narrative.NarrativeStatus>(Narrative.NarrativeStatus.Additional), new FhirString("<p>bla</p>") ])
+        n.Children().ToList().IsExactly([new FhirString("id1"), new Code<Narrative.NarrativeStatus>(Narrative.NarrativeStatus.Additional), new FhirString("<p>bla</p>") ])
             .Should().BeTrue();
 
         var e = new Extension("http://nu.nl", new FhirBoolean(true));
-        e.Children().IsExactly([new FhirUri("http://nu.nl"), new FhirBoolean(true)]).Should().BeTrue();
+        e.Children().ToList().IsExactly([new FhirUri("http://nu.nl"), new FhirBoolean(true)]).Should().BeTrue();
     }
 
     [TestMethod]

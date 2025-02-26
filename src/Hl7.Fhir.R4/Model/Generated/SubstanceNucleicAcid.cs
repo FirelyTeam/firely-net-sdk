@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -74,13 +77,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("subunit", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer SubunitElement
+      public Hl7.Fhir.Model.Integer? SubunitElement
       {
         get { return _SubunitElement; }
         set { _SubunitElement = value; OnPropertyChanged("SubunitElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _SubunitElement;
+      private Hl7.Fhir.Model.Integer? _SubunitElement;
 
       /// <summary>
       /// Index of linear sequences of nucleic acids in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts
@@ -89,13 +92,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Subunit
       {
-        get { return SubunitElement != null ? SubunitElement.Value : null; }
+        get => _SubunitElement?.Value;
         set
         {
-          if (value == null)
-            SubunitElement = null;
-          else
-            SubunitElement = new Hl7.Fhir.Model.Integer(value);
+          SubunitElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Subunit");
         }
       }
@@ -105,28 +105,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("sequence", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString SequenceElement
+      public Hl7.Fhir.Model.FhirString? SequenceElement
       {
         get { return _SequenceElement; }
         set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _SequenceElement;
+      private Hl7.Fhir.Model.FhirString? _SequenceElement;
 
       /// <summary>
       /// Actual nucleotide sequence notation from 5' to 3' end using standard single letter codes. In addition to the base sequence, sugar and type of phosphate or non-phosphate linkage should also be captured
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Sequence
+      public string? Sequence
       {
-        get { return SequenceElement != null ? SequenceElement.Value : null; }
+        get => _SequenceElement?.Value;
         set
         {
-          if (value == null)
-            SequenceElement = null;
-          else
-            SequenceElement = new Hl7.Fhir.Model.FhirString(value);
+          SequenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Sequence");
         }
       }
@@ -136,13 +133,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("length", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer LengthElement
+      public Hl7.Fhir.Model.Integer? LengthElement
       {
         get { return _LengthElement; }
         set { _LengthElement = value; OnPropertyChanged("LengthElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _LengthElement;
+      private Hl7.Fhir.Model.Integer? _LengthElement;
 
       /// <summary>
       /// The length of the sequence shall be captured
@@ -151,13 +148,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Length
       {
-        get { return LengthElement != null ? LengthElement.Value : null; }
+        get => _LengthElement?.Value;
         set
         {
-          if (value == null)
-            LengthElement = null;
-          else
-            LengthElement = new Hl7.Fhir.Model.Integer(value);
+          LengthElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("Length");
         }
       }
@@ -167,39 +161,39 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("sequenceAttachment", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Attachment SequenceAttachment
+      public Hl7.Fhir.Model.Attachment? SequenceAttachment
       {
         get { return _SequenceAttachment; }
         set { _SequenceAttachment = value; OnPropertyChanged("SequenceAttachment"); }
       }
 
-      private Hl7.Fhir.Model.Attachment _SequenceAttachment;
+      private Hl7.Fhir.Model.Attachment? _SequenceAttachment;
 
       /// <summary>
       /// The nucleotide present at the 5’ terminal shall be specified based on a controlled vocabulary. Since the sequence is represented from the 5' to the 3' end, the 5’ prime nucleotide is the letter at the first position in the sequence. A separate representation would be redundant.
       /// </summary>
       [FhirElement("fivePrime", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept FivePrime
+      public Hl7.Fhir.Model.CodeableConcept? FivePrime
       {
         get { return _FivePrime; }
         set { _FivePrime = value; OnPropertyChanged("FivePrime"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _FivePrime;
+      private Hl7.Fhir.Model.CodeableConcept? _FivePrime;
 
       /// <summary>
       /// The nucleotide present at the 3’ terminal shall be specified based on a controlled vocabulary. Since the sequence is represented from the 5' to the 3' end, the 5’ prime nucleotide is the letter at the last position in the sequence. A separate representation would be redundant.
       /// </summary>
       [FhirElement("threePrime", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept ThreePrime
+      public Hl7.Fhir.Model.CodeableConcept? ThreePrime
       {
         get { return _ThreePrime; }
         set { _ThreePrime = value; OnPropertyChanged("ThreePrime"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _ThreePrime;
+      private Hl7.Fhir.Model.CodeableConcept? _ThreePrime;
 
       /// <summary>
       /// The linkages between sugar residues will also be captured.
@@ -209,11 +203,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent> Linkage
       {
-        get { if(_Linkage==null) _Linkage = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>(); return _Linkage; }
+        get => _Linkage ??= [];
         set { _Linkage = value; OnPropertyChanged("Linkage"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent> _Linkage;
+      private List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>? _Linkage;
 
       /// <summary>
       /// 5.3.6.8.1 Sugar ID (Mandatory).
@@ -223,30 +217,26 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent> Sugar
       {
-        get { if(_Sugar==null) _Sugar = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>(); return _Sugar; }
+        get => _Sugar ??= [];
         set { _Sugar = value; OnPropertyChanged("Sugar"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent> _Sugar;
+      private List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>? _Sugar;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SubunitComponent;
-
-        if (dest == null)
-        {
+        if(other is not SubunitComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(SubunitElement != null) dest.SubunitElement = (Hl7.Fhir.Model.Integer)SubunitElement.DeepCopyInternal();
-        if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)SequenceElement.DeepCopyInternal();
-        if(LengthElement != null) dest.LengthElement = (Hl7.Fhir.Model.Integer)LengthElement.DeepCopyInternal();
-        if(SequenceAttachment != null) dest.SequenceAttachment = (Hl7.Fhir.Model.Attachment)SequenceAttachment.DeepCopyInternal();
-        if(FivePrime != null) dest.FivePrime = (Hl7.Fhir.Model.CodeableConcept)FivePrime.DeepCopyInternal();
-        if(ThreePrime != null) dest.ThreePrime = (Hl7.Fhir.Model.CodeableConcept)ThreePrime.DeepCopyInternal();
-        if(Linkage.Any()) dest.Linkage = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>(Linkage.DeepCopyInternal());
-        if(Sugar.Any()) dest.Sugar = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>(Sugar.DeepCopyInternal());
+        if(_SubunitElement is not null) dest.SubunitElement = (Hl7.Fhir.Model.Integer)_SubunitElement.DeepCopyInternal();
+        if(_SequenceElement is not null) dest.SequenceElement = (Hl7.Fhir.Model.FhirString)_SequenceElement.DeepCopyInternal();
+        if(_LengthElement is not null) dest.LengthElement = (Hl7.Fhir.Model.Integer)_LengthElement.DeepCopyInternal();
+        if(_SequenceAttachment is not null) dest.SequenceAttachment = (Hl7.Fhir.Model.Attachment)_SequenceAttachment.DeepCopyInternal();
+        if(_FivePrime is not null) dest.FivePrime = (Hl7.Fhir.Model.CodeableConcept)_FivePrime.DeepCopyInternal();
+        if(_ThreePrime is not null) dest.ThreePrime = (Hl7.Fhir.Model.CodeableConcept)_ThreePrime.DeepCopyInternal();
+        if(_Linkage is not null) dest.Linkage = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>(_Linkage.DeepCopyInternal());
+        if(_Sugar is not null) dest.Sugar = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>(_Sugar.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -258,83 +248,84 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SubunitComponent;
-        if(otherT == null) return false;
+        if(other is not SubunitComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(SubunitElement, otherT.SubunitElement)) return false;
-        if(!comparer.Equals(SequenceElement, otherT.SequenceElement)) return false;
-        if(!comparer.Equals(LengthElement, otherT.LengthElement)) return false;
-        if(!comparer.Equals(SequenceAttachment, otherT.SequenceAttachment)) return false;
-        if(!comparer.Equals(FivePrime, otherT.FivePrime)) return false;
-        if(!comparer.Equals(ThreePrime, otherT.ThreePrime)) return false;
-        if(!comparer.ListEquals(Linkage, otherT.Linkage)) return false;
-        if(!comparer.ListEquals(Sugar, otherT.Sugar)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SubunitElement, otherT._SubunitElement)) return false;
+        if(!comparer.Equals(_SequenceElement, otherT._SequenceElement)) return false;
+        if(!comparer.Equals(_LengthElement, otherT._LengthElement)) return false;
+        if(!comparer.Equals(_SequenceAttachment, otherT._SequenceAttachment)) return false;
+        if(!comparer.Equals(_FivePrime, otherT._FivePrime)) return false;
+        if(!comparer.Equals(_ThreePrime, otherT._ThreePrime)) return false;
+        if(!comparer.ListEquals(_Linkage, otherT._Linkage)) return false;
+        if(!comparer.ListEquals(_Sugar, otherT._Sugar)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "subunit":
-            value = SubunitElement;
-            return SubunitElement is not null;
+            value = _SubunitElement;
+            return _SubunitElement is not null;
           case "sequence":
-            value = SequenceElement;
-            return SequenceElement is not null;
+            value = _SequenceElement;
+            return _SequenceElement is not null;
           case "length":
-            value = LengthElement;
-            return LengthElement is not null;
+            value = _LengthElement;
+            return _LengthElement is not null;
           case "sequenceAttachment":
-            value = SequenceAttachment;
-            return SequenceAttachment is not null;
+            value = _SequenceAttachment;
+            return _SequenceAttachment is not null;
           case "fivePrime":
-            value = FivePrime;
-            return FivePrime is not null;
+            value = _FivePrime;
+            return _FivePrime is not null;
           case "threePrime":
-            value = ThreePrime;
-            return ThreePrime is not null;
+            value = _ThreePrime;
+            return _ThreePrime is not null;
           case "linkage":
-            value = Linkage;
-            return Linkage?.Any() == true;
+            value = _Linkage;
+            return _Linkage?.Any() == true;
           case "sugar":
-            value = Sugar;
-            return Sugar?.Any() == true;
+            value = _Sugar;
+            return _Sugar?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "subunit":
-            SubunitElement = (Hl7.Fhir.Model.Integer)value;
+            SubunitElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "sequence":
-            SequenceElement = (Hl7.Fhir.Model.FhirString)value;
+            SequenceElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "length":
-            LengthElement = (Hl7.Fhir.Model.Integer)value;
+            LengthElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "sequenceAttachment":
-            SequenceAttachment = (Hl7.Fhir.Model.Attachment)value;
+            SequenceAttachment = (Hl7.Fhir.Model.Attachment?)value;
             return this;
           case "fivePrime":
-            FivePrime = (Hl7.Fhir.Model.CodeableConcept)value;
+            FivePrime = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "threePrime":
-            ThreePrime = (Hl7.Fhir.Model.CodeableConcept)value;
+            ThreePrime = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "linkage":
-            Linkage = (List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>)value;
+            Linkage = (List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>?)value!;
             return this;
           case "sugar":
-            Sugar = (List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>)value;
+            Sugar = (List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -345,14 +336,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",SubunitElement);
-        if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
-        if (LengthElement is not null) yield return new KeyValuePair<string,object>("length",LengthElement);
-        if (SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",SequenceAttachment);
-        if (FivePrime is not null) yield return new KeyValuePair<string,object>("fivePrime",FivePrime);
-        if (ThreePrime is not null) yield return new KeyValuePair<string,object>("threePrime",ThreePrime);
-        if (Linkage?.Any() == true) yield return new KeyValuePair<string,object>("linkage",Linkage);
-        if (Sugar?.Any() == true) yield return new KeyValuePair<string,object>("sugar",Sugar);
+        if (_SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",_SubunitElement);
+        if (_SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
+        if (_LengthElement is not null) yield return new KeyValuePair<string,object>("length",_LengthElement);
+        if (_SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",_SequenceAttachment);
+        if (_FivePrime is not null) yield return new KeyValuePair<string,object>("fivePrime",_FivePrime);
+        if (_ThreePrime is not null) yield return new KeyValuePair<string,object>("threePrime",_ThreePrime);
+        if (_Linkage?.Any() == true) yield return new KeyValuePair<string,object>("linkage",_Linkage);
+        if (_Sugar?.Any() == true) yield return new KeyValuePair<string,object>("sugar",_Sugar);
       }
 
     }
@@ -375,28 +366,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("connectivity", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ConnectivityElement
+      public Hl7.Fhir.Model.FhirString? ConnectivityElement
       {
         get { return _ConnectivityElement; }
         set { _ConnectivityElement = value; OnPropertyChanged("ConnectivityElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ConnectivityElement;
+      private Hl7.Fhir.Model.FhirString? _ConnectivityElement;
 
       /// <summary>
       /// The entity that links the sugar residues together should also be captured for nearly all naturally occurring nucleic acid the linkage is a phosphate group. For many synthetic oligonucleotides phosphorothioate linkages are often seen. Linkage connectivity is assumed to be 3’-5’. If the linkage is either 3’-3’ or 5’-5’ this should be specified
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Connectivity
+      public string? Connectivity
       {
-        get { return ConnectivityElement != null ? ConnectivityElement.Value : null; }
+        get => _ConnectivityElement?.Value;
         set
         {
-          if (value == null)
-            ConnectivityElement = null;
-          else
-            ConnectivityElement = new Hl7.Fhir.Model.FhirString(value);
+          ConnectivityElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Connectivity");
         }
       }
@@ -406,41 +394,38 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier Identifier
+      public Hl7.Fhir.Model.Identifier? Identifier
       {
         get { return _Identifier; }
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
-      private Hl7.Fhir.Model.Identifier _Identifier;
+      private Hl7.Fhir.Model.Identifier? _Identifier;
 
       /// <summary>
       /// Each linkage will be registered as a fragment and have at least one name. A single name shall be assigned to each linkage.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString NameElement
+      public Hl7.Fhir.Model.FhirString? NameElement
       {
         get { return _NameElement; }
         set { _NameElement = value; OnPropertyChanged("NameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _NameElement;
+      private Hl7.Fhir.Model.FhirString? _NameElement;
 
       /// <summary>
       /// Each linkage will be registered as a fragment and have at least one name. A single name shall be assigned to each linkage
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => _NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -450,46 +435,39 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("residueSite", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ResidueSiteElement
+      public Hl7.Fhir.Model.FhirString? ResidueSiteElement
       {
         get { return _ResidueSiteElement; }
         set { _ResidueSiteElement = value; OnPropertyChanged("ResidueSiteElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ResidueSiteElement;
+      private Hl7.Fhir.Model.FhirString? _ResidueSiteElement;
 
       /// <summary>
       /// Residues shall be captured as described in 5.3.6.8.3
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ResidueSite
+      public string? ResidueSite
       {
-        get { return ResidueSiteElement != null ? ResidueSiteElement.Value : null; }
+        get => _ResidueSiteElement?.Value;
         set
         {
-          if (value == null)
-            ResidueSiteElement = null;
-          else
-            ResidueSiteElement = new Hl7.Fhir.Model.FhirString(value);
+          ResidueSiteElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ResidueSite");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as LinkageComponent;
-
-        if (dest == null)
-        {
+        if(other is not LinkageComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(ConnectivityElement != null) dest.ConnectivityElement = (Hl7.Fhir.Model.FhirString)ConnectivityElement.DeepCopyInternal();
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-        if(ResidueSiteElement != null) dest.ResidueSiteElement = (Hl7.Fhir.Model.FhirString)ResidueSiteElement.DeepCopyInternal();
+        if(_ConnectivityElement is not null) dest.ConnectivityElement = (Hl7.Fhir.Model.FhirString)_ConnectivityElement.DeepCopyInternal();
+        if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_ResidueSiteElement is not null) dest.ResidueSiteElement = (Hl7.Fhir.Model.FhirString)_ResidueSiteElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -501,55 +479,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as LinkageComponent;
-        if(otherT == null) return false;
+        if(other is not LinkageComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(ConnectivityElement, otherT.ConnectivityElement)) return false;
-        if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-        if(!comparer.Equals(ResidueSiteElement, otherT.ResidueSiteElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_ConnectivityElement, otherT._ConnectivityElement)) return false;
+        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_ResidueSiteElement, otherT._ResidueSiteElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "connectivity":
-            value = ConnectivityElement;
-            return ConnectivityElement is not null;
+            value = _ConnectivityElement;
+            return _ConnectivityElement is not null;
           case "identifier":
-            value = Identifier;
-            return Identifier is not null;
+            value = _Identifier;
+            return _Identifier is not null;
           case "name":
-            value = NameElement;
-            return NameElement is not null;
+            value = _NameElement;
+            return _NameElement is not null;
           case "residueSite":
-            value = ResidueSiteElement;
-            return ResidueSiteElement is not null;
+            value = _ResidueSiteElement;
+            return _ResidueSiteElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "connectivity":
-            ConnectivityElement = (Hl7.Fhir.Model.FhirString)value;
+            ConnectivityElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "identifier":
-            Identifier = (Hl7.Fhir.Model.Identifier)value;
+            Identifier = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString)value;
+            NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "residueSite":
-            ResidueSiteElement = (Hl7.Fhir.Model.FhirString)value;
+            ResidueSiteElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -560,10 +539,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (ConnectivityElement is not null) yield return new KeyValuePair<string,object>("connectivity",ConnectivityElement);
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (ResidueSiteElement is not null) yield return new KeyValuePair<string,object>("residueSite",ResidueSiteElement);
+        if (_ConnectivityElement is not null) yield return new KeyValuePair<string,object>("connectivity",_ConnectivityElement);
+        if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_ResidueSiteElement is not null) yield return new KeyValuePair<string,object>("residueSite",_ResidueSiteElement);
       }
 
     }
@@ -586,41 +565,38 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier Identifier
+      public Hl7.Fhir.Model.Identifier? Identifier
       {
         get { return _Identifier; }
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
-      private Hl7.Fhir.Model.Identifier _Identifier;
+      private Hl7.Fhir.Model.Identifier? _Identifier;
 
       /// <summary>
       /// The name of the sugar or sugar-like component that make up the nucleotide.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString NameElement
+      public Hl7.Fhir.Model.FhirString? NameElement
       {
         get { return _NameElement; }
         set { _NameElement = value; OnPropertyChanged("NameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _NameElement;
+      private Hl7.Fhir.Model.FhirString? _NameElement;
 
       /// <summary>
       /// The name of the sugar or sugar-like component that make up the nucleotide
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => _NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -630,45 +606,38 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("residueSite", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ResidueSiteElement
+      public Hl7.Fhir.Model.FhirString? ResidueSiteElement
       {
         get { return _ResidueSiteElement; }
         set { _ResidueSiteElement = value; OnPropertyChanged("ResidueSiteElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ResidueSiteElement;
+      private Hl7.Fhir.Model.FhirString? _ResidueSiteElement;
 
       /// <summary>
       /// The residues that contain a given sugar will be captured. The order of given residues will be captured in the 5‘-3‘direction consistent with the base sequences listed above
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string ResidueSite
+      public string? ResidueSite
       {
-        get { return ResidueSiteElement != null ? ResidueSiteElement.Value : null; }
+        get => _ResidueSiteElement?.Value;
         set
         {
-          if (value == null)
-            ResidueSiteElement = null;
-          else
-            ResidueSiteElement = new Hl7.Fhir.Model.FhirString(value);
+          ResidueSiteElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("ResidueSite");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SugarComponent;
-
-        if (dest == null)
-        {
+        if(other is not SugarComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-        if(ResidueSiteElement != null) dest.ResidueSiteElement = (Hl7.Fhir.Model.FhirString)ResidueSiteElement.DeepCopyInternal();
+        if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_ResidueSiteElement is not null) dest.ResidueSiteElement = (Hl7.Fhir.Model.FhirString)_ResidueSiteElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -680,48 +649,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SugarComponent;
-        if(otherT == null) return false;
+        if(other is not SugarComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-        if(!comparer.Equals(ResidueSiteElement, otherT.ResidueSiteElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_ResidueSiteElement, otherT._ResidueSiteElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "identifier":
-            value = Identifier;
-            return Identifier is not null;
+            value = _Identifier;
+            return _Identifier is not null;
           case "name":
-            value = NameElement;
-            return NameElement is not null;
+            value = _NameElement;
+            return _NameElement is not null;
           case "residueSite":
-            value = ResidueSiteElement;
-            return ResidueSiteElement is not null;
+            value = _ResidueSiteElement;
+            return _ResidueSiteElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "identifier":
-            Identifier = (Hl7.Fhir.Model.Identifier)value;
+            Identifier = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString)value;
+            NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "residueSite":
-            ResidueSiteElement = (Hl7.Fhir.Model.FhirString)value;
+            ResidueSiteElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -732,9 +702,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (ResidueSiteElement is not null) yield return new KeyValuePair<string,object>("residueSite",ResidueSiteElement);
+        if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_ResidueSiteElement is not null) yield return new KeyValuePair<string,object>("residueSite",_ResidueSiteElement);
       }
 
     }
@@ -744,26 +714,26 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("sequenceType", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept SequenceType
+    public Hl7.Fhir.Model.CodeableConcept? SequenceType
     {
       get { return _SequenceType; }
       set { _SequenceType = value; OnPropertyChanged("SequenceType"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _SequenceType;
+    private Hl7.Fhir.Model.CodeableConcept? _SequenceType;
 
     /// <summary>
     /// The number of linear sequences of nucleotides linked through phosphodiester bonds shall be described. Subunits would be strands of nucleic acids that are tightly associated typically through Watson-Crick base pairing. NOTE: If not specified in the reference source, the assumption is that there is 1 subunit.
     /// </summary>
     [FhirElement("numberOfSubunits", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.Integer NumberOfSubunitsElement
+    public Hl7.Fhir.Model.Integer? NumberOfSubunitsElement
     {
       get { return _NumberOfSubunitsElement; }
       set { _NumberOfSubunitsElement = value; OnPropertyChanged("NumberOfSubunitsElement"); }
     }
 
-    private Hl7.Fhir.Model.Integer _NumberOfSubunitsElement;
+    private Hl7.Fhir.Model.Integer? _NumberOfSubunitsElement;
 
     /// <summary>
     /// The number of linear sequences of nucleotides linked through phosphodiester bonds shall be described. Subunits would be strands of nucleic acids that are tightly associated typically through Watson-Crick base pairing. NOTE: If not specified in the reference source, the assumption is that there is 1 subunit
@@ -772,13 +742,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? NumberOfSubunits
     {
-      get { return NumberOfSubunitsElement != null ? NumberOfSubunitsElement.Value : null; }
+      get => _NumberOfSubunitsElement?.Value;
       set
       {
-        if (value == null)
-          NumberOfSubunitsElement = null;
-        else
-          NumberOfSubunitsElement = new Hl7.Fhir.Model.Integer(value);
+        NumberOfSubunitsElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
         OnPropertyChanged("NumberOfSubunits");
       }
     }
@@ -788,28 +755,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("areaOfHybridisation", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString AreaOfHybridisationElement
+    public Hl7.Fhir.Model.FhirString? AreaOfHybridisationElement
     {
       get { return _AreaOfHybridisationElement; }
       set { _AreaOfHybridisationElement = value; OnPropertyChanged("AreaOfHybridisationElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _AreaOfHybridisationElement;
+    private Hl7.Fhir.Model.FhirString? _AreaOfHybridisationElement;
 
     /// <summary>
     /// The area of hybridisation shall be described if applicable for double stranded RNA or DNA. The number associated with the subunit followed by the number associated to the residue shall be specified in increasing order. The underscore “” shall be used as separator as follows: “Subunitnumber Residue”
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string AreaOfHybridisation
+    public string? AreaOfHybridisation
     {
-      get { return AreaOfHybridisationElement != null ? AreaOfHybridisationElement.Value : null; }
+      get => _AreaOfHybridisationElement?.Value;
       set
       {
-        if (value == null)
-          AreaOfHybridisationElement = null;
-        else
-          AreaOfHybridisationElement = new Hl7.Fhir.Model.FhirString(value);
+        AreaOfHybridisationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("AreaOfHybridisation");
       }
     }
@@ -819,13 +783,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("oligoNucleotideType", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept OligoNucleotideType
+    public Hl7.Fhir.Model.CodeableConcept? OligoNucleotideType
     {
       get { return _OligoNucleotideType; }
       set { _OligoNucleotideType = value; OnPropertyChanged("OligoNucleotideType"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _OligoNucleotideType;
+    private Hl7.Fhir.Model.CodeableConcept? _OligoNucleotideType;
 
     /// <summary>
     /// Subunits are listed in order of decreasing length; sequences of the same length will be ordered by molecular weight; subunits that have identical sequences will be repeated multiple times.
@@ -835,27 +799,23 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent> Subunit
     {
-      get { if(_Subunit==null) _Subunit = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>(); return _Subunit; }
+      get => _Subunit ??= [];
       set { _Subunit = value; OnPropertyChanged("Subunit"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent> _Subunit;
+    private List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>? _Subunit;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as SubstanceNucleicAcid;
-
-      if (dest == null)
-      {
+      if(other is not SubstanceNucleicAcid dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(SequenceType != null) dest.SequenceType = (Hl7.Fhir.Model.CodeableConcept)SequenceType.DeepCopyInternal();
-      if(NumberOfSubunitsElement != null) dest.NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)NumberOfSubunitsElement.DeepCopyInternal();
-      if(AreaOfHybridisationElement != null) dest.AreaOfHybridisationElement = (Hl7.Fhir.Model.FhirString)AreaOfHybridisationElement.DeepCopyInternal();
-      if(OligoNucleotideType != null) dest.OligoNucleotideType = (Hl7.Fhir.Model.CodeableConcept)OligoNucleotideType.DeepCopyInternal();
-      if(Subunit.Any()) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>(Subunit.DeepCopyInternal());
+      if(_SequenceType is not null) dest.SequenceType = (Hl7.Fhir.Model.CodeableConcept)_SequenceType.DeepCopyInternal();
+      if(_NumberOfSubunitsElement is not null) dest.NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)_NumberOfSubunitsElement.DeepCopyInternal();
+      if(_AreaOfHybridisationElement is not null) dest.AreaOfHybridisationElement = (Hl7.Fhir.Model.FhirString)_AreaOfHybridisationElement.DeepCopyInternal();
+      if(_OligoNucleotideType is not null) dest.OligoNucleotideType = (Hl7.Fhir.Model.CodeableConcept)_OligoNucleotideType.DeepCopyInternal();
+      if(_Subunit is not null) dest.Subunit = new List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>(_Subunit.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -867,62 +827,63 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as SubstanceNucleicAcid;
-      if(otherT == null) return false;
+      if(other is not SubstanceNucleicAcid otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(SequenceType, otherT.SequenceType)) return false;
-      if(!comparer.Equals(NumberOfSubunitsElement, otherT.NumberOfSubunitsElement)) return false;
-      if(!comparer.Equals(AreaOfHybridisationElement, otherT.AreaOfHybridisationElement)) return false;
-      if(!comparer.Equals(OligoNucleotideType, otherT.OligoNucleotideType)) return false;
-      if(!comparer.ListEquals(Subunit, otherT.Subunit)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_SequenceType, otherT._SequenceType)) return false;
+      if(!comparer.Equals(_NumberOfSubunitsElement, otherT._NumberOfSubunitsElement)) return false;
+      if(!comparer.Equals(_AreaOfHybridisationElement, otherT._AreaOfHybridisationElement)) return false;
+      if(!comparer.Equals(_OligoNucleotideType, otherT._OligoNucleotideType)) return false;
+      if(!comparer.ListEquals(_Subunit, otherT._Subunit)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "sequenceType":
-          value = SequenceType;
-          return SequenceType is not null;
+          value = _SequenceType;
+          return _SequenceType is not null;
         case "numberOfSubunits":
-          value = NumberOfSubunitsElement;
-          return NumberOfSubunitsElement is not null;
+          value = _NumberOfSubunitsElement;
+          return _NumberOfSubunitsElement is not null;
         case "areaOfHybridisation":
-          value = AreaOfHybridisationElement;
-          return AreaOfHybridisationElement is not null;
+          value = _AreaOfHybridisationElement;
+          return _AreaOfHybridisationElement is not null;
         case "oligoNucleotideType":
-          value = OligoNucleotideType;
-          return OligoNucleotideType is not null;
+          value = _OligoNucleotideType;
+          return _OligoNucleotideType is not null;
         case "subunit":
-          value = Subunit;
-          return Subunit?.Any() == true;
+          value = _Subunit;
+          return _Subunit?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "sequenceType":
-          SequenceType = (Hl7.Fhir.Model.CodeableConcept)value;
+          SequenceType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "numberOfSubunits":
-          NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer)value;
+          NumberOfSubunitsElement = (Hl7.Fhir.Model.Integer?)value;
           return this;
         case "areaOfHybridisation":
-          AreaOfHybridisationElement = (Hl7.Fhir.Model.FhirString)value;
+          AreaOfHybridisationElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "oligoNucleotideType":
-          OligoNucleotideType = (Hl7.Fhir.Model.CodeableConcept)value;
+          OligoNucleotideType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "subunit":
-          Subunit = (List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>)value;
+          Subunit = (List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -933,11 +894,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",SequenceType);
-      if (NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",NumberOfSubunitsElement);
-      if (AreaOfHybridisationElement is not null) yield return new KeyValuePair<string,object>("areaOfHybridisation",AreaOfHybridisationElement);
-      if (OligoNucleotideType is not null) yield return new KeyValuePair<string,object>("oligoNucleotideType",OligoNucleotideType);
-      if (Subunit?.Any() == true) yield return new KeyValuePair<string,object>("subunit",Subunit);
+      if (_SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",_SequenceType);
+      if (_NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",_NumberOfSubunitsElement);
+      if (_AreaOfHybridisationElement is not null) yield return new KeyValuePair<string,object>("areaOfHybridisation",_AreaOfHybridisationElement);
+      if (_OligoNucleotideType is not null) yield return new KeyValuePair<string,object>("oligoNucleotideType",_OligoNucleotideType);
+      if (_Subunit?.Any() == true) yield return new KeyValuePair<string,object>("subunit",_Subunit);
     }
 
   }

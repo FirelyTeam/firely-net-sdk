@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -274,13 +277,13 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Binding("DeviceMetricCalibrationType")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType> TypeElement
+      public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>? TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType> _TypeElement;
+      private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>? _TypeElement;
 
       /// <summary>
       /// unspecified | offset | gain | two-point
@@ -289,13 +292,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType? Type
       {
-        get { return TypeElement != null ? TypeElement.Value : null; }
+        get => _TypeElement?.Value;
         set
         {
-          if (value == null)
-            TypeElement = null;
-          else
-            TypeElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>(value);
+          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -307,13 +307,13 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Binding("DeviceMetricCalibrationState")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState> StateElement
+      public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>? StateElement
       {
         get { return _StateElement; }
         set { _StateElement = value; OnPropertyChanged("StateElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState> _StateElement;
+      private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>? _StateElement;
 
       /// <summary>
       /// not-calibrated | calibration-required | calibrated | unspecified
@@ -322,13 +322,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState? State
       {
-        get { return StateElement != null ? StateElement.Value : null; }
+        get => _StateElement?.Value;
         set
         {
-          if (value == null)
-            StateElement = null;
-          else
-            StateElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>(value);
+          StateElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>(value);
           OnPropertyChanged("State");
         }
       }
@@ -338,13 +335,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("time", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Instant TimeElement
+      public Hl7.Fhir.Model.Instant? TimeElement
       {
         get { return _TimeElement; }
         set { _TimeElement = value; OnPropertyChanged("TimeElement"); }
       }
 
-      private Hl7.Fhir.Model.Instant _TimeElement;
+      private Hl7.Fhir.Model.Instant? _TimeElement;
 
       /// <summary>
       /// Describes the time last calibration has been performed
@@ -353,30 +350,23 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public DateTimeOffset? Time
       {
-        get { return TimeElement != null ? TimeElement.Value : null; }
+        get => _TimeElement?.Value;
         set
         {
-          if (value == null)
-            TimeElement = null;
-          else
-            TimeElement = new Hl7.Fhir.Model.Instant(value);
+          TimeElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
           OnPropertyChanged("Time");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as CalibrationComponent;
-
-        if (dest == null)
-        {
+        if(other is not CalibrationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>)TypeElement.DeepCopyInternal();
-        if(StateElement != null) dest.StateElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>)StateElement.DeepCopyInternal();
-        if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.Instant)TimeElement.DeepCopyInternal();
+        if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>)_TypeElement.DeepCopyInternal();
+        if(_StateElement is not null) dest.StateElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>)_StateElement.DeepCopyInternal();
+        if(_TimeElement is not null) dest.TimeElement = (Hl7.Fhir.Model.Instant)_TimeElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -388,48 +378,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CalibrationComponent;
-        if(otherT == null) return false;
+        if(other is not CalibrationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-        if(!comparer.Equals(StateElement, otherT.StateElement)) return false;
-        if(!comparer.Equals(TimeElement, otherT.TimeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+        if(!comparer.Equals(_StateElement, otherT._StateElement)) return false;
+        if(!comparer.Equals(_TimeElement, otherT._TimeElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = TypeElement;
-            return TypeElement is not null;
+            value = _TypeElement;
+            return _TypeElement is not null;
           case "state":
-            value = StateElement;
-            return StateElement is not null;
+            value = _StateElement;
+            return _StateElement is not null;
           case "time":
-            value = TimeElement;
-            return TimeElement is not null;
+            value = _TimeElement;
+            return _TimeElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            TypeElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>)value;
+            TypeElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>?)value;
             return this;
           case "state":
-            StateElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>)value;
+            StateElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>?)value;
             return this;
           case "time":
-            TimeElement = (Hl7.Fhir.Model.Instant)value;
+            TimeElement = (Hl7.Fhir.Model.Instant?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -440,9 +431,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-        if (StateElement is not null) yield return new KeyValuePair<string,object>("state",StateElement);
-        if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
+        if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_StateElement is not null) yield return new KeyValuePair<string,object>("state",_StateElement);
+        if (_TimeElement is not null) yield return new KeyValuePair<string,object>("time",_TimeElement);
       }
 
     }
@@ -455,11 +446,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Identity of metric, for example Heart Rate or PEEP Setting.
@@ -468,13 +459,13 @@ namespace Hl7.Fhir.Model
     [Binding("MetricType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Type
+    public Hl7.Fhir.Model.CodeableConcept? Type
     {
       get { return _Type; }
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
     /// Unit of Measure for the Metric.
@@ -482,13 +473,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("unit", InSummary=true, Order=110)]
     [Binding("MetricUnit")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Unit
+    public Hl7.Fhir.Model.CodeableConcept? Unit
     {
       get { return _Unit; }
       set { _Unit = value; OnPropertyChanged("Unit"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Unit;
+    private Hl7.Fhir.Model.CodeableConcept? _Unit;
 
     /// <summary>
     /// Describes the link to the source Device.
@@ -497,13 +488,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Source
+    public Hl7.Fhir.Model.ResourceReference? Source
     {
       get { return _Source; }
       set { _Source = value; OnPropertyChanged("Source"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Source;
+    private Hl7.Fhir.Model.ResourceReference? _Source;
 
     /// <summary>
     /// Describes the link to the parent Device.
@@ -512,13 +503,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Parent
+    public Hl7.Fhir.Model.ResourceReference? Parent
     {
       get { return _Parent; }
       set { _Parent = value; OnPropertyChanged("Parent"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Parent;
+    private Hl7.Fhir.Model.ResourceReference? _Parent;
 
     /// <summary>
     /// on | off | standby | entered-in-error.
@@ -527,13 +518,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("DeviceMetricOperationalStatus")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus> OperationalStatusElement
+    public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>? OperationalStatusElement
     {
       get { return _OperationalStatusElement; }
       set { _OperationalStatusElement = value; OnPropertyChanged("OperationalStatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus> _OperationalStatusElement;
+    private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>? _OperationalStatusElement;
 
     /// <summary>
     /// on | off | standby | entered-in-error
@@ -542,13 +533,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus? OperationalStatus
     {
-      get { return OperationalStatusElement != null ? OperationalStatusElement.Value : null; }
+      get => _OperationalStatusElement?.Value;
       set
       {
-        if (value == null)
-          OperationalStatusElement = null;
-        else
-          OperationalStatusElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>(value);
+        OperationalStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>(value);
         OnPropertyChanged("OperationalStatus");
       }
     }
@@ -560,13 +548,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("DeviceMetricColor")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor> ColorElement
+    public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>? ColorElement
     {
       get { return _ColorElement; }
       set { _ColorElement = value; OnPropertyChanged("ColorElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor> _ColorElement;
+    private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>? _ColorElement;
 
     /// <summary>
     /// black | red | green | yellow | blue | magenta | cyan | white
@@ -575,13 +563,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor? Color
     {
-      get { return ColorElement != null ? ColorElement.Value : null; }
+      get => _ColorElement?.Value;
       set
       {
-        if (value == null)
-          ColorElement = null;
-        else
-          ColorElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>(value);
+        ColorElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>(value);
         OnPropertyChanged("Color");
       }
     }
@@ -594,13 +579,13 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceMetricCategory")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory> CategoryElement
+    public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>? CategoryElement
     {
       get { return _CategoryElement; }
       set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory> _CategoryElement;
+    private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>? _CategoryElement;
 
     /// <summary>
     /// measurement | setting | calculation | unspecified
@@ -609,13 +594,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory? Category
     {
-      get { return CategoryElement != null ? CategoryElement.Value : null; }
+      get => _CategoryElement?.Value;
       set
       {
-        if (value == null)
-          CategoryElement = null;
-        else
-          CategoryElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>(value);
+        CategoryElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>(value);
         OnPropertyChanged("Category");
       }
     }
@@ -625,13 +607,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("measurementPeriod", InSummary=true, Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.Timing MeasurementPeriod
+    public Hl7.Fhir.Model.Timing? MeasurementPeriod
     {
       get { return _MeasurementPeriod; }
       set { _MeasurementPeriod = value; OnPropertyChanged("MeasurementPeriod"); }
     }
 
-    private Hl7.Fhir.Model.Timing _MeasurementPeriod;
+    private Hl7.Fhir.Model.Timing? _MeasurementPeriod;
 
     /// <summary>
     /// Describes the calibrations that have been performed or that are required to be performed.
@@ -641,34 +623,30 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> Calibration
     {
-      get { if(_Calibration==null) _Calibration = new List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>(); return _Calibration; }
+      get => _Calibration ??= [];
       set { _Calibration = value; OnPropertyChanged("Calibration"); }
     }
 
-    private List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> _Calibration;
+    private List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>? _Calibration;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as DeviceMetric;
-
-      if (dest == null)
-      {
+      if(other is not DeviceMetric dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-      if(Unit != null) dest.Unit = (Hl7.Fhir.Model.CodeableConcept)Unit.DeepCopyInternal();
-      if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopyInternal();
-      if(Parent != null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)Parent.DeepCopyInternal();
-      if(OperationalStatusElement != null) dest.OperationalStatusElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>)OperationalStatusElement.DeepCopyInternal();
-      if(ColorElement != null) dest.ColorElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>)ColorElement.DeepCopyInternal();
-      if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>)CategoryElement.DeepCopyInternal();
-      if(MeasurementPeriod != null) dest.MeasurementPeriod = (Hl7.Fhir.Model.Timing)MeasurementPeriod.DeepCopyInternal();
-      if(Calibration.Any()) dest.Calibration = new List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>(Calibration.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_Unit is not null) dest.Unit = (Hl7.Fhir.Model.CodeableConcept)_Unit.DeepCopyInternal();
+      if(_Source is not null) dest.Source = (Hl7.Fhir.Model.ResourceReference)_Source.DeepCopyInternal();
+      if(_Parent is not null) dest.Parent = (Hl7.Fhir.Model.ResourceReference)_Parent.DeepCopyInternal();
+      if(_OperationalStatusElement is not null) dest.OperationalStatusElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>)_OperationalStatusElement.DeepCopyInternal();
+      if(_ColorElement is not null) dest.ColorElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>)_ColorElement.DeepCopyInternal();
+      if(_CategoryElement is not null) dest.CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>)_CategoryElement.DeepCopyInternal();
+      if(_MeasurementPeriod is not null) dest.MeasurementPeriod = (Hl7.Fhir.Model.Timing)_MeasurementPeriod.DeepCopyInternal();
+      if(_Calibration is not null) dest.Calibration = new List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>(_Calibration.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -680,97 +658,98 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as DeviceMetric;
-      if(otherT == null) return false;
+      if(other is not DeviceMetric otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(Type, otherT.Type)) return false;
-      if(!comparer.Equals(Unit, otherT.Unit)) return false;
-      if(!comparer.Equals(Source, otherT.Source)) return false;
-      if(!comparer.Equals(Parent, otherT.Parent)) return false;
-      if(!comparer.Equals(OperationalStatusElement, otherT.OperationalStatusElement)) return false;
-      if(!comparer.Equals(ColorElement, otherT.ColorElement)) return false;
-      if(!comparer.Equals(CategoryElement, otherT.CategoryElement)) return false;
-      if(!comparer.Equals(MeasurementPeriod, otherT.MeasurementPeriod)) return false;
-      if(!comparer.ListEquals(Calibration, otherT.Calibration)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_Unit, otherT._Unit)) return false;
+      if(!comparer.Equals(_Source, otherT._Source)) return false;
+      if(!comparer.Equals(_Parent, otherT._Parent)) return false;
+      if(!comparer.Equals(_OperationalStatusElement, otherT._OperationalStatusElement)) return false;
+      if(!comparer.Equals(_ColorElement, otherT._ColorElement)) return false;
+      if(!comparer.Equals(_CategoryElement, otherT._CategoryElement)) return false;
+      if(!comparer.Equals(_MeasurementPeriod, otherT._MeasurementPeriod)) return false;
+      if(!comparer.ListEquals(_Calibration, otherT._Calibration)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "type":
-          value = Type;
-          return Type is not null;
+          value = _Type;
+          return _Type is not null;
         case "unit":
-          value = Unit;
-          return Unit is not null;
+          value = _Unit;
+          return _Unit is not null;
         case "source":
-          value = Source;
-          return Source is not null;
+          value = _Source;
+          return _Source is not null;
         case "parent":
-          value = Parent;
-          return Parent is not null;
+          value = _Parent;
+          return _Parent is not null;
         case "operationalStatus":
-          value = OperationalStatusElement;
-          return OperationalStatusElement is not null;
+          value = _OperationalStatusElement;
+          return _OperationalStatusElement is not null;
         case "color":
-          value = ColorElement;
-          return ColorElement is not null;
+          value = _ColorElement;
+          return _ColorElement is not null;
         case "category":
-          value = CategoryElement;
-          return CategoryElement is not null;
+          value = _CategoryElement;
+          return _CategoryElement is not null;
         case "measurementPeriod":
-          value = MeasurementPeriod;
-          return MeasurementPeriod is not null;
+          value = _MeasurementPeriod;
+          return _MeasurementPeriod is not null;
         case "calibration":
-          value = Calibration;
-          return Calibration?.Any() == true;
+          value = _Calibration;
+          return _Calibration?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept)value;
+          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "unit":
-          Unit = (Hl7.Fhir.Model.CodeableConcept)value;
+          Unit = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "source":
-          Source = (Hl7.Fhir.Model.ResourceReference)value;
+          Source = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "parent":
-          Parent = (Hl7.Fhir.Model.ResourceReference)value;
+          Parent = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "operationalStatus":
-          OperationalStatusElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>)value;
+          OperationalStatusElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>?)value;
           return this;
         case "color":
-          ColorElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>)value;
+          ColorElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>?)value;
           return this;
         case "category":
-          CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>)value;
+          CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>?)value;
           return this;
         case "measurementPeriod":
-          MeasurementPeriod = (Hl7.Fhir.Model.Timing)value;
+          MeasurementPeriod = (Hl7.Fhir.Model.Timing?)value;
           return this;
         case "calibration":
-          Calibration = (List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>)value;
+          Calibration = (List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -781,16 +760,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Unit is not null) yield return new KeyValuePair<string,object>("unit",Unit);
-      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-      if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
-      if (OperationalStatusElement is not null) yield return new KeyValuePair<string,object>("operationalStatus",OperationalStatusElement);
-      if (ColorElement is not null) yield return new KeyValuePair<string,object>("color",ColorElement);
-      if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
-      if (MeasurementPeriod is not null) yield return new KeyValuePair<string,object>("measurementPeriod",MeasurementPeriod);
-      if (Calibration?.Any() == true) yield return new KeyValuePair<string,object>("calibration",Calibration);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Unit is not null) yield return new KeyValuePair<string,object>("unit",_Unit);
+      if (_Source is not null) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_Parent is not null) yield return new KeyValuePair<string,object>("parent",_Parent);
+      if (_OperationalStatusElement is not null) yield return new KeyValuePair<string,object>("operationalStatus",_OperationalStatusElement);
+      if (_ColorElement is not null) yield return new KeyValuePair<string,object>("color",_ColorElement);
+      if (_CategoryElement is not null) yield return new KeyValuePair<string,object>("category",_CategoryElement);
+      if (_MeasurementPeriod is not null) yield return new KeyValuePair<string,object>("measurementPeriod",_MeasurementPeriod);
+      if (_Calibration?.Any() == true) yield return new KeyValuePair<string,object>("calibration",_Calibration);
     }
 
   }
