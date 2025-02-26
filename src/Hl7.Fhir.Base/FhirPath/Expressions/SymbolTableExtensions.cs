@@ -68,7 +68,7 @@ public static class SymbolTableExtensions
         table.AddVar(name, ElementNode.ForPrimitive(value));
     }
 
-    public static void AddVar(this SymbolTable table, string name, ITypedElement value)
+    public static void AddVar(this SymbolTable table, string name, PocoNode value)
     {
         table.Add(new CallSignature(name, typeof(string)), InvokeeFactory.Return(value));
     }
