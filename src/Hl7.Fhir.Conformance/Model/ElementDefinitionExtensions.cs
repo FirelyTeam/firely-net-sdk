@@ -267,12 +267,13 @@ namespace Hl7.Fhir.Model
         /// Returns the profiles on the given <see cref="ElementDefinition.TypeRefComponent"/> if specified, 
         /// or otherwise the core profile url for the specified type code.
         /// </summary>
-        public static IEnumerable<string?>? GetTypeProfiles(this ElementDefinition.TypeRefComponent elemType)
-        {
-            if(elemType.Profile.Any()) return elemType.Profile;
-
-            return elemType.Code is not null ? [Canonical.ForCoreType(elemType.Code).Value] : null;
-        }
+        public static IEnumerable<string?>? GetTypeProfiles(this ElementDefinition.TypeRefComponent elemType) =>
+            elemType switch
+            {
+                { ProfileElement.Count: > 0 } => elemType.Profile,
+                { Code: not null } => [Canonical.ForCoreType(elemType.Code).Value],
+                _ => null
+            };
 
         /// <summary>
         /// Determines if the specified element definition represents a <see cref="ResourceReference"/>.

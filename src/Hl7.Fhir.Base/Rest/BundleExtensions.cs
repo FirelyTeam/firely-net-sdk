@@ -32,11 +32,8 @@ namespace Hl7.Fhir.Rest
 
             foreach (var entry in result.Entry)
             {
-                if (entry.Resource != null)
-                {
-                    var url = entry.FullUrl ?? throw new InvalidOperationException("Entry has no FullUrl.");
+                if (entry is { Resource: not null, FullUrl: {} url })
                     entry.Resource = await client.ReadAsync<Resource>(url).ConfigureAwait(false);
-                }
             }
 
             return result;

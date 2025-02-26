@@ -53,8 +53,8 @@ namespace Hl7.Fhir.Rest
                 .Where(p => p.Name is not null && p.Value is not null)
                 .Select(p =>
                     new KeyValuePair<string, string>(
-                        p.Name ?? throw new ArgumentException("Parameter should have a name.", nameof(pars)),
-                        p.Value?.ToString() ?? throw new ArgumentException("Parameter should have a value.", nameof(pars))))
+                        p.Name!,
+                        p.Value!.ToString()!))
                 .ToList();
 
             var content = new FormUrlEncodedContent(bodyParameters);
