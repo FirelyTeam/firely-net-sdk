@@ -55,6 +55,9 @@ public partial class Code : ICoded
             ? new P.Code(system: null, code: Value, display: null, version: null)
             : null;
 
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
     protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
         ObjectValue switch
         {

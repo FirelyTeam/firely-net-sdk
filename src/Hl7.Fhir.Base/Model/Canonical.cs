@@ -95,6 +95,9 @@ public partial class Canonical
     /// <param name="value"></param>
     public static implicit operator string?(Canonical? value) => value?.Value;
 
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
     protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
         ObjectValue switch
         {

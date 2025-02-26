@@ -90,6 +90,9 @@ public partial class FhirDateTime
     [NonSerialized]  // To prevent binary serialization from serializing this field
     private P.DateTime? _parsedValue = null;
 
+    /// <summary>
+    /// Validates the JsonValue and updates the internal cached DateTime value.
+    /// </summary>
     protected internal override COVE? ValidateObjectValue(ValidationContext? context)
     {
         if (_parsedValue is not null || base.ObjectValue is null) return null;

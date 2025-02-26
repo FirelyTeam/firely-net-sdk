@@ -55,6 +55,9 @@ public partial class Uuid
     /// </summary>
     public FhirUri AsUri() => new(Value);
 
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
     protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
         ObjectValue switch
         {

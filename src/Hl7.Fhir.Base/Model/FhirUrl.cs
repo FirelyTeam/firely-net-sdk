@@ -43,6 +43,9 @@ public partial class FhirUrl
         Value = uri.OriginalString;
     }
 
+    /// <summary>
+    /// Validates the JsonValue.
+    /// </summary>
     protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
         ObjectValue switch
         {
