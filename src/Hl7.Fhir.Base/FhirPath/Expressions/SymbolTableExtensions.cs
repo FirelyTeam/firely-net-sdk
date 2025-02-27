@@ -65,7 +65,7 @@ public static class SymbolTableExtensions
 
     public static void AddVar(this SymbolTable table, string name, object value)
     {
-        table.AddVar(name, ElementNode.ForPrimitive(value));
+        table.AddVar(name, PocoNode.ForAnyPrimitive(value));
     }
 
     public static void AddVar(this SymbolTable table, string name, PocoNode value)
