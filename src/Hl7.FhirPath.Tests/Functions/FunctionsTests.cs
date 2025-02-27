@@ -589,14 +589,14 @@ namespace HL7.FhirPath.Tests
 
         public static IEnumerable<object[]> EmptyDecimalValueTestcases() =>
             new[]{
-                //"round()",
+                "round()",
                 "toBoolean()"
             }.Select(e => new object[] { e, typeof(FhirDecimal) });
 
         public static IEnumerable<object[]> EmptyValueTestcases() => EmptyStringValueTestcases().Union(EmptyDecimalValueTestcases());
 
         [DataTestMethod]
-        [DynamicData(nameof(EmptyDecimalValueTestcases), DynamicDataSourceType.Method)]
+        [DynamicData(nameof(EmptyValueTestcases), DynamicDataSourceType.Method)]
         public void AssertEmptyValueTestcases(string expression, Type data)
         {
             // Create a primitive with no value, just an extension

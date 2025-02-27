@@ -22,7 +22,7 @@ namespace Hl7.FhirPath.Functions
         /// </summary>
         /// <param name="focus"></param>
         /// <returns></returns>
-        public static bool? ToBoolean(this Any focus) =>
+        public static bool? ToBoolean(this Any focus) => 
             focus.TryConvertTo<Boolean>(out var result) ? result.Value : null;
 
         /// <summary>
