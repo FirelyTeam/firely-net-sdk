@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<!-- https://learn.microsoft.com/en-us/dotnet/fundamentals/package-validation/diagnostic-ids -->
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
@@ -1025,6 +1025,20 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.CodedExtensions.ToCodings(Hl7.Fhir.Model.DataType)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.CodedExtensions.ToCodings(System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.DataType})</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.Date.op_Equality(Hl7.Fhir.Model.Date,Hl7.Fhir.Model.Date)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -1075,6 +1089,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.Date.TryToDate(Hl7.Fhir.ElementModel.Types.Date@)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ExactMatchEqualityComparer.GetHashCode(System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base})</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -1145,6 +1166,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.FhirDecimal.IsValidValue(System.String)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ICoded.ToCodings</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -1236,6 +1264,34 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.IScopedNode.TryResolveLocalReference(System.String,Hl7.Fhir.Model.IScopedNode@)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PatternMatchEqualityComparer.GetHashCode(System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base})</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PocoEqualityComparisons.IsExactly(System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base},System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base})</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PocoEqualityComparisons.ListEquals``1(System.Collections.Generic.IEqualityComparer{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PocoEqualityComparisons.Matches(System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base},System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base})</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -2943,6 +2999,20 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.CodedExtensions.ToCodings(Hl7.Fhir.Model.DataType)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.CodedExtensions.ToCodings(System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.DataType})</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.Date.op_Equality(Hl7.Fhir.Model.Date,Hl7.Fhir.Model.Date)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
@@ -2993,6 +3063,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.Date.TryToDate(Hl7.Fhir.ElementModel.Types.Date@)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ExactMatchEqualityComparer.GetHashCode(System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base})</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -3063,6 +3140,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.FhirDecimal.IsValidValue(System.String)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ICoded.ToCodings</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -3154,6 +3238,34 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Model.IScopedNode.TryResolveLocalReference(System.String,Hl7.Fhir.Model.IScopedNode@)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PatternMatchEqualityComparer.GetHashCode(System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base})</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PocoEqualityComparisons.IsExactly(System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base},System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base})</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PocoEqualityComparisons.ListEquals``1(System.Collections.Generic.IEqualityComparer{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.PocoEqualityComparisons.Matches(System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base},System.Collections.Generic.IEnumerable{Hl7.Fhir.Model.Base})</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -4385,9 +4497,23 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0006</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ICoded.ToCodings</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0006</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.IDeserializationValidator.ValidateInstance(Hl7.Fhir.Model.Base,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0006</DiagnosticId>
+    <Target>M:Hl7.Fhir.Model.ICoded.ToCodings</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
@@ -4686,6 +4812,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Hl7.Fhir.Model.ExactMatchEqualityComparer</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
     <Target>T:Hl7.Fhir.Model.Extension</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -4827,6 +4960,13 @@
   <Suppression>
     <DiagnosticId>CP0008</DiagnosticId>
     <Target>T:Hl7.Fhir.Model.Parameters.ParameterComponent</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Hl7.Fhir.Model.PatternMatchEqualityComparer</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -5211,6 +5351,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Hl7.Fhir.Model.ExactMatchEqualityComparer</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
     <Target>T:Hl7.Fhir.Model.Extension</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
@@ -5352,6 +5499,13 @@
   <Suppression>
     <DiagnosticId>CP0008</DiagnosticId>
     <Target>T:Hl7.Fhir.Model.Parameters.ParameterComponent</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0008</DiagnosticId>
+    <Target>T:Hl7.Fhir.Model.PatternMatchEqualityComparer</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

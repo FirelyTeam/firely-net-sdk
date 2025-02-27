@@ -74,5 +74,5 @@ public partial class Code : ICoded
     public static bool IsValidValue(string value) => Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
 
     /// <inheritdoc cref="ICoded.ToCodings"/>
-    public virtual IEnumerable<Coding> ToCodings() => [new(system: null, code: Value)];
+    public virtual IReadOnlyCollection<Coding> ToCodings() => [new(system: null, code: Value)];
 }

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -132,54 +135,51 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Location")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Location
+      public Hl7.Fhir.Model.ResourceReference? Location
       {
         get { return _Location; }
         set { _Location = value; OnPropertyChanged("Location"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Location;
+      private Hl7.Fhir.Model.ResourceReference? _Location;
 
       /// <summary>
       /// The status of the items that are being reported.
       /// </summary>
       [FhirElement("itemStatus", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept ItemStatus
+      public Hl7.Fhir.Model.CodeableConcept? ItemStatus
       {
         get { return _ItemStatus; }
         set { _ItemStatus = value; OnPropertyChanged("ItemStatus"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _ItemStatus;
+      private Hl7.Fhir.Model.CodeableConcept? _ItemStatus;
 
       /// <summary>
       /// The date and time when the items were counted.
       /// </summary>
       [FhirElement("countingDateTime", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime CountingDateTimeElement
+      public Hl7.Fhir.Model.FhirDateTime? CountingDateTimeElement
       {
         get { return _CountingDateTimeElement; }
         set { _CountingDateTimeElement = value; OnPropertyChanged("CountingDateTimeElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDateTime _CountingDateTimeElement;
+      private Hl7.Fhir.Model.FhirDateTime? _CountingDateTimeElement;
 
       /// <summary>
       /// The date and time when the items were counted
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string CountingDateTime
+      public string? CountingDateTime
       {
-        get { return CountingDateTimeElement != null ? CountingDateTimeElement.Value : null; }
+        get => _CountingDateTimeElement?.Value;
         set
         {
-          if (value == null)
-            CountingDateTimeElement = null;
-          else
-            CountingDateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+          CountingDateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("CountingDateTime");
         }
       }
@@ -192,26 +192,22 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.InventoryReport.ItemComponent> Item
       {
-        get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>(); return _Item; }
+        get => _Item ??= [];
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private List<Hl7.Fhir.Model.InventoryReport.ItemComponent> _Item;
+      private List<Hl7.Fhir.Model.InventoryReport.ItemComponent>? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as InventoryListingComponent;
-
-        if (dest == null)
-        {
+        if(other is not InventoryListingComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
-        if(ItemStatus != null) dest.ItemStatus = (Hl7.Fhir.Model.CodeableConcept)ItemStatus.DeepCopyInternal();
-        if(CountingDateTimeElement != null) dest.CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)CountingDateTimeElement.DeepCopyInternal();
-        if(Item.Any()) dest.Item = new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>(Item.DeepCopyInternal());
+        if(_Location is not null) dest.Location = (Hl7.Fhir.Model.ResourceReference)_Location.DeepCopyInternal();
+        if(_ItemStatus is not null) dest.ItemStatus = (Hl7.Fhir.Model.CodeableConcept)_ItemStatus.DeepCopyInternal();
+        if(_CountingDateTimeElement is not null) dest.CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)_CountingDateTimeElement.DeepCopyInternal();
+        if(_Item is not null) dest.Item = new List<Hl7.Fhir.Model.InventoryReport.ItemComponent>(_Item.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -223,55 +219,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as InventoryListingComponent;
-        if(otherT == null) return false;
+        if(other is not InventoryListingComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Location, otherT.Location)) return false;
-        if(!comparer.Equals(ItemStatus, otherT.ItemStatus)) return false;
-        if(!comparer.Equals(CountingDateTimeElement, otherT.CountingDateTimeElement)) return false;
-        if(!comparer.ListEquals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Location, otherT._Location)) return false;
+        if(!comparer.Equals(_ItemStatus, otherT._ItemStatus)) return false;
+        if(!comparer.Equals(_CountingDateTimeElement, otherT._CountingDateTimeElement)) return false;
+        if(!comparer.ListEquals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "location":
-            value = Location;
-            return Location is not null;
+            value = _Location;
+            return _Location is not null;
           case "itemStatus":
-            value = ItemStatus;
-            return ItemStatus is not null;
+            value = _ItemStatus;
+            return _ItemStatus is not null;
           case "countingDateTime":
-            value = CountingDateTimeElement;
-            return CountingDateTimeElement is not null;
+            value = _CountingDateTimeElement;
+            return _CountingDateTimeElement is not null;
           case "item":
-            value = Item;
-            return Item?.Any() == true;
+            value = _Item;
+            return _Item?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "location":
-            Location = (Hl7.Fhir.Model.ResourceReference)value;
+            Location = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "itemStatus":
-            ItemStatus = (Hl7.Fhir.Model.CodeableConcept)value;
+            ItemStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "countingDateTime":
-            CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)value;
+            CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           case "item":
-            Item = (List<Hl7.Fhir.Model.InventoryReport.ItemComponent>)value;
+            Item = (List<Hl7.Fhir.Model.InventoryReport.ItemComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -282,10 +279,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-        if (ItemStatus is not null) yield return new KeyValuePair<string,object>("itemStatus",ItemStatus);
-        if (CountingDateTimeElement is not null) yield return new KeyValuePair<string,object>("countingDateTime",CountingDateTimeElement);
-        if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+        if (_Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
+        if (_ItemStatus is not null) yield return new KeyValuePair<string,object>("itemStatus",_ItemStatus);
+        if (_CountingDateTimeElement is not null) yield return new KeyValuePair<string,object>("countingDateTime",_CountingDateTimeElement);
+        if (_Item?.Any() == true) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -308,13 +305,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("category", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Category
+      public Hl7.Fhir.Model.CodeableConcept? Category
       {
         get { return _Category; }
         set { _Category = value; OnPropertyChanged("Category"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Category;
+      private Hl7.Fhir.Model.CodeableConcept? _Category;
 
       /// <summary>
       /// The quantity of the item or items being reported.
@@ -322,13 +319,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("quantity", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Quantity
+      public Hl7.Fhir.Model.Quantity? Quantity
       {
         get { return _Quantity; }
         set { _Quantity = value; OnPropertyChanged("Quantity"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Quantity;
+      private Hl7.Fhir.Model.Quantity? _Quantity;
 
       /// <summary>
       /// The code or reference to the item type.
@@ -336,27 +333,23 @@ namespace Hl7.Fhir.Model
       [FhirElement("item", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference Item
+      public Hl7.Fhir.Model.CodeableReference? Item
       {
         get { return _Item; }
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _Item;
+      private Hl7.Fhir.Model.CodeableReference? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ItemComponent;
-
-        if (dest == null)
-        {
+        if(other is not ItemComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopyInternal();
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
-        if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableReference)Item.DeepCopyInternal();
+        if(_Category is not null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)_Category.DeepCopyInternal();
+        if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
+        if(_Item is not null) dest.Item = (Hl7.Fhir.Model.CodeableReference)_Item.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -368,48 +361,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ItemComponent;
-        if(otherT == null) return false;
+        if(other is not ItemComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Category, otherT.Category)) return false;
-        if(!comparer.Equals(Quantity, otherT.Quantity)) return false;
-        if(!comparer.Equals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Category, otherT._Category)) return false;
+        if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+        if(!comparer.Equals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "category":
-            value = Category;
-            return Category is not null;
+            value = _Category;
+            return _Category is not null;
           case "quantity":
-            value = Quantity;
-            return Quantity is not null;
+            value = _Quantity;
+            return _Quantity is not null;
           case "item":
-            value = Item;
-            return Item is not null;
+            value = _Item;
+            return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "category":
-            Category = (Hl7.Fhir.Model.CodeableConcept)value;
+            Category = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity)value;
+            Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "item":
-            Item = (Hl7.Fhir.Model.CodeableReference)value;
+            Item = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -420,9 +414,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (_Category is not null) yield return new KeyValuePair<string,object>("category",_Category);
+        if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -435,11 +429,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// draft | requested | active | entered-in-error.
@@ -449,13 +443,13 @@ namespace Hl7.Fhir.Model
     [Binding("InventoryReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus> StatusElement
+    public Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>? _StatusElement;
 
     /// <summary>
     /// draft | requested | active | entered-in-error
@@ -464,13 +458,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.InventoryReport.InventoryReportStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -483,13 +474,13 @@ namespace Hl7.Fhir.Model
     [Binding("InventoryCountType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType> CountTypeElement
+    public Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>? CountTypeElement
     {
       get { return _CountTypeElement; }
       set { _CountTypeElement = value; OnPropertyChanged("CountTypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType> _CountTypeElement;
+    private Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>? _CountTypeElement;
 
     /// <summary>
     /// snapshot | difference
@@ -498,13 +489,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.InventoryReport.InventoryCountType? CountType
     {
-      get { return CountTypeElement != null ? CountTypeElement.Value : null; }
+      get => _CountTypeElement?.Value;
       set
       {
-        if (value == null)
-          CountTypeElement = null;
-        else
-          CountTypeElement = new Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>(value);
+        CountTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>(value);
         OnPropertyChanged("CountType");
       }
     }
@@ -514,26 +502,26 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("operationType", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept OperationType
+    public Hl7.Fhir.Model.CodeableConcept? OperationType
     {
       get { return _OperationType; }
       set { _OperationType = value; OnPropertyChanged("OperationType"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _OperationType;
+    private Hl7.Fhir.Model.CodeableConcept? _OperationType;
 
     /// <summary>
     /// The reason for this count - regular count, ad-hoc count, new arrivals, etc.
     /// </summary>
     [FhirElement("operationTypeReason", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept OperationTypeReason
+    public Hl7.Fhir.Model.CodeableConcept? OperationTypeReason
     {
       get { return _OperationTypeReason; }
       set { _OperationTypeReason = value; OnPropertyChanged("OperationTypeReason"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _OperationTypeReason;
+    private Hl7.Fhir.Model.CodeableConcept? _OperationTypeReason;
 
     /// <summary>
     /// When the report has been submitted.
@@ -541,28 +529,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("reportedDateTime", InSummary=true, Order=140)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime ReportedDateTimeElement
+    public Hl7.Fhir.Model.FhirDateTime? ReportedDateTimeElement
     {
       get { return _ReportedDateTimeElement; }
       set { _ReportedDateTimeElement = value; OnPropertyChanged("ReportedDateTimeElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _ReportedDateTimeElement;
+    private Hl7.Fhir.Model.FhirDateTime? _ReportedDateTimeElement;
 
     /// <summary>
     /// When the report has been submitted
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ReportedDateTime
+    public string? ReportedDateTime
     {
-      get { return ReportedDateTimeElement != null ? ReportedDateTimeElement.Value : null; }
+      get => _ReportedDateTimeElement?.Value;
       set
       {
-        if (value == null)
-          ReportedDateTimeElement = null;
-        else
-          ReportedDateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        ReportedDateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("ReportedDateTime");
       }
     }
@@ -574,26 +559,26 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","Patient","RelatedPerson","Device")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Reporter
+    public Hl7.Fhir.Model.ResourceReference? Reporter
     {
       get { return _Reporter; }
       set { _Reporter = value; OnPropertyChanged("Reporter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Reporter;
+    private Hl7.Fhir.Model.ResourceReference? _Reporter;
 
     /// <summary>
     /// The period the report refers to.
     /// </summary>
     [FhirElement("reportingPeriod", Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Period ReportingPeriod
+    public Hl7.Fhir.Model.Period? ReportingPeriod
     {
       get { return _ReportingPeriod; }
       set { _ReportingPeriod = value; OnPropertyChanged("ReportingPeriod"); }
     }
 
-    private Hl7.Fhir.Model.Period _ReportingPeriod;
+    private Hl7.Fhir.Model.Period? _ReportingPeriod;
 
     /// <summary>
     /// An inventory listing section (grouped by any of the attributes).
@@ -603,11 +588,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent> InventoryListing
     {
-      get { if(_InventoryListing==null) _InventoryListing = new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>(); return _InventoryListing; }
+      get => _InventoryListing ??= [];
       set { _InventoryListing = value; OnPropertyChanged("InventoryListing"); }
     }
 
-    private List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent> _InventoryListing;
+    private List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>? _InventoryListing;
 
     /// <summary>
     /// A note associated with the InventoryReport.
@@ -617,34 +602,30 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as InventoryReport;
-
-      if (dest == null)
-      {
+      if(other is not InventoryReport dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>)StatusElement.DeepCopyInternal();
-      if(CountTypeElement != null) dest.CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>)CountTypeElement.DeepCopyInternal();
-      if(OperationType != null) dest.OperationType = (Hl7.Fhir.Model.CodeableConcept)OperationType.DeepCopyInternal();
-      if(OperationTypeReason != null) dest.OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept)OperationTypeReason.DeepCopyInternal();
-      if(ReportedDateTimeElement != null) dest.ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)ReportedDateTimeElement.DeepCopyInternal();
-      if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopyInternal();
-      if(ReportingPeriod != null) dest.ReportingPeriod = (Hl7.Fhir.Model.Period)ReportingPeriod.DeepCopyInternal();
-      if(InventoryListing.Any()) dest.InventoryListing = new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>(InventoryListing.DeepCopyInternal());
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>)_StatusElement.DeepCopyInternal();
+      if(_CountTypeElement is not null) dest.CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>)_CountTypeElement.DeepCopyInternal();
+      if(_OperationType is not null) dest.OperationType = (Hl7.Fhir.Model.CodeableConcept)_OperationType.DeepCopyInternal();
+      if(_OperationTypeReason is not null) dest.OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept)_OperationTypeReason.DeepCopyInternal();
+      if(_ReportedDateTimeElement is not null) dest.ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)_ReportedDateTimeElement.DeepCopyInternal();
+      if(_Reporter is not null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)_Reporter.DeepCopyInternal();
+      if(_ReportingPeriod is not null) dest.ReportingPeriod = (Hl7.Fhir.Model.Period)_ReportingPeriod.DeepCopyInternal();
+      if(_InventoryListing is not null) dest.InventoryListing = new List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>(_InventoryListing.DeepCopyInternal());
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -656,97 +637,98 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as InventoryReport;
-      if(otherT == null) return false;
+      if(other is not InventoryReport otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(CountTypeElement, otherT.CountTypeElement)) return false;
-      if(!comparer.Equals(OperationType, otherT.OperationType)) return false;
-      if(!comparer.Equals(OperationTypeReason, otherT.OperationTypeReason)) return false;
-      if(!comparer.Equals(ReportedDateTimeElement, otherT.ReportedDateTimeElement)) return false;
-      if(!comparer.Equals(Reporter, otherT.Reporter)) return false;
-      if(!comparer.Equals(ReportingPeriod, otherT.ReportingPeriod)) return false;
-      if(!comparer.ListEquals(InventoryListing, otherT.InventoryListing)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_CountTypeElement, otherT._CountTypeElement)) return false;
+      if(!comparer.Equals(_OperationType, otherT._OperationType)) return false;
+      if(!comparer.Equals(_OperationTypeReason, otherT._OperationTypeReason)) return false;
+      if(!comparer.Equals(_ReportedDateTimeElement, otherT._ReportedDateTimeElement)) return false;
+      if(!comparer.Equals(_Reporter, otherT._Reporter)) return false;
+      if(!comparer.Equals(_ReportingPeriod, otherT._ReportingPeriod)) return false;
+      if(!comparer.ListEquals(_InventoryListing, otherT._InventoryListing)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "countType":
-          value = CountTypeElement;
-          return CountTypeElement is not null;
+          value = _CountTypeElement;
+          return _CountTypeElement is not null;
         case "operationType":
-          value = OperationType;
-          return OperationType is not null;
+          value = _OperationType;
+          return _OperationType is not null;
         case "operationTypeReason":
-          value = OperationTypeReason;
-          return OperationTypeReason is not null;
+          value = _OperationTypeReason;
+          return _OperationTypeReason is not null;
         case "reportedDateTime":
-          value = ReportedDateTimeElement;
-          return ReportedDateTimeElement is not null;
+          value = _ReportedDateTimeElement;
+          return _ReportedDateTimeElement is not null;
         case "reporter":
-          value = Reporter;
-          return Reporter is not null;
+          value = _Reporter;
+          return _Reporter is not null;
         case "reportingPeriod":
-          value = ReportingPeriod;
-          return ReportingPeriod is not null;
+          value = _ReportingPeriod;
+          return _ReportingPeriod is not null;
         case "inventoryListing":
-          value = InventoryListing;
-          return InventoryListing?.Any() == true;
+          value = _InventoryListing;
+          return _InventoryListing?.Any() == true;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>?)value;
           return this;
         case "countType":
-          CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>)value;
+          CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>?)value;
           return this;
         case "operationType":
-          OperationType = (Hl7.Fhir.Model.CodeableConcept)value;
+          OperationType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "operationTypeReason":
-          OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept)value;
+          OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "reportedDateTime":
-          ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "reporter":
-          Reporter = (Hl7.Fhir.Model.ResourceReference)value;
+          Reporter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "reportingPeriod":
-          ReportingPeriod = (Hl7.Fhir.Model.Period)value;
+          ReportingPeriod = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "inventoryListing":
-          InventoryListing = (List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>)value;
+          InventoryListing = (List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>?)value!;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -757,16 +739,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (CountTypeElement is not null) yield return new KeyValuePair<string,object>("countType",CountTypeElement);
-      if (OperationType is not null) yield return new KeyValuePair<string,object>("operationType",OperationType);
-      if (OperationTypeReason is not null) yield return new KeyValuePair<string,object>("operationTypeReason",OperationTypeReason);
-      if (ReportedDateTimeElement is not null) yield return new KeyValuePair<string,object>("reportedDateTime",ReportedDateTimeElement);
-      if (Reporter is not null) yield return new KeyValuePair<string,object>("reporter",Reporter);
-      if (ReportingPeriod is not null) yield return new KeyValuePair<string,object>("reportingPeriod",ReportingPeriod);
-      if (InventoryListing?.Any() == true) yield return new KeyValuePair<string,object>("inventoryListing",InventoryListing);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_CountTypeElement is not null) yield return new KeyValuePair<string,object>("countType",_CountTypeElement);
+      if (_OperationType is not null) yield return new KeyValuePair<string,object>("operationType",_OperationType);
+      if (_OperationTypeReason is not null) yield return new KeyValuePair<string,object>("operationTypeReason",_OperationTypeReason);
+      if (_ReportedDateTimeElement is not null) yield return new KeyValuePair<string,object>("reportedDateTime",_ReportedDateTimeElement);
+      if (_Reporter is not null) yield return new KeyValuePair<string,object>("reporter",_Reporter);
+      if (_ReportingPeriod is not null) yield return new KeyValuePair<string,object>("reportingPeriod",_ReportingPeriod);
+      if (_InventoryListing?.Any() == true) yield return new KeyValuePair<string,object>("inventoryListing",_InventoryListing);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

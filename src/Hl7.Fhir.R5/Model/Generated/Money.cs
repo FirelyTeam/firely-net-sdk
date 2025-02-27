@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -61,13 +64,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("value", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal ValueElement
+    public Hl7.Fhir.Model.FhirDecimal? ValueElement
     {
       get { return _ValueElement; }
       set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDecimal _ValueElement;
+    private Hl7.Fhir.Model.FhirDecimal? _ValueElement;
 
     /// <summary>
     /// Numerical value (with implicit precision)
@@ -76,13 +79,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Value
     {
-      get { return ValueElement != null ? ValueElement.Value : null; }
+      get => _ValueElement?.Value;
       set
       {
-        if (value == null)
-          ValueElement = null;
-        else
-          ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
+        ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Value");
       }
     }
@@ -94,13 +94,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("CurrencyCode")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Currencies> CurrencyElement
+    public Code<Hl7.Fhir.Model.Currencies>? CurrencyElement
     {
       get { return _CurrencyElement; }
       set { _CurrencyElement = value; OnPropertyChanged("CurrencyElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Currencies> _CurrencyElement;
+    private Code<Hl7.Fhir.Model.Currencies>? _CurrencyElement;
 
     /// <summary>
     /// ISO 4217 Currency Code
@@ -109,29 +109,22 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Currencies? Currency
     {
-      get { return CurrencyElement != null ? CurrencyElement.Value : null; }
+      get => _CurrencyElement?.Value;
       set
       {
-        if (value == null)
-          CurrencyElement = null;
-        else
-          CurrencyElement = new Code<Hl7.Fhir.Model.Currencies>(value);
+        CurrencyElement = value is null ? null : new Code<Hl7.Fhir.Model.Currencies>(value);
         OnPropertyChanged("Currency");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Money;
-
-      if (dest == null)
-      {
+      if(other is not Money dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopyInternal();
-      if(CurrencyElement != null) dest.CurrencyElement = (Code<Hl7.Fhir.Model.Currencies>)CurrencyElement.DeepCopyInternal();
+      if(_ValueElement is not null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)_ValueElement.DeepCopyInternal();
+      if(_CurrencyElement is not null) dest.CurrencyElement = (Code<Hl7.Fhir.Model.Currencies>)_CurrencyElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -143,41 +136,42 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Money;
-      if(otherT == null) return false;
+      if(other is not Money otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(ValueElement, otherT.ValueElement)) return false;
-      if(!comparer.Equals(CurrencyElement, otherT.CurrencyElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+      if(!comparer.Equals(_CurrencyElement, otherT._CurrencyElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "value":
-          value = ValueElement;
-          return ValueElement is not null;
+          value = _ValueElement;
+          return _ValueElement is not null;
         case "currency":
-          value = CurrencyElement;
-          return CurrencyElement is not null;
+          value = _CurrencyElement;
+          return _CurrencyElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "value":
-          ValueElement = (Hl7.Fhir.Model.FhirDecimal)value;
+          ValueElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "currency":
-          CurrencyElement = (Code<Hl7.Fhir.Model.Currencies>)value;
+          CurrencyElement = (Code<Hl7.Fhir.Model.Currencies>?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -188,8 +182,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
-      if (CurrencyElement is not null) yield return new KeyValuePair<string,object>("currency",CurrencyElement);
+      if (_ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (_CurrencyElement is not null) yield return new KeyValuePair<string,object>("currency",_CurrencyElement);
     }
 
   }

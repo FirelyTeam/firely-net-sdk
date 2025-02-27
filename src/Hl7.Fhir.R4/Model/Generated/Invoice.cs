@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -120,13 +123,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("role", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Role
+      public Hl7.Fhir.Model.CodeableConcept? Role
       {
         get { return _Role; }
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Role;
+      private Hl7.Fhir.Model.CodeableConcept? _Role;
 
       /// <summary>
       /// Individual who was involved.
@@ -136,26 +139,22 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","Organization","Patient","PractitionerRole","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Actor
+      public Hl7.Fhir.Model.ResourceReference? Actor
       {
         get { return _Actor; }
         set { _Actor = value; OnPropertyChanged("Actor"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Actor;
+      private Hl7.Fhir.Model.ResourceReference? _Actor;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ParticipantComponent;
-
-        if (dest == null)
-        {
+        if(other is not ParticipantComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopyInternal();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
+        if(_Role is not null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)_Role.DeepCopyInternal();
+        if(_Actor is not null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)_Actor.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -167,41 +166,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ParticipantComponent;
-        if(otherT == null) return false;
+        if(other is not ParticipantComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Role, otherT.Role)) return false;
-        if(!comparer.Equals(Actor, otherT.Actor)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Role, otherT._Role)) return false;
+        if(!comparer.Equals(_Actor, otherT._Actor)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "role":
-            value = Role;
-            return Role is not null;
+            value = _Role;
+            return _Role is not null;
           case "actor":
-            value = Actor;
-            return Actor is not null;
+            value = _Actor;
+            return _Actor is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "role":
-            Role = (Hl7.Fhir.Model.CodeableConcept)value;
+            Role = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "actor":
-            Actor = (Hl7.Fhir.Model.ResourceReference)value;
+            Actor = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -212,8 +212,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
-        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+        if (_Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
       }
 
     }
@@ -239,13 +239,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("sequence", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.PositiveInt SequenceElement
+      public Hl7.Fhir.Model.PositiveInt? SequenceElement
       {
         get { return _SequenceElement; }
         set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
       }
 
-      private Hl7.Fhir.Model.PositiveInt _SequenceElement;
+      private Hl7.Fhir.Model.PositiveInt? _SequenceElement;
 
       /// <summary>
       /// Sequence number of line item
@@ -254,13 +254,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get { return SequenceElement != null ? SequenceElement.Value : null; }
+        get => _SequenceElement?.Value;
         set
         {
-          if (value == null)
-            SequenceElement = null;
-          else
-            SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+          SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
           OnPropertyChanged("Sequence");
         }
       }
@@ -274,13 +271,13 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType ChargeItem
+      public Hl7.Fhir.Model.DataType? ChargeItem
       {
         get { return _ChargeItem; }
         set { _ChargeItem = value; OnPropertyChanged("ChargeItem"); }
       }
 
-      private Hl7.Fhir.Model.DataType _ChargeItem;
+      private Hl7.Fhir.Model.DataType? _ChargeItem;
 
       /// <summary>
       /// Components of total line item price.
@@ -290,25 +287,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Invoice.PriceComponentComponent> PriceComponent
       {
-        get { if(_PriceComponent==null) _PriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(); return _PriceComponent; }
+        get => _PriceComponent ??= [];
         set { _PriceComponent = value; OnPropertyChanged("PriceComponent"); }
       }
 
-      private List<Hl7.Fhir.Model.Invoice.PriceComponentComponent> _PriceComponent;
+      private List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>? _PriceComponent;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as LineItemComponent;
-
-        if (dest == null)
-        {
+        if(other is not LineItemComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopyInternal();
-        if(ChargeItem != null) dest.ChargeItem = (Hl7.Fhir.Model.DataType)ChargeItem.DeepCopyInternal();
-        if(PriceComponent.Any()) dest.PriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(PriceComponent.DeepCopyInternal());
+        if(_SequenceElement is not null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)_SequenceElement.DeepCopyInternal();
+        if(_ChargeItem is not null) dest.ChargeItem = (Hl7.Fhir.Model.DataType)_ChargeItem.DeepCopyInternal();
+        if(_PriceComponent is not null) dest.PriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(_PriceComponent.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -320,48 +313,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as LineItemComponent;
-        if(otherT == null) return false;
+        if(other is not LineItemComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(SequenceElement, otherT.SequenceElement)) return false;
-        if(!comparer.Equals(ChargeItem, otherT.ChargeItem)) return false;
-        if(!comparer.ListEquals(PriceComponent, otherT.PriceComponent)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SequenceElement, otherT._SequenceElement)) return false;
+        if(!comparer.Equals(_ChargeItem, otherT._ChargeItem)) return false;
+        if(!comparer.ListEquals(_PriceComponent, otherT._PriceComponent)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "sequence":
-            value = SequenceElement;
-            return SequenceElement is not null;
+            value = _SequenceElement;
+            return _SequenceElement is not null;
           case "chargeItem":
-            value = ChargeItem;
-            return ChargeItem is not null;
+            value = _ChargeItem;
+            return _ChargeItem is not null;
           case "priceComponent":
-            value = PriceComponent;
-            return PriceComponent?.Any() == true;
+            value = _PriceComponent;
+            return _PriceComponent?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "sequence":
-            SequenceElement = (Hl7.Fhir.Model.PositiveInt)value;
+            SequenceElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "chargeItem":
-            ChargeItem = (Hl7.Fhir.Model.DataType)value;
+            ChargeItem = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "priceComponent":
-            PriceComponent = (List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>)value;
+            PriceComponent = (List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -372,9 +366,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
-        if (ChargeItem is not null) yield return new KeyValuePair<string,object>("chargeItem",ChargeItem);
-        if (PriceComponent?.Any() == true) yield return new KeyValuePair<string,object>("priceComponent",PriceComponent);
+        if (_SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
+        if (_ChargeItem is not null) yield return new KeyValuePair<string,object>("chargeItem",_ChargeItem);
+        if (_PriceComponent?.Any() == true) yield return new KeyValuePair<string,object>("priceComponent",_PriceComponent);
       }
 
     }
@@ -403,13 +397,13 @@ namespace Hl7.Fhir.Model
       [Binding("InvoicePriceComponentType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.InvoicePriceComponentType> TypeElement
+      public Code<Hl7.Fhir.Model.InvoicePriceComponentType>? TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.InvoicePriceComponentType> _TypeElement;
+      private Code<Hl7.Fhir.Model.InvoicePriceComponentType>? _TypeElement;
 
       /// <summary>
       /// base | surcharge | deduction | discount | tax | informational
@@ -418,13 +412,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.InvoicePriceComponentType? Type
       {
-        get { return TypeElement != null ? TypeElement.Value : null; }
+        get => _TypeElement?.Value;
         set
         {
-          if (value == null)
-            TypeElement = null;
-          else
-            TypeElement = new Code<Hl7.Fhir.Model.InvoicePriceComponentType>(value);
+          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.InvoicePriceComponentType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -434,26 +425,26 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Code
+      public Hl7.Fhir.Model.CodeableConcept? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Code;
+      private Hl7.Fhir.Model.CodeableConcept? _Code;
 
       /// <summary>
       /// Factor used for calculating this component.
       /// </summary>
       [FhirElement("factor", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDecimal FactorElement
+      public Hl7.Fhir.Model.FhirDecimal? FactorElement
       {
         get { return _FactorElement; }
         set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDecimal _FactorElement;
+      private Hl7.Fhir.Model.FhirDecimal? _FactorElement;
 
       /// <summary>
       /// Factor used for calculating this component
@@ -462,13 +453,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Factor
       {
-        get { return FactorElement != null ? FactorElement.Value : null; }
+        get => _FactorElement?.Value;
         set
         {
-          if (value == null)
-            FactorElement = null;
-          else
-            FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+          FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
           OnPropertyChanged("Factor");
         }
       }
@@ -478,28 +466,24 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("amount", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Money Amount
+      public Hl7.Fhir.Model.Money? Amount
       {
         get { return _Amount; }
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private Hl7.Fhir.Model.Money _Amount;
+      private Hl7.Fhir.Model.Money? _Amount;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PriceComponentComponent;
-
-        if (dest == null)
-        {
+        if(other is not PriceComponentComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.InvoicePriceComponentType>)TypeElement.DeepCopyInternal();
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-        if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopyInternal();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Money)Amount.DeepCopyInternal();
+        if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.InvoicePriceComponentType>)_TypeElement.DeepCopyInternal();
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+        if(_FactorElement is not null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)_FactorElement.DeepCopyInternal();
+        if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.Money)_Amount.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -511,55 +495,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PriceComponentComponent;
-        if(otherT == null) return false;
+        if(other is not PriceComponentComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
-        if(!comparer.Equals(FactorElement, otherT.FactorElement)) return false;
-        if(!comparer.Equals(Amount, otherT.Amount)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        if(!comparer.Equals(_FactorElement, otherT._FactorElement)) return false;
+        if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = TypeElement;
-            return TypeElement is not null;
+            value = _TypeElement;
+            return _TypeElement is not null;
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           case "factor":
-            value = FactorElement;
-            return FactorElement is not null;
+            value = _FactorElement;
+            return _FactorElement is not null;
           case "amount":
-            value = Amount;
-            return Amount is not null;
+            value = _Amount;
+            return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            TypeElement = (Code<Hl7.Fhir.Model.InvoicePriceComponentType>)value;
+            TypeElement = (Code<Hl7.Fhir.Model.InvoicePriceComponentType>?)value;
             return this;
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept)value;
+            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "factor":
-            FactorElement = (Hl7.Fhir.Model.FhirDecimal)value;
+            FactorElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.Money)value;
+            Amount = (Hl7.Fhir.Model.Money?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -570,10 +555,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_FactorElement is not null) yield return new KeyValuePair<string,object>("factor",_FactorElement);
+        if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -586,11 +571,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// draft | issued | balanced | cancelled | entered-in-error.
@@ -600,13 +585,13 @@ namespace Hl7.Fhir.Model
     [Binding("InvoiceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Invoice.InvoiceStatus> StatusElement
+    public Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Invoice.InvoiceStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>? _StatusElement;
 
     /// <summary>
     /// draft | issued | balanced | cancelled | entered-in-error
@@ -615,13 +600,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Invoice.InvoiceStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -631,28 +613,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("cancelledReason", Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString CancelledReasonElement
+    public Hl7.Fhir.Model.FhirString? CancelledReasonElement
     {
       get { return _CancelledReasonElement; }
       set { _CancelledReasonElement = value; OnPropertyChanged("CancelledReasonElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _CancelledReasonElement;
+    private Hl7.Fhir.Model.FhirString? _CancelledReasonElement;
 
     /// <summary>
     /// Reason for cancellation of this Invoice
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string CancelledReason
+    public string? CancelledReason
     {
-      get { return CancelledReasonElement != null ? CancelledReasonElement.Value : null; }
+      get => _CancelledReasonElement?.Value;
       set
       {
-        if (value == null)
-          CancelledReasonElement = null;
-        else
-          CancelledReasonElement = new Hl7.Fhir.Model.FhirString(value);
+        CancelledReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("CancelledReason");
       }
     }
@@ -662,13 +641,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Type
+    public Hl7.Fhir.Model.CodeableConcept? Type
     {
       get { return _Type; }
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
     /// Recipient(s) of goods and services.
@@ -677,13 +656,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// Recipient of this invoice.
@@ -692,41 +671,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization","Patient","RelatedPerson")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Recipient
+    public Hl7.Fhir.Model.ResourceReference? Recipient
     {
       get { return _Recipient; }
       set { _Recipient = value; OnPropertyChanged("Recipient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Recipient;
+    private Hl7.Fhir.Model.ResourceReference? _Recipient;
 
     /// <summary>
     /// Invoice date / posting date.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.done[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime DateElement
+    public Hl7.Fhir.Model.FhirDateTime? DateElement
     {
       get { return _DateElement; }
       set { _DateElement = value; OnPropertyChanged("DateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _DateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _DateElement;
 
     /// <summary>
     /// Invoice date / posting date
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Date
+    public string? Date
     {
-      get { return DateElement != null ? DateElement.Value : null; }
+      get => _DateElement?.Value;
       set
       {
-        if (value == null)
-          DateElement = null;
-        else
-          DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -739,11 +715,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Invoice.ParticipantComponent> Participant
     {
-      get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.Invoice.ParticipantComponent>(); return _Participant; }
+      get => _Participant ??= [];
       set { _Participant = value; OnPropertyChanged("Participant"); }
     }
 
-    private List<Hl7.Fhir.Model.Invoice.ParticipantComponent> _Participant;
+    private List<Hl7.Fhir.Model.Invoice.ParticipantComponent>? _Participant;
 
     /// <summary>
     /// Issuing Organization of Invoice.
@@ -752,13 +728,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Issuer
+    public Hl7.Fhir.Model.ResourceReference? Issuer
     {
       get { return _Issuer; }
       set { _Issuer = value; OnPropertyChanged("Issuer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Issuer;
+    private Hl7.Fhir.Model.ResourceReference? _Issuer;
 
     /// <summary>
     /// Account that is being balanced.
@@ -767,13 +743,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Account")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Account
+    public Hl7.Fhir.Model.ResourceReference? Account
     {
       get { return _Account; }
       set { _Account = value; OnPropertyChanged("Account"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Account;
+    private Hl7.Fhir.Model.ResourceReference? _Account;
 
     /// <summary>
     /// Line items of this Invoice.
@@ -783,11 +759,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Invoice.LineItemComponent> LineItem
     {
-      get { if(_LineItem==null) _LineItem = new List<Hl7.Fhir.Model.Invoice.LineItemComponent>(); return _LineItem; }
+      get => _LineItem ??= [];
       set { _LineItem = value; OnPropertyChanged("LineItem"); }
     }
 
-    private List<Hl7.Fhir.Model.Invoice.LineItemComponent> _LineItem;
+    private List<Hl7.Fhir.Model.Invoice.LineItemComponent>? _LineItem;
 
     /// <summary>
     /// Components of Invoice total.
@@ -797,65 +773,62 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Invoice.PriceComponentComponent> TotalPriceComponent
     {
-      get { if(_TotalPriceComponent==null) _TotalPriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(); return _TotalPriceComponent; }
+      get => _TotalPriceComponent ??= [];
       set { _TotalPriceComponent = value; OnPropertyChanged("TotalPriceComponent"); }
     }
 
-    private List<Hl7.Fhir.Model.Invoice.PriceComponentComponent> _TotalPriceComponent;
+    private List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>? _TotalPriceComponent;
 
     /// <summary>
     /// Net total of this Invoice.
     /// </summary>
     [FhirElement("totalNet", InSummary=true, Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.Money TotalNet
+    public Hl7.Fhir.Model.Money? TotalNet
     {
       get { return _TotalNet; }
       set { _TotalNet = value; OnPropertyChanged("TotalNet"); }
     }
 
-    private Hl7.Fhir.Model.Money _TotalNet;
+    private Hl7.Fhir.Model.Money? _TotalNet;
 
     /// <summary>
     /// Gross total of this Invoice.
     /// </summary>
     [FhirElement("totalGross", InSummary=true, Order=220)]
     [DataMember]
-    public Hl7.Fhir.Model.Money TotalGross
+    public Hl7.Fhir.Model.Money? TotalGross
     {
       get { return _TotalGross; }
       set { _TotalGross = value; OnPropertyChanged("TotalGross"); }
     }
 
-    private Hl7.Fhir.Model.Money _TotalGross;
+    private Hl7.Fhir.Model.Money? _TotalGross;
 
     /// <summary>
     /// Payment details.
     /// </summary>
     [FhirElement("paymentTerms", Order=230)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown PaymentTermsElement
+    public Hl7.Fhir.Model.Markdown? PaymentTermsElement
     {
       get { return _PaymentTermsElement; }
       set { _PaymentTermsElement = value; OnPropertyChanged("PaymentTermsElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _PaymentTermsElement;
+    private Hl7.Fhir.Model.Markdown? _PaymentTermsElement;
 
     /// <summary>
     /// Payment details
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string PaymentTerms
+    public string? PaymentTerms
     {
-      get { return PaymentTermsElement != null ? PaymentTermsElement.Value : null; }
+      get => _PaymentTermsElement?.Value;
       set
       {
-        if (value == null)
-          PaymentTermsElement = null;
-        else
-          PaymentTermsElement = new Hl7.Fhir.Model.Markdown(value);
+        PaymentTermsElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("PaymentTerms");
       }
     }
@@ -868,40 +841,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Invoice;
-
-      if (dest == null)
-      {
+      if(other is not Invoice dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>)StatusElement.DeepCopyInternal();
-      if(CancelledReasonElement != null) dest.CancelledReasonElement = (Hl7.Fhir.Model.FhirString)CancelledReasonElement.DeepCopyInternal();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Recipient != null) dest.Recipient = (Hl7.Fhir.Model.ResourceReference)Recipient.DeepCopyInternal();
-      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
-      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.Invoice.ParticipantComponent>(Participant.DeepCopyInternal());
-      if(Issuer != null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)Issuer.DeepCopyInternal();
-      if(Account != null) dest.Account = (Hl7.Fhir.Model.ResourceReference)Account.DeepCopyInternal();
-      if(LineItem.Any()) dest.LineItem = new List<Hl7.Fhir.Model.Invoice.LineItemComponent>(LineItem.DeepCopyInternal());
-      if(TotalPriceComponent.Any()) dest.TotalPriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(TotalPriceComponent.DeepCopyInternal());
-      if(TotalNet != null) dest.TotalNet = (Hl7.Fhir.Model.Money)TotalNet.DeepCopyInternal();
-      if(TotalGross != null) dest.TotalGross = (Hl7.Fhir.Model.Money)TotalGross.DeepCopyInternal();
-      if(PaymentTermsElement != null) dest.PaymentTermsElement = (Hl7.Fhir.Model.Markdown)PaymentTermsElement.DeepCopyInternal();
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>)_StatusElement.DeepCopyInternal();
+      if(_CancelledReasonElement is not null) dest.CancelledReasonElement = (Hl7.Fhir.Model.FhirString)_CancelledReasonElement.DeepCopyInternal();
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Recipient is not null) dest.Recipient = (Hl7.Fhir.Model.ResourceReference)_Recipient.DeepCopyInternal();
+      if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)_DateElement.DeepCopyInternal();
+      if(_Participant is not null) dest.Participant = new List<Hl7.Fhir.Model.Invoice.ParticipantComponent>(_Participant.DeepCopyInternal());
+      if(_Issuer is not null) dest.Issuer = (Hl7.Fhir.Model.ResourceReference)_Issuer.DeepCopyInternal();
+      if(_Account is not null) dest.Account = (Hl7.Fhir.Model.ResourceReference)_Account.DeepCopyInternal();
+      if(_LineItem is not null) dest.LineItem = new List<Hl7.Fhir.Model.Invoice.LineItemComponent>(_LineItem.DeepCopyInternal());
+      if(_TotalPriceComponent is not null) dest.TotalPriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(_TotalPriceComponent.DeepCopyInternal());
+      if(_TotalNet is not null) dest.TotalNet = (Hl7.Fhir.Model.Money)_TotalNet.DeepCopyInternal();
+      if(_TotalGross is not null) dest.TotalGross = (Hl7.Fhir.Model.Money)_TotalGross.DeepCopyInternal();
+      if(_PaymentTermsElement is not null) dest.PaymentTermsElement = (Hl7.Fhir.Model.Markdown)_PaymentTermsElement.DeepCopyInternal();
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -913,139 +882,140 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Invoice;
-      if(otherT == null) return false;
+      if(other is not Invoice otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(CancelledReasonElement, otherT.CancelledReasonElement)) return false;
-      if(!comparer.Equals(Type, otherT.Type)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Recipient, otherT.Recipient)) return false;
-      if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
-      if(!comparer.ListEquals(Participant, otherT.Participant)) return false;
-      if(!comparer.Equals(Issuer, otherT.Issuer)) return false;
-      if(!comparer.Equals(Account, otherT.Account)) return false;
-      if(!comparer.ListEquals(LineItem, otherT.LineItem)) return false;
-      if(!comparer.ListEquals(TotalPriceComponent, otherT.TotalPriceComponent)) return false;
-      if(!comparer.Equals(TotalNet, otherT.TotalNet)) return false;
-      if(!comparer.Equals(TotalGross, otherT.TotalGross)) return false;
-      if(!comparer.Equals(PaymentTermsElement, otherT.PaymentTermsElement)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_CancelledReasonElement, otherT._CancelledReasonElement)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Recipient, otherT._Recipient)) return false;
+      if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
+      if(!comparer.ListEquals(_Participant, otherT._Participant)) return false;
+      if(!comparer.Equals(_Issuer, otherT._Issuer)) return false;
+      if(!comparer.Equals(_Account, otherT._Account)) return false;
+      if(!comparer.ListEquals(_LineItem, otherT._LineItem)) return false;
+      if(!comparer.ListEquals(_TotalPriceComponent, otherT._TotalPriceComponent)) return false;
+      if(!comparer.Equals(_TotalNet, otherT._TotalNet)) return false;
+      if(!comparer.Equals(_TotalGross, otherT._TotalGross)) return false;
+      if(!comparer.Equals(_PaymentTermsElement, otherT._PaymentTermsElement)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "cancelledReason":
-          value = CancelledReasonElement;
-          return CancelledReasonElement is not null;
+          value = _CancelledReasonElement;
+          return _CancelledReasonElement is not null;
         case "type":
-          value = Type;
-          return Type is not null;
+          value = _Type;
+          return _Type is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "recipient":
-          value = Recipient;
-          return Recipient is not null;
+          value = _Recipient;
+          return _Recipient is not null;
         case "date":
-          value = DateElement;
-          return DateElement is not null;
+          value = _DateElement;
+          return _DateElement is not null;
         case "participant":
-          value = Participant;
-          return Participant?.Any() == true;
+          value = _Participant;
+          return _Participant?.Any() == true;
         case "issuer":
-          value = Issuer;
-          return Issuer is not null;
+          value = _Issuer;
+          return _Issuer is not null;
         case "account":
-          value = Account;
-          return Account is not null;
+          value = _Account;
+          return _Account is not null;
         case "lineItem":
-          value = LineItem;
-          return LineItem?.Any() == true;
+          value = _LineItem;
+          return _LineItem?.Any() == true;
         case "totalPriceComponent":
-          value = TotalPriceComponent;
-          return TotalPriceComponent?.Any() == true;
+          value = _TotalPriceComponent;
+          return _TotalPriceComponent?.Any() == true;
         case "totalNet":
-          value = TotalNet;
-          return TotalNet is not null;
+          value = _TotalNet;
+          return _TotalNet is not null;
         case "totalGross":
-          value = TotalGross;
-          return TotalGross is not null;
+          value = _TotalGross;
+          return _TotalGross is not null;
         case "paymentTerms":
-          value = PaymentTermsElement;
-          return PaymentTermsElement is not null;
+          value = _PaymentTermsElement;
+          return _PaymentTermsElement is not null;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>?)value;
           return this;
         case "cancelledReason":
-          CancelledReasonElement = (Hl7.Fhir.Model.FhirString)value;
+          CancelledReasonElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept)value;
+          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "recipient":
-          Recipient = (Hl7.Fhir.Model.ResourceReference)value;
+          Recipient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "date":
-          DateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "participant":
-          Participant = (List<Hl7.Fhir.Model.Invoice.ParticipantComponent>)value;
+          Participant = (List<Hl7.Fhir.Model.Invoice.ParticipantComponent>?)value!;
           return this;
         case "issuer":
-          Issuer = (Hl7.Fhir.Model.ResourceReference)value;
+          Issuer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "account":
-          Account = (Hl7.Fhir.Model.ResourceReference)value;
+          Account = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "lineItem":
-          LineItem = (List<Hl7.Fhir.Model.Invoice.LineItemComponent>)value;
+          LineItem = (List<Hl7.Fhir.Model.Invoice.LineItemComponent>?)value!;
           return this;
         case "totalPriceComponent":
-          TotalPriceComponent = (List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>)value;
+          TotalPriceComponent = (List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>?)value!;
           return this;
         case "totalNet":
-          TotalNet = (Hl7.Fhir.Model.Money)value;
+          TotalNet = (Hl7.Fhir.Model.Money?)value;
           return this;
         case "totalGross":
-          TotalGross = (Hl7.Fhir.Model.Money)value;
+          TotalGross = (Hl7.Fhir.Model.Money?)value;
           return this;
         case "paymentTerms":
-          PaymentTermsElement = (Hl7.Fhir.Model.Markdown)value;
+          PaymentTermsElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1056,22 +1026,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (CancelledReasonElement is not null) yield return new KeyValuePair<string,object>("cancelledReason",CancelledReasonElement);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Recipient is not null) yield return new KeyValuePair<string,object>("recipient",Recipient);
-      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
-      if (Issuer is not null) yield return new KeyValuePair<string,object>("issuer",Issuer);
-      if (Account is not null) yield return new KeyValuePair<string,object>("account",Account);
-      if (LineItem?.Any() == true) yield return new KeyValuePair<string,object>("lineItem",LineItem);
-      if (TotalPriceComponent?.Any() == true) yield return new KeyValuePair<string,object>("totalPriceComponent",TotalPriceComponent);
-      if (TotalNet is not null) yield return new KeyValuePair<string,object>("totalNet",TotalNet);
-      if (TotalGross is not null) yield return new KeyValuePair<string,object>("totalGross",TotalGross);
-      if (PaymentTermsElement is not null) yield return new KeyValuePair<string,object>("paymentTerms",PaymentTermsElement);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_CancelledReasonElement is not null) yield return new KeyValuePair<string,object>("cancelledReason",_CancelledReasonElement);
+      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Recipient is not null) yield return new KeyValuePair<string,object>("recipient",_Recipient);
+      if (_DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",_Participant);
+      if (_Issuer is not null) yield return new KeyValuePair<string,object>("issuer",_Issuer);
+      if (_Account is not null) yield return new KeyValuePair<string,object>("account",_Account);
+      if (_LineItem?.Any() == true) yield return new KeyValuePair<string,object>("lineItem",_LineItem);
+      if (_TotalPriceComponent?.Any() == true) yield return new KeyValuePair<string,object>("totalPriceComponent",_TotalPriceComponent);
+      if (_TotalNet is not null) yield return new KeyValuePair<string,object>("totalNet",_TotalNet);
+      if (_TotalGross is not null) yield return new KeyValuePair<string,object>("totalGross",_TotalGross);
+      if (_PaymentTermsElement is not null) yield return new KeyValuePair<string,object>("paymentTerms",_PaymentTermsElement);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

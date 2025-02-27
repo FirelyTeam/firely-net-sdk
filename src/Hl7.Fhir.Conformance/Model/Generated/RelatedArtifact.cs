@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -294,13 +297,13 @@ namespace Hl7.Fhir.Model
     [Binding("RelatedArtifactType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> TypeElement
+    public Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> _TypeElement;
+    private Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>? _TypeElement;
 
     /// <summary>
     /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of | part-of | amends | amended-with | appends | appended-with | cites | cited-by | comments-on | comment-in | contains | contained-in | corrects | correction-in | replaces | replaced-with | retracts | retracted-by | signs | similar-to | supports | supported-with | transforms | transformed-into | transformed-with | documents | specification-of | created-with | cite-as
@@ -309,13 +312,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -332,39 +332,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Classifier
     {
-      get { if(_Classifier==null) _Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Classifier; }
+      get => _Classifier ??= [];
       set { _Classifier = value; OnPropertyChanged("Classifier"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Classifier;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Classifier;
 
     /// <summary>
     /// Short label.
     /// </summary>
     [FhirElement("label", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString LabelElement
+    public Hl7.Fhir.Model.FhirString? LabelElement
     {
       get { return _LabelElement; }
       set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _LabelElement;
+    private Hl7.Fhir.Model.FhirString? _LabelElement;
 
     /// <summary>
     /// Short label
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Label
+    public string? Label
     {
-      get { return LabelElement != null ? LabelElement.Value : null; }
+      get => _LabelElement?.Value;
       set
       {
-        if (value == null)
-          LabelElement = null;
-        else
-          LabelElement = new Hl7.Fhir.Model.FhirString(value);
+        LabelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Label");
       }
     }
@@ -374,28 +371,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DisplayElement
+    public Hl7.Fhir.Model.FhirString? DisplayElement
     {
       get { return _DisplayElement; }
       set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DisplayElement;
+    private Hl7.Fhir.Model.FhirString? _DisplayElement;
 
     /// <summary>
     /// Brief description of the related artifact
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Display
+    public string? Display
     {
-      get { return DisplayElement != null ? DisplayElement.Value : null; }
+      get => _DisplayElement?.Value;
       set
       {
-        if (value == null)
-          DisplayElement = null;
-        else
-          DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+        DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Display");
       }
     }
@@ -405,28 +399,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("citation", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown CitationElement
+    public Hl7.Fhir.Model.Markdown? CitationElement
     {
       get { return _CitationElement; }
       set { _CitationElement = value; OnPropertyChanged("CitationElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _CitationElement;
+    private Hl7.Fhir.Model.Markdown? _CitationElement;
 
     /// <summary>
     /// Bibliographic citation for the artifact
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Citation
+    public string? Citation
     {
-      get { return CitationElement != null ? CitationElement.Value : null; }
+      get => _CitationElement?.Value;
       set
       {
-        if (value == null)
-          CitationElement = null;
-        else
-          CitationElement = new Hl7.Fhir.Model.Markdown(value);
+        CitationElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Citation");
       }
     }
@@ -440,28 +431,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("url", InSummary=true, Order=80)]
     [NotMapped(Since=FhirRelease.R5)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUrl UrlElement
+    public Hl7.Fhir.Model.FhirUrl? UrlElement
     {
       get { return _UrlElement; }
       set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUrl _UrlElement;
+    private Hl7.Fhir.Model.FhirUrl? _UrlElement;
 
     /// <summary>
     /// Where the artifact can be accessed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Url
+    public string? Url
     {
-      get { return UrlElement != null ? UrlElement.Value : null; }
+      get => _UrlElement?.Value;
       set
       {
-        if (value == null)
-          UrlElement = null;
-        else
-          UrlElement = new Hl7.Fhir.Model.FhirUrl(value);
+        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
         OnPropertyChanged("Url");
       }
     }
@@ -471,41 +459,38 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("document", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.Attachment Document
+    public Hl7.Fhir.Model.Attachment? Document
     {
       get { return _Document; }
       set { _Document = value; OnPropertyChanged("Document"); }
     }
 
-    private Hl7.Fhir.Model.Attachment _Document;
+    private Hl7.Fhir.Model.Attachment? _Document;
 
     /// <summary>
     /// What artifact is being referenced.
     /// </summary>
     [FhirElement("resource", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.Canonical ResourceElement
+    public Hl7.Fhir.Model.Canonical? ResourceElement
     {
       get { return _ResourceElement; }
       set { _ResourceElement = value; OnPropertyChanged("ResourceElement"); }
     }
 
-    private Hl7.Fhir.Model.Canonical _ResourceElement;
+    private Hl7.Fhir.Model.Canonical? _ResourceElement;
 
     /// <summary>
     /// What artifact is being referenced
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Resource
+    public string? Resource
     {
-      get { return ResourceElement != null ? ResourceElement.Value : null; }
+      get => _ResourceElement?.Value;
       set
       {
-        if (value == null)
-          ResourceElement = null;
-        else
-          ResourceElement = new Hl7.Fhir.Model.Canonical(value);
+        ResourceElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
         OnPropertyChanged("Resource");
       }
     }
@@ -520,13 +505,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ResourceReference
+    public Hl7.Fhir.Model.ResourceReference? ResourceReference
     {
       get { return _ResourceReference; }
       set { _ResourceReference = value; OnPropertyChanged("ResourceReference"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ResourceReference;
+    private Hl7.Fhir.Model.ResourceReference? _ResourceReference;
 
     /// <summary>
     /// draft | active | retired | unknown.
@@ -538,13 +523,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("RelatedArtifactPublicationStatus")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus> PublicationStatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus>? PublicationStatusElement
     {
       get { return _PublicationStatusElement; }
       set { _PublicationStatusElement = value; OnPropertyChanged("PublicationStatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.PublicationStatus> _PublicationStatusElement;
+    private Code<Hl7.Fhir.Model.PublicationStatus>? _PublicationStatusElement;
 
     /// <summary>
     /// draft | active | retired | unknown
@@ -553,13 +538,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? PublicationStatus
     {
-      get { return PublicationStatusElement != null ? PublicationStatusElement.Value : null; }
+      get => _PublicationStatusElement?.Value;
       set
       {
-        if (value == null)
-          PublicationStatusElement = null;
-        else
-          PublicationStatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        PublicationStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("PublicationStatus");
       }
     }
@@ -572,53 +554,46 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("publicationDate", InSummary=true, Order=130, Since=FhirRelease.R5)]
     [DataMember]
-    public Hl7.Fhir.Model.Date PublicationDateElement
+    public Hl7.Fhir.Model.Date? PublicationDateElement
     {
       get { return _PublicationDateElement; }
       set { _PublicationDateElement = value; OnPropertyChanged("PublicationDateElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _PublicationDateElement;
+    private Hl7.Fhir.Model.Date? _PublicationDateElement;
 
     /// <summary>
     /// Date of publication of the artifact being referred to
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string PublicationDate
+    public string? PublicationDate
     {
-      get { return PublicationDateElement != null ? PublicationDateElement.Value : null; }
+      get => _PublicationDateElement?.Value;
       set
       {
-        if (value == null)
-          PublicationDateElement = null;
-        else
-          PublicationDateElement = new Hl7.Fhir.Model.Date(value);
+        PublicationDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("PublicationDate");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as RelatedArtifact;
-
-      if (dest == null)
-      {
+      if(other is not RelatedArtifact dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>)TypeElement.DeepCopyInternal();
-      if(Classifier.Any()) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopyInternal());
-      if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopyInternal();
-      if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopyInternal();
-      if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.Markdown)CitationElement.DeepCopyInternal();
-      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUrl)UrlElement.DeepCopyInternal();
-      if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopyInternal();
-      if(ResourceElement != null) dest.ResourceElement = (Hl7.Fhir.Model.Canonical)ResourceElement.DeepCopyInternal();
-      if(ResourceReference != null) dest.ResourceReference = (Hl7.Fhir.Model.ResourceReference)ResourceReference.DeepCopyInternal();
-      if(PublicationStatusElement != null) dest.PublicationStatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)PublicationStatusElement.DeepCopyInternal();
-      if(PublicationDateElement != null) dest.PublicationDateElement = (Hl7.Fhir.Model.Date)PublicationDateElement.DeepCopyInternal();
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>)_TypeElement.DeepCopyInternal();
+      if(_Classifier is not null) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(_Classifier.DeepCopyInternal());
+      if(_LabelElement is not null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)_LabelElement.DeepCopyInternal();
+      if(_DisplayElement is not null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)_DisplayElement.DeepCopyInternal();
+      if(_CitationElement is not null) dest.CitationElement = (Hl7.Fhir.Model.Markdown)_CitationElement.DeepCopyInternal();
+      if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUrl)_UrlElement.DeepCopyInternal();
+      if(_Document is not null) dest.Document = (Hl7.Fhir.Model.Attachment)_Document.DeepCopyInternal();
+      if(_ResourceElement is not null) dest.ResourceElement = (Hl7.Fhir.Model.Canonical)_ResourceElement.DeepCopyInternal();
+      if(_ResourceReference is not null) dest.ResourceReference = (Hl7.Fhir.Model.ResourceReference)_ResourceReference.DeepCopyInternal();
+      if(_PublicationStatusElement is not null) dest.PublicationStatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)_PublicationStatusElement.DeepCopyInternal();
+      if(_PublicationDateElement is not null) dest.PublicationDateElement = (Hl7.Fhir.Model.Date)_PublicationDateElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -630,104 +605,105 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as RelatedArtifact;
-      if(otherT == null) return false;
+      if(other is not RelatedArtifact otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.ListEquals(Classifier, otherT.Classifier)) return false;
-      if(!comparer.Equals(LabelElement, otherT.LabelElement)) return false;
-      if(!comparer.Equals(DisplayElement, otherT.DisplayElement)) return false;
-      if(!comparer.Equals(CitationElement, otherT.CitationElement)) return false;
-      if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
-      if(!comparer.Equals(Document, otherT.Document)) return false;
-      if(!comparer.Equals(ResourceElement, otherT.ResourceElement)) return false;
-      if(!comparer.Equals(ResourceReference, otherT.ResourceReference)) return false;
-      if(!comparer.Equals(PublicationStatusElement, otherT.PublicationStatusElement)) return false;
-      if(!comparer.Equals(PublicationDateElement, otherT.PublicationDateElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.ListEquals(_Classifier, otherT._Classifier)) return false;
+      if(!comparer.Equals(_LabelElement, otherT._LabelElement)) return false;
+      if(!comparer.Equals(_DisplayElement, otherT._DisplayElement)) return false;
+      if(!comparer.Equals(_CitationElement, otherT._CitationElement)) return false;
+      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+      if(!comparer.Equals(_Document, otherT._Document)) return false;
+      if(!comparer.Equals(_ResourceElement, otherT._ResourceElement)) return false;
+      if(!comparer.Equals(_ResourceReference, otherT._ResourceReference)) return false;
+      if(!comparer.Equals(_PublicationStatusElement, otherT._PublicationStatusElement)) return false;
+      if(!comparer.Equals(_PublicationDateElement, otherT._PublicationDateElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "classifier":
-          value = Classifier;
-          return Classifier?.Any() == true;
+          value = _Classifier;
+          return _Classifier?.Any() == true;
         case "label":
-          value = LabelElement;
-          return LabelElement is not null;
+          value = _LabelElement;
+          return _LabelElement is not null;
         case "display":
-          value = DisplayElement;
-          return DisplayElement is not null;
+          value = _DisplayElement;
+          return _DisplayElement is not null;
         case "citation":
-          value = CitationElement;
-          return CitationElement is not null;
+          value = _CitationElement;
+          return _CitationElement is not null;
         case "url":
-          value = UrlElement;
-          return UrlElement is not null;
+          value = _UrlElement;
+          return _UrlElement is not null;
         case "document":
-          value = Document;
-          return Document is not null;
+          value = _Document;
+          return _Document is not null;
         case "resource":
-          value = ResourceElement;
-          return ResourceElement is not null;
+          value = _ResourceElement;
+          return _ResourceElement is not null;
         case "resourceReference":
-          value = ResourceReference;
-          return ResourceReference is not null;
+          value = _ResourceReference;
+          return _ResourceReference is not null;
         case "publicationStatus":
-          value = PublicationStatusElement;
-          return PublicationStatusElement is not null;
+          value = _PublicationStatusElement;
+          return _PublicationStatusElement is not null;
         case "publicationDate":
-          value = PublicationDateElement;
-          return PublicationDateElement is not null;
+          value = _PublicationDateElement;
+          return _PublicationDateElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>?)value;
           return this;
         case "classifier":
-          Classifier = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Classifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "label":
-          LabelElement = (Hl7.Fhir.Model.FhirString)value;
+          LabelElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "display":
-          DisplayElement = (Hl7.Fhir.Model.FhirString)value;
+          DisplayElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "citation":
-          CitationElement = (Hl7.Fhir.Model.Markdown)value;
+          CitationElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "url":
-          UrlElement = (Hl7.Fhir.Model.FhirUrl)value;
+          UrlElement = (Hl7.Fhir.Model.FhirUrl?)value;
           return this;
         case "document":
-          Document = (Hl7.Fhir.Model.Attachment)value;
+          Document = (Hl7.Fhir.Model.Attachment?)value;
           return this;
         case "resource":
-          ResourceElement = (Hl7.Fhir.Model.Canonical)value;
+          ResourceElement = (Hl7.Fhir.Model.Canonical?)value;
           return this;
         case "resourceReference":
-          ResourceReference = (Hl7.Fhir.Model.ResourceReference)value;
+          ResourceReference = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "publicationStatus":
-          PublicationStatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)value;
+          PublicationStatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
           return this;
         case "publicationDate":
-          PublicationDateElement = (Hl7.Fhir.Model.Date)value;
+          PublicationDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -738,17 +714,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (Classifier?.Any() == true) yield return new KeyValuePair<string,object>("classifier",Classifier);
-      if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
-      if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
-      if (CitationElement is not null) yield return new KeyValuePair<string,object>("citation",CitationElement);
-      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Document is not null) yield return new KeyValuePair<string,object>("document",Document);
-      if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
-      if (ResourceReference is not null) yield return new KeyValuePair<string,object>("resourceReference",ResourceReference);
-      if (PublicationStatusElement is not null) yield return new KeyValuePair<string,object>("publicationStatus",PublicationStatusElement);
-      if (PublicationDateElement is not null) yield return new KeyValuePair<string,object>("publicationDate",PublicationDateElement);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_Classifier?.Any() == true) yield return new KeyValuePair<string,object>("classifier",_Classifier);
+      if (_LabelElement is not null) yield return new KeyValuePair<string,object>("label",_LabelElement);
+      if (_DisplayElement is not null) yield return new KeyValuePair<string,object>("display",_DisplayElement);
+      if (_CitationElement is not null) yield return new KeyValuePair<string,object>("citation",_CitationElement);
+      if (_UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_Document is not null) yield return new KeyValuePair<string,object>("document",_Document);
+      if (_ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",_ResourceElement);
+      if (_ResourceReference is not null) yield return new KeyValuePair<string,object>("resourceReference",_ResourceReference);
+      if (_PublicationStatusElement is not null) yield return new KeyValuePair<string,object>("publicationStatus",_PublicationStatusElement);
+      if (_PublicationDateElement is not null) yield return new KeyValuePair<string,object>("publicationDate",_PublicationDateElement);
     }
 
   }

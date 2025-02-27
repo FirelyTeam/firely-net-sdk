@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -77,24 +80,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
-      private List<Hl7.Fhir.Model.Identifier> _Identifier;
+      private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
       /// <summary>
       /// Country of authorization.
       /// </summary>
       [FhirElement("country", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Country
+      public Hl7.Fhir.Model.CodeableConcept? Country
       {
         get { return _Country; }
         set { _Country = value; OnPropertyChanged("Country"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Country;
+      private Hl7.Fhir.Model.CodeableConcept? _Country;
 
       /// <summary>
       /// Jurisdiction within a country.
@@ -104,53 +107,49 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
       {
-        get { if(_Jurisdiction==null) _Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Jurisdiction; }
+        get => _Jurisdiction ??= [];
         set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Jurisdiction;
 
       /// <summary>
       /// The legal status of supply in a jurisdiction or region.
       /// </summary>
       [FhirElement("legalStatusOfSupply", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept LegalStatusOfSupply
+      public Hl7.Fhir.Model.CodeableConcept? LegalStatusOfSupply
       {
         get { return _LegalStatusOfSupply; }
         set { _LegalStatusOfSupply = value; OnPropertyChanged("LegalStatusOfSupply"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _LegalStatusOfSupply;
+      private Hl7.Fhir.Model.CodeableConcept? _LegalStatusOfSupply;
 
       /// <summary>
       /// The start and expected end date of the authorization.
       /// </summary>
       [FhirElement("validityPeriod", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Period ValidityPeriod
+      public Hl7.Fhir.Model.Period? ValidityPeriod
       {
         get { return _ValidityPeriod; }
         set { _ValidityPeriod = value; OnPropertyChanged("ValidityPeriod"); }
       }
 
-      private Hl7.Fhir.Model.Period _ValidityPeriod;
+      private Hl7.Fhir.Model.Period? _ValidityPeriod;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as JurisdictionalAuthorizationComponent;
-
-        if (dest == null)
-        {
+        if(other is not JurisdictionalAuthorizationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-        if(Country != null) dest.Country = (Hl7.Fhir.Model.CodeableConcept)Country.DeepCopyInternal();
-        if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopyInternal());
-        if(LegalStatusOfSupply != null) dest.LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)LegalStatusOfSupply.DeepCopyInternal();
-        if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopyInternal();
+        if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+        if(_Country is not null) dest.Country = (Hl7.Fhir.Model.CodeableConcept)_Country.DeepCopyInternal();
+        if(_Jurisdiction is not null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(_Jurisdiction.DeepCopyInternal());
+        if(_LegalStatusOfSupply is not null) dest.LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)_LegalStatusOfSupply.DeepCopyInternal();
+        if(_ValidityPeriod is not null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)_ValidityPeriod.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -162,62 +161,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as JurisdictionalAuthorizationComponent;
-        if(otherT == null) return false;
+        if(other is not JurisdictionalAuthorizationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-        if(!comparer.Equals(Country, otherT.Country)) return false;
-        if(!comparer.ListEquals(Jurisdiction, otherT.Jurisdiction)) return false;
-        if(!comparer.Equals(LegalStatusOfSupply, otherT.LegalStatusOfSupply)) return false;
-        if(!comparer.Equals(ValidityPeriod, otherT.ValidityPeriod)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+        if(!comparer.Equals(_Country, otherT._Country)) return false;
+        if(!comparer.ListEquals(_Jurisdiction, otherT._Jurisdiction)) return false;
+        if(!comparer.Equals(_LegalStatusOfSupply, otherT._LegalStatusOfSupply)) return false;
+        if(!comparer.Equals(_ValidityPeriod, otherT._ValidityPeriod)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "identifier":
-            value = Identifier;
-            return Identifier?.Any() == true;
+            value = _Identifier;
+            return _Identifier?.Any() == true;
           case "country":
-            value = Country;
-            return Country is not null;
+            value = _Country;
+            return _Country is not null;
           case "jurisdiction":
-            value = Jurisdiction;
-            return Jurisdiction?.Any() == true;
+            value = _Jurisdiction;
+            return _Jurisdiction?.Any() == true;
           case "legalStatusOfSupply":
-            value = LegalStatusOfSupply;
-            return LegalStatusOfSupply is not null;
+            value = _LegalStatusOfSupply;
+            return _LegalStatusOfSupply is not null;
           case "validityPeriod":
-            value = ValidityPeriod;
-            return ValidityPeriod is not null;
+            value = _ValidityPeriod;
+            return _ValidityPeriod is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "identifier":
-            Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+            Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
             return this;
           case "country":
-            Country = (Hl7.Fhir.Model.CodeableConcept)value;
+            Country = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "jurisdiction":
-            Jurisdiction = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Jurisdiction = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "legalStatusOfSupply":
-            LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)value;
+            LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "validityPeriod":
-            ValidityPeriod = (Hl7.Fhir.Model.Period)value;
+            ValidityPeriod = (Hl7.Fhir.Model.Period?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -228,11 +228,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-        if (Country is not null) yield return new KeyValuePair<string,object>("country",Country);
-        if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
-        if (LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
-        if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
+        if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Country is not null) yield return new KeyValuePair<string,object>("country",_Country);
+        if (_Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
+        if (_LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",_LegalStatusOfSupply);
+        if (_ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
       }
 
     }
@@ -255,13 +255,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier Identifier
+      public Hl7.Fhir.Model.Identifier? Identifier
       {
         get { return _Identifier; }
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
-      private Hl7.Fhir.Model.Identifier _Identifier;
+      private Hl7.Fhir.Model.Identifier? _Identifier;
 
       /// <summary>
       /// Type of procedure.
@@ -269,13 +269,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// Date of procedure.
@@ -284,13 +284,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Date
+      public Hl7.Fhir.Model.DataType? Date
       {
         get { return _Date; }
         set { _Date = value; OnPropertyChanged("Date"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Date;
+      private Hl7.Fhir.Model.DataType? _Date;
 
       /// <summary>
       /// Applcations submitted to obtain a marketing authorization.
@@ -300,26 +300,22 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent> Application
       {
-        get { if(_Application==null) _Application = new List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>(); return _Application; }
+        get => _Application ??= [];
         set { _Application = value; OnPropertyChanged("Application"); }
       }
 
-      private List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent> _Application;
+      private List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>? _Application;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ProcedureComponent;
-
-        if (dest == null)
-        {
+        if(other is not ProcedureComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Date != null) dest.Date = (Hl7.Fhir.Model.DataType)Date.DeepCopyInternal();
-        if(Application.Any()) dest.Application = new List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>(Application.DeepCopyInternal());
+        if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Date is not null) dest.Date = (Hl7.Fhir.Model.DataType)_Date.DeepCopyInternal();
+        if(_Application is not null) dest.Application = new List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>(_Application.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -331,55 +327,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ProcedureComponent;
-        if(otherT == null) return false;
+        if(other is not ProcedureComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Date, otherT.Date)) return false;
-        if(!comparer.ListEquals(Application, otherT.Application)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Date, otherT._Date)) return false;
+        if(!comparer.ListEquals(_Application, otherT._Application)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "identifier":
-            value = Identifier;
-            return Identifier is not null;
+            value = _Identifier;
+            return _Identifier is not null;
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "date":
-            value = Date;
-            return Date is not null;
+            value = _Date;
+            return _Date is not null;
           case "application":
-            value = Application;
-            return Application?.Any() == true;
+            value = _Application;
+            return _Application?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "identifier":
-            Identifier = (Hl7.Fhir.Model.Identifier)value;
+            Identifier = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "date":
-            Date = (Hl7.Fhir.Model.DataType)value;
+            Date = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "application":
-            Application = (List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>)value;
+            Application = (List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -390,10 +387,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Date is not null) yield return new KeyValuePair<string,object>("date",Date);
-        if (Application?.Any() == true) yield return new KeyValuePair<string,object>("application",Application);
+        if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Date is not null) yield return new KeyValuePair<string,object>("date",_Date);
+        if (_Application?.Any() == true) yield return new KeyValuePair<string,object>("application",_Application);
       }
 
     }
@@ -406,11 +403,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// The medicinal product that is being authorized.
@@ -419,13 +416,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("MedicinalProduct","MedicinalProductPackaged")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// The country in which the marketing authorization has been granted.
@@ -435,11 +432,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Country
     {
-      get { if(_Country==null) _Country = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Country; }
+      get => _Country ??= [];
       set { _Country = value; OnPropertyChanged("Country"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Country;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Country;
 
     /// <summary>
     /// Jurisdiction within a country.
@@ -449,52 +446,49 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get { if(_Jurisdiction==null) _Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Jurisdiction; }
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Jurisdiction;
 
     /// <summary>
     /// The status of the marketing authorization.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Status
+    public Hl7.Fhir.Model.CodeableConcept? Status
     {
       get { return _Status; }
       set { _Status = value; OnPropertyChanged("Status"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Status;
+    private Hl7.Fhir.Model.CodeableConcept? _Status;
 
     /// <summary>
     /// The date at which the given status has become applicable.
     /// </summary>
     [FhirElement("statusDate", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime StatusDateElement
+    public Hl7.Fhir.Model.FhirDateTime? StatusDateElement
     {
       get { return _StatusDateElement; }
       set { _StatusDateElement = value; OnPropertyChanged("StatusDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _StatusDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _StatusDateElement;
 
     /// <summary>
     /// The date at which the given status has become applicable
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string StatusDate
+    public string? StatusDate
     {
-      get { return StatusDateElement != null ? StatusDateElement.Value : null; }
+      get => _StatusDateElement?.Value;
       set
       {
-        if (value == null)
-          StatusDateElement = null;
-        else
-          StatusDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -504,28 +498,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("restoreDate", InSummary=true, Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime RestoreDateElement
+    public Hl7.Fhir.Model.FhirDateTime? RestoreDateElement
     {
       get { return _RestoreDateElement; }
       set { _RestoreDateElement = value; OnPropertyChanged("RestoreDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _RestoreDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _RestoreDateElement;
 
     /// <summary>
     /// The date when a suspended the marketing or the marketing authorization of the product is anticipated to be restored
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string RestoreDate
+    public string? RestoreDate
     {
-      get { return RestoreDateElement != null ? RestoreDateElement.Value : null; }
+      get => _RestoreDateElement?.Value;
       set
       {
-        if (value == null)
-          RestoreDateElement = null;
-        else
-          RestoreDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        RestoreDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RestoreDate");
       }
     }
@@ -535,54 +526,51 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("validityPeriod", InSummary=true, Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Period ValidityPeriod
+    public Hl7.Fhir.Model.Period? ValidityPeriod
     {
       get { return _ValidityPeriod; }
       set { _ValidityPeriod = value; OnPropertyChanged("ValidityPeriod"); }
     }
 
-    private Hl7.Fhir.Model.Period _ValidityPeriod;
+    private Hl7.Fhir.Model.Period? _ValidityPeriod;
 
     /// <summary>
     /// A period of time after authorization before generic product applicatiosn can be submitted.
     /// </summary>
     [FhirElement("dataExclusivityPeriod", InSummary=true, Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.Period DataExclusivityPeriod
+    public Hl7.Fhir.Model.Period? DataExclusivityPeriod
     {
       get { return _DataExclusivityPeriod; }
       set { _DataExclusivityPeriod = value; OnPropertyChanged("DataExclusivityPeriod"); }
     }
 
-    private Hl7.Fhir.Model.Period _DataExclusivityPeriod;
+    private Hl7.Fhir.Model.Period? _DataExclusivityPeriod;
 
     /// <summary>
     /// The date when the first authorization was granted by a Medicines Regulatory Agency.
     /// </summary>
     [FhirElement("dateOfFirstAuthorization", InSummary=true, Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime DateOfFirstAuthorizationElement
+    public Hl7.Fhir.Model.FhirDateTime? DateOfFirstAuthorizationElement
     {
       get { return _DateOfFirstAuthorizationElement; }
       set { _DateOfFirstAuthorizationElement = value; OnPropertyChanged("DateOfFirstAuthorizationElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _DateOfFirstAuthorizationElement;
+    private Hl7.Fhir.Model.FhirDateTime? _DateOfFirstAuthorizationElement;
 
     /// <summary>
     /// The date when the first authorization was granted by a Medicines Regulatory Agency
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string DateOfFirstAuthorization
+    public string? DateOfFirstAuthorization
     {
-      get { return DateOfFirstAuthorizationElement != null ? DateOfFirstAuthorizationElement.Value : null; }
+      get => _DateOfFirstAuthorizationElement?.Value;
       set
       {
-        if (value == null)
-          DateOfFirstAuthorizationElement = null;
-        else
-          DateOfFirstAuthorizationElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateOfFirstAuthorizationElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("DateOfFirstAuthorization");
       }
     }
@@ -592,28 +580,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("internationalBirthDate", InSummary=true, Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime InternationalBirthDateElement
+    public Hl7.Fhir.Model.FhirDateTime? InternationalBirthDateElement
     {
       get { return _InternationalBirthDateElement; }
       set { _InternationalBirthDateElement = value; OnPropertyChanged("InternationalBirthDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _InternationalBirthDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _InternationalBirthDateElement;
 
     /// <summary>
     /// Date of first marketing authorization for a company's new medicinal product in any country in the World
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string InternationalBirthDate
+    public string? InternationalBirthDate
     {
-      get { return InternationalBirthDateElement != null ? InternationalBirthDateElement.Value : null; }
+      get => _InternationalBirthDateElement?.Value;
       set
       {
-        if (value == null)
-          InternationalBirthDateElement = null;
-        else
-          InternationalBirthDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        InternationalBirthDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("InternationalBirthDate");
       }
     }
@@ -623,13 +608,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("legalBasis", InSummary=true, Order=200)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept LegalBasis
+    public Hl7.Fhir.Model.CodeableConcept? LegalBasis
     {
       get { return _LegalBasis; }
       set { _LegalBasis = value; OnPropertyChanged("LegalBasis"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _LegalBasis;
+    private Hl7.Fhir.Model.CodeableConcept? _LegalBasis;
 
     /// <summary>
     /// Authorization in areas within a country.
@@ -639,11 +624,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent> JurisdictionalAuthorization
     {
-      get { if(_JurisdictionalAuthorization==null) _JurisdictionalAuthorization = new List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent>(); return _JurisdictionalAuthorization; }
+      get => _JurisdictionalAuthorization ??= [];
       set { _JurisdictionalAuthorization = value; OnPropertyChanged("JurisdictionalAuthorization"); }
     }
 
-    private List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent> _JurisdictionalAuthorization;
+    private List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent>? _JurisdictionalAuthorization;
 
     /// <summary>
     /// Marketing Authorization Holder.
@@ -652,13 +637,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Holder
+    public Hl7.Fhir.Model.ResourceReference? Holder
     {
       get { return _Holder; }
       set { _Holder = value; OnPropertyChanged("Holder"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Holder;
+    private Hl7.Fhir.Model.ResourceReference? _Holder;
 
     /// <summary>
     /// Medicines Regulatory Agency.
@@ -667,55 +652,51 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Regulator
+    public Hl7.Fhir.Model.ResourceReference? Regulator
     {
       get { return _Regulator; }
       set { _Regulator = value; OnPropertyChanged("Regulator"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Regulator;
+    private Hl7.Fhir.Model.ResourceReference? _Regulator;
 
     /// <summary>
     /// The regulatory procedure for granting or amending a marketing authorization.
     /// </summary>
     [FhirElement("procedure", InSummary=true, Order=240)]
     [DataMember]
-    public Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent Procedure
+    public Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent? Procedure
     {
       get { return _Procedure; }
       set { _Procedure = value; OnPropertyChanged("Procedure"); }
     }
 
-    private Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent _Procedure;
+    private Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent? _Procedure;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as MedicinalProductAuthorization;
-
-      if (dest == null)
-      {
+      if(other is not MedicinalProductAuthorization dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Country.Any()) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopyInternal());
-      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopyInternal());
-      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
-      if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopyInternal();
-      if(RestoreDateElement != null) dest.RestoreDateElement = (Hl7.Fhir.Model.FhirDateTime)RestoreDateElement.DeepCopyInternal();
-      if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopyInternal();
-      if(DataExclusivityPeriod != null) dest.DataExclusivityPeriod = (Hl7.Fhir.Model.Period)DataExclusivityPeriod.DeepCopyInternal();
-      if(DateOfFirstAuthorizationElement != null) dest.DateOfFirstAuthorizationElement = (Hl7.Fhir.Model.FhirDateTime)DateOfFirstAuthorizationElement.DeepCopyInternal();
-      if(InternationalBirthDateElement != null) dest.InternationalBirthDateElement = (Hl7.Fhir.Model.FhirDateTime)InternationalBirthDateElement.DeepCopyInternal();
-      if(LegalBasis != null) dest.LegalBasis = (Hl7.Fhir.Model.CodeableConcept)LegalBasis.DeepCopyInternal();
-      if(JurisdictionalAuthorization.Any()) dest.JurisdictionalAuthorization = new List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent>(JurisdictionalAuthorization.DeepCopyInternal());
-      if(Holder != null) dest.Holder = (Hl7.Fhir.Model.ResourceReference)Holder.DeepCopyInternal();
-      if(Regulator != null) dest.Regulator = (Hl7.Fhir.Model.ResourceReference)Regulator.DeepCopyInternal();
-      if(Procedure != null) dest.Procedure = (Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent)Procedure.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Country is not null) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(_Country.DeepCopyInternal());
+      if(_Jurisdiction is not null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(_Jurisdiction.DeepCopyInternal());
+      if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
+      if(_StatusDateElement is not null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)_StatusDateElement.DeepCopyInternal();
+      if(_RestoreDateElement is not null) dest.RestoreDateElement = (Hl7.Fhir.Model.FhirDateTime)_RestoreDateElement.DeepCopyInternal();
+      if(_ValidityPeriod is not null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)_ValidityPeriod.DeepCopyInternal();
+      if(_DataExclusivityPeriod is not null) dest.DataExclusivityPeriod = (Hl7.Fhir.Model.Period)_DataExclusivityPeriod.DeepCopyInternal();
+      if(_DateOfFirstAuthorizationElement is not null) dest.DateOfFirstAuthorizationElement = (Hl7.Fhir.Model.FhirDateTime)_DateOfFirstAuthorizationElement.DeepCopyInternal();
+      if(_InternationalBirthDateElement is not null) dest.InternationalBirthDateElement = (Hl7.Fhir.Model.FhirDateTime)_InternationalBirthDateElement.DeepCopyInternal();
+      if(_LegalBasis is not null) dest.LegalBasis = (Hl7.Fhir.Model.CodeableConcept)_LegalBasis.DeepCopyInternal();
+      if(_JurisdictionalAuthorization is not null) dest.JurisdictionalAuthorization = new List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent>(_JurisdictionalAuthorization.DeepCopyInternal());
+      if(_Holder is not null) dest.Holder = (Hl7.Fhir.Model.ResourceReference)_Holder.DeepCopyInternal();
+      if(_Regulator is not null) dest.Regulator = (Hl7.Fhir.Model.ResourceReference)_Regulator.DeepCopyInternal();
+      if(_Procedure is not null) dest.Procedure = (Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent)_Procedure.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -727,139 +708,140 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as MedicinalProductAuthorization;
-      if(otherT == null) return false;
+      if(other is not MedicinalProductAuthorization otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.ListEquals(Country, otherT.Country)) return false;
-      if(!comparer.ListEquals(Jurisdiction, otherT.Jurisdiction)) return false;
-      if(!comparer.Equals(Status, otherT.Status)) return false;
-      if(!comparer.Equals(StatusDateElement, otherT.StatusDateElement)) return false;
-      if(!comparer.Equals(RestoreDateElement, otherT.RestoreDateElement)) return false;
-      if(!comparer.Equals(ValidityPeriod, otherT.ValidityPeriod)) return false;
-      if(!comparer.Equals(DataExclusivityPeriod, otherT.DataExclusivityPeriod)) return false;
-      if(!comparer.Equals(DateOfFirstAuthorizationElement, otherT.DateOfFirstAuthorizationElement)) return false;
-      if(!comparer.Equals(InternationalBirthDateElement, otherT.InternationalBirthDateElement)) return false;
-      if(!comparer.Equals(LegalBasis, otherT.LegalBasis)) return false;
-      if(!comparer.ListEquals(JurisdictionalAuthorization, otherT.JurisdictionalAuthorization)) return false;
-      if(!comparer.Equals(Holder, otherT.Holder)) return false;
-      if(!comparer.Equals(Regulator, otherT.Regulator)) return false;
-      if(!comparer.Equals(Procedure, otherT.Procedure)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.ListEquals(_Country, otherT._Country)) return false;
+      if(!comparer.ListEquals(_Jurisdiction, otherT._Jurisdiction)) return false;
+      if(!comparer.Equals(_Status, otherT._Status)) return false;
+      if(!comparer.Equals(_StatusDateElement, otherT._StatusDateElement)) return false;
+      if(!comparer.Equals(_RestoreDateElement, otherT._RestoreDateElement)) return false;
+      if(!comparer.Equals(_ValidityPeriod, otherT._ValidityPeriod)) return false;
+      if(!comparer.Equals(_DataExclusivityPeriod, otherT._DataExclusivityPeriod)) return false;
+      if(!comparer.Equals(_DateOfFirstAuthorizationElement, otherT._DateOfFirstAuthorizationElement)) return false;
+      if(!comparer.Equals(_InternationalBirthDateElement, otherT._InternationalBirthDateElement)) return false;
+      if(!comparer.Equals(_LegalBasis, otherT._LegalBasis)) return false;
+      if(!comparer.ListEquals(_JurisdictionalAuthorization, otherT._JurisdictionalAuthorization)) return false;
+      if(!comparer.Equals(_Holder, otherT._Holder)) return false;
+      if(!comparer.Equals(_Regulator, otherT._Regulator)) return false;
+      if(!comparer.Equals(_Procedure, otherT._Procedure)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "country":
-          value = Country;
-          return Country?.Any() == true;
+          value = _Country;
+          return _Country?.Any() == true;
         case "jurisdiction":
-          value = Jurisdiction;
-          return Jurisdiction?.Any() == true;
+          value = _Jurisdiction;
+          return _Jurisdiction?.Any() == true;
         case "status":
-          value = Status;
-          return Status is not null;
+          value = _Status;
+          return _Status is not null;
         case "statusDate":
-          value = StatusDateElement;
-          return StatusDateElement is not null;
+          value = _StatusDateElement;
+          return _StatusDateElement is not null;
         case "restoreDate":
-          value = RestoreDateElement;
-          return RestoreDateElement is not null;
+          value = _RestoreDateElement;
+          return _RestoreDateElement is not null;
         case "validityPeriod":
-          value = ValidityPeriod;
-          return ValidityPeriod is not null;
+          value = _ValidityPeriod;
+          return _ValidityPeriod is not null;
         case "dataExclusivityPeriod":
-          value = DataExclusivityPeriod;
-          return DataExclusivityPeriod is not null;
+          value = _DataExclusivityPeriod;
+          return _DataExclusivityPeriod is not null;
         case "dateOfFirstAuthorization":
-          value = DateOfFirstAuthorizationElement;
-          return DateOfFirstAuthorizationElement is not null;
+          value = _DateOfFirstAuthorizationElement;
+          return _DateOfFirstAuthorizationElement is not null;
         case "internationalBirthDate":
-          value = InternationalBirthDateElement;
-          return InternationalBirthDateElement is not null;
+          value = _InternationalBirthDateElement;
+          return _InternationalBirthDateElement is not null;
         case "legalBasis":
-          value = LegalBasis;
-          return LegalBasis is not null;
+          value = _LegalBasis;
+          return _LegalBasis is not null;
         case "jurisdictionalAuthorization":
-          value = JurisdictionalAuthorization;
-          return JurisdictionalAuthorization?.Any() == true;
+          value = _JurisdictionalAuthorization;
+          return _JurisdictionalAuthorization?.Any() == true;
         case "holder":
-          value = Holder;
-          return Holder is not null;
+          value = _Holder;
+          return _Holder is not null;
         case "regulator":
-          value = Regulator;
-          return Regulator is not null;
+          value = _Regulator;
+          return _Regulator is not null;
         case "procedure":
-          value = Procedure;
-          return Procedure is not null;
+          value = _Procedure;
+          return _Procedure is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "country":
-          Country = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Country = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "jurisdiction":
-          Jurisdiction = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Jurisdiction = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "status":
-          Status = (Hl7.Fhir.Model.CodeableConcept)value;
+          Status = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "statusDate":
-          StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          StatusDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "restoreDate":
-          RestoreDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          RestoreDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "validityPeriod":
-          ValidityPeriod = (Hl7.Fhir.Model.Period)value;
+          ValidityPeriod = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "dataExclusivityPeriod":
-          DataExclusivityPeriod = (Hl7.Fhir.Model.Period)value;
+          DataExclusivityPeriod = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "dateOfFirstAuthorization":
-          DateOfFirstAuthorizationElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          DateOfFirstAuthorizationElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "internationalBirthDate":
-          InternationalBirthDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          InternationalBirthDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "legalBasis":
-          LegalBasis = (Hl7.Fhir.Model.CodeableConcept)value;
+          LegalBasis = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "jurisdictionalAuthorization":
-          JurisdictionalAuthorization = (List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent>)value;
+          JurisdictionalAuthorization = (List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent>?)value!;
           return this;
         case "holder":
-          Holder = (Hl7.Fhir.Model.ResourceReference)value;
+          Holder = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "regulator":
-          Regulator = (Hl7.Fhir.Model.ResourceReference)value;
+          Regulator = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "procedure":
-          Procedure = (Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent)value;
+          Procedure = (Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -870,22 +852,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Country?.Any() == true) yield return new KeyValuePair<string,object>("country",Country);
-      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
-      if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
-      if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
-      if (RestoreDateElement is not null) yield return new KeyValuePair<string,object>("restoreDate",RestoreDateElement);
-      if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
-      if (DataExclusivityPeriod is not null) yield return new KeyValuePair<string,object>("dataExclusivityPeriod",DataExclusivityPeriod);
-      if (DateOfFirstAuthorizationElement is not null) yield return new KeyValuePair<string,object>("dateOfFirstAuthorization",DateOfFirstAuthorizationElement);
-      if (InternationalBirthDateElement is not null) yield return new KeyValuePair<string,object>("internationalBirthDate",InternationalBirthDateElement);
-      if (LegalBasis is not null) yield return new KeyValuePair<string,object>("legalBasis",LegalBasis);
-      if (JurisdictionalAuthorization?.Any() == true) yield return new KeyValuePair<string,object>("jurisdictionalAuthorization",JurisdictionalAuthorization);
-      if (Holder is not null) yield return new KeyValuePair<string,object>("holder",Holder);
-      if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
-      if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Country?.Any() == true) yield return new KeyValuePair<string,object>("country",_Country);
+      if (_Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
+      if (_Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
+      if (_StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
+      if (_RestoreDateElement is not null) yield return new KeyValuePair<string,object>("restoreDate",_RestoreDateElement);
+      if (_ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
+      if (_DataExclusivityPeriod is not null) yield return new KeyValuePair<string,object>("dataExclusivityPeriod",_DataExclusivityPeriod);
+      if (_DateOfFirstAuthorizationElement is not null) yield return new KeyValuePair<string,object>("dateOfFirstAuthorization",_DateOfFirstAuthorizationElement);
+      if (_InternationalBirthDateElement is not null) yield return new KeyValuePair<string,object>("internationalBirthDate",_InternationalBirthDateElement);
+      if (_LegalBasis is not null) yield return new KeyValuePair<string,object>("legalBasis",_LegalBasis);
+      if (_JurisdictionalAuthorization?.Any() == true) yield return new KeyValuePair<string,object>("jurisdictionalAuthorization",_JurisdictionalAuthorization);
+      if (_Holder is not null) yield return new KeyValuePair<string,object>("holder",_Holder);
+      if (_Regulator is not null) yield return new KeyValuePair<string,object>("regulator",_Regulator);
+      if (_Procedure is not null) yield return new KeyValuePair<string,object>("procedure",_Procedure);
     }
 
   }

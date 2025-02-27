@@ -7,8 +7,11 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -59,12 +62,12 @@ namespace Hl7.Fhir.Model
     /// Must conform to the pattern "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?"
     public const string PATTERN = @"([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?";
 
-    public Date(string value)
+    public Date(string? value)
     {
       Value = value;
     }
 
-    public Date(): this((string)null) {}
+    public Date(): this((string?)null) {}
 
     /// <summary>
     /// Primitive value of the element
@@ -73,9 +76,9 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(SystemPrimitive.Date))]
     [DatePattern]
     [DataMember]
-    public string Value
+    public string? Value
     {
-      get { return ObjectValue is string or null ? (string)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
+      get { return ObjectValue is string or null ? (string?)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
       set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 

@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Specification
         public IEnumerable<StructureDefinitionWalker> Expand()
         {
             if (Current.HasChildren)
-                return new[] { this };
+                return [this];
             else if (Current.Current.ContentReference != null)
             {
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -158,13 +158,15 @@ namespace Hl7.Fhir.Specification
                     throw new StructureDefinitionWalkerException($"The contentReference '{reference}' cannot be resolved.");
 #pragma warning restore CS0618 // Type or member is obsolete
 
-                return new[] { new StructureDefinitionWalker(reference!, _resolver) };
+                return [new StructureDefinitionWalker(reference!, _resolver)];
             }
             else if (Current.Current.Type.Count >= 1)
             {
                 return Current.Current.Type
-                    .GroupBy(t => t.GetTypeProfile(), t => t.TargetProfile)
-                    .Select(group => FromCanonical(group.Key!, group.ToList())); // no use returning multiple "reference" profiles when they only differ in targetReference
+                    .GroupBy(t => t.GetTypeProfile() ?? throw new InvalidOperationException("Found TypeRef without profile or code."),
+                        t => t.TargetProfile)
+                    .Select(group => FromCanonical(group.Key,
+                        group.OfType<string>().ToList())); // no use returning multiple "reference" profiles when they only differ in targetReference
             }
 
             throw new StructureDefinitionWalkerException("Invalid StructureDefinition: element misses either a type reference or " +
@@ -215,7 +217,7 @@ namespace Hl7.Fhir.Specification
 
             return Current.Current.Type
                     .Where(t => t.IsReference() && t.TargetProfile != null)
-                    .Select(t => t.TargetProfile)
+                    .Select(t => t.TargetProfile!)
                     .Select(c => FromCanonical(c));
         }
 

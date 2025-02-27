@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -67,11 +70,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
@@ -80,13 +83,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("EnrollmentResponseStatus")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
+    public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> _StatusElement;
+    private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? _StatusElement;
 
     /// <summary>
     /// active | cancelled | draft | entered-in-error
@@ -95,13 +98,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -113,13 +113,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("EnrollmentRequest")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Request
+    public Hl7.Fhir.Model.ResourceReference? Request
     {
       get { return _Request; }
       set { _Request = value; OnPropertyChanged("Request"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Request;
+    private Hl7.Fhir.Model.ResourceReference? _Request;
 
     /// <summary>
     /// queued | complete | error | partial.
@@ -128,13 +128,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("RemittanceOutcome")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.RemittanceOutcome> OutcomeElement
+    public Code<Hl7.Fhir.Model.RemittanceOutcome>? OutcomeElement
     {
       get { return _OutcomeElement; }
       set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.RemittanceOutcome> _OutcomeElement;
+    private Code<Hl7.Fhir.Model.RemittanceOutcome>? _OutcomeElement;
 
     /// <summary>
     /// queued | complete | error | partial
@@ -143,13 +143,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RemittanceOutcome? Outcome
     {
-      get { return OutcomeElement != null ? OutcomeElement.Value : null; }
+      get => _OutcomeElement?.Value;
       set
       {
-        if (value == null)
-          OutcomeElement = null;
-        else
-          OutcomeElement = new Code<Hl7.Fhir.Model.RemittanceOutcome>(value);
+        OutcomeElement = value is null ? null : new Code<Hl7.Fhir.Model.RemittanceOutcome>(value);
         OnPropertyChanged("Outcome");
       }
     }
@@ -159,28 +156,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("disposition", Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DispositionElement
+    public Hl7.Fhir.Model.FhirString? DispositionElement
     {
       get { return _DispositionElement; }
       set { _DispositionElement = value; OnPropertyChanged("DispositionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DispositionElement;
+    private Hl7.Fhir.Model.FhirString? _DispositionElement;
 
     /// <summary>
     /// Disposition Message
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Disposition
+    public string? Disposition
     {
-      get { return DispositionElement != null ? DispositionElement.Value : null; }
+      get => _DispositionElement?.Value;
       set
       {
-        if (value == null)
-          DispositionElement = null;
-        else
-          DispositionElement = new Hl7.Fhir.Model.FhirString(value);
+        DispositionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Disposition");
       }
     }
@@ -190,28 +184,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("created", Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime CreatedElement
+    public Hl7.Fhir.Model.FhirDateTime? CreatedElement
     {
       get { return _CreatedElement; }
       set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
+    private Hl7.Fhir.Model.FhirDateTime? _CreatedElement;
 
     /// <summary>
     /// Creation date
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Created
+    public string? Created
     {
-      get { return CreatedElement != null ? CreatedElement.Value : null; }
+      get => _CreatedElement?.Value;
       set
       {
-        if (value == null)
-          CreatedElement = null;
-        else
-          CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Created");
       }
     }
@@ -223,13 +214,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Organization
+    public Hl7.Fhir.Model.ResourceReference? Organization
     {
       get { return _Organization; }
       set { _Organization = value; OnPropertyChanged("Organization"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Organization;
+    private Hl7.Fhir.Model.ResourceReference? _Organization;
 
     /// <summary>
     /// Responsible practitioner.
@@ -238,34 +229,30 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference RequestProvider
+    public Hl7.Fhir.Model.ResourceReference? RequestProvider
     {
       get { return _RequestProvider; }
       set { _RequestProvider = value; OnPropertyChanged("RequestProvider"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _RequestProvider;
+    private Hl7.Fhir.Model.ResourceReference? _RequestProvider;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as EnrollmentResponse;
-
-      if (dest == null)
-      {
+      if(other is not EnrollmentResponse dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopyInternal();
-      if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopyInternal();
-      if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.RemittanceOutcome>)OutcomeElement.DeepCopyInternal();
-      if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopyInternal();
-      if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopyInternal();
-      if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopyInternal();
-      if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)_StatusElement.DeepCopyInternal();
+      if(_Request is not null) dest.Request = (Hl7.Fhir.Model.ResourceReference)_Request.DeepCopyInternal();
+      if(_OutcomeElement is not null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.RemittanceOutcome>)_OutcomeElement.DeepCopyInternal();
+      if(_DispositionElement is not null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)_DispositionElement.DeepCopyInternal();
+      if(_CreatedElement is not null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)_CreatedElement.DeepCopyInternal();
+      if(_Organization is not null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)_Organization.DeepCopyInternal();
+      if(_RequestProvider is not null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)_RequestProvider.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -277,83 +264,84 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as EnrollmentResponse;
-      if(otherT == null) return false;
+      if(other is not EnrollmentResponse otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Request, otherT.Request)) return false;
-      if(!comparer.Equals(OutcomeElement, otherT.OutcomeElement)) return false;
-      if(!comparer.Equals(DispositionElement, otherT.DispositionElement)) return false;
-      if(!comparer.Equals(CreatedElement, otherT.CreatedElement)) return false;
-      if(!comparer.Equals(Organization, otherT.Organization)) return false;
-      if(!comparer.Equals(RequestProvider, otherT.RequestProvider)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Request, otherT._Request)) return false;
+      if(!comparer.Equals(_OutcomeElement, otherT._OutcomeElement)) return false;
+      if(!comparer.Equals(_DispositionElement, otherT._DispositionElement)) return false;
+      if(!comparer.Equals(_CreatedElement, otherT._CreatedElement)) return false;
+      if(!comparer.Equals(_Organization, otherT._Organization)) return false;
+      if(!comparer.Equals(_RequestProvider, otherT._RequestProvider)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "request":
-          value = Request;
-          return Request is not null;
+          value = _Request;
+          return _Request is not null;
         case "outcome":
-          value = OutcomeElement;
-          return OutcomeElement is not null;
+          value = _OutcomeElement;
+          return _OutcomeElement is not null;
         case "disposition":
-          value = DispositionElement;
-          return DispositionElement is not null;
+          value = _DispositionElement;
+          return _DispositionElement is not null;
         case "created":
-          value = CreatedElement;
-          return CreatedElement is not null;
+          value = _CreatedElement;
+          return _CreatedElement is not null;
         case "organization":
-          value = Organization;
-          return Organization is not null;
+          value = _Organization;
+          return _Organization is not null;
         case "requestProvider":
-          value = RequestProvider;
-          return RequestProvider is not null;
+          value = _RequestProvider;
+          return _RequestProvider is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
           return this;
         case "request":
-          Request = (Hl7.Fhir.Model.ResourceReference)value;
+          Request = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "outcome":
-          OutcomeElement = (Code<Hl7.Fhir.Model.RemittanceOutcome>)value;
+          OutcomeElement = (Code<Hl7.Fhir.Model.RemittanceOutcome>?)value;
           return this;
         case "disposition":
-          DispositionElement = (Hl7.Fhir.Model.FhirString)value;
+          DispositionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "created":
-          CreatedElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "organization":
-          Organization = (Hl7.Fhir.Model.ResourceReference)value;
+          Organization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "requestProvider":
-          RequestProvider = (Hl7.Fhir.Model.ResourceReference)value;
+          RequestProvider = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -364,14 +352,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);
-      if (OutcomeElement is not null) yield return new KeyValuePair<string,object>("outcome",OutcomeElement);
-      if (DispositionElement is not null) yield return new KeyValuePair<string,object>("disposition",DispositionElement);
-      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
-      if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
-      if (RequestProvider is not null) yield return new KeyValuePair<string,object>("requestProvider",RequestProvider);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Request is not null) yield return new KeyValuePair<string,object>("request",_Request);
+      if (_OutcomeElement is not null) yield return new KeyValuePair<string,object>("outcome",_OutcomeElement);
+      if (_DispositionElement is not null) yield return new KeyValuePair<string,object>("disposition",_DispositionElement);
+      if (_CreatedElement is not null) yield return new KeyValuePair<string,object>("created",_CreatedElement);
+      if (_Organization is not null) yield return new KeyValuePair<string,object>("organization",_Organization);
+      if (_RequestProvider is not null) yield return new KeyValuePair<string,object>("requestProvider",_RequestProvider);
     }
 
   }

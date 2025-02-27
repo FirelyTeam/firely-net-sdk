@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Test
             extracted.Response.LastModified.Should().Be(response.Content.Headers.LastModified);
             extracted.Response.Location.Should().Be(response.Headers.Location.OriginalString);
             response.GetRequestUri().Should().Be(response.RequestMessage.RequestUri);
-            Enum.Parse<HttpStatusCode>(extracted.Response.Status).Should().Be(response.StatusCode);
+            Enum.Parse<HttpStatusCode>(extracted.Response.Status!).Should().Be(response.StatusCode);
             extracted.Response.GetHttpHeaders().GetValues("Test-key").Should().BeEquivalentTo("Test-value");
         }
 
@@ -361,9 +361,9 @@ namespace Hl7.Fhir.Test
 
             b.Content.Should().BeNull();
             b.Data.Should().BeEquivalentTo(data);
-            b.SecurityContext.Reference.Should().Be("http://nu.nl");
+            b.SecurityContext!.Reference.Should().Be("http://nu.nl");
             b.ContentType.Should().Be("application/crap");
-            b.Meta.VersionId.Should().Be("123");
+            b.Meta!.VersionId.Should().Be("123");
             b.Meta.LastUpdated.Should().Be(when);
             b.Id.Should().Be("4");
 

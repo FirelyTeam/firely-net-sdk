@@ -69,5 +69,5 @@ public partial class FhirString : ICoded
     protected internal override P.Any? TryConvertToSystemTypeInternal() => Value is not null ? new P.String(Value) : null;
 
     /// <inheritdoc cref="ICoded.ToCodings"/>
-    public IEnumerable<Coding> ToCodings() => [new(null, Value)];
+    public IReadOnlyCollection<Coding> ToCodings() => [new(null, Value)];
 }

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -101,13 +104,13 @@ namespace Hl7.Fhir.Model
     [Binding("NarrativeStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
+    public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>? _StatusElement;
 
     /// <summary>
     /// generated | extensions | additional | empty
@@ -116,13 +119,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Narrative.NarrativeStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -133,44 +133,37 @@ namespace Hl7.Fhir.Model
     [FhirElement("div", XmlSerialization = XmlRepresentation.XHtml, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.XHtml DivElement
+    public Hl7.Fhir.Model.XHtml? DivElement
     {
       get { return _DivElement; }
       set { _DivElement = value; OnPropertyChanged("DivElement"); }
     }
 
-    private Hl7.Fhir.Model.XHtml _DivElement;
+    private Hl7.Fhir.Model.XHtml? _DivElement;
 
     /// <summary>
     /// Limited xhtml content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Div
+    public string? Div
     {
-      get { return DivElement != null ? DivElement.Value : null; }
+      get => _DivElement?.Value;
       set
       {
-        if (value == null)
-          DivElement = null;
-        else
-          DivElement = new Hl7.Fhir.Model.XHtml(value);
+        DivElement = value is null ? null : new Hl7.Fhir.Model.XHtml(value);
         OnPropertyChanged("Div");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Narrative;
-
-      if (dest == null)
-      {
+      if(other is not Narrative dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>)StatusElement.DeepCopyInternal();
-      if(DivElement != null) dest.DivElement = (Hl7.Fhir.Model.XHtml)DivElement.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>)_StatusElement.DeepCopyInternal();
+      if(_DivElement is not null) dest.DivElement = (Hl7.Fhir.Model.XHtml)_DivElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -182,41 +175,42 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Narrative;
-      if(otherT == null) return false;
+      if(other is not Narrative otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(DivElement, otherT.DivElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_DivElement, otherT._DivElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "div":
-          value = DivElement;
-          return DivElement is not null;
+          value = _DivElement;
+          return _DivElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>?)value;
           return this;
         case "div":
-          DivElement = (Hl7.Fhir.Model.XHtml)value;
+          DivElement = (Hl7.Fhir.Model.XHtml?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -227,8 +221,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (DivElement is not null) yield return new KeyValuePair<string,object>("div",DivElement);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_DivElement is not null) yield return new KeyValuePair<string,object>("div",_DivElement);
     }
 
   }

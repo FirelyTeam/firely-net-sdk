@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -56,12 +59,8 @@ namespace Hl7.Fhir.Model
   {
     protected internal virtual void CopyToInternal(Base other)
     {
-      var dest = other as Base;
-
-      if (dest == null)
-      {
+      if(other is not Base dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       if (_annotations is not null)
         dest.annotations.AddRange(annotations);

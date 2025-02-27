@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         private class ResourceWithChoiceReference(DataType medication) : ICoded<DataType>
         {
             DataType ICoded<DataType>.Code { get => medication; set => throw new NotImplementedException(); }
-            IEnumerable<Coding> ICoded.ToCodings() => medication.ToCodings();
+            IReadOnlyCollection<Coding> ICoded.ToCodings() => medication.ToCodings();
         }
 
         [TestMethod]
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             ]).Should().BeTrue();
 
             static Coding c(string s, string v) => new(s, v);
-            static IEnumerable<Coding> l(Coding c) => [c];
+            static IReadOnlyCollection<Coding> l(Coding c) => [c];
         }
     }
 

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -62,26 +65,26 @@ namespace Hl7.Fhir.Model
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept ManufacturedDoseForm
+    public Hl7.Fhir.Model.CodeableConcept? ManufacturedDoseForm
     {
       get { return _ManufacturedDoseForm; }
       set { _ManufacturedDoseForm = value; OnPropertyChanged("ManufacturedDoseForm"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _ManufacturedDoseForm;
+    private Hl7.Fhir.Model.CodeableConcept? _ManufacturedDoseForm;
 
     /// <summary>
     /// The “real world” units in which the quantity of the manufactured item is described.
     /// </summary>
     [FhirElement("unitOfPresentation", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept UnitOfPresentation
+    public Hl7.Fhir.Model.CodeableConcept? UnitOfPresentation
     {
       get { return _UnitOfPresentation; }
       set { _UnitOfPresentation = value; OnPropertyChanged("UnitOfPresentation"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _UnitOfPresentation;
+    private Hl7.Fhir.Model.CodeableConcept? _UnitOfPresentation;
 
     /// <summary>
     /// The quantity or "count number" of the manufactured item.
@@ -89,13 +92,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("quantity", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Quantity
+    public Hl7.Fhir.Model.Quantity? Quantity
     {
       get { return _Quantity; }
       set { _Quantity = value; OnPropertyChanged("Quantity"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Quantity;
+    private Hl7.Fhir.Model.Quantity? _Quantity;
 
     /// <summary>
     /// Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues).
@@ -107,11 +110,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
+      get => _Manufacturer ??= [];
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Manufacturer;
 
     /// <summary>
     /// Ingredient.
@@ -123,24 +126,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Ingredient
     {
-      get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(); return _Ingredient; }
+      get => _Ingredient ??= [];
       set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Ingredient;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Ingredient;
 
     /// <summary>
     /// Dimensions, color etc.
     /// </summary>
     [FhirElement("physicalCharacteristics", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.ProdCharacteristic PhysicalCharacteristics
+    public Hl7.Fhir.Model.ProdCharacteristic? PhysicalCharacteristics
     {
       get { return _PhysicalCharacteristics; }
       set { _PhysicalCharacteristics = value; OnPropertyChanged("PhysicalCharacteristics"); }
     }
 
-    private Hl7.Fhir.Model.ProdCharacteristic _PhysicalCharacteristics;
+    private Hl7.Fhir.Model.ProdCharacteristic? _PhysicalCharacteristics;
 
     /// <summary>
     /// Other codeable characteristics.
@@ -150,29 +153,25 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OtherCharacteristics
     {
-      get { if(_OtherCharacteristics==null) _OtherCharacteristics = new List<Hl7.Fhir.Model.CodeableConcept>(); return _OtherCharacteristics; }
+      get => _OtherCharacteristics ??= [];
       set { _OtherCharacteristics = value; OnPropertyChanged("OtherCharacteristics"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _OtherCharacteristics;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _OtherCharacteristics;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as MedicinalProductManufactured;
-
-      if (dest == null)
-      {
+      if(other is not MedicinalProductManufactured dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(ManufacturedDoseForm != null) dest.ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)ManufacturedDoseForm.DeepCopyInternal();
-      if(UnitOfPresentation != null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)UnitOfPresentation.DeepCopyInternal();
-      if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
-      if(Manufacturer.Any()) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopyInternal());
-      if(Ingredient.Any()) dest.Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(Ingredient.DeepCopyInternal());
-      if(PhysicalCharacteristics != null) dest.PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic)PhysicalCharacteristics.DeepCopyInternal();
-      if(OtherCharacteristics.Any()) dest.OtherCharacteristics = new List<Hl7.Fhir.Model.CodeableConcept>(OtherCharacteristics.DeepCopyInternal());
+      if(_ManufacturedDoseForm is not null) dest.ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)_ManufacturedDoseForm.DeepCopyInternal();
+      if(_UnitOfPresentation is not null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)_UnitOfPresentation.DeepCopyInternal();
+      if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
+      if(_Manufacturer is not null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(_Manufacturer.DeepCopyInternal());
+      if(_Ingredient is not null) dest.Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(_Ingredient.DeepCopyInternal());
+      if(_PhysicalCharacteristics is not null) dest.PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic)_PhysicalCharacteristics.DeepCopyInternal();
+      if(_OtherCharacteristics is not null) dest.OtherCharacteristics = new List<Hl7.Fhir.Model.CodeableConcept>(_OtherCharacteristics.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -184,76 +183,77 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as MedicinalProductManufactured;
-      if(otherT == null) return false;
+      if(other is not MedicinalProductManufactured otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(ManufacturedDoseForm, otherT.ManufacturedDoseForm)) return false;
-      if(!comparer.Equals(UnitOfPresentation, otherT.UnitOfPresentation)) return false;
-      if(!comparer.Equals(Quantity, otherT.Quantity)) return false;
-      if(!comparer.ListEquals(Manufacturer, otherT.Manufacturer)) return false;
-      if(!comparer.ListEquals(Ingredient, otherT.Ingredient)) return false;
-      if(!comparer.Equals(PhysicalCharacteristics, otherT.PhysicalCharacteristics)) return false;
-      if(!comparer.ListEquals(OtherCharacteristics, otherT.OtherCharacteristics)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_ManufacturedDoseForm, otherT._ManufacturedDoseForm)) return false;
+      if(!comparer.Equals(_UnitOfPresentation, otherT._UnitOfPresentation)) return false;
+      if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+      if(!comparer.ListEquals(_Manufacturer, otherT._Manufacturer)) return false;
+      if(!comparer.ListEquals(_Ingredient, otherT._Ingredient)) return false;
+      if(!comparer.Equals(_PhysicalCharacteristics, otherT._PhysicalCharacteristics)) return false;
+      if(!comparer.ListEquals(_OtherCharacteristics, otherT._OtherCharacteristics)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "manufacturedDoseForm":
-          value = ManufacturedDoseForm;
-          return ManufacturedDoseForm is not null;
+          value = _ManufacturedDoseForm;
+          return _ManufacturedDoseForm is not null;
         case "unitOfPresentation":
-          value = UnitOfPresentation;
-          return UnitOfPresentation is not null;
+          value = _UnitOfPresentation;
+          return _UnitOfPresentation is not null;
         case "quantity":
-          value = Quantity;
-          return Quantity is not null;
+          value = _Quantity;
+          return _Quantity is not null;
         case "manufacturer":
-          value = Manufacturer;
-          return Manufacturer?.Any() == true;
+          value = _Manufacturer;
+          return _Manufacturer?.Any() == true;
         case "ingredient":
-          value = Ingredient;
-          return Ingredient?.Any() == true;
+          value = _Ingredient;
+          return _Ingredient?.Any() == true;
         case "physicalCharacteristics":
-          value = PhysicalCharacteristics;
-          return PhysicalCharacteristics is not null;
+          value = _PhysicalCharacteristics;
+          return _PhysicalCharacteristics is not null;
         case "otherCharacteristics":
-          value = OtherCharacteristics;
-          return OtherCharacteristics?.Any() == true;
+          value = _OtherCharacteristics;
+          return _OtherCharacteristics?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "manufacturedDoseForm":
-          ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)value;
+          ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "unitOfPresentation":
-          UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)value;
+          UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "quantity":
-          Quantity = (Hl7.Fhir.Model.Quantity)value;
+          Quantity = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "manufacturer":
-          Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "ingredient":
-          Ingredient = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Ingredient = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "physicalCharacteristics":
-          PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic)value;
+          PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic?)value;
           return this;
         case "otherCharacteristics":
-          OtherCharacteristics = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          OtherCharacteristics = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -264,13 +264,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (ManufacturedDoseForm is not null) yield return new KeyValuePair<string,object>("manufacturedDoseForm",ManufacturedDoseForm);
-      if (UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",UnitOfPresentation);
-      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
-      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
-      if (PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",PhysicalCharacteristics);
-      if (OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
+      if (_ManufacturedDoseForm is not null) yield return new KeyValuePair<string,object>("manufacturedDoseForm",_ManufacturedDoseForm);
+      if (_UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",_UnitOfPresentation);
+      if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+      if (_Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (_Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",_Ingredient);
+      if (_PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",_PhysicalCharacteristics);
+      if (_OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",_OtherCharacteristics);
     }
 
   }

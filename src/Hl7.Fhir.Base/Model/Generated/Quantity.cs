@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -105,13 +108,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("value", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDecimal ValueElement
+    public Hl7.Fhir.Model.FhirDecimal? ValueElement
     {
       get { return _ValueElement; }
       set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDecimal _ValueElement;
+    private Hl7.Fhir.Model.FhirDecimal? _ValueElement;
 
     /// <summary>
     /// Numerical value (with implicit precision)
@@ -120,13 +123,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Value
     {
-      get { return ValueElement != null ? ValueElement.Value : null; }
+      get => _ValueElement?.Value;
       set
       {
-        if (value == null)
-          ValueElement = null;
-        else
-          ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
+        ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
         OnPropertyChanged("Value");
       }
     }
@@ -138,13 +138,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("QuantityComparator")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Quantity.QuantityComparator> ComparatorElement
+    public Code<Hl7.Fhir.Model.Quantity.QuantityComparator>? ComparatorElement
     {
       get { return _ComparatorElement; }
       set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Quantity.QuantityComparator> _ComparatorElement;
+    private Code<Hl7.Fhir.Model.Quantity.QuantityComparator>? _ComparatorElement;
 
     /// <summary>
     /// &lt; | &lt;= | &gt;= | &gt; | ad - how to understand the value
@@ -153,13 +153,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Quantity.QuantityComparator? Comparator
     {
-      get { return ComparatorElement != null ? ComparatorElement.Value : null; }
+      get => _ComparatorElement?.Value;
       set
       {
-        if (value == null)
-          ComparatorElement = null;
-        else
-          ComparatorElement = new Code<Hl7.Fhir.Model.Quantity.QuantityComparator>(value);
+        ComparatorElement = value is null ? null : new Code<Hl7.Fhir.Model.Quantity.QuantityComparator>(value);
         OnPropertyChanged("Comparator");
       }
     }
@@ -169,28 +166,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("unit", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString UnitElement
+    public Hl7.Fhir.Model.FhirString? UnitElement
     {
       get { return _UnitElement; }
       set { _UnitElement = value; OnPropertyChanged("UnitElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _UnitElement;
+    private Hl7.Fhir.Model.FhirString? _UnitElement;
 
     /// <summary>
     /// Unit representation
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Unit
+    public string? Unit
     {
-      get { return UnitElement != null ? UnitElement.Value : null; }
+      get => _UnitElement?.Value;
       set
       {
-        if (value == null)
-          UnitElement = null;
-        else
-          UnitElement = new Hl7.Fhir.Model.FhirString(value);
+        UnitElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Unit");
       }
     }
@@ -200,28 +194,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("system", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri SystemElement
+    public Hl7.Fhir.Model.FhirUri? SystemElement
     {
       get { return _SystemElement; }
       set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _SystemElement;
+    private Hl7.Fhir.Model.FhirUri? _SystemElement;
 
     /// <summary>
     /// System that defines coded unit form
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string System
+    public string? System
     {
-      get { return SystemElement != null ? SystemElement.Value : null; }
+      get => _SystemElement?.Value;
       set
       {
-        if (value == null)
-          SystemElement = null;
-        else
-          SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+        SystemElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("System");
       }
     }
@@ -231,47 +222,40 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("code", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Code CodeElement
+    public Hl7.Fhir.Model.Code? CodeElement
     {
       get { return _CodeElement; }
       set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _CodeElement;
+    private Hl7.Fhir.Model.Code? _CodeElement;
 
     /// <summary>
     /// Coded form of the unit
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Code
+    public string? Code
     {
-      get { return CodeElement != null ? CodeElement.Value : null; }
+      get => _CodeElement?.Value;
       set
       {
-        if (value == null)
-          CodeElement = null;
-        else
-          CodeElement = new Hl7.Fhir.Model.Code(value);
+        CodeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Code");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Quantity;
-
-      if (dest == null)
-      {
+      if(other is not Quantity dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopyInternal();
-      if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>)ComparatorElement.DeepCopyInternal();
-      if(UnitElement != null) dest.UnitElement = (Hl7.Fhir.Model.FhirString)UnitElement.DeepCopyInternal();
-      if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopyInternal();
-      if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopyInternal();
+      if(_ValueElement is not null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)_ValueElement.DeepCopyInternal();
+      if(_ComparatorElement is not null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>)_ComparatorElement.DeepCopyInternal();
+      if(_UnitElement is not null) dest.UnitElement = (Hl7.Fhir.Model.FhirString)_UnitElement.DeepCopyInternal();
+      if(_SystemElement is not null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)_SystemElement.DeepCopyInternal();
+      if(_CodeElement is not null) dest.CodeElement = (Hl7.Fhir.Model.Code)_CodeElement.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -283,62 +267,63 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Quantity;
-      if(otherT == null) return false;
+      if(other is not Quantity otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(ValueElement, otherT.ValueElement)) return false;
-      if(!comparer.Equals(ComparatorElement, otherT.ComparatorElement)) return false;
-      if(!comparer.Equals(UnitElement, otherT.UnitElement)) return false;
-      if(!comparer.Equals(SystemElement, otherT.SystemElement)) return false;
-      if(!comparer.Equals(CodeElement, otherT.CodeElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_ValueElement, otherT._ValueElement)) return false;
+      if(!comparer.Equals(_ComparatorElement, otherT._ComparatorElement)) return false;
+      if(!comparer.Equals(_UnitElement, otherT._UnitElement)) return false;
+      if(!comparer.Equals(_SystemElement, otherT._SystemElement)) return false;
+      if(!comparer.Equals(_CodeElement, otherT._CodeElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "value":
-          value = ValueElement;
-          return ValueElement is not null;
+          value = _ValueElement;
+          return _ValueElement is not null;
         case "comparator":
-          value = ComparatorElement;
-          return ComparatorElement is not null;
+          value = _ComparatorElement;
+          return _ComparatorElement is not null;
         case "unit":
-          value = UnitElement;
-          return UnitElement is not null;
+          value = _UnitElement;
+          return _UnitElement is not null;
         case "system":
-          value = SystemElement;
-          return SystemElement is not null;
+          value = _SystemElement;
+          return _SystemElement is not null;
         case "code":
-          value = CodeElement;
-          return CodeElement is not null;
+          value = _CodeElement;
+          return _CodeElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "value":
-          ValueElement = (Hl7.Fhir.Model.FhirDecimal)value;
+          ValueElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "comparator":
-          ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>)value;
+          ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>?)value;
           return this;
         case "unit":
-          UnitElement = (Hl7.Fhir.Model.FhirString)value;
+          UnitElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "system":
-          SystemElement = (Hl7.Fhir.Model.FhirUri)value;
+          SystemElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "code":
-          CodeElement = (Hl7.Fhir.Model.Code)value;
+          CodeElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -349,11 +334,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
-      if (ComparatorElement is not null) yield return new KeyValuePair<string,object>("comparator",ComparatorElement);
-      if (UnitElement is not null) yield return new KeyValuePair<string,object>("unit",UnitElement);
-      if (SystemElement is not null) yield return new KeyValuePair<string,object>("system",SystemElement);
-      if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
+      if (_ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (_ComparatorElement is not null) yield return new KeyValuePair<string,object>("comparator",_ComparatorElement);
+      if (_UnitElement is not null) yield return new KeyValuePair<string,object>("unit",_UnitElement);
+      if (_SystemElement is not null) yield return new KeyValuePair<string,object>("system",_SystemElement);
+      if (_CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
     }
 
   }

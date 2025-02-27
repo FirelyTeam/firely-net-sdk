@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -172,13 +175,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=40)]
       [Binding("ResearchSubjectStateType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn.
@@ -186,13 +189,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("subjectState", Order=50, FiveWs="FiveWs.status")]
       [Binding("ResearchSubjectProgresss")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept SubjectState
+      public Hl7.Fhir.Model.CodeableConcept? SubjectState
       {
         get { return _SubjectState; }
         set { _SubjectState = value; OnPropertyChanged("SubjectState"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _SubjectState;
+      private Hl7.Fhir.Model.CodeableConcept? _SubjectState;
 
       /// <summary>
       /// SignedUp | Screened | Randomized.
@@ -200,13 +203,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("milestone", Order=60, FiveWs="FiveWs.status")]
       [Binding("ResearchSubjectMilestone")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Milestone
+      public Hl7.Fhir.Model.CodeableConcept? Milestone
       {
         get { return _Milestone; }
         set { _Milestone = value; OnPropertyChanged("Milestone"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Milestone;
+      private Hl7.Fhir.Model.CodeableConcept? _Milestone;
 
       /// <summary>
       /// State change reason.
@@ -214,41 +217,38 @@ namespace Hl7.Fhir.Model
       [FhirElement("reason", Order=70)]
       [Binding("StateChangeReason")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Reason
+      public Hl7.Fhir.Model.CodeableConcept? Reason
       {
         get { return _Reason; }
         set { _Reason = value; OnPropertyChanged("Reason"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Reason;
+      private Hl7.Fhir.Model.CodeableConcept? _Reason;
 
       /// <summary>
       /// State change date.
       /// </summary>
       [FhirElement("startDate", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime StartDateElement
+      public Hl7.Fhir.Model.FhirDateTime? StartDateElement
       {
         get { return _StartDateElement; }
         set { _StartDateElement = value; OnPropertyChanged("StartDateElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDateTime _StartDateElement;
+      private Hl7.Fhir.Model.FhirDateTime? _StartDateElement;
 
       /// <summary>
       /// State change date
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string StartDate
+      public string? StartDate
       {
-        get { return StartDateElement != null ? StartDateElement.Value : null; }
+        get => _StartDateElement?.Value;
         set
         {
-          if (value == null)
-            StartDateElement = null;
-          else
-            StartDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+          StartDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("StartDate");
         }
       }
@@ -258,48 +258,41 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("endDate", Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime EndDateElement
+      public Hl7.Fhir.Model.FhirDateTime? EndDateElement
       {
         get { return _EndDateElement; }
         set { _EndDateElement = value; OnPropertyChanged("EndDateElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDateTime _EndDateElement;
+      private Hl7.Fhir.Model.FhirDateTime? _EndDateElement;
 
       /// <summary>
       /// State change date
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string EndDate
+      public string? EndDate
       {
-        get { return EndDateElement != null ? EndDateElement.Value : null; }
+        get => _EndDateElement?.Value;
         set
         {
-          if (value == null)
-            EndDateElement = null;
-          else
-            EndDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+          EndDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("EndDate");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ProgressComponent;
-
-        if (dest == null)
-        {
+        if(other is not ProgressComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(SubjectState != null) dest.SubjectState = (Hl7.Fhir.Model.CodeableConcept)SubjectState.DeepCopyInternal();
-        if(Milestone != null) dest.Milestone = (Hl7.Fhir.Model.CodeableConcept)Milestone.DeepCopyInternal();
-        if(Reason != null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)Reason.DeepCopyInternal();
-        if(StartDateElement != null) dest.StartDateElement = (Hl7.Fhir.Model.FhirDateTime)StartDateElement.DeepCopyInternal();
-        if(EndDateElement != null) dest.EndDateElement = (Hl7.Fhir.Model.FhirDateTime)EndDateElement.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_SubjectState is not null) dest.SubjectState = (Hl7.Fhir.Model.CodeableConcept)_SubjectState.DeepCopyInternal();
+        if(_Milestone is not null) dest.Milestone = (Hl7.Fhir.Model.CodeableConcept)_Milestone.DeepCopyInternal();
+        if(_Reason is not null) dest.Reason = (Hl7.Fhir.Model.CodeableConcept)_Reason.DeepCopyInternal();
+        if(_StartDateElement is not null) dest.StartDateElement = (Hl7.Fhir.Model.FhirDateTime)_StartDateElement.DeepCopyInternal();
+        if(_EndDateElement is not null) dest.EndDateElement = (Hl7.Fhir.Model.FhirDateTime)_EndDateElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -311,69 +304,70 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ProgressComponent;
-        if(otherT == null) return false;
+        if(other is not ProgressComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(SubjectState, otherT.SubjectState)) return false;
-        if(!comparer.Equals(Milestone, otherT.Milestone)) return false;
-        if(!comparer.Equals(Reason, otherT.Reason)) return false;
-        if(!comparer.Equals(StartDateElement, otherT.StartDateElement)) return false;
-        if(!comparer.Equals(EndDateElement, otherT.EndDateElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_SubjectState, otherT._SubjectState)) return false;
+        if(!comparer.Equals(_Milestone, otherT._Milestone)) return false;
+        if(!comparer.Equals(_Reason, otherT._Reason)) return false;
+        if(!comparer.Equals(_StartDateElement, otherT._StartDateElement)) return false;
+        if(!comparer.Equals(_EndDateElement, otherT._EndDateElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "subjectState":
-            value = SubjectState;
-            return SubjectState is not null;
+            value = _SubjectState;
+            return _SubjectState is not null;
           case "milestone":
-            value = Milestone;
-            return Milestone is not null;
+            value = _Milestone;
+            return _Milestone is not null;
           case "reason":
-            value = Reason;
-            return Reason is not null;
+            value = _Reason;
+            return _Reason is not null;
           case "startDate":
-            value = StartDateElement;
-            return StartDateElement is not null;
+            value = _StartDateElement;
+            return _StartDateElement is not null;
           case "endDate":
-            value = EndDateElement;
-            return EndDateElement is not null;
+            value = _EndDateElement;
+            return _EndDateElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "subjectState":
-            SubjectState = (Hl7.Fhir.Model.CodeableConcept)value;
+            SubjectState = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "milestone":
-            Milestone = (Hl7.Fhir.Model.CodeableConcept)value;
+            Milestone = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "reason":
-            Reason = (Hl7.Fhir.Model.CodeableConcept)value;
+            Reason = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "startDate":
-            StartDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+            StartDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           case "endDate":
-            EndDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+            EndDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -384,12 +378,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (SubjectState is not null) yield return new KeyValuePair<string,object>("subjectState",SubjectState);
-        if (Milestone is not null) yield return new KeyValuePair<string,object>("milestone",Milestone);
-        if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
-        if (StartDateElement is not null) yield return new KeyValuePair<string,object>("startDate",StartDateElement);
-        if (EndDateElement is not null) yield return new KeyValuePair<string,object>("endDate",EndDateElement);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_SubjectState is not null) yield return new KeyValuePair<string,object>("subjectState",_SubjectState);
+        if (_Milestone is not null) yield return new KeyValuePair<string,object>("milestone",_Milestone);
+        if (_Reason is not null) yield return new KeyValuePair<string,object>("reason",_Reason);
+        if (_StartDateElement is not null) yield return new KeyValuePair<string,object>("startDate",_StartDateElement);
+        if (_EndDateElement is not null) yield return new KeyValuePair<string,object>("endDate",_EndDateElement);
       }
 
     }
@@ -402,11 +396,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// draft | active | retired | unknown.
@@ -416,13 +410,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.PublicationStatus>? _StatusElement;
 
     /// <summary>
     /// draft | active | retired | unknown
@@ -431,13 +425,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -450,24 +441,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent> Progress
     {
-      get { if(_Progress==null) _Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(); return _Progress; }
+      get => _Progress ??= [];
       set { _Progress = value; OnPropertyChanged("Progress"); }
     }
 
-    private List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent> _Progress;
+    private List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>? _Progress;
 
     /// <summary>
     /// Start and end of participation.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     /// <summary>
     /// Study subject is part of.
@@ -477,13 +468,13 @@ namespace Hl7.Fhir.Model
     [References("ResearchStudy")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Study
+    public Hl7.Fhir.Model.ResourceReference? Study
     {
       get { return _Study; }
       set { _Study = value; OnPropertyChanged("Study"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Study;
+    private Hl7.Fhir.Model.ResourceReference? _Study;
 
     /// <summary>
     /// Who or what is part of study.
@@ -493,41 +484,38 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group","Specimen","Device","Medication","Substance","BiologicallyDerivedProduct")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// What path should be followed.
     /// </summary>
     [FhirElement("assignedComparisonGroup", Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.Id AssignedComparisonGroupElement
+    public Hl7.Fhir.Model.Id? AssignedComparisonGroupElement
     {
       get { return _AssignedComparisonGroupElement; }
       set { _AssignedComparisonGroupElement = value; OnPropertyChanged("AssignedComparisonGroupElement"); }
     }
 
-    private Hl7.Fhir.Model.Id _AssignedComparisonGroupElement;
+    private Hl7.Fhir.Model.Id? _AssignedComparisonGroupElement;
 
     /// <summary>
     /// What path should be followed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string AssignedComparisonGroup
+    public string? AssignedComparisonGroup
     {
-      get { return AssignedComparisonGroupElement != null ? AssignedComparisonGroupElement.Value : null; }
+      get => _AssignedComparisonGroupElement?.Value;
       set
       {
-        if (value == null)
-          AssignedComparisonGroupElement = null;
-        else
-          AssignedComparisonGroupElement = new Hl7.Fhir.Model.Id(value);
+        AssignedComparisonGroupElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("AssignedComparisonGroup");
       }
     }
@@ -537,28 +525,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("actualComparisonGroup", Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Id ActualComparisonGroupElement
+    public Hl7.Fhir.Model.Id? ActualComparisonGroupElement
     {
       get { return _ActualComparisonGroupElement; }
       set { _ActualComparisonGroupElement = value; OnPropertyChanged("ActualComparisonGroupElement"); }
     }
 
-    private Hl7.Fhir.Model.Id _ActualComparisonGroupElement;
+    private Hl7.Fhir.Model.Id? _ActualComparisonGroupElement;
 
     /// <summary>
     /// What path was followed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ActualComparisonGroup
+    public string? ActualComparisonGroup
     {
-      get { return ActualComparisonGroupElement != null ? ActualComparisonGroupElement.Value : null; }
+      get => _ActualComparisonGroupElement?.Value;
       set
       {
-        if (value == null)
-          ActualComparisonGroupElement = null;
-        else
-          ActualComparisonGroupElement = new Hl7.Fhir.Model.Id(value);
+        ActualComparisonGroupElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("ActualComparisonGroup");
       }
     }
@@ -573,33 +558,29 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Consent
     {
-      get { if(_Consent==null) _Consent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Consent; }
+      get => _Consent ??= [];
       set { _Consent = value; OnPropertyChanged("Consent"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Consent;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Consent;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ResearchSubject;
-
-      if (dest == null)
-      {
+      if(other is not ResearchSubject dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopyInternal();
-      if(Progress.Any()) dest.Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(Progress.DeepCopyInternal());
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
-      if(Study != null) dest.Study = (Hl7.Fhir.Model.ResourceReference)Study.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(AssignedComparisonGroupElement != null) dest.AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id)AssignedComparisonGroupElement.DeepCopyInternal();
-      if(ActualComparisonGroupElement != null) dest.ActualComparisonGroupElement = (Hl7.Fhir.Model.Id)ActualComparisonGroupElement.DeepCopyInternal();
-      if(Consent.Any()) dest.Consent = new List<Hl7.Fhir.Model.ResourceReference>(Consent.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)_StatusElement.DeepCopyInternal();
+      if(_Progress is not null) dest.Progress = new List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>(_Progress.DeepCopyInternal());
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+      if(_Study is not null) dest.Study = (Hl7.Fhir.Model.ResourceReference)_Study.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_AssignedComparisonGroupElement is not null) dest.AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id)_AssignedComparisonGroupElement.DeepCopyInternal();
+      if(_ActualComparisonGroupElement is not null) dest.ActualComparisonGroupElement = (Hl7.Fhir.Model.Id)_ActualComparisonGroupElement.DeepCopyInternal();
+      if(_Consent is not null) dest.Consent = new List<Hl7.Fhir.Model.ResourceReference>(_Consent.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -611,90 +592,91 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ResearchSubject;
-      if(otherT == null) return false;
+      if(other is not ResearchSubject otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.ListEquals(Progress, otherT.Progress)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
-      if(!comparer.Equals(Study, otherT.Study)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(AssignedComparisonGroupElement, otherT.AssignedComparisonGroupElement)) return false;
-      if(!comparer.Equals(ActualComparisonGroupElement, otherT.ActualComparisonGroupElement)) return false;
-      if(!comparer.ListEquals(Consent, otherT.Consent)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.ListEquals(_Progress, otherT._Progress)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.Equals(_Study, otherT._Study)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_AssignedComparisonGroupElement, otherT._AssignedComparisonGroupElement)) return false;
+      if(!comparer.Equals(_ActualComparisonGroupElement, otherT._ActualComparisonGroupElement)) return false;
+      if(!comparer.ListEquals(_Consent, otherT._Consent)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "progress":
-          value = Progress;
-          return Progress?.Any() == true;
+          value = _Progress;
+          return _Progress?.Any() == true;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         case "study":
-          value = Study;
-          return Study is not null;
+          value = _Study;
+          return _Study is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "assignedComparisonGroup":
-          value = AssignedComparisonGroupElement;
-          return AssignedComparisonGroupElement is not null;
+          value = _AssignedComparisonGroupElement;
+          return _AssignedComparisonGroupElement is not null;
         case "actualComparisonGroup":
-          value = ActualComparisonGroupElement;
-          return ActualComparisonGroupElement is not null;
+          value = _ActualComparisonGroupElement;
+          return _ActualComparisonGroupElement is not null;
         case "consent":
-          value = Consent;
-          return Consent?.Any() == true;
+          value = _Consent;
+          return _Consent?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
           return this;
         case "progress":
-          Progress = (List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>)value;
+          Progress = (List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>?)value!;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "study":
-          Study = (Hl7.Fhir.Model.ResourceReference)value;
+          Study = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "assignedComparisonGroup":
-          AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id)value;
+          AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id?)value;
           return this;
         case "actualComparisonGroup":
-          ActualComparisonGroupElement = (Hl7.Fhir.Model.Id)value;
+          ActualComparisonGroupElement = (Hl7.Fhir.Model.Id?)value;
           return this;
         case "consent":
-          Consent = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Consent = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -705,15 +687,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Progress?.Any() == true) yield return new KeyValuePair<string,object>("progress",Progress);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (Study is not null) yield return new KeyValuePair<string,object>("study",Study);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (AssignedComparisonGroupElement is not null) yield return new KeyValuePair<string,object>("assignedComparisonGroup",AssignedComparisonGroupElement);
-      if (ActualComparisonGroupElement is not null) yield return new KeyValuePair<string,object>("actualComparisonGroup",ActualComparisonGroupElement);
-      if (Consent?.Any() == true) yield return new KeyValuePair<string,object>("consent",Consent);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Progress?.Any() == true) yield return new KeyValuePair<string,object>("progress",_Progress);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Study is not null) yield return new KeyValuePair<string,object>("study",_Study);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_AssignedComparisonGroupElement is not null) yield return new KeyValuePair<string,object>("assignedComparisonGroup",_AssignedComparisonGroupElement);
+      if (_ActualComparisonGroupElement is not null) yield return new KeyValuePair<string,object>("actualComparisonGroup",_ActualComparisonGroupElement);
+      if (_Consent?.Any() == true) yield return new KeyValuePair<string,object>("consent",_Consent);
     }
 
   }

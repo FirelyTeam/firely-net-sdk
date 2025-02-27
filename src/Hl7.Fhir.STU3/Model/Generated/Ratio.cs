@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,39 +67,35 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("numerator", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Numerator
+    public Hl7.Fhir.Model.Quantity? Numerator
     {
       get { return _Numerator; }
       set { _Numerator = value; OnPropertyChanged("Numerator"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Numerator;
+    private Hl7.Fhir.Model.Quantity? _Numerator;
 
     /// <summary>
     /// Denominator value.
     /// </summary>
     [FhirElement("denominator", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Denominator
+    public Hl7.Fhir.Model.Quantity? Denominator
     {
       get { return _Denominator; }
       set { _Denominator = value; OnPropertyChanged("Denominator"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Denominator;
+    private Hl7.Fhir.Model.Quantity? _Denominator;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Ratio;
-
-      if (dest == null)
-      {
+      if(other is not Ratio dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Numerator != null) dest.Numerator = (Hl7.Fhir.Model.Quantity)Numerator.DeepCopyInternal();
-      if(Denominator != null) dest.Denominator = (Hl7.Fhir.Model.Quantity)Denominator.DeepCopyInternal();
+      if(_Numerator is not null) dest.Numerator = (Hl7.Fhir.Model.Quantity)_Numerator.DeepCopyInternal();
+      if(_Denominator is not null) dest.Denominator = (Hl7.Fhir.Model.Quantity)_Denominator.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -108,41 +107,42 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Ratio;
-      if(otherT == null) return false;
+      if(other is not Ratio otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Numerator, otherT.Numerator)) return false;
-      if(!comparer.Equals(Denominator, otherT.Denominator)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Numerator, otherT._Numerator)) return false;
+      if(!comparer.Equals(_Denominator, otherT._Denominator)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "numerator":
-          value = Numerator;
-          return Numerator is not null;
+          value = _Numerator;
+          return _Numerator is not null;
         case "denominator":
-          value = Denominator;
-          return Denominator is not null;
+          value = _Denominator;
+          return _Denominator is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "numerator":
-          Numerator = (Hl7.Fhir.Model.Quantity)value;
+          Numerator = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "denominator":
-          Denominator = (Hl7.Fhir.Model.Quantity)value;
+          Denominator = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -153,8 +153,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Numerator is not null) yield return new KeyValuePair<string,object>("numerator",Numerator);
-      if (Denominator is not null) yield return new KeyValuePair<string,object>("denominator",Denominator);
+      if (_Numerator is not null) yield return new KeyValuePair<string,object>("numerator",_Numerator);
+      if (_Denominator is not null) yield return new KeyValuePair<string,object>("denominator",_Denominator);
     }
 
   }

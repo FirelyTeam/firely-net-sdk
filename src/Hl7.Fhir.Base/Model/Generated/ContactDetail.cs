@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,28 +67,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("name", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString NameElement
+    public Hl7.Fhir.Model.FhirString? NameElement
     {
       get { return _NameElement; }
       set { _NameElement = value; OnPropertyChanged("NameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _NameElement;
+    private Hl7.Fhir.Model.FhirString? _NameElement;
 
     /// <summary>
     /// Name of an individual to contact
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Name
+    public string? Name
     {
-      get { return NameElement != null ? NameElement.Value : null; }
+      get => _NameElement?.Value;
       set
       {
-        if (value == null)
-          NameElement = null;
-        else
-          NameElement = new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -98,24 +98,20 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
-      get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+      get => _Telecom ??= [];
       set { _Telecom = value; OnPropertyChanged("Telecom"); }
     }
 
-    private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+    private List<Hl7.Fhir.Model.ContactPoint>? _Telecom;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ContactDetail;
-
-      if (dest == null)
-      {
+      if(other is not ContactDetail dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-      if(Telecom.Any()) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopyInternal());
+      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+      if(_Telecom is not null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(_Telecom.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -127,41 +123,42 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ContactDetail;
-      if(otherT == null) return false;
+      if(other is not ContactDetail otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-      if(!comparer.ListEquals(Telecom, otherT.Telecom)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      if(!comparer.ListEquals(_Telecom, otherT._Telecom)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "name":
-          value = NameElement;
-          return NameElement is not null;
+          value = _NameElement;
+          return _NameElement is not null;
         case "telecom":
-          value = Telecom;
-          return Telecom?.Any() == true;
+          value = _Telecom;
+          return _Telecom?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "name":
-          NameElement = (Hl7.Fhir.Model.FhirString)value;
+          NameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "telecom":
-          Telecom = (List<Hl7.Fhir.Model.ContactPoint>)value;
+          Telecom = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -172,8 +169,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",_Telecom);
     }
 
   }

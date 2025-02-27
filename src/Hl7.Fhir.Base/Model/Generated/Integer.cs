@@ -7,8 +7,11 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.

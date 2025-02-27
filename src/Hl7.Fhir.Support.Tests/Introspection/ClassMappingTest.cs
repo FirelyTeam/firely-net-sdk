@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Tests.Introspection
 
         public Date BirthDate => new(1972, 11, 30);
         
-        public IEnumerable<Coding> ToCodings() => [new(null, Code)];
+        public IReadOnlyCollection<Coding> ToCodings() => [new(null, Code)];
         protected internal override Base DeepCopyInternal() => throw new NotImplementedException();
     }
 
