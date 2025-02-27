@@ -129,9 +129,9 @@ namespace Hl7.FhirPath.Expressions
                 if (to.CanBeTreatedAsType(typeof(PocoNode))) return instance;
                 if (to == typeof(object)) return instance;
 
-                if (element is PrimitiveNode { Value: { } value })
+                if (element is PrimitiveNode pn)
                 {
-                    instance = value;
+                    instance = pn.Value;
                 }
             }
 
