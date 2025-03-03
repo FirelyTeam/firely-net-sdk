@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Authentication;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -70,12 +71,6 @@ namespace Hl7.Fhir.Tests.Rest
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            // Ignore SSL certificate errors
-            ServicePointManager.ServerCertificateValidationCallback += (a, b, c, d) => true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-                                                   | SecurityProtocolType.Tls12
-                                                   | SecurityProtocolType.Tls11
-                                                   | SecurityProtocolType.Tls13;
             CreateItems();
         }
 
@@ -602,7 +597,13 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async Tasks.Task CallsCallbacksHttpClientHandler()
         {
-            using var handler = new HttpClientEventHandler();
+            using var handler = new HttpClientEventHandler()
+            {
+#pragma warning disable SYSLIB0039
+                SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13,
+#pragma warning restore SYSLIB0039
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true                
+            };
 
             using (FhirClient client = new FhirClient(TestEndpoint, messageHandler: handler))
                 await check(handler, client);
@@ -655,7 +656,13 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async Tasks.Task CallsCallbacksHttpClient()
         {
-            using (var handler = new HttpClientEventHandler())
+            using (var handler = new HttpClientEventHandler()
+            {
+#pragma warning disable SYSLIB0039
+                SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13,
+#pragma warning restore SYSLIB0039
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true,                
+            })
             using (var httpClient = new HttpClient(handler))
             {
                 using (FhirClient client = new FhirClient(TestEndpoint, httpClient: httpClient))

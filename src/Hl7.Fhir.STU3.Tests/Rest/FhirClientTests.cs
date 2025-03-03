@@ -20,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,12 +56,6 @@ namespace Hl7.Fhir.Tests.Rest
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
-            // Ignore SSL certificate errors
-            ServicePointManager.ServerCertificateValidationCallback += (a, b, c, d) => true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-               | SecurityProtocolType.Tls12
-               | SecurityProtocolType.Tls11
-               | SecurityProtocolType.Tls13;
             CreateItems().WaitNoResult();
         }
 
@@ -336,7 +331,13 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async Tasks.Task SearchHttpClient()
         {
-            using (var handler = new HttpClientHandler())
+            using (var handler = new HttpClientHandler()
+            {
+#pragma warning disable SYSLIB0039
+                SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13,
+#pragma warning restore SYSLIB0039
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true,                
+            })
             using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
             {
                 Bundle result;
@@ -602,7 +603,13 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async Tasks.Task CreateEditDeleteHttpClient()
         {
-            using (var handler = new HttpClientHandler())
+            using (var handler = new HttpClientHandler()
+            {
+#pragma warning disable SYSLIB0039
+                SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13,
+#pragma warning restore SYSLIB0039
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true,                
+            })
             using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
             {
                 handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -1050,7 +1057,13 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async Tasks.Task CallsCallbacksHttpClientHandler()
         {
-            using (var handler = new HttpClientEventHandler())
+            using (var handler = new HttpClientEventHandler()
+            {
+#pragma warning disable SYSLIB0039
+                SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13,
+#pragma warning restore SYSLIB0039
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true,                
+            })
             {
                 using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
                 {
@@ -1137,7 +1150,13 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async Tasks.Task CallsCallbacksHttpClient()
         {
-            using (var handler = new HttpClientEventHandler())
+            using (var handler = new HttpClientEventHandler()
+            {
+#pragma warning disable SYSLIB0039
+                SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13,
+#pragma warning restore SYSLIB0039
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true,                
+            })
             using (var httpClient = new HttpClient(handler))
             {
                 using (FhirClient client = new FhirClient(testEndpoint, httpClient: httpClient))
@@ -1508,7 +1527,13 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public async Tasks.Task TestMultipleMessageHandlersInFhirClient()
         {
-            var testMessageHandler = new TestMessageHandler();
+            var testMessageHandler = new TestMessageHandler()
+            {
+#pragma warning disable SYSLIB0039
+                SslProtocols = SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13,
+#pragma warning restore SYSLIB0039
+                ServerCertificateCustomValidationCallback = (_, _, _, _) => true,                
+            };
             var testDegatingHandler = new TestDeligatingHandler()
             {
                 InnerHandler = testMessageHandler
