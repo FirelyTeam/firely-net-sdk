@@ -70,6 +70,7 @@ public class BaseFhirXmlPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeResource(XmlReader reader, [NotNullWhen(true)] out Resource? instance, out IEnumerable<CodedException> issues)
     {
         FhirXmlPocoDeserializerState state = new();
@@ -84,9 +85,11 @@ public class BaseFhirXmlPocoDeserializer
         }
 
         instance = DeserializeResourceInternal(reader, state);
-        issues = state.Errors;
+        issues = Settings.ExceptionFilter is { } filter
+            ? state.Errors.Remove(filter)
+            : state.Errors;
 
-        return !state.Errors.HasExceptions;
+        return !issues.Any();
     }
 
     /// <summary>
@@ -97,6 +100,7 @@ public class BaseFhirXmlPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeElement(Type targetType, XmlReader reader, [NotNullWhen(true)] out Base? instance, out IEnumerable<CodedException> issues)
     {
         FhirXmlPocoDeserializerState state = new();
@@ -108,8 +112,11 @@ public class BaseFhirXmlPocoDeserializer
         }
 
         instance = DeserializeElementInternal(targetType, reader, state);
-        issues = state.Errors;
-        return !state.Errors.HasExceptions;
+        issues = Settings.ExceptionFilter is { } filter
+            ? state.Errors.Remove(filter)
+            : state.Errors;
+
+        return !issues.Any();
     }
 
     internal Resource? DeserializeResourceInternal(XmlReader reader, FhirXmlPocoDeserializerState state)
@@ -291,7 +298,8 @@ public class BaseFhirXmlPocoDeserializer
             var context = new InstanceDeserializationContext(
                 state.Path,
                 lineNumber, position,
-                mapping!);
+                mapping,
+                Settings.NarrativeValidation);
 
             PocoDeserializationHelper.RunInstanceValidation(target, Settings.Validator, context, state.Errors);
         }
@@ -336,7 +344,8 @@ public class BaseFhirXmlPocoDeserializer
                 state.Path, // should this path GetPath or this?
                 name,
                 lineNumber, position,
-                propMapping);
+                propMapping,
+                Settings.NarrativeValidation);
 
             PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator, context, state.Errors);
         }

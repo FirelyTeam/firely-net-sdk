@@ -96,7 +96,11 @@ namespace Hl7.Fhir.Rest
 
         public static BaseFhirClient WithCustomIgnoreListSerializer(this BaseFhirClient client, string[] ignoreList)
         {
-            client.Settings.SerializationEngine = FhirSerializationEngineFactory.Custom(client.Inspector, ignoreList.IsInList());
+            var xmlSettings = new FhirXmlPocoDeserializerSettings().Ignoring(ignoreList);
+            var jsonSettings = new FhirJsonConverterOptions().Ignoring(ignoreList);
+
+            client.Settings.SerializationEngine = FhirSerializationEngineFactory.Custom(client.Inspector, jsonSettings, xmlSettings);
+
             return client;
         }
 

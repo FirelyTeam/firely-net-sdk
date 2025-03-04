@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
@@ -39,6 +40,26 @@ public class CodedValidationException : ExtendedCodedException
     public const string LITERAL_INVALID_CODE = "PVAL124";
     public const string POSITIVE_INT_MUST_BE_POSITIVE_CODE = "PVAL125";
     public const string UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE = "PVAL126";
+
+    // A list of all issues mentioned above, to we can filter on them.
+    internal static readonly HashSet<string> POCO_VALIDATION_ISSUES =
+    [
+        CHOICE_TYPE_NOT_ALLOWED_CODE,
+        INCORRECT_CARDINALITY_MIN_CODE,
+        INCORRECT_CARDINALITY_MAX_CODE,
+        REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE,
+        MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE,
+        NARRATIVE_XML_IS_MALFORMED_CODE,
+        NARRATIVE_XML_IS_INVALID_CODE,
+        INVALID_CODED_VALUE_CODE,
+        CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE,
+        INVALID_STRING_LENGTH_CODE,
+        INVALID_BASE64_VALUE_CODE,
+        INCORRECT_LITERAL_VALUE_TYPE_CODE,
+        LITERAL_INVALID_CODE,
+        POSITIVE_INT_MUST_BE_POSITIVE_CODE,
+        UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE
+    ];
 
     internal static COVE CHOICE_TYPE_NOT_ALLOWED(ValidationContext context, string typeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{typeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Structure);
     internal static COVE INCORRECT_CARDINALITY_MIN(ValidationContext context, int count, int Min) => Initialize(context, INCORRECT_CARDINALITY_MIN_CODE, $"Element has {count} elements, but minimum cardinality is {Min}.", OO_Sev.Error, OO_Typ.Required);

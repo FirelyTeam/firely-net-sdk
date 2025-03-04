@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Support.Poco.Tests;
 public class FhirJsonDeserializationTests
 {
     private static BaseFhirJsonPocoDeserializer getTestDeserializer(FhirJsonConverterOptions settings) =>
-        new(typeof(Patient).Assembly, settings);
+        new(ModelInspector.ForType(typeof(Patient)), settings);
 
 
     [TestMethod]
@@ -102,8 +102,8 @@ public class FhirJsonDeserializationTests
 
         PrimitiveType test()
         {
-            var inspector = ModelInspector.ForAssembly(typeof(Patient).Assembly);
-            var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Patient).Assembly);
+            var inspector = ModelInspector.ForType(typeof(Patient));
+            var deserializer = new BaseFhirJsonPocoDeserializer(inspector);
             var mapping = inspector.ImportType(targetType)!;
 
             var reader = constructReader(value);
@@ -135,7 +135,7 @@ public class FhirJsonDeserializationTests
         FhirJsonConverterOptions settings)
     {
         // For the tests, enable full XHML validation so we can test it when necessary.
-        var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Patient).Assembly, settings);
+        var deserializer = new BaseFhirJsonPocoDeserializer(ModelInspector.ForType<Patient>(), settings);
         Utf8JsonReader reader = constructReader(testObject);
         reader.Read();
 
@@ -183,7 +183,7 @@ public class FhirJsonDeserializationTests
         var reader = constructReader(testObject);
         reader.Read();
 
-        var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Patient).Assembly);
+        var deserializer = new BaseFhirJsonPocoDeserializer(ModelInspector.ForType<Patient>());
         var state = new FhirJsonPocoDeserializerState();
         _ = deserializer.DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
         assertErrors(state.Errors, errors);
@@ -266,8 +266,7 @@ public class FhirJsonDeserializationTests
         var (result, errors) = deserializeComplex(t, testObject, out var readerState,
             new FhirJsonConverterOptions
             {
-                Validator = new DataAnnotationDeserialzationValidator(
-                    narrativeValidation: NarrativeValidationKind.FhirXhtml)
+                NarrativeValidation = NarrativeValidationKind.FhirXhtml
             });
 
         assertErrors(errors, expectedErrors);
@@ -442,7 +441,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void TestParseResourcePublicMethod()
     {
-        var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Resource).Assembly);
+        var deserializer = new BaseFhirJsonPocoDeserializer(ModelInspector.Base);
         var reader = constructReader(
             new { resourceType = "Parameters", parameter = new[] { new { name = "a" } } });
 
@@ -465,7 +464,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void TestParseObjectPublicMethod()
     {
-        var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Resource).Assembly);
+        var deserializer = new BaseFhirJsonPocoDeserializer(ModelInspector.Base);
         var reader = constructReader(
             new { name = "Ewout" });
 
@@ -554,7 +553,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void TestBase64Parsing()
     {
-        var attachment = deserializeAttachment(new());
+        var attachment = deserializeAttachment(new FhirJsonConverterOptions());
 
         // After parsing, the ObjectValue is supposed to be the base64 string
         attachment.DataElement!.ObjectValue.Should().BeOfType<string>().And.Subject.Should().Be("SGkh");
@@ -872,20 +871,20 @@ public class FhirJsonDeserializationTests
         yield return
         [
             new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
-                .UsingMode(DeserializerModes.Ostrich),
+                .UsingMode(DeserializationMode.Ostrich),
             new Predicate<IEnumerable<CodedException>>(errs => !errs.Any())
         ];
         yield return
         [
             new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
-                .UsingMode(DeserializerModes.Recoverable),
-            new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => FilterPredicateExtensions.IsRecoverableIssue(e)))
+                .UsingMode(DeserializationMode.Recoverable),
+            new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => CodedExceptionFilters.IsRecoverableIssue(e)))
         ];
         yield return
         [
             new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
-                .UsingMode(DeserializerModes.BackwardsCompatible),
-            new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => FilterPredicateExtensions.IsBackwardsCompatibilityIssue(e)))
+                .UsingMode(DeserializationMode.BackwardsCompatible),
+            new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => CodedExceptionFilters.IsBackwardsCompatibilityIssue(e)))
         ];
         yield return
         [
@@ -895,7 +894,7 @@ public class FhirJsonDeserializationTests
         ];
         yield return
         [
-            new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).UsingMode(DeserializerModes.Ostrich)
+            new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).UsingMode(DeserializationMode.Ostrich)
                 .Enforcing([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, COVE.LITERAL_INVALID_CODE]),
             new Predicate<IEnumerable<CodedException>>(errs =>
             {
@@ -926,7 +925,7 @@ public class FhirJsonDeserializationTests
     private static Predicate<CodedException> getPredicateFromOptions(JsonSerializerOptions options)
     {
         var factory = options.Converters.FindCustomConverter() as FhirJsonConverterFactory ?? throw new InvalidOperationException();
-        return factory.Engine!.IgnoreFilter;
+        return factory.CurrentOptions.ExceptionFilter!;
     }
 
     private static IEnumerable<object[]> getIgnoreEnforceTests()
@@ -964,7 +963,7 @@ public class FhirJsonDeserializationTests
     private static IEnumerable<CodedException> getErrorsList()
     {
         var testDeserializerOptions = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
-            .UsingMode(DeserializerModes.Strict);
+            .UsingMode(DeserializationMode.Strict);
         string testJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient-errors.json"));
 
         try
@@ -993,7 +992,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void TestInvalidCustomization()
     {
-        var shouldThrow = () => (_ = new JsonSerializerOptions().UsingMode(DeserializerModes.Ostrich));
+        var shouldThrow = () => (_ = new JsonSerializerOptions().UsingMode(DeserializationMode.Ostrich));
         shouldThrow.Should().Throw<NotSupportedException>("Expected error trying to set the mode of a non-existent converter");
     }
 }

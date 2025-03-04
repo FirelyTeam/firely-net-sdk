@@ -77,7 +77,7 @@ public static class FhirJsonConverterOptionsExtensions
         FhirJsonConverterOptions converterOptions
     )
     {
-        var converter = new FhirJsonConverterFactory(modelAssembly, converterOptions);
+        var converter = new FhirJsonConverterFactory(ModelInspector.ForAssembly(modelAssembly), converterOptions);
         return options.ForFhir(converter);
     }
 
@@ -108,25 +108,17 @@ public static class FhirJsonConverterOptionsExtensions
     }
 
     /// <summary>
-    /// Initialize the options to serialize using the JsonFhirConverter, producing compact output without whitespace.
-    /// </summary>
-    public static JsonSerializerOptions ForFhir<F>(this JsonSerializerOptions options, FhirJsonConverter<F> converter) where F : Base
-    {
-        options.Converters.Add(converter);
-        options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-
-        return options;
-    }
-
-    /// <summary>
-    /// Modify the options to use a preset list of errors to ignore by specifying a mode. This can be any member of <see cref="DeserializerModes"/>
+    /// Modify the options to use a preset list of errors to ignore by specifying a mode.
+    /// This can be any member of <see cref="DeserializationMode"/>
     /// </summary>
     /// <remarks>
     /// Modifying the options is always left-associative. This means that defining custom constraints should probably be done AFTER setting the mode.
     /// </remarks>
-    public static JsonSerializerOptions UsingMode(this JsonSerializerOptions options, DeserializerModes mode)
+    public static JsonSerializerOptions UsingMode(this JsonSerializerOptions options, DeserializationMode mode)
     {
-        getCustomFactoryFromList(options.Converters).SetMode(mode);
+        var ourConverter = getCustomFactoryFromList(options.Converters);
+        ourConverter.Reconfigure(ourConverter.CurrentOptions.WithMode(mode));
+
         return options;
     }
 
@@ -139,7 +131,9 @@ public static class FhirJsonConverterOptionsExtensions
     /// </remarks>
     public static JsonSerializerOptions Enforcing(this JsonSerializerOptions options, IEnumerable<string> toEnforce)
     {
-        getCustomFactoryFromList(options.Converters).SetEnforcedErrors(toEnforce);
+        var ourConverter = getCustomFactoryFromList(options.Converters);
+        ourConverter.Reconfigure(ourConverter.CurrentOptions.Enforcing(toEnforce));
+
         return options;
     }
 
@@ -152,7 +146,9 @@ public static class FhirJsonConverterOptionsExtensions
     /// </remarks>
     public static JsonSerializerOptions Ignoring(this JsonSerializerOptions options, IEnumerable<string> toIgnore)
     {
-        getCustomFactoryFromList(options.Converters).SetIgnoredErrors(toIgnore);
+        var ourConverter = getCustomFactoryFromList(options.Converters);
+        ourConverter.Reconfigure(ourConverter.CurrentOptions.Ignoring(toIgnore));
+
         return options;
     }
 
@@ -185,33 +181,4 @@ public static class FhirJsonConverterOptionsExtensions
         return FindCustomConverter(converters) as FhirJsonConverterFactory ?? throw new NotSupportedException(
             "Customizing a FHIR serializer can only be done after it was created. Try calling .ForFhir first");
     }
-}
-
-/// <summary>
-/// Enumerates the modes with which a deserializer can be configured
-/// </summary>
-public enum DeserializerModes
-{
-    /// <summary>
-    /// Do not ignore any errors (default behaviour for most implementations)
-    /// </summary>
-    Strict,
-
-    /// <summary>
-    /// An issue is recoverable if all data present in the parsed data could be retrieved and
-    /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
-    /// </summary>
-    Recoverable,
-
-    /// <summary>
-    /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer
-    /// FHIR release. This means allowing unknown elements, attributes, codes and types in a choice element. Note that the POCO model cannot capture
-    /// these newer elements and data, so this means data loss may occur.
-    /// </summary>
-    BackwardsCompatible,
-
-    /// <summary>
-    /// Ignore all errors. Useful for debugging and/or when you know the data to be parsed is a correct instance.
-    /// </summary>
-    Ostrich,
 }

@@ -33,29 +33,20 @@ public class BaseFhirJsonPocoDeserializer
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirJsonPocoDeserializer(Assembly assembly) : this(assembly, new())
+    [Obsolete("Use the constructor that takes a ModelInspector instead. " +
+              "You can find the right ModelInspector for an assembly by calling ModelInspector.ForAssembly(assembly).")]
+    public BaseFhirJsonPocoDeserializer(Assembly assembly) : this(ModelInspector.ForAssembly(assembly), new FhirJsonConverterOptions())
     {
-        // nothing
+        // Nothing
     }
 
     /// <summary>
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirJsonPocoDeserializer(ModelInspector inspector) : this(inspector, new())
+    public BaseFhirJsonPocoDeserializer(ModelInspector inspector) : this(inspector, new FhirJsonConverterOptions())
     {
         // nothing
-    }
-
-    /// <summary>
-    /// Initializes an instance of the deserializer.
-    /// </summary>
-    /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-    /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirJsonPocoDeserializer(Assembly assembly, FhirJsonConverterOptions settings)
-    {
-        Settings = settings;
-        _inspector = ModelInspector.ForAssembly(assembly ?? throw new ArgumentNullException(nameof(assembly)));
     }
 
     /// <summary>
@@ -85,6 +76,7 @@ public class BaseFhirJsonPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeResource(ref Utf8JsonReader reader, [NotNullWhen(true)] out Resource? instance, out IEnumerable<CodedException> issues)
     {
         if (reader.CurrentState.Options.CommentHandling is not JsonCommentHandling.Skip and not JsonCommentHandling.Disallow)
@@ -96,9 +88,11 @@ public class BaseFhirJsonPocoDeserializer
         FhirJsonPocoDeserializerState state = new();
 
         instance = DeserializeResourceInternal(ref reader, state, stayOnLastToken: true);
-        issues = state.Errors;
+        issues = Settings.ExceptionFilter is { } filter
+            ? state.Errors.Remove(filter)
+            : state.Errors;
 
-        return !state.Errors.HasExceptions;
+        return !issues.Any();
     }
 
     /// <summary>
@@ -109,6 +103,7 @@ public class BaseFhirJsonPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeObject(Type targetType, ref Utf8JsonReader reader, [NotNullWhen(true)] out Base? instance, out IEnumerable<CodedException> issues)
     {
         if (reader.CurrentState.Options.CommentHandling is not JsonCommentHandling.Skip and not JsonCommentHandling.Disallow)
@@ -122,17 +117,20 @@ public class BaseFhirJsonPocoDeserializer
                                                   $"therefore not be used for deserialization. " + reader.GenerateLocationMessage(), nameof(targetType));
 
         // Create a new instance of the object to read the members into.
-        if (mapping.Factory() is Base result)
-        {
-            var state = new FhirJsonPocoDeserializerState();
-            deserializeObjectInto(result, mapping, ref reader, DeserializedObjectKind.Complex, state, stayOnLastToken: true);
+        if (mapping.Factory() is not Base result)
+            throw new ArgumentException(
+                $"Can only deserialize into subclasses of class {nameof(Base)}. " + reader.GenerateLocationMessage(),
+                nameof(targetType));
 
-            instance = result;
-            issues = state.Errors;
-            return !state.Errors.HasExceptions;
-        }
-        else
-            throw new ArgumentException($"Can only deserialize into subclasses of class {nameof(Base)}. " + reader.GenerateLocationMessage(), nameof(targetType));
+        var state = new FhirJsonPocoDeserializerState();
+        deserializeObjectInto(result, mapping, ref reader, DeserializedObjectKind.Complex, state, stayOnLastToken: true);
+
+        instance = result;
+        issues = Settings.ExceptionFilter is { } filter
+            ? state.Errors.Remove(filter)
+            : state.Errors;
+
+        return !issues.Any();
     }
 
     internal Resource? DeserializeResourceInternal(ref Utf8JsonReader reader, FhirJsonPocoDeserializerState state, bool stayOnLastToken)
@@ -308,7 +306,7 @@ public class BaseFhirJsonPocoDeserializer
         // to avoid spurious error messages.
         if (Settings.Validator is not null && kind != DeserializedObjectKind.FhirPrimitive && (Settings.ValidateOnFailedParse || state.Errors.Count == oldErrorCount))
         {
-            var context = new InstanceDeserializationContext(state.Path, line, pos, mapping);
+            var context = new InstanceDeserializationContext(state.Path, line, pos, mapping, Settings.NarrativeValidation);
             PocoDeserializationHelper.RunInstanceValidation(target, Settings.Validator, context, state.Errors);
         }
     }
@@ -397,7 +395,8 @@ public class BaseFhirJsonPocoDeserializer
                 state.Path,
                 propertyName,
                 line, pos,
-                propertyMapping);
+                propertyMapping,
+                Settings.NarrativeValidation);
 
             // If this is a FhirPrimitive, make sure we delay validation until we had the
             // chance to encounter both the `name` and `_name` property.
@@ -650,7 +649,7 @@ public class BaseFhirJsonPocoDeserializer
         // the `name` and `_name` property.
         if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
         {
-            var context = new InstanceDeserializationContext(state.Path, line, pos, propertyValueMapping);
+            var context = new InstanceDeserializationContext(state.Path, line, pos, propertyValueMapping, Settings.NarrativeValidation);
             if (parsingState is null)
                 PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors);
             else

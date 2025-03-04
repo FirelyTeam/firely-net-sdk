@@ -9,6 +9,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Validation;
 
 #nullable enable
 
@@ -27,7 +28,9 @@ public readonly struct PropertyDeserializationContext
         string propertyName,
         long lineNumber,
         long linePosition,
-        PropertyMapping propMapping)
+        PropertyMapping propMapping,
+        NarrativeValidationKind narrativeValidation
+        )
     {
         PathStack = path;
         ObjectInstance = objectInstance;
@@ -35,6 +38,7 @@ public readonly struct PropertyDeserializationContext
         LineNumber = lineNumber;
         LinePosition = linePosition;
         ElementMapping = propMapping;
+        NarrativeValidation = narrativeValidation;
     }
 
     internal PathStack PathStack { get; }
@@ -68,6 +72,14 @@ public readonly struct PropertyDeserializationContext
     /// The metadata for the element that is currently being deserialized.
     /// </summary>
     public PropertyMapping ElementMapping { get; }
+
+    /// <summary>
+    /// For performance reasons, validation of Xhtml again the rules specified in the FHIR
+    /// specification for Narrative (http://hl7.org/fhir/narrative.html#2.4.0) is turned off by
+    /// default. Set this property to any other value than <see cref="NarrativeValidationKind.None"/>
+    /// to perform validation.
+    /// </summary>
+    public NarrativeValidationKind NarrativeValidation { get; } = NarrativeValidationKind.None;
 }
 
 /// <summary>
@@ -80,12 +92,14 @@ public readonly struct InstanceDeserializationContext
         PathStack path,
         long lineNumber,
         long linePosition,
-        ClassMapping instanceMapping)
+        ClassMapping instanceMapping,
+        NarrativeValidationKind narrativeValidation)
     {
         PathStack = path;
         LineNumber = lineNumber;
         LinePosition = linePosition;
         InstanceMapping = instanceMapping;
+        NarrativeValidation = narrativeValidation;
     }
 
     internal PathStack PathStack { get; }
@@ -109,4 +123,12 @@ public readonly struct InstanceDeserializationContext
     /// The metadata for the type of which the current property is part of.
     /// </summary>
     public ClassMapping InstanceMapping { get; }
+
+    /// <summary>
+    /// For performance reasons, validation of Xhtml again the rules specified in the FHIR
+    /// specification for Narrative (http://hl7.org/fhir/narrative.html#2.4.0) is turned off by
+    /// default. Set this property to any other value than <see cref="NarrativeValidationKind.None"/>
+    /// to perform validation.
+    /// </summary>
+    public NarrativeValidationKind NarrativeValidation { get; } = NarrativeValidationKind.None;
 }

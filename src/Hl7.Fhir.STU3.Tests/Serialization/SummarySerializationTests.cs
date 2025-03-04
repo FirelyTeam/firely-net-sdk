@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Tests.Serialization
             // make sure we accept the crappy output with empty groups
             var nav = await FhirXmlNode.ParseAsync(qText, new FhirXmlParsingSettings { PermissiveParsing = true });
 
-            var qInflate = FhirXmlParser.Parse<Questionnaire>(nav);
+            var qInflate = nav.ToPoco<Questionnaire>();
             Assert.AreEqual(1, qInflate.Meta.Tag.Count(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED"), "Subsetted Tag should not still be there.");
         }
 

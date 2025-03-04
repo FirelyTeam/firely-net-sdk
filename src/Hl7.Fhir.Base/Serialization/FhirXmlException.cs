@@ -4,6 +4,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
@@ -85,8 +86,9 @@ public class FhirXmlException : ExtendedCodedException
     /// List of issues which do NOT lead to data loss. Recoverable issues mean that all data present in the parsed data could be retrieved and
     /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
     /// </summary>
-    internal static string[] RecoverableIssues =
+    internal static readonly HashSet<string> RECOVERABLE_ISSUES =
     [
+        ..CodedValidationException.POCO_VALIDATION_ISSUES,
         EMPTY_ELEMENT_NAMESPACE_CODE,
         INCORRECT_ELEMENT_NAMESPACE_CODE,
         INCORRECT_XHTML_NAMESPACE_CODE,
@@ -96,7 +98,7 @@ public class FhirXmlException : ExtendedCodedException
         ATTRIBUTE_HAS_EMPTY_VALUE_CODE,
         ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE,
         SCHEMALOCATION_DISALLOWED_CODE,
-        ENCOUNTERED_DTD_REFERENCES_CODE,
+        ENCOUNTERED_DTD_REFERENCES_CODE
     ];
 
     /// <summary>
@@ -104,7 +106,7 @@ public class FhirXmlException : ExtendedCodedException
     /// FHIR release. This means allowing unknown elements, attributes, codes and types in a choice element. Note that the POCO model cannot capture
     /// these newer elements and data, so this means data loss may occur.
     /// </summary>
-    internal static string[] BackwardsCompatibilityAllowedIssues =
+    internal static readonly string[] BACKWARDS_COMPATIBILITY_ALLOWED_ISSUES =
     [
         CodedValidationException.INVALID_CODED_VALUE_CODE,
         UNKNOWN_ELEMENT_CODE,
