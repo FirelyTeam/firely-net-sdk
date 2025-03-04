@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 
@@ -28,6 +29,17 @@ namespace Hl7.Fhir.Serialization;
 /// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/json.html. </remarks>
 public class BaseFhirJsonPocoDeserializer
 {
+    /// <summary>
+    /// Initializes an instance of the deserializer.
+    /// </summary>
+    /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
+    [Obsolete("Use the constructor that takes a ModelInspector instead. " +
+              "You can find the right ModelInspector for an assembly by calling ModelInspector.ForAssembly(assembly).")]
+    public BaseFhirJsonPocoDeserializer(Assembly assembly) : this(ModelInspector.ForAssembly(assembly), new FhirJsonConverterOptions())
+    {
+        // Nothing
+    }
+
     /// <summary>
     /// Initializes an instance of the deserializer.
     /// </summary>
