@@ -10,7 +10,6 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Validation;
-using Hl7.FhirPath.Sprache;
 
 #nullable enable
 
@@ -77,7 +76,7 @@ public readonly struct PropertyDeserializationContext
     /// <summary>
     /// For performance reasons, validation of Xhtml again the rules specified in the FHIR
     /// specification for Narrative (http://hl7.org/fhir/narrative.html#2.4.0) is turned off by
-    /// default. Set this property to any other value than <see cref="None{T}"/>
+    /// default. Set this property to any other value than <see cref="NarrativeValidationKind.None"/>
     /// to perform validation.
     /// </summary>
     public NarrativeValidationKind NarrativeValidation { get; } = NarrativeValidationKind.None;
@@ -125,11 +124,10 @@ public readonly struct InstanceDeserializationContext
     /// </summary>
     public ClassMapping InstanceMapping { get; }
 
-
     /// <summary>
     /// For performance reasons, validation of Xhtml again the rules specified in the FHIR
     /// specification for Narrative (http://hl7.org/fhir/narrative.html#2.4.0) is turned off by
-    /// default. Set this property to any other value than <see cref="None{T}"/>
+    /// default. Set this property to any other value than <see cref="NarrativeValidationKind.None"/>
     /// to perform validation.
     /// </summary>
     public NarrativeValidationKind NarrativeValidation { get; } = NarrativeValidationKind.None;

@@ -76,8 +76,9 @@ public record FhirXmlPocoDeserializerSettings
             },
             DeserializationMode.Ostrich => this with
             {
-                ExceptionFilter = _ => true,
-                NarrativeValidation = NarrativeValidationKind.None
+                Validator = null,   // Disable all validations, we don't care.
+                ExceptionFilter = _ => true,   // If there are still errors, ignore.
+                NarrativeValidation = NarrativeValidationKind.None   // We don't care about the narrative.
             },
             _ => throw Error.NotSupported("Unknown deserialization mode.")
         };
