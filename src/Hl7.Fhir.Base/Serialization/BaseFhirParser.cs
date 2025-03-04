@@ -6,35 +6,30 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
-using System;
+#nullable enable
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+public class BaseFhirParser
 {
-    public class BaseFhirParser
-    {
-        internal static PocoBuilderSettings BuildPocoBuilderSettings(ParserSettings ps) =>
-            new()
-            {
-                AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
-                IgnoreUnknownMembers = ps.AcceptUnknownMembers,
-                ExceptionHandler = ps.ExceptionHandler,
+    internal static PocoBuilderSettings BuildPocoBuilderSettings(ParserSettings ps) =>
+        new()
+        {
+            AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
+            IgnoreUnknownMembers = ps.AcceptUnknownMembers,
+            ExceptionHandler = ps.ExceptionHandler,
 #pragma warning disable CS0618 // Type or member is obsolete
-                TruncateDateTimeToDate = ps.TruncateDateTimeToDate
+            TruncateDateTimeToDate = ps.TruncateDateTimeToDate
 #pragma warning restore CS0618 // Type or member is obsolete
-            };
+        };
 
-        internal static FhirXmlParsingSettings BuildXmlParsingSettings(ParserSettings settings) =>
-            new()
-            {
-                DisallowSchemaLocation = settings.DisallowXsiAttributesOnRoot,
-                PermissiveParsing = settings.PermissiveParsing,
-            };
+    internal static FhirXmlParsingSettings BuildXmlParsingSettings(ParserSettings settings) =>
+        new()
+        {
+            DisallowSchemaLocation = settings.DisallowXsiAttributesOnRoot,
+            PermissiveParsing = settings.PermissiveParsing,
+        };
 
-        internal static FhirJsonParsingSettings BuildJsonParserSettings(ParserSettings settings) =>
-            new() { AllowJsonComments = false, PermissiveParsing = settings.PermissiveParsing };
-    }
-
+    internal static FhirJsonParsingSettings BuildJsonParserSettings(ParserSettings settings) =>
+        new() { AllowJsonComments = false, PermissiveParsing = settings.PermissiveParsing };
 }

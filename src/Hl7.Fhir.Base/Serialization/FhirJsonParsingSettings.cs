@@ -6,58 +6,58 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
+#nullable enable
 
 using Hl7.Fhir.Utility;
 using System;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+/// <summary>Parser configuration settings for the <see cref="FhirJsonNode"/> class.</summary>
+public class FhirJsonParsingSettings
 {
-    /// <summary>Parser configuration settings for the <see cref="FhirJsonNode"/> class.</summary>
-    public class FhirJsonParsingSettings
+    /// <summary>
+    /// Do not raise exceptions for recoverable errors.
+    /// </summary>
+    public bool PermissiveParsing { get; set; } = true;
+
+    /// <summary>
+    /// Allow DSTU2-style Json comment members.
+    /// </summary>
+    public bool AllowJsonComments { get; set; } // = false;
+
+    /// <summary>
+    /// Validate narrative against the FHIR Xhtml schema.
+    /// </summary>
+    /// <remarks>Validation of xhtml is expensive, so turned off by default.</remarks>
+    public bool ValidateFhirXhtml { get; set; } // = false;
+
+    /// <summary>Default constructor. Creates a new <see cref="FhirJsonParsingSettings"/> instance with default property values.</summary>
+    public FhirJsonParsingSettings() { }
+
+    /// <summary>Clone constructor. Generates a new <see cref="FhirJsonParsingSettings"/> instance initialized from the state of the specified instance.</summary>
+    /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
+    public FhirJsonParsingSettings(FhirJsonParsingSettings other)
     {
-        /// <summary>
-        /// Do not raise exceptions for recoverable errors.
-        /// </summary>
-        public bool PermissiveParsing { get; set; } = true;
-
-        /// <summary>
-        /// Allow DSTU2-style Json comment members.
-        /// </summary>
-        public bool AllowJsonComments { get; set; } // = false;
-
-        /// <summary>
-        /// Validate narrative against the FHIR Xhtml schema.
-        /// </summary>
-        /// <remarks>Validation of xhtml is expensive, so turned off by default.</remarks>
-        public bool ValidateFhirXhtml { get; set; } // = false;
-
-        /// <summary>Default constructor. Creates a new <see cref="FhirJsonParsingSettings"/> instance with default property values.</summary>
-        public FhirJsonParsingSettings() { }
-
-        /// <summary>Clone constructor. Generates a new <see cref="FhirJsonParsingSettings"/> instance initialized from the state of the specified instance.</summary>
-        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
-        public FhirJsonParsingSettings(FhirJsonParsingSettings other)
-        {
-            if (other == null) throw Error.ArgumentNull(nameof(other));
-            other.CopyTo(this);
-        }
-
-        /// <summary>Copy all configuration settings to another instance.</summary>
-        /// <param name="other">Another <see cref="FhirJsonParsingSettings"/> instance.</param>
-        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
-        public void CopyTo(FhirJsonParsingSettings other)
-        {
-            if (other == null) throw Error.ArgumentNull(nameof(other));
-
-            other.PermissiveParsing = PermissiveParsing;
-            other.AllowJsonComments = AllowJsonComments;
-            other.ValidateFhirXhtml = ValidateFhirXhtml;
-        }
-
-        /// <summary>Creates a new <see cref="FhirJsonParsingSettings"/> object that is a copy of the current instance.</summary>
-        public FhirJsonParsingSettings Clone() => new FhirJsonParsingSettings(this);
-
-        /// <summary>Creates a new <see cref="FhirJsonParsingSettings"/> instance with default property values.</summary>
-        public static FhirJsonParsingSettings CreateDefault() => new FhirJsonParsingSettings();
+        if (other == null) throw Error.ArgumentNull(nameof(other));
+        other.CopyTo(this);
     }
+
+    /// <summary>Copy all configuration settings to another instance.</summary>
+    /// <param name="other">Another <see cref="FhirJsonParsingSettings"/> instance.</param>
+    /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
+    public void CopyTo(FhirJsonParsingSettings other)
+    {
+        if (other == null) throw Error.ArgumentNull(nameof(other));
+
+        other.PermissiveParsing = PermissiveParsing;
+        other.AllowJsonComments = AllowJsonComments;
+        other.ValidateFhirXhtml = ValidateFhirXhtml;
+    }
+
+    /// <summary>Creates a new <see cref="FhirJsonParsingSettings"/> object that is a copy of the current instance.</summary>
+    public FhirJsonParsingSettings Clone() => new FhirJsonParsingSettings(this);
+
+    /// <summary>Creates a new <see cref="FhirJsonParsingSettings"/> instance with default property values.</summary>
+    public static FhirJsonParsingSettings CreateDefault() => new();
 }

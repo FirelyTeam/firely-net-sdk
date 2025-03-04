@@ -15,7 +15,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using System.Text.Json;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 
@@ -32,30 +31,10 @@ public class BaseFhirJsonPocoDeserializer
     /// <summary>
     /// Initializes an instance of the deserializer.
     /// </summary>
-    /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirJsonPocoDeserializer(Assembly assembly) : this(assembly, new())
-    {
-        // nothing
-    }
-
-    /// <summary>
-    /// Initializes an instance of the deserializer.
-    /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirJsonPocoDeserializer(ModelInspector inspector) : this(inspector, new())
+    public BaseFhirJsonPocoDeserializer(ModelInspector inspector) : this(inspector, new FhirJsonConverterOptions())
     {
         // nothing
-    }
-
-    /// <summary>
-    /// Initializes an instance of the deserializer.
-    /// </summary>
-    /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-    /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirJsonPocoDeserializer(Assembly assembly, FhirJsonConverterOptions settings)
-    {
-        Settings = settings;
-        _inspector = ModelInspector.ForAssembly(assembly ?? throw new ArgumentNullException(nameof(assembly)));
     }
 
     /// <summary>
@@ -85,6 +64,7 @@ public class BaseFhirJsonPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeResource(ref Utf8JsonReader reader, [NotNullWhen(true)] out Resource? instance, out IEnumerable<CodedException> issues)
     {
         if (reader.CurrentState.Options.CommentHandling is not JsonCommentHandling.Skip and not JsonCommentHandling.Disallow)
@@ -96,9 +76,11 @@ public class BaseFhirJsonPocoDeserializer
         FhirJsonPocoDeserializerState state = new();
 
         instance = DeserializeResourceInternal(ref reader, state, stayOnLastToken: true);
-        issues = state.Errors;
+        issues = Settings.ExceptionFilter is { } filter
+            ? state.Errors.Remove(filter)
+            : state.Errors;
 
-        return !state.Errors.HasExceptions;
+        return !issues.Any();
     }
 
     /// <summary>
@@ -109,6 +91,7 @@ public class BaseFhirJsonPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeObject(Type targetType, ref Utf8JsonReader reader, [NotNullWhen(true)] out Base? instance, out IEnumerable<CodedException> issues)
     {
         if (reader.CurrentState.Options.CommentHandling is not JsonCommentHandling.Skip and not JsonCommentHandling.Disallow)
@@ -122,17 +105,20 @@ public class BaseFhirJsonPocoDeserializer
                                                   $"therefore not be used for deserialization. " + reader.GenerateLocationMessage(), nameof(targetType));
 
         // Create a new instance of the object to read the members into.
-        if (mapping.Factory() is Base result)
-        {
-            var state = new FhirJsonPocoDeserializerState();
-            deserializeObjectInto(result, mapping, ref reader, DeserializedObjectKind.Complex, state, stayOnLastToken: true);
+        if (mapping.Factory() is not Base result)
+            throw new ArgumentException(
+                $"Can only deserialize into subclasses of class {nameof(Base)}. " + reader.GenerateLocationMessage(),
+                nameof(targetType));
 
-            instance = result;
-            issues = state.Errors;
-            return !state.Errors.HasExceptions;
-        }
-        else
-            throw new ArgumentException($"Can only deserialize into subclasses of class {nameof(Base)}. " + reader.GenerateLocationMessage(), nameof(targetType));
+        var state = new FhirJsonPocoDeserializerState();
+        deserializeObjectInto(result, mapping, ref reader, DeserializedObjectKind.Complex, state, stayOnLastToken: true);
+
+        instance = result;
+        issues = Settings.ExceptionFilter is { } filter
+            ? state.Errors.Remove(filter)
+            : state.Errors;
+
+        return !issues.Any();
     }
 
     internal Resource? DeserializeResourceInternal(ref Utf8JsonReader reader, FhirJsonPocoDeserializerState state, bool stayOnLastToken)

@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
@@ -92,8 +93,9 @@ public class FhirJsonException : ExtendedCodedException
     /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
     /// </summary>
 #pragma warning disable CS0618 // Type or member is obsolete
-    internal static string[] RecoverableIssues =
+    internal static readonly HashSet<string> RECOVERABLE_ISSUES =
     [
+        ..CodedValidationException.POCO_VALIDATION_ISSUES,
         EXPECTED_PRIMITIVE_NOT_NULL_CODE,
         EXPECTED_START_OF_ARRAY_CODE,
         USE_OF_UNDERSCORE_ILLEGAL_CODE,
@@ -101,7 +103,7 @@ public class FhirJsonException : ExtendedCodedException
         ARRAYS_CANNOT_BE_EMPTY_CODE,
         PRIMITIVE_ARRAYS_ONLY_NULL_CODE,
         PROPERTY_MAY_NOT_BE_EMPTY_CODE,
-        DUPLICATE_ARRAY_CODE,
+        DUPLICATE_ARRAY_CODE
     ];
 #pragma warning restore CS0618 // Type or member is obsolete
 
@@ -110,12 +112,12 @@ public class FhirJsonException : ExtendedCodedException
     /// FHIR release. This means allowing unknown elements, codes and types in a choice element. Note that the POCO model cannot capture
     /// these newer elements and data, so this means data loss may occur.
     /// </summary>
-    internal static string[] BackwardsCompatibilityAllowedIssues =
-    [
+    internal static readonly string[] BACKWARDS_COMPATIBILITY_ALLOWED_ISSUES =
+    {
         CodedValidationException.INVALID_CODED_VALUE_CODE,
         CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE,
         UNKNOWN_PROPERTY_FOUND_CODE
-    ];
+    };
 
     public FhirJsonException(string code, string message)
         : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown)

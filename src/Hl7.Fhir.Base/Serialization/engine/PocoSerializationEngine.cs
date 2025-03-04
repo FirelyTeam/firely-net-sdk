@@ -14,7 +14,6 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace Hl7.Fhir.Serialization;
 
@@ -22,27 +21,18 @@ namespace Hl7.Fhir.Serialization;
 /// This is an implementation of <see cref="IFhirSerializationEngine"/> which uses the
 /// new Poco-based parser and serializer, initialized with the default settings.
 /// </summary>
-internal partial class PocoSerializationEngine : IFhirSerializationEngine
+public class PocoSerializationEngine(BaseFhirJsonPocoDeserializer jsonDeserializer, BaseFhirJsonSerializer jsonSerializer,
+    BaseFhirXmlPocoDeserializer xmlDeserializer, BaseFhirXmlSerializer xmlSerializer) : IFhirSerializationEngine
 {
-    private delegate (Base?, IEnumerable<CodedException>) TryDeserializer();
+    /// <inheritdoc />
+    public string SerializeToJson(Resource instance) => jsonSerializer.SerializeToString(instance);
 
-    private readonly ModelInspector _inspector;
-    internal Predicate<CodedException> IgnoreFilter { get; set; }
-        
-    internal PocoSerializationEngine(ModelInspector inspector, Predicate<CodedException>? ignoreFilter = null,
-        FhirJsonConverterOptions? converterOptions = null, FhirXmlPocoDeserializerSettings? xmlSettings = null)
-    {
-        _inspector = inspector;
-        IgnoreFilter = ignoreFilter ?? (_ => false);
-        _jsonConverterOptions = converterOptions ?? new FhirJsonConverterOptions();
-        _xmlSettings = xmlSettings ?? new FhirXmlPocoDeserializerSettings();
-    }
+    /// <inheritdoc />
+    public Resource? DeserializeFromJson(string data) => jsonDeserializer.DeserializeResource(data);
 
-    private Base deserializeAndFilterErrors(TryDeserializer deserializer)
-    {
-        var (instance, issues) = deserializer();
-        var relevantIssues = issues.Where(i => !IgnoreFilter(i)).ToList();
+    /// <inheritdoc />
+    public Resource? DeserializeFromXml(string data) => xmlDeserializer.DeserializeResource(data);
 
-        return relevantIssues.Any() ? throw new DeserializationFailedException(instance, relevantIssues) : instance!;
-    }
+    /// <inheritdoc />
+    public string SerializeToXml(Resource instance) => xmlSerializer.SerializeToString(instance);
 }
