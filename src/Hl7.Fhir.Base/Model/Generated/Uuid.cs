@@ -7,8 +7,11 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -62,12 +65,12 @@ namespace Hl7.Fhir.Model
     /// Must conform to the pattern "urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     public const string PATTERN = @"urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
 
-    public Uuid(string value)
+    public Uuid(string? value)
     {
       Value = value;
     }
 
-    public Uuid(): this((string)null) {}
+    public Uuid(): this((string?)null) {}
 
     /// <summary>
     /// Primitive value of the element
@@ -76,9 +79,9 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(SystemPrimitive.String))]
     [UuidPattern]
     [DataMember]
-    public string Value
+    public string? Value
     {
-      get { return ObjectValue is string or null ? (string)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
+      get { return ObjectValue is string or null ? (string?)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
       set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 

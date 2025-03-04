@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -49,7 +52,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SubstanceSpecification","http://hl7.org/fhir/StructureDefinition/SubstanceSpecification")]
-  public partial class SubstanceSpecification : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
+  public partial class SubstanceSpecification : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier?>
   {
     /// <summary>
     /// FHIR Type Name
@@ -74,54 +77,51 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Role
+      public Hl7.Fhir.Model.CodeableConcept? Role
       {
         get { return _Role; }
         set { _Role = value; OnPropertyChanged("Role"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Role;
+      private Hl7.Fhir.Model.CodeableConcept? _Role;
 
       /// <summary>
       /// Identifier by which this moiety substance is known.
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier Identifier
+      public Hl7.Fhir.Model.Identifier? Identifier
       {
         get { return _Identifier; }
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
-      private Hl7.Fhir.Model.Identifier _Identifier;
+      private Hl7.Fhir.Model.Identifier? _Identifier;
 
       /// <summary>
       /// Textual name for this moiety substance.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString NameElement
+      public Hl7.Fhir.Model.FhirString? NameElement
       {
         get { return _NameElement; }
         set { _NameElement = value; OnPropertyChanged("NameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _NameElement;
+      private Hl7.Fhir.Model.FhirString? _NameElement;
 
       /// <summary>
       /// Textual name for this moiety substance
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => _NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -131,54 +131,51 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("stereochemistry", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Stereochemistry
+      public Hl7.Fhir.Model.CodeableConcept? Stereochemistry
       {
         get { return _Stereochemistry; }
         set { _Stereochemistry = value; OnPropertyChanged("Stereochemistry"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Stereochemistry;
+      private Hl7.Fhir.Model.CodeableConcept? _Stereochemistry;
 
       /// <summary>
       /// Optical activity type.
       /// </summary>
       [FhirElement("opticalActivity", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept OpticalActivity
+      public Hl7.Fhir.Model.CodeableConcept? OpticalActivity
       {
         get { return _OpticalActivity; }
         set { _OpticalActivity = value; OnPropertyChanged("OpticalActivity"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _OpticalActivity;
+      private Hl7.Fhir.Model.CodeableConcept? _OpticalActivity;
 
       /// <summary>
       /// Molecular formula.
       /// </summary>
       [FhirElement("molecularFormula", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString MolecularFormulaElement
+      public Hl7.Fhir.Model.FhirString? MolecularFormulaElement
       {
         get { return _MolecularFormulaElement; }
         set { _MolecularFormulaElement = value; OnPropertyChanged("MolecularFormulaElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _MolecularFormulaElement;
+      private Hl7.Fhir.Model.FhirString? _MolecularFormulaElement;
 
       /// <summary>
       /// Molecular formula
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string MolecularFormula
+      public string? MolecularFormula
       {
-        get { return MolecularFormulaElement != null ? MolecularFormulaElement.Value : null; }
+        get => _MolecularFormulaElement?.Value;
         set
         {
-          if (value == null)
-            MolecularFormulaElement = null;
-          else
-            MolecularFormulaElement = new Hl7.Fhir.Model.FhirString(value);
+          MolecularFormulaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MolecularFormula");
         }
       }
@@ -190,31 +187,27 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Amount
+      public Hl7.Fhir.Model.DataType? Amount
       {
         get { return _Amount; }
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Amount;
+      private Hl7.Fhir.Model.DataType? _Amount;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as MoietyComponent;
-
-        if (dest == null)
-        {
+        if(other is not MoietyComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopyInternal();
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-        if(Stereochemistry != null) dest.Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)Stereochemistry.DeepCopyInternal();
-        if(OpticalActivity != null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)OpticalActivity.DeepCopyInternal();
-        if(MolecularFormulaElement != null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaElement.DeepCopyInternal();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopyInternal();
+        if(_Role is not null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)_Role.DeepCopyInternal();
+        if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_Stereochemistry is not null) dest.Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)_Stereochemistry.DeepCopyInternal();
+        if(_OpticalActivity is not null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)_OpticalActivity.DeepCopyInternal();
+        if(_MolecularFormulaElement is not null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)_MolecularFormulaElement.DeepCopyInternal();
+        if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.DataType)_Amount.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -226,76 +219,77 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as MoietyComponent;
-        if(otherT == null) return false;
+        if(other is not MoietyComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Role, otherT.Role)) return false;
-        if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-        if(!comparer.Equals(Stereochemistry, otherT.Stereochemistry)) return false;
-        if(!comparer.Equals(OpticalActivity, otherT.OpticalActivity)) return false;
-        if(!comparer.Equals(MolecularFormulaElement, otherT.MolecularFormulaElement)) return false;
-        if(!comparer.Equals(Amount, otherT.Amount)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Role, otherT._Role)) return false;
+        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_Stereochemistry, otherT._Stereochemistry)) return false;
+        if(!comparer.Equals(_OpticalActivity, otherT._OpticalActivity)) return false;
+        if(!comparer.Equals(_MolecularFormulaElement, otherT._MolecularFormulaElement)) return false;
+        if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "role":
-            value = Role;
-            return Role is not null;
+            value = _Role;
+            return _Role is not null;
           case "identifier":
-            value = Identifier;
-            return Identifier is not null;
+            value = _Identifier;
+            return _Identifier is not null;
           case "name":
-            value = NameElement;
-            return NameElement is not null;
+            value = _NameElement;
+            return _NameElement is not null;
           case "stereochemistry":
-            value = Stereochemistry;
-            return Stereochemistry is not null;
+            value = _Stereochemistry;
+            return _Stereochemistry is not null;
           case "opticalActivity":
-            value = OpticalActivity;
-            return OpticalActivity is not null;
+            value = _OpticalActivity;
+            return _OpticalActivity is not null;
           case "molecularFormula":
-            value = MolecularFormulaElement;
-            return MolecularFormulaElement is not null;
+            value = _MolecularFormulaElement;
+            return _MolecularFormulaElement is not null;
           case "amount":
-            value = Amount;
-            return Amount is not null;
+            value = _Amount;
+            return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "role":
-            Role = (Hl7.Fhir.Model.CodeableConcept)value;
+            Role = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "identifier":
-            Identifier = (Hl7.Fhir.Model.Identifier)value;
+            Identifier = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString)value;
+            NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "stereochemistry":
-            Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)value;
+            Stereochemistry = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "opticalActivity":
-            OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)value;
+            OpticalActivity = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "molecularFormula":
-            MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)value;
+            MolecularFormulaElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.DataType)value;
+            Amount = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -306,13 +300,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (Stereochemistry is not null) yield return new KeyValuePair<string,object>("stereochemistry",Stereochemistry);
-        if (OpticalActivity is not null) yield return new KeyValuePair<string,object>("opticalActivity",OpticalActivity);
-        if (MolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("molecularFormula",MolecularFormulaElement);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (_Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_Stereochemistry is not null) yield return new KeyValuePair<string,object>("stereochemistry",_Stereochemistry);
+        if (_OpticalActivity is not null) yield return new KeyValuePair<string,object>("opticalActivity",_OpticalActivity);
+        if (_MolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("molecularFormula",_MolecularFormulaElement);
+        if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -335,54 +329,51 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("category", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Category
+      public Hl7.Fhir.Model.CodeableConcept? Category
       {
         get { return _Category; }
         set { _Category = value; OnPropertyChanged("Category"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Category;
+      private Hl7.Fhir.Model.CodeableConcept? _Category;
 
       /// <summary>
       /// Property type e.g. viscosity, pH, isoelectric point.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Code
+      public Hl7.Fhir.Model.CodeableConcept? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Code;
+      private Hl7.Fhir.Model.CodeableConcept? _Code;
 
       /// <summary>
       /// Parameters that were used in the measurement of a property (e.g. for viscosity: measured at 20C with a pH of 7.1).
       /// </summary>
       [FhirElement("parameters", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString ParametersElement
+      public Hl7.Fhir.Model.FhirString? ParametersElement
       {
         get { return _ParametersElement; }
         set { _ParametersElement = value; OnPropertyChanged("ParametersElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _ParametersElement;
+      private Hl7.Fhir.Model.FhirString? _ParametersElement;
 
       /// <summary>
       /// Parameters that were used in the measurement of a property (e.g. for viscosity: measured at 20C with a pH of 7.1)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Parameters
+      public string? Parameters
       {
-        get { return ParametersElement != null ? ParametersElement.Value : null; }
+        get => _ParametersElement?.Value;
         set
         {
-          if (value == null)
-            ParametersElement = null;
-          else
-            ParametersElement = new Hl7.Fhir.Model.FhirString(value);
+          ParametersElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Parameters");
         }
       }
@@ -395,13 +386,13 @@ namespace Hl7.Fhir.Model
       [References("SubstanceSpecification","Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType DefiningSubstance
+      public Hl7.Fhir.Model.DataType? DefiningSubstance
       {
         get { return _DefiningSubstance; }
         set { _DefiningSubstance = value; OnPropertyChanged("DefiningSubstance"); }
       }
 
-      private Hl7.Fhir.Model.DataType _DefiningSubstance;
+      private Hl7.Fhir.Model.DataType? _DefiningSubstance;
 
       /// <summary>
       /// Quantitative value for this property.
@@ -410,29 +401,25 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Amount
+      public Hl7.Fhir.Model.DataType? Amount
       {
         get { return _Amount; }
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Amount;
+      private Hl7.Fhir.Model.DataType? _Amount;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PropertyComponent;
-
-        if (dest == null)
-        {
+        if(other is not PropertyComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopyInternal();
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-        if(ParametersElement != null) dest.ParametersElement = (Hl7.Fhir.Model.FhirString)ParametersElement.DeepCopyInternal();
-        if(DefiningSubstance != null) dest.DefiningSubstance = (Hl7.Fhir.Model.DataType)DefiningSubstance.DeepCopyInternal();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopyInternal();
+        if(_Category is not null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)_Category.DeepCopyInternal();
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+        if(_ParametersElement is not null) dest.ParametersElement = (Hl7.Fhir.Model.FhirString)_ParametersElement.DeepCopyInternal();
+        if(_DefiningSubstance is not null) dest.DefiningSubstance = (Hl7.Fhir.Model.DataType)_DefiningSubstance.DeepCopyInternal();
+        if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.DataType)_Amount.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -444,62 +431,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PropertyComponent;
-        if(otherT == null) return false;
+        if(other is not PropertyComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Category, otherT.Category)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
-        if(!comparer.Equals(ParametersElement, otherT.ParametersElement)) return false;
-        if(!comparer.Equals(DefiningSubstance, otherT.DefiningSubstance)) return false;
-        if(!comparer.Equals(Amount, otherT.Amount)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Category, otherT._Category)) return false;
+        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        if(!comparer.Equals(_ParametersElement, otherT._ParametersElement)) return false;
+        if(!comparer.Equals(_DefiningSubstance, otherT._DefiningSubstance)) return false;
+        if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "category":
-            value = Category;
-            return Category is not null;
+            value = _Category;
+            return _Category is not null;
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           case "parameters":
-            value = ParametersElement;
-            return ParametersElement is not null;
+            value = _ParametersElement;
+            return _ParametersElement is not null;
           case "definingSubstance":
-            value = DefiningSubstance;
-            return DefiningSubstance is not null;
+            value = _DefiningSubstance;
+            return _DefiningSubstance is not null;
           case "amount":
-            value = Amount;
-            return Amount is not null;
+            value = _Amount;
+            return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "category":
-            Category = (Hl7.Fhir.Model.CodeableConcept)value;
+            Category = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept)value;
+            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "parameters":
-            ParametersElement = (Hl7.Fhir.Model.FhirString)value;
+            ParametersElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "definingSubstance":
-            DefiningSubstance = (Hl7.Fhir.Model.DataType)value;
+            DefiningSubstance = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.DataType)value;
+            Amount = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -510,11 +498,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (ParametersElement is not null) yield return new KeyValuePair<string,object>("parameters",ParametersElement);
-        if (DefiningSubstance is not null) yield return new KeyValuePair<string,object>("definingSubstance",DefiningSubstance);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (_Category is not null) yield return new KeyValuePair<string,object>("category",_Category);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_ParametersElement is not null) yield return new KeyValuePair<string,object>("parameters",_ParametersElement);
+        if (_DefiningSubstance is not null) yield return new KeyValuePair<string,object>("definingSubstance",_DefiningSubstance);
+        if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -537,54 +525,51 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("stereochemistry", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Stereochemistry
+      public Hl7.Fhir.Model.CodeableConcept? Stereochemistry
       {
         get { return _Stereochemistry; }
         set { _Stereochemistry = value; OnPropertyChanged("Stereochemistry"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Stereochemistry;
+      private Hl7.Fhir.Model.CodeableConcept? _Stereochemistry;
 
       /// <summary>
       /// Optical activity type.
       /// </summary>
       [FhirElement("opticalActivity", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept OpticalActivity
+      public Hl7.Fhir.Model.CodeableConcept? OpticalActivity
       {
         get { return _OpticalActivity; }
         set { _OpticalActivity = value; OnPropertyChanged("OpticalActivity"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _OpticalActivity;
+      private Hl7.Fhir.Model.CodeableConcept? _OpticalActivity;
 
       /// <summary>
       /// Molecular formula.
       /// </summary>
       [FhirElement("molecularFormula", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString MolecularFormulaElement
+      public Hl7.Fhir.Model.FhirString? MolecularFormulaElement
       {
         get { return _MolecularFormulaElement; }
         set { _MolecularFormulaElement = value; OnPropertyChanged("MolecularFormulaElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _MolecularFormulaElement;
+      private Hl7.Fhir.Model.FhirString? _MolecularFormulaElement;
 
       /// <summary>
       /// Molecular formula
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string MolecularFormula
+      public string? MolecularFormula
       {
-        get { return MolecularFormulaElement != null ? MolecularFormulaElement.Value : null; }
+        get => _MolecularFormulaElement?.Value;
         set
         {
-          if (value == null)
-            MolecularFormulaElement = null;
-          else
-            MolecularFormulaElement = new Hl7.Fhir.Model.FhirString(value);
+          MolecularFormulaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MolecularFormula");
         }
       }
@@ -594,28 +579,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("molecularFormulaByMoiety", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString MolecularFormulaByMoietyElement
+      public Hl7.Fhir.Model.FhirString? MolecularFormulaByMoietyElement
       {
         get { return _MolecularFormulaByMoietyElement; }
         set { _MolecularFormulaByMoietyElement = value; OnPropertyChanged("MolecularFormulaByMoietyElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _MolecularFormulaByMoietyElement;
+      private Hl7.Fhir.Model.FhirString? _MolecularFormulaByMoietyElement;
 
       /// <summary>
       /// Specified per moiety according to the Hill system, i.e. first C, then H, then alphabetical, each moiety separated by a dot
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string MolecularFormulaByMoiety
+      public string? MolecularFormulaByMoiety
       {
-        get { return MolecularFormulaByMoietyElement != null ? MolecularFormulaByMoietyElement.Value : null; }
+        get => _MolecularFormulaByMoietyElement?.Value;
         set
         {
-          if (value == null)
-            MolecularFormulaByMoietyElement = null;
-          else
-            MolecularFormulaByMoietyElement = new Hl7.Fhir.Model.FhirString(value);
+          MolecularFormulaByMoietyElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("MolecularFormulaByMoiety");
         }
       }
@@ -628,24 +610,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent> Isotope
       {
-        get { if(_Isotope==null) _Isotope = new List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent>(); return _Isotope; }
+        get => _Isotope ??= [];
         set { _Isotope = value; OnPropertyChanged("Isotope"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent> _Isotope;
+      private List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent>? _Isotope;
 
       /// <summary>
       /// The molecular weight or weight range (for proteins, polymers or nucleic acids).
       /// </summary>
       [FhirElement("molecularWeight", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent MolecularWeight
+      public Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent? MolecularWeight
       {
         get { return _MolecularWeight; }
         set { _MolecularWeight = value; OnPropertyChanged("MolecularWeight"); }
       }
 
-      private Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent _MolecularWeight;
+      private Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent? _MolecularWeight;
 
       /// <summary>
       /// Supporting literature.
@@ -657,11 +639,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Source;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Source;
 
       /// <summary>
       /// Molecular structural representation.
@@ -671,30 +653,26 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent> Representation
       {
-        get { if(_Representation==null) _Representation = new List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent>(); return _Representation; }
+        get => _Representation ??= [];
         set { _Representation = value; OnPropertyChanged("Representation"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent> _Representation;
+      private List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent>? _Representation;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StructureComponent;
-
-        if (dest == null)
-        {
+        if(other is not StructureComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Stereochemistry != null) dest.Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)Stereochemistry.DeepCopyInternal();
-        if(OpticalActivity != null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)OpticalActivity.DeepCopyInternal();
-        if(MolecularFormulaElement != null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaElement.DeepCopyInternal();
-        if(MolecularFormulaByMoietyElement != null) dest.MolecularFormulaByMoietyElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaByMoietyElement.DeepCopyInternal();
-        if(Isotope.Any()) dest.Isotope = new List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent>(Isotope.DeepCopyInternal());
-        if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)MolecularWeight.DeepCopyInternal();
-        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopyInternal());
-        if(Representation.Any()) dest.Representation = new List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent>(Representation.DeepCopyInternal());
+        if(_Stereochemistry is not null) dest.Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)_Stereochemistry.DeepCopyInternal();
+        if(_OpticalActivity is not null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)_OpticalActivity.DeepCopyInternal();
+        if(_MolecularFormulaElement is not null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)_MolecularFormulaElement.DeepCopyInternal();
+        if(_MolecularFormulaByMoietyElement is not null) dest.MolecularFormulaByMoietyElement = (Hl7.Fhir.Model.FhirString)_MolecularFormulaByMoietyElement.DeepCopyInternal();
+        if(_Isotope is not null) dest.Isotope = new List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent>(_Isotope.DeepCopyInternal());
+        if(_MolecularWeight is not null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)_MolecularWeight.DeepCopyInternal();
+        if(_Source is not null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(_Source.DeepCopyInternal());
+        if(_Representation is not null) dest.Representation = new List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent>(_Representation.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -706,83 +684,84 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StructureComponent;
-        if(otherT == null) return false;
+        if(other is not StructureComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Stereochemistry, otherT.Stereochemistry)) return false;
-        if(!comparer.Equals(OpticalActivity, otherT.OpticalActivity)) return false;
-        if(!comparer.Equals(MolecularFormulaElement, otherT.MolecularFormulaElement)) return false;
-        if(!comparer.Equals(MolecularFormulaByMoietyElement, otherT.MolecularFormulaByMoietyElement)) return false;
-        if(!comparer.ListEquals(Isotope, otherT.Isotope)) return false;
-        if(!comparer.Equals(MolecularWeight, otherT.MolecularWeight)) return false;
-        if(!comparer.ListEquals(Source, otherT.Source)) return false;
-        if(!comparer.ListEquals(Representation, otherT.Representation)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Stereochemistry, otherT._Stereochemistry)) return false;
+        if(!comparer.Equals(_OpticalActivity, otherT._OpticalActivity)) return false;
+        if(!comparer.Equals(_MolecularFormulaElement, otherT._MolecularFormulaElement)) return false;
+        if(!comparer.Equals(_MolecularFormulaByMoietyElement, otherT._MolecularFormulaByMoietyElement)) return false;
+        if(!comparer.ListEquals(_Isotope, otherT._Isotope)) return false;
+        if(!comparer.Equals(_MolecularWeight, otherT._MolecularWeight)) return false;
+        if(!comparer.ListEquals(_Source, otherT._Source)) return false;
+        if(!comparer.ListEquals(_Representation, otherT._Representation)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "stereochemistry":
-            value = Stereochemistry;
-            return Stereochemistry is not null;
+            value = _Stereochemistry;
+            return _Stereochemistry is not null;
           case "opticalActivity":
-            value = OpticalActivity;
-            return OpticalActivity is not null;
+            value = _OpticalActivity;
+            return _OpticalActivity is not null;
           case "molecularFormula":
-            value = MolecularFormulaElement;
-            return MolecularFormulaElement is not null;
+            value = _MolecularFormulaElement;
+            return _MolecularFormulaElement is not null;
           case "molecularFormulaByMoiety":
-            value = MolecularFormulaByMoietyElement;
-            return MolecularFormulaByMoietyElement is not null;
+            value = _MolecularFormulaByMoietyElement;
+            return _MolecularFormulaByMoietyElement is not null;
           case "isotope":
-            value = Isotope;
-            return Isotope?.Any() == true;
+            value = _Isotope;
+            return _Isotope?.Any() == true;
           case "molecularWeight":
-            value = MolecularWeight;
-            return MolecularWeight is not null;
+            value = _MolecularWeight;
+            return _MolecularWeight is not null;
           case "source":
-            value = Source;
-            return Source?.Any() == true;
+            value = _Source;
+            return _Source?.Any() == true;
           case "representation":
-            value = Representation;
-            return Representation?.Any() == true;
+            value = _Representation;
+            return _Representation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "stereochemistry":
-            Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)value;
+            Stereochemistry = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "opticalActivity":
-            OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)value;
+            OpticalActivity = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "molecularFormula":
-            MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)value;
+            MolecularFormulaElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "molecularFormulaByMoiety":
-            MolecularFormulaByMoietyElement = (Hl7.Fhir.Model.FhirString)value;
+            MolecularFormulaByMoietyElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "isotope":
-            Isotope = (List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent>)value;
+            Isotope = (List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent>?)value!;
             return this;
           case "molecularWeight":
-            MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)value;
+            MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent?)value;
             return this;
           case "source":
-            Source = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Source = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "representation":
-            Representation = (List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent>)value;
+            Representation = (List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -793,14 +772,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Stereochemistry is not null) yield return new KeyValuePair<string,object>("stereochemistry",Stereochemistry);
-        if (OpticalActivity is not null) yield return new KeyValuePair<string,object>("opticalActivity",OpticalActivity);
-        if (MolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("molecularFormula",MolecularFormulaElement);
-        if (MolecularFormulaByMoietyElement is not null) yield return new KeyValuePair<string,object>("molecularFormulaByMoiety",MolecularFormulaByMoietyElement);
-        if (Isotope?.Any() == true) yield return new KeyValuePair<string,object>("isotope",Isotope);
-        if (MolecularWeight is not null) yield return new KeyValuePair<string,object>("molecularWeight",MolecularWeight);
-        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
-        if (Representation?.Any() == true) yield return new KeyValuePair<string,object>("representation",Representation);
+        if (_Stereochemistry is not null) yield return new KeyValuePair<string,object>("stereochemistry",_Stereochemistry);
+        if (_OpticalActivity is not null) yield return new KeyValuePair<string,object>("opticalActivity",_OpticalActivity);
+        if (_MolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("molecularFormula",_MolecularFormulaElement);
+        if (_MolecularFormulaByMoietyElement is not null) yield return new KeyValuePair<string,object>("molecularFormulaByMoiety",_MolecularFormulaByMoietyElement);
+        if (_Isotope?.Any() == true) yield return new KeyValuePair<string,object>("isotope",_Isotope);
+        if (_MolecularWeight is not null) yield return new KeyValuePair<string,object>("molecularWeight",_MolecularWeight);
+        if (_Source?.Any() == true) yield return new KeyValuePair<string,object>("source",_Source);
+        if (_Representation?.Any() == true) yield return new KeyValuePair<string,object>("representation",_Representation);
       }
 
     }
@@ -823,81 +802,77 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier Identifier
+      public Hl7.Fhir.Model.Identifier? Identifier
       {
         get { return _Identifier; }
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
-      private Hl7.Fhir.Model.Identifier _Identifier;
+      private Hl7.Fhir.Model.Identifier? _Identifier;
 
       /// <summary>
       /// Substance name for each non-natural or radioisotope.
       /// </summary>
       [FhirElement("name", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Name
+      public Hl7.Fhir.Model.CodeableConcept? Name
       {
         get { return _Name; }
         set { _Name = value; OnPropertyChanged("Name"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Name;
+      private Hl7.Fhir.Model.CodeableConcept? _Name;
 
       /// <summary>
       /// The type of isotopic substitution present in a single substance.
       /// </summary>
       [FhirElement("substitution", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Substitution
+      public Hl7.Fhir.Model.CodeableConcept? Substitution
       {
         get { return _Substitution; }
         set { _Substitution = value; OnPropertyChanged("Substitution"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Substitution;
+      private Hl7.Fhir.Model.CodeableConcept? _Substitution;
 
       /// <summary>
       /// Half life - for a non-natural nuclide.
       /// </summary>
       [FhirElement("halfLife", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity HalfLife
+      public Hl7.Fhir.Model.Quantity? HalfLife
       {
         get { return _HalfLife; }
         set { _HalfLife = value; OnPropertyChanged("HalfLife"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _HalfLife;
+      private Hl7.Fhir.Model.Quantity? _HalfLife;
 
       /// <summary>
       /// The molecular weight or weight range (for proteins, polymers or nucleic acids).
       /// </summary>
       [FhirElement("molecularWeight", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent MolecularWeight
+      public Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent? MolecularWeight
       {
         get { return _MolecularWeight; }
         set { _MolecularWeight = value; OnPropertyChanged("MolecularWeight"); }
       }
 
-      private Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent _MolecularWeight;
+      private Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent? _MolecularWeight;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as IsotopeComponent;
-
-        if (dest == null)
-        {
+        if(other is not IsotopeComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-        if(Name != null) dest.Name = (Hl7.Fhir.Model.CodeableConcept)Name.DeepCopyInternal();
-        if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.CodeableConcept)Substitution.DeepCopyInternal();
-        if(HalfLife != null) dest.HalfLife = (Hl7.Fhir.Model.Quantity)HalfLife.DeepCopyInternal();
-        if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)MolecularWeight.DeepCopyInternal();
+        if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+        if(_Name is not null) dest.Name = (Hl7.Fhir.Model.CodeableConcept)_Name.DeepCopyInternal();
+        if(_Substitution is not null) dest.Substitution = (Hl7.Fhir.Model.CodeableConcept)_Substitution.DeepCopyInternal();
+        if(_HalfLife is not null) dest.HalfLife = (Hl7.Fhir.Model.Quantity)_HalfLife.DeepCopyInternal();
+        if(_MolecularWeight is not null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)_MolecularWeight.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -909,62 +884,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as IsotopeComponent;
-        if(otherT == null) return false;
+        if(other is not IsotopeComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-        if(!comparer.Equals(Name, otherT.Name)) return false;
-        if(!comparer.Equals(Substitution, otherT.Substitution)) return false;
-        if(!comparer.Equals(HalfLife, otherT.HalfLife)) return false;
-        if(!comparer.Equals(MolecularWeight, otherT.MolecularWeight)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+        if(!comparer.Equals(_Name, otherT._Name)) return false;
+        if(!comparer.Equals(_Substitution, otherT._Substitution)) return false;
+        if(!comparer.Equals(_HalfLife, otherT._HalfLife)) return false;
+        if(!comparer.Equals(_MolecularWeight, otherT._MolecularWeight)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "identifier":
-            value = Identifier;
-            return Identifier is not null;
+            value = _Identifier;
+            return _Identifier is not null;
           case "name":
-            value = Name;
-            return Name is not null;
+            value = _Name;
+            return _Name is not null;
           case "substitution":
-            value = Substitution;
-            return Substitution is not null;
+            value = _Substitution;
+            return _Substitution is not null;
           case "halfLife":
-            value = HalfLife;
-            return HalfLife is not null;
+            value = _HalfLife;
+            return _HalfLife is not null;
           case "molecularWeight":
-            value = MolecularWeight;
-            return MolecularWeight is not null;
+            value = _MolecularWeight;
+            return _MolecularWeight is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "identifier":
-            Identifier = (Hl7.Fhir.Model.Identifier)value;
+            Identifier = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "name":
-            Name = (Hl7.Fhir.Model.CodeableConcept)value;
+            Name = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "substitution":
-            Substitution = (Hl7.Fhir.Model.CodeableConcept)value;
+            Substitution = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "halfLife":
-            HalfLife = (Hl7.Fhir.Model.Quantity)value;
+            HalfLife = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "molecularWeight":
-            MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent)value;
+            MolecularWeight = (Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -975,11 +951,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-        if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
-        if (Substitution is not null) yield return new KeyValuePair<string,object>("substitution",Substitution);
-        if (HalfLife is not null) yield return new KeyValuePair<string,object>("halfLife",HalfLife);
-        if (MolecularWeight is not null) yield return new KeyValuePair<string,object>("molecularWeight",MolecularWeight);
+        if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Name is not null) yield return new KeyValuePair<string,object>("name",_Name);
+        if (_Substitution is not null) yield return new KeyValuePair<string,object>("substitution",_Substitution);
+        if (_HalfLife is not null) yield return new KeyValuePair<string,object>("halfLife",_HalfLife);
+        if (_MolecularWeight is not null) yield return new KeyValuePair<string,object>("molecularWeight",_MolecularWeight);
       }
 
     }
@@ -1002,53 +978,49 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("method", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Method
+      public Hl7.Fhir.Model.CodeableConcept? Method
       {
         get { return _Method; }
         set { _Method = value; OnPropertyChanged("Method"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Method;
+      private Hl7.Fhir.Model.CodeableConcept? _Method;
 
       /// <summary>
       /// Type of molecular weight such as exact, average (also known as. number average), weight average.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Amount
+      public Hl7.Fhir.Model.Quantity? Amount
       {
         get { return _Amount; }
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Amount;
+      private Hl7.Fhir.Model.Quantity? _Amount;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as MolecularWeightComponent;
-
-        if (dest == null)
-        {
+        if(other is not MolecularWeightComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopyInternal();
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Quantity)Amount.DeepCopyInternal();
+        if(_Method is not null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)_Method.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.Quantity)_Amount.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1060,48 +1032,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as MolecularWeightComponent;
-        if(otherT == null) return false;
+        if(other is not MolecularWeightComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Method, otherT.Method)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Amount, otherT.Amount)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Method, otherT._Method)) return false;
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "method":
-            value = Method;
-            return Method is not null;
+            value = _Method;
+            return _Method is not null;
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "amount":
-            value = Amount;
-            return Amount is not null;
+            value = _Amount;
+            return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "method":
-            Method = (Hl7.Fhir.Model.CodeableConcept)value;
+            Method = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.Quantity)value;
+            Amount = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1112,9 +1085,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (_Method is not null) yield return new KeyValuePair<string,object>("method",_Method);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -1137,41 +1110,38 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// The structural representation as text string in a format e.g. InChI, SMILES, MOLFILE, CDX.
       /// </summary>
       [FhirElement("representation", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString RepresentationElement
+      public Hl7.Fhir.Model.FhirString? RepresentationElement
       {
         get { return _RepresentationElement; }
         set { _RepresentationElement = value; OnPropertyChanged("RepresentationElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _RepresentationElement;
+      private Hl7.Fhir.Model.FhirString? _RepresentationElement;
 
       /// <summary>
       /// The structural representation as text string in a format e.g. InChI, SMILES, MOLFILE, CDX
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Representation
+      public string? Representation
       {
-        get { return RepresentationElement != null ? RepresentationElement.Value : null; }
+        get => _RepresentationElement?.Value;
         set
         {
-          if (value == null)
-            RepresentationElement = null;
-          else
-            RepresentationElement = new Hl7.Fhir.Model.FhirString(value);
+          RepresentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Representation");
         }
       }
@@ -1181,27 +1151,23 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("attachment", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Attachment Attachment
+      public Hl7.Fhir.Model.Attachment? Attachment
       {
         get { return _Attachment; }
         set { _Attachment = value; OnPropertyChanged("Attachment"); }
       }
 
-      private Hl7.Fhir.Model.Attachment _Attachment;
+      private Hl7.Fhir.Model.Attachment? _Attachment;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RepresentationComponent;
-
-        if (dest == null)
-        {
+        if(other is not RepresentationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(RepresentationElement != null) dest.RepresentationElement = (Hl7.Fhir.Model.FhirString)RepresentationElement.DeepCopyInternal();
-        if(Attachment != null) dest.Attachment = (Hl7.Fhir.Model.Attachment)Attachment.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_RepresentationElement is not null) dest.RepresentationElement = (Hl7.Fhir.Model.FhirString)_RepresentationElement.DeepCopyInternal();
+        if(_Attachment is not null) dest.Attachment = (Hl7.Fhir.Model.Attachment)_Attachment.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1213,48 +1179,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RepresentationComponent;
-        if(otherT == null) return false;
+        if(other is not RepresentationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(RepresentationElement, otherT.RepresentationElement)) return false;
-        if(!comparer.Equals(Attachment, otherT.Attachment)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_RepresentationElement, otherT._RepresentationElement)) return false;
+        if(!comparer.Equals(_Attachment, otherT._Attachment)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "representation":
-            value = RepresentationElement;
-            return RepresentationElement is not null;
+            value = _RepresentationElement;
+            return _RepresentationElement is not null;
           case "attachment":
-            value = Attachment;
-            return Attachment is not null;
+            value = _Attachment;
+            return _Attachment is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "representation":
-            RepresentationElement = (Hl7.Fhir.Model.FhirString)value;
+            RepresentationElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "attachment":
-            Attachment = (Hl7.Fhir.Model.Attachment)value;
+            Attachment = (Hl7.Fhir.Model.Attachment?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1265,9 +1232,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (RepresentationElement is not null) yield return new KeyValuePair<string,object>("representation",RepresentationElement);
-        if (Attachment is not null) yield return new KeyValuePair<string,object>("attachment",Attachment);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_RepresentationElement is not null) yield return new KeyValuePair<string,object>("representation",_RepresentationElement);
+        if (_Attachment is not null) yield return new KeyValuePair<string,object>("attachment",_Attachment);
       }
 
     }
@@ -1290,54 +1257,51 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Code
+      public Hl7.Fhir.Model.CodeableConcept? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Code;
+      private Hl7.Fhir.Model.CodeableConcept? _Code;
 
       /// <summary>
       /// Status of the code assignment.
       /// </summary>
       [FhirElement("status", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Status
+      public Hl7.Fhir.Model.CodeableConcept? Status
       {
         get { return _Status; }
         set { _Status = value; OnPropertyChanged("Status"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Status;
+      private Hl7.Fhir.Model.CodeableConcept? _Status;
 
       /// <summary>
       /// The date at which the code status is changed as part of the terminology maintenance.
       /// </summary>
       [FhirElement("statusDate", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime StatusDateElement
+      public Hl7.Fhir.Model.FhirDateTime? StatusDateElement
       {
         get { return _StatusDateElement; }
         set { _StatusDateElement = value; OnPropertyChanged("StatusDateElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDateTime _StatusDateElement;
+      private Hl7.Fhir.Model.FhirDateTime? _StatusDateElement;
 
       /// <summary>
       /// The date at which the code status is changed as part of the terminology maintenance
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string StatusDate
+      public string? StatusDate
       {
-        get { return StatusDateElement != null ? StatusDateElement.Value : null; }
+        get => _StatusDateElement?.Value;
         set
         {
-          if (value == null)
-            StatusDateElement = null;
-          else
-            StatusDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+          StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("StatusDate");
         }
       }
@@ -1347,28 +1311,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("comment", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString CommentElement
+      public Hl7.Fhir.Model.FhirString? CommentElement
       {
         get { return _CommentElement; }
         set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _CommentElement;
+      private Hl7.Fhir.Model.FhirString? _CommentElement;
 
       /// <summary>
       /// Any comment can be provided in this field, if necessary
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Comment
+      public string? Comment
       {
-        get { return CommentElement != null ? CommentElement.Value : null; }
+        get => _CommentElement?.Value;
         set
         {
-          if (value == null)
-            CommentElement = null;
-          else
-            CommentElement = new Hl7.Fhir.Model.FhirString(value);
+          CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Comment");
         }
       }
@@ -1383,27 +1344,23 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Source;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Source;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as CodeComponent;
-
-        if (dest == null)
-        {
+        if(other is not CodeComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
-        if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopyInternal();
-        if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopyInternal();
-        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopyInternal());
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+        if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
+        if(_StatusDateElement is not null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)_StatusDateElement.DeepCopyInternal();
+        if(_CommentElement is not null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)_CommentElement.DeepCopyInternal();
+        if(_Source is not null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(_Source.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1415,62 +1372,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CodeComponent;
-        if(otherT == null) return false;
+        if(other is not CodeComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
-        if(!comparer.Equals(Status, otherT.Status)) return false;
-        if(!comparer.Equals(StatusDateElement, otherT.StatusDateElement)) return false;
-        if(!comparer.Equals(CommentElement, otherT.CommentElement)) return false;
-        if(!comparer.ListEquals(Source, otherT.Source)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        if(!comparer.Equals(_Status, otherT._Status)) return false;
+        if(!comparer.Equals(_StatusDateElement, otherT._StatusDateElement)) return false;
+        if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
+        if(!comparer.ListEquals(_Source, otherT._Source)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           case "status":
-            value = Status;
-            return Status is not null;
+            value = _Status;
+            return _Status is not null;
           case "statusDate":
-            value = StatusDateElement;
-            return StatusDateElement is not null;
+            value = _StatusDateElement;
+            return _StatusDateElement is not null;
           case "comment":
-            value = CommentElement;
-            return CommentElement is not null;
+            value = _CommentElement;
+            return _CommentElement is not null;
           case "source":
-            value = Source;
-            return Source?.Any() == true;
+            value = _Source;
+            return _Source?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept)value;
+            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "status":
-            Status = (Hl7.Fhir.Model.CodeableConcept)value;
+            Status = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "statusDate":
-            StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+            StatusDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           case "comment":
-            CommentElement = (Hl7.Fhir.Model.FhirString)value;
+            CommentElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "source":
-            Source = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Source = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1481,11 +1439,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
-        if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
-        if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
-        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
+        if (_StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
+        if (_CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+        if (_Source?.Any() == true) yield return new KeyValuePair<string,object>("source",_Source);
       }
 
     }
@@ -1509,28 +1467,25 @@ namespace Hl7.Fhir.Model
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString NameElement
+      public Hl7.Fhir.Model.FhirString? NameElement
       {
         get { return _NameElement; }
         set { _NameElement = value; OnPropertyChanged("NameElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _NameElement;
+      private Hl7.Fhir.Model.FhirString? _NameElement;
 
       /// <summary>
       /// The actual name
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Name
+      public string? Name
       {
-        get { return NameElement != null ? NameElement.Value : null; }
+        get => _NameElement?.Value;
         set
         {
-          if (value == null)
-            NameElement = null;
-          else
-            NameElement = new Hl7.Fhir.Model.FhirString(value);
+          NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Name");
         }
       }
@@ -1540,39 +1495,39 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// The status of the name.
       /// </summary>
       [FhirElement("status", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Status
+      public Hl7.Fhir.Model.CodeableConcept? Status
       {
         get { return _Status; }
         set { _Status = value; OnPropertyChanged("Status"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Status;
+      private Hl7.Fhir.Model.CodeableConcept? _Status;
 
       /// <summary>
       /// If this is the preferred name for this substance.
       /// </summary>
       [FhirElement("preferred", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean PreferredElement
+      public Hl7.Fhir.Model.FhirBoolean? PreferredElement
       {
         get { return _PreferredElement; }
         set { _PreferredElement = value; OnPropertyChanged("PreferredElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _PreferredElement;
+      private Hl7.Fhir.Model.FhirBoolean? _PreferredElement;
 
       /// <summary>
       /// If this is the preferred name for this substance
@@ -1581,13 +1536,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Preferred
       {
-        get { return PreferredElement != null ? PreferredElement.Value : null; }
+        get => _PreferredElement?.Value;
         set
         {
-          if (value == null)
-            PreferredElement = null;
-          else
-            PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          PreferredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("Preferred");
         }
       }
@@ -1600,11 +1552,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Language
       {
-        get { if(_Language==null) _Language = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Language; }
+        get => _Language ??= [];
         set { _Language = value; OnPropertyChanged("Language"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Language;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Language;
 
       /// <summary>
       /// The use context of this name for example if there is a different name a drug active ingredient as opposed to a food colour additive.
@@ -1614,11 +1566,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Domain
       {
-        get { if(_Domain==null) _Domain = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Domain; }
+        get => _Domain ??= [];
         set { _Domain = value; OnPropertyChanged("Domain"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Domain;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Domain;
 
       /// <summary>
       /// The jurisdiction where this name applies.
@@ -1628,11 +1580,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
       {
-        get { if(_Jurisdiction==null) _Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Jurisdiction; }
+        get => _Jurisdiction ??= [];
         set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Jurisdiction;
 
       /// <summary>
       /// A synonym of this name.
@@ -1642,11 +1594,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> Synonym
       {
-        get { if(_Synonym==null) _Synonym = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(); return _Synonym; }
+        get => _Synonym ??= [];
         set { _Synonym = value; OnPropertyChanged("Synonym"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> _Synonym;
+      private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>? _Synonym;
 
       /// <summary>
       /// A translation for this name.
@@ -1656,11 +1608,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> Translation
       {
-        get { if(_Translation==null) _Translation = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(); return _Translation; }
+        get => _Translation ??= [];
         set { _Translation = value; OnPropertyChanged("Translation"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> _Translation;
+      private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>? _Translation;
 
       /// <summary>
       /// Details of the official nature of this name.
@@ -1670,11 +1622,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent> Official
       {
-        get { if(_Official==null) _Official = new List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent>(); return _Official; }
+        get => _Official ??= [];
         set { _Official = value; OnPropertyChanged("Official"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent> _Official;
+      private List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent>? _Official;
 
       /// <summary>
       /// Supporting literature.
@@ -1686,33 +1638,29 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Source;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Source;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as NameComponent;
-
-        if (dest == null)
-        {
+        if(other is not NameComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
-        if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopyInternal();
-        if(Language.Any()) dest.Language = new List<Hl7.Fhir.Model.CodeableConcept>(Language.DeepCopyInternal());
-        if(Domain.Any()) dest.Domain = new List<Hl7.Fhir.Model.CodeableConcept>(Domain.DeepCopyInternal());
-        if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopyInternal());
-        if(Synonym.Any()) dest.Synonym = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Synonym.DeepCopyInternal());
-        if(Translation.Any()) dest.Translation = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Translation.DeepCopyInternal());
-        if(Official.Any()) dest.Official = new List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent>(Official.DeepCopyInternal());
-        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopyInternal());
+        if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
+        if(_PreferredElement is not null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)_PreferredElement.DeepCopyInternal();
+        if(_Language is not null) dest.Language = new List<Hl7.Fhir.Model.CodeableConcept>(_Language.DeepCopyInternal());
+        if(_Domain is not null) dest.Domain = new List<Hl7.Fhir.Model.CodeableConcept>(_Domain.DeepCopyInternal());
+        if(_Jurisdiction is not null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(_Jurisdiction.DeepCopyInternal());
+        if(_Synonym is not null) dest.Synonym = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(_Synonym.DeepCopyInternal());
+        if(_Translation is not null) dest.Translation = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(_Translation.DeepCopyInternal());
+        if(_Official is not null) dest.Official = new List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent>(_Official.DeepCopyInternal());
+        if(_Source is not null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(_Source.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1724,104 +1672,105 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as NameComponent;
-        if(otherT == null) return false;
+        if(other is not NameComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Status, otherT.Status)) return false;
-        if(!comparer.Equals(PreferredElement, otherT.PreferredElement)) return false;
-        if(!comparer.ListEquals(Language, otherT.Language)) return false;
-        if(!comparer.ListEquals(Domain, otherT.Domain)) return false;
-        if(!comparer.ListEquals(Jurisdiction, otherT.Jurisdiction)) return false;
-        if(!comparer.ListEquals(Synonym, otherT.Synonym)) return false;
-        if(!comparer.ListEquals(Translation, otherT.Translation)) return false;
-        if(!comparer.ListEquals(Official, otherT.Official)) return false;
-        if(!comparer.ListEquals(Source, otherT.Source)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Status, otherT._Status)) return false;
+        if(!comparer.Equals(_PreferredElement, otherT._PreferredElement)) return false;
+        if(!comparer.ListEquals(_Language, otherT._Language)) return false;
+        if(!comparer.ListEquals(_Domain, otherT._Domain)) return false;
+        if(!comparer.ListEquals(_Jurisdiction, otherT._Jurisdiction)) return false;
+        if(!comparer.ListEquals(_Synonym, otherT._Synonym)) return false;
+        if(!comparer.ListEquals(_Translation, otherT._Translation)) return false;
+        if(!comparer.ListEquals(_Official, otherT._Official)) return false;
+        if(!comparer.ListEquals(_Source, otherT._Source)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "name":
-            value = NameElement;
-            return NameElement is not null;
+            value = _NameElement;
+            return _NameElement is not null;
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "status":
-            value = Status;
-            return Status is not null;
+            value = _Status;
+            return _Status is not null;
           case "preferred":
-            value = PreferredElement;
-            return PreferredElement is not null;
+            value = _PreferredElement;
+            return _PreferredElement is not null;
           case "language":
-            value = Language;
-            return Language?.Any() == true;
+            value = _Language;
+            return _Language?.Any() == true;
           case "domain":
-            value = Domain;
-            return Domain?.Any() == true;
+            value = _Domain;
+            return _Domain?.Any() == true;
           case "jurisdiction":
-            value = Jurisdiction;
-            return Jurisdiction?.Any() == true;
+            value = _Jurisdiction;
+            return _Jurisdiction?.Any() == true;
           case "synonym":
-            value = Synonym;
-            return Synonym?.Any() == true;
+            value = _Synonym;
+            return _Synonym?.Any() == true;
           case "translation":
-            value = Translation;
-            return Translation?.Any() == true;
+            value = _Translation;
+            return _Translation?.Any() == true;
           case "official":
-            value = Official;
-            return Official?.Any() == true;
+            value = _Official;
+            return _Official?.Any() == true;
           case "source":
-            value = Source;
-            return Source?.Any() == true;
+            value = _Source;
+            return _Source?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString)value;
+            NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "status":
-            Status = (Hl7.Fhir.Model.CodeableConcept)value;
+            Status = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "preferred":
-            PreferredElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            PreferredElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "language":
-            Language = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Language = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "domain":
-            Domain = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Domain = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "jurisdiction":
-            Jurisdiction = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Jurisdiction = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "synonym":
-            Synonym = (List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>)value;
+            Synonym = (List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>?)value!;
             return this;
           case "translation":
-            Translation = (List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>)value;
+            Translation = (List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>?)value!;
             return this;
           case "official":
-            Official = (List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent>)value;
+            Official = (List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent>?)value!;
             return this;
           case "source":
-            Source = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Source = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1832,17 +1781,17 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
-        if (PreferredElement is not null) yield return new KeyValuePair<string,object>("preferred",PreferredElement);
-        if (Language?.Any() == true) yield return new KeyValuePair<string,object>("language",Language);
-        if (Domain?.Any() == true) yield return new KeyValuePair<string,object>("domain",Domain);
-        if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
-        if (Synonym?.Any() == true) yield return new KeyValuePair<string,object>("synonym",Synonym);
-        if (Translation?.Any() == true) yield return new KeyValuePair<string,object>("translation",Translation);
-        if (Official?.Any() == true) yield return new KeyValuePair<string,object>("official",Official);
-        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+        if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
+        if (_PreferredElement is not null) yield return new KeyValuePair<string,object>("preferred",_PreferredElement);
+        if (_Language?.Any() == true) yield return new KeyValuePair<string,object>("language",_Language);
+        if (_Domain?.Any() == true) yield return new KeyValuePair<string,object>("domain",_Domain);
+        if (_Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
+        if (_Synonym?.Any() == true) yield return new KeyValuePair<string,object>("synonym",_Synonym);
+        if (_Translation?.Any() == true) yield return new KeyValuePair<string,object>("translation",_Translation);
+        if (_Official?.Any() == true) yield return new KeyValuePair<string,object>("official",_Official);
+        if (_Source?.Any() == true) yield return new KeyValuePair<string,object>("source",_Source);
       }
 
     }
@@ -1865,71 +1814,64 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("authority", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Authority
+      public Hl7.Fhir.Model.CodeableConcept? Authority
       {
         get { return _Authority; }
         set { _Authority = value; OnPropertyChanged("Authority"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Authority;
+      private Hl7.Fhir.Model.CodeableConcept? _Authority;
 
       /// <summary>
       /// The status of the official name.
       /// </summary>
       [FhirElement("status", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Status
+      public Hl7.Fhir.Model.CodeableConcept? Status
       {
         get { return _Status; }
         set { _Status = value; OnPropertyChanged("Status"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Status;
+      private Hl7.Fhir.Model.CodeableConcept? _Status;
 
       /// <summary>
       /// Date of official name change.
       /// </summary>
       [FhirElement("date", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirDateTime DateElement
+      public Hl7.Fhir.Model.FhirDateTime? DateElement
       {
         get { return _DateElement; }
         set { _DateElement = value; OnPropertyChanged("DateElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirDateTime _DateElement;
+      private Hl7.Fhir.Model.FhirDateTime? _DateElement;
 
       /// <summary>
       /// Date of official name change
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Date
+      public string? Date
       {
-        get { return DateElement != null ? DateElement.Value : null; }
+        get => _DateElement?.Value;
         set
         {
-          if (value == null)
-            DateElement = null;
-          else
-            DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+          DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
           OnPropertyChanged("Date");
         }
       }
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as OfficialComponent;
-
-        if (dest == null)
-        {
+        if(other is not OfficialComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Authority != null) dest.Authority = (Hl7.Fhir.Model.CodeableConcept)Authority.DeepCopyInternal();
-        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
-        if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
+        if(_Authority is not null) dest.Authority = (Hl7.Fhir.Model.CodeableConcept)_Authority.DeepCopyInternal();
+        if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
+        if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)_DateElement.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1941,48 +1883,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as OfficialComponent;
-        if(otherT == null) return false;
+        if(other is not OfficialComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Authority, otherT.Authority)) return false;
-        if(!comparer.Equals(Status, otherT.Status)) return false;
-        if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Authority, otherT._Authority)) return false;
+        if(!comparer.Equals(_Status, otherT._Status)) return false;
+        if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "authority":
-            value = Authority;
-            return Authority is not null;
+            value = _Authority;
+            return _Authority is not null;
           case "status":
-            value = Status;
-            return Status is not null;
+            value = _Status;
+            return _Status is not null;
           case "date":
-            value = DateElement;
-            return DateElement is not null;
+            value = _DateElement;
+            return _DateElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "authority":
-            Authority = (Hl7.Fhir.Model.CodeableConcept)value;
+            Authority = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "status":
-            Status = (Hl7.Fhir.Model.CodeableConcept)value;
+            Status = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "date":
-            DateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+            DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1993,9 +1936,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
-        if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
-        if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+        if (_Authority is not null) yield return new KeyValuePair<string,object>("authority",_Authority);
+        if (_Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
+        if (_DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
       }
 
     }
@@ -2021,39 +1964,39 @@ namespace Hl7.Fhir.Model
       [References("SubstanceSpecification")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Substance
+      public Hl7.Fhir.Model.DataType? Substance
       {
         get { return _Substance; }
         set { _Substance = value; OnPropertyChanged("Substance"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Substance;
+      private Hl7.Fhir.Model.DataType? _Substance;
 
       /// <summary>
       /// For example "salt to parent", "active moiety", "starting material".
       /// </summary>
       [FhirElement("relationship", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Relationship
+      public Hl7.Fhir.Model.CodeableConcept? Relationship
       {
         get { return _Relationship; }
         set { _Relationship = value; OnPropertyChanged("Relationship"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Relationship;
+      private Hl7.Fhir.Model.CodeableConcept? _Relationship;
 
       /// <summary>
       /// For example where an enzyme strongly bonds with a particular substance, this is a defining relationship for that enzyme, out of several possible substance relationships.
       /// </summary>
       [FhirElement("isDefining", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean IsDefiningElement
+      public Hl7.Fhir.Model.FhirBoolean? IsDefiningElement
       {
         get { return _IsDefiningElement; }
         set { _IsDefiningElement = value; OnPropertyChanged("IsDefiningElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _IsDefiningElement;
+      private Hl7.Fhir.Model.FhirBoolean? _IsDefiningElement;
 
       /// <summary>
       /// For example where an enzyme strongly bonds with a particular substance, this is a defining relationship for that enzyme, out of several possible substance relationships
@@ -2062,13 +2005,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? IsDefining
       {
-        get { return IsDefiningElement != null ? IsDefiningElement.Value : null; }
+        get => _IsDefiningElement?.Value;
         set
         {
-          if (value == null)
-            IsDefiningElement = null;
-          else
-            IsDefiningElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          IsDefiningElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("IsDefining");
         }
       }
@@ -2080,39 +2020,39 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Amount
+      public Hl7.Fhir.Model.DataType? Amount
       {
         get { return _Amount; }
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Amount;
+      private Hl7.Fhir.Model.DataType? _Amount;
 
       /// <summary>
       /// For use when the numeric.
       /// </summary>
       [FhirElement("amountRatioLowLimit", InSummary=true, Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Ratio AmountRatioLowLimit
+      public Hl7.Fhir.Model.Ratio? AmountRatioLowLimit
       {
         get { return _AmountRatioLowLimit; }
         set { _AmountRatioLowLimit = value; OnPropertyChanged("AmountRatioLowLimit"); }
       }
 
-      private Hl7.Fhir.Model.Ratio _AmountRatioLowLimit;
+      private Hl7.Fhir.Model.Ratio? _AmountRatioLowLimit;
 
       /// <summary>
       /// An operator for the amount, for example "average", "approximately", "less than".
       /// </summary>
       [FhirElement("amountType", InSummary=true, Order=90)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept AmountType
+      public Hl7.Fhir.Model.CodeableConcept? AmountType
       {
         get { return _AmountType; }
         set { _AmountType = value; OnPropertyChanged("AmountType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _AmountType;
+      private Hl7.Fhir.Model.CodeableConcept? _AmountType;
 
       /// <summary>
       /// Supporting literature.
@@ -2124,29 +2064,25 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
-        get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
+        get => _Source ??= [];
         set { _Source = value; OnPropertyChanged("Source"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Source;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Source;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RelationshipComponent;
-
-        if (dest == null)
-        {
+        if(other is not RelationshipComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Substance != null) dest.Substance = (Hl7.Fhir.Model.DataType)Substance.DeepCopyInternal();
-        if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopyInternal();
-        if(IsDefiningElement != null) dest.IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)IsDefiningElement.DeepCopyInternal();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopyInternal();
-        if(AmountRatioLowLimit != null) dest.AmountRatioLowLimit = (Hl7.Fhir.Model.Ratio)AmountRatioLowLimit.DeepCopyInternal();
-        if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopyInternal();
-        if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopyInternal());
+        if(_Substance is not null) dest.Substance = (Hl7.Fhir.Model.DataType)_Substance.DeepCopyInternal();
+        if(_Relationship is not null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)_Relationship.DeepCopyInternal();
+        if(_IsDefiningElement is not null) dest.IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)_IsDefiningElement.DeepCopyInternal();
+        if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.DataType)_Amount.DeepCopyInternal();
+        if(_AmountRatioLowLimit is not null) dest.AmountRatioLowLimit = (Hl7.Fhir.Model.Ratio)_AmountRatioLowLimit.DeepCopyInternal();
+        if(_AmountType is not null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)_AmountType.DeepCopyInternal();
+        if(_Source is not null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(_Source.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -2158,76 +2094,77 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RelationshipComponent;
-        if(otherT == null) return false;
+        if(other is not RelationshipComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Substance, otherT.Substance)) return false;
-        if(!comparer.Equals(Relationship, otherT.Relationship)) return false;
-        if(!comparer.Equals(IsDefiningElement, otherT.IsDefiningElement)) return false;
-        if(!comparer.Equals(Amount, otherT.Amount)) return false;
-        if(!comparer.Equals(AmountRatioLowLimit, otherT.AmountRatioLowLimit)) return false;
-        if(!comparer.Equals(AmountType, otherT.AmountType)) return false;
-        if(!comparer.ListEquals(Source, otherT.Source)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Substance, otherT._Substance)) return false;
+        if(!comparer.Equals(_Relationship, otherT._Relationship)) return false;
+        if(!comparer.Equals(_IsDefiningElement, otherT._IsDefiningElement)) return false;
+        if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+        if(!comparer.Equals(_AmountRatioLowLimit, otherT._AmountRatioLowLimit)) return false;
+        if(!comparer.Equals(_AmountType, otherT._AmountType)) return false;
+        if(!comparer.ListEquals(_Source, otherT._Source)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "substance":
-            value = Substance;
-            return Substance is not null;
+            value = _Substance;
+            return _Substance is not null;
           case "relationship":
-            value = Relationship;
-            return Relationship is not null;
+            value = _Relationship;
+            return _Relationship is not null;
           case "isDefining":
-            value = IsDefiningElement;
-            return IsDefiningElement is not null;
+            value = _IsDefiningElement;
+            return _IsDefiningElement is not null;
           case "amount":
-            value = Amount;
-            return Amount is not null;
+            value = _Amount;
+            return _Amount is not null;
           case "amountRatioLowLimit":
-            value = AmountRatioLowLimit;
-            return AmountRatioLowLimit is not null;
+            value = _AmountRatioLowLimit;
+            return _AmountRatioLowLimit is not null;
           case "amountType":
-            value = AmountType;
-            return AmountType is not null;
+            value = _AmountType;
+            return _AmountType is not null;
           case "source":
-            value = Source;
-            return Source?.Any() == true;
+            value = _Source;
+            return _Source?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "substance":
-            Substance = (Hl7.Fhir.Model.DataType)value;
+            Substance = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "relationship":
-            Relationship = (Hl7.Fhir.Model.CodeableConcept)value;
+            Relationship = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "isDefining":
-            IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.DataType)value;
+            Amount = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "amountRatioLowLimit":
-            AmountRatioLowLimit = (Hl7.Fhir.Model.Ratio)value;
+            AmountRatioLowLimit = (Hl7.Fhir.Model.Ratio?)value;
             return this;
           case "amountType":
-            AmountType = (Hl7.Fhir.Model.CodeableConcept)value;
+            AmountType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "source":
-            Source = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Source = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2238,13 +2175,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
-        if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
-        if (IsDefiningElement is not null) yield return new KeyValuePair<string,object>("isDefining",IsDefiningElement);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
-        if (AmountRatioLowLimit is not null) yield return new KeyValuePair<string,object>("amountRatioLowLimit",AmountRatioLowLimit);
-        if (AmountType is not null) yield return new KeyValuePair<string,object>("amountType",AmountType);
-        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+        if (_Substance is not null) yield return new KeyValuePair<string,object>("substance",_Substance);
+        if (_Relationship is not null) yield return new KeyValuePair<string,object>("relationship",_Relationship);
+        if (_IsDefiningElement is not null) yield return new KeyValuePair<string,object>("isDefining",_IsDefiningElement);
+        if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
+        if (_AmountRatioLowLimit is not null) yield return new KeyValuePair<string,object>("amountRatioLowLimit",_AmountRatioLowLimit);
+        if (_AmountType is not null) yield return new KeyValuePair<string,object>("amountType",_AmountType);
+        if (_Source?.Any() == true) yield return new KeyValuePair<string,object>("source",_Source);
       }
 
     }
@@ -2254,80 +2191,77 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier Identifier
+    public Hl7.Fhir.Model.Identifier? Identifier
     {
       get { return _Identifier; }
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _Identifier;
+    private Hl7.Fhir.Model.Identifier? _Identifier;
 
     /// <summary>
     /// High level categorization, e.g. polymer or nucleic acid.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Type
+    public Hl7.Fhir.Model.CodeableConcept? Type
     {
       get { return _Type; }
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
     /// Status of substance within the catalogue e.g. approved.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Status
+    public Hl7.Fhir.Model.CodeableConcept? Status
     {
       get { return _Status; }
       set { _Status = value; OnPropertyChanged("Status"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Status;
+    private Hl7.Fhir.Model.CodeableConcept? _Status;
 
     /// <summary>
     /// If the substance applies to only human or veterinary use.
     /// </summary>
     [FhirElement("domain", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Domain
+    public Hl7.Fhir.Model.CodeableConcept? Domain
     {
       get { return _Domain; }
       set { _Domain = value; OnPropertyChanged("Domain"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Domain;
+    private Hl7.Fhir.Model.CodeableConcept? _Domain;
 
     /// <summary>
     /// Textual description of the substance.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DescriptionElement
+    public Hl7.Fhir.Model.FhirString? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DescriptionElement;
+    private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
     /// <summary>
     /// Textual description of the substance
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -2342,39 +2276,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Source
     {
-      get { if(_Source==null) _Source = new List<Hl7.Fhir.Model.ResourceReference>(); return _Source; }
+      get => _Source ??= [];
       set { _Source = value; OnPropertyChanged("Source"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Source;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Source;
 
     /// <summary>
     /// Textual comment about this record of a substance.
     /// </summary>
     [FhirElement("comment", InSummary=true, Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString CommentElement
+    public Hl7.Fhir.Model.FhirString? CommentElement
     {
       get { return _CommentElement; }
       set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _CommentElement;
+    private Hl7.Fhir.Model.FhirString? _CommentElement;
 
     /// <summary>
     /// Textual comment about this record of a substance
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Comment
+    public string? Comment
     {
-      get { return CommentElement != null ? CommentElement.Value : null; }
+      get => _CommentElement?.Value;
       set
       {
-        if (value == null)
-          CommentElement = null;
-        else
-          CommentElement = new Hl7.Fhir.Model.FhirString(value);
+        CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Comment");
       }
     }
@@ -2387,11 +2318,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent> Moiety
     {
-      get { if(_Moiety==null) _Moiety = new List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent>(); return _Moiety; }
+      get => _Moiety ??= [];
       set { _Moiety = value; OnPropertyChanged("Moiety"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent> _Moiety;
+    private List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent>? _Moiety;
 
     /// <summary>
     /// General specifications for this substance, including how it is related to other substances.
@@ -2401,11 +2332,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent> Property
     {
-      get { if(_Property==null) _Property = new List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent>(); return _Property; }
+      get => _Property ??= [];
       set { _Property = value; OnPropertyChanged("Property"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent> _Property;
+    private List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent>? _Property;
 
     /// <summary>
     /// General information detailing this substance.
@@ -2414,26 +2345,26 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("SubstanceReferenceInformation")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ReferenceInformation
+    public Hl7.Fhir.Model.ResourceReference? ReferenceInformation
     {
       get { return _ReferenceInformation; }
       set { _ReferenceInformation = value; OnPropertyChanged("ReferenceInformation"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ReferenceInformation;
+    private Hl7.Fhir.Model.ResourceReference? _ReferenceInformation;
 
     /// <summary>
     /// Structural information.
     /// </summary>
     [FhirElement("structure", InSummary=true, Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.SubstanceSpecification.StructureComponent Structure
+    public Hl7.Fhir.Model.SubstanceSpecification.StructureComponent? Structure
     {
       get { return _Structure; }
       set { _Structure = value; OnPropertyChanged("Structure"); }
     }
 
-    private Hl7.Fhir.Model.SubstanceSpecification.StructureComponent _Structure;
+    private Hl7.Fhir.Model.SubstanceSpecification.StructureComponent? _Structure;
 
     /// <summary>
     /// Codes associated with the substance.
@@ -2443,11 +2374,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent> Code
     {
-      get { if(_Code==null) _Code = new List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent>(); return _Code; }
+      get => _Code ??= [];
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent> _Code;
+    private List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent>? _Code;
 
     /// <summary>
     /// Names applicable to this substance.
@@ -2457,11 +2388,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> Name
     {
-      get { if(_Name==null) _Name = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(); return _Name; }
+      get => _Name ??= [];
       set { _Name = value; OnPropertyChanged("Name"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> _Name;
+    private List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>? _Name;
 
     /// <summary>
     /// The molecular weight or weight range (for proteins, polymers or nucleic acids).
@@ -2471,11 +2402,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent> MolecularWeight
     {
-      get { if(_MolecularWeight==null) _MolecularWeight = new List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent>(); return _MolecularWeight; }
+      get => _MolecularWeight ??= [];
       set { _MolecularWeight = value; OnPropertyChanged("MolecularWeight"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent> _MolecularWeight;
+    private List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent>? _MolecularWeight;
 
     /// <summary>
     /// A link between this substance and another, with details of the relationship.
@@ -2485,11 +2416,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent> Relationship
     {
-      get { if(_Relationship==null) _Relationship = new List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent>(); return _Relationship; }
+      get => _Relationship ??= [];
       set { _Relationship = value; OnPropertyChanged("Relationship"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent> _Relationship;
+    private List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent>? _Relationship;
 
     /// <summary>
     /// Data items specific to nucleic acids.
@@ -2498,13 +2429,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("SubstanceNucleicAcid")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference NucleicAcid
+    public Hl7.Fhir.Model.ResourceReference? NucleicAcid
     {
       get { return _NucleicAcid; }
       set { _NucleicAcid = value; OnPropertyChanged("NucleicAcid"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _NucleicAcid;
+    private Hl7.Fhir.Model.ResourceReference? _NucleicAcid;
 
     /// <summary>
     /// Data items specific to polymers.
@@ -2513,13 +2444,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("SubstancePolymer")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Polymer
+    public Hl7.Fhir.Model.ResourceReference? Polymer
     {
       get { return _Polymer; }
       set { _Polymer = value; OnPropertyChanged("Polymer"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Polymer;
+    private Hl7.Fhir.Model.ResourceReference? _Polymer;
 
     /// <summary>
     /// Data items specific to proteins.
@@ -2528,13 +2459,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("SubstanceProtein")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Protein
+    public Hl7.Fhir.Model.ResourceReference? Protein
     {
       get { return _Protein; }
       set { _Protein = value; OnPropertyChanged("Protein"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Protein;
+    private Hl7.Fhir.Model.ResourceReference? _Protein;
 
     /// <summary>
     /// Material or taxonomic/anatomical source for the substance.
@@ -2543,45 +2474,41 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("SubstanceSourceMaterial")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference SourceMaterial
+    public Hl7.Fhir.Model.ResourceReference? SourceMaterial
     {
       get { return _SourceMaterial; }
       set { _SourceMaterial = value; OnPropertyChanged("SourceMaterial"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _SourceMaterial;
+    private Hl7.Fhir.Model.ResourceReference? _SourceMaterial;
 
-    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
+    Identifier? IIdentifiable<Identifier?>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as SubstanceSpecification;
-
-      if (dest == null)
-      {
+      if(other is not SubstanceSpecification dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
-      if(Domain != null) dest.Domain = (Hl7.Fhir.Model.CodeableConcept)Domain.DeepCopyInternal();
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
-      if(Source.Any()) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopyInternal());
-      if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopyInternal();
-      if(Moiety.Any()) dest.Moiety = new List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent>(Moiety.DeepCopyInternal());
-      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent>(Property.DeepCopyInternal());
-      if(ReferenceInformation != null) dest.ReferenceInformation = (Hl7.Fhir.Model.ResourceReference)ReferenceInformation.DeepCopyInternal();
-      if(Structure != null) dest.Structure = (Hl7.Fhir.Model.SubstanceSpecification.StructureComponent)Structure.DeepCopyInternal();
-      if(Code.Any()) dest.Code = new List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent>(Code.DeepCopyInternal());
-      if(Name.Any()) dest.Name = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(Name.DeepCopyInternal());
-      if(MolecularWeight.Any()) dest.MolecularWeight = new List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent>(MolecularWeight.DeepCopyInternal());
-      if(Relationship.Any()) dest.Relationship = new List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent>(Relationship.DeepCopyInternal());
-      if(NucleicAcid != null) dest.NucleicAcid = (Hl7.Fhir.Model.ResourceReference)NucleicAcid.DeepCopyInternal();
-      if(Polymer != null) dest.Polymer = (Hl7.Fhir.Model.ResourceReference)Polymer.DeepCopyInternal();
-      if(Protein != null) dest.Protein = (Hl7.Fhir.Model.ResourceReference)Protein.DeepCopyInternal();
-      if(SourceMaterial != null) dest.SourceMaterial = (Hl7.Fhir.Model.ResourceReference)SourceMaterial.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
+      if(_Domain is not null) dest.Domain = (Hl7.Fhir.Model.CodeableConcept)_Domain.DeepCopyInternal();
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+      if(_Source is not null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(_Source.DeepCopyInternal());
+      if(_CommentElement is not null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)_CommentElement.DeepCopyInternal();
+      if(_Moiety is not null) dest.Moiety = new List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent>(_Moiety.DeepCopyInternal());
+      if(_Property is not null) dest.Property = new List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent>(_Property.DeepCopyInternal());
+      if(_ReferenceInformation is not null) dest.ReferenceInformation = (Hl7.Fhir.Model.ResourceReference)_ReferenceInformation.DeepCopyInternal();
+      if(_Structure is not null) dest.Structure = (Hl7.Fhir.Model.SubstanceSpecification.StructureComponent)_Structure.DeepCopyInternal();
+      if(_Code is not null) dest.Code = new List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent>(_Code.DeepCopyInternal());
+      if(_Name is not null) dest.Name = new List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>(_Name.DeepCopyInternal());
+      if(_MolecularWeight is not null) dest.MolecularWeight = new List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent>(_MolecularWeight.DeepCopyInternal());
+      if(_Relationship is not null) dest.Relationship = new List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent>(_Relationship.DeepCopyInternal());
+      if(_NucleicAcid is not null) dest.NucleicAcid = (Hl7.Fhir.Model.ResourceReference)_NucleicAcid.DeepCopyInternal();
+      if(_Polymer is not null) dest.Polymer = (Hl7.Fhir.Model.ResourceReference)_Polymer.DeepCopyInternal();
+      if(_Protein is not null) dest.Protein = (Hl7.Fhir.Model.ResourceReference)_Protein.DeepCopyInternal();
+      if(_SourceMaterial is not null) dest.SourceMaterial = (Hl7.Fhir.Model.ResourceReference)_SourceMaterial.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -2593,160 +2520,161 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as SubstanceSpecification;
-      if(otherT == null) return false;
+      if(other is not SubstanceSpecification otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(Type, otherT.Type)) return false;
-      if(!comparer.Equals(Status, otherT.Status)) return false;
-      if(!comparer.Equals(Domain, otherT.Domain)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.ListEquals(Source, otherT.Source)) return false;
-      if(!comparer.Equals(CommentElement, otherT.CommentElement)) return false;
-      if(!comparer.ListEquals(Moiety, otherT.Moiety)) return false;
-      if(!comparer.ListEquals(Property, otherT.Property)) return false;
-      if(!comparer.Equals(ReferenceInformation, otherT.ReferenceInformation)) return false;
-      if(!comparer.Equals(Structure, otherT.Structure)) return false;
-      if(!comparer.ListEquals(Code, otherT.Code)) return false;
-      if(!comparer.ListEquals(Name, otherT.Name)) return false;
-      if(!comparer.ListEquals(MolecularWeight, otherT.MolecularWeight)) return false;
-      if(!comparer.ListEquals(Relationship, otherT.Relationship)) return false;
-      if(!comparer.Equals(NucleicAcid, otherT.NucleicAcid)) return false;
-      if(!comparer.Equals(Polymer, otherT.Polymer)) return false;
-      if(!comparer.Equals(Protein, otherT.Protein)) return false;
-      if(!comparer.Equals(SourceMaterial, otherT.SourceMaterial)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_Status, otherT._Status)) return false;
+      if(!comparer.Equals(_Domain, otherT._Domain)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.ListEquals(_Source, otherT._Source)) return false;
+      if(!comparer.Equals(_CommentElement, otherT._CommentElement)) return false;
+      if(!comparer.ListEquals(_Moiety, otherT._Moiety)) return false;
+      if(!comparer.ListEquals(_Property, otherT._Property)) return false;
+      if(!comparer.Equals(_ReferenceInformation, otherT._ReferenceInformation)) return false;
+      if(!comparer.Equals(_Structure, otherT._Structure)) return false;
+      if(!comparer.ListEquals(_Code, otherT._Code)) return false;
+      if(!comparer.ListEquals(_Name, otherT._Name)) return false;
+      if(!comparer.ListEquals(_MolecularWeight, otherT._MolecularWeight)) return false;
+      if(!comparer.ListEquals(_Relationship, otherT._Relationship)) return false;
+      if(!comparer.Equals(_NucleicAcid, otherT._NucleicAcid)) return false;
+      if(!comparer.Equals(_Polymer, otherT._Polymer)) return false;
+      if(!comparer.Equals(_Protein, otherT._Protein)) return false;
+      if(!comparer.Equals(_SourceMaterial, otherT._SourceMaterial)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier is not null;
+          value = _Identifier;
+          return _Identifier is not null;
         case "type":
-          value = Type;
-          return Type is not null;
+          value = _Type;
+          return _Type is not null;
         case "status":
-          value = Status;
-          return Status is not null;
+          value = _Status;
+          return _Status is not null;
         case "domain":
-          value = Domain;
-          return Domain is not null;
+          value = _Domain;
+          return _Domain is not null;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "source":
-          value = Source;
-          return Source?.Any() == true;
+          value = _Source;
+          return _Source?.Any() == true;
         case "comment":
-          value = CommentElement;
-          return CommentElement is not null;
+          value = _CommentElement;
+          return _CommentElement is not null;
         case "moiety":
-          value = Moiety;
-          return Moiety?.Any() == true;
+          value = _Moiety;
+          return _Moiety?.Any() == true;
         case "property":
-          value = Property;
-          return Property?.Any() == true;
+          value = _Property;
+          return _Property?.Any() == true;
         case "referenceInformation":
-          value = ReferenceInformation;
-          return ReferenceInformation is not null;
+          value = _ReferenceInformation;
+          return _ReferenceInformation is not null;
         case "structure":
-          value = Structure;
-          return Structure is not null;
+          value = _Structure;
+          return _Structure is not null;
         case "code":
-          value = Code;
-          return Code?.Any() == true;
+          value = _Code;
+          return _Code?.Any() == true;
         case "name":
-          value = Name;
-          return Name?.Any() == true;
+          value = _Name;
+          return _Name?.Any() == true;
         case "molecularWeight":
-          value = MolecularWeight;
-          return MolecularWeight?.Any() == true;
+          value = _MolecularWeight;
+          return _MolecularWeight?.Any() == true;
         case "relationship":
-          value = Relationship;
-          return Relationship?.Any() == true;
+          value = _Relationship;
+          return _Relationship?.Any() == true;
         case "nucleicAcid":
-          value = NucleicAcid;
-          return NucleicAcid is not null;
+          value = _NucleicAcid;
+          return _NucleicAcid is not null;
         case "polymer":
-          value = Polymer;
-          return Polymer is not null;
+          value = _Polymer;
+          return _Polymer is not null;
         case "protein":
-          value = Protein;
-          return Protein is not null;
+          value = _Protein;
+          return _Protein is not null;
         case "sourceMaterial":
-          value = SourceMaterial;
-          return SourceMaterial is not null;
+          value = _SourceMaterial;
+          return _SourceMaterial is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier)value;
+          Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept)value;
+          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "status":
-          Status = (Hl7.Fhir.Model.CodeableConcept)value;
+          Status = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "domain":
-          Domain = (Hl7.Fhir.Model.CodeableConcept)value;
+          Domain = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+          DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "source":
-          Source = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Source = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "comment":
-          CommentElement = (Hl7.Fhir.Model.FhirString)value;
+          CommentElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "moiety":
-          Moiety = (List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent>)value;
+          Moiety = (List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent>?)value!;
           return this;
         case "property":
-          Property = (List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent>)value;
+          Property = (List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent>?)value!;
           return this;
         case "referenceInformation":
-          ReferenceInformation = (Hl7.Fhir.Model.ResourceReference)value;
+          ReferenceInformation = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "structure":
-          Structure = (Hl7.Fhir.Model.SubstanceSpecification.StructureComponent)value;
+          Structure = (Hl7.Fhir.Model.SubstanceSpecification.StructureComponent?)value;
           return this;
         case "code":
-          Code = (List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent>)value;
+          Code = (List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent>?)value!;
           return this;
         case "name":
-          Name = (List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>)value;
+          Name = (List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent>?)value!;
           return this;
         case "molecularWeight":
-          MolecularWeight = (List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent>)value;
+          MolecularWeight = (List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent>?)value!;
           return this;
         case "relationship":
-          Relationship = (List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent>)value;
+          Relationship = (List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent>?)value!;
           return this;
         case "nucleicAcid":
-          NucleicAcid = (Hl7.Fhir.Model.ResourceReference)value;
+          NucleicAcid = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "polymer":
-          Polymer = (Hl7.Fhir.Model.ResourceReference)value;
+          Polymer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "protein":
-          Protein = (Hl7.Fhir.Model.ResourceReference)value;
+          Protein = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "sourceMaterial":
-          SourceMaterial = (Hl7.Fhir.Model.ResourceReference)value;
+          SourceMaterial = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -2757,25 +2685,25 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
-      if (Domain is not null) yield return new KeyValuePair<string,object>("domain",Domain);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
-      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
-      if (Moiety?.Any() == true) yield return new KeyValuePair<string,object>("moiety",Moiety);
-      if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
-      if (ReferenceInformation is not null) yield return new KeyValuePair<string,object>("referenceInformation",ReferenceInformation);
-      if (Structure is not null) yield return new KeyValuePair<string,object>("structure",Structure);
-      if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
-      if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
-      if (MolecularWeight?.Any() == true) yield return new KeyValuePair<string,object>("molecularWeight",MolecularWeight);
-      if (Relationship?.Any() == true) yield return new KeyValuePair<string,object>("relationship",Relationship);
-      if (NucleicAcid is not null) yield return new KeyValuePair<string,object>("nucleicAcid",NucleicAcid);
-      if (Polymer is not null) yield return new KeyValuePair<string,object>("polymer",Polymer);
-      if (Protein is not null) yield return new KeyValuePair<string,object>("protein",Protein);
-      if (SourceMaterial is not null) yield return new KeyValuePair<string,object>("sourceMaterial",SourceMaterial);
+      if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
+      if (_Domain is not null) yield return new KeyValuePair<string,object>("domain",_Domain);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Source?.Any() == true) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+      if (_Moiety?.Any() == true) yield return new KeyValuePair<string,object>("moiety",_Moiety);
+      if (_Property?.Any() == true) yield return new KeyValuePair<string,object>("property",_Property);
+      if (_ReferenceInformation is not null) yield return new KeyValuePair<string,object>("referenceInformation",_ReferenceInformation);
+      if (_Structure is not null) yield return new KeyValuePair<string,object>("structure",_Structure);
+      if (_Code?.Any() == true) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Name?.Any() == true) yield return new KeyValuePair<string,object>("name",_Name);
+      if (_MolecularWeight?.Any() == true) yield return new KeyValuePair<string,object>("molecularWeight",_MolecularWeight);
+      if (_Relationship?.Any() == true) yield return new KeyValuePair<string,object>("relationship",_Relationship);
+      if (_NucleicAcid is not null) yield return new KeyValuePair<string,object>("nucleicAcid",_NucleicAcid);
+      if (_Polymer is not null) yield return new KeyValuePair<string,object>("polymer",_Polymer);
+      if (_Protein is not null) yield return new KeyValuePair<string,object>("protein",_Protein);
+      if (_SourceMaterial is not null) yield return new KeyValuePair<string,object>("sourceMaterial",_SourceMaterial);
     }
 
   }

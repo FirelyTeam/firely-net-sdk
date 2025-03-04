@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -61,106 +64,103 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("height", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Height
+    public Hl7.Fhir.Model.Quantity? Height
     {
       get { return _Height; }
       set { _Height = value; OnPropertyChanged("Height"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Height;
+    private Hl7.Fhir.Model.Quantity? _Height;
 
     /// <summary>
     /// Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("width", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Width
+    public Hl7.Fhir.Model.Quantity? Width
     {
       get { return _Width; }
       set { _Width = value; OnPropertyChanged("Width"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Width;
+    private Hl7.Fhir.Model.Quantity? _Width;
 
     /// <summary>
     /// Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("depth", InSummary=true, Order=60)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Depth
+    public Hl7.Fhir.Model.Quantity? Depth
     {
       get { return _Depth; }
       set { _Depth = value; OnPropertyChanged("Depth"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Depth;
+    private Hl7.Fhir.Model.Quantity? _Depth;
 
     /// <summary>
     /// Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("weight", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity Weight
+    public Hl7.Fhir.Model.Quantity? Weight
     {
       get { return _Weight; }
       set { _Weight = value; OnPropertyChanged("Weight"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _Weight;
+    private Hl7.Fhir.Model.Quantity? _Weight;
 
     /// <summary>
     /// Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("nominalVolume", InSummary=true, Order=80)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity NominalVolume
+    public Hl7.Fhir.Model.Quantity? NominalVolume
     {
       get { return _NominalVolume; }
       set { _NominalVolume = value; OnPropertyChanged("NominalVolume"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _NominalVolume;
+    private Hl7.Fhir.Model.Quantity? _NominalVolume;
 
     /// <summary>
     /// Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
     [FhirElement("externalDiameter", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.Quantity ExternalDiameter
+    public Hl7.Fhir.Model.Quantity? ExternalDiameter
     {
       get { return _ExternalDiameter; }
       set { _ExternalDiameter = value; OnPropertyChanged("ExternalDiameter"); }
     }
 
-    private Hl7.Fhir.Model.Quantity _ExternalDiameter;
+    private Hl7.Fhir.Model.Quantity? _ExternalDiameter;
 
     /// <summary>
     /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used.
     /// </summary>
     [FhirElement("shape", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString ShapeElement
+    public Hl7.Fhir.Model.FhirString? ShapeElement
     {
       get { return _ShapeElement; }
       set { _ShapeElement = value; OnPropertyChanged("ShapeElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _ShapeElement;
+    private Hl7.Fhir.Model.FhirString? _ShapeElement;
 
     /// <summary>
     /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Shape
+    public string? Shape
     {
-      get { return ShapeElement != null ? ShapeElement.Value : null; }
+      get => _ShapeElement?.Value;
       set
       {
-        if (value == null)
-          ShapeElement = null;
-        else
-          ShapeElement = new Hl7.Fhir.Model.FhirString(value);
+        ShapeElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Shape");
       }
     }
@@ -173,24 +173,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ColorElement
     {
-      get { if(_ColorElement==null) _ColorElement = new List<Hl7.Fhir.Model.FhirString>(); return _ColorElement; }
+      get => _ColorElement ??= [];
       set { _ColorElement = value; OnPropertyChanged("ColorElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _ColorElement;
+    private List<Hl7.Fhir.Model.FhirString>? _ColorElement;
 
     /// <summary>
     /// Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Color
+    public IEnumerable<string?> Color
     {
-      get { return ColorElement != null ? ColorElement.Select(elem => elem.Value) : null; }
+      get => _ColorElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          ColorElement = null;
+          ColorElement = null!;
         else
           ColorElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("Color");
@@ -205,24 +205,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ImprintElement
     {
-      get { if(_ImprintElement==null) _ImprintElement = new List<Hl7.Fhir.Model.FhirString>(); return _ImprintElement; }
+      get => _ImprintElement ??= [];
       set { _ImprintElement = value; OnPropertyChanged("ImprintElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _ImprintElement;
+    private List<Hl7.Fhir.Model.FhirString>? _ImprintElement;
 
     /// <summary>
     /// Where applicable, the imprint can be specified as text
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Imprint
+    public IEnumerable<string?> Imprint
     {
-      get { return ImprintElement != null ? ImprintElement.Select(elem => elem.Value) : null; }
+      get => _ImprintElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          ImprintElement = null;
+          ImprintElement = null!;
         else
           ImprintElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("Imprint");
@@ -237,46 +237,42 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
-      get { if(_Image==null) _Image = new List<Hl7.Fhir.Model.Attachment>(); return _Image; }
+      get => _Image ??= [];
       set { _Image = value; OnPropertyChanged("Image"); }
     }
 
-    private List<Hl7.Fhir.Model.Attachment> _Image;
+    private List<Hl7.Fhir.Model.Attachment>? _Image;
 
     /// <summary>
     /// Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used.
     /// </summary>
     [FhirElement("scoring", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Scoring
+    public Hl7.Fhir.Model.CodeableConcept? Scoring
     {
       get { return _Scoring; }
       set { _Scoring = value; OnPropertyChanged("Scoring"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Scoring;
+    private Hl7.Fhir.Model.CodeableConcept? _Scoring;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ProdCharacteristic;
-
-      if (dest == null)
-      {
+      if(other is not ProdCharacteristic dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Height != null) dest.Height = (Hl7.Fhir.Model.Quantity)Height.DeepCopyInternal();
-      if(Width != null) dest.Width = (Hl7.Fhir.Model.Quantity)Width.DeepCopyInternal();
-      if(Depth != null) dest.Depth = (Hl7.Fhir.Model.Quantity)Depth.DeepCopyInternal();
-      if(Weight != null) dest.Weight = (Hl7.Fhir.Model.Quantity)Weight.DeepCopyInternal();
-      if(NominalVolume != null) dest.NominalVolume = (Hl7.Fhir.Model.Quantity)NominalVolume.DeepCopyInternal();
-      if(ExternalDiameter != null) dest.ExternalDiameter = (Hl7.Fhir.Model.Quantity)ExternalDiameter.DeepCopyInternal();
-      if(ShapeElement != null) dest.ShapeElement = (Hl7.Fhir.Model.FhirString)ShapeElement.DeepCopyInternal();
-      if(ColorElement.Any()) dest.ColorElement = new List<Hl7.Fhir.Model.FhirString>(ColorElement.DeepCopyInternal());
-      if(ImprintElement.Any()) dest.ImprintElement = new List<Hl7.Fhir.Model.FhirString>(ImprintElement.DeepCopyInternal());
-      if(Image.Any()) dest.Image = new List<Hl7.Fhir.Model.Attachment>(Image.DeepCopyInternal());
-      if(Scoring != null) dest.Scoring = (Hl7.Fhir.Model.CodeableConcept)Scoring.DeepCopyInternal();
+      if(_Height is not null) dest.Height = (Hl7.Fhir.Model.Quantity)_Height.DeepCopyInternal();
+      if(_Width is not null) dest.Width = (Hl7.Fhir.Model.Quantity)_Width.DeepCopyInternal();
+      if(_Depth is not null) dest.Depth = (Hl7.Fhir.Model.Quantity)_Depth.DeepCopyInternal();
+      if(_Weight is not null) dest.Weight = (Hl7.Fhir.Model.Quantity)_Weight.DeepCopyInternal();
+      if(_NominalVolume is not null) dest.NominalVolume = (Hl7.Fhir.Model.Quantity)_NominalVolume.DeepCopyInternal();
+      if(_ExternalDiameter is not null) dest.ExternalDiameter = (Hl7.Fhir.Model.Quantity)_ExternalDiameter.DeepCopyInternal();
+      if(_ShapeElement is not null) dest.ShapeElement = (Hl7.Fhir.Model.FhirString)_ShapeElement.DeepCopyInternal();
+      if(_ColorElement is not null) dest.ColorElement = new List<Hl7.Fhir.Model.FhirString>(_ColorElement.DeepCopyInternal());
+      if(_ImprintElement is not null) dest.ImprintElement = new List<Hl7.Fhir.Model.FhirString>(_ImprintElement.DeepCopyInternal());
+      if(_Image is not null) dest.Image = new List<Hl7.Fhir.Model.Attachment>(_Image.DeepCopyInternal());
+      if(_Scoring is not null) dest.Scoring = (Hl7.Fhir.Model.CodeableConcept)_Scoring.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -288,104 +284,105 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ProdCharacteristic;
-      if(otherT == null) return false;
+      if(other is not ProdCharacteristic otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Height, otherT.Height)) return false;
-      if(!comparer.Equals(Width, otherT.Width)) return false;
-      if(!comparer.Equals(Depth, otherT.Depth)) return false;
-      if(!comparer.Equals(Weight, otherT.Weight)) return false;
-      if(!comparer.Equals(NominalVolume, otherT.NominalVolume)) return false;
-      if(!comparer.Equals(ExternalDiameter, otherT.ExternalDiameter)) return false;
-      if(!comparer.Equals(ShapeElement, otherT.ShapeElement)) return false;
-      if(!comparer.ListEquals(ColorElement, otherT.ColorElement)) return false;
-      if(!comparer.ListEquals(ImprintElement, otherT.ImprintElement)) return false;
-      if(!comparer.ListEquals(Image, otherT.Image)) return false;
-      if(!comparer.Equals(Scoring, otherT.Scoring)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Height, otherT._Height)) return false;
+      if(!comparer.Equals(_Width, otherT._Width)) return false;
+      if(!comparer.Equals(_Depth, otherT._Depth)) return false;
+      if(!comparer.Equals(_Weight, otherT._Weight)) return false;
+      if(!comparer.Equals(_NominalVolume, otherT._NominalVolume)) return false;
+      if(!comparer.Equals(_ExternalDiameter, otherT._ExternalDiameter)) return false;
+      if(!comparer.Equals(_ShapeElement, otherT._ShapeElement)) return false;
+      if(!comparer.ListEquals(_ColorElement, otherT._ColorElement)) return false;
+      if(!comparer.ListEquals(_ImprintElement, otherT._ImprintElement)) return false;
+      if(!comparer.ListEquals(_Image, otherT._Image)) return false;
+      if(!comparer.Equals(_Scoring, otherT._Scoring)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "height":
-          value = Height;
-          return Height is not null;
+          value = _Height;
+          return _Height is not null;
         case "width":
-          value = Width;
-          return Width is not null;
+          value = _Width;
+          return _Width is not null;
         case "depth":
-          value = Depth;
-          return Depth is not null;
+          value = _Depth;
+          return _Depth is not null;
         case "weight":
-          value = Weight;
-          return Weight is not null;
+          value = _Weight;
+          return _Weight is not null;
         case "nominalVolume":
-          value = NominalVolume;
-          return NominalVolume is not null;
+          value = _NominalVolume;
+          return _NominalVolume is not null;
         case "externalDiameter":
-          value = ExternalDiameter;
-          return ExternalDiameter is not null;
+          value = _ExternalDiameter;
+          return _ExternalDiameter is not null;
         case "shape":
-          value = ShapeElement;
-          return ShapeElement is not null;
+          value = _ShapeElement;
+          return _ShapeElement is not null;
         case "color":
-          value = ColorElement;
-          return ColorElement?.Any() == true;
+          value = _ColorElement;
+          return _ColorElement?.Any() == true;
         case "imprint":
-          value = ImprintElement;
-          return ImprintElement?.Any() == true;
+          value = _ImprintElement;
+          return _ImprintElement?.Any() == true;
         case "image":
-          value = Image;
-          return Image?.Any() == true;
+          value = _Image;
+          return _Image?.Any() == true;
         case "scoring":
-          value = Scoring;
-          return Scoring is not null;
+          value = _Scoring;
+          return _Scoring is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "height":
-          Height = (Hl7.Fhir.Model.Quantity)value;
+          Height = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "width":
-          Width = (Hl7.Fhir.Model.Quantity)value;
+          Width = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "depth":
-          Depth = (Hl7.Fhir.Model.Quantity)value;
+          Depth = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "weight":
-          Weight = (Hl7.Fhir.Model.Quantity)value;
+          Weight = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "nominalVolume":
-          NominalVolume = (Hl7.Fhir.Model.Quantity)value;
+          NominalVolume = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "externalDiameter":
-          ExternalDiameter = (Hl7.Fhir.Model.Quantity)value;
+          ExternalDiameter = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "shape":
-          ShapeElement = (Hl7.Fhir.Model.FhirString)value;
+          ShapeElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "color":
-          ColorElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          ColorElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "imprint":
-          ImprintElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          ImprintElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "image":
-          Image = (List<Hl7.Fhir.Model.Attachment>)value;
+          Image = (List<Hl7.Fhir.Model.Attachment>?)value!;
           return this;
         case "scoring":
-          Scoring = (Hl7.Fhir.Model.CodeableConcept)value;
+          Scoring = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -396,17 +393,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Height is not null) yield return new KeyValuePair<string,object>("height",Height);
-      if (Width is not null) yield return new KeyValuePair<string,object>("width",Width);
-      if (Depth is not null) yield return new KeyValuePair<string,object>("depth",Depth);
-      if (Weight is not null) yield return new KeyValuePair<string,object>("weight",Weight);
-      if (NominalVolume is not null) yield return new KeyValuePair<string,object>("nominalVolume",NominalVolume);
-      if (ExternalDiameter is not null) yield return new KeyValuePair<string,object>("externalDiameter",ExternalDiameter);
-      if (ShapeElement is not null) yield return new KeyValuePair<string,object>("shape",ShapeElement);
-      if (ColorElement?.Any() == true) yield return new KeyValuePair<string,object>("color",ColorElement);
-      if (ImprintElement?.Any() == true) yield return new KeyValuePair<string,object>("imprint",ImprintElement);
-      if (Image?.Any() == true) yield return new KeyValuePair<string,object>("image",Image);
-      if (Scoring is not null) yield return new KeyValuePair<string,object>("scoring",Scoring);
+      if (_Height is not null) yield return new KeyValuePair<string,object>("height",_Height);
+      if (_Width is not null) yield return new KeyValuePair<string,object>("width",_Width);
+      if (_Depth is not null) yield return new KeyValuePair<string,object>("depth",_Depth);
+      if (_Weight is not null) yield return new KeyValuePair<string,object>("weight",_Weight);
+      if (_NominalVolume is not null) yield return new KeyValuePair<string,object>("nominalVolume",_NominalVolume);
+      if (_ExternalDiameter is not null) yield return new KeyValuePair<string,object>("externalDiameter",_ExternalDiameter);
+      if (_ShapeElement is not null) yield return new KeyValuePair<string,object>("shape",_ShapeElement);
+      if (_ColorElement?.Any() == true) yield return new KeyValuePair<string,object>("color",_ColorElement);
+      if (_ImprintElement?.Any() == true) yield return new KeyValuePair<string,object>("imprint",_ImprintElement);
+      if (_Image?.Any() == true) yield return new KeyValuePair<string,object>("image",_Image);
+      if (_Scoring is not null) yield return new KeyValuePair<string,object>("scoring",_Scoring);
     }
 
   }

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -80,13 +83,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier Identifier
+      public Hl7.Fhir.Model.Identifier? Identifier
       {
         get { return _Identifier; }
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
-      private Hl7.Fhir.Model.Identifier _Identifier;
+      private Hl7.Fhir.Model.Identifier? _Identifier;
 
       /// <summary>
       /// The defining type of case.
@@ -94,13 +97,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("RegulatedAuthorizationCaseType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// The status associated with the case.
@@ -108,13 +111,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("status", InSummary=true, Order=60)]
       [Binding("PublicationStatus")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Status
+      public Hl7.Fhir.Model.CodeableConcept? Status
       {
         get { return _Status; }
         set { _Status = value; OnPropertyChanged("Status"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Status;
+      private Hl7.Fhir.Model.CodeableConcept? _Status;
 
       /// <summary>
       /// Relevant date for this case.
@@ -123,13 +126,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Date
+      public Hl7.Fhir.Model.DataType? Date
       {
         get { return _Date; }
         set { _Date = value; OnPropertyChanged("Date"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Date;
+      private Hl7.Fhir.Model.DataType? _Date;
 
       /// <summary>
       /// Applications submitted to obtain a regulated authorization. Steps within the longer running case or procedure.
@@ -139,27 +142,23 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent> Application
       {
-        get { if(_Application==null) _Application = new List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>(); return _Application; }
+        get => _Application ??= [];
         set { _Application = value; OnPropertyChanged("Application"); }
       }
 
-      private List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent> _Application;
+      private List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>? _Application;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as CaseComponent;
-
-        if (dest == null)
-        {
+        if(other is not CaseComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopyInternal();
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
-        if(Date != null) dest.Date = (Hl7.Fhir.Model.DataType)Date.DeepCopyInternal();
-        if(Application.Any()) dest.Application = new List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>(Application.DeepCopyInternal());
+        if(_Identifier is not null) dest.Identifier = (Hl7.Fhir.Model.Identifier)_Identifier.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
+        if(_Date is not null) dest.Date = (Hl7.Fhir.Model.DataType)_Date.DeepCopyInternal();
+        if(_Application is not null) dest.Application = new List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>(_Application.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -171,62 +170,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CaseComponent;
-        if(otherT == null) return false;
+        if(other is not CaseComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Identifier, otherT.Identifier)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Status, otherT.Status)) return false;
-        if(!comparer.Equals(Date, otherT.Date)) return false;
-        if(!comparer.ListEquals(Application, otherT.Application)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Identifier, otherT._Identifier)) return false;
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Status, otherT._Status)) return false;
+        if(!comparer.Equals(_Date, otherT._Date)) return false;
+        if(!comparer.ListEquals(_Application, otherT._Application)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "identifier":
-            value = Identifier;
-            return Identifier is not null;
+            value = _Identifier;
+            return _Identifier is not null;
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "status":
-            value = Status;
-            return Status is not null;
+            value = _Status;
+            return _Status is not null;
           case "date":
-            value = Date;
-            return Date is not null;
+            value = _Date;
+            return _Date is not null;
           case "application":
-            value = Application;
-            return Application?.Any() == true;
+            value = _Application;
+            return _Application?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "identifier":
-            Identifier = (Hl7.Fhir.Model.Identifier)value;
+            Identifier = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "status":
-            Status = (Hl7.Fhir.Model.CodeableConcept)value;
+            Status = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "date":
-            Date = (Hl7.Fhir.Model.DataType)value;
+            Date = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "application":
-            Application = (List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>)value;
+            Application = (List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -237,11 +237,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
-        if (Date is not null) yield return new KeyValuePair<string,object>("date",Date);
-        if (Application?.Any() == true) yield return new KeyValuePair<string,object>("application",Application);
+        if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
+        if (_Date is not null) yield return new KeyValuePair<string,object>("date",_Date);
+        if (_Application?.Any() == true) yield return new KeyValuePair<string,object>("application",_Application);
       }
 
     }
@@ -254,11 +254,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// The product type, treatment, facility or activity that is being authorized.
@@ -270,11 +270,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Subject;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Subject;
 
     /// <summary>
     /// Overall type of this authorization, for example drug marketing approval, orphan drug designation.
@@ -282,41 +282,38 @@ namespace Hl7.Fhir.Model
     [FhirElement("type", InSummary=true, Order=110)]
     [Binding("RegulatedAuthorizationType")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Type
+    public Hl7.Fhir.Model.CodeableConcept? Type
     {
       get { return _Type; }
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
     /// General textual supporting information.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown DescriptionElement
+    public Hl7.Fhir.Model.Markdown? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+    private Hl7.Fhir.Model.Markdown? _DescriptionElement;
 
     /// <summary>
     /// General textual supporting information
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -330,11 +327,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Region
     {
-      get { if(_Region==null) _Region = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Region; }
+      get => _Region ??= [];
       set { _Region = value; OnPropertyChanged("Region"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Region;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Region;
 
     /// <summary>
     /// The status that is authorised e.g. approved. Intermediate states can be tracked with cases and applications.
@@ -342,41 +339,38 @@ namespace Hl7.Fhir.Model
     [FhirElement("status", InSummary=true, Order=140)]
     [Binding("PublicationStatus")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Status
+    public Hl7.Fhir.Model.CodeableConcept? Status
     {
       get { return _Status; }
       set { _Status = value; OnPropertyChanged("Status"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Status;
+    private Hl7.Fhir.Model.CodeableConcept? _Status;
 
     /// <summary>
     /// The date at which the current status was assigned.
     /// </summary>
     [FhirElement("statusDate", InSummary=true, Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime StatusDateElement
+    public Hl7.Fhir.Model.FhirDateTime? StatusDateElement
     {
       get { return _StatusDateElement; }
       set { _StatusDateElement = value; OnPropertyChanged("StatusDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _StatusDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _StatusDateElement;
 
     /// <summary>
     /// The date at which the current status was assigned
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string StatusDate
+    public string? StatusDate
     {
-      get { return StatusDateElement != null ? StatusDateElement.Value : null; }
+      get => _StatusDateElement?.Value;
       set
       {
-        if (value == null)
-          StatusDateElement = null;
-        else
-          StatusDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("StatusDate");
       }
     }
@@ -386,26 +380,26 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("validityPeriod", InSummary=true, Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Period ValidityPeriod
+    public Hl7.Fhir.Model.Period? ValidityPeriod
     {
       get { return _ValidityPeriod; }
       set { _ValidityPeriod = value; OnPropertyChanged("ValidityPeriod"); }
     }
 
-    private Hl7.Fhir.Model.Period _ValidityPeriod;
+    private Hl7.Fhir.Model.Period? _ValidityPeriod;
 
     /// <summary>
     /// Condition for which the use of the regulated product applies.
     /// </summary>
     [FhirElement("indication", InSummary=true, Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableReference Indication
+    public Hl7.Fhir.Model.CodeableReference? Indication
     {
       get { return _Indication; }
       set { _Indication = value; OnPropertyChanged("Indication"); }
     }
 
-    private Hl7.Fhir.Model.CodeableReference _Indication;
+    private Hl7.Fhir.Model.CodeableReference? _Indication;
 
     /// <summary>
     /// The intended use of the product, e.g. prevention, treatment.
@@ -413,13 +407,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("intendedUse", InSummary=true, Order=180)]
     [Binding("ProductIntendedUse")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept IntendedUse
+    public Hl7.Fhir.Model.CodeableConcept? IntendedUse
     {
       get { return _IntendedUse; }
       set { _IntendedUse = value; OnPropertyChanged("IntendedUse"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _IntendedUse;
+    private Hl7.Fhir.Model.CodeableConcept? _IntendedUse;
 
     /// <summary>
     /// The legal/regulatory framework or reasons under which this authorization is granted.
@@ -430,11 +424,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Basis
     {
-      get { if(_Basis==null) _Basis = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Basis; }
+      get => _Basis ??= [];
       set { _Basis = value; OnPropertyChanged("Basis"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Basis;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Basis;
 
     /// <summary>
     /// The organization that has been granted this authorization, by the regulator.
@@ -443,13 +437,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Holder
+    public Hl7.Fhir.Model.ResourceReference? Holder
     {
       get { return _Holder; }
       set { _Holder = value; OnPropertyChanged("Holder"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Holder;
+    private Hl7.Fhir.Model.ResourceReference? _Holder;
 
     /// <summary>
     /// The regulatory authority or authorizing body granting the authorization.
@@ -458,53 +452,49 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Regulator
+    public Hl7.Fhir.Model.ResourceReference? Regulator
     {
       get { return _Regulator; }
       set { _Regulator = value; OnPropertyChanged("Regulator"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Regulator;
+    private Hl7.Fhir.Model.ResourceReference? _Regulator;
 
     /// <summary>
     /// The case or regulatory procedure for granting or amending a regulated authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page).
     /// </summary>
     [FhirElement("case", InSummary=true, Order=220)]
     [DataMember]
-    public Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent Case
+    public Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent? Case
     {
       get { return _Case; }
       set { _Case = value; OnPropertyChanged("Case"); }
     }
 
-    private Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent _Case;
+    private Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent? _Case;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as RegulatedAuthorization;
-
-      if (dest == null)
-      {
+      if(other is not RegulatedAuthorization dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopyInternal());
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopyInternal();
-      if(Region.Any()) dest.Region = new List<Hl7.Fhir.Model.CodeableConcept>(Region.DeepCopyInternal());
-      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
-      if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopyInternal();
-      if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopyInternal();
-      if(Indication != null) dest.Indication = (Hl7.Fhir.Model.CodeableReference)Indication.DeepCopyInternal();
-      if(IntendedUse != null) dest.IntendedUse = (Hl7.Fhir.Model.CodeableConcept)IntendedUse.DeepCopyInternal();
-      if(Basis.Any()) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(Basis.DeepCopyInternal());
-      if(Holder != null) dest.Holder = (Hl7.Fhir.Model.ResourceReference)Holder.DeepCopyInternal();
-      if(Regulator != null) dest.Regulator = (Hl7.Fhir.Model.ResourceReference)Regulator.DeepCopyInternal();
-      if(Case != null) dest.Case = (Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent)Case.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_Subject is not null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(_Subject.DeepCopyInternal());
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)_DescriptionElement.DeepCopyInternal();
+      if(_Region is not null) dest.Region = new List<Hl7.Fhir.Model.CodeableConcept>(_Region.DeepCopyInternal());
+      if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
+      if(_StatusDateElement is not null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)_StatusDateElement.DeepCopyInternal();
+      if(_ValidityPeriod is not null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)_ValidityPeriod.DeepCopyInternal();
+      if(_Indication is not null) dest.Indication = (Hl7.Fhir.Model.CodeableReference)_Indication.DeepCopyInternal();
+      if(_IntendedUse is not null) dest.IntendedUse = (Hl7.Fhir.Model.CodeableConcept)_IntendedUse.DeepCopyInternal();
+      if(_Basis is not null) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(_Basis.DeepCopyInternal());
+      if(_Holder is not null) dest.Holder = (Hl7.Fhir.Model.ResourceReference)_Holder.DeepCopyInternal();
+      if(_Regulator is not null) dest.Regulator = (Hl7.Fhir.Model.ResourceReference)_Regulator.DeepCopyInternal();
+      if(_Case is not null) dest.Case = (Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent)_Case.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -516,125 +506,126 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as RegulatedAuthorization;
-      if(otherT == null) return false;
+      if(other is not RegulatedAuthorization otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.ListEquals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Type, otherT.Type)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.ListEquals(Region, otherT.Region)) return false;
-      if(!comparer.Equals(Status, otherT.Status)) return false;
-      if(!comparer.Equals(StatusDateElement, otherT.StatusDateElement)) return false;
-      if(!comparer.Equals(ValidityPeriod, otherT.ValidityPeriod)) return false;
-      if(!comparer.Equals(Indication, otherT.Indication)) return false;
-      if(!comparer.Equals(IntendedUse, otherT.IntendedUse)) return false;
-      if(!comparer.ListEquals(Basis, otherT.Basis)) return false;
-      if(!comparer.Equals(Holder, otherT.Holder)) return false;
-      if(!comparer.Equals(Regulator, otherT.Regulator)) return false;
-      if(!comparer.Equals(Case, otherT.Case)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.ListEquals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.ListEquals(_Region, otherT._Region)) return false;
+      if(!comparer.Equals(_Status, otherT._Status)) return false;
+      if(!comparer.Equals(_StatusDateElement, otherT._StatusDateElement)) return false;
+      if(!comparer.Equals(_ValidityPeriod, otherT._ValidityPeriod)) return false;
+      if(!comparer.Equals(_Indication, otherT._Indication)) return false;
+      if(!comparer.Equals(_IntendedUse, otherT._IntendedUse)) return false;
+      if(!comparer.ListEquals(_Basis, otherT._Basis)) return false;
+      if(!comparer.Equals(_Holder, otherT._Holder)) return false;
+      if(!comparer.Equals(_Regulator, otherT._Regulator)) return false;
+      if(!comparer.Equals(_Case, otherT._Case)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "subject":
-          value = Subject;
-          return Subject?.Any() == true;
+          value = _Subject;
+          return _Subject?.Any() == true;
         case "type":
-          value = Type;
-          return Type is not null;
+          value = _Type;
+          return _Type is not null;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "region":
-          value = Region;
-          return Region?.Any() == true;
+          value = _Region;
+          return _Region?.Any() == true;
         case "status":
-          value = Status;
-          return Status is not null;
+          value = _Status;
+          return _Status is not null;
         case "statusDate":
-          value = StatusDateElement;
-          return StatusDateElement is not null;
+          value = _StatusDateElement;
+          return _StatusDateElement is not null;
         case "validityPeriod":
-          value = ValidityPeriod;
-          return ValidityPeriod is not null;
+          value = _ValidityPeriod;
+          return _ValidityPeriod is not null;
         case "indication":
-          value = Indication;
-          return Indication is not null;
+          value = _Indication;
+          return _Indication is not null;
         case "intendedUse":
-          value = IntendedUse;
-          return IntendedUse is not null;
+          value = _IntendedUse;
+          return _IntendedUse is not null;
         case "basis":
-          value = Basis;
-          return Basis?.Any() == true;
+          value = _Basis;
+          return _Basis?.Any() == true;
         case "holder":
-          value = Holder;
-          return Holder is not null;
+          value = _Holder;
+          return _Holder is not null;
         case "regulator":
-          value = Regulator;
-          return Regulator is not null;
+          value = _Regulator;
+          return _Regulator is not null;
         case "case":
-          value = Case;
-          return Case is not null;
+          value = _Case;
+          return _Case is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "subject":
-          Subject = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept)value;
+          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.Markdown)value;
+          DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "region":
-          Region = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Region = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "status":
-          Status = (Hl7.Fhir.Model.CodeableConcept)value;
+          Status = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "statusDate":
-          StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          StatusDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "validityPeriod":
-          ValidityPeriod = (Hl7.Fhir.Model.Period)value;
+          ValidityPeriod = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "indication":
-          Indication = (Hl7.Fhir.Model.CodeableReference)value;
+          Indication = (Hl7.Fhir.Model.CodeableReference?)value;
           return this;
         case "intendedUse":
-          IntendedUse = (Hl7.Fhir.Model.CodeableConcept)value;
+          IntendedUse = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "basis":
-          Basis = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Basis = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "holder":
-          Holder = (Hl7.Fhir.Model.ResourceReference)value;
+          Holder = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "regulator":
-          Regulator = (Hl7.Fhir.Model.ResourceReference)value;
+          Regulator = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "case":
-          Case = (Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent)value;
+          Case = (Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -645,20 +636,20 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Region?.Any() == true) yield return new KeyValuePair<string,object>("region",Region);
-      if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
-      if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
-      if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
-      if (Indication is not null) yield return new KeyValuePair<string,object>("indication",Indication);
-      if (IntendedUse is not null) yield return new KeyValuePair<string,object>("intendedUse",IntendedUse);
-      if (Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",Basis);
-      if (Holder is not null) yield return new KeyValuePair<string,object>("holder",Holder);
-      if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
-      if (Case is not null) yield return new KeyValuePair<string,object>("case",Case);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Region?.Any() == true) yield return new KeyValuePair<string,object>("region",_Region);
+      if (_Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
+      if (_StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
+      if (_ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
+      if (_Indication is not null) yield return new KeyValuePair<string,object>("indication",_Indication);
+      if (_IntendedUse is not null) yield return new KeyValuePair<string,object>("intendedUse",_IntendedUse);
+      if (_Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",_Basis);
+      if (_Holder is not null) yield return new KeyValuePair<string,object>("holder",_Holder);
+      if (_Regulator is not null) yield return new KeyValuePair<string,object>("regulator",_Regulator);
+      if (_Case is not null) yield return new KeyValuePair<string,object>("case",_Case);
     }
 
   }

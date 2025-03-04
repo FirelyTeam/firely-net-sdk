@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -115,13 +118,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("diseaseSymptomProcedure", InSummary=true, Order=40)]
       [Binding("DiseaseSymptomProcedure")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference DiseaseSymptomProcedure
+      public Hl7.Fhir.Model.CodeableReference? DiseaseSymptomProcedure
       {
         get { return _DiseaseSymptomProcedure; }
         set { _DiseaseSymptomProcedure = value; OnPropertyChanged("DiseaseSymptomProcedure"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _DiseaseSymptomProcedure;
+      private Hl7.Fhir.Model.CodeableReference? _DiseaseSymptomProcedure;
 
       /// <summary>
       /// The status of the disease or symptom for the contraindication.
@@ -129,13 +132,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("diseaseStatus", InSummary=true, Order=50)]
       [Binding("DiseaseStatus")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference DiseaseStatus
+      public Hl7.Fhir.Model.CodeableReference? DiseaseStatus
       {
         get { return _DiseaseStatus; }
         set { _DiseaseStatus = value; OnPropertyChanged("DiseaseStatus"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _DiseaseStatus;
+      private Hl7.Fhir.Model.CodeableReference? _DiseaseStatus;
 
       /// <summary>
       /// A comorbidity (concurrent condition) or coinfection.
@@ -146,11 +149,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Comorbidity
       {
-        get { if(_Comorbidity==null) _Comorbidity = new List<Hl7.Fhir.Model.CodeableReference>(); return _Comorbidity; }
+        get => _Comorbidity ??= [];
         set { _Comorbidity = value; OnPropertyChanged("Comorbidity"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableReference> _Comorbidity;
+      private List<Hl7.Fhir.Model.CodeableReference>? _Comorbidity;
 
       /// <summary>
       /// The indication which this is a contraidication for.
@@ -162,24 +165,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Indication
       {
-        get { if(_Indication==null) _Indication = new List<Hl7.Fhir.Model.ResourceReference>(); return _Indication; }
+        get => _Indication ??= [];
         set { _Indication = value; OnPropertyChanged("Indication"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Indication;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Indication;
 
       /// <summary>
       /// An expression that returns true or false, indicating whether the indication is applicable or not, after having applied its other elements.
       /// </summary>
       [FhirElement("applicability", Order=80)]
       [DataMember]
-      public Hl7.Fhir.Model.Expression Applicability
+      public Hl7.Fhir.Model.Expression? Applicability
       {
         get { return _Applicability; }
         set { _Applicability = value; OnPropertyChanged("Applicability"); }
       }
 
-      private Hl7.Fhir.Model.Expression _Applicability;
+      private Hl7.Fhir.Model.Expression? _Applicability;
 
       /// <summary>
       /// Information about use of the product in relation to other therapies described as part of the contraindication.
@@ -189,28 +192,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent> OtherTherapy
       {
-        get { if(_OtherTherapy==null) _OtherTherapy = new List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>(); return _OtherTherapy; }
+        get => _OtherTherapy ??= [];
         set { _OtherTherapy = value; OnPropertyChanged("OtherTherapy"); }
       }
 
-      private List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent> _OtherTherapy;
+      private List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>? _OtherTherapy;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ContraindicationComponent;
-
-        if (dest == null)
-        {
+        if(other is not ContraindicationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(DiseaseSymptomProcedure != null) dest.DiseaseSymptomProcedure = (Hl7.Fhir.Model.CodeableReference)DiseaseSymptomProcedure.DeepCopyInternal();
-        if(DiseaseStatus != null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableReference)DiseaseStatus.DeepCopyInternal();
-        if(Comorbidity.Any()) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableReference>(Comorbidity.DeepCopyInternal());
-        if(Indication.Any()) dest.Indication = new List<Hl7.Fhir.Model.ResourceReference>(Indication.DeepCopyInternal());
-        if(Applicability != null) dest.Applicability = (Hl7.Fhir.Model.Expression)Applicability.DeepCopyInternal();
-        if(OtherTherapy.Any()) dest.OtherTherapy = new List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>(OtherTherapy.DeepCopyInternal());
+        if(_DiseaseSymptomProcedure is not null) dest.DiseaseSymptomProcedure = (Hl7.Fhir.Model.CodeableReference)_DiseaseSymptomProcedure.DeepCopyInternal();
+        if(_DiseaseStatus is not null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableReference)_DiseaseStatus.DeepCopyInternal();
+        if(_Comorbidity is not null) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableReference>(_Comorbidity.DeepCopyInternal());
+        if(_Indication is not null) dest.Indication = new List<Hl7.Fhir.Model.ResourceReference>(_Indication.DeepCopyInternal());
+        if(_Applicability is not null) dest.Applicability = (Hl7.Fhir.Model.Expression)_Applicability.DeepCopyInternal();
+        if(_OtherTherapy is not null) dest.OtherTherapy = new List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>(_OtherTherapy.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -222,69 +221,70 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ContraindicationComponent;
-        if(otherT == null) return false;
+        if(other is not ContraindicationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(DiseaseSymptomProcedure, otherT.DiseaseSymptomProcedure)) return false;
-        if(!comparer.Equals(DiseaseStatus, otherT.DiseaseStatus)) return false;
-        if(!comparer.ListEquals(Comorbidity, otherT.Comorbidity)) return false;
-        if(!comparer.ListEquals(Indication, otherT.Indication)) return false;
-        if(!comparer.Equals(Applicability, otherT.Applicability)) return false;
-        if(!comparer.ListEquals(OtherTherapy, otherT.OtherTherapy)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_DiseaseSymptomProcedure, otherT._DiseaseSymptomProcedure)) return false;
+        if(!comparer.Equals(_DiseaseStatus, otherT._DiseaseStatus)) return false;
+        if(!comparer.ListEquals(_Comorbidity, otherT._Comorbidity)) return false;
+        if(!comparer.ListEquals(_Indication, otherT._Indication)) return false;
+        if(!comparer.Equals(_Applicability, otherT._Applicability)) return false;
+        if(!comparer.ListEquals(_OtherTherapy, otherT._OtherTherapy)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "diseaseSymptomProcedure":
-            value = DiseaseSymptomProcedure;
-            return DiseaseSymptomProcedure is not null;
+            value = _DiseaseSymptomProcedure;
+            return _DiseaseSymptomProcedure is not null;
           case "diseaseStatus":
-            value = DiseaseStatus;
-            return DiseaseStatus is not null;
+            value = _DiseaseStatus;
+            return _DiseaseStatus is not null;
           case "comorbidity":
-            value = Comorbidity;
-            return Comorbidity?.Any() == true;
+            value = _Comorbidity;
+            return _Comorbidity?.Any() == true;
           case "indication":
-            value = Indication;
-            return Indication?.Any() == true;
+            value = _Indication;
+            return _Indication?.Any() == true;
           case "applicability":
-            value = Applicability;
-            return Applicability is not null;
+            value = _Applicability;
+            return _Applicability is not null;
           case "otherTherapy":
-            value = OtherTherapy;
-            return OtherTherapy?.Any() == true;
+            value = _OtherTherapy;
+            return _OtherTherapy?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "diseaseSymptomProcedure":
-            DiseaseSymptomProcedure = (Hl7.Fhir.Model.CodeableReference)value;
+            DiseaseSymptomProcedure = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "diseaseStatus":
-            DiseaseStatus = (Hl7.Fhir.Model.CodeableReference)value;
+            DiseaseStatus = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "comorbidity":
-            Comorbidity = (List<Hl7.Fhir.Model.CodeableReference>)value;
+            Comorbidity = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
             return this;
           case "indication":
-            Indication = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Indication = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "applicability":
-            Applicability = (Hl7.Fhir.Model.Expression)value;
+            Applicability = (Hl7.Fhir.Model.Expression?)value;
             return this;
           case "otherTherapy":
-            OtherTherapy = (List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>)value;
+            OtherTherapy = (List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -295,12 +295,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",DiseaseSymptomProcedure);
-        if (DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",DiseaseStatus);
-        if (Comorbidity?.Any() == true) yield return new KeyValuePair<string,object>("comorbidity",Comorbidity);
-        if (Indication?.Any() == true) yield return new KeyValuePair<string,object>("indication",Indication);
-        if (Applicability is not null) yield return new KeyValuePair<string,object>("applicability",Applicability);
-        if (OtherTherapy?.Any() == true) yield return new KeyValuePair<string,object>("otherTherapy",OtherTherapy);
+        if (_DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",_DiseaseSymptomProcedure);
+        if (_DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",_DiseaseStatus);
+        if (_Comorbidity?.Any() == true) yield return new KeyValuePair<string,object>("comorbidity",_Comorbidity);
+        if (_Indication?.Any() == true) yield return new KeyValuePair<string,object>("indication",_Indication);
+        if (_Applicability is not null) yield return new KeyValuePair<string,object>("applicability",_Applicability);
+        if (_OtherTherapy?.Any() == true) yield return new KeyValuePair<string,object>("otherTherapy",_OtherTherapy);
       }
 
     }
@@ -328,13 +328,13 @@ namespace Hl7.Fhir.Model
       [Binding("TherapyRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept RelationshipType
+      public Hl7.Fhir.Model.CodeableConcept? RelationshipType
       {
         get { return _RelationshipType; }
         set { _RelationshipType = value; OnPropertyChanged("RelationshipType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _RelationshipType;
+      private Hl7.Fhir.Model.CodeableConcept? _RelationshipType;
 
       /// <summary>
       /// Reference to a specific medication, substance etc. as part of an indication or contraindication.
@@ -343,26 +343,22 @@ namespace Hl7.Fhir.Model
       [Binding("Therapy")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference Treatment
+      public Hl7.Fhir.Model.CodeableReference? Treatment
       {
         get { return _Treatment; }
         set { _Treatment = value; OnPropertyChanged("Treatment"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _Treatment;
+      private Hl7.Fhir.Model.CodeableReference? _Treatment;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as OtherTherapyComponent;
-
-        if (dest == null)
-        {
+        if(other is not OtherTherapyComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(RelationshipType != null) dest.RelationshipType = (Hl7.Fhir.Model.CodeableConcept)RelationshipType.DeepCopyInternal();
-        if(Treatment != null) dest.Treatment = (Hl7.Fhir.Model.CodeableReference)Treatment.DeepCopyInternal();
+        if(_RelationshipType is not null) dest.RelationshipType = (Hl7.Fhir.Model.CodeableConcept)_RelationshipType.DeepCopyInternal();
+        if(_Treatment is not null) dest.Treatment = (Hl7.Fhir.Model.CodeableReference)_Treatment.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -374,41 +370,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as OtherTherapyComponent;
-        if(otherT == null) return false;
+        if(other is not OtherTherapyComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(RelationshipType, otherT.RelationshipType)) return false;
-        if(!comparer.Equals(Treatment, otherT.Treatment)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_RelationshipType, otherT._RelationshipType)) return false;
+        if(!comparer.Equals(_Treatment, otherT._Treatment)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "relationshipType":
-            value = RelationshipType;
-            return RelationshipType is not null;
+            value = _RelationshipType;
+            return _RelationshipType is not null;
           case "treatment":
-            value = Treatment;
-            return Treatment is not null;
+            value = _Treatment;
+            return _Treatment is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "relationshipType":
-            RelationshipType = (Hl7.Fhir.Model.CodeableConcept)value;
+            RelationshipType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "treatment":
-            Treatment = (Hl7.Fhir.Model.CodeableReference)value;
+            Treatment = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -419,8 +416,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (RelationshipType is not null) yield return new KeyValuePair<string,object>("relationshipType",RelationshipType);
-        if (Treatment is not null) yield return new KeyValuePair<string,object>("treatment",Treatment);
+        if (_RelationshipType is not null) yield return new KeyValuePair<string,object>("relationshipType",_RelationshipType);
+        if (_Treatment is not null) yield return new KeyValuePair<string,object>("treatment",_Treatment);
       }
 
     }
@@ -444,13 +441,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("diseaseSymptomProcedure", InSummary=true, Order=40)]
       [Binding("DiseaseSymptomProcedure")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference DiseaseSymptomProcedure
+      public Hl7.Fhir.Model.CodeableReference? DiseaseSymptomProcedure
       {
         get { return _DiseaseSymptomProcedure; }
         set { _DiseaseSymptomProcedure = value; OnPropertyChanged("DiseaseSymptomProcedure"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _DiseaseSymptomProcedure;
+      private Hl7.Fhir.Model.CodeableReference? _DiseaseSymptomProcedure;
 
       /// <summary>
       /// The status of the disease or symptom for the indication.
@@ -458,13 +455,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("diseaseStatus", InSummary=true, Order=50)]
       [Binding("DiseaseStatus")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference DiseaseStatus
+      public Hl7.Fhir.Model.CodeableReference? DiseaseStatus
       {
         get { return _DiseaseStatus; }
         set { _DiseaseStatus = value; OnPropertyChanged("DiseaseStatus"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _DiseaseStatus;
+      private Hl7.Fhir.Model.CodeableReference? _DiseaseStatus;
 
       /// <summary>
       /// A comorbidity or coinfection as part of the indication.
@@ -475,11 +472,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Comorbidity
       {
-        get { if(_Comorbidity==null) _Comorbidity = new List<Hl7.Fhir.Model.CodeableReference>(); return _Comorbidity; }
+        get => _Comorbidity ??= [];
         set { _Comorbidity = value; OnPropertyChanged("Comorbidity"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableReference> _Comorbidity;
+      private List<Hl7.Fhir.Model.CodeableReference>? _Comorbidity;
 
       /// <summary>
       /// The intended effect, aim or strategy to be achieved.
@@ -487,13 +484,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("intendedEffect", InSummary=true, Order=70)]
       [Binding("ProductIntendedUse")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference IntendedEffect
+      public Hl7.Fhir.Model.CodeableReference? IntendedEffect
       {
         get { return _IntendedEffect; }
         set { _IntendedEffect = value; OnPropertyChanged("IntendedEffect"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _IntendedEffect;
+      private Hl7.Fhir.Model.CodeableReference? _IntendedEffect;
 
       /// <summary>
       /// Timing or duration information.
@@ -502,13 +499,13 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Duration
+      public Hl7.Fhir.Model.DataType? Duration
       {
         get { return _Duration; }
         set { _Duration = value; OnPropertyChanged("Duration"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Duration;
+      private Hl7.Fhir.Model.DataType? _Duration;
 
       /// <summary>
       /// An unwanted side effect or negative outcome of the subject of this resource when being used for this indication.
@@ -520,24 +517,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> UndesirableEffect
       {
-        get { if(_UndesirableEffect==null) _UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(); return _UndesirableEffect; }
+        get => _UndesirableEffect ??= [];
         set { _UndesirableEffect = value; OnPropertyChanged("UndesirableEffect"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _UndesirableEffect;
+      private List<Hl7.Fhir.Model.ResourceReference>? _UndesirableEffect;
 
       /// <summary>
       /// An expression that returns true or false, indicating whether the indication is applicable or not, after having applied its other elements.
       /// </summary>
       [FhirElement("applicability", Order=100)]
       [DataMember]
-      public Hl7.Fhir.Model.Expression Applicability
+      public Hl7.Fhir.Model.Expression? Applicability
       {
         get { return _Applicability; }
         set { _Applicability = value; OnPropertyChanged("Applicability"); }
       }
 
-      private Hl7.Fhir.Model.Expression _Applicability;
+      private Hl7.Fhir.Model.Expression? _Applicability;
 
       /// <summary>
       /// The use of the medicinal product in relation to other therapies described as part of the indication.
@@ -547,30 +544,26 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent> OtherTherapy
       {
-        get { if(_OtherTherapy==null) _OtherTherapy = new List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>(); return _OtherTherapy; }
+        get => _OtherTherapy ??= [];
         set { _OtherTherapy = value; OnPropertyChanged("OtherTherapy"); }
       }
 
-      private List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent> _OtherTherapy;
+      private List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>? _OtherTherapy;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as IndicationComponent;
-
-        if (dest == null)
-        {
+        if(other is not IndicationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(DiseaseSymptomProcedure != null) dest.DiseaseSymptomProcedure = (Hl7.Fhir.Model.CodeableReference)DiseaseSymptomProcedure.DeepCopyInternal();
-        if(DiseaseStatus != null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableReference)DiseaseStatus.DeepCopyInternal();
-        if(Comorbidity.Any()) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableReference>(Comorbidity.DeepCopyInternal());
-        if(IntendedEffect != null) dest.IntendedEffect = (Hl7.Fhir.Model.CodeableReference)IntendedEffect.DeepCopyInternal();
-        if(Duration != null) dest.Duration = (Hl7.Fhir.Model.DataType)Duration.DeepCopyInternal();
-        if(UndesirableEffect.Any()) dest.UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(UndesirableEffect.DeepCopyInternal());
-        if(Applicability != null) dest.Applicability = (Hl7.Fhir.Model.Expression)Applicability.DeepCopyInternal();
-        if(OtherTherapy.Any()) dest.OtherTherapy = new List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>(OtherTherapy.DeepCopyInternal());
+        if(_DiseaseSymptomProcedure is not null) dest.DiseaseSymptomProcedure = (Hl7.Fhir.Model.CodeableReference)_DiseaseSymptomProcedure.DeepCopyInternal();
+        if(_DiseaseStatus is not null) dest.DiseaseStatus = (Hl7.Fhir.Model.CodeableReference)_DiseaseStatus.DeepCopyInternal();
+        if(_Comorbidity is not null) dest.Comorbidity = new List<Hl7.Fhir.Model.CodeableReference>(_Comorbidity.DeepCopyInternal());
+        if(_IntendedEffect is not null) dest.IntendedEffect = (Hl7.Fhir.Model.CodeableReference)_IntendedEffect.DeepCopyInternal();
+        if(_Duration is not null) dest.Duration = (Hl7.Fhir.Model.DataType)_Duration.DeepCopyInternal();
+        if(_UndesirableEffect is not null) dest.UndesirableEffect = new List<Hl7.Fhir.Model.ResourceReference>(_UndesirableEffect.DeepCopyInternal());
+        if(_Applicability is not null) dest.Applicability = (Hl7.Fhir.Model.Expression)_Applicability.DeepCopyInternal();
+        if(_OtherTherapy is not null) dest.OtherTherapy = new List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>(_OtherTherapy.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -582,83 +575,84 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as IndicationComponent;
-        if(otherT == null) return false;
+        if(other is not IndicationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(DiseaseSymptomProcedure, otherT.DiseaseSymptomProcedure)) return false;
-        if(!comparer.Equals(DiseaseStatus, otherT.DiseaseStatus)) return false;
-        if(!comparer.ListEquals(Comorbidity, otherT.Comorbidity)) return false;
-        if(!comparer.Equals(IntendedEffect, otherT.IntendedEffect)) return false;
-        if(!comparer.Equals(Duration, otherT.Duration)) return false;
-        if(!comparer.ListEquals(UndesirableEffect, otherT.UndesirableEffect)) return false;
-        if(!comparer.Equals(Applicability, otherT.Applicability)) return false;
-        if(!comparer.ListEquals(OtherTherapy, otherT.OtherTherapy)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_DiseaseSymptomProcedure, otherT._DiseaseSymptomProcedure)) return false;
+        if(!comparer.Equals(_DiseaseStatus, otherT._DiseaseStatus)) return false;
+        if(!comparer.ListEquals(_Comorbidity, otherT._Comorbidity)) return false;
+        if(!comparer.Equals(_IntendedEffect, otherT._IntendedEffect)) return false;
+        if(!comparer.Equals(_Duration, otherT._Duration)) return false;
+        if(!comparer.ListEquals(_UndesirableEffect, otherT._UndesirableEffect)) return false;
+        if(!comparer.Equals(_Applicability, otherT._Applicability)) return false;
+        if(!comparer.ListEquals(_OtherTherapy, otherT._OtherTherapy)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "diseaseSymptomProcedure":
-            value = DiseaseSymptomProcedure;
-            return DiseaseSymptomProcedure is not null;
+            value = _DiseaseSymptomProcedure;
+            return _DiseaseSymptomProcedure is not null;
           case "diseaseStatus":
-            value = DiseaseStatus;
-            return DiseaseStatus is not null;
+            value = _DiseaseStatus;
+            return _DiseaseStatus is not null;
           case "comorbidity":
-            value = Comorbidity;
-            return Comorbidity?.Any() == true;
+            value = _Comorbidity;
+            return _Comorbidity?.Any() == true;
           case "intendedEffect":
-            value = IntendedEffect;
-            return IntendedEffect is not null;
+            value = _IntendedEffect;
+            return _IntendedEffect is not null;
           case "duration":
-            value = Duration;
-            return Duration is not null;
+            value = _Duration;
+            return _Duration is not null;
           case "undesirableEffect":
-            value = UndesirableEffect;
-            return UndesirableEffect?.Any() == true;
+            value = _UndesirableEffect;
+            return _UndesirableEffect?.Any() == true;
           case "applicability":
-            value = Applicability;
-            return Applicability is not null;
+            value = _Applicability;
+            return _Applicability is not null;
           case "otherTherapy":
-            value = OtherTherapy;
-            return OtherTherapy?.Any() == true;
+            value = _OtherTherapy;
+            return _OtherTherapy?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "diseaseSymptomProcedure":
-            DiseaseSymptomProcedure = (Hl7.Fhir.Model.CodeableReference)value;
+            DiseaseSymptomProcedure = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "diseaseStatus":
-            DiseaseStatus = (Hl7.Fhir.Model.CodeableReference)value;
+            DiseaseStatus = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "comorbidity":
-            Comorbidity = (List<Hl7.Fhir.Model.CodeableReference>)value;
+            Comorbidity = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
             return this;
           case "intendedEffect":
-            IntendedEffect = (Hl7.Fhir.Model.CodeableReference)value;
+            IntendedEffect = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "duration":
-            Duration = (Hl7.Fhir.Model.DataType)value;
+            Duration = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "undesirableEffect":
-            UndesirableEffect = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            UndesirableEffect = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "applicability":
-            Applicability = (Hl7.Fhir.Model.Expression)value;
+            Applicability = (Hl7.Fhir.Model.Expression?)value;
             return this;
           case "otherTherapy":
-            OtherTherapy = (List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>)value;
+            OtherTherapy = (List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -669,14 +663,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",DiseaseSymptomProcedure);
-        if (DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",DiseaseStatus);
-        if (Comorbidity?.Any() == true) yield return new KeyValuePair<string,object>("comorbidity",Comorbidity);
-        if (IntendedEffect is not null) yield return new KeyValuePair<string,object>("intendedEffect",IntendedEffect);
-        if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
-        if (UndesirableEffect?.Any() == true) yield return new KeyValuePair<string,object>("undesirableEffect",UndesirableEffect);
-        if (Applicability is not null) yield return new KeyValuePair<string,object>("applicability",Applicability);
-        if (OtherTherapy?.Any() == true) yield return new KeyValuePair<string,object>("otherTherapy",OtherTherapy);
+        if (_DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",_DiseaseSymptomProcedure);
+        if (_DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",_DiseaseStatus);
+        if (_Comorbidity?.Any() == true) yield return new KeyValuePair<string,object>("comorbidity",_Comorbidity);
+        if (_IntendedEffect is not null) yield return new KeyValuePair<string,object>("intendedEffect",_IntendedEffect);
+        if (_Duration is not null) yield return new KeyValuePair<string,object>("duration",_Duration);
+        if (_UndesirableEffect?.Any() == true) yield return new KeyValuePair<string,object>("undesirableEffect",_UndesirableEffect);
+        if (_Applicability is not null) yield return new KeyValuePair<string,object>("applicability",_Applicability);
+        if (_OtherTherapy?.Any() == true) yield return new KeyValuePair<string,object>("otherTherapy",_OtherTherapy);
       }
 
     }
@@ -702,11 +696,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent> Interactant
       {
-        get { if(_Interactant==null) _Interactant = new List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent>(); return _Interactant; }
+        get => _Interactant ??= [];
         set { _Interactant = value; OnPropertyChanged("Interactant"); }
       }
 
-      private List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent> _Interactant;
+      private List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent>? _Interactant;
 
       /// <summary>
       /// The type of the interaction e.g. drug-drug interaction, drug-lab test interaction.
@@ -714,13 +708,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("InteractionType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// The effect of the interaction, for example "reduced gastric absorption of primary medication".
@@ -728,13 +722,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("effect", InSummary=true, Order=60)]
       [Binding("InteractionEffect")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference Effect
+      public Hl7.Fhir.Model.CodeableReference? Effect
       {
         get { return _Effect; }
         set { _Effect = value; OnPropertyChanged("Effect"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _Effect;
+      private Hl7.Fhir.Model.CodeableReference? _Effect;
 
       /// <summary>
       /// The incidence of the interaction, e.g. theoretical, observed.
@@ -742,13 +736,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("incidence", InSummary=true, Order=70)]
       [Binding("UndesirableEffectSymptom")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Incidence
+      public Hl7.Fhir.Model.CodeableConcept? Incidence
       {
         get { return _Incidence; }
         set { _Incidence = value; OnPropertyChanged("Incidence"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Incidence;
+      private Hl7.Fhir.Model.CodeableConcept? _Incidence;
 
       /// <summary>
       /// Actions for managing the interaction.
@@ -759,27 +753,23 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Management
       {
-        get { if(_Management==null) _Management = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Management; }
+        get => _Management ??= [];
         set { _Management = value; OnPropertyChanged("Management"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Management;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Management;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as InteractionComponent;
-
-        if (dest == null)
-        {
+        if(other is not InteractionComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Interactant.Any()) dest.Interactant = new List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent>(Interactant.DeepCopyInternal());
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Effect != null) dest.Effect = (Hl7.Fhir.Model.CodeableReference)Effect.DeepCopyInternal();
-        if(Incidence != null) dest.Incidence = (Hl7.Fhir.Model.CodeableConcept)Incidence.DeepCopyInternal();
-        if(Management.Any()) dest.Management = new List<Hl7.Fhir.Model.CodeableConcept>(Management.DeepCopyInternal());
+        if(_Interactant is not null) dest.Interactant = new List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent>(_Interactant.DeepCopyInternal());
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Effect is not null) dest.Effect = (Hl7.Fhir.Model.CodeableReference)_Effect.DeepCopyInternal();
+        if(_Incidence is not null) dest.Incidence = (Hl7.Fhir.Model.CodeableConcept)_Incidence.DeepCopyInternal();
+        if(_Management is not null) dest.Management = new List<Hl7.Fhir.Model.CodeableConcept>(_Management.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -791,62 +781,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as InteractionComponent;
-        if(otherT == null) return false;
+        if(other is not InteractionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Interactant, otherT.Interactant)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Effect, otherT.Effect)) return false;
-        if(!comparer.Equals(Incidence, otherT.Incidence)) return false;
-        if(!comparer.ListEquals(Management, otherT.Management)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Interactant, otherT._Interactant)) return false;
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Effect, otherT._Effect)) return false;
+        if(!comparer.Equals(_Incidence, otherT._Incidence)) return false;
+        if(!comparer.ListEquals(_Management, otherT._Management)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "interactant":
-            value = Interactant;
-            return Interactant?.Any() == true;
+            value = _Interactant;
+            return _Interactant?.Any() == true;
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "effect":
-            value = Effect;
-            return Effect is not null;
+            value = _Effect;
+            return _Effect is not null;
           case "incidence":
-            value = Incidence;
-            return Incidence is not null;
+            value = _Incidence;
+            return _Incidence is not null;
           case "management":
-            value = Management;
-            return Management?.Any() == true;
+            value = _Management;
+            return _Management?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "interactant":
-            Interactant = (List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent>)value;
+            Interactant = (List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent>?)value!;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "effect":
-            Effect = (Hl7.Fhir.Model.CodeableReference)value;
+            Effect = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "incidence":
-            Incidence = (Hl7.Fhir.Model.CodeableConcept)value;
+            Incidence = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "management":
-            Management = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Management = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -857,11 +848,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Interactant?.Any() == true) yield return new KeyValuePair<string,object>("interactant",Interactant);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Effect is not null) yield return new KeyValuePair<string,object>("effect",Effect);
-        if (Incidence is not null) yield return new KeyValuePair<string,object>("incidence",Incidence);
-        if (Management?.Any() == true) yield return new KeyValuePair<string,object>("management",Management);
+        if (_Interactant?.Any() == true) yield return new KeyValuePair<string,object>("interactant",_Interactant);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Effect is not null) yield return new KeyValuePair<string,object>("effect",_Effect);
+        if (_Incidence is not null) yield return new KeyValuePair<string,object>("incidence",_Incidence);
+        if (_Management?.Any() == true) yield return new KeyValuePair<string,object>("management",_Management);
       }
 
     }
@@ -892,25 +883,21 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Item
+      public Hl7.Fhir.Model.DataType? Item
       {
         get { return _Item; }
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Item;
+      private Hl7.Fhir.Model.DataType? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as InteractantComponent;
-
-        if (dest == null)
-        {
+        if(other is not InteractantComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopyInternal();
+        if(_Item is not null) dest.Item = (Hl7.Fhir.Model.DataType)_Item.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -922,34 +909,35 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as InteractantComponent;
-        if(otherT == null) return false;
+        if(other is not InteractantComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "item":
-            value = Item;
-            return Item is not null;
+            value = _Item;
+            return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "item":
-            Item = (Hl7.Fhir.Model.DataType)value;
+            Item = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -960,7 +948,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (_Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -987,13 +975,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("symptomConditionEffect", InSummary=true, Order=40)]
       [Binding("UndesirableEffectSymptom")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableReference SymptomConditionEffect
+      public Hl7.Fhir.Model.CodeableReference? SymptomConditionEffect
       {
         get { return _SymptomConditionEffect; }
         set { _SymptomConditionEffect = value; OnPropertyChanged("SymptomConditionEffect"); }
       }
 
-      private Hl7.Fhir.Model.CodeableReference _SymptomConditionEffect;
+      private Hl7.Fhir.Model.CodeableReference? _SymptomConditionEffect;
 
       /// <summary>
       /// High level classification of the effect.
@@ -1001,13 +989,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("classification", InSummary=true, Order=50)]
       [Binding("UndesirableEffectClassification")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Classification
+      public Hl7.Fhir.Model.CodeableConcept? Classification
       {
         get { return _Classification; }
         set { _Classification = value; OnPropertyChanged("Classification"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Classification;
+      private Hl7.Fhir.Model.CodeableConcept? _Classification;
 
       /// <summary>
       /// How often the effect is seen.
@@ -1015,27 +1003,23 @@ namespace Hl7.Fhir.Model
       [FhirElement("frequencyOfOccurrence", InSummary=true, Order=60)]
       [Binding("UndesirablEffectFrequency")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept FrequencyOfOccurrence
+      public Hl7.Fhir.Model.CodeableConcept? FrequencyOfOccurrence
       {
         get { return _FrequencyOfOccurrence; }
         set { _FrequencyOfOccurrence = value; OnPropertyChanged("FrequencyOfOccurrence"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _FrequencyOfOccurrence;
+      private Hl7.Fhir.Model.CodeableConcept? _FrequencyOfOccurrence;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as UndesirableEffectComponent;
-
-        if (dest == null)
-        {
+        if(other is not UndesirableEffectComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(SymptomConditionEffect != null) dest.SymptomConditionEffect = (Hl7.Fhir.Model.CodeableReference)SymptomConditionEffect.DeepCopyInternal();
-        if(Classification != null) dest.Classification = (Hl7.Fhir.Model.CodeableConcept)Classification.DeepCopyInternal();
-        if(FrequencyOfOccurrence != null) dest.FrequencyOfOccurrence = (Hl7.Fhir.Model.CodeableConcept)FrequencyOfOccurrence.DeepCopyInternal();
+        if(_SymptomConditionEffect is not null) dest.SymptomConditionEffect = (Hl7.Fhir.Model.CodeableReference)_SymptomConditionEffect.DeepCopyInternal();
+        if(_Classification is not null) dest.Classification = (Hl7.Fhir.Model.CodeableConcept)_Classification.DeepCopyInternal();
+        if(_FrequencyOfOccurrence is not null) dest.FrequencyOfOccurrence = (Hl7.Fhir.Model.CodeableConcept)_FrequencyOfOccurrence.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1047,48 +1031,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as UndesirableEffectComponent;
-        if(otherT == null) return false;
+        if(other is not UndesirableEffectComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(SymptomConditionEffect, otherT.SymptomConditionEffect)) return false;
-        if(!comparer.Equals(Classification, otherT.Classification)) return false;
-        if(!comparer.Equals(FrequencyOfOccurrence, otherT.FrequencyOfOccurrence)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_SymptomConditionEffect, otherT._SymptomConditionEffect)) return false;
+        if(!comparer.Equals(_Classification, otherT._Classification)) return false;
+        if(!comparer.Equals(_FrequencyOfOccurrence, otherT._FrequencyOfOccurrence)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "symptomConditionEffect":
-            value = SymptomConditionEffect;
-            return SymptomConditionEffect is not null;
+            value = _SymptomConditionEffect;
+            return _SymptomConditionEffect is not null;
           case "classification":
-            value = Classification;
-            return Classification is not null;
+            value = _Classification;
+            return _Classification is not null;
           case "frequencyOfOccurrence":
-            value = FrequencyOfOccurrence;
-            return FrequencyOfOccurrence is not null;
+            value = _FrequencyOfOccurrence;
+            return _FrequencyOfOccurrence is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "symptomConditionEffect":
-            SymptomConditionEffect = (Hl7.Fhir.Model.CodeableReference)value;
+            SymptomConditionEffect = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "classification":
-            Classification = (Hl7.Fhir.Model.CodeableConcept)value;
+            Classification = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "frequencyOfOccurrence":
-            FrequencyOfOccurrence = (Hl7.Fhir.Model.CodeableConcept)value;
+            FrequencyOfOccurrence = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1099,9 +1084,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (SymptomConditionEffect is not null) yield return new KeyValuePair<string,object>("symptomConditionEffect",SymptomConditionEffect);
-        if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
-        if (FrequencyOfOccurrence is not null) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",FrequencyOfOccurrence);
+        if (_SymptomConditionEffect is not null) yield return new KeyValuePair<string,object>("symptomConditionEffect",_SymptomConditionEffect);
+        if (_Classification is not null) yield return new KeyValuePair<string,object>("classification",_Classification);
+        if (_FrequencyOfOccurrence is not null) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",_FrequencyOfOccurrence);
       }
 
     }
@@ -1127,28 +1112,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("description", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown DescriptionElement
+      public Hl7.Fhir.Model.Markdown? DescriptionElement
       {
         get { return _DescriptionElement; }
         set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _DescriptionElement;
+      private Hl7.Fhir.Model.Markdown? _DescriptionElement;
 
       /// <summary>
       /// A textual definition of this warning, with formatting
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Description
+      public string? Description
       {
-        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+        get => _DescriptionElement?.Value;
         set
         {
-          if (value == null)
-            DescriptionElement = null;
-          else
-            DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+          DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
           OnPropertyChanged("Description");
         }
       }
@@ -1159,26 +1141,22 @@ namespace Hl7.Fhir.Model
       [FhirElement("code", InSummary=true, Order=50)]
       [Binding("WarningType")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Code
+      public Hl7.Fhir.Model.CodeableConcept? Code
       {
         get { return _Code; }
         set { _Code = value; OnPropertyChanged("Code"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Code;
+      private Hl7.Fhir.Model.CodeableConcept? _Code;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as WarningComponent;
-
-        if (dest == null)
-        {
+        if(other is not WarningComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopyInternal();
-        if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
+        if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)_DescriptionElement.DeepCopyInternal();
+        if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -1190,41 +1168,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as WarningComponent;
-        if(otherT == null) return false;
+        if(other is not WarningComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-        if(!comparer.Equals(Code, otherT.Code)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+        if(!comparer.Equals(_Code, otherT._Code)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "description":
-            value = DescriptionElement;
-            return DescriptionElement is not null;
+            value = _DescriptionElement;
+            return _DescriptionElement is not null;
           case "code":
-            value = Code;
-            return Code is not null;
+            value = _Code;
+            return _Code is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "description":
-            DescriptionElement = (Hl7.Fhir.Model.Markdown)value;
+            DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
             return this;
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept)value;
+            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1235,8 +1214,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
       }
 
     }
@@ -1249,11 +1228,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// indication | contraindication | interaction | undesirable-effect | warning.
@@ -1263,13 +1242,13 @@ namespace Hl7.Fhir.Model
     [Binding("ClinicalUseDefinitionType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType> TypeElement
+    public Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType> _TypeElement;
+    private Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>? _TypeElement;
 
     /// <summary>
     /// indication | contraindication | interaction | undesirable-effect | warning
@@ -1278,13 +1257,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -1298,11 +1274,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
 
     /// <summary>
     /// The medication, product, substance, device, procedure etc. for which this is an indication.
@@ -1314,11 +1290,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Subject;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Subject;
 
     /// <summary>
     /// Whether this is a current issue or one that has been retired etc.
@@ -1326,52 +1302,52 @@ namespace Hl7.Fhir.Model
     [FhirElement("status", InSummary=true, Order=130)]
     [Binding("PublicationStatus")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Status
+    public Hl7.Fhir.Model.CodeableConcept? Status
     {
       get { return _Status; }
       set { _Status = value; OnPropertyChanged("Status"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Status;
+    private Hl7.Fhir.Model.CodeableConcept? _Status;
 
     /// <summary>
     /// Specifics for when this is a contraindication.
     /// </summary>
     [FhirElement("contraindication", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent Contraindication
+    public Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent? Contraindication
     {
       get { return _Contraindication; }
       set { _Contraindication = value; OnPropertyChanged("Contraindication"); }
     }
 
-    private Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent _Contraindication;
+    private Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent? _Contraindication;
 
     /// <summary>
     /// Specifics for when this is an indication.
     /// </summary>
     [FhirElement("indication", InSummary=true, Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent Indication
+    public Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent? Indication
     {
       get { return _Indication; }
       set { _Indication = value; OnPropertyChanged("Indication"); }
     }
 
-    private Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent _Indication;
+    private Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent? _Indication;
 
     /// <summary>
     /// Specifics for when this is an interaction.
     /// </summary>
     [FhirElement("interaction", InSummary=true, Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent Interaction
+    public Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent? Interaction
     {
       get { return _Interaction; }
       set { _Interaction = value; OnPropertyChanged("Interaction"); }
     }
 
-    private Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent _Interaction;
+    private Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent? _Interaction;
 
     /// <summary>
     /// The population group to which this applies.
@@ -1383,11 +1359,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Population
     {
-      get { if(_Population==null) _Population = new List<Hl7.Fhir.Model.ResourceReference>(); return _Population; }
+      get => _Population ??= [];
       set { _Population = value; OnPropertyChanged("Population"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Population;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Population;
 
     /// <summary>
     /// Logic used by the clinical use definition.
@@ -1397,24 +1373,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> LibraryElement
     {
-      get { if(_LibraryElement==null) _LibraryElement = new List<Hl7.Fhir.Model.Canonical>(); return _LibraryElement; }
+      get => _LibraryElement ??= [];
       set { _LibraryElement = value; OnPropertyChanged("LibraryElement"); }
     }
 
-    private List<Hl7.Fhir.Model.Canonical> _LibraryElement;
+    private List<Hl7.Fhir.Model.Canonical>? _LibraryElement;
 
     /// <summary>
     /// Logic used by the clinical use definition
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Library
+    public IEnumerable<string?> Library
     {
-      get { return LibraryElement != null ? LibraryElement.Select(elem => elem.Value) : null; }
+      get => _LibraryElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          LibraryElement = null;
+          LibraryElement = null!;
         else
           LibraryElement = new List<Hl7.Fhir.Model.Canonical>(value.Select(elem=>new Hl7.Fhir.Model.Canonical(elem)));
         OnPropertyChanged("Library");
@@ -1426,51 +1402,47 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("undesirableEffect", InSummary=true, Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent UndesirableEffect
+    public Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent? UndesirableEffect
     {
       get { return _UndesirableEffect; }
       set { _UndesirableEffect = value; OnPropertyChanged("UndesirableEffect"); }
     }
 
-    private Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent _UndesirableEffect;
+    private Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent? _UndesirableEffect;
 
     /// <summary>
     /// Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness'.
     /// </summary>
     [FhirElement("warning", InSummary=true, Order=200)]
     [DataMember]
-    public Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent Warning
+    public Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent? Warning
     {
       get { return _Warning; }
       set { _Warning = value; OnPropertyChanged("Warning"); }
     }
 
-    private Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent _Warning;
+    private Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent? _Warning;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ClinicalUseDefinition;
-
-      if (dest == null)
-      {
+      if(other is not ClinicalUseDefinition dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>)TypeElement.DeepCopyInternal();
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopyInternal());
-      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopyInternal());
-      if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopyInternal();
-      if(Contraindication != null) dest.Contraindication = (Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent)Contraindication.DeepCopyInternal();
-      if(Indication != null) dest.Indication = (Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent)Indication.DeepCopyInternal();
-      if(Interaction != null) dest.Interaction = (Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent)Interaction.DeepCopyInternal();
-      if(Population.Any()) dest.Population = new List<Hl7.Fhir.Model.ResourceReference>(Population.DeepCopyInternal());
-      if(LibraryElement.Any()) dest.LibraryElement = new List<Hl7.Fhir.Model.Canonical>(LibraryElement.DeepCopyInternal());
-      if(UndesirableEffect != null) dest.UndesirableEffect = (Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent)UndesirableEffect.DeepCopyInternal();
-      if(Warning != null) dest.Warning = (Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent)Warning.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>)_TypeElement.DeepCopyInternal();
+      if(_Category is not null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(_Category.DeepCopyInternal());
+      if(_Subject is not null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(_Subject.DeepCopyInternal());
+      if(_Status is not null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)_Status.DeepCopyInternal();
+      if(_Contraindication is not null) dest.Contraindication = (Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent)_Contraindication.DeepCopyInternal();
+      if(_Indication is not null) dest.Indication = (Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent)_Indication.DeepCopyInternal();
+      if(_Interaction is not null) dest.Interaction = (Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent)_Interaction.DeepCopyInternal();
+      if(_Population is not null) dest.Population = new List<Hl7.Fhir.Model.ResourceReference>(_Population.DeepCopyInternal());
+      if(_LibraryElement is not null) dest.LibraryElement = new List<Hl7.Fhir.Model.Canonical>(_LibraryElement.DeepCopyInternal());
+      if(_UndesirableEffect is not null) dest.UndesirableEffect = (Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent)_UndesirableEffect.DeepCopyInternal();
+      if(_Warning is not null) dest.Warning = (Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent)_Warning.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1482,111 +1454,112 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ClinicalUseDefinition;
-      if(otherT == null) return false;
+      if(other is not ClinicalUseDefinition otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.ListEquals(Category, otherT.Category)) return false;
-      if(!comparer.ListEquals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Status, otherT.Status)) return false;
-      if(!comparer.Equals(Contraindication, otherT.Contraindication)) return false;
-      if(!comparer.Equals(Indication, otherT.Indication)) return false;
-      if(!comparer.Equals(Interaction, otherT.Interaction)) return false;
-      if(!comparer.ListEquals(Population, otherT.Population)) return false;
-      if(!comparer.ListEquals(LibraryElement, otherT.LibraryElement)) return false;
-      if(!comparer.Equals(UndesirableEffect, otherT.UndesirableEffect)) return false;
-      if(!comparer.Equals(Warning, otherT.Warning)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.ListEquals(_Category, otherT._Category)) return false;
+      if(!comparer.ListEquals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Status, otherT._Status)) return false;
+      if(!comparer.Equals(_Contraindication, otherT._Contraindication)) return false;
+      if(!comparer.Equals(_Indication, otherT._Indication)) return false;
+      if(!comparer.Equals(_Interaction, otherT._Interaction)) return false;
+      if(!comparer.ListEquals(_Population, otherT._Population)) return false;
+      if(!comparer.ListEquals(_LibraryElement, otherT._LibraryElement)) return false;
+      if(!comparer.Equals(_UndesirableEffect, otherT._UndesirableEffect)) return false;
+      if(!comparer.Equals(_Warning, otherT._Warning)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "category":
-          value = Category;
-          return Category?.Any() == true;
+          value = _Category;
+          return _Category?.Any() == true;
         case "subject":
-          value = Subject;
-          return Subject?.Any() == true;
+          value = _Subject;
+          return _Subject?.Any() == true;
         case "status":
-          value = Status;
-          return Status is not null;
+          value = _Status;
+          return _Status is not null;
         case "contraindication":
-          value = Contraindication;
-          return Contraindication is not null;
+          value = _Contraindication;
+          return _Contraindication is not null;
         case "indication":
-          value = Indication;
-          return Indication is not null;
+          value = _Indication;
+          return _Indication is not null;
         case "interaction":
-          value = Interaction;
-          return Interaction is not null;
+          value = _Interaction;
+          return _Interaction is not null;
         case "population":
-          value = Population;
-          return Population?.Any() == true;
+          value = _Population;
+          return _Population?.Any() == true;
         case "library":
-          value = LibraryElement;
-          return LibraryElement?.Any() == true;
+          value = _LibraryElement;
+          return _LibraryElement?.Any() == true;
         case "undesirableEffect":
-          value = UndesirableEffect;
-          return UndesirableEffect is not null;
+          value = _UndesirableEffect;
+          return _UndesirableEffect is not null;
         case "warning":
-          value = Warning;
-          return Warning is not null;
+          value = _Warning;
+          return _Warning is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>?)value;
           return this;
         case "category":
-          Category = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "subject":
-          Subject = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "status":
-          Status = (Hl7.Fhir.Model.CodeableConcept)value;
+          Status = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "contraindication":
-          Contraindication = (Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent)value;
+          Contraindication = (Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent?)value;
           return this;
         case "indication":
-          Indication = (Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent)value;
+          Indication = (Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent?)value;
           return this;
         case "interaction":
-          Interaction = (Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent)value;
+          Interaction = (Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent?)value;
           return this;
         case "population":
-          Population = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Population = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "library":
-          LibraryElement = (List<Hl7.Fhir.Model.Canonical>)value;
+          LibraryElement = (List<Hl7.Fhir.Model.Canonical>?)value!;
           return this;
         case "undesirableEffect":
-          UndesirableEffect = (Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent)value;
+          UndesirableEffect = (Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent?)value;
           return this;
         case "warning":
-          Warning = (Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent)value;
+          Warning = (Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1597,18 +1570,18 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
-      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
-      if (Contraindication is not null) yield return new KeyValuePair<string,object>("contraindication",Contraindication);
-      if (Indication is not null) yield return new KeyValuePair<string,object>("indication",Indication);
-      if (Interaction is not null) yield return new KeyValuePair<string,object>("interaction",Interaction);
-      if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
-      if (LibraryElement?.Any() == true) yield return new KeyValuePair<string,object>("library",LibraryElement);
-      if (UndesirableEffect is not null) yield return new KeyValuePair<string,object>("undesirableEffect",UndesirableEffect);
-      if (Warning is not null) yield return new KeyValuePair<string,object>("warning",Warning);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_Category?.Any() == true) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
+      if (_Contraindication is not null) yield return new KeyValuePair<string,object>("contraindication",_Contraindication);
+      if (_Indication is not null) yield return new KeyValuePair<string,object>("indication",_Indication);
+      if (_Interaction is not null) yield return new KeyValuePair<string,object>("interaction",_Interaction);
+      if (_Population?.Any() == true) yield return new KeyValuePair<string,object>("population",_Population);
+      if (_LibraryElement?.Any() == true) yield return new KeyValuePair<string,object>("library",_LibraryElement);
+      if (_UndesirableEffect is not null) yield return new KeyValuePair<string,object>("undesirableEffect",_UndesirableEffect);
+      if (_Warning is not null) yield return new KeyValuePair<string,object>("warning",_Warning);
     }
 
   }

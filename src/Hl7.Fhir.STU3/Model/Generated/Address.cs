@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -129,13 +132,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("AddressUse")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Address.AddressUse> UseElement
+    public Code<Hl7.Fhir.Model.Address.AddressUse>? UseElement
     {
       get { return _UseElement; }
       set { _UseElement = value; OnPropertyChanged("UseElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Address.AddressUse> _UseElement;
+    private Code<Hl7.Fhir.Model.Address.AddressUse>? _UseElement;
 
     /// <summary>
     /// home | work | temp | old - purpose of this address
@@ -144,13 +147,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Address.AddressUse? Use
     {
-      get { return UseElement != null ? UseElement.Value : null; }
+      get => _UseElement?.Value;
       set
       {
-        if (value == null)
-          UseElement = null;
-        else
-          UseElement = new Code<Hl7.Fhir.Model.Address.AddressUse>(value);
+        UseElement = value is null ? null : new Code<Hl7.Fhir.Model.Address.AddressUse>(value);
         OnPropertyChanged("Use");
       }
     }
@@ -162,13 +162,13 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Binding("AddressType")]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Address.AddressType> TypeElement
+    public Code<Hl7.Fhir.Model.Address.AddressType>? TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Address.AddressType> _TypeElement;
+    private Code<Hl7.Fhir.Model.Address.AddressType>? _TypeElement;
 
     /// <summary>
     /// postal | physical | both
@@ -177,13 +177,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Address.AddressType? Type
     {
-      get { return TypeElement != null ? TypeElement.Value : null; }
+      get => _TypeElement?.Value;
       set
       {
-        if (value == null)
-          TypeElement = null;
-        else
-          TypeElement = new Code<Hl7.Fhir.Model.Address.AddressType>(value);
+        TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Address.AddressType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -193,28 +190,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("text", InSummary=true, Order=50)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString TextElement
+    public Hl7.Fhir.Model.FhirString? TextElement
     {
       get { return _TextElement; }
       set { _TextElement = value; OnPropertyChanged("TextElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _TextElement;
+    private Hl7.Fhir.Model.FhirString? _TextElement;
 
     /// <summary>
     /// Text representation of the address
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Text
+    public string? Text
     {
-      get { return TextElement != null ? TextElement.Value : null; }
+      get => _TextElement?.Value;
       set
       {
-        if (value == null)
-          TextElement = null;
-        else
-          TextElement = new Hl7.Fhir.Model.FhirString(value);
+        TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Text");
       }
     }
@@ -227,24 +221,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> LineElement
     {
-      get { if(_LineElement==null) _LineElement = new List<Hl7.Fhir.Model.FhirString>(); return _LineElement; }
+      get => _LineElement ??= [];
       set { _LineElement = value; OnPropertyChanged("LineElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _LineElement;
+    private List<Hl7.Fhir.Model.FhirString>? _LineElement;
 
     /// <summary>
     /// Street name, number, direction &amp; P.O. Box etc.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Line
+    public IEnumerable<string?> Line
     {
-      get { return LineElement != null ? LineElement.Select(elem => elem.Value) : null; }
+      get => _LineElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          LineElement = null;
+          LineElement = null!;
         else
           LineElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("Line");
@@ -256,28 +250,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("city", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString CityElement
+    public Hl7.Fhir.Model.FhirString? CityElement
     {
       get { return _CityElement; }
       set { _CityElement = value; OnPropertyChanged("CityElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _CityElement;
+    private Hl7.Fhir.Model.FhirString? _CityElement;
 
     /// <summary>
     /// Name of city, town etc.
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string City
+    public string? City
     {
-      get { return CityElement != null ? CityElement.Value : null; }
+      get => _CityElement?.Value;
       set
       {
-        if (value == null)
-          CityElement = null;
-        else
-          CityElement = new Hl7.Fhir.Model.FhirString(value);
+        CityElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("City");
       }
     }
@@ -287,28 +278,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("district", InSummary=true, Order=80)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DistrictElement
+    public Hl7.Fhir.Model.FhirString? DistrictElement
     {
       get { return _DistrictElement; }
       set { _DistrictElement = value; OnPropertyChanged("DistrictElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DistrictElement;
+    private Hl7.Fhir.Model.FhirString? _DistrictElement;
 
     /// <summary>
     /// District name (aka county)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string District
+    public string? District
     {
-      get { return DistrictElement != null ? DistrictElement.Value : null; }
+      get => _DistrictElement?.Value;
       set
       {
-        if (value == null)
-          DistrictElement = null;
-        else
-          DistrictElement = new Hl7.Fhir.Model.FhirString(value);
+        DistrictElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("District");
       }
     }
@@ -318,28 +306,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("state", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString StateElement
+    public Hl7.Fhir.Model.FhirString? StateElement
     {
       get { return _StateElement; }
       set { _StateElement = value; OnPropertyChanged("StateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _StateElement;
+    private Hl7.Fhir.Model.FhirString? _StateElement;
 
     /// <summary>
     /// Sub-unit of country (abbreviations ok)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string State
+    public string? State
     {
-      get { return StateElement != null ? StateElement.Value : null; }
+      get => _StateElement?.Value;
       set
       {
-        if (value == null)
-          StateElement = null;
-        else
-          StateElement = new Hl7.Fhir.Model.FhirString(value);
+        StateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("State");
       }
     }
@@ -349,28 +334,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("postalCode", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString PostalCodeElement
+    public Hl7.Fhir.Model.FhirString? PostalCodeElement
     {
       get { return _PostalCodeElement; }
       set { _PostalCodeElement = value; OnPropertyChanged("PostalCodeElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _PostalCodeElement;
+    private Hl7.Fhir.Model.FhirString? _PostalCodeElement;
 
     /// <summary>
     /// Postal code for area
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string PostalCode
+    public string? PostalCode
     {
-      get { return PostalCodeElement != null ? PostalCodeElement.Value : null; }
+      get => _PostalCodeElement?.Value;
       set
       {
-        if (value == null)
-          PostalCodeElement = null;
-        else
-          PostalCodeElement = new Hl7.Fhir.Model.FhirString(value);
+        PostalCodeElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("PostalCode");
       }
     }
@@ -380,28 +362,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("country", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString CountryElement
+    public Hl7.Fhir.Model.FhirString? CountryElement
     {
       get { return _CountryElement; }
       set { _CountryElement = value; OnPropertyChanged("CountryElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _CountryElement;
+    private Hl7.Fhir.Model.FhirString? _CountryElement;
 
     /// <summary>
     /// Country (e.g. can be ISO 3166 2 or 3 letter code)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Country
+    public string? Country
     {
-      get { return CountryElement != null ? CountryElement.Value : null; }
+      get => _CountryElement?.Value;
       set
       {
-        if (value == null)
-          CountryElement = null;
-        else
-          CountryElement = new Hl7.Fhir.Model.FhirString(value);
+        CountryElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Country");
       }
     }
@@ -411,34 +390,30 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("period", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Address;
-
-      if (dest == null)
-      {
+      if(other is not Address dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.Address.AddressUse>)UseElement.DeepCopyInternal();
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Address.AddressType>)TypeElement.DeepCopyInternal();
-      if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopyInternal();
-      if(LineElement.Any()) dest.LineElement = new List<Hl7.Fhir.Model.FhirString>(LineElement.DeepCopyInternal());
-      if(CityElement != null) dest.CityElement = (Hl7.Fhir.Model.FhirString)CityElement.DeepCopyInternal();
-      if(DistrictElement != null) dest.DistrictElement = (Hl7.Fhir.Model.FhirString)DistrictElement.DeepCopyInternal();
-      if(StateElement != null) dest.StateElement = (Hl7.Fhir.Model.FhirString)StateElement.DeepCopyInternal();
-      if(PostalCodeElement != null) dest.PostalCodeElement = (Hl7.Fhir.Model.FhirString)PostalCodeElement.DeepCopyInternal();
-      if(CountryElement != null) dest.CountryElement = (Hl7.Fhir.Model.FhirString)CountryElement.DeepCopyInternal();
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
+      if(_UseElement is not null) dest.UseElement = (Code<Hl7.Fhir.Model.Address.AddressUse>)_UseElement.DeepCopyInternal();
+      if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.Address.AddressType>)_TypeElement.DeepCopyInternal();
+      if(_TextElement is not null) dest.TextElement = (Hl7.Fhir.Model.FhirString)_TextElement.DeepCopyInternal();
+      if(_LineElement is not null) dest.LineElement = new List<Hl7.Fhir.Model.FhirString>(_LineElement.DeepCopyInternal());
+      if(_CityElement is not null) dest.CityElement = (Hl7.Fhir.Model.FhirString)_CityElement.DeepCopyInternal();
+      if(_DistrictElement is not null) dest.DistrictElement = (Hl7.Fhir.Model.FhirString)_DistrictElement.DeepCopyInternal();
+      if(_StateElement is not null) dest.StateElement = (Hl7.Fhir.Model.FhirString)_StateElement.DeepCopyInternal();
+      if(_PostalCodeElement is not null) dest.PostalCodeElement = (Hl7.Fhir.Model.FhirString)_PostalCodeElement.DeepCopyInternal();
+      if(_CountryElement is not null) dest.CountryElement = (Hl7.Fhir.Model.FhirString)_CountryElement.DeepCopyInternal();
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
     }
 
     protected internal override Base DeepCopyInternal()
@@ -450,97 +425,98 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Address;
-      if(otherT == null) return false;
+      if(other is not Address otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(UseElement, otherT.UseElement)) return false;
-      if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-      if(!comparer.Equals(TextElement, otherT.TextElement)) return false;
-      if(!comparer.ListEquals(LineElement, otherT.LineElement)) return false;
-      if(!comparer.Equals(CityElement, otherT.CityElement)) return false;
-      if(!comparer.Equals(DistrictElement, otherT.DistrictElement)) return false;
-      if(!comparer.Equals(StateElement, otherT.StateElement)) return false;
-      if(!comparer.Equals(PostalCodeElement, otherT.PostalCodeElement)) return false;
-      if(!comparer.Equals(CountryElement, otherT.CountryElement)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_UseElement, otherT._UseElement)) return false;
+      if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+      if(!comparer.Equals(_TextElement, otherT._TextElement)) return false;
+      if(!comparer.ListEquals(_LineElement, otherT._LineElement)) return false;
+      if(!comparer.Equals(_CityElement, otherT._CityElement)) return false;
+      if(!comparer.Equals(_DistrictElement, otherT._DistrictElement)) return false;
+      if(!comparer.Equals(_StateElement, otherT._StateElement)) return false;
+      if(!comparer.Equals(_PostalCodeElement, otherT._PostalCodeElement)) return false;
+      if(!comparer.Equals(_CountryElement, otherT._CountryElement)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "use":
-          value = UseElement;
-          return UseElement is not null;
+          value = _UseElement;
+          return _UseElement is not null;
         case "type":
-          value = TypeElement;
-          return TypeElement is not null;
+          value = _TypeElement;
+          return _TypeElement is not null;
         case "text":
-          value = TextElement;
-          return TextElement is not null;
+          value = _TextElement;
+          return _TextElement is not null;
         case "line":
-          value = LineElement;
-          return LineElement?.Any() == true;
+          value = _LineElement;
+          return _LineElement?.Any() == true;
         case "city":
-          value = CityElement;
-          return CityElement is not null;
+          value = _CityElement;
+          return _CityElement is not null;
         case "district":
-          value = DistrictElement;
-          return DistrictElement is not null;
+          value = _DistrictElement;
+          return _DistrictElement is not null;
         case "state":
-          value = StateElement;
-          return StateElement is not null;
+          value = _StateElement;
+          return _StateElement is not null;
         case "postalCode":
-          value = PostalCodeElement;
-          return PostalCodeElement is not null;
+          value = _PostalCodeElement;
+          return _PostalCodeElement is not null;
         case "country":
-          value = CountryElement;
-          return CountryElement is not null;
+          value = _CountryElement;
+          return _CountryElement is not null;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "use":
-          UseElement = (Code<Hl7.Fhir.Model.Address.AddressUse>)value;
+          UseElement = (Code<Hl7.Fhir.Model.Address.AddressUse>?)value;
           return this;
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.Address.AddressType>)value;
+          TypeElement = (Code<Hl7.Fhir.Model.Address.AddressType>?)value;
           return this;
         case "text":
-          TextElement = (Hl7.Fhir.Model.FhirString)value;
+          TextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "line":
-          LineElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          LineElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "city":
-          CityElement = (Hl7.Fhir.Model.FhirString)value;
+          CityElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "district":
-          DistrictElement = (Hl7.Fhir.Model.FhirString)value;
+          DistrictElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "state":
-          StateElement = (Hl7.Fhir.Model.FhirString)value;
+          StateElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "postalCode":
-          PostalCodeElement = (Hl7.Fhir.Model.FhirString)value;
+          PostalCodeElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "country":
-          CountryElement = (Hl7.Fhir.Model.FhirString)value;
+          CountryElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -551,16 +527,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
-      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
-      if (LineElement?.Any() == true) yield return new KeyValuePair<string,object>("line",LineElement);
-      if (CityElement is not null) yield return new KeyValuePair<string,object>("city",CityElement);
-      if (DistrictElement is not null) yield return new KeyValuePair<string,object>("district",DistrictElement);
-      if (StateElement is not null) yield return new KeyValuePair<string,object>("state",StateElement);
-      if (PostalCodeElement is not null) yield return new KeyValuePair<string,object>("postalCode",PostalCodeElement);
-      if (CountryElement is not null) yield return new KeyValuePair<string,object>("country",CountryElement);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (_UseElement is not null) yield return new KeyValuePair<string,object>("use",_UseElement);
+      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (_LineElement?.Any() == true) yield return new KeyValuePair<string,object>("line",_LineElement);
+      if (_CityElement is not null) yield return new KeyValuePair<string,object>("city",_CityElement);
+      if (_DistrictElement is not null) yield return new KeyValuePair<string,object>("district",_DistrictElement);
+      if (_StateElement is not null) yield return new KeyValuePair<string,object>("state",_StateElement);
+      if (_PostalCodeElement is not null) yield return new KeyValuePair<string,object>("postalCode",_PostalCodeElement);
+      if (_CountryElement is not null) yield return new KeyValuePair<string,object>("country",_CountryElement);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
     }
 
   }

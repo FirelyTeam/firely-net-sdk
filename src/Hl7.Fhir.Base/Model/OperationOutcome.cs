@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Introspection;
+﻿#nullable enable
+
+using Hl7.Fhir.Introspection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -125,10 +127,10 @@ namespace Hl7.Fhir.Model
 
             internal void ToStringBuilder(StringBuilder buffer)
             {
-                if (Severity != null)
+                if (Severity is not null)
                 {
-                    buffer.Append("[");
-                    buffer.Append(Severity.ToString().ToUpper());
+                    buffer.Append('[');
+                    buffer.Append(Severity.ToString()!.ToUpper());
                     buffer.Append("] ");
                 }
 
@@ -141,11 +143,11 @@ namespace Hl7.Fhir.Model
                     buffer.Append(")");
                 }
 
-                if (Expression.Any())
+                if (Expression?.Any() == true)
                 {
                     buffer.Append(" (at ");
                     buffer.Append(String.Join(" via ", Expression));
-                    buffer.Append(")");
+                    buffer.Append(')');
                 }
             }
 

@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -161,11 +164,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Basis
       {
-        get { if(_Basis==null) _Basis = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Basis; }
+        get => _Basis ??= [];
         set { _Basis = value; OnPropertyChanged("Basis"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Basis;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Basis;
 
       /// <summary>
       /// Justifing rational.
@@ -177,24 +180,20 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Evidence
       {
-        get { if(_Evidence==null) _Evidence = new List<Hl7.Fhir.Model.ResourceReference>(); return _Evidence; }
+        get => _Evidence ??= [];
         set { _Evidence = value; OnPropertyChanged("Evidence"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Evidence;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Evidence;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as JustificationComponent;
-
-        if (dest == null)
-        {
+        if(other is not JustificationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Basis.Any()) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(Basis.DeepCopyInternal());
-        if(Evidence.Any()) dest.Evidence = new List<Hl7.Fhir.Model.ResourceReference>(Evidence.DeepCopyInternal());
+        if(_Basis is not null) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(_Basis.DeepCopyInternal());
+        if(_Evidence is not null) dest.Evidence = new List<Hl7.Fhir.Model.ResourceReference>(_Evidence.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -206,41 +205,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as JustificationComponent;
-        if(otherT == null) return false;
+        if(other is not JustificationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Basis, otherT.Basis)) return false;
-        if(!comparer.ListEquals(Evidence, otherT.Evidence)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Basis, otherT._Basis)) return false;
+        if(!comparer.ListEquals(_Evidence, otherT._Evidence)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "basis":
-            value = Basis;
-            return Basis?.Any() == true;
+            value = _Basis;
+            return _Basis?.Any() == true;
           case "evidence":
-            value = Evidence;
-            return Evidence?.Any() == true;
+            value = _Evidence;
+            return _Evidence?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "basis":
-            Basis = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Basis = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "evidence":
-            Evidence = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Evidence = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -251,8 +251,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",Basis);
-        if (Evidence?.Any() == true) yield return new KeyValuePair<string,object>("evidence",Evidence);
+        if (_Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",_Basis);
+        if (_Evidence?.Any() == true) yield return new KeyValuePair<string,object>("evidence",_Evidence);
       }
 
     }
@@ -280,13 +280,13 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Binding("PermissionProvisionType")]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ConsentProvisionType> TypeElement
+      public Code<Hl7.Fhir.Model.ConsentProvisionType>? TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.ConsentProvisionType> _TypeElement;
+      private Code<Hl7.Fhir.Model.ConsentProvisionType>? _TypeElement;
 
       /// <summary>
       /// deny | permit
@@ -295,13 +295,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ConsentProvisionType? Type
       {
-        get { return TypeElement != null ? TypeElement.Value : null; }
+        get => _TypeElement?.Value;
         set
         {
-          if (value == null)
-            TypeElement = null;
-          else
-            TypeElement = new Code<Hl7.Fhir.Model.ConsentProvisionType>(value);
+          TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ConsentProvisionType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -314,11 +311,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Permission.DataComponent> Data
       {
-        get { if(_Data==null) _Data = new List<Hl7.Fhir.Model.Permission.DataComponent>(); return _Data; }
+        get => _Data ??= [];
         set { _Data = value; OnPropertyChanged("Data"); }
       }
 
-      private List<Hl7.Fhir.Model.Permission.DataComponent> _Data;
+      private List<Hl7.Fhir.Model.Permission.DataComponent>? _Data;
 
       /// <summary>
       /// A description or definition of which activities are allowed to be done on the data.
@@ -328,11 +325,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Permission.ActivityComponent> Activity
       {
-        get { if(_Activity==null) _Activity = new List<Hl7.Fhir.Model.Permission.ActivityComponent>(); return _Activity; }
+        get => _Activity ??= [];
         set { _Activity = value; OnPropertyChanged("Activity"); }
       }
 
-      private List<Hl7.Fhir.Model.Permission.ActivityComponent> _Activity;
+      private List<Hl7.Fhir.Model.Permission.ActivityComponent>? _Activity;
 
       /// <summary>
       /// What limits apply to the use of the data.
@@ -343,26 +340,22 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Limit
       {
-        get { if(_Limit==null) _Limit = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Limit; }
+        get => _Limit ??= [];
         set { _Limit = value; OnPropertyChanged("Limit"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Limit;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Limit;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RuleComponent;
-
-        if (dest == null)
-        {
+        if(other is not RuleComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ConsentProvisionType>)TypeElement.DeepCopyInternal();
-        if(Data.Any()) dest.Data = new List<Hl7.Fhir.Model.Permission.DataComponent>(Data.DeepCopyInternal());
-        if(Activity.Any()) dest.Activity = new List<Hl7.Fhir.Model.Permission.ActivityComponent>(Activity.DeepCopyInternal());
-        if(Limit.Any()) dest.Limit = new List<Hl7.Fhir.Model.CodeableConcept>(Limit.DeepCopyInternal());
+        if(_TypeElement is not null) dest.TypeElement = (Code<Hl7.Fhir.Model.ConsentProvisionType>)_TypeElement.DeepCopyInternal();
+        if(_Data is not null) dest.Data = new List<Hl7.Fhir.Model.Permission.DataComponent>(_Data.DeepCopyInternal());
+        if(_Activity is not null) dest.Activity = new List<Hl7.Fhir.Model.Permission.ActivityComponent>(_Activity.DeepCopyInternal());
+        if(_Limit is not null) dest.Limit = new List<Hl7.Fhir.Model.CodeableConcept>(_Limit.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -374,55 +367,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RuleComponent;
-        if(otherT == null) return false;
+        if(other is not RuleComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(TypeElement, otherT.TypeElement)) return false;
-        if(!comparer.ListEquals(Data, otherT.Data)) return false;
-        if(!comparer.ListEquals(Activity, otherT.Activity)) return false;
-        if(!comparer.ListEquals(Limit, otherT.Limit)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_TypeElement, otherT._TypeElement)) return false;
+        if(!comparer.ListEquals(_Data, otherT._Data)) return false;
+        if(!comparer.ListEquals(_Activity, otherT._Activity)) return false;
+        if(!comparer.ListEquals(_Limit, otherT._Limit)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = TypeElement;
-            return TypeElement is not null;
+            value = _TypeElement;
+            return _TypeElement is not null;
           case "data":
-            value = Data;
-            return Data?.Any() == true;
+            value = _Data;
+            return _Data?.Any() == true;
           case "activity":
-            value = Activity;
-            return Activity?.Any() == true;
+            value = _Activity;
+            return _Activity?.Any() == true;
           case "limit":
-            value = Limit;
-            return Limit?.Any() == true;
+            value = _Limit;
+            return _Limit?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            TypeElement = (Code<Hl7.Fhir.Model.ConsentProvisionType>)value;
+            TypeElement = (Code<Hl7.Fhir.Model.ConsentProvisionType>?)value;
             return this;
           case "data":
-            Data = (List<Hl7.Fhir.Model.Permission.DataComponent>)value;
+            Data = (List<Hl7.Fhir.Model.Permission.DataComponent>?)value!;
             return this;
           case "activity":
-            Activity = (List<Hl7.Fhir.Model.Permission.ActivityComponent>)value;
+            Activity = (List<Hl7.Fhir.Model.Permission.ActivityComponent>?)value!;
             return this;
           case "limit":
-            Limit = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Limit = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -433,10 +427,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-        if (Data?.Any() == true) yield return new KeyValuePair<string,object>("data",Data);
-        if (Activity?.Any() == true) yield return new KeyValuePair<string,object>("activity",Activity);
-        if (Limit?.Any() == true) yield return new KeyValuePair<string,object>("limit",Limit);
+        if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_Data?.Any() == true) yield return new KeyValuePair<string,object>("data",_Data);
+        if (_Activity?.Any() == true) yield return new KeyValuePair<string,object>("activity",_Activity);
+        if (_Limit?.Any() == true) yield return new KeyValuePair<string,object>("limit",_Limit);
       }
 
     }
@@ -465,11 +459,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Permission.ResourceComponent> Resource
       {
-        get { if(_Resource==null) _Resource = new List<Hl7.Fhir.Model.Permission.ResourceComponent>(); return _Resource; }
+        get => _Resource ??= [];
         set { _Resource = value; OnPropertyChanged("Resource"); }
       }
 
-      private List<Hl7.Fhir.Model.Permission.ResourceComponent> _Resource;
+      private List<Hl7.Fhir.Model.Permission.ResourceComponent>? _Resource;
 
       /// <summary>
       /// Security tag code on .meta.security.
@@ -479,11 +473,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Security
       {
-        get { if(_Security==null) _Security = new List<Hl7.Fhir.Model.Coding>(); return _Security; }
+        get => _Security ??= [];
         set { _Security = value; OnPropertyChanged("Security"); }
       }
 
-      private List<Hl7.Fhir.Model.Coding> _Security;
+      private List<Hl7.Fhir.Model.Coding>? _Security;
 
       /// <summary>
       /// Timeframe encompasing data create/update.
@@ -493,39 +487,35 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Period> Period
       {
-        get { if(_Period==null) _Period = new List<Hl7.Fhir.Model.Period>(); return _Period; }
+        get => _Period ??= [];
         set { _Period = value; OnPropertyChanged("Period"); }
       }
 
-      private List<Hl7.Fhir.Model.Period> _Period;
+      private List<Hl7.Fhir.Model.Period>? _Period;
 
       /// <summary>
       /// Expression identifying the data.
       /// </summary>
       [FhirElement("expression", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Expression Expression
+      public Hl7.Fhir.Model.Expression? Expression
       {
         get { return _Expression; }
         set { _Expression = value; OnPropertyChanged("Expression"); }
       }
 
-      private Hl7.Fhir.Model.Expression _Expression;
+      private Hl7.Fhir.Model.Expression? _Expression;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as DataComponent;
-
-        if (dest == null)
-        {
+        if(other is not DataComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Resource.Any()) dest.Resource = new List<Hl7.Fhir.Model.Permission.ResourceComponent>(Resource.DeepCopyInternal());
-        if(Security.Any()) dest.Security = new List<Hl7.Fhir.Model.Coding>(Security.DeepCopyInternal());
-        if(Period.Any()) dest.Period = new List<Hl7.Fhir.Model.Period>(Period.DeepCopyInternal());
-        if(Expression != null) dest.Expression = (Hl7.Fhir.Model.Expression)Expression.DeepCopyInternal();
+        if(_Resource is not null) dest.Resource = new List<Hl7.Fhir.Model.Permission.ResourceComponent>(_Resource.DeepCopyInternal());
+        if(_Security is not null) dest.Security = new List<Hl7.Fhir.Model.Coding>(_Security.DeepCopyInternal());
+        if(_Period is not null) dest.Period = new List<Hl7.Fhir.Model.Period>(_Period.DeepCopyInternal());
+        if(_Expression is not null) dest.Expression = (Hl7.Fhir.Model.Expression)_Expression.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -537,55 +527,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DataComponent;
-        if(otherT == null) return false;
+        if(other is not DataComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Resource, otherT.Resource)) return false;
-        if(!comparer.ListEquals(Security, otherT.Security)) return false;
-        if(!comparer.ListEquals(Period, otherT.Period)) return false;
-        if(!comparer.Equals(Expression, otherT.Expression)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Resource, otherT._Resource)) return false;
+        if(!comparer.ListEquals(_Security, otherT._Security)) return false;
+        if(!comparer.ListEquals(_Period, otherT._Period)) return false;
+        if(!comparer.Equals(_Expression, otherT._Expression)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "resource":
-            value = Resource;
-            return Resource?.Any() == true;
+            value = _Resource;
+            return _Resource?.Any() == true;
           case "security":
-            value = Security;
-            return Security?.Any() == true;
+            value = _Security;
+            return _Security?.Any() == true;
           case "period":
-            value = Period;
-            return Period?.Any() == true;
+            value = _Period;
+            return _Period?.Any() == true;
           case "expression":
-            value = Expression;
-            return Expression is not null;
+            value = _Expression;
+            return _Expression is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "resource":
-            Resource = (List<Hl7.Fhir.Model.Permission.ResourceComponent>)value;
+            Resource = (List<Hl7.Fhir.Model.Permission.ResourceComponent>?)value!;
             return this;
           case "security":
-            Security = (List<Hl7.Fhir.Model.Coding>)value;
+            Security = (List<Hl7.Fhir.Model.Coding>?)value!;
             return this;
           case "period":
-            Period = (List<Hl7.Fhir.Model.Period>)value;
+            Period = (List<Hl7.Fhir.Model.Period>?)value!;
             return this;
           case "expression":
-            Expression = (Hl7.Fhir.Model.Expression)value;
+            Expression = (Hl7.Fhir.Model.Expression?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -596,10 +587,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Resource?.Any() == true) yield return new KeyValuePair<string,object>("resource",Resource);
-        if (Security?.Any() == true) yield return new KeyValuePair<string,object>("security",Security);
-        if (Period?.Any() == true) yield return new KeyValuePair<string,object>("period",Period);
-        if (Expression is not null) yield return new KeyValuePair<string,object>("expression",Expression);
+        if (_Resource?.Any() == true) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (_Security?.Any() == true) yield return new KeyValuePair<string,object>("security",_Security);
+        if (_Period?.Any() == true) yield return new KeyValuePair<string,object>("period",_Period);
+        if (_Expression is not null) yield return new KeyValuePair<string,object>("expression",_Expression);
       }
 
     }
@@ -625,13 +616,13 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ConsentDataMeaning> MeaningElement
+      public Code<Hl7.Fhir.Model.ConsentDataMeaning>? MeaningElement
       {
         get { return _MeaningElement; }
         set { _MeaningElement = value; OnPropertyChanged("MeaningElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.ConsentDataMeaning> _MeaningElement;
+      private Code<Hl7.Fhir.Model.ConsentDataMeaning>? _MeaningElement;
 
       /// <summary>
       /// instance | related | dependents | authoredby
@@ -640,13 +631,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ConsentDataMeaning? Meaning
       {
-        get { return MeaningElement != null ? MeaningElement.Value : null; }
+        get => _MeaningElement?.Value;
         set
         {
-          if (value == null)
-            MeaningElement = null;
-          else
-            MeaningElement = new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
+          MeaningElement = value is null ? null : new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
           OnPropertyChanged("Meaning");
         }
       }
@@ -659,26 +647,22 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Reference
+      public Hl7.Fhir.Model.ResourceReference? Reference
       {
         get { return _Reference; }
         set { _Reference = value; OnPropertyChanged("Reference"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Reference;
+      private Hl7.Fhir.Model.ResourceReference? _Reference;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ResourceComponent;
-
-        if (dest == null)
-        {
+        if(other is not ResourceComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(MeaningElement != null) dest.MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>)MeaningElement.DeepCopyInternal();
-        if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopyInternal();
+        if(_MeaningElement is not null) dest.MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>)_MeaningElement.DeepCopyInternal();
+        if(_Reference is not null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)_Reference.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -690,41 +674,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ResourceComponent;
-        if(otherT == null) return false;
+        if(other is not ResourceComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(MeaningElement, otherT.MeaningElement)) return false;
-        if(!comparer.Equals(Reference, otherT.Reference)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_MeaningElement, otherT._MeaningElement)) return false;
+        if(!comparer.Equals(_Reference, otherT._Reference)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "meaning":
-            value = MeaningElement;
-            return MeaningElement is not null;
+            value = _MeaningElement;
+            return _MeaningElement is not null;
           case "reference":
-            value = Reference;
-            return Reference is not null;
+            value = _Reference;
+            return _Reference is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "meaning":
-            MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>)value;
+            MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>?)value;
             return this;
           case "reference":
-            Reference = (Hl7.Fhir.Model.ResourceReference)value;
+            Reference = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -735,8 +720,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (MeaningElement is not null) yield return new KeyValuePair<string,object>("meaning",MeaningElement);
-        if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
+        if (_MeaningElement is not null) yield return new KeyValuePair<string,object>("meaning",_MeaningElement);
+        if (_Reference is not null) yield return new KeyValuePair<string,object>("reference",_Reference);
       }
 
     }
@@ -764,11 +749,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Actor
       {
-        get { if(_Actor==null) _Actor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Actor; }
+        get => _Actor ??= [];
         set { _Actor = value; OnPropertyChanged("Actor"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Actor;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Actor;
 
       /// <summary>
       /// Actions controlled by this rule.
@@ -779,11 +764,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
       {
-        get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Action; }
+        get => _Action ??= [];
         set { _Action = value; OnPropertyChanged("Action"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Action;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Action;
 
       /// <summary>
       /// The purpose for which the permission is given.
@@ -794,25 +779,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Purpose
       {
-        get { if(_Purpose==null) _Purpose = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Purpose; }
+        get => _Purpose ??= [];
         set { _Purpose = value; OnPropertyChanged("Purpose"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Purpose;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Purpose;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ActivityComponent;
-
-        if (dest == null)
-        {
+        if(other is not ActivityComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Actor.Any()) dest.Actor = new List<Hl7.Fhir.Model.ResourceReference>(Actor.DeepCopyInternal());
-        if(Action.Any()) dest.Action = new List<Hl7.Fhir.Model.CodeableConcept>(Action.DeepCopyInternal());
-        if(Purpose.Any()) dest.Purpose = new List<Hl7.Fhir.Model.CodeableConcept>(Purpose.DeepCopyInternal());
+        if(_Actor is not null) dest.Actor = new List<Hl7.Fhir.Model.ResourceReference>(_Actor.DeepCopyInternal());
+        if(_Action is not null) dest.Action = new List<Hl7.Fhir.Model.CodeableConcept>(_Action.DeepCopyInternal());
+        if(_Purpose is not null) dest.Purpose = new List<Hl7.Fhir.Model.CodeableConcept>(_Purpose.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -824,48 +805,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ActivityComponent;
-        if(otherT == null) return false;
+        if(other is not ActivityComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Actor, otherT.Actor)) return false;
-        if(!comparer.ListEquals(Action, otherT.Action)) return false;
-        if(!comparer.ListEquals(Purpose, otherT.Purpose)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Actor, otherT._Actor)) return false;
+        if(!comparer.ListEquals(_Action, otherT._Action)) return false;
+        if(!comparer.ListEquals(_Purpose, otherT._Purpose)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "actor":
-            value = Actor;
-            return Actor?.Any() == true;
+            value = _Actor;
+            return _Actor?.Any() == true;
           case "action":
-            value = Action;
-            return Action?.Any() == true;
+            value = _Action;
+            return _Action?.Any() == true;
           case "purpose":
-            value = Purpose;
-            return Purpose?.Any() == true;
+            value = _Purpose;
+            return _Purpose?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "actor":
-            Actor = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Actor = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "action":
-            Action = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Action = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "purpose":
-            Purpose = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Purpose = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -876,9 +858,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",Actor);
-        if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
-        if (Purpose?.Any() == true) yield return new KeyValuePair<string,object>("purpose",Purpose);
+        if (_Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",_Actor);
+        if (_Action?.Any() == true) yield return new KeyValuePair<string,object>("action",_Action);
+        if (_Purpose?.Any() == true) yield return new KeyValuePair<string,object>("purpose",_Purpose);
       }
 
     }
@@ -891,13 +873,13 @@ namespace Hl7.Fhir.Model
     [Binding("PermissionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Permission.PermissionStatus> StatusElement
+    public Code<Hl7.Fhir.Model.Permission.PermissionStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Permission.PermissionStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.Permission.PermissionStatus>? _StatusElement;
 
     /// <summary>
     /// active | entered-in-error | draft | rejected
@@ -906,13 +888,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Permission.PermissionStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.Permission.PermissionStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Permission.PermissionStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -924,13 +903,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","RelatedPerson","HealthcareService")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Asserter
+    public Hl7.Fhir.Model.ResourceReference? Asserter
     {
       get { return _Asserter; }
       set { _Asserter = value; OnPropertyChanged("Asserter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Asserter;
+    private Hl7.Fhir.Model.ResourceReference? _Asserter;
 
     /// <summary>
     /// The date that permission was asserted.
@@ -940,24 +919,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirDateTime> DateElement
     {
-      get { if(_DateElement==null) _DateElement = new List<Hl7.Fhir.Model.FhirDateTime>(); return _DateElement; }
+      get => _DateElement ??= [];
       set { _DateElement = value; OnPropertyChanged("DateElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirDateTime> _DateElement;
+    private List<Hl7.Fhir.Model.FhirDateTime>? _DateElement;
 
     /// <summary>
     /// The date that permission was asserted
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Date
+    public IEnumerable<string?> Date
     {
-      get { return DateElement != null ? DateElement.Select(elem => elem.Value) : null; }
+      get => _DateElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          DateElement = null;
+          DateElement = null!;
         else
           DateElement = new List<Hl7.Fhir.Model.FhirDateTime>(value.Select(elem=>new Hl7.Fhir.Model.FhirDateTime(elem)));
         OnPropertyChanged("Date");
@@ -969,26 +948,26 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("validity", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Period Validity
+    public Hl7.Fhir.Model.Period? Validity
     {
       get { return _Validity; }
       set { _Validity = value; OnPropertyChanged("Validity"); }
     }
 
-    private Hl7.Fhir.Model.Period _Validity;
+    private Hl7.Fhir.Model.Period? _Validity;
 
     /// <summary>
     /// The asserted justification for using the data.
     /// </summary>
     [FhirElement("justification", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.Permission.JustificationComponent Justification
+    public Hl7.Fhir.Model.Permission.JustificationComponent? Justification
     {
       get { return _Justification; }
       set { _Justification = value; OnPropertyChanged("Justification"); }
     }
 
-    private Hl7.Fhir.Model.Permission.JustificationComponent _Justification;
+    private Hl7.Fhir.Model.Permission.JustificationComponent? _Justification;
 
     /// <summary>
     /// deny-overrides | permit-overrides | ordered-deny-overrides | ordered-permit-overrides | deny-unless-permit | permit-unless-deny.
@@ -998,13 +977,13 @@ namespace Hl7.Fhir.Model
     [Binding("PermissionCombining")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining> CombiningElement
+    public Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>? CombiningElement
     {
       get { return _CombiningElement; }
       set { _CombiningElement = value; OnPropertyChanged("CombiningElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining> _CombiningElement;
+    private Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>? _CombiningElement;
 
     /// <summary>
     /// deny-overrides | permit-overrides | ordered-deny-overrides | ordered-permit-overrides | deny-unless-permit | permit-unless-deny
@@ -1013,13 +992,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Permission.PermissionRuleCombining? Combining
     {
-      get { return CombiningElement != null ? CombiningElement.Value : null; }
+      get => _CombiningElement?.Value;
       set
       {
-        if (value == null)
-          CombiningElement = null;
-        else
-          CombiningElement = new Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>(value);
+        CombiningElement = value is null ? null : new Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>(value);
         OnPropertyChanged("Combining");
       }
     }
@@ -1032,29 +1008,25 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Permission.RuleComponent> Rule
     {
-      get { if(_Rule==null) _Rule = new List<Hl7.Fhir.Model.Permission.RuleComponent>(); return _Rule; }
+      get => _Rule ??= [];
       set { _Rule = value; OnPropertyChanged("Rule"); }
     }
 
-    private List<Hl7.Fhir.Model.Permission.RuleComponent> _Rule;
+    private List<Hl7.Fhir.Model.Permission.RuleComponent>? _Rule;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Permission;
-
-      if (dest == null)
-      {
+      if(other is not Permission dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Permission.PermissionStatus>)StatusElement.DeepCopyInternal();
-      if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopyInternal();
-      if(DateElement.Any()) dest.DateElement = new List<Hl7.Fhir.Model.FhirDateTime>(DateElement.DeepCopyInternal());
-      if(Validity != null) dest.Validity = (Hl7.Fhir.Model.Period)Validity.DeepCopyInternal();
-      if(Justification != null) dest.Justification = (Hl7.Fhir.Model.Permission.JustificationComponent)Justification.DeepCopyInternal();
-      if(CombiningElement != null) dest.CombiningElement = (Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>)CombiningElement.DeepCopyInternal();
-      if(Rule.Any()) dest.Rule = new List<Hl7.Fhir.Model.Permission.RuleComponent>(Rule.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.Permission.PermissionStatus>)_StatusElement.DeepCopyInternal();
+      if(_Asserter is not null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)_Asserter.DeepCopyInternal();
+      if(_DateElement is not null) dest.DateElement = new List<Hl7.Fhir.Model.FhirDateTime>(_DateElement.DeepCopyInternal());
+      if(_Validity is not null) dest.Validity = (Hl7.Fhir.Model.Period)_Validity.DeepCopyInternal();
+      if(_Justification is not null) dest.Justification = (Hl7.Fhir.Model.Permission.JustificationComponent)_Justification.DeepCopyInternal();
+      if(_CombiningElement is not null) dest.CombiningElement = (Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>)_CombiningElement.DeepCopyInternal();
+      if(_Rule is not null) dest.Rule = new List<Hl7.Fhir.Model.Permission.RuleComponent>(_Rule.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1066,76 +1038,77 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Permission;
-      if(otherT == null) return false;
+      if(other is not Permission otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(Asserter, otherT.Asserter)) return false;
-      if(!comparer.ListEquals(DateElement, otherT.DateElement)) return false;
-      if(!comparer.Equals(Validity, otherT.Validity)) return false;
-      if(!comparer.Equals(Justification, otherT.Justification)) return false;
-      if(!comparer.Equals(CombiningElement, otherT.CombiningElement)) return false;
-      if(!comparer.ListEquals(Rule, otherT.Rule)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_Asserter, otherT._Asserter)) return false;
+      if(!comparer.ListEquals(_DateElement, otherT._DateElement)) return false;
+      if(!comparer.Equals(_Validity, otherT._Validity)) return false;
+      if(!comparer.Equals(_Justification, otherT._Justification)) return false;
+      if(!comparer.Equals(_CombiningElement, otherT._CombiningElement)) return false;
+      if(!comparer.ListEquals(_Rule, otherT._Rule)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "asserter":
-          value = Asserter;
-          return Asserter is not null;
+          value = _Asserter;
+          return _Asserter is not null;
         case "date":
-          value = DateElement;
-          return DateElement?.Any() == true;
+          value = _DateElement;
+          return _DateElement?.Any() == true;
         case "validity":
-          value = Validity;
-          return Validity is not null;
+          value = _Validity;
+          return _Validity is not null;
         case "justification":
-          value = Justification;
-          return Justification is not null;
+          value = _Justification;
+          return _Justification is not null;
         case "combining":
-          value = CombiningElement;
-          return CombiningElement is not null;
+          value = _CombiningElement;
+          return _CombiningElement is not null;
         case "rule":
-          value = Rule;
-          return Rule?.Any() == true;
+          value = _Rule;
+          return _Rule?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Permission.PermissionStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.Permission.PermissionStatus>?)value;
           return this;
         case "asserter":
-          Asserter = (Hl7.Fhir.Model.ResourceReference)value;
+          Asserter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "date":
-          DateElement = (List<Hl7.Fhir.Model.FhirDateTime>)value;
+          DateElement = (List<Hl7.Fhir.Model.FhirDateTime>?)value!;
           return this;
         case "validity":
-          Validity = (Hl7.Fhir.Model.Period)value;
+          Validity = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "justification":
-          Justification = (Hl7.Fhir.Model.Permission.JustificationComponent)value;
+          Justification = (Hl7.Fhir.Model.Permission.JustificationComponent?)value;
           return this;
         case "combining":
-          CombiningElement = (Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>)value;
+          CombiningElement = (Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining>?)value;
           return this;
         case "rule":
-          Rule = (List<Hl7.Fhir.Model.Permission.RuleComponent>)value;
+          Rule = (List<Hl7.Fhir.Model.Permission.RuleComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1146,13 +1119,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Asserter is not null) yield return new KeyValuePair<string,object>("asserter",Asserter);
-      if (DateElement?.Any() == true) yield return new KeyValuePair<string,object>("date",DateElement);
-      if (Validity is not null) yield return new KeyValuePair<string,object>("validity",Validity);
-      if (Justification is not null) yield return new KeyValuePair<string,object>("justification",Justification);
-      if (CombiningElement is not null) yield return new KeyValuePair<string,object>("combining",CombiningElement);
-      if (Rule?.Any() == true) yield return new KeyValuePair<string,object>("rule",Rule);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Asserter is not null) yield return new KeyValuePair<string,object>("asserter",_Asserter);
+      if (_DateElement?.Any() == true) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_Validity is not null) yield return new KeyValuePair<string,object>("validity",_Validity);
+      if (_Justification is not null) yield return new KeyValuePair<string,object>("justification",_Justification);
+      if (_CombiningElement is not null) yield return new KeyValuePair<string,object>("combining",_CombiningElement);
+      if (_Rule?.Any() == true) yield return new KeyValuePair<string,object>("rule",_Rule);
     }
 
   }

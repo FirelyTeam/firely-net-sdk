@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -137,13 +140,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("AdverseEventParticipantFunction")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Function
+      public Hl7.Fhir.Model.CodeableConcept? Function
       {
         get { return _Function; }
         set { _Function = value; OnPropertyChanged("Function"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Function;
+      private Hl7.Fhir.Model.CodeableConcept? _Function;
 
       /// <summary>
       /// Who was involved in the adverse event or the potential adverse event.
@@ -153,26 +156,22 @@ namespace Hl7.Fhir.Model
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson","ResearchSubject")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Actor
+      public Hl7.Fhir.Model.ResourceReference? Actor
       {
         get { return _Actor; }
         set { _Actor = value; OnPropertyChanged("Actor"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Actor;
+      private Hl7.Fhir.Model.ResourceReference? _Actor;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ParticipantComponent;
-
-        if (dest == null)
-        {
+        if(other is not ParticipantComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Function != null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)Function.DeepCopyInternal();
-        if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopyInternal();
+        if(_Function is not null) dest.Function = (Hl7.Fhir.Model.CodeableConcept)_Function.DeepCopyInternal();
+        if(_Actor is not null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)_Actor.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -184,41 +183,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ParticipantComponent;
-        if(otherT == null) return false;
+        if(other is not ParticipantComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Function, otherT.Function)) return false;
-        if(!comparer.Equals(Actor, otherT.Actor)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Function, otherT._Function)) return false;
+        if(!comparer.Equals(_Actor, otherT._Actor)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "function":
-            value = Function;
-            return Function is not null;
+            value = _Function;
+            return _Function is not null;
           case "actor":
-            value = Actor;
-            return Actor is not null;
+            value = _Actor;
+            return _Actor is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "function":
-            Function = (Hl7.Fhir.Model.CodeableConcept)value;
+            Function = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "actor":
-            Actor = (Hl7.Fhir.Model.ResourceReference)value;
+            Actor = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -229,8 +229,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
-        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+        if (_Function is not null) yield return new KeyValuePair<string,object>("function",_Function);
+        if (_Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
       }
 
     }
@@ -260,39 +260,35 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Instance
+      public Hl7.Fhir.Model.DataType? Instance
       {
         get { return _Instance; }
         set { _Instance = value; OnPropertyChanged("Instance"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Instance;
+      private Hl7.Fhir.Model.DataType? _Instance;
 
       /// <summary>
       /// Information on the possible cause of the event.
       /// </summary>
       [FhirElement("causality", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.AdverseEvent.CausalityComponent Causality
+      public Hl7.Fhir.Model.AdverseEvent.CausalityComponent? Causality
       {
         get { return _Causality; }
         set { _Causality = value; OnPropertyChanged("Causality"); }
       }
 
-      private Hl7.Fhir.Model.AdverseEvent.CausalityComponent _Causality;
+      private Hl7.Fhir.Model.AdverseEvent.CausalityComponent? _Causality;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SuspectEntityComponent;
-
-        if (dest == null)
-        {
+        if(other is not SuspectEntityComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Instance != null) dest.Instance = (Hl7.Fhir.Model.DataType)Instance.DeepCopyInternal();
-        if(Causality != null) dest.Causality = (Hl7.Fhir.Model.AdverseEvent.CausalityComponent)Causality.DeepCopyInternal();
+        if(_Instance is not null) dest.Instance = (Hl7.Fhir.Model.DataType)_Instance.DeepCopyInternal();
+        if(_Causality is not null) dest.Causality = (Hl7.Fhir.Model.AdverseEvent.CausalityComponent)_Causality.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -304,41 +300,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SuspectEntityComponent;
-        if(otherT == null) return false;
+        if(other is not SuspectEntityComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Instance, otherT.Instance)) return false;
-        if(!comparer.Equals(Causality, otherT.Causality)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Instance, otherT._Instance)) return false;
+        if(!comparer.Equals(_Causality, otherT._Causality)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "instance":
-            value = Instance;
-            return Instance is not null;
+            value = _Instance;
+            return _Instance is not null;
           case "causality":
-            value = Causality;
-            return Causality is not null;
+            value = _Causality;
+            return _Causality is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "instance":
-            Instance = (Hl7.Fhir.Model.DataType)value;
+            Instance = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "causality":
-            Causality = (Hl7.Fhir.Model.AdverseEvent.CausalityComponent)value;
+            Causality = (Hl7.Fhir.Model.AdverseEvent.CausalityComponent?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -349,8 +346,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
-        if (Causality is not null) yield return new KeyValuePair<string,object>("causality",Causality);
+        if (_Instance is not null) yield return new KeyValuePair<string,object>("instance",_Instance);
+        if (_Causality is not null) yield return new KeyValuePair<string,object>("causality",_Causality);
       }
 
     }
@@ -374,13 +371,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("assessmentMethod", InSummary=true, Order=40)]
       [Binding("AdverseEventCausalityMethod")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept AssessmentMethod
+      public Hl7.Fhir.Model.CodeableConcept? AssessmentMethod
       {
         get { return _AssessmentMethod; }
         set { _AssessmentMethod = value; OnPropertyChanged("AssessmentMethod"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _AssessmentMethod;
+      private Hl7.Fhir.Model.CodeableConcept? _AssessmentMethod;
 
       /// <summary>
       /// Result of the assessment regarding the relatedness of the suspected entity to the event.
@@ -388,13 +385,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("entityRelatedness", InSummary=true, Order=50)]
       [Binding("AdverseEventCausalityAssessment")]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept EntityRelatedness
+      public Hl7.Fhir.Model.CodeableConcept? EntityRelatedness
       {
         get { return _EntityRelatedness; }
         set { _EntityRelatedness = value; OnPropertyChanged("EntityRelatedness"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _EntityRelatedness;
+      private Hl7.Fhir.Model.CodeableConcept? _EntityRelatedness;
 
       /// <summary>
       /// Author of the information on the possible cause of the event.
@@ -403,27 +400,23 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Patient","RelatedPerson","ResearchSubject")]
       [DataMember]
-      public Hl7.Fhir.Model.ResourceReference Author
+      public Hl7.Fhir.Model.ResourceReference? Author
       {
         get { return _Author; }
         set { _Author = value; OnPropertyChanged("Author"); }
       }
 
-      private Hl7.Fhir.Model.ResourceReference _Author;
+      private Hl7.Fhir.Model.ResourceReference? _Author;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as CausalityComponent;
-
-        if (dest == null)
-        {
+        if(other is not CausalityComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(AssessmentMethod != null) dest.AssessmentMethod = (Hl7.Fhir.Model.CodeableConcept)AssessmentMethod.DeepCopyInternal();
-        if(EntityRelatedness != null) dest.EntityRelatedness = (Hl7.Fhir.Model.CodeableConcept)EntityRelatedness.DeepCopyInternal();
-        if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopyInternal();
+        if(_AssessmentMethod is not null) dest.AssessmentMethod = (Hl7.Fhir.Model.CodeableConcept)_AssessmentMethod.DeepCopyInternal();
+        if(_EntityRelatedness is not null) dest.EntityRelatedness = (Hl7.Fhir.Model.CodeableConcept)_EntityRelatedness.DeepCopyInternal();
+        if(_Author is not null) dest.Author = (Hl7.Fhir.Model.ResourceReference)_Author.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -435,48 +428,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as CausalityComponent;
-        if(otherT == null) return false;
+        if(other is not CausalityComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(AssessmentMethod, otherT.AssessmentMethod)) return false;
-        if(!comparer.Equals(EntityRelatedness, otherT.EntityRelatedness)) return false;
-        if(!comparer.Equals(Author, otherT.Author)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_AssessmentMethod, otherT._AssessmentMethod)) return false;
+        if(!comparer.Equals(_EntityRelatedness, otherT._EntityRelatedness)) return false;
+        if(!comparer.Equals(_Author, otherT._Author)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "assessmentMethod":
-            value = AssessmentMethod;
-            return AssessmentMethod is not null;
+            value = _AssessmentMethod;
+            return _AssessmentMethod is not null;
           case "entityRelatedness":
-            value = EntityRelatedness;
-            return EntityRelatedness is not null;
+            value = _EntityRelatedness;
+            return _EntityRelatedness is not null;
           case "author":
-            value = Author;
-            return Author is not null;
+            value = _Author;
+            return _Author is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "assessmentMethod":
-            AssessmentMethod = (Hl7.Fhir.Model.CodeableConcept)value;
+            AssessmentMethod = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "entityRelatedness":
-            EntityRelatedness = (Hl7.Fhir.Model.CodeableConcept)value;
+            EntityRelatedness = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "author":
-            Author = (Hl7.Fhir.Model.ResourceReference)value;
+            Author = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -487,9 +481,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (AssessmentMethod is not null) yield return new KeyValuePair<string,object>("assessmentMethod",AssessmentMethod);
-        if (EntityRelatedness is not null) yield return new KeyValuePair<string,object>("entityRelatedness",EntityRelatedness);
-        if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+        if (_AssessmentMethod is not null) yield return new KeyValuePair<string,object>("assessmentMethod",_AssessmentMethod);
+        if (_EntityRelatedness is not null) yield return new KeyValuePair<string,object>("entityRelatedness",_EntityRelatedness);
+        if (_Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
       }
 
     }
@@ -520,25 +514,21 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Item
+      public Hl7.Fhir.Model.DataType? Item
       {
         get { return _Item; }
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Item;
+      private Hl7.Fhir.Model.DataType? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as ContributingFactorComponent;
-
-        if (dest == null)
-        {
+        if(other is not ContributingFactorComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopyInternal();
+        if(_Item is not null) dest.Item = (Hl7.Fhir.Model.DataType)_Item.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -550,34 +540,35 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as ContributingFactorComponent;
-        if(otherT == null) return false;
+        if(other is not ContributingFactorComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "item":
-            value = Item;
-            return Item is not null;
+            value = _Item;
+            return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "item":
-            Item = (Hl7.Fhir.Model.DataType)value;
+            Item = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -588,7 +579,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (_Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -616,25 +607,21 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Item
+      public Hl7.Fhir.Model.DataType? Item
       {
         get { return _Item; }
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Item;
+      private Hl7.Fhir.Model.DataType? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PreventiveActionComponent;
-
-        if (dest == null)
-        {
+        if(other is not PreventiveActionComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopyInternal();
+        if(_Item is not null) dest.Item = (Hl7.Fhir.Model.DataType)_Item.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -646,34 +633,35 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PreventiveActionComponent;
-        if(otherT == null) return false;
+        if(other is not PreventiveActionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "item":
-            value = Item;
-            return Item is not null;
+            value = _Item;
+            return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "item":
-            Item = (Hl7.Fhir.Model.DataType)value;
+            Item = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -684,7 +672,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (_Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -715,25 +703,21 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Item
+      public Hl7.Fhir.Model.DataType? Item
       {
         get { return _Item; }
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Item;
+      private Hl7.Fhir.Model.DataType? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as MitigatingActionComponent;
-
-        if (dest == null)
-        {
+        if(other is not MitigatingActionComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopyInternal();
+        if(_Item is not null) dest.Item = (Hl7.Fhir.Model.DataType)_Item.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -745,34 +729,35 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as MitigatingActionComponent;
-        if(otherT == null) return false;
+        if(other is not MitigatingActionComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "item":
-            value = Item;
-            return Item is not null;
+            value = _Item;
+            return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "item":
-            Item = (Hl7.Fhir.Model.DataType)value;
+            Item = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -783,7 +768,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (_Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -811,25 +796,21 @@ namespace Hl7.Fhir.Model
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Item
+      public Hl7.Fhir.Model.DataType? Item
       {
         get { return _Item; }
         set { _Item = value; OnPropertyChanged("Item"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Item;
+      private Hl7.Fhir.Model.DataType? _Item;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as SupportingInfoComponent;
-
-        if (dest == null)
-        {
+        if(other is not SupportingInfoComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopyInternal();
+        if(_Item is not null) dest.Item = (Hl7.Fhir.Model.DataType)_Item.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -841,34 +822,35 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as SupportingInfoComponent;
-        if(otherT == null) return false;
+        if(other is not SupportingInfoComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Item, otherT.Item)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Item, otherT._Item)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "item":
-            value = Item;
-            return Item is not null;
+            value = _Item;
+            return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "item":
-            Item = (Hl7.Fhir.Model.DataType)value;
+            Item = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -879,7 +861,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (_Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -892,11 +874,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// in-progress | completed | entered-in-error | unknown.
@@ -906,13 +888,13 @@ namespace Hl7.Fhir.Model
     [Binding("AdverseEventStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus> StatusElement
+    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>? _StatusElement;
 
     /// <summary>
     /// in-progress | completed | entered-in-error | unknown
@@ -921,13 +903,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -940,13 +919,13 @@ namespace Hl7.Fhir.Model
     [Binding("AdverseEventActuality")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> ActualityElement
+    public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>? ActualityElement
     {
       get { return _ActualityElement; }
       set { _ActualityElement = value; OnPropertyChanged("ActualityElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> _ActualityElement;
+    private Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>? _ActualityElement;
 
     /// <summary>
     /// actual | potential
@@ -955,13 +934,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality? Actuality
     {
-      get { return ActualityElement != null ? ActualityElement.Value : null; }
+      get => _ActualityElement?.Value;
       set
       {
-        if (value == null)
-          ActualityElement = null;
-        else
-          ActualityElement = new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
+        ActualityElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
         OnPropertyChanged("Actuality");
       }
     }
@@ -975,11 +951,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
+      get => _Category ??= [];
       set { _Category = value; OnPropertyChanged("Category"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
 
     /// <summary>
     /// Event or incident that occurred or was averted.
@@ -987,13 +963,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("AdverseEventType")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Code
+    public Hl7.Fhir.Model.CodeableConcept? Code
     {
       get { return _Code; }
       set { _Code = value; OnPropertyChanged("Code"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Code;
+    private Hl7.Fhir.Model.CodeableConcept? _Code;
 
     /// <summary>
     /// Subject impacted by event.
@@ -1003,13 +979,13 @@ namespace Hl7.Fhir.Model
     [References("Patient","Group","Practitioner","RelatedPerson","ResearchSubject")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Subject
+    public Hl7.Fhir.Model.ResourceReference? Subject
     {
       get { return _Subject; }
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Subject;
+    private Hl7.Fhir.Model.ResourceReference? _Subject;
 
     /// <summary>
     /// The Encounter associated with the start of the AdverseEvent.
@@ -1018,13 +994,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Encounter
+    public Hl7.Fhir.Model.ResourceReference? Encounter
     {
       get { return _Encounter; }
       set { _Encounter = value; OnPropertyChanged("Encounter"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Encounter;
+    private Hl7.Fhir.Model.ResourceReference? _Encounter;
 
     /// <summary>
     /// When the event occurred.
@@ -1033,41 +1009,38 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
-    public Hl7.Fhir.Model.DataType Occurrence
+    public Hl7.Fhir.Model.DataType? Occurrence
     {
       get { return _Occurrence; }
       set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
     }
 
-    private Hl7.Fhir.Model.DataType _Occurrence;
+    private Hl7.Fhir.Model.DataType? _Occurrence;
 
     /// <summary>
     /// When the event was detected.
     /// </summary>
     [FhirElement("detected", InSummary=true, Order=170)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime DetectedElement
+    public Hl7.Fhir.Model.FhirDateTime? DetectedElement
     {
       get { return _DetectedElement; }
       set { _DetectedElement = value; OnPropertyChanged("DetectedElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _DetectedElement;
+    private Hl7.Fhir.Model.FhirDateTime? _DetectedElement;
 
     /// <summary>
     /// When the event was detected
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Detected
+    public string? Detected
     {
-      get { return DetectedElement != null ? DetectedElement.Value : null; }
+      get => _DetectedElement?.Value;
       set
       {
-        if (value == null)
-          DetectedElement = null;
-        else
-          DetectedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DetectedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Detected");
       }
     }
@@ -1077,28 +1050,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("recordedDate", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
+    public Hl7.Fhir.Model.FhirDateTime? RecordedDateElement
     {
       get { return _RecordedDateElement; }
       set { _RecordedDateElement = value; OnPropertyChanged("RecordedDateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _RecordedDateElement;
 
     /// <summary>
     /// When the event was recorded
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string RecordedDate
+    public string? RecordedDate
     {
-      get { return RecordedDateElement != null ? RecordedDateElement.Value : null; }
+      get => _RecordedDateElement?.Value;
       set
       {
-        if (value == null)
-          RecordedDateElement = null;
-        else
-          RecordedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("RecordedDate");
       }
     }
@@ -1113,11 +1083,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> ResultingEffect
     {
-      get { if(_ResultingEffect==null) _ResultingEffect = new List<Hl7.Fhir.Model.ResourceReference>(); return _ResultingEffect; }
+      get => _ResultingEffect ??= [];
       set { _ResultingEffect = value; OnPropertyChanged("ResultingEffect"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _ResultingEffect;
+    private List<Hl7.Fhir.Model.ResourceReference>? _ResultingEffect;
 
     /// <summary>
     /// Location where adverse event occurred.
@@ -1126,13 +1096,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Location
+    public Hl7.Fhir.Model.ResourceReference? Location
     {
       get { return _Location; }
       set { _Location = value; OnPropertyChanged("Location"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Location;
+    private Hl7.Fhir.Model.ResourceReference? _Location;
 
     /// <summary>
     /// Seriousness or gravity of the event.
@@ -1140,13 +1110,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("seriousness", InSummary=true, Order=210)]
     [Binding("AdverseEventSeriousness")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Seriousness
+    public Hl7.Fhir.Model.CodeableConcept? Seriousness
     {
       get { return _Seriousness; }
       set { _Seriousness = value; OnPropertyChanged("Seriousness"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Seriousness;
+    private Hl7.Fhir.Model.CodeableConcept? _Seriousness;
 
     /// <summary>
     /// Type of outcome from the adverse event.
@@ -1157,11 +1127,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Outcome
     {
-      get { if(_Outcome==null) _Outcome = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Outcome; }
+      get => _Outcome ??= [];
       set { _Outcome = value; OnPropertyChanged("Outcome"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Outcome;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Outcome;
 
     /// <summary>
     /// Who recorded the adverse event.
@@ -1170,13 +1140,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","ResearchSubject")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Recorder
+    public Hl7.Fhir.Model.ResourceReference? Recorder
     {
       get { return _Recorder; }
       set { _Recorder = value; OnPropertyChanged("Recorder"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Recorder;
+    private Hl7.Fhir.Model.ResourceReference? _Recorder;
 
     /// <summary>
     /// Who was involved in the adverse event or the potential adverse event and what they did.
@@ -1186,11 +1156,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent> Participant
     {
-      get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>(); return _Participant; }
+      get => _Participant ??= [];
       set { _Participant = value; OnPropertyChanged("Participant"); }
     }
 
-    private List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent> _Participant;
+    private List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>? _Participant;
 
     /// <summary>
     /// Research study that the subject is enrolled in.
@@ -1202,24 +1172,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Study
     {
-      get { if(_Study==null) _Study = new List<Hl7.Fhir.Model.ResourceReference>(); return _Study; }
+      get => _Study ??= [];
       set { _Study = value; OnPropertyChanged("Study"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Study;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Study;
 
     /// <summary>
     /// Considered likely or probable or anticipated in the research study.
     /// </summary>
     [FhirElement("expectedInResearchStudy", Order=260)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean ExpectedInResearchStudyElement
+    public Hl7.Fhir.Model.FhirBoolean? ExpectedInResearchStudyElement
     {
       get { return _ExpectedInResearchStudyElement; }
       set { _ExpectedInResearchStudyElement = value; OnPropertyChanged("ExpectedInResearchStudyElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _ExpectedInResearchStudyElement;
+    private Hl7.Fhir.Model.FhirBoolean? _ExpectedInResearchStudyElement;
 
     /// <summary>
     /// Considered likely or probable or anticipated in the research study
@@ -1228,13 +1198,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? ExpectedInResearchStudy
     {
-      get { return ExpectedInResearchStudyElement != null ? ExpectedInResearchStudyElement.Value : null; }
+      get => _ExpectedInResearchStudyElement?.Value;
       set
       {
-        if (value == null)
-          ExpectedInResearchStudyElement = null;
-        else
-          ExpectedInResearchStudyElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ExpectedInResearchStudyElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("ExpectedInResearchStudy");
       }
     }
@@ -1247,11 +1214,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> SuspectEntity
     {
-      get { if(_SuspectEntity==null) _SuspectEntity = new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>(); return _SuspectEntity; }
+      get => _SuspectEntity ??= [];
       set { _SuspectEntity = value; OnPropertyChanged("SuspectEntity"); }
     }
 
-    private List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> _SuspectEntity;
+    private List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>? _SuspectEntity;
 
     /// <summary>
     /// Contributing factors suspected to have increased the probability or severity of the adverse event.
@@ -1261,11 +1228,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent> ContributingFactor
     {
-      get { if(_ContributingFactor==null) _ContributingFactor = new List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent>(); return _ContributingFactor; }
+      get => _ContributingFactor ??= [];
       set { _ContributingFactor = value; OnPropertyChanged("ContributingFactor"); }
     }
 
-    private List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent> _ContributingFactor;
+    private List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent>? _ContributingFactor;
 
     /// <summary>
     /// Preventive actions that contributed to avoiding the adverse event.
@@ -1275,11 +1242,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent> PreventiveAction
     {
-      get { if(_PreventiveAction==null) _PreventiveAction = new List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent>(); return _PreventiveAction; }
+      get => _PreventiveAction ??= [];
       set { _PreventiveAction = value; OnPropertyChanged("PreventiveAction"); }
     }
 
-    private List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent> _PreventiveAction;
+    private List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent>? _PreventiveAction;
 
     /// <summary>
     /// Ameliorating actions taken after the adverse event occured in order to reduce the extent of harm.
@@ -1289,11 +1256,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent> MitigatingAction
     {
-      get { if(_MitigatingAction==null) _MitigatingAction = new List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent>(); return _MitigatingAction; }
+      get => _MitigatingAction ??= [];
       set { _MitigatingAction = value; OnPropertyChanged("MitigatingAction"); }
     }
 
-    private List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent> _MitigatingAction;
+    private List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent>? _MitigatingAction;
 
     /// <summary>
     /// Supporting information relevant to the event.
@@ -1303,11 +1270,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent> SupportingInfo
     {
-      get { if(_SupportingInfo==null) _SupportingInfo = new List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent>(); return _SupportingInfo; }
+      get => _SupportingInfo ??= [];
       set { _SupportingInfo = value; OnPropertyChanged("SupportingInfo"); }
     }
 
-    private List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent> _SupportingInfo;
+    private List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent>? _SupportingInfo;
 
     /// <summary>
     /// Comment on adverse event.
@@ -1317,48 +1284,44 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+      get => _Note ??= [];
       set { _Note = value; OnPropertyChanged("Note"); }
     }
 
-    private List<Hl7.Fhir.Model.Annotation> _Note;
+    private List<Hl7.Fhir.Model.Annotation>? _Note;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as AdverseEvent;
-
-      if (dest == null)
-      {
+      if(other is not AdverseEvent dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>)StatusElement.DeepCopyInternal();
-      if(ActualityElement != null) dest.ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>)ActualityElement.DeepCopyInternal();
-      if(Category.Any()) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopyInternal());
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopyInternal();
-      if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopyInternal();
-      if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopyInternal();
-      if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopyInternal();
-      if(DetectedElement != null) dest.DetectedElement = (Hl7.Fhir.Model.FhirDateTime)DetectedElement.DeepCopyInternal();
-      if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopyInternal();
-      if(ResultingEffect.Any()) dest.ResultingEffect = new List<Hl7.Fhir.Model.ResourceReference>(ResultingEffect.DeepCopyInternal());
-      if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopyInternal();
-      if(Seriousness != null) dest.Seriousness = (Hl7.Fhir.Model.CodeableConcept)Seriousness.DeepCopyInternal();
-      if(Outcome.Any()) dest.Outcome = new List<Hl7.Fhir.Model.CodeableConcept>(Outcome.DeepCopyInternal());
-      if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopyInternal();
-      if(Participant.Any()) dest.Participant = new List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>(Participant.DeepCopyInternal());
-      if(Study.Any()) dest.Study = new List<Hl7.Fhir.Model.ResourceReference>(Study.DeepCopyInternal());
-      if(ExpectedInResearchStudyElement != null) dest.ExpectedInResearchStudyElement = (Hl7.Fhir.Model.FhirBoolean)ExpectedInResearchStudyElement.DeepCopyInternal();
-      if(SuspectEntity.Any()) dest.SuspectEntity = new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>(SuspectEntity.DeepCopyInternal());
-      if(ContributingFactor.Any()) dest.ContributingFactor = new List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent>(ContributingFactor.DeepCopyInternal());
-      if(PreventiveAction.Any()) dest.PreventiveAction = new List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent>(PreventiveAction.DeepCopyInternal());
-      if(MitigatingAction.Any()) dest.MitigatingAction = new List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent>(MitigatingAction.DeepCopyInternal());
-      if(SupportingInfo.Any()) dest.SupportingInfo = new List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent>(SupportingInfo.DeepCopyInternal());
-      if(Note.Any()) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>)_StatusElement.DeepCopyInternal();
+      if(_ActualityElement is not null) dest.ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>)_ActualityElement.DeepCopyInternal();
+      if(_Category is not null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(_Category.DeepCopyInternal());
+      if(_Code is not null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)_Code.DeepCopyInternal();
+      if(_Subject is not null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)_Subject.DeepCopyInternal();
+      if(_Encounter is not null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)_Encounter.DeepCopyInternal();
+      if(_Occurrence is not null) dest.Occurrence = (Hl7.Fhir.Model.DataType)_Occurrence.DeepCopyInternal();
+      if(_DetectedElement is not null) dest.DetectedElement = (Hl7.Fhir.Model.FhirDateTime)_DetectedElement.DeepCopyInternal();
+      if(_RecordedDateElement is not null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)_RecordedDateElement.DeepCopyInternal();
+      if(_ResultingEffect is not null) dest.ResultingEffect = new List<Hl7.Fhir.Model.ResourceReference>(_ResultingEffect.DeepCopyInternal());
+      if(_Location is not null) dest.Location = (Hl7.Fhir.Model.ResourceReference)_Location.DeepCopyInternal();
+      if(_Seriousness is not null) dest.Seriousness = (Hl7.Fhir.Model.CodeableConcept)_Seriousness.DeepCopyInternal();
+      if(_Outcome is not null) dest.Outcome = new List<Hl7.Fhir.Model.CodeableConcept>(_Outcome.DeepCopyInternal());
+      if(_Recorder is not null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)_Recorder.DeepCopyInternal();
+      if(_Participant is not null) dest.Participant = new List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>(_Participant.DeepCopyInternal());
+      if(_Study is not null) dest.Study = new List<Hl7.Fhir.Model.ResourceReference>(_Study.DeepCopyInternal());
+      if(_ExpectedInResearchStudyElement is not null) dest.ExpectedInResearchStudyElement = (Hl7.Fhir.Model.FhirBoolean)_ExpectedInResearchStudyElement.DeepCopyInternal();
+      if(_SuspectEntity is not null) dest.SuspectEntity = new List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>(_SuspectEntity.DeepCopyInternal());
+      if(_ContributingFactor is not null) dest.ContributingFactor = new List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent>(_ContributingFactor.DeepCopyInternal());
+      if(_PreventiveAction is not null) dest.PreventiveAction = new List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent>(_PreventiveAction.DeepCopyInternal());
+      if(_MitigatingAction is not null) dest.MitigatingAction = new List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent>(_MitigatingAction.DeepCopyInternal());
+      if(_SupportingInfo is not null) dest.SupportingInfo = new List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent>(_SupportingInfo.DeepCopyInternal());
+      if(_Note is not null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(_Note.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1370,195 +1333,196 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as AdverseEvent;
-      if(otherT == null) return false;
+      if(other is not AdverseEvent otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(ActualityElement, otherT.ActualityElement)) return false;
-      if(!comparer.ListEquals(Category, otherT.Category)) return false;
-      if(!comparer.Equals(Code, otherT.Code)) return false;
-      if(!comparer.Equals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(Encounter, otherT.Encounter)) return false;
-      if(!comparer.Equals(Occurrence, otherT.Occurrence)) return false;
-      if(!comparer.Equals(DetectedElement, otherT.DetectedElement)) return false;
-      if(!comparer.Equals(RecordedDateElement, otherT.RecordedDateElement)) return false;
-      if(!comparer.ListEquals(ResultingEffect, otherT.ResultingEffect)) return false;
-      if(!comparer.Equals(Location, otherT.Location)) return false;
-      if(!comparer.Equals(Seriousness, otherT.Seriousness)) return false;
-      if(!comparer.ListEquals(Outcome, otherT.Outcome)) return false;
-      if(!comparer.Equals(Recorder, otherT.Recorder)) return false;
-      if(!comparer.ListEquals(Participant, otherT.Participant)) return false;
-      if(!comparer.ListEquals(Study, otherT.Study)) return false;
-      if(!comparer.Equals(ExpectedInResearchStudyElement, otherT.ExpectedInResearchStudyElement)) return false;
-      if(!comparer.ListEquals(SuspectEntity, otherT.SuspectEntity)) return false;
-      if(!comparer.ListEquals(ContributingFactor, otherT.ContributingFactor)) return false;
-      if(!comparer.ListEquals(PreventiveAction, otherT.PreventiveAction)) return false;
-      if(!comparer.ListEquals(MitigatingAction, otherT.MitigatingAction)) return false;
-      if(!comparer.ListEquals(SupportingInfo, otherT.SupportingInfo)) return false;
-      if(!comparer.ListEquals(Note, otherT.Note)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_ActualityElement, otherT._ActualityElement)) return false;
+      if(!comparer.ListEquals(_Category, otherT._Category)) return false;
+      if(!comparer.Equals(_Code, otherT._Code)) return false;
+      if(!comparer.Equals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_Encounter, otherT._Encounter)) return false;
+      if(!comparer.Equals(_Occurrence, otherT._Occurrence)) return false;
+      if(!comparer.Equals(_DetectedElement, otherT._DetectedElement)) return false;
+      if(!comparer.Equals(_RecordedDateElement, otherT._RecordedDateElement)) return false;
+      if(!comparer.ListEquals(_ResultingEffect, otherT._ResultingEffect)) return false;
+      if(!comparer.Equals(_Location, otherT._Location)) return false;
+      if(!comparer.Equals(_Seriousness, otherT._Seriousness)) return false;
+      if(!comparer.ListEquals(_Outcome, otherT._Outcome)) return false;
+      if(!comparer.Equals(_Recorder, otherT._Recorder)) return false;
+      if(!comparer.ListEquals(_Participant, otherT._Participant)) return false;
+      if(!comparer.ListEquals(_Study, otherT._Study)) return false;
+      if(!comparer.Equals(_ExpectedInResearchStudyElement, otherT._ExpectedInResearchStudyElement)) return false;
+      if(!comparer.ListEquals(_SuspectEntity, otherT._SuspectEntity)) return false;
+      if(!comparer.ListEquals(_ContributingFactor, otherT._ContributingFactor)) return false;
+      if(!comparer.ListEquals(_PreventiveAction, otherT._PreventiveAction)) return false;
+      if(!comparer.ListEquals(_MitigatingAction, otherT._MitigatingAction)) return false;
+      if(!comparer.ListEquals(_SupportingInfo, otherT._SupportingInfo)) return false;
+      if(!comparer.ListEquals(_Note, otherT._Note)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "actuality":
-          value = ActualityElement;
-          return ActualityElement is not null;
+          value = _ActualityElement;
+          return _ActualityElement is not null;
         case "category":
-          value = Category;
-          return Category?.Any() == true;
+          value = _Category;
+          return _Category?.Any() == true;
         case "code":
-          value = Code;
-          return Code is not null;
+          value = _Code;
+          return _Code is not null;
         case "subject":
-          value = Subject;
-          return Subject is not null;
+          value = _Subject;
+          return _Subject is not null;
         case "encounter":
-          value = Encounter;
-          return Encounter is not null;
+          value = _Encounter;
+          return _Encounter is not null;
         case "occurrence":
-          value = Occurrence;
-          return Occurrence is not null;
+          value = _Occurrence;
+          return _Occurrence is not null;
         case "detected":
-          value = DetectedElement;
-          return DetectedElement is not null;
+          value = _DetectedElement;
+          return _DetectedElement is not null;
         case "recordedDate":
-          value = RecordedDateElement;
-          return RecordedDateElement is not null;
+          value = _RecordedDateElement;
+          return _RecordedDateElement is not null;
         case "resultingEffect":
-          value = ResultingEffect;
-          return ResultingEffect?.Any() == true;
+          value = _ResultingEffect;
+          return _ResultingEffect?.Any() == true;
         case "location":
-          value = Location;
-          return Location is not null;
+          value = _Location;
+          return _Location is not null;
         case "seriousness":
-          value = Seriousness;
-          return Seriousness is not null;
+          value = _Seriousness;
+          return _Seriousness is not null;
         case "outcome":
-          value = Outcome;
-          return Outcome?.Any() == true;
+          value = _Outcome;
+          return _Outcome?.Any() == true;
         case "recorder":
-          value = Recorder;
-          return Recorder is not null;
+          value = _Recorder;
+          return _Recorder is not null;
         case "participant":
-          value = Participant;
-          return Participant?.Any() == true;
+          value = _Participant;
+          return _Participant?.Any() == true;
         case "study":
-          value = Study;
-          return Study?.Any() == true;
+          value = _Study;
+          return _Study?.Any() == true;
         case "expectedInResearchStudy":
-          value = ExpectedInResearchStudyElement;
-          return ExpectedInResearchStudyElement is not null;
+          value = _ExpectedInResearchStudyElement;
+          return _ExpectedInResearchStudyElement is not null;
         case "suspectEntity":
-          value = SuspectEntity;
-          return SuspectEntity?.Any() == true;
+          value = _SuspectEntity;
+          return _SuspectEntity?.Any() == true;
         case "contributingFactor":
-          value = ContributingFactor;
-          return ContributingFactor?.Any() == true;
+          value = _ContributingFactor;
+          return _ContributingFactor?.Any() == true;
         case "preventiveAction":
-          value = PreventiveAction;
-          return PreventiveAction?.Any() == true;
+          value = _PreventiveAction;
+          return _PreventiveAction?.Any() == true;
         case "mitigatingAction":
-          value = MitigatingAction;
-          return MitigatingAction?.Any() == true;
+          value = _MitigatingAction;
+          return _MitigatingAction?.Any() == true;
         case "supportingInfo":
-          value = SupportingInfo;
-          return SupportingInfo?.Any() == true;
+          value = _SupportingInfo;
+          return _SupportingInfo?.Any() == true;
         case "note":
-          value = Note;
-          return Note?.Any() == true;
+          value = _Note;
+          return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>?)value;
           return this;
         case "actuality":
-          ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>)value;
+          ActualityElement = (Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>?)value;
           return this;
         case "category":
-          Category = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept)value;
+          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference)value;
+          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference)value;
+          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "occurrence":
-          Occurrence = (Hl7.Fhir.Model.DataType)value;
+          Occurrence = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "detected":
-          DetectedElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          DetectedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "recordedDate":
-          RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "resultingEffect":
-          ResultingEffect = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          ResultingEffect = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "location":
-          Location = (Hl7.Fhir.Model.ResourceReference)value;
+          Location = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "seriousness":
-          Seriousness = (Hl7.Fhir.Model.CodeableConcept)value;
+          Seriousness = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "outcome":
-          Outcome = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Outcome = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "recorder":
-          Recorder = (Hl7.Fhir.Model.ResourceReference)value;
+          Recorder = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "participant":
-          Participant = (List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>)value;
+          Participant = (List<Hl7.Fhir.Model.AdverseEvent.ParticipantComponent>?)value!;
           return this;
         case "study":
-          Study = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Study = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "expectedInResearchStudy":
-          ExpectedInResearchStudyElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          ExpectedInResearchStudyElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "suspectEntity":
-          SuspectEntity = (List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>)value;
+          SuspectEntity = (List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>?)value!;
           return this;
         case "contributingFactor":
-          ContributingFactor = (List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent>)value;
+          ContributingFactor = (List<Hl7.Fhir.Model.AdverseEvent.ContributingFactorComponent>?)value!;
           return this;
         case "preventiveAction":
-          PreventiveAction = (List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent>)value;
+          PreventiveAction = (List<Hl7.Fhir.Model.AdverseEvent.PreventiveActionComponent>?)value!;
           return this;
         case "mitigatingAction":
-          MitigatingAction = (List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent>)value;
+          MitigatingAction = (List<Hl7.Fhir.Model.AdverseEvent.MitigatingActionComponent>?)value!;
           return this;
         case "supportingInfo":
-          SupportingInfo = (List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent>)value;
+          SupportingInfo = (List<Hl7.Fhir.Model.AdverseEvent.SupportingInfoComponent>?)value!;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>)value;
+          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1569,30 +1533,30 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (ActualityElement is not null) yield return new KeyValuePair<string,object>("actuality",ActualityElement);
-      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
-      if (DetectedElement is not null) yield return new KeyValuePair<string,object>("detected",DetectedElement);
-      if (RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",RecordedDateElement);
-      if (ResultingEffect?.Any() == true) yield return new KeyValuePair<string,object>("resultingEffect",ResultingEffect);
-      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (Seriousness is not null) yield return new KeyValuePair<string,object>("seriousness",Seriousness);
-      if (Outcome?.Any() == true) yield return new KeyValuePair<string,object>("outcome",Outcome);
-      if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
-      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
-      if (Study?.Any() == true) yield return new KeyValuePair<string,object>("study",Study);
-      if (ExpectedInResearchStudyElement is not null) yield return new KeyValuePair<string,object>("expectedInResearchStudy",ExpectedInResearchStudyElement);
-      if (SuspectEntity?.Any() == true) yield return new KeyValuePair<string,object>("suspectEntity",SuspectEntity);
-      if (ContributingFactor?.Any() == true) yield return new KeyValuePair<string,object>("contributingFactor",ContributingFactor);
-      if (PreventiveAction?.Any() == true) yield return new KeyValuePair<string,object>("preventiveAction",PreventiveAction);
-      if (MitigatingAction?.Any() == true) yield return new KeyValuePair<string,object>("mitigatingAction",MitigatingAction);
-      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
-      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_ActualityElement is not null) yield return new KeyValuePair<string,object>("actuality",_ActualityElement);
+      if (_Category?.Any() == true) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",_Occurrence);
+      if (_DetectedElement is not null) yield return new KeyValuePair<string,object>("detected",_DetectedElement);
+      if (_RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",_RecordedDateElement);
+      if (_ResultingEffect?.Any() == true) yield return new KeyValuePair<string,object>("resultingEffect",_ResultingEffect);
+      if (_Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_Seriousness is not null) yield return new KeyValuePair<string,object>("seriousness",_Seriousness);
+      if (_Outcome?.Any() == true) yield return new KeyValuePair<string,object>("outcome",_Outcome);
+      if (_Recorder is not null) yield return new KeyValuePair<string,object>("recorder",_Recorder);
+      if (_Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",_Participant);
+      if (_Study?.Any() == true) yield return new KeyValuePair<string,object>("study",_Study);
+      if (_ExpectedInResearchStudyElement is not null) yield return new KeyValuePair<string,object>("expectedInResearchStudy",_ExpectedInResearchStudyElement);
+      if (_SuspectEntity?.Any() == true) yield return new KeyValuePair<string,object>("suspectEntity",_SuspectEntity);
+      if (_ContributingFactor?.Any() == true) yield return new KeyValuePair<string,object>("contributingFactor",_ContributingFactor);
+      if (_PreventiveAction?.Any() == true) yield return new KeyValuePair<string,object>("preventiveAction",_PreventiveAction);
+      if (_MitigatingAction?.Any() == true) yield return new KeyValuePair<string,object>("mitigatingAction",_MitigatingAction);
+      if (_SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",_SupportingInfo);
+      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

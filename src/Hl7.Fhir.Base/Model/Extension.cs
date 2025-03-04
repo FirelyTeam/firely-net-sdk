@@ -51,7 +51,7 @@ public partial class Extension : ICoded
         this.Value = value;
     }
 
-    public IEnumerable<Coding> ToCodings() => Value switch
+    public IReadOnlyCollection<Coding> ToCodings() => Value switch
     {
         ICoded coded => coded.ToCodings(),
         _ => []

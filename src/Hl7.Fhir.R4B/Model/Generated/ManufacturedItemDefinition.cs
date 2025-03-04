@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -76,13 +79,13 @@ namespace Hl7.Fhir.Model
       [Binding("SNOMEDCTCharacteristicCodes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// A value for the characteristic.
@@ -91,26 +94,22 @@ namespace Hl7.Fhir.Model
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
       [DataMember]
-      public Hl7.Fhir.Model.DataType Value
+      public Hl7.Fhir.Model.DataType? Value
       {
         get { return _Value; }
         set { _Value = value; OnPropertyChanged("Value"); }
       }
 
-      private Hl7.Fhir.Model.DataType _Value;
+      private Hl7.Fhir.Model.DataType? _Value;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PropertyComponent;
-
-        if (dest == null)
-        {
+        if(other is not PropertyComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Value is not null) dest.Value = (Hl7.Fhir.Model.DataType)_Value.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -122,41 +121,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PropertyComponent;
-        if(otherT == null) return false;
+        if(other is not PropertyComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Value, otherT.Value)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Value, otherT._Value)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "value":
-            value = Value;
-            return Value is not null;
+            value = _Value;
+            return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType)value;
+            Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -167,8 +167,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -181,11 +181,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// draft | active | retired | unknown.
@@ -195,13 +195,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.PublicationStatus>? _StatusElement;
 
     /// <summary>
     /// draft | active | retired | unknown
@@ -210,13 +210,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -228,13 +225,13 @@ namespace Hl7.Fhir.Model
     [Binding("ManufacturedDoseForm")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept ManufacturedDoseForm
+    public Hl7.Fhir.Model.CodeableConcept? ManufacturedDoseForm
     {
       get { return _ManufacturedDoseForm; }
       set { _ManufacturedDoseForm = value; OnPropertyChanged("ManufacturedDoseForm"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _ManufacturedDoseForm;
+    private Hl7.Fhir.Model.CodeableConcept? _ManufacturedDoseForm;
 
     /// <summary>
     /// The “real world” units in which the quantity of the item is described.
@@ -242,13 +239,13 @@ namespace Hl7.Fhir.Model
     [FhirElement("unitOfPresentation", InSummary=true, Order=120)]
     [Binding("UnitOfPresentation")]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept UnitOfPresentation
+    public Hl7.Fhir.Model.CodeableConcept? UnitOfPresentation
     {
       get { return _UnitOfPresentation; }
       set { _UnitOfPresentation = value; OnPropertyChanged("UnitOfPresentation"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _UnitOfPresentation;
+    private Hl7.Fhir.Model.CodeableConcept? _UnitOfPresentation;
 
     /// <summary>
     /// Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues).
@@ -260,11 +257,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
+      get => _Manufacturer ??= [];
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Manufacturer;
 
     /// <summary>
     /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource.
@@ -275,11 +272,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
     {
-      get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Ingredient; }
+      get => _Ingredient ??= [];
       set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Ingredient;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Ingredient;
 
     /// <summary>
     /// General characteristics of this item.
@@ -289,31 +286,27 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> Property
     {
-      get { if(_Property==null) _Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(); return _Property; }
+      get => _Property ??= [];
       set { _Property = value; OnPropertyChanged("Property"); }
     }
 
-    private List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> _Property;
+    private List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>? _Property;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as ManufacturedItemDefinition;
-
-      if (dest == null)
-      {
+      if(other is not ManufacturedItemDefinition dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopyInternal();
-      if(ManufacturedDoseForm != null) dest.ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)ManufacturedDoseForm.DeepCopyInternal();
-      if(UnitOfPresentation != null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)UnitOfPresentation.DeepCopyInternal();
-      if(Manufacturer.Any()) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopyInternal());
-      if(Ingredient.Any()) dest.Ingredient = new List<Hl7.Fhir.Model.CodeableConcept>(Ingredient.DeepCopyInternal());
-      if(Property.Any()) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(Property.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)_StatusElement.DeepCopyInternal();
+      if(_ManufacturedDoseForm is not null) dest.ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)_ManufacturedDoseForm.DeepCopyInternal();
+      if(_UnitOfPresentation is not null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)_UnitOfPresentation.DeepCopyInternal();
+      if(_Manufacturer is not null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(_Manufacturer.DeepCopyInternal());
+      if(_Ingredient is not null) dest.Ingredient = new List<Hl7.Fhir.Model.CodeableConcept>(_Ingredient.DeepCopyInternal());
+      if(_Property is not null) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(_Property.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -325,76 +318,77 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as ManufacturedItemDefinition;
-      if(otherT == null) return false;
+      if(other is not ManufacturedItemDefinition otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(ManufacturedDoseForm, otherT.ManufacturedDoseForm)) return false;
-      if(!comparer.Equals(UnitOfPresentation, otherT.UnitOfPresentation)) return false;
-      if(!comparer.ListEquals(Manufacturer, otherT.Manufacturer)) return false;
-      if(!comparer.ListEquals(Ingredient, otherT.Ingredient)) return false;
-      if(!comparer.ListEquals(Property, otherT.Property)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_ManufacturedDoseForm, otherT._ManufacturedDoseForm)) return false;
+      if(!comparer.Equals(_UnitOfPresentation, otherT._UnitOfPresentation)) return false;
+      if(!comparer.ListEquals(_Manufacturer, otherT._Manufacturer)) return false;
+      if(!comparer.ListEquals(_Ingredient, otherT._Ingredient)) return false;
+      if(!comparer.ListEquals(_Property, otherT._Property)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "manufacturedDoseForm":
-          value = ManufacturedDoseForm;
-          return ManufacturedDoseForm is not null;
+          value = _ManufacturedDoseForm;
+          return _ManufacturedDoseForm is not null;
         case "unitOfPresentation":
-          value = UnitOfPresentation;
-          return UnitOfPresentation is not null;
+          value = _UnitOfPresentation;
+          return _UnitOfPresentation is not null;
         case "manufacturer":
-          value = Manufacturer;
-          return Manufacturer?.Any() == true;
+          value = _Manufacturer;
+          return _Manufacturer?.Any() == true;
         case "ingredient":
-          value = Ingredient;
-          return Ingredient?.Any() == true;
+          value = _Ingredient;
+          return _Ingredient?.Any() == true;
         case "property":
-          value = Property;
-          return Property?.Any() == true;
+          value = _Property;
+          return _Property?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
           return this;
         case "manufacturedDoseForm":
-          ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept)value;
+          ManufacturedDoseForm = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "unitOfPresentation":
-          UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)value;
+          UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "manufacturer":
-          Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "ingredient":
-          Ingredient = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Ingredient = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "property":
-          Property = (List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>)value;
+          Property = (List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -405,13 +399,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (ManufacturedDoseForm is not null) yield return new KeyValuePair<string,object>("manufacturedDoseForm",ManufacturedDoseForm);
-      if (UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",UnitOfPresentation);
-      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
-      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
-      if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_ManufacturedDoseForm is not null) yield return new KeyValuePair<string,object>("manufacturedDoseForm",_ManufacturedDoseForm);
+      if (_UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",_UnitOfPresentation);
+      if (_Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (_Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",_Ingredient);
+      if (_Property?.Any() == true) yield return new KeyValuePair<string,object>("property",_Property);
     }
 
   }

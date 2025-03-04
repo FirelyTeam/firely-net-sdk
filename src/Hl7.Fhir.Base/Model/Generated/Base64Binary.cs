@@ -7,8 +7,11 @@ using System.Text.RegularExpressions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -62,12 +65,12 @@ namespace Hl7.Fhir.Model
     /// Must conform to the pattern "(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?"
     public const string PATTERN = @"(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?";
 
-    public Base64Binary(byte[] value)
+    public Base64Binary(byte[]? value)
     {
       Value = value;
     }
 
-    public Base64Binary(): this((byte[])null) {}
+    public Base64Binary(): this((byte[]?)null) {}
 
     protected internal override Base DeepCopyInternal()
     {

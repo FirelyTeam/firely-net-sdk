@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -64,28 +67,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri UrlElement
+    public Hl7.Fhir.Model.FhirUri? UrlElement
     {
       get { return _UrlElement; }
       set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _UrlElement;
+    private Hl7.Fhir.Model.FhirUri? _UrlElement;
 
     /// <summary>
     /// Logical URI to reference this library (globally unique)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Url
+    public string? Url
     {
-      get { return UrlElement != null ? UrlElement.Value : null; }
+      get => _UrlElement?.Value;
       set
       {
-        if (value == null)
-          UrlElement = null;
-        else
-          UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+        UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("Url");
       }
     }
@@ -98,39 +98,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// Business version of the library.
     /// </summary>
     [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString VersionElement
+    public Hl7.Fhir.Model.FhirString? VersionElement
     {
       get { return _VersionElement; }
       set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _VersionElement;
+    private Hl7.Fhir.Model.FhirString? _VersionElement;
 
     /// <summary>
     /// Business version of the library
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Version
+    public string? Version
     {
-      get { return VersionElement != null ? VersionElement.Value : null; }
+      get => _VersionElement?.Value;
       set
       {
-        if (value == null)
-          VersionElement = null;
-        else
-          VersionElement = new Hl7.Fhir.Model.FhirString(value);
+        VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Version");
       }
     }
@@ -140,28 +137,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString NameElement
+    public Hl7.Fhir.Model.FhirString? NameElement
     {
       get { return _NameElement; }
       set { _NameElement = value; OnPropertyChanged("NameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _NameElement;
+    private Hl7.Fhir.Model.FhirString? _NameElement;
 
     /// <summary>
     /// Name for this library (computer friendly)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Name
+    public string? Name
     {
-      get { return NameElement != null ? NameElement.Value : null; }
+      get => _NameElement?.Value;
       set
       {
-        if (value == null)
-          NameElement = null;
-        else
-          NameElement = new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -171,28 +165,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString TitleElement
+    public Hl7.Fhir.Model.FhirString? TitleElement
     {
       get { return _TitleElement; }
       set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _TitleElement;
+    private Hl7.Fhir.Model.FhirString? _TitleElement;
 
     /// <summary>
     /// Name for this library (human friendly)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Title
+    public string? Title
     {
-      get { return TitleElement != null ? TitleElement.Value : null; }
+      get => _TitleElement?.Value;
       set
       {
-        if (value == null)
-          TitleElement = null;
-        else
-          TitleElement = new Hl7.Fhir.Model.FhirString(value);
+        TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Title");
       }
     }
@@ -205,13 +196,13 @@ namespace Hl7.Fhir.Model
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
+    public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.PublicationStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.PublicationStatus>? _StatusElement;
 
     /// <summary>
     /// draft | active | retired | unknown
@@ -220,13 +211,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.PublicationStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -236,13 +224,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
+    public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
     {
       get { return _ExperimentalElement; }
       set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
+    private Hl7.Fhir.Model.FhirBoolean? _ExperimentalElement;
 
     /// <summary>
     /// For testing purposes, not real usage
@@ -251,13 +239,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Experimental
     {
-      get { return ExperimentalElement != null ? ExperimentalElement.Value : null; }
+      get => _ExperimentalElement?.Value;
       set
       {
-        if (value == null)
-          ExperimentalElement = null;
-        else
-          ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
+        ExperimentalElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
         OnPropertyChanged("Experimental");
       }
     }
@@ -269,41 +254,38 @@ namespace Hl7.Fhir.Model
     [Binding("LibraryType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Type
+    public Hl7.Fhir.Model.CodeableConcept? Type
     {
       get { return _Type; }
       set { _Type = value; OnPropertyChanged("Type"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Type;
+    private Hl7.Fhir.Model.CodeableConcept? _Type;
 
     /// <summary>
     /// Date this was last changed.
     /// </summary>
     [FhirElement("date", InSummary=true, Order=170, FiveWs="when.recorded")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirDateTime DateElement
+    public Hl7.Fhir.Model.FhirDateTime? DateElement
     {
       get { return _DateElement; }
       set { _DateElement = value; OnPropertyChanged("DateElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirDateTime _DateElement;
+    private Hl7.Fhir.Model.FhirDateTime? _DateElement;
 
     /// <summary>
     /// Date this was last changed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Date
+    public string? Date
     {
-      get { return DateElement != null ? DateElement.Value : null; }
+      get => _DateElement?.Value;
       set
       {
-        if (value == null)
-          DateElement = null;
-        else
-          DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+        DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
         OnPropertyChanged("Date");
       }
     }
@@ -313,28 +295,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("publisher", InSummary=true, Order=180, FiveWs="who.witness")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString PublisherElement
+    public Hl7.Fhir.Model.FhirString? PublisherElement
     {
       get { return _PublisherElement; }
       set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _PublisherElement;
+    private Hl7.Fhir.Model.FhirString? _PublisherElement;
 
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Publisher
+    public string? Publisher
     {
-      get { return PublisherElement != null ? PublisherElement.Value : null; }
+      get => _PublisherElement?.Value;
       set
       {
-        if (value == null)
-          PublisherElement = null;
-        else
-          PublisherElement = new Hl7.Fhir.Model.FhirString(value);
+        PublisherElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Publisher");
       }
     }
@@ -344,28 +323,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", InSummary=true, Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown DescriptionElement
+    public Hl7.Fhir.Model.Markdown? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+    private Hl7.Fhir.Model.Markdown? _DescriptionElement;
 
     /// <summary>
     /// Natural language description of the library
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Description");
       }
     }
@@ -375,28 +351,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("purpose", Order=200, FiveWs="why")]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown PurposeElement
+    public Hl7.Fhir.Model.Markdown? PurposeElement
     {
       get { return _PurposeElement; }
       set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _PurposeElement;
+    private Hl7.Fhir.Model.Markdown? _PurposeElement;
 
     /// <summary>
     /// Why this library is defined
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Purpose
+    public string? Purpose
     {
-      get { return PurposeElement != null ? PurposeElement.Value : null; }
+      get => _PurposeElement?.Value;
       set
       {
-        if (value == null)
-          PurposeElement = null;
-        else
-          PurposeElement = new Hl7.Fhir.Model.Markdown(value);
+        PurposeElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Purpose");
       }
     }
@@ -406,28 +379,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("usage", Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString UsageElement
+    public Hl7.Fhir.Model.FhirString? UsageElement
     {
       get { return _UsageElement; }
       set { _UsageElement = value; OnPropertyChanged("UsageElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _UsageElement;
+    private Hl7.Fhir.Model.FhirString? _UsageElement;
 
     /// <summary>
     /// Describes the clinical usage of the library
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Usage
+    public string? Usage
     {
-      get { return UsageElement != null ? UsageElement.Value : null; }
+      get => _UsageElement?.Value;
       set
       {
-        if (value == null)
-          UsageElement = null;
-        else
-          UsageElement = new Hl7.Fhir.Model.FhirString(value);
+        UsageElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Usage");
       }
     }
@@ -437,28 +407,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("approvalDate", Order=220)]
     [DataMember]
-    public Hl7.Fhir.Model.Date ApprovalDateElement
+    public Hl7.Fhir.Model.Date? ApprovalDateElement
     {
       get { return _ApprovalDateElement; }
       set { _ApprovalDateElement = value; OnPropertyChanged("ApprovalDateElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _ApprovalDateElement;
+    private Hl7.Fhir.Model.Date? _ApprovalDateElement;
 
     /// <summary>
     /// When the library was approved by publisher
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ApprovalDate
+    public string? ApprovalDate
     {
-      get { return ApprovalDateElement != null ? ApprovalDateElement.Value : null; }
+      get => _ApprovalDateElement?.Value;
       set
       {
-        if (value == null)
-          ApprovalDateElement = null;
-        else
-          ApprovalDateElement = new Hl7.Fhir.Model.Date(value);
+        ApprovalDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("ApprovalDate");
       }
     }
@@ -468,28 +435,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("lastReviewDate", Order=230)]
     [DataMember]
-    public Hl7.Fhir.Model.Date LastReviewDateElement
+    public Hl7.Fhir.Model.Date? LastReviewDateElement
     {
       get { return _LastReviewDateElement; }
       set { _LastReviewDateElement = value; OnPropertyChanged("LastReviewDateElement"); }
     }
 
-    private Hl7.Fhir.Model.Date _LastReviewDateElement;
+    private Hl7.Fhir.Model.Date? _LastReviewDateElement;
 
     /// <summary>
     /// When the library was last reviewed
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string LastReviewDate
+    public string? LastReviewDate
     {
-      get { return LastReviewDateElement != null ? LastReviewDateElement.Value : null; }
+      get => _LastReviewDateElement?.Value;
       set
       {
-        if (value == null)
-          LastReviewDateElement = null;
-        else
-          LastReviewDateElement = new Hl7.Fhir.Model.Date(value);
+        LastReviewDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
         OnPropertyChanged("LastReviewDate");
       }
     }
@@ -499,13 +463,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("effectivePeriod", InSummary=true, Order=240)]
     [DataMember]
-    public Hl7.Fhir.Model.Period EffectivePeriod
+    public Hl7.Fhir.Model.Period? EffectivePeriod
     {
       get { return _EffectivePeriod; }
       set { _EffectivePeriod = value; OnPropertyChanged("EffectivePeriod"); }
     }
 
-    private Hl7.Fhir.Model.Period _EffectivePeriod;
+    private Hl7.Fhir.Model.Period? _EffectivePeriod;
 
     /// <summary>
     /// Context the content is intended to support.
@@ -515,11 +479,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.UsageContext>(); return _UseContext; }
+      get => _UseContext ??= [];
       set { _UseContext = value; OnPropertyChanged("UseContext"); }
     }
 
-    private List<Hl7.Fhir.Model.UsageContext> _UseContext;
+    private List<Hl7.Fhir.Model.UsageContext>? _UseContext;
 
     /// <summary>
     /// Intended jurisdiction for library (if applicable).
@@ -530,11 +494,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
-      get { if(_Jurisdiction==null) _Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Jurisdiction; }
+      get => _Jurisdiction ??= [];
       set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Jurisdiction;
 
     /// <summary>
     /// E.g. Education, Treatment, Assessment, etc.
@@ -545,11 +509,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
-      get { if(_Topic==null) _Topic = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Topic; }
+      get => _Topic ??= [];
       set { _Topic = value; OnPropertyChanged("Topic"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Topic;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _Topic;
 
     /// <summary>
     /// A content contributor.
@@ -559,11 +523,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Contributor> Contributor
     {
-      get { if(_Contributor==null) _Contributor = new List<Hl7.Fhir.Model.Contributor>(); return _Contributor; }
+      get => _Contributor ??= [];
       set { _Contributor = value; OnPropertyChanged("Contributor"); }
     }
 
-    private List<Hl7.Fhir.Model.Contributor> _Contributor;
+    private List<Hl7.Fhir.Model.Contributor>? _Contributor;
 
     /// <summary>
     /// Contact details for the publisher.
@@ -573,39 +537,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactDetail>(); return _Contact; }
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
-    private List<Hl7.Fhir.Model.ContactDetail> _Contact;
+    private List<Hl7.Fhir.Model.ContactDetail>? _Contact;
 
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
     [FhirElement("copyright", Order=300)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown CopyrightElement
+    public Hl7.Fhir.Model.Markdown? CopyrightElement
     {
       get { return _CopyrightElement; }
       set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _CopyrightElement;
+    private Hl7.Fhir.Model.Markdown? _CopyrightElement;
 
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Copyright
+    public string? Copyright
     {
-      get { return CopyrightElement != null ? CopyrightElement.Value : null; }
+      get => _CopyrightElement?.Value;
       set
       {
-        if (value == null)
-          CopyrightElement = null;
-        else
-          CopyrightElement = new Hl7.Fhir.Model.Markdown(value);
+        CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
         OnPropertyChanged("Copyright");
       }
     }
@@ -618,11 +579,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
-      get { if(_RelatedArtifact==null) _RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(); return _RelatedArtifact; }
+      get => _RelatedArtifact ??= [];
       set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
     }
 
-    private List<Hl7.Fhir.Model.RelatedArtifact> _RelatedArtifact;
+    private List<Hl7.Fhir.Model.RelatedArtifact>? _RelatedArtifact;
 
     /// <summary>
     /// Parameters defined by the library.
@@ -632,11 +593,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ParameterDefinition> Parameter
     {
-      get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.ParameterDefinition>(); return _Parameter; }
+      get => _Parameter ??= [];
       set { _Parameter = value; OnPropertyChanged("Parameter"); }
     }
 
-    private List<Hl7.Fhir.Model.ParameterDefinition> _Parameter;
+    private List<Hl7.Fhir.Model.ParameterDefinition>? _Parameter;
 
     /// <summary>
     /// What data is referenced by this library.
@@ -646,11 +607,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement> DataRequirement
     {
-      get { if(_DataRequirement==null) _DataRequirement = new List<Hl7.Fhir.Model.DataRequirement>(); return _DataRequirement; }
+      get => _DataRequirement ??= [];
       set { _DataRequirement = value; OnPropertyChanged("DataRequirement"); }
     }
 
-    private List<Hl7.Fhir.Model.DataRequirement> _DataRequirement;
+    private List<Hl7.Fhir.Model.DataRequirement>? _DataRequirement;
 
     /// <summary>
     /// Contents of the library, either embedded or referenced.
@@ -660,50 +621,46 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Content
     {
-      get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.Attachment>(); return _Content; }
+      get => _Content ??= [];
       set { _Content = value; OnPropertyChanged("Content"); }
     }
 
-    private List<Hl7.Fhir.Model.Attachment> _Content;
+    private List<Hl7.Fhir.Model.Attachment>? _Content;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Library;
-
-      if (dest == null)
-      {
+      if(other is not Library dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopyInternal();
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopyInternal();
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-      if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopyInternal();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopyInternal();
-      if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopyInternal();
-      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-      if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopyInternal();
-      if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopyInternal();
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopyInternal();
-      if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopyInternal();
-      if(UsageElement != null) dest.UsageElement = (Hl7.Fhir.Model.FhirString)UsageElement.DeepCopyInternal();
-      if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopyInternal();
-      if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopyInternal();
-      if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopyInternal();
-      if(UseContext.Any()) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopyInternal());
-      if(Jurisdiction.Any()) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopyInternal());
-      if(Topic.Any()) dest.Topic = new List<Hl7.Fhir.Model.CodeableConcept>(Topic.DeepCopyInternal());
-      if(Contributor.Any()) dest.Contributor = new List<Hl7.Fhir.Model.Contributor>(Contributor.DeepCopyInternal());
-      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopyInternal());
-      if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopyInternal();
-      if(RelatedArtifact.Any()) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopyInternal());
-      if(Parameter.Any()) dest.Parameter = new List<Hl7.Fhir.Model.ParameterDefinition>(Parameter.DeepCopyInternal());
-      if(DataRequirement.Any()) dest.DataRequirement = new List<Hl7.Fhir.Model.DataRequirement>(DataRequirement.DeepCopyInternal());
-      if(Content.Any()) dest.Content = new List<Hl7.Fhir.Model.Attachment>(Content.DeepCopyInternal());
+      if(_UrlElement is not null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)_UrlElement.DeepCopyInternal();
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_VersionElement is not null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)_VersionElement.DeepCopyInternal();
+      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+      if(_TitleElement is not null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)_TitleElement.DeepCopyInternal();
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)_StatusElement.DeepCopyInternal();
+      if(_ExperimentalElement is not null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)_ExperimentalElement.DeepCopyInternal();
+      if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+      if(_DateElement is not null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)_DateElement.DeepCopyInternal();
+      if(_PublisherElement is not null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)_PublisherElement.DeepCopyInternal();
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)_DescriptionElement.DeepCopyInternal();
+      if(_PurposeElement is not null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)_PurposeElement.DeepCopyInternal();
+      if(_UsageElement is not null) dest.UsageElement = (Hl7.Fhir.Model.FhirString)_UsageElement.DeepCopyInternal();
+      if(_ApprovalDateElement is not null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)_ApprovalDateElement.DeepCopyInternal();
+      if(_LastReviewDateElement is not null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)_LastReviewDateElement.DeepCopyInternal();
+      if(_EffectivePeriod is not null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)_EffectivePeriod.DeepCopyInternal();
+      if(_UseContext is not null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(_UseContext.DeepCopyInternal());
+      if(_Jurisdiction is not null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(_Jurisdiction.DeepCopyInternal());
+      if(_Topic is not null) dest.Topic = new List<Hl7.Fhir.Model.CodeableConcept>(_Topic.DeepCopyInternal());
+      if(_Contributor is not null) dest.Contributor = new List<Hl7.Fhir.Model.Contributor>(_Contributor.DeepCopyInternal());
+      if(_Contact is not null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(_Contact.DeepCopyInternal());
+      if(_CopyrightElement is not null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)_CopyrightElement.DeepCopyInternal();
+      if(_RelatedArtifact is not null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(_RelatedArtifact.DeepCopyInternal());
+      if(_Parameter is not null) dest.Parameter = new List<Hl7.Fhir.Model.ParameterDefinition>(_Parameter.DeepCopyInternal());
+      if(_DataRequirement is not null) dest.DataRequirement = new List<Hl7.Fhir.Model.DataRequirement>(_DataRequirement.DeepCopyInternal());
+      if(_Content is not null) dest.Content = new List<Hl7.Fhir.Model.Attachment>(_Content.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -715,209 +672,210 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Library;
-      if(otherT == null) return false;
+      if(other is not Library otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(UrlElement, otherT.UrlElement)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(VersionElement, otherT.VersionElement)) return false;
-      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-      if(!comparer.Equals(TitleElement, otherT.TitleElement)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.Equals(ExperimentalElement, otherT.ExperimentalElement)) return false;
-      if(!comparer.Equals(Type, otherT.Type)) return false;
-      if(!comparer.Equals(DateElement, otherT.DateElement)) return false;
-      if(!comparer.Equals(PublisherElement, otherT.PublisherElement)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.Equals(PurposeElement, otherT.PurposeElement)) return false;
-      if(!comparer.Equals(UsageElement, otherT.UsageElement)) return false;
-      if(!comparer.Equals(ApprovalDateElement, otherT.ApprovalDateElement)) return false;
-      if(!comparer.Equals(LastReviewDateElement, otherT.LastReviewDateElement)) return false;
-      if(!comparer.Equals(EffectivePeriod, otherT.EffectivePeriod)) return false;
-      if(!comparer.ListEquals(UseContext, otherT.UseContext)) return false;
-      if(!comparer.ListEquals(Jurisdiction, otherT.Jurisdiction)) return false;
-      if(!comparer.ListEquals(Topic, otherT.Topic)) return false;
-      if(!comparer.ListEquals(Contributor, otherT.Contributor)) return false;
-      if(!comparer.ListEquals(Contact, otherT.Contact)) return false;
-      if(!comparer.Equals(CopyrightElement, otherT.CopyrightElement)) return false;
-      if(!comparer.ListEquals(RelatedArtifact, otherT.RelatedArtifact)) return false;
-      if(!comparer.ListEquals(Parameter, otherT.Parameter)) return false;
-      if(!comparer.ListEquals(DataRequirement, otherT.DataRequirement)) return false;
-      if(!comparer.ListEquals(Content, otherT.Content)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_UrlElement, otherT._UrlElement)) return false;
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_VersionElement, otherT._VersionElement)) return false;
+      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      if(!comparer.Equals(_TitleElement, otherT._TitleElement)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.Equals(_ExperimentalElement, otherT._ExperimentalElement)) return false;
+      if(!comparer.Equals(_Type, otherT._Type)) return false;
+      if(!comparer.Equals(_DateElement, otherT._DateElement)) return false;
+      if(!comparer.Equals(_PublisherElement, otherT._PublisherElement)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.Equals(_PurposeElement, otherT._PurposeElement)) return false;
+      if(!comparer.Equals(_UsageElement, otherT._UsageElement)) return false;
+      if(!comparer.Equals(_ApprovalDateElement, otherT._ApprovalDateElement)) return false;
+      if(!comparer.Equals(_LastReviewDateElement, otherT._LastReviewDateElement)) return false;
+      if(!comparer.Equals(_EffectivePeriod, otherT._EffectivePeriod)) return false;
+      if(!comparer.ListEquals(_UseContext, otherT._UseContext)) return false;
+      if(!comparer.ListEquals(_Jurisdiction, otherT._Jurisdiction)) return false;
+      if(!comparer.ListEquals(_Topic, otherT._Topic)) return false;
+      if(!comparer.ListEquals(_Contributor, otherT._Contributor)) return false;
+      if(!comparer.ListEquals(_Contact, otherT._Contact)) return false;
+      if(!comparer.Equals(_CopyrightElement, otherT._CopyrightElement)) return false;
+      if(!comparer.ListEquals(_RelatedArtifact, otherT._RelatedArtifact)) return false;
+      if(!comparer.ListEquals(_Parameter, otherT._Parameter)) return false;
+      if(!comparer.ListEquals(_DataRequirement, otherT._DataRequirement)) return false;
+      if(!comparer.ListEquals(_Content, otherT._Content)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "url":
-          value = UrlElement;
-          return UrlElement is not null;
+          value = _UrlElement;
+          return _UrlElement is not null;
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "version":
-          value = VersionElement;
-          return VersionElement is not null;
+          value = _VersionElement;
+          return _VersionElement is not null;
         case "name":
-          value = NameElement;
-          return NameElement is not null;
+          value = _NameElement;
+          return _NameElement is not null;
         case "title":
-          value = TitleElement;
-          return TitleElement is not null;
+          value = _TitleElement;
+          return _TitleElement is not null;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "experimental":
-          value = ExperimentalElement;
-          return ExperimentalElement is not null;
+          value = _ExperimentalElement;
+          return _ExperimentalElement is not null;
         case "type":
-          value = Type;
-          return Type is not null;
+          value = _Type;
+          return _Type is not null;
         case "date":
-          value = DateElement;
-          return DateElement is not null;
+          value = _DateElement;
+          return _DateElement is not null;
         case "publisher":
-          value = PublisherElement;
-          return PublisherElement is not null;
+          value = _PublisherElement;
+          return _PublisherElement is not null;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "purpose":
-          value = PurposeElement;
-          return PurposeElement is not null;
+          value = _PurposeElement;
+          return _PurposeElement is not null;
         case "usage":
-          value = UsageElement;
-          return UsageElement is not null;
+          value = _UsageElement;
+          return _UsageElement is not null;
         case "approvalDate":
-          value = ApprovalDateElement;
-          return ApprovalDateElement is not null;
+          value = _ApprovalDateElement;
+          return _ApprovalDateElement is not null;
         case "lastReviewDate":
-          value = LastReviewDateElement;
-          return LastReviewDateElement is not null;
+          value = _LastReviewDateElement;
+          return _LastReviewDateElement is not null;
         case "effectivePeriod":
-          value = EffectivePeriod;
-          return EffectivePeriod is not null;
+          value = _EffectivePeriod;
+          return _EffectivePeriod is not null;
         case "useContext":
-          value = UseContext;
-          return UseContext?.Any() == true;
+          value = _UseContext;
+          return _UseContext?.Any() == true;
         case "jurisdiction":
-          value = Jurisdiction;
-          return Jurisdiction?.Any() == true;
+          value = _Jurisdiction;
+          return _Jurisdiction?.Any() == true;
         case "topic":
-          value = Topic;
-          return Topic?.Any() == true;
+          value = _Topic;
+          return _Topic?.Any() == true;
         case "contributor":
-          value = Contributor;
-          return Contributor?.Any() == true;
+          value = _Contributor;
+          return _Contributor?.Any() == true;
         case "contact":
-          value = Contact;
-          return Contact?.Any() == true;
+          value = _Contact;
+          return _Contact?.Any() == true;
         case "copyright":
-          value = CopyrightElement;
-          return CopyrightElement is not null;
+          value = _CopyrightElement;
+          return _CopyrightElement is not null;
         case "relatedArtifact":
-          value = RelatedArtifact;
-          return RelatedArtifact?.Any() == true;
+          value = _RelatedArtifact;
+          return _RelatedArtifact?.Any() == true;
         case "parameter":
-          value = Parameter;
-          return Parameter?.Any() == true;
+          value = _Parameter;
+          return _Parameter?.Any() == true;
         case "dataRequirement":
-          value = DataRequirement;
-          return DataRequirement?.Any() == true;
+          value = _DataRequirement;
+          return _DataRequirement?.Any() == true;
         case "content":
-          value = Content;
-          return Content?.Any() == true;
+          value = _Content;
+          return _Content?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "url":
-          UrlElement = (Hl7.Fhir.Model.FhirUri)value;
+          UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "version":
-          VersionElement = (Hl7.Fhir.Model.FhirString)value;
+          VersionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "name":
-          NameElement = (Hl7.Fhir.Model.FhirString)value;
+          NameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "title":
-          TitleElement = (Hl7.Fhir.Model.FhirString)value;
+          TitleElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
           return this;
         case "experimental":
-          ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)value;
+          ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept)value;
+          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "date":
-          DateElement = (Hl7.Fhir.Model.FhirDateTime)value;
+          DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "publisher":
-          PublisherElement = (Hl7.Fhir.Model.FhirString)value;
+          PublisherElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.Markdown)value;
+          DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "purpose":
-          PurposeElement = (Hl7.Fhir.Model.Markdown)value;
+          PurposeElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "usage":
-          UsageElement = (Hl7.Fhir.Model.FhirString)value;
+          UsageElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "approvalDate":
-          ApprovalDateElement = (Hl7.Fhir.Model.Date)value;
+          ApprovalDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "lastReviewDate":
-          LastReviewDateElement = (Hl7.Fhir.Model.Date)value;
+          LastReviewDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "effectivePeriod":
-          EffectivePeriod = (Hl7.Fhir.Model.Period)value;
+          EffectivePeriod = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "useContext":
-          UseContext = (List<Hl7.Fhir.Model.UsageContext>)value;
+          UseContext = (List<Hl7.Fhir.Model.UsageContext>?)value!;
           return this;
         case "jurisdiction":
-          Jurisdiction = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Jurisdiction = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "topic":
-          Topic = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          Topic = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "contributor":
-          Contributor = (List<Hl7.Fhir.Model.Contributor>)value;
+          Contributor = (List<Hl7.Fhir.Model.Contributor>?)value!;
           return this;
         case "contact":
-          Contact = (List<Hl7.Fhir.Model.ContactDetail>)value;
+          Contact = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
           return this;
         case "copyright":
-          CopyrightElement = (Hl7.Fhir.Model.Markdown)value;
+          CopyrightElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "relatedArtifact":
-          RelatedArtifact = (List<Hl7.Fhir.Model.RelatedArtifact>)value;
+          RelatedArtifact = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
           return this;
         case "parameter":
-          Parameter = (List<Hl7.Fhir.Model.ParameterDefinition>)value;
+          Parameter = (List<Hl7.Fhir.Model.ParameterDefinition>?)value!;
           return this;
         case "dataRequirement":
-          DataRequirement = (List<Hl7.Fhir.Model.DataRequirement>)value;
+          DataRequirement = (List<Hl7.Fhir.Model.DataRequirement>?)value!;
           return this;
         case "content":
-          Content = (List<Hl7.Fhir.Model.Attachment>)value;
+          Content = (List<Hl7.Fhir.Model.Attachment>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -928,32 +886,32 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
-      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-      if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",PurposeElement);
-      if (UsageElement is not null) yield return new KeyValuePair<string,object>("usage",UsageElement);
-      if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
-      if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
-      if (EffectivePeriod is not null) yield return new KeyValuePair<string,object>("effectivePeriod",EffectivePeriod);
-      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
-      if (Topic?.Any() == true) yield return new KeyValuePair<string,object>("topic",Topic);
-      if (Contributor?.Any() == true) yield return new KeyValuePair<string,object>("contributor",Contributor);
-      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",CopyrightElement);
-      if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
-      if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
-      if (DataRequirement?.Any() == true) yield return new KeyValuePair<string,object>("dataRequirement",DataRequirement);
-      if (Content?.Any() == true) yield return new KeyValuePair<string,object>("content",Content);
+      if (_UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_VersionElement is not null) yield return new KeyValuePair<string,object>("version",_VersionElement);
+      if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",_ExperimentalElement);
+      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",_PublisherElement);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",_PurposeElement);
+      if (_UsageElement is not null) yield return new KeyValuePair<string,object>("usage",_UsageElement);
+      if (_ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",_ApprovalDateElement);
+      if (_LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",_LastReviewDateElement);
+      if (_EffectivePeriod is not null) yield return new KeyValuePair<string,object>("effectivePeriod",_EffectivePeriod);
+      if (_UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",_UseContext);
+      if (_Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
+      if (_Topic?.Any() == true) yield return new KeyValuePair<string,object>("topic",_Topic);
+      if (_Contributor?.Any() == true) yield return new KeyValuePair<string,object>("contributor",_Contributor);
+      if (_Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",_CopyrightElement);
+      if (_RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",_RelatedArtifact);
+      if (_Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",_Parameter);
+      if (_DataRequirement?.Any() == true) yield return new KeyValuePair<string,object>("dataRequirement",_DataRequirement);
+      if (_Content?.Any() == true) yield return new KeyValuePair<string,object>("content",_Content);
     }
 
   }

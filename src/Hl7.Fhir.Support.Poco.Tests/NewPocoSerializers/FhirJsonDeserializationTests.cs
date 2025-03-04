@@ -350,10 +350,10 @@ public class FhirJsonDeserializationTests
         yield return data<ContactDetail>(new { _name = new { id = true } }, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
         yield return data<ContactDetail>(new { name = "Ewout", _name = new { id = "12345" } }, checkAll);
 
-        static void checkName(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement.Value
+        static void checkName(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.Value
             .Should().Be("Ewout");
 
-        static void checkId(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement.ElementId
+        static void checkId(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.ElementId
             .Should().Be("12345");
 
         static void checkAll(object parsed)
@@ -556,10 +556,10 @@ public class FhirJsonDeserializationTests
         var attachment = deserializeAttachment(new FhirJsonConverterOptions());
 
         // After parsing, the ObjectValue is supposed to be the base64 string
-        attachment.DataElement.ObjectValue.Should().BeOfType<string>().And.Subject.Should().Be("SGkh");
+        attachment.DataElement!.ObjectValue.Should().BeOfType<string>().And.Subject.Should().Be("SGkh");
 
         // Getting the Value should decode and return a byte[]
-        Encoding.UTF8.GetString(attachment.Data).Should().Be("Hi!");
+        Encoding.UTF8.GetString(attachment.Data!).Should().Be("Hi!");
 
         static Attachment deserializeAttachment(FhirJsonConverterOptions settings)
         {

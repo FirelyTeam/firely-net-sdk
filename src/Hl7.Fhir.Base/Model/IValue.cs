@@ -6,6 +6,8 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 namespace Hl7.Fhir.Model;
 
 /// <summary>Common generic Value property interface.</summary>
@@ -13,9 +15,9 @@ namespace Hl7.Fhir.Model;
 public interface IValue<T>
 {
     /// <summary>Gets or sets the value</summary>
-    T Value { get; set; }
+    T? Value { get; set; }
 }
 
 /// <summary>Common generic nullable value property interface.</summary>
 /// <typeparam name="T">The value type.</typeparam>
-public interface INullableValue<T> : IValue<T?> where T : struct { }
+public interface INullableValue<T> : IValue<T?> where T : struct;

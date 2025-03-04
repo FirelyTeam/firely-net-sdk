@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -74,13 +77,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("ratioType", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept RatioType
+      public Hl7.Fhir.Model.CodeableConcept? RatioType
       {
         get { return _RatioType; }
         set { _RatioType = value; OnPropertyChanged("RatioType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _RatioType;
+      private Hl7.Fhir.Model.CodeableConcept? _RatioType;
 
       /// <summary>
       /// Todo.
@@ -90,24 +93,20 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent> StartingMaterial
       {
-        get { if(_StartingMaterial==null) _StartingMaterial = new List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>(); return _StartingMaterial; }
+        get => _StartingMaterial ??= [];
         set { _StartingMaterial = value; OnPropertyChanged("StartingMaterial"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent> _StartingMaterial;
+      private List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>? _StartingMaterial;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as MonomerSetComponent;
-
-        if (dest == null)
-        {
+        if(other is not MonomerSetComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(RatioType != null) dest.RatioType = (Hl7.Fhir.Model.CodeableConcept)RatioType.DeepCopyInternal();
-        if(StartingMaterial.Any()) dest.StartingMaterial = new List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>(StartingMaterial.DeepCopyInternal());
+        if(_RatioType is not null) dest.RatioType = (Hl7.Fhir.Model.CodeableConcept)_RatioType.DeepCopyInternal();
+        if(_StartingMaterial is not null) dest.StartingMaterial = new List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>(_StartingMaterial.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -119,41 +118,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as MonomerSetComponent;
-        if(otherT == null) return false;
+        if(other is not MonomerSetComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(RatioType, otherT.RatioType)) return false;
-        if(!comparer.ListEquals(StartingMaterial, otherT.StartingMaterial)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_RatioType, otherT._RatioType)) return false;
+        if(!comparer.ListEquals(_StartingMaterial, otherT._StartingMaterial)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "ratioType":
-            value = RatioType;
-            return RatioType is not null;
+            value = _RatioType;
+            return _RatioType is not null;
           case "startingMaterial":
-            value = StartingMaterial;
-            return StartingMaterial?.Any() == true;
+            value = _StartingMaterial;
+            return _StartingMaterial?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "ratioType":
-            RatioType = (Hl7.Fhir.Model.CodeableConcept)value;
+            RatioType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "startingMaterial":
-            StartingMaterial = (List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>)value;
+            StartingMaterial = (List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -164,8 +164,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (RatioType is not null) yield return new KeyValuePair<string,object>("ratioType",RatioType);
-        if (StartingMaterial?.Any() == true) yield return new KeyValuePair<string,object>("startingMaterial",StartingMaterial);
+        if (_RatioType is not null) yield return new KeyValuePair<string,object>("ratioType",_RatioType);
+        if (_StartingMaterial?.Any() == true) yield return new KeyValuePair<string,object>("startingMaterial",_StartingMaterial);
       }
 
     }
@@ -188,39 +188,39 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("material", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Material
+      public Hl7.Fhir.Model.CodeableConcept? Material
       {
         get { return _Material; }
         set { _Material = value; OnPropertyChanged("Material"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Material;
+      private Hl7.Fhir.Model.CodeableConcept? _Material;
 
       /// <summary>
       /// Todo.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// Todo.
       /// </summary>
       [FhirElement("isDefining", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirBoolean IsDefiningElement
+      public Hl7.Fhir.Model.FhirBoolean? IsDefiningElement
       {
         get { return _IsDefiningElement; }
         set { _IsDefiningElement = value; OnPropertyChanged("IsDefiningElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirBoolean _IsDefiningElement;
+      private Hl7.Fhir.Model.FhirBoolean? _IsDefiningElement;
 
       /// <summary>
       /// Todo
@@ -229,13 +229,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? IsDefining
       {
-        get { return IsDefiningElement != null ? IsDefiningElement.Value : null; }
+        get => _IsDefiningElement?.Value;
         set
         {
-          if (value == null)
-            IsDefiningElement = null;
-          else
-            IsDefiningElement = new Hl7.Fhir.Model.FhirBoolean(value);
+          IsDefiningElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
           OnPropertyChanged("IsDefining");
         }
       }
@@ -245,28 +242,24 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.SubstanceAmount Amount
+      public Hl7.Fhir.Model.SubstanceAmount? Amount
       {
         get { return _Amount; }
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private Hl7.Fhir.Model.SubstanceAmount _Amount;
+      private Hl7.Fhir.Model.SubstanceAmount? _Amount;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StartingMaterialComponent;
-
-        if (dest == null)
-        {
+        if(other is not StartingMaterialComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Material != null) dest.Material = (Hl7.Fhir.Model.CodeableConcept)Material.DeepCopyInternal();
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(IsDefiningElement != null) dest.IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)IsDefiningElement.DeepCopyInternal();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SubstanceAmount)Amount.DeepCopyInternal();
+        if(_Material is not null) dest.Material = (Hl7.Fhir.Model.CodeableConcept)_Material.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_IsDefiningElement is not null) dest.IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)_IsDefiningElement.DeepCopyInternal();
+        if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.SubstanceAmount)_Amount.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -278,55 +271,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StartingMaterialComponent;
-        if(otherT == null) return false;
+        if(other is not StartingMaterialComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Material, otherT.Material)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(IsDefiningElement, otherT.IsDefiningElement)) return false;
-        if(!comparer.Equals(Amount, otherT.Amount)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Material, otherT._Material)) return false;
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_IsDefiningElement, otherT._IsDefiningElement)) return false;
+        if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "material":
-            value = Material;
-            return Material is not null;
+            value = _Material;
+            return _Material is not null;
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "isDefining":
-            value = IsDefiningElement;
-            return IsDefiningElement is not null;
+            value = _IsDefiningElement;
+            return _IsDefiningElement is not null;
           case "amount":
-            value = Amount;
-            return Amount is not null;
+            value = _Amount;
+            return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "material":
-            Material = (Hl7.Fhir.Model.CodeableConcept)value;
+            Material = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "isDefining":
-            IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)value;
+            IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.SubstanceAmount)value;
+            Amount = (Hl7.Fhir.Model.SubstanceAmount?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -337,10 +331,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Material is not null) yield return new KeyValuePair<string,object>("material",Material);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (IsDefiningElement is not null) yield return new KeyValuePair<string,object>("isDefining",IsDefiningElement);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (_Material is not null) yield return new KeyValuePair<string,object>("material",_Material);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_IsDefiningElement is not null) yield return new KeyValuePair<string,object>("isDefining",_IsDefiningElement);
+        if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -363,13 +357,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("numberOfUnits", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Integer NumberOfUnitsElement
+      public Hl7.Fhir.Model.Integer? NumberOfUnitsElement
       {
         get { return _NumberOfUnitsElement; }
         set { _NumberOfUnitsElement = value; OnPropertyChanged("NumberOfUnitsElement"); }
       }
 
-      private Hl7.Fhir.Model.Integer _NumberOfUnitsElement;
+      private Hl7.Fhir.Model.Integer? _NumberOfUnitsElement;
 
       /// <summary>
       /// Todo
@@ -378,13 +372,10 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? NumberOfUnits
       {
-        get { return NumberOfUnitsElement != null ? NumberOfUnitsElement.Value : null; }
+        get => _NumberOfUnitsElement?.Value;
         set
         {
-          if (value == null)
-            NumberOfUnitsElement = null;
-          else
-            NumberOfUnitsElement = new Hl7.Fhir.Model.Integer(value);
+          NumberOfUnitsElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
           OnPropertyChanged("NumberOfUnits");
         }
       }
@@ -394,28 +385,25 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("averageMolecularFormula", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString AverageMolecularFormulaElement
+      public Hl7.Fhir.Model.FhirString? AverageMolecularFormulaElement
       {
         get { return _AverageMolecularFormulaElement; }
         set { _AverageMolecularFormulaElement = value; OnPropertyChanged("AverageMolecularFormulaElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _AverageMolecularFormulaElement;
+      private Hl7.Fhir.Model.FhirString? _AverageMolecularFormulaElement;
 
       /// <summary>
       /// Todo
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string AverageMolecularFormula
+      public string? AverageMolecularFormula
       {
-        get { return AverageMolecularFormulaElement != null ? AverageMolecularFormulaElement.Value : null; }
+        get => _AverageMolecularFormulaElement?.Value;
         set
         {
-          if (value == null)
-            AverageMolecularFormulaElement = null;
-          else
-            AverageMolecularFormulaElement = new Hl7.Fhir.Model.FhirString(value);
+          AverageMolecularFormulaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("AverageMolecularFormula");
         }
       }
@@ -425,13 +413,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("repeatUnitAmountType", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept RepeatUnitAmountType
+      public Hl7.Fhir.Model.CodeableConcept? RepeatUnitAmountType
       {
         get { return _RepeatUnitAmountType; }
         set { _RepeatUnitAmountType = value; OnPropertyChanged("RepeatUnitAmountType"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _RepeatUnitAmountType;
+      private Hl7.Fhir.Model.CodeableConcept? _RepeatUnitAmountType;
 
       /// <summary>
       /// Todo.
@@ -441,26 +429,22 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent> RepeatUnit
       {
-        get { if(_RepeatUnit==null) _RepeatUnit = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>(); return _RepeatUnit; }
+        get => _RepeatUnit ??= [];
         set { _RepeatUnit = value; OnPropertyChanged("RepeatUnit"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent> _RepeatUnit;
+      private List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>? _RepeatUnit;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RepeatComponent;
-
-        if (dest == null)
-        {
+        if(other is not RepeatComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(NumberOfUnitsElement != null) dest.NumberOfUnitsElement = (Hl7.Fhir.Model.Integer)NumberOfUnitsElement.DeepCopyInternal();
-        if(AverageMolecularFormulaElement != null) dest.AverageMolecularFormulaElement = (Hl7.Fhir.Model.FhirString)AverageMolecularFormulaElement.DeepCopyInternal();
-        if(RepeatUnitAmountType != null) dest.RepeatUnitAmountType = (Hl7.Fhir.Model.CodeableConcept)RepeatUnitAmountType.DeepCopyInternal();
-        if(RepeatUnit.Any()) dest.RepeatUnit = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>(RepeatUnit.DeepCopyInternal());
+        if(_NumberOfUnitsElement is not null) dest.NumberOfUnitsElement = (Hl7.Fhir.Model.Integer)_NumberOfUnitsElement.DeepCopyInternal();
+        if(_AverageMolecularFormulaElement is not null) dest.AverageMolecularFormulaElement = (Hl7.Fhir.Model.FhirString)_AverageMolecularFormulaElement.DeepCopyInternal();
+        if(_RepeatUnitAmountType is not null) dest.RepeatUnitAmountType = (Hl7.Fhir.Model.CodeableConcept)_RepeatUnitAmountType.DeepCopyInternal();
+        if(_RepeatUnit is not null) dest.RepeatUnit = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>(_RepeatUnit.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -472,55 +456,56 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RepeatComponent;
-        if(otherT == null) return false;
+        if(other is not RepeatComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(NumberOfUnitsElement, otherT.NumberOfUnitsElement)) return false;
-        if(!comparer.Equals(AverageMolecularFormulaElement, otherT.AverageMolecularFormulaElement)) return false;
-        if(!comparer.Equals(RepeatUnitAmountType, otherT.RepeatUnitAmountType)) return false;
-        if(!comparer.ListEquals(RepeatUnit, otherT.RepeatUnit)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_NumberOfUnitsElement, otherT._NumberOfUnitsElement)) return false;
+        if(!comparer.Equals(_AverageMolecularFormulaElement, otherT._AverageMolecularFormulaElement)) return false;
+        if(!comparer.Equals(_RepeatUnitAmountType, otherT._RepeatUnitAmountType)) return false;
+        if(!comparer.ListEquals(_RepeatUnit, otherT._RepeatUnit)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "numberOfUnits":
-            value = NumberOfUnitsElement;
-            return NumberOfUnitsElement is not null;
+            value = _NumberOfUnitsElement;
+            return _NumberOfUnitsElement is not null;
           case "averageMolecularFormula":
-            value = AverageMolecularFormulaElement;
-            return AverageMolecularFormulaElement is not null;
+            value = _AverageMolecularFormulaElement;
+            return _AverageMolecularFormulaElement is not null;
           case "repeatUnitAmountType":
-            value = RepeatUnitAmountType;
-            return RepeatUnitAmountType is not null;
+            value = _RepeatUnitAmountType;
+            return _RepeatUnitAmountType is not null;
           case "repeatUnit":
-            value = RepeatUnit;
-            return RepeatUnit?.Any() == true;
+            value = _RepeatUnit;
+            return _RepeatUnit?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "numberOfUnits":
-            NumberOfUnitsElement = (Hl7.Fhir.Model.Integer)value;
+            NumberOfUnitsElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "averageMolecularFormula":
-            AverageMolecularFormulaElement = (Hl7.Fhir.Model.FhirString)value;
+            AverageMolecularFormulaElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "repeatUnitAmountType":
-            RepeatUnitAmountType = (Hl7.Fhir.Model.CodeableConcept)value;
+            RepeatUnitAmountType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "repeatUnit":
-            RepeatUnit = (List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>)value;
+            RepeatUnit = (List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -531,10 +516,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (NumberOfUnitsElement is not null) yield return new KeyValuePair<string,object>("numberOfUnits",NumberOfUnitsElement);
-        if (AverageMolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("averageMolecularFormula",AverageMolecularFormulaElement);
-        if (RepeatUnitAmountType is not null) yield return new KeyValuePair<string,object>("repeatUnitAmountType",RepeatUnitAmountType);
-        if (RepeatUnit?.Any() == true) yield return new KeyValuePair<string,object>("repeatUnit",RepeatUnit);
+        if (_NumberOfUnitsElement is not null) yield return new KeyValuePair<string,object>("numberOfUnits",_NumberOfUnitsElement);
+        if (_AverageMolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("averageMolecularFormula",_AverageMolecularFormulaElement);
+        if (_RepeatUnitAmountType is not null) yield return new KeyValuePair<string,object>("repeatUnitAmountType",_RepeatUnitAmountType);
+        if (_RepeatUnit?.Any() == true) yield return new KeyValuePair<string,object>("repeatUnit",_RepeatUnit);
       }
 
     }
@@ -557,41 +542,38 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("orientationOfPolymerisation", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept OrientationOfPolymerisation
+      public Hl7.Fhir.Model.CodeableConcept? OrientationOfPolymerisation
       {
         get { return _OrientationOfPolymerisation; }
         set { _OrientationOfPolymerisation = value; OnPropertyChanged("OrientationOfPolymerisation"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _OrientationOfPolymerisation;
+      private Hl7.Fhir.Model.CodeableConcept? _OrientationOfPolymerisation;
 
       /// <summary>
       /// Todo.
       /// </summary>
       [FhirElement("repeatUnit", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString RepeatUnitElement
+      public Hl7.Fhir.Model.FhirString? RepeatUnitElement
       {
         get { return _RepeatUnitElement; }
         set { _RepeatUnitElement = value; OnPropertyChanged("RepeatUnitElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _RepeatUnitElement;
+      private Hl7.Fhir.Model.FhirString? _RepeatUnitElement;
 
       /// <summary>
       /// Todo
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string RepeatUnit
+      public string? RepeatUnit
       {
-        get { return RepeatUnitElement != null ? RepeatUnitElement.Value : null; }
+        get => _RepeatUnitElement?.Value;
         set
         {
-          if (value == null)
-            RepeatUnitElement = null;
-          else
-            RepeatUnitElement = new Hl7.Fhir.Model.FhirString(value);
+          RepeatUnitElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("RepeatUnit");
         }
       }
@@ -601,13 +583,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.SubstanceAmount Amount
+      public Hl7.Fhir.Model.SubstanceAmount? Amount
       {
         get { return _Amount; }
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private Hl7.Fhir.Model.SubstanceAmount _Amount;
+      private Hl7.Fhir.Model.SubstanceAmount? _Amount;
 
       /// <summary>
       /// Todo.
@@ -617,11 +599,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent> DegreeOfPolymerisation
       {
-        get { if(_DegreeOfPolymerisation==null) _DegreeOfPolymerisation = new List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>(); return _DegreeOfPolymerisation; }
+        get => _DegreeOfPolymerisation ??= [];
         set { _DegreeOfPolymerisation = value; OnPropertyChanged("DegreeOfPolymerisation"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent> _DegreeOfPolymerisation;
+      private List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>? _DegreeOfPolymerisation;
 
       /// <summary>
       /// Todo.
@@ -631,27 +613,23 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent> StructuralRepresentation
       {
-        get { if(_StructuralRepresentation==null) _StructuralRepresentation = new List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>(); return _StructuralRepresentation; }
+        get => _StructuralRepresentation ??= [];
         set { _StructuralRepresentation = value; OnPropertyChanged("StructuralRepresentation"); }
       }
 
-      private List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent> _StructuralRepresentation;
+      private List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>? _StructuralRepresentation;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as RepeatUnitComponent;
-
-        if (dest == null)
-        {
+        if(other is not RepeatUnitComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(OrientationOfPolymerisation != null) dest.OrientationOfPolymerisation = (Hl7.Fhir.Model.CodeableConcept)OrientationOfPolymerisation.DeepCopyInternal();
-        if(RepeatUnitElement != null) dest.RepeatUnitElement = (Hl7.Fhir.Model.FhirString)RepeatUnitElement.DeepCopyInternal();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SubstanceAmount)Amount.DeepCopyInternal();
-        if(DegreeOfPolymerisation.Any()) dest.DegreeOfPolymerisation = new List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>(DegreeOfPolymerisation.DeepCopyInternal());
-        if(StructuralRepresentation.Any()) dest.StructuralRepresentation = new List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>(StructuralRepresentation.DeepCopyInternal());
+        if(_OrientationOfPolymerisation is not null) dest.OrientationOfPolymerisation = (Hl7.Fhir.Model.CodeableConcept)_OrientationOfPolymerisation.DeepCopyInternal();
+        if(_RepeatUnitElement is not null) dest.RepeatUnitElement = (Hl7.Fhir.Model.FhirString)_RepeatUnitElement.DeepCopyInternal();
+        if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.SubstanceAmount)_Amount.DeepCopyInternal();
+        if(_DegreeOfPolymerisation is not null) dest.DegreeOfPolymerisation = new List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>(_DegreeOfPolymerisation.DeepCopyInternal());
+        if(_StructuralRepresentation is not null) dest.StructuralRepresentation = new List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>(_StructuralRepresentation.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -663,62 +641,63 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as RepeatUnitComponent;
-        if(otherT == null) return false;
+        if(other is not RepeatUnitComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(OrientationOfPolymerisation, otherT.OrientationOfPolymerisation)) return false;
-        if(!comparer.Equals(RepeatUnitElement, otherT.RepeatUnitElement)) return false;
-        if(!comparer.Equals(Amount, otherT.Amount)) return false;
-        if(!comparer.ListEquals(DegreeOfPolymerisation, otherT.DegreeOfPolymerisation)) return false;
-        if(!comparer.ListEquals(StructuralRepresentation, otherT.StructuralRepresentation)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_OrientationOfPolymerisation, otherT._OrientationOfPolymerisation)) return false;
+        if(!comparer.Equals(_RepeatUnitElement, otherT._RepeatUnitElement)) return false;
+        if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+        if(!comparer.ListEquals(_DegreeOfPolymerisation, otherT._DegreeOfPolymerisation)) return false;
+        if(!comparer.ListEquals(_StructuralRepresentation, otherT._StructuralRepresentation)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "orientationOfPolymerisation":
-            value = OrientationOfPolymerisation;
-            return OrientationOfPolymerisation is not null;
+            value = _OrientationOfPolymerisation;
+            return _OrientationOfPolymerisation is not null;
           case "repeatUnit":
-            value = RepeatUnitElement;
-            return RepeatUnitElement is not null;
+            value = _RepeatUnitElement;
+            return _RepeatUnitElement is not null;
           case "amount":
-            value = Amount;
-            return Amount is not null;
+            value = _Amount;
+            return _Amount is not null;
           case "degreeOfPolymerisation":
-            value = DegreeOfPolymerisation;
-            return DegreeOfPolymerisation?.Any() == true;
+            value = _DegreeOfPolymerisation;
+            return _DegreeOfPolymerisation?.Any() == true;
           case "structuralRepresentation":
-            value = StructuralRepresentation;
-            return StructuralRepresentation?.Any() == true;
+            value = _StructuralRepresentation;
+            return _StructuralRepresentation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "orientationOfPolymerisation":
-            OrientationOfPolymerisation = (Hl7.Fhir.Model.CodeableConcept)value;
+            OrientationOfPolymerisation = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "repeatUnit":
-            RepeatUnitElement = (Hl7.Fhir.Model.FhirString)value;
+            RepeatUnitElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.SubstanceAmount)value;
+            Amount = (Hl7.Fhir.Model.SubstanceAmount?)value;
             return this;
           case "degreeOfPolymerisation":
-            DegreeOfPolymerisation = (List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>)value;
+            DegreeOfPolymerisation = (List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>?)value!;
             return this;
           case "structuralRepresentation":
-            StructuralRepresentation = (List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>)value;
+            StructuralRepresentation = (List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -729,11 +708,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (OrientationOfPolymerisation is not null) yield return new KeyValuePair<string,object>("orientationOfPolymerisation",OrientationOfPolymerisation);
-        if (RepeatUnitElement is not null) yield return new KeyValuePair<string,object>("repeatUnit",RepeatUnitElement);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
-        if (DegreeOfPolymerisation?.Any() == true) yield return new KeyValuePair<string,object>("degreeOfPolymerisation",DegreeOfPolymerisation);
-        if (StructuralRepresentation?.Any() == true) yield return new KeyValuePair<string,object>("structuralRepresentation",StructuralRepresentation);
+        if (_OrientationOfPolymerisation is not null) yield return new KeyValuePair<string,object>("orientationOfPolymerisation",_OrientationOfPolymerisation);
+        if (_RepeatUnitElement is not null) yield return new KeyValuePair<string,object>("repeatUnit",_RepeatUnitElement);
+        if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
+        if (_DegreeOfPolymerisation?.Any() == true) yield return new KeyValuePair<string,object>("degreeOfPolymerisation",_DegreeOfPolymerisation);
+        if (_StructuralRepresentation?.Any() == true) yield return new KeyValuePair<string,object>("structuralRepresentation",_StructuralRepresentation);
       }
 
     }
@@ -756,39 +735,35 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("degree", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Degree
+      public Hl7.Fhir.Model.CodeableConcept? Degree
       {
         get { return _Degree; }
         set { _Degree = value; OnPropertyChanged("Degree"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Degree;
+      private Hl7.Fhir.Model.CodeableConcept? _Degree;
 
       /// <summary>
       /// Todo.
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.SubstanceAmount Amount
+      public Hl7.Fhir.Model.SubstanceAmount? Amount
       {
         get { return _Amount; }
         set { _Amount = value; OnPropertyChanged("Amount"); }
       }
 
-      private Hl7.Fhir.Model.SubstanceAmount _Amount;
+      private Hl7.Fhir.Model.SubstanceAmount? _Amount;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as DegreeOfPolymerisationComponent;
-
-        if (dest == null)
-        {
+        if(other is not DegreeOfPolymerisationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Degree != null) dest.Degree = (Hl7.Fhir.Model.CodeableConcept)Degree.DeepCopyInternal();
-        if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SubstanceAmount)Amount.DeepCopyInternal();
+        if(_Degree is not null) dest.Degree = (Hl7.Fhir.Model.CodeableConcept)_Degree.DeepCopyInternal();
+        if(_Amount is not null) dest.Amount = (Hl7.Fhir.Model.SubstanceAmount)_Amount.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -800,41 +775,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as DegreeOfPolymerisationComponent;
-        if(otherT == null) return false;
+        if(other is not DegreeOfPolymerisationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Degree, otherT.Degree)) return false;
-        if(!comparer.Equals(Amount, otherT.Amount)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Degree, otherT._Degree)) return false;
+        if(!comparer.Equals(_Amount, otherT._Amount)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "degree":
-            value = Degree;
-            return Degree is not null;
+            value = _Degree;
+            return _Degree is not null;
           case "amount":
-            value = Amount;
-            return Amount is not null;
+            value = _Amount;
+            return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "degree":
-            Degree = (Hl7.Fhir.Model.CodeableConcept)value;
+            Degree = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.SubstanceAmount)value;
+            Amount = (Hl7.Fhir.Model.SubstanceAmount?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -845,8 +821,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Degree is not null) yield return new KeyValuePair<string,object>("degree",Degree);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (_Degree is not null) yield return new KeyValuePair<string,object>("degree",_Degree);
+        if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -869,41 +845,38 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// Todo.
       /// </summary>
       [FhirElement("representation", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.FhirString RepresentationElement
+      public Hl7.Fhir.Model.FhirString? RepresentationElement
       {
         get { return _RepresentationElement; }
         set { _RepresentationElement = value; OnPropertyChanged("RepresentationElement"); }
       }
 
-      private Hl7.Fhir.Model.FhirString _RepresentationElement;
+      private Hl7.Fhir.Model.FhirString? _RepresentationElement;
 
       /// <summary>
       /// Todo
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Representation
+      public string? Representation
       {
-        get { return RepresentationElement != null ? RepresentationElement.Value : null; }
+        get => _RepresentationElement?.Value;
         set
         {
-          if (value == null)
-            RepresentationElement = null;
-          else
-            RepresentationElement = new Hl7.Fhir.Model.FhirString(value);
+          RepresentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Representation");
         }
       }
@@ -913,27 +886,23 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("attachment", InSummary=true, Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Attachment Attachment
+      public Hl7.Fhir.Model.Attachment? Attachment
       {
         get { return _Attachment; }
         set { _Attachment = value; OnPropertyChanged("Attachment"); }
       }
 
-      private Hl7.Fhir.Model.Attachment _Attachment;
+      private Hl7.Fhir.Model.Attachment? _Attachment;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as StructuralRepresentationComponent;
-
-        if (dest == null)
-        {
+        if(other is not StructuralRepresentationComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(RepresentationElement != null) dest.RepresentationElement = (Hl7.Fhir.Model.FhirString)RepresentationElement.DeepCopyInternal();
-        if(Attachment != null) dest.Attachment = (Hl7.Fhir.Model.Attachment)Attachment.DeepCopyInternal();
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_RepresentationElement is not null) dest.RepresentationElement = (Hl7.Fhir.Model.FhirString)_RepresentationElement.DeepCopyInternal();
+        if(_Attachment is not null) dest.Attachment = (Hl7.Fhir.Model.Attachment)_Attachment.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -945,48 +914,49 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as StructuralRepresentationComponent;
-        if(otherT == null) return false;
+        if(other is not StructuralRepresentationComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(RepresentationElement, otherT.RepresentationElement)) return false;
-        if(!comparer.Equals(Attachment, otherT.Attachment)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_RepresentationElement, otherT._RepresentationElement)) return false;
+        if(!comparer.Equals(_Attachment, otherT._Attachment)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "representation":
-            value = RepresentationElement;
-            return RepresentationElement is not null;
+            value = _RepresentationElement;
+            return _RepresentationElement is not null;
           case "attachment":
-            value = Attachment;
-            return Attachment is not null;
+            value = _Attachment;
+            return _Attachment is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "representation":
-            RepresentationElement = (Hl7.Fhir.Model.FhirString)value;
+            RepresentationElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "attachment":
-            Attachment = (Hl7.Fhir.Model.Attachment)value;
+            Attachment = (Hl7.Fhir.Model.Attachment?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -997,9 +967,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (RepresentationElement is not null) yield return new KeyValuePair<string,object>("representation",RepresentationElement);
-        if (Attachment is not null) yield return new KeyValuePair<string,object>("attachment",Attachment);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_RepresentationElement is not null) yield return new KeyValuePair<string,object>("representation",_RepresentationElement);
+        if (_Attachment is not null) yield return new KeyValuePair<string,object>("attachment",_Attachment);
       }
 
     }
@@ -1009,26 +979,26 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("class", InSummary=true, Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Class
+    public Hl7.Fhir.Model.CodeableConcept? Class
     {
       get { return _Class; }
       set { _Class = value; OnPropertyChanged("Class"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Class;
+    private Hl7.Fhir.Model.CodeableConcept? _Class;
 
     /// <summary>
     /// Todo.
     /// </summary>
     [FhirElement("geometry", InSummary=true, Order=100)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Geometry
+    public Hl7.Fhir.Model.CodeableConcept? Geometry
     {
       get { return _Geometry; }
       set { _Geometry = value; OnPropertyChanged("Geometry"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Geometry;
+    private Hl7.Fhir.Model.CodeableConcept? _Geometry;
 
     /// <summary>
     /// Todo.
@@ -1038,11 +1008,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CopolymerConnectivity
     {
-      get { if(_CopolymerConnectivity==null) _CopolymerConnectivity = new List<Hl7.Fhir.Model.CodeableConcept>(); return _CopolymerConnectivity; }
+      get => _CopolymerConnectivity ??= [];
       set { _CopolymerConnectivity = value; OnPropertyChanged("CopolymerConnectivity"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _CopolymerConnectivity;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _CopolymerConnectivity;
 
     /// <summary>
     /// Todo.
@@ -1052,24 +1022,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ModificationElement
     {
-      get { if(_ModificationElement==null) _ModificationElement = new List<Hl7.Fhir.Model.FhirString>(); return _ModificationElement; }
+      get => _ModificationElement ??= [];
       set { _ModificationElement = value; OnPropertyChanged("ModificationElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _ModificationElement;
+    private List<Hl7.Fhir.Model.FhirString>? _ModificationElement;
 
     /// <summary>
     /// Todo
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Modification
+    public IEnumerable<string?> Modification
     {
-      get { return ModificationElement != null ? ModificationElement.Select(elem => elem.Value) : null; }
+      get => _ModificationElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          ModificationElement = null;
+          ModificationElement = null!;
         else
           ModificationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("Modification");
@@ -1084,11 +1054,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent> MonomerSet
     {
-      get { if(_MonomerSet==null) _MonomerSet = new List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>(); return _MonomerSet; }
+      get => _MonomerSet ??= [];
       set { _MonomerSet = value; OnPropertyChanged("MonomerSet"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent> _MonomerSet;
+    private List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>? _MonomerSet;
 
     /// <summary>
     /// Todo.
@@ -1098,28 +1068,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent> Repeat
     {
-      get { if(_Repeat==null) _Repeat = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>(); return _Repeat; }
+      get => _Repeat ??= [];
       set { _Repeat = value; OnPropertyChanged("Repeat"); }
     }
 
-    private List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent> _Repeat;
+    private List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>? _Repeat;
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as SubstancePolymer;
-
-      if (dest == null)
-      {
+      if(other is not SubstancePolymer dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopyInternal();
-      if(Geometry != null) dest.Geometry = (Hl7.Fhir.Model.CodeableConcept)Geometry.DeepCopyInternal();
-      if(CopolymerConnectivity.Any()) dest.CopolymerConnectivity = new List<Hl7.Fhir.Model.CodeableConcept>(CopolymerConnectivity.DeepCopyInternal());
-      if(ModificationElement.Any()) dest.ModificationElement = new List<Hl7.Fhir.Model.FhirString>(ModificationElement.DeepCopyInternal());
-      if(MonomerSet.Any()) dest.MonomerSet = new List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>(MonomerSet.DeepCopyInternal());
-      if(Repeat.Any()) dest.Repeat = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>(Repeat.DeepCopyInternal());
+      if(_Class is not null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)_Class.DeepCopyInternal();
+      if(_Geometry is not null) dest.Geometry = (Hl7.Fhir.Model.CodeableConcept)_Geometry.DeepCopyInternal();
+      if(_CopolymerConnectivity is not null) dest.CopolymerConnectivity = new List<Hl7.Fhir.Model.CodeableConcept>(_CopolymerConnectivity.DeepCopyInternal());
+      if(_ModificationElement is not null) dest.ModificationElement = new List<Hl7.Fhir.Model.FhirString>(_ModificationElement.DeepCopyInternal());
+      if(_MonomerSet is not null) dest.MonomerSet = new List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>(_MonomerSet.DeepCopyInternal());
+      if(_Repeat is not null) dest.Repeat = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>(_Repeat.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -1131,69 +1097,70 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as SubstancePolymer;
-      if(otherT == null) return false;
+      if(other is not SubstancePolymer otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(Class, otherT.Class)) return false;
-      if(!comparer.Equals(Geometry, otherT.Geometry)) return false;
-      if(!comparer.ListEquals(CopolymerConnectivity, otherT.CopolymerConnectivity)) return false;
-      if(!comparer.ListEquals(ModificationElement, otherT.ModificationElement)) return false;
-      if(!comparer.ListEquals(MonomerSet, otherT.MonomerSet)) return false;
-      if(!comparer.ListEquals(Repeat, otherT.Repeat)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_Class, otherT._Class)) return false;
+      if(!comparer.Equals(_Geometry, otherT._Geometry)) return false;
+      if(!comparer.ListEquals(_CopolymerConnectivity, otherT._CopolymerConnectivity)) return false;
+      if(!comparer.ListEquals(_ModificationElement, otherT._ModificationElement)) return false;
+      if(!comparer.ListEquals(_MonomerSet, otherT._MonomerSet)) return false;
+      if(!comparer.ListEquals(_Repeat, otherT._Repeat)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "class":
-          value = Class;
-          return Class is not null;
+          value = _Class;
+          return _Class is not null;
         case "geometry":
-          value = Geometry;
-          return Geometry is not null;
+          value = _Geometry;
+          return _Geometry is not null;
         case "copolymerConnectivity":
-          value = CopolymerConnectivity;
-          return CopolymerConnectivity?.Any() == true;
+          value = _CopolymerConnectivity;
+          return _CopolymerConnectivity?.Any() == true;
         case "modification":
-          value = ModificationElement;
-          return ModificationElement?.Any() == true;
+          value = _ModificationElement;
+          return _ModificationElement?.Any() == true;
         case "monomerSet":
-          value = MonomerSet;
-          return MonomerSet?.Any() == true;
+          value = _MonomerSet;
+          return _MonomerSet?.Any() == true;
         case "repeat":
-          value = Repeat;
-          return Repeat?.Any() == true;
+          value = _Repeat;
+          return _Repeat?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "class":
-          Class = (Hl7.Fhir.Model.CodeableConcept)value;
+          Class = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "geometry":
-          Geometry = (Hl7.Fhir.Model.CodeableConcept)value;
+          Geometry = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "copolymerConnectivity":
-          CopolymerConnectivity = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          CopolymerConnectivity = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "modification":
-          ModificationElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          ModificationElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "monomerSet":
-          MonomerSet = (List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>)value;
+          MonomerSet = (List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>?)value!;
           return this;
         case "repeat":
-          Repeat = (List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>)value;
+          Repeat = (List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1204,12 +1171,12 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Class is not null) yield return new KeyValuePair<string,object>("class",Class);
-      if (Geometry is not null) yield return new KeyValuePair<string,object>("geometry",Geometry);
-      if (CopolymerConnectivity?.Any() == true) yield return new KeyValuePair<string,object>("copolymerConnectivity",CopolymerConnectivity);
-      if (ModificationElement?.Any() == true) yield return new KeyValuePair<string,object>("modification",ModificationElement);
-      if (MonomerSet?.Any() == true) yield return new KeyValuePair<string,object>("monomerSet",MonomerSet);
-      if (Repeat?.Any() == true) yield return new KeyValuePair<string,object>("repeat",Repeat);
+      if (_Class is not null) yield return new KeyValuePair<string,object>("class",_Class);
+      if (_Geometry is not null) yield return new KeyValuePair<string,object>("geometry",_Geometry);
+      if (_CopolymerConnectivity?.Any() == true) yield return new KeyValuePair<string,object>("copolymerConnectivity",_CopolymerConnectivity);
+      if (_ModificationElement?.Any() == true) yield return new KeyValuePair<string,object>("modification",_ModificationElement);
+      if (_MonomerSet?.Any() == true) yield return new KeyValuePair<string,object>("monomerSet",_MonomerSet);
+      if (_Repeat?.Any() == true) yield return new KeyValuePair<string,object>("repeat",_Repeat);
     }
 
   }

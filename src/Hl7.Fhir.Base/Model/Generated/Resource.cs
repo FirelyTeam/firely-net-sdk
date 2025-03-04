@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -59,28 +62,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("id", InSummary=true, Order=10)]
     [DataMember]
-    public Hl7.Fhir.Model.Id IdElement
+    public Hl7.Fhir.Model.Id? IdElement
     {
       get { return _IdElement; }
       set { _IdElement = value; OnPropertyChanged("IdElement"); }
     }
 
-    private Hl7.Fhir.Model.Id _IdElement;
+    private Hl7.Fhir.Model.Id? _IdElement;
 
     /// <summary>
     /// Logical id of this artifact
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Id
+    public string? Id
     {
-      get { return IdElement != null ? IdElement.Value : null; }
+      get => _IdElement?.Value;
       set
       {
-        if (value == null)
-          IdElement = null;
-        else
-          IdElement = new Hl7.Fhir.Model.Id(value);
+        IdElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
         OnPropertyChanged("Id");
       }
     }
@@ -90,41 +90,38 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("meta", InSummary=true, Order=20)]
     [DataMember]
-    public Hl7.Fhir.Model.Meta Meta
+    public Hl7.Fhir.Model.Meta? Meta
     {
       get { return _Meta; }
       set { _Meta = value; OnPropertyChanged("Meta"); }
     }
 
-    private Hl7.Fhir.Model.Meta _Meta;
+    private Hl7.Fhir.Model.Meta? _Meta;
 
     /// <summary>
     /// A set of rules under which this content was created.
     /// </summary>
     [FhirElement("implicitRules", InSummary=true, IsModifier=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUri ImplicitRulesElement
+    public Hl7.Fhir.Model.FhirUri? ImplicitRulesElement
     {
       get { return _ImplicitRulesElement; }
       set { _ImplicitRulesElement = value; OnPropertyChanged("ImplicitRulesElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUri _ImplicitRulesElement;
+    private Hl7.Fhir.Model.FhirUri? _ImplicitRulesElement;
 
     /// <summary>
     /// A set of rules under which this content was created
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string ImplicitRules
+    public string? ImplicitRules
     {
-      get { return ImplicitRulesElement != null ? ImplicitRulesElement.Value : null; }
+      get => _ImplicitRulesElement?.Value;
       set
       {
-        if (value == null)
-          ImplicitRulesElement = null;
-        else
-          ImplicitRulesElement = new Hl7.Fhir.Model.FhirUri(value);
+        ImplicitRulesElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
         OnPropertyChanged("ImplicitRules");
       }
     }
@@ -135,99 +132,93 @@ namespace Hl7.Fhir.Model
     [FhirElement("language", Order=40)]
     [Binding("Language")]
     [DataMember]
-    public Hl7.Fhir.Model.Code LanguageElement
+    public Hl7.Fhir.Model.Code? LanguageElement
     {
       get { return _LanguageElement; }
       set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
     }
 
-    private Hl7.Fhir.Model.Code _LanguageElement;
+    private Hl7.Fhir.Model.Code? _LanguageElement;
 
     /// <summary>
     /// Language of the resource content
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Language
+    public string? Language
     {
-      get { return LanguageElement != null ? LanguageElement.Value : null; }
+      get => _LanguageElement?.Value;
       set
       {
-        if (value == null)
-          LanguageElement = null;
-        else
-          LanguageElement = new Hl7.Fhir.Model.Code(value);
+        LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
         OnPropertyChanged("Language");
       }
     }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Resource;
-
-      if (dest == null)
-      {
+      if(other is not Resource dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(IdElement != null) dest.IdElement = (Hl7.Fhir.Model.Id)IdElement.DeepCopyInternal();
-      if(Meta != null) dest.Meta = (Hl7.Fhir.Model.Meta)Meta.DeepCopyInternal();
-      if(ImplicitRulesElement != null) dest.ImplicitRulesElement = (Hl7.Fhir.Model.FhirUri)ImplicitRulesElement.DeepCopyInternal();
-      if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopyInternal();
+      if(_IdElement is not null) dest.IdElement = (Hl7.Fhir.Model.Id)_IdElement.DeepCopyInternal();
+      if(_Meta is not null) dest.Meta = (Hl7.Fhir.Model.Meta)_Meta.DeepCopyInternal();
+      if(_ImplicitRulesElement is not null) dest.ImplicitRulesElement = (Hl7.Fhir.Model.FhirUri)_ImplicitRulesElement.DeepCopyInternal();
+      if(_LanguageElement is not null) dest.LanguageElement = (Hl7.Fhir.Model.Code)_LanguageElement.DeepCopyInternal();
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Resource;
-      if(otherT == null) return false;
+      if(other is not Resource otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.Equals(IdElement, otherT.IdElement)) return false;
-      if(!comparer.Equals(Meta, otherT.Meta)) return false;
-      if(!comparer.Equals(ImplicitRulesElement, otherT.ImplicitRulesElement)) return false;
-      if(!comparer.Equals(LanguageElement, otherT.LanguageElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.Equals(_IdElement, otherT._IdElement)) return false;
+      if(!comparer.Equals(_Meta, otherT._Meta)) return false;
+      if(!comparer.Equals(_ImplicitRulesElement, otherT._ImplicitRulesElement)) return false;
+      if(!comparer.Equals(_LanguageElement, otherT._LanguageElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "id":
-          value = IdElement;
-          return IdElement is not null;
+          value = _IdElement;
+          return _IdElement is not null;
         case "meta":
-          value = Meta;
-          return Meta is not null;
+          value = _Meta;
+          return _Meta is not null;
         case "implicitRules":
-          value = ImplicitRulesElement;
-          return ImplicitRulesElement is not null;
+          value = _ImplicitRulesElement;
+          return _ImplicitRulesElement is not null;
         case "language":
-          value = LanguageElement;
-          return LanguageElement is not null;
+          value = _LanguageElement;
+          return _LanguageElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "id":
-          IdElement = (Hl7.Fhir.Model.Id)value;
+          IdElement = (Hl7.Fhir.Model.Id?)value;
           return this;
         case "meta":
-          Meta = (Hl7.Fhir.Model.Meta)value;
+          Meta = (Hl7.Fhir.Model.Meta?)value;
           return this;
         case "implicitRules":
-          ImplicitRulesElement = (Hl7.Fhir.Model.FhirUri)value;
+          ImplicitRulesElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "language":
-          LanguageElement = (Hl7.Fhir.Model.Code)value;
+          LanguageElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -238,10 +229,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (IdElement is not null) yield return new KeyValuePair<string,object>("id",IdElement);
-      if (Meta is not null) yield return new KeyValuePair<string,object>("meta",Meta);
-      if (ImplicitRulesElement is not null) yield return new KeyValuePair<string,object>("implicitRules",ImplicitRulesElement);
-      if (LanguageElement is not null) yield return new KeyValuePair<string,object>("language",LanguageElement);
+      if (_IdElement is not null) yield return new KeyValuePair<string,object>("id",_IdElement);
+      if (_Meta is not null) yield return new KeyValuePair<string,object>("meta",_Meta);
+      if (_ImplicitRulesElement is not null) yield return new KeyValuePair<string,object>("implicitRules",_ImplicitRulesElement);
+      if (_LanguageElement is not null) yield return new KeyValuePair<string,object>("language",_LanguageElement);
     }
 
   }

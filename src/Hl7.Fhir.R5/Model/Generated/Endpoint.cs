@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -125,11 +128,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
-        get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+        get => _Type ??= [];
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Type;
 
       /// <summary>
       /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this).
@@ -140,24 +143,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Code> MimeTypeElement
       {
-        get { if(_MimeTypeElement==null) _MimeTypeElement = new List<Hl7.Fhir.Model.Code>(); return _MimeTypeElement; }
+        get => _MimeTypeElement ??= [];
         set { _MimeTypeElement = value; OnPropertyChanged("MimeTypeElement"); }
       }
 
-      private List<Hl7.Fhir.Model.Code> _MimeTypeElement;
+      private List<Hl7.Fhir.Model.Code>? _MimeTypeElement;
 
       /// <summary>
       /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public IEnumerable<string> MimeType
+      public IEnumerable<string?> MimeType
       {
-        get { return MimeTypeElement != null ? MimeTypeElement.Select(elem => elem.Value) : null; }
+        get => _MimeTypeElement?.Select(elem => elem.Value) ?? [];
         set
         {
           if (value == null)
-            MimeTypeElement = null;
+            MimeTypeElement = null!;
           else
             MimeTypeElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
           OnPropertyChanged("MimeType");
@@ -166,16 +169,12 @@ namespace Hl7.Fhir.Model
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PayloadComponent;
-
-        if (dest == null)
-        {
+        if(other is not PayloadComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Type.Any()) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopyInternal());
-        if(MimeTypeElement.Any()) dest.MimeTypeElement = new List<Hl7.Fhir.Model.Code>(MimeTypeElement.DeepCopyInternal());
+        if(_Type is not null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(_Type.DeepCopyInternal());
+        if(_MimeTypeElement is not null) dest.MimeTypeElement = new List<Hl7.Fhir.Model.Code>(_MimeTypeElement.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -187,41 +186,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PayloadComponent;
-        if(otherT == null) return false;
+        if(other is not PayloadComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Type, otherT.Type)) return false;
-        if(!comparer.ListEquals(MimeTypeElement, otherT.MimeTypeElement)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Type, otherT._Type)) return false;
+        if(!comparer.ListEquals(_MimeTypeElement, otherT._MimeTypeElement)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "type":
-            value = Type;
-            return Type?.Any() == true;
+            value = _Type;
+            return _Type?.Any() == true;
           case "mimeType":
-            value = MimeTypeElement;
-            return MimeTypeElement?.Any() == true;
+            value = _MimeTypeElement;
+            return _MimeTypeElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "type":
-            Type = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Type = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "mimeType":
-            MimeTypeElement = (List<Hl7.Fhir.Model.Code>)value;
+            MimeTypeElement = (List<Hl7.Fhir.Model.Code>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -232,8 +232,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
-        if (MimeTypeElement?.Any() == true) yield return new KeyValuePair<string,object>("mimeType",MimeTypeElement);
+        if (_Type?.Any() == true) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_MimeTypeElement?.Any() == true) yield return new KeyValuePair<string,object>("mimeType",_MimeTypeElement);
       }
 
     }
@@ -246,11 +246,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// active | suspended | error | off | entered-in-error | test.
@@ -260,13 +260,13 @@ namespace Hl7.Fhir.Model
     [Binding("EndpointStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Endpoint.EndpointStatus> StatusElement
+    public Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>? StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Endpoint.EndpointStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>? _StatusElement;
 
     /// <summary>
     /// active | suspended | error | off | entered-in-error | test
@@ -275,13 +275,10 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Endpoint.EndpointStatus? Status
     {
-      get { return StatusElement != null ? StatusElement.Value : null; }
+      get => _StatusElement?.Value;
       set
       {
-        if (value == null)
-          StatusElement = null;
-        else
-          StatusElement = new Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>(value);
+        StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -295,39 +292,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ConnectionType
     {
-      get { if(_ConnectionType==null) _ConnectionType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ConnectionType; }
+      get => _ConnectionType ??= [];
       set { _ConnectionType = value; OnPropertyChanged("ConnectionType"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _ConnectionType;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _ConnectionType;
 
     /// <summary>
     /// A name that this endpoint can be identified by.
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString NameElement
+    public Hl7.Fhir.Model.FhirString? NameElement
     {
       get { return _NameElement; }
       set { _NameElement = value; OnPropertyChanged("NameElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _NameElement;
+    private Hl7.Fhir.Model.FhirString? _NameElement;
 
     /// <summary>
     /// A name that this endpoint can be identified by
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Name
+    public string? Name
     {
-      get { return NameElement != null ? NameElement.Value : null; }
+      get => _NameElement?.Value;
       set
       {
-        if (value == null)
-          NameElement = null;
-        else
-          NameElement = new Hl7.Fhir.Model.FhirString(value);
+        NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Name");
       }
     }
@@ -337,28 +331,25 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DescriptionElement
+    public Hl7.Fhir.Model.FhirString? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DescriptionElement;
+    private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
     /// <summary>
     /// Additional details about the endpoint that could be displayed as further information to identify the description beyond its name
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -372,11 +363,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> EnvironmentType
     {
-      get { if(_EnvironmentType==null) _EnvironmentType = new List<Hl7.Fhir.Model.CodeableConcept>(); return _EnvironmentType; }
+      get => _EnvironmentType ??= [];
       set { _EnvironmentType = value; OnPropertyChanged("EnvironmentType"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _EnvironmentType;
+    private List<Hl7.Fhir.Model.CodeableConcept>? _EnvironmentType;
 
     /// <summary>
     /// Organization that manages this endpoint (might not be the organization that exposes the endpoint).
@@ -385,13 +376,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference ManagingOrganization
+    public Hl7.Fhir.Model.ResourceReference? ManagingOrganization
     {
       get { return _ManagingOrganization; }
       set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
+    private Hl7.Fhir.Model.ResourceReference? _ManagingOrganization;
 
     /// <summary>
     /// Contact details for source (e.g. troubleshooting).
@@ -401,24 +392,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
-      get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ContactPoint>(); return _Contact; }
+      get => _Contact ??= [];
       set { _Contact = value; OnPropertyChanged("Contact"); }
     }
 
-    private List<Hl7.Fhir.Model.ContactPoint> _Contact;
+    private List<Hl7.Fhir.Model.ContactPoint>? _Contact;
 
     /// <summary>
     /// Interval the endpoint is expected to be operational.
     /// </summary>
     [FhirElement("period", InSummary=true, Order=170, FiveWs="FiveWs.done[x]")]
     [DataMember]
-    public Hl7.Fhir.Model.Period Period
+    public Hl7.Fhir.Model.Period? Period
     {
       get { return _Period; }
       set { _Period = value; OnPropertyChanged("Period"); }
     }
 
-    private Hl7.Fhir.Model.Period _Period;
+    private Hl7.Fhir.Model.Period? _Period;
 
     /// <summary>
     /// Set of payloads that are provided by this endpoint.
@@ -428,11 +419,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Endpoint.PayloadComponent> Payload
     {
-      get { if(_Payload==null) _Payload = new List<Hl7.Fhir.Model.Endpoint.PayloadComponent>(); return _Payload; }
+      get => _Payload ??= [];
       set { _Payload = value; OnPropertyChanged("Payload"); }
     }
 
-    private List<Hl7.Fhir.Model.Endpoint.PayloadComponent> _Payload;
+    private List<Hl7.Fhir.Model.Endpoint.PayloadComponent>? _Payload;
 
     /// <summary>
     /// The technical base address for connecting to this endpoint.
@@ -440,28 +431,25 @@ namespace Hl7.Fhir.Model
     [FhirElement("address", InSummary=true, Order=190)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirUrl AddressElement
+    public Hl7.Fhir.Model.FhirUrl? AddressElement
     {
       get { return _AddressElement; }
       set { _AddressElement = value; OnPropertyChanged("AddressElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirUrl _AddressElement;
+    private Hl7.Fhir.Model.FhirUrl? _AddressElement;
 
     /// <summary>
     /// The technical base address for connecting to this endpoint
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Address
+    public string? Address
     {
-      get { return AddressElement != null ? AddressElement.Value : null; }
+      get => _AddressElement?.Value;
       set
       {
-        if (value == null)
-          AddressElement = null;
-        else
-          AddressElement = new Hl7.Fhir.Model.FhirUrl(value);
+        AddressElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
         OnPropertyChanged("Address");
       }
     }
@@ -474,24 +462,24 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> HeaderElement
     {
-      get { if(_HeaderElement==null) _HeaderElement = new List<Hl7.Fhir.Model.FhirString>(); return _HeaderElement; }
+      get => _HeaderElement ??= [];
       set { _HeaderElement = value; OnPropertyChanged("HeaderElement"); }
     }
 
-    private List<Hl7.Fhir.Model.FhirString> _HeaderElement;
+    private List<Hl7.Fhir.Model.FhirString>? _HeaderElement;
 
     /// <summary>
     /// Usage depends on the channel type
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public IEnumerable<string> Header
+    public IEnumerable<string?> Header
     {
-      get { return HeaderElement != null ? HeaderElement.Select(elem => elem.Value) : null; }
+      get => _HeaderElement?.Select(elem => elem.Value) ?? [];
       set
       {
         if (value == null)
-          HeaderElement = null;
+          HeaderElement = null!;
         else
           HeaderElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
         OnPropertyChanged("Header");
@@ -502,26 +490,22 @@ namespace Hl7.Fhir.Model
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as Endpoint;
-
-      if (dest == null)
-      {
+      if(other is not Endpoint dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>)StatusElement.DeepCopyInternal();
-      if(ConnectionType.Any()) dest.ConnectionType = new List<Hl7.Fhir.Model.CodeableConcept>(ConnectionType.DeepCopyInternal());
-      if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopyInternal();
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
-      if(EnvironmentType.Any()) dest.EnvironmentType = new List<Hl7.Fhir.Model.CodeableConcept>(EnvironmentType.DeepCopyInternal());
-      if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopyInternal();
-      if(Contact.Any()) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopyInternal());
-      if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopyInternal();
-      if(Payload.Any()) dest.Payload = new List<Hl7.Fhir.Model.Endpoint.PayloadComponent>(Payload.DeepCopyInternal());
-      if(AddressElement != null) dest.AddressElement = (Hl7.Fhir.Model.FhirUrl)AddressElement.DeepCopyInternal();
-      if(HeaderElement.Any()) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(HeaderElement.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_StatusElement is not null) dest.StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>)_StatusElement.DeepCopyInternal();
+      if(_ConnectionType is not null) dest.ConnectionType = new List<Hl7.Fhir.Model.CodeableConcept>(_ConnectionType.DeepCopyInternal());
+      if(_NameElement is not null) dest.NameElement = (Hl7.Fhir.Model.FhirString)_NameElement.DeepCopyInternal();
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+      if(_EnvironmentType is not null) dest.EnvironmentType = new List<Hl7.Fhir.Model.CodeableConcept>(_EnvironmentType.DeepCopyInternal());
+      if(_ManagingOrganization is not null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)_ManagingOrganization.DeepCopyInternal();
+      if(_Contact is not null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(_Contact.DeepCopyInternal());
+      if(_Period is not null) dest.Period = (Hl7.Fhir.Model.Period)_Period.DeepCopyInternal();
+      if(_Payload is not null) dest.Payload = new List<Hl7.Fhir.Model.Endpoint.PayloadComponent>(_Payload.DeepCopyInternal());
+      if(_AddressElement is not null) dest.AddressElement = (Hl7.Fhir.Model.FhirUrl)_AddressElement.DeepCopyInternal();
+      if(_HeaderElement is not null) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(_HeaderElement.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -533,111 +517,112 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as Endpoint;
-      if(otherT == null) return false;
+      if(other is not Endpoint otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.Equals(StatusElement, otherT.StatusElement)) return false;
-      if(!comparer.ListEquals(ConnectionType, otherT.ConnectionType)) return false;
-      if(!comparer.Equals(NameElement, otherT.NameElement)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.ListEquals(EnvironmentType, otherT.EnvironmentType)) return false;
-      if(!comparer.Equals(ManagingOrganization, otherT.ManagingOrganization)) return false;
-      if(!comparer.ListEquals(Contact, otherT.Contact)) return false;
-      if(!comparer.Equals(Period, otherT.Period)) return false;
-      if(!comparer.ListEquals(Payload, otherT.Payload)) return false;
-      if(!comparer.Equals(AddressElement, otherT.AddressElement)) return false;
-      if(!comparer.ListEquals(HeaderElement, otherT.HeaderElement)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.Equals(_StatusElement, otherT._StatusElement)) return false;
+      if(!comparer.ListEquals(_ConnectionType, otherT._ConnectionType)) return false;
+      if(!comparer.Equals(_NameElement, otherT._NameElement)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.ListEquals(_EnvironmentType, otherT._EnvironmentType)) return false;
+      if(!comparer.Equals(_ManagingOrganization, otherT._ManagingOrganization)) return false;
+      if(!comparer.ListEquals(_Contact, otherT._Contact)) return false;
+      if(!comparer.Equals(_Period, otherT._Period)) return false;
+      if(!comparer.ListEquals(_Payload, otherT._Payload)) return false;
+      if(!comparer.Equals(_AddressElement, otherT._AddressElement)) return false;
+      if(!comparer.ListEquals(_HeaderElement, otherT._HeaderElement)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "status":
-          value = StatusElement;
-          return StatusElement is not null;
+          value = _StatusElement;
+          return _StatusElement is not null;
         case "connectionType":
-          value = ConnectionType;
-          return ConnectionType?.Any() == true;
+          value = _ConnectionType;
+          return _ConnectionType?.Any() == true;
         case "name":
-          value = NameElement;
-          return NameElement is not null;
+          value = _NameElement;
+          return _NameElement is not null;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "environmentType":
-          value = EnvironmentType;
-          return EnvironmentType?.Any() == true;
+          value = _EnvironmentType;
+          return _EnvironmentType?.Any() == true;
         case "managingOrganization":
-          value = ManagingOrganization;
-          return ManagingOrganization is not null;
+          value = _ManagingOrganization;
+          return _ManagingOrganization is not null;
         case "contact":
-          value = Contact;
-          return Contact?.Any() == true;
+          value = _Contact;
+          return _Contact?.Any() == true;
         case "period":
-          value = Period;
-          return Period is not null;
+          value = _Period;
+          return _Period is not null;
         case "payload":
-          value = Payload;
-          return Payload?.Any() == true;
+          value = _Payload;
+          return _Payload?.Any() == true;
         case "address":
-          value = AddressElement;
-          return AddressElement is not null;
+          value = _AddressElement;
+          return _AddressElement is not null;
         case "header":
-          value = HeaderElement;
-          return HeaderElement?.Any() == true;
+          value = _HeaderElement;
+          return _HeaderElement?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>)value;
+          StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>?)value;
           return this;
         case "connectionType":
-          ConnectionType = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          ConnectionType = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "name":
-          NameElement = (Hl7.Fhir.Model.FhirString)value;
+          NameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+          DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "environmentType":
-          EnvironmentType = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+          EnvironmentType = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "managingOrganization":
-          ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)value;
+          ManagingOrganization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "contact":
-          Contact = (List<Hl7.Fhir.Model.ContactPoint>)value;
+          Contact = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period)value;
+          Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "payload":
-          Payload = (List<Hl7.Fhir.Model.Endpoint.PayloadComponent>)value;
+          Payload = (List<Hl7.Fhir.Model.Endpoint.PayloadComponent>?)value!;
           return this;
         case "address":
-          AddressElement = (Hl7.Fhir.Model.FhirUrl)value;
+          AddressElement = (Hl7.Fhir.Model.FhirUrl?)value;
           return this;
         case "header":
-          HeaderElement = (List<Hl7.Fhir.Model.FhirString>)value;
+          HeaderElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -648,18 +633,18 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (ConnectionType?.Any() == true) yield return new KeyValuePair<string,object>("connectionType",ConnectionType);
-      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (EnvironmentType?.Any() == true) yield return new KeyValuePair<string,object>("environmentType",EnvironmentType);
-      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
-      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (Payload?.Any() == true) yield return new KeyValuePair<string,object>("payload",Payload);
-      if (AddressElement is not null) yield return new KeyValuePair<string,object>("address",AddressElement);
-      if (HeaderElement?.Any() == true) yield return new KeyValuePair<string,object>("header",HeaderElement);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_ConnectionType?.Any() == true) yield return new KeyValuePair<string,object>("connectionType",_ConnectionType);
+      if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_EnvironmentType?.Any() == true) yield return new KeyValuePair<string,object>("environmentType",_EnvironmentType);
+      if (_ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",_ManagingOrganization);
+      if (_Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Payload?.Any() == true) yield return new KeyValuePair<string,object>("payload",_Payload);
+      if (_AddressElement is not null) yield return new KeyValuePair<string,object>("address",_AddressElement);
+      if (_HeaderElement?.Any() == true) yield return new KeyValuePair<string,object>("header",_HeaderElement);
     }
 
   }

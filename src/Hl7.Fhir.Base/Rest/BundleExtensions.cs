@@ -25,18 +25,15 @@ namespace Hl7.Fhir.Rest
                 throw Error.Argument("Refresh is only applicable to bundles of type 'searchset'");
 
             // Clone old bundle, without the entries (so, just the header)
-            Bundle result = (Bundle)bundle.DeepCopy();
+            Bundle result = bundle.DeepCopy();
 
             result.Id = "urn:uuid:" + Guid.NewGuid().ToString("n");
-            result.Meta = new Meta();
-            result.Meta.LastUpdated = DateTimeOffset.Now;
+            result.Meta = new Meta { LastUpdated = DateTimeOffset.Now };
 
             foreach (var entry in result.Entry)
             {
-                if (entry.Resource != null)
-                {
-                    entry.Resource = await client.ReadAsync<Resource>(entry.FullUrl).ConfigureAwait(false);
-                }
+                if (entry is { Resource: not null, FullUrl: {} url })
+                    entry.Resource = await client.ReadAsync<Resource>(url).ConfigureAwait(false);
             }
 
             return result;

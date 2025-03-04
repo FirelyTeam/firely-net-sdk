@@ -10,7 +10,10 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
+using System.Diagnostics.CodeAnalysis;
 using SystemPrimitive = Hl7.Fhir.ElementModel.Types;
+
+#nullable enable
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -75,39 +78,35 @@ namespace Hl7.Fhir.Model
       [FhirElement("outerPackaging", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier OuterPackaging
+      public Hl7.Fhir.Model.Identifier? OuterPackaging
       {
         get { return _OuterPackaging; }
         set { _OuterPackaging = value; OnPropertyChanged("OuterPackaging"); }
       }
 
-      private Hl7.Fhir.Model.Identifier _OuterPackaging;
+      private Hl7.Fhir.Model.Identifier? _OuterPackaging;
 
       /// <summary>
       /// A number appearing on the immediate packaging (and not the outer packaging).
       /// </summary>
       [FhirElement("immediatePackaging", InSummary=true, Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Identifier ImmediatePackaging
+      public Hl7.Fhir.Model.Identifier? ImmediatePackaging
       {
         get { return _ImmediatePackaging; }
         set { _ImmediatePackaging = value; OnPropertyChanged("ImmediatePackaging"); }
       }
 
-      private Hl7.Fhir.Model.Identifier _ImmediatePackaging;
+      private Hl7.Fhir.Model.Identifier? _ImmediatePackaging;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as BatchIdentifierComponent;
-
-        if (dest == null)
-        {
+        if(other is not BatchIdentifierComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(OuterPackaging != null) dest.OuterPackaging = (Hl7.Fhir.Model.Identifier)OuterPackaging.DeepCopyInternal();
-        if(ImmediatePackaging != null) dest.ImmediatePackaging = (Hl7.Fhir.Model.Identifier)ImmediatePackaging.DeepCopyInternal();
+        if(_OuterPackaging is not null) dest.OuterPackaging = (Hl7.Fhir.Model.Identifier)_OuterPackaging.DeepCopyInternal();
+        if(_ImmediatePackaging is not null) dest.ImmediatePackaging = (Hl7.Fhir.Model.Identifier)_ImmediatePackaging.DeepCopyInternal();
       }
 
       protected internal override Base DeepCopyInternal()
@@ -119,41 +118,42 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as BatchIdentifierComponent;
-        if(otherT == null) return false;
+        if(other is not BatchIdentifierComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.Equals(OuterPackaging, otherT.OuterPackaging)) return false;
-        if(!comparer.Equals(ImmediatePackaging, otherT.ImmediatePackaging)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.Equals(_OuterPackaging, otherT._OuterPackaging)) return false;
+        if(!comparer.Equals(_ImmediatePackaging, otherT._ImmediatePackaging)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "outerPackaging":
-            value = OuterPackaging;
-            return OuterPackaging is not null;
+            value = _OuterPackaging;
+            return _OuterPackaging is not null;
           case "immediatePackaging":
-            value = ImmediatePackaging;
-            return ImmediatePackaging is not null;
+            value = _ImmediatePackaging;
+            return _ImmediatePackaging is not null;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "outerPackaging":
-            OuterPackaging = (Hl7.Fhir.Model.Identifier)value;
+            OuterPackaging = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "immediatePackaging":
-            ImmediatePackaging = (Hl7.Fhir.Model.Identifier)value;
+            ImmediatePackaging = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -164,8 +164,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (OuterPackaging is not null) yield return new KeyValuePair<string,object>("outerPackaging",OuterPackaging);
-        if (ImmediatePackaging is not null) yield return new KeyValuePair<string,object>("immediatePackaging",ImmediatePackaging);
+        if (_OuterPackaging is not null) yield return new KeyValuePair<string,object>("outerPackaging",_OuterPackaging);
+        if (_ImmediatePackaging is not null) yield return new KeyValuePair<string,object>("immediatePackaging",_ImmediatePackaging);
       }
 
     }
@@ -191,11 +191,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+        get => _Identifier ??= [];
         set { _Identifier = value; OnPropertyChanged("Identifier"); }
       }
 
-      private List<Hl7.Fhir.Model.Identifier> _Identifier;
+      private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
       /// <summary>
       /// The physical type of the container of the medicine.
@@ -203,13 +203,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.CodeableConcept Type
+      public Hl7.Fhir.Model.CodeableConcept? Type
       {
         get { return _Type; }
         set { _Type = value; OnPropertyChanged("Type"); }
       }
 
-      private Hl7.Fhir.Model.CodeableConcept _Type;
+      private Hl7.Fhir.Model.CodeableConcept? _Type;
 
       /// <summary>
       /// The quantity of this package in the medicinal product, at the current level of packaging. The outermost is always 1.
@@ -217,13 +217,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("quantity", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Hl7.Fhir.Model.Quantity Quantity
+      public Hl7.Fhir.Model.Quantity? Quantity
       {
         get { return _Quantity; }
         set { _Quantity = value; OnPropertyChanged("Quantity"); }
       }
 
-      private Hl7.Fhir.Model.Quantity _Quantity;
+      private Hl7.Fhir.Model.Quantity? _Quantity;
 
       /// <summary>
       /// Material type of the package item.
@@ -233,11 +233,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Material
       {
-        get { if(_Material==null) _Material = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Material; }
+        get => _Material ??= [];
         set { _Material = value; OnPropertyChanged("Material"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _Material;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _Material;
 
       /// <summary>
       /// A possible alternate material for the packaging.
@@ -247,11 +247,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AlternateMaterial
       {
-        get { if(_AlternateMaterial==null) _AlternateMaterial = new List<Hl7.Fhir.Model.CodeableConcept>(); return _AlternateMaterial; }
+        get => _AlternateMaterial ??= [];
         set { _AlternateMaterial = value; OnPropertyChanged("AlternateMaterial"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _AlternateMaterial;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _AlternateMaterial;
 
       /// <summary>
       /// A device accompanying a medicinal product.
@@ -263,11 +263,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Device
       {
-        get { if(_Device==null) _Device = new List<Hl7.Fhir.Model.ResourceReference>(); return _Device; }
+        get => _Device ??= [];
         set { _Device = value; OnPropertyChanged("Device"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Device;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Device;
 
       /// <summary>
       /// The manufactured item as contained in the packaged medicinal product.
@@ -279,11 +279,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> ManufacturedItem
       {
-        get { if(_ManufacturedItem==null) _ManufacturedItem = new List<Hl7.Fhir.Model.ResourceReference>(); return _ManufacturedItem; }
+        get => _ManufacturedItem ??= [];
         set { _ManufacturedItem = value; OnPropertyChanged("ManufacturedItem"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _ManufacturedItem;
+      private List<Hl7.Fhir.Model.ResourceReference>? _ManufacturedItem;
 
       /// <summary>
       /// Allows containers within containers.
@@ -293,24 +293,24 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> PackageItem
       {
-        get { if(_PackageItem==null) _PackageItem = new List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>(); return _PackageItem; }
+        get => _PackageItem ??= [];
         set { _PackageItem = value; OnPropertyChanged("PackageItem"); }
       }
 
-      private List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> _PackageItem;
+      private List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>? _PackageItem;
 
       /// <summary>
       /// Dimensions, color etc.
       /// </summary>
       [FhirElement("physicalCharacteristics", InSummary=true, Order=120)]
       [DataMember]
-      public Hl7.Fhir.Model.ProdCharacteristic PhysicalCharacteristics
+      public Hl7.Fhir.Model.ProdCharacteristic? PhysicalCharacteristics
       {
         get { return _PhysicalCharacteristics; }
         set { _PhysicalCharacteristics = value; OnPropertyChanged("PhysicalCharacteristics"); }
       }
 
-      private Hl7.Fhir.Model.ProdCharacteristic _PhysicalCharacteristics;
+      private Hl7.Fhir.Model.ProdCharacteristic? _PhysicalCharacteristics;
 
       /// <summary>
       /// Other codeable characteristics.
@@ -320,11 +320,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> OtherCharacteristics
       {
-        get { if(_OtherCharacteristics==null) _OtherCharacteristics = new List<Hl7.Fhir.Model.CodeableConcept>(); return _OtherCharacteristics; }
+        get => _OtherCharacteristics ??= [];
         set { _OtherCharacteristics = value; OnPropertyChanged("OtherCharacteristics"); }
       }
 
-      private List<Hl7.Fhir.Model.CodeableConcept> _OtherCharacteristics;
+      private List<Hl7.Fhir.Model.CodeableConcept>? _OtherCharacteristics;
 
       /// <summary>
       /// Shelf Life and storage information.
@@ -334,11 +334,11 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ProductShelfLife> ShelfLifeStorage
       {
-        get { if(_ShelfLifeStorage==null) _ShelfLifeStorage = new List<Hl7.Fhir.Model.ProductShelfLife>(); return _ShelfLifeStorage; }
+        get => _ShelfLifeStorage ??= [];
         set { _ShelfLifeStorage = value; OnPropertyChanged("ShelfLifeStorage"); }
       }
 
-      private List<Hl7.Fhir.Model.ProductShelfLife> _ShelfLifeStorage;
+      private List<Hl7.Fhir.Model.ProductShelfLife>? _ShelfLifeStorage;
 
       /// <summary>
       /// Manufacturer of this Package Item.
@@ -350,34 +350,30 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
       {
-        get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
+        get => _Manufacturer ??= [];
         set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
       }
 
-      private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
+      private List<Hl7.Fhir.Model.ResourceReference>? _Manufacturer;
 
       protected internal override void CopyToInternal(Base other)
       {
-        var dest = other as PackageItemComponent;
-
-        if (dest == null)
-        {
+        if(other is not PackageItemComponent dest)
           throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
 
         base.CopyToInternal(dest);
-        if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-        if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopyInternal();
-        if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopyInternal();
-        if(Material.Any()) dest.Material = new List<Hl7.Fhir.Model.CodeableConcept>(Material.DeepCopyInternal());
-        if(AlternateMaterial.Any()) dest.AlternateMaterial = new List<Hl7.Fhir.Model.CodeableConcept>(AlternateMaterial.DeepCopyInternal());
-        if(Device.Any()) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(Device.DeepCopyInternal());
-        if(ManufacturedItem.Any()) dest.ManufacturedItem = new List<Hl7.Fhir.Model.ResourceReference>(ManufacturedItem.DeepCopyInternal());
-        if(PackageItem.Any()) dest.PackageItem = new List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>(PackageItem.DeepCopyInternal());
-        if(PhysicalCharacteristics != null) dest.PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic)PhysicalCharacteristics.DeepCopyInternal();
-        if(OtherCharacteristics.Any()) dest.OtherCharacteristics = new List<Hl7.Fhir.Model.CodeableConcept>(OtherCharacteristics.DeepCopyInternal());
-        if(ShelfLifeStorage.Any()) dest.ShelfLifeStorage = new List<Hl7.Fhir.Model.ProductShelfLife>(ShelfLifeStorage.DeepCopyInternal());
-        if(Manufacturer.Any()) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopyInternal());
+        if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+        if(_Type is not null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)_Type.DeepCopyInternal();
+        if(_Quantity is not null) dest.Quantity = (Hl7.Fhir.Model.Quantity)_Quantity.DeepCopyInternal();
+        if(_Material is not null) dest.Material = new List<Hl7.Fhir.Model.CodeableConcept>(_Material.DeepCopyInternal());
+        if(_AlternateMaterial is not null) dest.AlternateMaterial = new List<Hl7.Fhir.Model.CodeableConcept>(_AlternateMaterial.DeepCopyInternal());
+        if(_Device is not null) dest.Device = new List<Hl7.Fhir.Model.ResourceReference>(_Device.DeepCopyInternal());
+        if(_ManufacturedItem is not null) dest.ManufacturedItem = new List<Hl7.Fhir.Model.ResourceReference>(_ManufacturedItem.DeepCopyInternal());
+        if(_PackageItem is not null) dest.PackageItem = new List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>(_PackageItem.DeepCopyInternal());
+        if(_PhysicalCharacteristics is not null) dest.PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic)_PhysicalCharacteristics.DeepCopyInternal();
+        if(_OtherCharacteristics is not null) dest.OtherCharacteristics = new List<Hl7.Fhir.Model.CodeableConcept>(_OtherCharacteristics.DeepCopyInternal());
+        if(_ShelfLifeStorage is not null) dest.ShelfLifeStorage = new List<Hl7.Fhir.Model.ProductShelfLife>(_ShelfLifeStorage.DeepCopyInternal());
+        if(_Manufacturer is not null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(_Manufacturer.DeepCopyInternal());
       }
 
       protected internal override Base DeepCopyInternal()
@@ -389,111 +385,112 @@ namespace Hl7.Fhir.Model
 
       public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
       {
-        var otherT = other as PackageItemComponent;
-        if(otherT == null) return false;
+        if(other is not PackageItemComponent otherT) return false;
 
         if(!base.CompareChildren(otherT, comparer)) return false;
-        if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-        if(!comparer.Equals(Type, otherT.Type)) return false;
-        if(!comparer.Equals(Quantity, otherT.Quantity)) return false;
-        if(!comparer.ListEquals(Material, otherT.Material)) return false;
-        if(!comparer.ListEquals(AlternateMaterial, otherT.AlternateMaterial)) return false;
-        if(!comparer.ListEquals(Device, otherT.Device)) return false;
-        if(!comparer.ListEquals(ManufacturedItem, otherT.ManufacturedItem)) return false;
-        if(!comparer.ListEquals(PackageItem, otherT.PackageItem)) return false;
-        if(!comparer.Equals(PhysicalCharacteristics, otherT.PhysicalCharacteristics)) return false;
-        if(!comparer.ListEquals(OtherCharacteristics, otherT.OtherCharacteristics)) return false;
-        if(!comparer.ListEquals(ShelfLifeStorage, otherT.ShelfLifeStorage)) return false;
-        if(!comparer.ListEquals(Manufacturer, otherT.Manufacturer)) return false;
+        #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+        if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+        if(!comparer.Equals(_Type, otherT._Type)) return false;
+        if(!comparer.Equals(_Quantity, otherT._Quantity)) return false;
+        if(!comparer.ListEquals(_Material, otherT._Material)) return false;
+        if(!comparer.ListEquals(_AlternateMaterial, otherT._AlternateMaterial)) return false;
+        if(!comparer.ListEquals(_Device, otherT._Device)) return false;
+        if(!comparer.ListEquals(_ManufacturedItem, otherT._ManufacturedItem)) return false;
+        if(!comparer.ListEquals(_PackageItem, otherT._PackageItem)) return false;
+        if(!comparer.Equals(_PhysicalCharacteristics, otherT._PhysicalCharacteristics)) return false;
+        if(!comparer.ListEquals(_OtherCharacteristics, otherT._OtherCharacteristics)) return false;
+        if(!comparer.ListEquals(_ShelfLifeStorage, otherT._ShelfLifeStorage)) return false;
+        if(!comparer.ListEquals(_Manufacturer, otherT._Manufacturer)) return false;
+        #pragma warning restore CS8604 // Possible null reference argument.
 
         return true;
       }
 
-      public override bool TryGetValue(string key, out object value)
+      public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
       {
         switch (key)
         {
           case "identifier":
-            value = Identifier;
-            return Identifier?.Any() == true;
+            value = _Identifier;
+            return _Identifier?.Any() == true;
           case "type":
-            value = Type;
-            return Type is not null;
+            value = _Type;
+            return _Type is not null;
           case "quantity":
-            value = Quantity;
-            return Quantity is not null;
+            value = _Quantity;
+            return _Quantity is not null;
           case "material":
-            value = Material;
-            return Material?.Any() == true;
+            value = _Material;
+            return _Material?.Any() == true;
           case "alternateMaterial":
-            value = AlternateMaterial;
-            return AlternateMaterial?.Any() == true;
+            value = _AlternateMaterial;
+            return _AlternateMaterial?.Any() == true;
           case "device":
-            value = Device;
-            return Device?.Any() == true;
+            value = _Device;
+            return _Device?.Any() == true;
           case "manufacturedItem":
-            value = ManufacturedItem;
-            return ManufacturedItem?.Any() == true;
+            value = _ManufacturedItem;
+            return _ManufacturedItem?.Any() == true;
           case "packageItem":
-            value = PackageItem;
-            return PackageItem?.Any() == true;
+            value = _PackageItem;
+            return _PackageItem?.Any() == true;
           case "physicalCharacteristics":
-            value = PhysicalCharacteristics;
-            return PhysicalCharacteristics is not null;
+            value = _PhysicalCharacteristics;
+            return _PhysicalCharacteristics is not null;
           case "otherCharacteristics":
-            value = OtherCharacteristics;
-            return OtherCharacteristics?.Any() == true;
+            value = _OtherCharacteristics;
+            return _OtherCharacteristics?.Any() == true;
           case "shelfLifeStorage":
-            value = ShelfLifeStorage;
-            return ShelfLifeStorage?.Any() == true;
+            value = _ShelfLifeStorage;
+            return _ShelfLifeStorage?.Any() == true;
           case "manufacturer":
-            value = Manufacturer;
-            return Manufacturer?.Any() == true;
+            value = _Manufacturer;
+            return _Manufacturer?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         }
 
       }
 
-      public override Base SetValue(string key, object value)
+      public override Base SetValue(string key, object? value)
       {
         switch (key)
         {
           case "identifier":
-            Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+            Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept)value;
+            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity)value;
+            Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "material":
-            Material = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            Material = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "alternateMaterial":
-            AlternateMaterial = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            AlternateMaterial = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "device":
-            Device = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Device = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "manufacturedItem":
-            ManufacturedItem = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            ManufacturedItem = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "packageItem":
-            PackageItem = (List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>)value;
+            PackageItem = (List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>?)value!;
             return this;
           case "physicalCharacteristics":
-            PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic)value;
+            PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic?)value;
             return this;
           case "otherCharacteristics":
-            OtherCharacteristics = (List<Hl7.Fhir.Model.CodeableConcept>)value;
+            OtherCharacteristics = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "shelfLifeStorage":
-            ShelfLifeStorage = (List<Hl7.Fhir.Model.ProductShelfLife>)value;
+            ShelfLifeStorage = (List<Hl7.Fhir.Model.ProductShelfLife>?)value!;
             return this;
           case "manufacturer":
-            Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>)value;
+            Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -504,18 +501,18 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Material?.Any() == true) yield return new KeyValuePair<string,object>("material",Material);
-        if (AlternateMaterial?.Any() == true) yield return new KeyValuePair<string,object>("alternateMaterial",AlternateMaterial);
-        if (Device?.Any() == true) yield return new KeyValuePair<string,object>("device",Device);
-        if (ManufacturedItem?.Any() == true) yield return new KeyValuePair<string,object>("manufacturedItem",ManufacturedItem);
-        if (PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
-        if (PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",PhysicalCharacteristics);
-        if (OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
-        if (ShelfLifeStorage?.Any() == true) yield return new KeyValuePair<string,object>("shelfLifeStorage",ShelfLifeStorage);
-        if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+        if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Material?.Any() == true) yield return new KeyValuePair<string,object>("material",_Material);
+        if (_AlternateMaterial?.Any() == true) yield return new KeyValuePair<string,object>("alternateMaterial",_AlternateMaterial);
+        if (_Device?.Any() == true) yield return new KeyValuePair<string,object>("device",_Device);
+        if (_ManufacturedItem?.Any() == true) yield return new KeyValuePair<string,object>("manufacturedItem",_ManufacturedItem);
+        if (_PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",_PackageItem);
+        if (_PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",_PhysicalCharacteristics);
+        if (_OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",_OtherCharacteristics);
+        if (_ShelfLifeStorage?.Any() == true) yield return new KeyValuePair<string,object>("shelfLifeStorage",_ShelfLifeStorage);
+        if (_Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
       }
 
     }
@@ -528,11 +525,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+      get => _Identifier ??= [];
       set { _Identifier = value; OnPropertyChanged("Identifier"); }
     }
 
-    private List<Hl7.Fhir.Model.Identifier> _Identifier;
+    private List<Hl7.Fhir.Model.Identifier>? _Identifier;
 
     /// <summary>
     /// The product with this is a pack for.
@@ -544,39 +541,36 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get { if(_Subject==null) _Subject = new List<Hl7.Fhir.Model.ResourceReference>(); return _Subject; }
+      get => _Subject ??= [];
       set { _Subject = value; OnPropertyChanged("Subject"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Subject;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Subject;
 
     /// <summary>
     /// Textual description.
     /// </summary>
     [FhirElement("description", InSummary=true, Order=110)]
     [DataMember]
-    public Hl7.Fhir.Model.FhirString DescriptionElement
+    public Hl7.Fhir.Model.FhirString? DescriptionElement
     {
       get { return _DescriptionElement; }
       set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.FhirString _DescriptionElement;
+    private Hl7.Fhir.Model.FhirString? _DescriptionElement;
 
     /// <summary>
     /// Textual description
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public string Description
+    public string? Description
     {
-      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      get => _DescriptionElement?.Value;
       set
       {
-        if (value == null)
-          DescriptionElement = null;
-        else
-          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+        DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
         OnPropertyChanged("Description");
       }
     }
@@ -586,13 +580,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("legalStatusOfSupply", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept LegalStatusOfSupply
+    public Hl7.Fhir.Model.CodeableConcept? LegalStatusOfSupply
     {
       get { return _LegalStatusOfSupply; }
       set { _LegalStatusOfSupply = value; OnPropertyChanged("LegalStatusOfSupply"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _LegalStatusOfSupply;
+    private Hl7.Fhir.Model.CodeableConcept? _LegalStatusOfSupply;
 
     /// <summary>
     /// Marketing information.
@@ -602,11 +596,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
-      get { if(_MarketingStatus==null) _MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(); return _MarketingStatus; }
+      get => _MarketingStatus ??= [];
       set { _MarketingStatus = value; OnPropertyChanged("MarketingStatus"); }
     }
 
-    private List<Hl7.Fhir.Model.MarketingStatus> _MarketingStatus;
+    private List<Hl7.Fhir.Model.MarketingStatus>? _MarketingStatus;
 
     /// <summary>
     /// Manufacturer of this Package Item.
@@ -615,13 +609,13 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("MedicinalProductAuthorization")]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference MarketingAuthorization
+    public Hl7.Fhir.Model.ResourceReference? MarketingAuthorization
     {
       get { return _MarketingAuthorization; }
       set { _MarketingAuthorization = value; OnPropertyChanged("MarketingAuthorization"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _MarketingAuthorization;
+    private Hl7.Fhir.Model.ResourceReference? _MarketingAuthorization;
 
     /// <summary>
     /// Manufacturer of this Package Item.
@@ -633,11 +627,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get { if(_Manufacturer==null) _Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Manufacturer; }
+      get => _Manufacturer ??= [];
       set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
     }
 
-    private List<Hl7.Fhir.Model.ResourceReference> _Manufacturer;
+    private List<Hl7.Fhir.Model.ResourceReference>? _Manufacturer;
 
     /// <summary>
     /// Batch numbering.
@@ -647,11 +641,11 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent> BatchIdentifier
     {
-      get { if(_BatchIdentifier==null) _BatchIdentifier = new List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>(); return _BatchIdentifier; }
+      get => _BatchIdentifier ??= [];
       set { _BatchIdentifier = value; OnPropertyChanged("BatchIdentifier"); }
     }
 
-    private List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent> _BatchIdentifier;
+    private List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>? _BatchIdentifier;
 
     /// <summary>
     /// A packaging item, as a contained for medicine, possibly with other packaging items within.
@@ -661,33 +655,29 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> PackageItem
     {
-      get { if(_PackageItem==null) _PackageItem = new List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>(); return _PackageItem; }
+      get => _PackageItem ??= [];
       set { _PackageItem = value; OnPropertyChanged("PackageItem"); }
     }
 
-    private List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> _PackageItem;
+    private List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>? _PackageItem;
 
     List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     protected internal override void CopyToInternal(Base other)
     {
-      var dest = other as MedicinalProductPackaged;
-
-      if (dest == null)
-      {
+      if(other is not MedicinalProductPackaged dest)
         throw new ArgumentException("Can only copy to an object of the same type", "other");
-      }
 
       base.CopyToInternal(dest);
-      if(Identifier.Any()) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopyInternal());
-      if(Subject.Any()) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopyInternal());
-      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopyInternal();
-      if(LegalStatusOfSupply != null) dest.LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)LegalStatusOfSupply.DeepCopyInternal();
-      if(MarketingStatus.Any()) dest.MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(MarketingStatus.DeepCopyInternal());
-      if(MarketingAuthorization != null) dest.MarketingAuthorization = (Hl7.Fhir.Model.ResourceReference)MarketingAuthorization.DeepCopyInternal();
-      if(Manufacturer.Any()) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopyInternal());
-      if(BatchIdentifier.Any()) dest.BatchIdentifier = new List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>(BatchIdentifier.DeepCopyInternal());
-      if(PackageItem.Any()) dest.PackageItem = new List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>(PackageItem.DeepCopyInternal());
+      if(_Identifier is not null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(_Identifier.DeepCopyInternal());
+      if(_Subject is not null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(_Subject.DeepCopyInternal());
+      if(_DescriptionElement is not null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)_DescriptionElement.DeepCopyInternal();
+      if(_LegalStatusOfSupply is not null) dest.LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)_LegalStatusOfSupply.DeepCopyInternal();
+      if(_MarketingStatus is not null) dest.MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(_MarketingStatus.DeepCopyInternal());
+      if(_MarketingAuthorization is not null) dest.MarketingAuthorization = (Hl7.Fhir.Model.ResourceReference)_MarketingAuthorization.DeepCopyInternal();
+      if(_Manufacturer is not null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(_Manufacturer.DeepCopyInternal());
+      if(_BatchIdentifier is not null) dest.BatchIdentifier = new List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>(_BatchIdentifier.DeepCopyInternal());
+      if(_PackageItem is not null) dest.PackageItem = new List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>(_PackageItem.DeepCopyInternal());
     }
 
     protected internal override Base DeepCopyInternal()
@@ -699,90 +689,91 @@ namespace Hl7.Fhir.Model
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
     {
-      var otherT = other as MedicinalProductPackaged;
-      if(otherT == null) return false;
+      if(other is not MedicinalProductPackaged otherT) return false;
 
       if(!base.CompareChildren(otherT, comparer)) return false;
-      if(!comparer.ListEquals(Identifier, otherT.Identifier)) return false;
-      if(!comparer.ListEquals(Subject, otherT.Subject)) return false;
-      if(!comparer.Equals(DescriptionElement, otherT.DescriptionElement)) return false;
-      if(!comparer.Equals(LegalStatusOfSupply, otherT.LegalStatusOfSupply)) return false;
-      if(!comparer.ListEquals(MarketingStatus, otherT.MarketingStatus)) return false;
-      if(!comparer.Equals(MarketingAuthorization, otherT.MarketingAuthorization)) return false;
-      if(!comparer.ListEquals(Manufacturer, otherT.Manufacturer)) return false;
-      if(!comparer.ListEquals(BatchIdentifier, otherT.BatchIdentifier)) return false;
-      if(!comparer.ListEquals(PackageItem, otherT.PackageItem)) return false;
+      #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
+      if(!comparer.ListEquals(_Identifier, otherT._Identifier)) return false;
+      if(!comparer.ListEquals(_Subject, otherT._Subject)) return false;
+      if(!comparer.Equals(_DescriptionElement, otherT._DescriptionElement)) return false;
+      if(!comparer.Equals(_LegalStatusOfSupply, otherT._LegalStatusOfSupply)) return false;
+      if(!comparer.ListEquals(_MarketingStatus, otherT._MarketingStatus)) return false;
+      if(!comparer.Equals(_MarketingAuthorization, otherT._MarketingAuthorization)) return false;
+      if(!comparer.ListEquals(_Manufacturer, otherT._Manufacturer)) return false;
+      if(!comparer.ListEquals(_BatchIdentifier, otherT._BatchIdentifier)) return false;
+      if(!comparer.ListEquals(_PackageItem, otherT._PackageItem)) return false;
+      #pragma warning restore CS8604 // Possible null reference argument.
 
       return true;
     }
 
-    public override bool TryGetValue(string key, out object value)
+    public override bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
     {
       switch (key)
       {
         case "identifier":
-          value = Identifier;
-          return Identifier?.Any() == true;
+          value = _Identifier;
+          return _Identifier?.Any() == true;
         case "subject":
-          value = Subject;
-          return Subject?.Any() == true;
+          value = _Subject;
+          return _Subject?.Any() == true;
         case "description":
-          value = DescriptionElement;
-          return DescriptionElement is not null;
+          value = _DescriptionElement;
+          return _DescriptionElement is not null;
         case "legalStatusOfSupply":
-          value = LegalStatusOfSupply;
-          return LegalStatusOfSupply is not null;
+          value = _LegalStatusOfSupply;
+          return _LegalStatusOfSupply is not null;
         case "marketingStatus":
-          value = MarketingStatus;
-          return MarketingStatus?.Any() == true;
+          value = _MarketingStatus;
+          return _MarketingStatus?.Any() == true;
         case "marketingAuthorization":
-          value = MarketingAuthorization;
-          return MarketingAuthorization is not null;
+          value = _MarketingAuthorization;
+          return _MarketingAuthorization is not null;
         case "manufacturer":
-          value = Manufacturer;
-          return Manufacturer?.Any() == true;
+          value = _Manufacturer;
+          return _Manufacturer?.Any() == true;
         case "batchIdentifier":
-          value = BatchIdentifier;
-          return BatchIdentifier?.Any() == true;
+          value = _BatchIdentifier;
+          return _BatchIdentifier?.Any() == true;
         case "packageItem":
-          value = PackageItem;
-          return PackageItem?.Any() == true;
+          value = _PackageItem;
+          return _PackageItem?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       }
 
     }
 
-    public override Base SetValue(string key, object value)
+    public override Base SetValue(string key, object? value)
     {
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>)value;
+          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "subject":
-          Subject = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.FhirString)value;
+          DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "legalStatusOfSupply":
-          LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)value;
+          LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "marketingStatus":
-          MarketingStatus = (List<Hl7.Fhir.Model.MarketingStatus>)value;
+          MarketingStatus = (List<Hl7.Fhir.Model.MarketingStatus>?)value!;
           return this;
         case "marketingAuthorization":
-          MarketingAuthorization = (Hl7.Fhir.Model.ResourceReference)value;
+          MarketingAuthorization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "manufacturer":
-          Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>)value;
+          Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "batchIdentifier":
-          BatchIdentifier = (List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>)value;
+          BatchIdentifier = (List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>?)value!;
           return this;
         case "packageItem":
-          PackageItem = (List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>)value;
+          PackageItem = (List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -793,15 +784,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
-      if (MarketingStatus?.Any() == true) yield return new KeyValuePair<string,object>("marketingStatus",MarketingStatus);
-      if (MarketingAuthorization is not null) yield return new KeyValuePair<string,object>("marketingAuthorization",MarketingAuthorization);
-      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
-      if (BatchIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("batchIdentifier",BatchIdentifier);
-      if (PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
+      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",_LegalStatusOfSupply);
+      if (_MarketingStatus?.Any() == true) yield return new KeyValuePair<string,object>("marketingStatus",_MarketingStatus);
+      if (_MarketingAuthorization is not null) yield return new KeyValuePair<string,object>("marketingAuthorization",_MarketingAuthorization);
+      if (_Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (_BatchIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("batchIdentifier",_BatchIdentifier);
+      if (_PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",_PackageItem);
     }
 
   }
