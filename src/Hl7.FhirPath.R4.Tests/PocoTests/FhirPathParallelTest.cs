@@ -17,17 +17,16 @@ namespace Vonk.FhirPath.R4.Tests
     public class FhirPathExtensionsTests
     {
         private static Dictionary<string, ValueSet> Resources;
-        private static TestContext Context;
+
+        public TestContext TestContext { get; set; }
 
         [ClassInitialize]
         public static void Initialize(TestContext ctx)
         {
-            Context = ctx;
             var specSource = ZipSource.CreateValidationSource();
 
             Resources = specSource.FindAll<ValueSet>().ToDictionary<ValueSet, string>(sd => sd.Url);
             //By putting all the url's in a dictionary we can be sure there are no duplicates. 
-
         }
 
         [TestMethod]
@@ -46,7 +45,7 @@ namespace Vonk.FhirPath.R4.Tests
         /// This may indicate a multithreading problem in the FhirPath evaluation.
         /// You may need to run the test in Release mode to reveal the error.
         /// </summary>
-        public static async Tasks.Task MassiveParallelSelectsShouldBeCorrect(string testName, Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
+        public async Tasks.Task MassiveParallelSelectsShouldBeCorrect(string testName, Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
         {
             var actual = new ConcurrentBag<(string canonical, ValueSet resource)>();
             var buffer = new BufferBlock<ValueSet>();
@@ -73,7 +72,7 @@ namespace Vonk.FhirPath.R4.Tests
             buffer.Complete();
             await processor.Completion;
             sw.Stop();
-            Context.WriteLine($"Extracting urls took {sw.Elapsed.ToString("c")} ms");
+            TestContext.WriteLine($"Extracting urls took {sw.Elapsed.ToString("c")} ms");
 
             Assert.AreEqual(actual.Count(), resources.Count(), $"{testName}: All Resources should have a url.");
             Assert.IsFalse(actual
