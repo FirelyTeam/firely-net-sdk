@@ -42,6 +42,15 @@ namespace Hl7.Fhir.Specification.Tests
                 .Should().BeTrue();
 
             parameters = new ValidateCodeParameters()
+                    .WithValueSet(MIMETYPEVS)
+                    .WithCode(code: "json")
+                    .Build();
+
+            result = await _service.ValueSetValidateCode(parameters);
+            result.Parameter.Should().Contain(p => p.Name == "result")
+                .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
+
+            parameters = new ValidateCodeParameters()
                    .WithValueSet(ADMINGENDERVS)
                    .WithCode(code: "application/json", context: "context")
                    .Build();
@@ -60,6 +69,11 @@ namespace Hl7.Fhir.Specification.Tests
                   .WithValueSet(MIMETYPEVS)
                   .WithCode(code: "male", system: "http://hl7.org/fhir/administrative-gender")
                   .Build();
+
+            validateCode = async () => await _service.ValueSetValidateCode(parameters);
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Unknown system 'http://hl7.org/fhir/administrative-gender'");
+
+
 
             validateCode = async () => await _service.ValueSetValidateCode(parameters);
             await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Unknown system 'http://hl7.org/fhir/administrative-gender'");
