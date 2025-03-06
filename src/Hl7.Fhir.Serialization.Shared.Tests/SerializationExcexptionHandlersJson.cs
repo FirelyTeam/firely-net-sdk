@@ -27,17 +27,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 }
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var parser = new FhirJsonParser(parserSettings);
+            var parser = new FhirJsonParser();
             var p = parser.Parse<Patient>(rawData);
             DebugDump.OutputJson(p);
         }
@@ -53,17 +43,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 }
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var parser = new FhirJsonParser(parserSettings);
+            var parser = new FhirJsonParser();
             var p = parser.Parse<Observation>(rawData);
             DebugDump.OutputJson(p);
         }
@@ -86,17 +66,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 }
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var parser = new FhirJsonParser(parserSettings);
+            var parser = new FhirJsonParser();
             var p = parser.Parse<Patient>(rawData);
             DebugDump.OutputJson(p);
         }
@@ -118,17 +88,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 }
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var parser = new FhirJsonParser(parserSettings);
+            var parser = new FhirJsonParser();
             var p = parser.Parse<Patient>(rawData);
             DebugDump.OutputJson(p);
         }
@@ -151,17 +111,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 }
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var parser = new FhirJsonParser(parserSettings);
+            var parser = new FhirJsonParser();
             var p = parser.Parse<Patient>(rawData);
             DebugDump.OutputJson(p);
         }
@@ -245,17 +195,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 }
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var parser = new FhirJsonParser(parserSettings);
+            var parser = new FhirJsonParser();
             var p = parser.Parse<Observation>(rawData);
             DebugDump.OutputJson(p);
         }
@@ -294,17 +234,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 }
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var parser = new FhirJsonParser(parserSettings);
+            var parser = new FhirJsonParser();
             var p = parser.Parse<Observation>(rawData);
             DebugDump.OutputJson(p);
         }

@@ -21,17 +21,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 </Patient>
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var xs = new FhirXmlParser(parserSettings);
+            var xs = new FhirXmlParser();
             var p = xs.Parse<Patient>(xmlPatient);
             DebugDump.OutputXml(p);
         }
@@ -50,17 +40,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 </Patient>
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var xs = new FhirXmlParser(parserSettings);
+            var xs = new FhirXmlParser();
             var p = xs.Parse<Patient>(xmlPatient);
             DebugDump.OutputXml(p);
         }
@@ -80,17 +60,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 </Patient>
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var xs = new FhirXmlParser(parserSettings);
+            var xs = new FhirXmlParser();
             var p = xs.Parse<Patient>(xmlPatient);
             DebugDump.OutputXml(p);
         }
@@ -112,17 +82,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 </Patient>
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var xs = new FhirXmlParser(parserSettings);
+            var xs = new FhirXmlParser();
             var p = xs.Parse<Patient>(xmlPatient);
 
             DebugDump.OutputXml(p);
@@ -140,17 +100,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 </Patient>
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var xs = new FhirXmlParser(parserSettings);
+            var xs = new FhirXmlParser();
             var p = xs.Parse<Patient>(xmlPatient);
             DebugDump.OutputXml(p);
         }
@@ -231,17 +181,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 </Observation>
                 """;
 
-            var parserSettings = new ParserSettings()
-            {
-                PermissiveParsing = false,
-                ExceptionHandler = (sender, notification) =>
-                {
-                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
-                    // intentionally not throwing here
-                }
-            };
-            var xs = new FhirXmlParser(parserSettings);
+            var xs = new FhirXmlParser();
             var p = xs.Parse<Observation>(xml);
             DebugDump.OutputXml(p);
         }

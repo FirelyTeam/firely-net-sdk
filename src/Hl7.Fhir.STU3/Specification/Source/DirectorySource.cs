@@ -971,7 +971,8 @@ namespace Hl7.Fhir.Specification.Source
 
             // Also use the current PoCo parser settings
             var pocoSettings = PocoBuilderSettings.CreateDefault();
-            _settings.ParserSettings?.CopyTo(pocoSettings);
+            if (_settings.ParserSettings is { } ps)
+                pocoSettings.CopyFrom(ps);
 
             T result = null;
 

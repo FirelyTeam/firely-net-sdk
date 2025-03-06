@@ -93,7 +93,8 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// ParserSettings for the pre-5.0 SDK parsers. Are only used when <see cref="SerializationEngine"/> is not set.
         /// </summary>
-        public ParserSettings? ParserSettings = ParserSettings.CreateDefault();
+        [Obsolete("Use the SerializationEngine setting instead, chosing one of the options on FhirSerializationEngineFactory.")]
+        public ParserSettings? ParserSettings = new();
 
         /// <summary>
         /// How to transfer binary data when sending data to a Binary endpoint.
@@ -123,7 +124,9 @@ namespace Hl7.Fhir.Rest
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
+#pragma warning disable CS0618 // Type or member is obsolete
             other.ParserSettings = ParserSettings;
+#pragma warning restore CS0618 // Type or member is obsolete
             other.PreferCompressedResponses = PreferCompressedResponses;
             other.PreferredFormat = PreferredFormat;
             other.ReturnPreference = ReturnPreference;

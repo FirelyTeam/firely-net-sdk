@@ -76,7 +76,7 @@ public class BaseFhirJsonPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
-    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
+    /// <remarks>The <see cref="ParserSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeResource(ref Utf8JsonReader reader, [NotNullWhen(true)] out Resource? instance, out IEnumerable<CodedException> issues)
     {
         if (reader.CurrentState.Options.CommentHandling is not JsonCommentHandling.Skip and not JsonCommentHandling.Disallow)
@@ -103,7 +103,7 @@ public class BaseFhirJsonPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
-    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
+    /// <remarks>The <see cref="ParserSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeObject(Type targetType, ref Utf8JsonReader reader, [NotNullWhen(true)] out Base? instance, out IEnumerable<CodedException> issues)
     {
         if (reader.CurrentState.Options.CommentHandling is not JsonCommentHandling.Skip and not JsonCommentHandling.Disallow)

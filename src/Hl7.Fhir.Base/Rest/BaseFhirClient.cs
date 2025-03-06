@@ -787,7 +787,7 @@ public partial class BaseFhirClient : IDisposable
 
     public Task<TResource?> executeAsync<TResource>(Model.Bundle tx, HttpStatusCode expect, CancellationToken? ct) where TResource : Model.Resource
     {
-        return executeAsync<TResource>(tx, new[] { expect }, ct);
+        return executeAsync<TResource>(tx, [expect], ct);
     }
 
     private async Task<TResource?> executeAsync<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect, CancellationToken? ct) where TResource : Resource
@@ -974,7 +974,9 @@ public partial class BaseFhirClient : IDisposable
 
     private IFhirSerializationEngine getSerializationEngine()
     {
-        return Settings.SerializationEngine ?? FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, Settings.ParserSettings ?? new());
+#pragma warning disable CS0618 // Type or member is obsolete
+        return Settings.SerializationEngine ?? FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, Settings.ParserSettings ?? new ParserSettings());
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 
     private async Task verifyServerVersion(CancellationToken ct)
@@ -985,12 +987,12 @@ public partial class BaseFhirClient : IDisposable
         _versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
         string? serverVersion;
-        var settings = Settings;
+        var originalEngine = Settings.SerializationEngine;
 
         try
         {
-            Settings = Settings.Clone();
-            Settings.ParserSettings = new() { AllowUnrecognizedEnums = true };
+            // Temporarily set the engine to ignore most errors.
+            Settings.SerializationEngine = FhirSerializationEngineFactory.Ostrich(Inspector);
             serverVersion = await getFhirVersionOfServer(ct).ConfigureAwait(false);
         }
         catch (FormatException fe)
@@ -1000,8 +1002,8 @@ public partial class BaseFhirClient : IDisposable
         }
         finally
         {
-            // put back the original settings
-            Settings = settings;
+            // put back the original engine
+            Settings.SerializationEngine = originalEngine;
         }
 
         if (serverVersion == null)

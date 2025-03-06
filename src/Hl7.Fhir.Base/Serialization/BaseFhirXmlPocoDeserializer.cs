@@ -20,7 +20,7 @@ public class BaseFhirXmlPocoDeserializer
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new FhirXmlPocoDeserializerSettings())
+    public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new ParserSettings())
     {
         // nothing
     }
@@ -39,7 +39,7 @@ public class BaseFhirXmlPocoDeserializer
     /// </summary>
     /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
     /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirXmlPocoDeserializer(Assembly assembly, FhirXmlPocoDeserializerSettings settings)
+    public BaseFhirXmlPocoDeserializer(Assembly assembly, ParserSettings settings)
     {
         Settings = settings;
         _inspector = ModelInspector.ForAssembly(assembly ?? throw new ArgumentNullException(nameof(assembly)));
@@ -50,7 +50,7 @@ public class BaseFhirXmlPocoDeserializer
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
     /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirXmlPocoDeserializer(ModelInspector inspector, FhirXmlPocoDeserializerSettings settings)
+    public BaseFhirXmlPocoDeserializer(ModelInspector inspector, ParserSettings settings)
     {
         Settings = settings;
         _inspector = inspector;
@@ -59,7 +59,7 @@ public class BaseFhirXmlPocoDeserializer
     /// <summary>
     /// The settings that were passed to the constructor.
     /// </summary>
-    public FhirXmlPocoDeserializerSettings Settings { get; }
+    public ParserSettings Settings { get; }
 
     private readonly ModelInspector _inspector;
 
@@ -70,7 +70,7 @@ public class BaseFhirXmlPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
-    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
+    /// <remarks>The <see cref="ParserSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeResource(XmlReader reader, [NotNullWhen(true)] out Resource? instance, out IEnumerable<CodedException> issues)
     {
         FhirXmlPocoDeserializerState state = new();
@@ -100,7 +100,7 @@ public class BaseFhirXmlPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
-    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
+    /// <remarks>The <see cref="ParserSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeElement(Type targetType, XmlReader reader, [NotNullWhen(true)] out Base? instance, out IEnumerable<CodedException> issues)
     {
         FhirXmlPocoDeserializerState state = new();

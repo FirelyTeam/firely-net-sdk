@@ -14,16 +14,14 @@ namespace Hl7.Fhir.Serialization.Tests
         private T SerializeResource<T>(string xml)
             where T : Resource
         {
-            using (var reader = SerializationUtil.XmlReaderFromXmlText(xml))
+            using var reader = SerializationUtil.XmlReaderFromXmlText(xml);
+            var settings = new ParserSettings()
             {
-                FhirXmlPocoDeserializerSettings settings = new FhirXmlPocoDeserializerSettings()
-                {
-                    ValidateOnFailedParse = true,
-                    // Validator = null
-                };
-                FhirXmlPocoDeserializer ds = new FhirXmlPocoDeserializer(settings);
-                return (T)ds.DeserializeResource(reader);
-            }
+                ValidateOnFailedParse = true,
+                // Validator = null
+            };
+            var ds = new FhirXmlPocoDeserializer(settings);
+            return (T)ds.DeserializeResource(reader);
         }
 
         [TestMethod]

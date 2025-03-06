@@ -20,10 +20,10 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Configures the FhirClient to use the legacy serialization behaviour, using the <see cref="FhirClientSettings.ParserSettings"/>.
         /// </summary>
-        public static BaseFhirClient WithLegacySerializer(this BaseFhirClient client)
+        public static BaseFhirClient WithLegacySerializer(this BaseFhirClient client, ParserSettings? parserSettings = null)
         {
             client.Settings.SerializationEngine =
-                FhirSerializationEngineFactory.Legacy.FromParserSettings(client.Inspector, client.Settings.ParserSettings ?? new());
+                FhirSerializationEngineFactory.Legacy.FromParserSettings(client.Inspector, parserSettings ?? new ParserSettings());
             return client;
         }
 
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Rest
 
         public static BaseFhirClient WithCustomIgnoreListSerializer(this BaseFhirClient client, string[] ignoreList)
         {
-            var xmlSettings = new FhirXmlPocoDeserializerSettings().Ignoring(ignoreList);
+            var xmlSettings = new ParserSettings().Ignoring(ignoreList);
             var jsonSettings = new FhirJsonConverterOptions().Ignoring(ignoreList);
 
             client.Settings.SerializationEngine = FhirSerializationEngineFactory.Custom(client.Inspector, jsonSettings, xmlSettings);

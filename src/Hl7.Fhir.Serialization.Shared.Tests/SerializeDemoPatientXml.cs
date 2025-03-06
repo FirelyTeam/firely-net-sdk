@@ -58,7 +58,7 @@ public class SerializeDemoPatientXml
     public async Tasks.Task CanSerializeFromPoco()
     {
         var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-        var pser = new FhirXmlParser(new ParserSettings { DisallowXsiAttributesOnRoot = false });
+        var pser = new FhirXmlParser(new ParserSettings { AllowXsiAttributesOnRoot = true });
         var pat = await pser.ParseAsync<Patient>(tpXml);
 
         var nav = pat.ToTypedElement();

@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Tests.Serialization
             await File.WriteAllTextAsync(xmlFile, xml);
 
             xml = await File.ReadAllTextAsync(xmlFile);
-            var parsed = await new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(xml);
+            var parsed = await new FhirXmlParser(new ParserSettings().UsingMode(DeserializationMode.Recoverable)).ParseAsync<T>(xml);
 
             return parsed;
         }
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Tests.Serialization
             await File.WriteAllTextAsync(jsonFile, json);
 
             json = await File.ReadAllTextAsync(jsonFile);
-            var parsed = await new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(json);
+            var parsed = await new FhirJsonParser(new ParserSettings().UsingMode(DeserializationMode.Recoverable)).ParseAsync<T>(json);
 
             return parsed;
         }

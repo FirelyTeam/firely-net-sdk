@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Tests.Model
 
         private void SearchExtractionAllExamplesInternal()
         {
-            FhirXmlParser parser = new FhirXmlParser(new ParserSettings { PermissiveParsing = true });
+            var parser = new FhirXmlParser(new ParserSettings().UsingMode(DeserializationMode.Recoverable));
             int errorCount = 0;
             int parserErrorCount = 0;
             int testFileCount = 0;

@@ -61,10 +61,8 @@ namespace Hl7.Fhir.Specification.Tests
             PermissiveParsing = true
         };
 
-        static readonly ParserSettings _parserSettings = new ParserSettings()
-        {
-            PermissiveParsing = true
-        };
+        private static readonly ParserSettings _parserSettings =
+            new ParserSettings().UsingMode(DeserializationMode.Recoverable);
 
         static readonly DirectorySourceSettings _dirSourceSettings = new DirectorySourceSettings()
         {

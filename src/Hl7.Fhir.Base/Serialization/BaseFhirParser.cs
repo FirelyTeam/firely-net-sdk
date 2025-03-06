@@ -17,19 +17,19 @@ public class BaseFhirParser
         {
             AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
             IgnoreUnknownMembers = ps.AcceptUnknownMembers,
-            ExceptionHandler = ps.ExceptionHandler,
-#pragma warning disable CS0618 // Type or member is obsolete
-            TruncateDateTimeToDate = ps.TruncateDateTimeToDate
-#pragma warning restore CS0618 // Type or member is obsolete
         };
 
     internal static FhirXmlParsingSettings BuildXmlParsingSettings(ParserSettings settings) =>
         new()
         {
-            DisallowSchemaLocation = settings.DisallowXsiAttributesOnRoot,
+            DisallowSchemaLocation = !settings.AllowXsiAttributesOnRoot,
+#pragma warning disable CS0618 // Type or member is obsolete
             PermissiveParsing = settings.PermissiveParsing,
+#pragma warning restore CS0618 // Type or member is obsolete
         };
 
     internal static FhirJsonParsingSettings BuildJsonParserSettings(ParserSettings settings) =>
+#pragma warning disable CS0618 // Type or member is obsolete
         new() { AllowJsonComments = false, PermissiveParsing = settings.PermissiveParsing };
+#pragma warning restore CS0618 // Type or member is obsolete
 }

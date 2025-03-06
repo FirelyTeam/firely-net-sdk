@@ -27,31 +27,33 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ConfigureFailOnUnknownMember()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
-            var parser = new FhirXmlParser();
-            parser.Settings.AllowUnrecognizedEnums = true;
-            parser.Settings.ExceptionHandler = (object source, Utility.ExceptionNotification args) =>
-            {
-                Debug.WriteLine(args.Message);
-                if (args.Exception is StructuralTypeException && args.Severity == Utility.ExceptionSeverity.Error)
-                {
-                    Assert.IsTrue(args.Exception.Message.Contains("Type checking the data: "), "Error message detected");
-                    throw new StructuralTypeException(args.Exception.Message.Replace("Type checking the data: ", ""), args.Exception.InnerException);
-                }
-            };
+            var parser = new FhirXmlParser(new ParserSettings { AllowXsiAttributesOnRoot = true });
 
-            try
-            {
-                var r2 = parser.Parse<Resource>(xml);
-                Assert.Fail("Should have failed on unknown member");
-            }
-            catch (StructuralTypeException ste)
-            {
-                Debug.WriteLine(ste.Message);
-                Assert.IsFalse(ste.Message.Contains("Type checking the data: "), "Custom error message should have removed the prefix");
-            }
+            // parser.Settings.ExceptionHandler = (object source, Utility.ExceptionNotification args) =>
+            // {
+            //     Debug.WriteLine(args.Message);
+            //     if (args.Exception is StructuralTypeException && args.Severity == Utility.ExceptionSeverity.Error)
+            //     {
+            //         Assert.IsTrue(args.Exception.Message.Contains("Type checking the data: "), "Error message detected");
+            //         throw new StructuralTypeException(args.Exception.Message.Replace("Type checking the data: ", ""), args.Exception.InnerException);
+            //     }
+            // };
 
-            parser.Settings.AcceptUnknownMembers = true;
+            // try
+            // {
+            //     var r2 = parser.Parse<Resource>(xml);
+            //     Assert.Fail("Should have failed on unknown member");
+            // }
+            // catch (StructuralTypeException ste)
+            // {
+            //     Debug.WriteLine(ste.Message);
+            //     Assert.IsFalse(ste.Message.Contains("Type checking the data: "), "Custom error message should have removed the prefix");
+            // }
+            //
+            // parser.Settings.AcceptUnknownMembers = true;
             var resource = parser.Parse<Resource>(xml);
+
+            throw new NotImplementedException("Repair this unit test as soon as we have replaced the FhirXmlParser.");
         }
 
 
@@ -94,7 +96,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void RequiresHl7Namespace()
         {
             var xml = "<Patient><active value='false' /></Patient>";
-            var parser = new FhirXmlParser(new ParserSettings() { PermissiveParsing = false });
+            var parser = new FhirXmlParser();
 
             try
             {
@@ -130,7 +132,7 @@ namespace Hl7.Fhir.Tests.Serialization
             parser.Parse<Resource>(xml);
 
             // Now, enforce xsi: attributes are no longer accepted
-            parser.Settings.DisallowXsiAttributesOnRoot = true;
+            parser.Settings = parser.Settings with { DisallowXsiAttributesOnRoot = true };
 
             try
             {
@@ -220,7 +222,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
 
             // Verify that if we relax the restriction that everything still works
-            pser.Settings.AllowUnrecognizedEnums = true;
+            pser.Settings = pser.Settings with { AllowUnrecognizedEnums = true };
             p = await pser.ParseAsync<Patient>(json);
 
             Assert.IsNotNull(p.Gender);
@@ -234,7 +236,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             try
             {
-                pser.Settings.AllowUnrecognizedEnums = false;
+                pser.Settings = pser.Settings with { AllowUnrecognizedEnums = false };
                 await pser.ParseAsync<Patient>(xml2);
                 Assert.Fail();
             }
@@ -244,7 +246,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
 
             // Now, allow unknown enums and check support
-            pser.Settings.AllowUnrecognizedEnums = true;
+            pser.Settings = pser.Settings with { AllowUnrecognizedEnums = true };
             p = await pser.ParseAsync<Patient>(xml2);
             Assert.ThrowsException<CodedValidationException>(() => p.Gender);
             Assert.AreEqual("superman", p.GenderElement.ObjectValue);
@@ -366,7 +368,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
                 var json =
                     "{\"resourceType\": \"Patient\", \"text\": {\"status\": \"generated\", \"div\": \"text without div\" } }";
-                var patient = await new FhirJsonParser(new ParserSettings { PermissiveParsing = false }).ParseAsync<Patient>(json);
+                var patient = await new FhirJsonParser().ParseAsync<Patient>(json);
 
                 Assert.Fail("Should have thrown on invalid Div format");
             }

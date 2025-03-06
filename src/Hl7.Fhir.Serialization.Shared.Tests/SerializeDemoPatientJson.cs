@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public async Tasks.Task CanSerializeFromPoco()
         {
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
-            var pser = new FhirJsonParser(new ParserSettings { DisallowXsiAttributesOnRoot = false } );
+            var pser = new FhirJsonParser(new ParserSettings { AllowXsiAttributesOnRoot = true } );
             var pat = await pser.ParseAsync<Patient>(tp);
 
             var output = pat.ToJson();
