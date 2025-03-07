@@ -58,8 +58,7 @@ public class SerializeDemoPatientXml
     public void CanSerializeFromPoco()
     {
         var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-        var pser = new FhirXmlParser();
-        var pat = pser.Parse<Patient>(tpXml);
+        var pat = FhirXmlParser.OSTRICH.Parse<Patient>(tpXml);
 
         var nav = pat.ToTypedElement();
         var output = nav.ToXml();
@@ -74,7 +73,7 @@ public class SerializeDemoPatientXml
         // If on a Unix platform replace \\r\\n in json strings to \\n.
         if(Environment.NewLine == "\n")
             tpJson = tpJson.Replace(@"\r\n", @"\n");
-        var pat = (new FhirXmlParser()).Parse<Patient>(tpXml);
+        var pat = FhirXmlParser.RECOVERABLE.Parse<Patient>(tpXml);
 
         var navXml = getXmlElement(tpXml);
         var navJson = await getJsonElement(tpJson);
@@ -106,7 +105,7 @@ public class SerializeDemoPatientXml
         var pretty = nav.ToXml(pretty: true);
         Assert.IsTrue(pretty[..50].Contains('\n'));
 
-        var p = new FhirXmlParser().Parse<Patient>(xml);
+        var p = FhirXmlParser.OSTRICH.Parse<Patient>(xml);
         output = new FhirXmlSerializer().SerializeToString(p, pretty: false);
         Assert.IsFalse(output[..50].Contains('\n'));
         pretty = new FhirXmlSerializer().SerializeToString(p, pretty: true);

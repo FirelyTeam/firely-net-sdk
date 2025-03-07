@@ -137,7 +137,7 @@ public static class SerializationUtil
 
     public static Utf8JsonReader Utf8JsonReaderFromJsonText(string json) =>
         new(Encoding.UTF8.GetBytes(json),
-            new JsonReaderOptions { CommentHandling = JsonCommentHandling.Skip });
+            new JsonReaderOptions { CommentHandling = JsonCommentHandling.Skip, AllowTrailingCommas = true });
 
     public static XmlReader XmlReaderFromStream(Stream input, bool ignoreComments = true)
         => WrapXmlReader(XmlReader.Create(input), ignoreComments);

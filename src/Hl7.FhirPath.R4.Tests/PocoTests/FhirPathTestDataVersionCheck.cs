@@ -33,8 +33,8 @@ namespace Hl7.FhirPath.R4.Tests
             if (path.Contains("source-test"))
                 return;
 
-            var xmlParser = new Hl7.Fhir.Serialization.FhirXmlParser();
-            var jsonParser = new Fhir.Serialization.FhirJsonParser();
+            var xmlParser = FhirXmlParser.OSTRICH; // There are many errors in the test data
+            var jsonParser = FhirJsonParser.OSTRICH; // Idem
             Console.WriteLine($"Validating test files in {path.Replace(basePath, "")}");
             foreach (var item in Directory.EnumerateFiles(path))
             {

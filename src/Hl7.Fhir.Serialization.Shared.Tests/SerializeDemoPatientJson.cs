@@ -51,8 +51,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public async Tasks.Task CanSerializeFromPoco()
         {
             var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
-            var pser = new FhirJsonParser();
-            var pat = pser.Parse<Patient>(tp);
+            var pat = FhirJsonParser.OSTRICH.Parse<Patient>(tp);
 
             var output = pat.ToJson();
 
@@ -73,7 +72,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pretty = nav.ToJson(pretty: true);
             Assert.IsTrue(pretty[..20].Contains('\n'));
 
-            var p = new FhirJsonParser().Parse<Patient>(json);
+            var p = FhirJsonParser.OSTRICH.Parse<Patient>(json);
             output = new FhirJsonSerializer().SerializeToString(p, pretty: false);
             Assert.IsFalse(output[..20].Contains('\n'));
             pretty = new FhirJsonSerializer().SerializeToString(p, pretty: true);

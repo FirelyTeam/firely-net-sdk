@@ -43,6 +43,7 @@ public class FhirXmlException : ExtendedCodedException
     public const string ENCOUNTERED_DTD_REFERENCES_CODE = "XML119";
     public const string ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE = "XML120";
     public const string INVALID_DUPLICATE_PROPERTY_CODE = "XML121";
+    public const string EMPTY_RESOURCE_CONTAINER_CODE = "XML122";
 
     // ==========================================
     // Unrecoverable Errors - when adding a new error, also add it to the appropriate error collections below.
@@ -57,7 +58,8 @@ public class FhirXmlException : ExtendedCodedException
     internal static FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, $"Element '{elementName}' has a contained resource and therefore should not have attributes.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException UNALLOWED_NODE_TYPE(XmlReader reader, string instancePath, string s0) => Initialize(reader, instancePath, UNALLOWED_NODE_TYPE_CODE, $"Xml node of type '{s0}' is unexpected at this point", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException EXPECTED_OPENING_ELEMENT(XmlReader reader, string instancePath, string openElementName) => Initialize(reader, instancePath, EXPECTED_OPENING_ELEMENT_CODE, $"Expected opening element, but found {openElementName}.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException INVALID_DUPLICATE_PROPERTY(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, INVALID_DUPLICATE_PROPERTY_CODE, $"Element '{elementName}' is not permitted to repeat", OO_Sev.Error, OO_Typ.Structure);
+    internal static FhirXmlException INVALID_DUPLICATE_PROPERTY(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, INVALID_DUPLICATE_PROPERTY_CODE, $"Element '{elementName}' is not permitted to repeat.", OO_Sev.Error, OO_Typ.Structure);
+
 
     // ==========================================
     // Recoverable Errors - when adding a new error, also add it to the appropriate error collections below.
@@ -91,10 +93,13 @@ public class FhirXmlException : ExtendedCodedException
     internal static FhirXmlException SCHEMALOCATION_DISALLOWED(XmlReader reader, string instancePath) => Initialize(reader, instancePath, SCHEMALOCATION_DISALLOWED_CODE, "The 'schemaLocation' attribute is disallowed.", OO_Sev.Warning, OO_Typ.Structure);
     internal static FhirXmlException ENCOUNTERED_DTD_REFERENCES(XmlReader reader, string instancePath) => Initialize(reader, instancePath, ENCOUNTERED_DTD_REFERENCES_CODE, "There SHALL be no DTD references in FHIR resources (because of the XXE security exploit)", OO_Sev.Warning, OO_Typ.Structure);
 
+    // Empty resource containers are not allowed in FHIR, but there is no data loss.
+    internal static FhirXmlException EMPTY_RESOURCE_CONTAINER(XmlReader reader, string instancePath) => Initialize(reader, instancePath, EMPTY_RESOURCE_CONTAINER_CODE, $"Encountered an empty resource container.", OO_Sev.Error, OO_Typ.Structure);
     /// <summary>
     /// List of issues which do NOT lead to data loss. Recoverable issues mean that all data present in the parsed data could be retrieved and
     /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
     /// </summary>
+
     internal static readonly HashSet<string> RECOVERABLE_ISSUES =
     [
         ..CodedValidationException.POCO_VALIDATION_ISSUES,
@@ -107,7 +112,8 @@ public class FhirXmlException : ExtendedCodedException
         ATTRIBUTE_HAS_EMPTY_VALUE_CODE,
         ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE,
         SCHEMALOCATION_DISALLOWED_CODE,
-        ENCOUNTERED_DTD_REFERENCES_CODE
+        ENCOUNTERED_DTD_REFERENCES_CODE,
+        EMPTY_RESOURCE_CONTAINER_CODE
     ];
 
     /// <summary>

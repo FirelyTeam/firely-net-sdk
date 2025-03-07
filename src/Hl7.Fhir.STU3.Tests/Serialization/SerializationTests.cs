@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
@@ -136,6 +137,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var b = new Bundle
             {
+                Type = Bundle.BundleType.Batch,
                 NextLink = new Uri("Organization/123456/_history/123456", UriKind.Relative)
             };
 
@@ -152,7 +154,12 @@ namespace Hl7.Fhir.Tests.Serialization
             var dec6 = 6m;
             var dec60 = 6.0m;
             var ext = new FhirDecimal(dec6);
-            var obs = new Observation();
+            var obs = new Observation
+            {
+                Code = new CodeableConcept("http://nu.nl", "bla"),
+                Status = ObservationStatus.Cancelled
+            };
+
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
 
             var json = FhirJsonSerializer.SerializeToString(obs);
@@ -161,7 +168,12 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("6", ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
 
             ext = new FhirDecimal(dec60);
-            obs = new Observation();
+            obs = new Observation
+            {
+                Code = new CodeableConcept("http://nu.nl", "bla"),
+                Status = ObservationStatus.Cancelled
+            };
+
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
 
             json = FhirJsonSerializer.SerializeToString(obs);
@@ -175,7 +187,11 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var dec = 3.1415926535897932384626433833m;
             var ext = new FhirDecimal(dec);
-            var obs = new Observation();
+            var obs = new Observation
+            {
+                Code = new CodeableConcept("http://nu.nl", "bla"),
+                Status = ObservationStatus.Cancelled
+            };
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
 
             var json = FhirJsonSerializer.SerializeToString(obs);
@@ -254,7 +270,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
                 Assert.Fail();
             }
-            catch (FormatException e)
+            catch (XmlException e)
             {
                 Assert.IsTrue(e.Message.Contains("DTD is prohibited"));
             }

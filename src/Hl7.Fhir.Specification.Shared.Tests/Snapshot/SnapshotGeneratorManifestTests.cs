@@ -62,27 +62,27 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         private static readonly ParserSettings _parserSettings =
-            new ParserSettings().UsingMode(DeserializationMode.Recoverable);
+            new ParserSettings().UsingMode(DeserializationMode.Ostrich);
 
         static readonly DirectorySourceSettings _dirSourceSettings = new DirectorySourceSettings()
         {
             IncludeSubDirectories = true,
             // Exclude expected output, to prevent canonical url conflicts
             // Also include duplicate input file "t24a", conflicts with "t24a-input"
-            Excludes = new string[] { "manifest.xml", "*-expected*", "*-output*", "t24a.xml" },
+            Excludes = ["manifest.xml", "*-expected*", "*-output*", "t24a.xml"],
             FormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml,
             XmlParserSettings = _fhirXmlParserSettings
         };
 
-        static readonly SnapshotGeneratorSettings _snapGenSettings = new SnapshotGeneratorSettings()
+        static readonly SnapshotGeneratorSettings _snapGenSettings = new()
         {
             ForceRegenerateSnapshots = true,
             GenerateSnapshotForExternalProfiles = true
         };
 
-        static readonly FhirXmlParser _fhirXmlParser = new FhirXmlParser(_parserSettings);
-        static readonly FhirJsonParser _fhirJsonParser = new FhirJsonParser(_parserSettings);
-        static readonly FhirXmlSerializer _fhirXmlSerializer = new FhirXmlSerializer();
+        private static readonly FhirXmlParser FHIR_XML_PARSER = new(_parserSettings);
+        private static readonly FhirJsonParser FHIR_JSON_PARSER = new(_parserSettings);
+        private static readonly FhirXmlSerializer FHIR_XML_SERIALIZER = new();
 
         string _testPath;
         DirectorySource _dirSource;
@@ -636,20 +636,15 @@ namespace Hl7.Fhir.Specification.Tests
                 using (var stream = File.OpenRead(filePath))
                 using (var reader = new XmlTextReader(stream))
                 {
-                    return _fhirXmlParser.Parse<StructureDefinition>(reader);
+                    return FHIR_XML_PARSER.Parse<StructureDefinition>(reader);
                 }
             }
 
             filePath = Path.ChangeExtension(filePath, "json");
             if (File.Exists(filePath))
             {
-                //using (var stream = _dirSource.LoadArtifactByName(filePath))
-                using (var stream = File.OpenRead(filePath))
-                using (var textReader = new StreamReader(stream))
-                using (var reader = new JsonTextReader(textReader))
-                {
-                    return _fhirJsonParser.Parse<StructureDefinition>(reader);
-                }
+                var text = File.ReadAllText(filePath);
+                return FHIR_JSON_PARSER.Parse<StructureDefinition>(text);
             }
 
             Assert.Fail($"File not found: '{filePath}'");
@@ -667,7 +662,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         static void Save(string filePath, Base output)
         {
-            var xml = _fhirXmlSerializer.SerializeToString(output, pretty: true);
+            var xml = FHIR_XML_SERIALIZER.SerializeToString(output, pretty: true);
             File.WriteAllText(filePath, xml);
         }
 

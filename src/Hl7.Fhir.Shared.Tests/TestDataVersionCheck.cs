@@ -29,8 +29,9 @@ namespace Hl7.Fhir.Tests
 
         private static void validateFolder(string basePath, string path, StringBuilder issues)
         {
-            var xmlParser = new FhirXmlParser();
-            var jsonParser = new FhirJsonParser();
+            var xmlParser = FhirXmlParser.OSTRICH;
+            var jsonParser = FhirJsonParser.OSTRICH;
+
             Console.WriteLine($"Validating test files in {path.Replace(basePath, "")}");
             foreach (var item in Directory.EnumerateFiles(path))
             {

@@ -213,7 +213,7 @@ public class BaseFhirXmlParser
             //if we are still not at an opening element, throw user-error.
             state.Errors.Add(ERR.EXPECTED_OPENING_ELEMENT(reader, state.Path.GetInstancePath(), reader.NodeType.GetLiteral()));
             //try to recover
-            while (reader.NodeType != XmlNodeType.Element || !reader.EOF)
+            while (reader.NodeType != XmlNodeType.Element && !reader.EOF)
             {
                 reader.ReadToContent(state);
             }
@@ -396,6 +396,7 @@ public class BaseFhirXmlParser
     private static XHtml readXhtml(XmlReader reader)
     {
         var xhtml = reader.ReadOuterXml();
+        reader.MoveToContent();
         return new XHtml(xhtml);
     }
 
@@ -457,16 +458,27 @@ public class BaseFhirXmlParser
         }
         // let's move to the actual resource
         reader.ReadToContent(state);
-        var result = DeserializeResourceInternal(reader, state);
-        // now we should be at the closing element of the resource container (e.g. </contained>). We should check that and maybe fix that.)
-        if (reader.Depth != depth && reader.NodeType != XmlNodeType.EndElement)
-        {
-            state.Errors.Add(ERR.UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath(), reader.LocalName));
+        object? result;
 
-            // skip until we're back at the closing of the </contained>
-            while (!(reader.Depth == depth && reader.NodeType == XmlNodeType.EndElement))
+        if (reader.NodeType == XmlNodeType.EndElement)
+        {
+            state.Errors.Add(ERR.EMPTY_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath()));
+            result = null;
+        }
+        else
+        {
+            result = DeserializeResourceInternal(reader, state);
+            // now we should be at the closing element of the resource container (e.g. </contained>). We should check that and maybe fix that.)
+            if (reader.Depth != depth && reader.NodeType != XmlNodeType.EndElement)
             {
-                reader.Read();
+                state.Errors.Add(ERR.UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath(),
+                    reader.LocalName));
+
+                // skip until we're back at the closing of the </contained>
+                while (!(reader.Depth == depth && reader.NodeType == XmlNodeType.EndElement))
+                {
+                    reader.Read();
+                }
             }
         }
 

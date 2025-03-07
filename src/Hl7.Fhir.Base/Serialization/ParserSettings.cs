@@ -65,7 +65,7 @@ public record ParserSettings
 
         // Simulate the old behaviour by selectively enforcing errors.
         if(AllowUnrecognizedEnums) ignored.Add(CodedValidationException.INVALID_CODED_VALUE_CODE);
-        if(AllowUnrecognizedEnums) ignored.AddRange(
+        if(AcceptUnknownMembers) ignored.AddRange(
             [FhirXmlException.UNKNOWN_ELEMENT_CODE, FhirXmlException.UNKNOWN_ATTRIBUTE_CODE]);
 
         var augmentedFilter = _exceptionFilter;
@@ -79,7 +79,7 @@ public record ParserSettings
     /// <summary>
     /// Raise an error when an xsi:schemaLocation is encountered.
     /// </summary>
-    public bool DisallowXsiAttributesOnRoot { get; set; }
+    public bool DisallowXsiAttributesOnRoot { get; init; }
 
     /// <summary>
     /// Do not throw when encountering values not parseable as a member of an enumeration in a Poco.

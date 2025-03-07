@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         public void PocoTypedElementPerformance()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-            var cs = (new FhirXmlParser()).Parse<Patient>(xml);
+            var cs = FhirXmlParser.OSTRICH.Parse<Patient>(xml);
             var nav = cs.ToTypedElement();
 
             TypedElementPerformance(nav);

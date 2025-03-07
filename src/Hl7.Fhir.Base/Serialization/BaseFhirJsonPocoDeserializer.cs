@@ -521,7 +521,6 @@ public class BaseFhirJsonParser
             _validations[key] = validation;
         }
 
-        //public CodedValidationException[] Run() => _validations.Values.SelectMany(delayed => delayed()).ToArray();
         public void RunDelayedValidation()
         {
             foreach (var validation in _validations.Values) validation();
@@ -738,7 +737,7 @@ public class BaseFhirJsonParser
         (object? partial, ERR? error) result = reader.TokenType switch
         {
             JsonTokenType.Null => (null, ERR.EXPECTED_PRIMITIVE_NOT_NULL(ref reader, pathStack.GetInstancePath())),
-            JsonTokenType.String when string.IsNullOrEmpty(reader.GetString()) => (reader.GetString(), ERR.PROPERTY_MAY_NOT_BE_EMPTY(ref reader, pathStack.GetInstancePath())),
+            JsonTokenType.String when string.IsNullOrWhiteSpace(reader.GetString()) => (reader.GetString(), ERR.PROPERTY_MAY_NOT_BE_EMPTY(ref reader, pathStack.GetInstancePath())),
             JsonTokenType.String => (reader.GetString(), null),
             JsonTokenType.Number => (tryGetMatchingNumber(ref reader, valuePropertyType), null),
             JsonTokenType.True or JsonTokenType.False => (reader.GetBoolean(), null),

@@ -17,4 +17,20 @@ using Tasks = System.Threading.Tasks;
 namespace Hl7.Fhir.Serialization;
 
 public class FhirJsonParser(ParserSettings? settings = null)
-    : BaseFhirJsonParser(ModelInfo.ModelInspector, settings);
+    : BaseFhirJsonParser(ModelInfo.ModelInspector, settings)
+{
+    /// <inheritdoc cref="FhirXmlParser.DEFAULT" />
+    public static readonly FhirJsonParser DEFAULT = new();
+
+    /// <inheritdoc cref="FhirXmlParser.STRICT" />
+    public static readonly FhirJsonParser STRICT = new(new ParserSettings().UsingMode(DeserializationMode.Strict));
+
+    /// <inheritdoc cref="FhirXmlParser.RECOVERABLE" />
+    public static readonly FhirJsonParser RECOVERABLE = new(new ParserSettings().UsingMode(DeserializationMode.Recoverable));
+
+    /// <inheritdoc cref="FhirXmlParser.BACKWARDSCOMPATIBLE" />
+    public static readonly FhirJsonParser BACKWARDSCOMPATIBLE = new(new ParserSettings().UsingMode(DeserializationMode.BackwardsCompatible));
+
+    /// <inheritdoc cref="FhirXmlParser.OSTRICH" />
+    public static readonly FhirJsonParser OSTRICH = new(new ParserSettings().UsingMode(DeserializationMode.Ostrich));
+}
