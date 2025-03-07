@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             var json = TestDataHelper.ReadTestData("TestPatient.json");
             var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var poco = await (new FhirJsonParser()).ParseAsync<Patient>(json);
+            var poco = (new FhirJsonParser()).Parse<Patient>(json);
             var pocoP = poco.ToTypedElement();
             var jsonP = (await FhirJsonNode.ParseAsync(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true }))
                 .ToTypedElement(new PocoStructureDefinitionSummaryProvider());

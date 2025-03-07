@@ -117,7 +117,7 @@ public static class FhirJsonConverterOptionsExtensions
     public static JsonSerializerOptions UsingMode(this JsonSerializerOptions options, DeserializationMode mode)
     {
         var ourConverter = getCustomFactoryFromList(options.Converters);
-        ourConverter.Reconfigure(ourConverter.CurrentOptions.WithMode(mode));
+        ourConverter.Reconfigure((FhirJsonConverterOptions)ourConverter.CurrentOptions.UsingMode(mode));
 
         return options;
     }
@@ -132,7 +132,7 @@ public static class FhirJsonConverterOptionsExtensions
     public static JsonSerializerOptions Enforcing(this JsonSerializerOptions options, IEnumerable<string> toEnforce)
     {
         var ourConverter = getCustomFactoryFromList(options.Converters);
-        ourConverter.Reconfigure(ourConverter.CurrentOptions.Enforcing(toEnforce));
+        ourConverter.Reconfigure((FhirJsonConverterOptions)ourConverter.CurrentOptions.Enforcing(toEnforce));
 
         return options;
     }
@@ -147,7 +147,7 @@ public static class FhirJsonConverterOptionsExtensions
     public static JsonSerializerOptions Ignoring(this JsonSerializerOptions options, IEnumerable<string> toIgnore)
     {
         var ourConverter = getCustomFactoryFromList(options.Converters);
-        ourConverter.Reconfigure(ourConverter.CurrentOptions.Ignoring(toIgnore));
+        ourConverter.Reconfigure((FhirJsonConverterOptions)ourConverter.CurrentOptions.Ignoring(toIgnore));
 
         return options;
     }

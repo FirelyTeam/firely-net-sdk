@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -50,12 +51,12 @@ namespace Hl7.Fhir.Tests
                     if (new FileInfo(item).Extension == ".xml")
                     {
                         Console.WriteLine($"    {item.Replace(path+"//", "")}");
-                        await xmlParser.ParseAsync<Resource>(content);
+                        xmlParser.Parse<Resource>(content);
                     }
                     else if (new FileInfo(item).Extension == ".json")
                     {
                         Console.WriteLine($"    {item.Replace(path + "//", "")}");
-                        await jsonParser.ParseAsync<Resource>(content);
+                        jsonParser.Parse<Resource>(content);
                     }
                     else
                     {

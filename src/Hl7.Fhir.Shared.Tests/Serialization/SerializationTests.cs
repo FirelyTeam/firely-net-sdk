@@ -44,9 +44,9 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task ParseMetaXml()
+        public void ParseMetaXml()
         {
-            var poco = (Meta)(await new FhirXmlParser().ParseAsync(metaXml, typeof(Meta)));
+            var poco = (new FhirXmlParser().Parse<Meta>(metaXml));
             var xml = new FhirXmlSerializer().SerializeToString(poco, rootName: "meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
@@ -70,9 +70,9 @@ namespace Hl7.Fhir.Tests.Serialization
         internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
 
         [TestMethod]
-        public async Tasks.Task ParseMetaJson()
+        public void ParseMetaJson()
         {
-            var poco = (Meta)await (new FhirJsonParser().ParseAsync(metaJson, typeof(Meta)));
+            var poco = (new FhirJsonParser().Parse<Meta>(metaJson));
             var json = FhirJsonSerializer.SerializeToString(poco);
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
@@ -80,11 +80,11 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task ParsePatientJsonNullType()
+        public void ParsePatientJsonNullType()
         {
             string jsonPatient = TestDataHelper.ReadTestData("TestPatient.json");
 
-            var poco = await new FhirJsonParser().ParseAsync(jsonPatient);
+            var poco = new FhirJsonParser().Parse(jsonPatient);
 
             Assert.AreEqual(((Patient)poco).Id, "pat1");
             Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task TestLongDecimalSerialization()
+        public void TestLongDecimalSerialization()
         {
             var dec = 3.1415926535897932384626433833m;
             var ext = new FhirDecimal(dec);
@@ -179,13 +179,13 @@ namespace Hl7.Fhir.Tests.Serialization
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
 
             var json = FhirJsonSerializer.SerializeToString(obs);
-            var obs2 = await FhirJsonParser.ParseAsync<Observation>(json);
+            var obs2 = FhirJsonParser.Parse<Observation>(json);
 
             Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
 
         [TestMethod]
-        public async Tasks.Task TestParseUnkownPolymorphPropertyInJson()
+        public void TestParseUnkownPolymorphPropertyInJson()
         {
             var dec6 = 6m;
             var ext = new FhirDecimal(dec6);
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var json = FhirJsonSerializer.SerializeToString(obs);
             try
             {
-                var obs2 = await FhirJsonParser.ParseAsync<Observation>(json);
+                var obs2 = FhirJsonParser.Parse<Observation>(json);
                 Assert.Fail("valueDecimal is not a known type for Observation");
             }
             catch (FormatException)
@@ -261,11 +261,11 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task SerializeUnknownEnums()
+        public void SerializeUnknownEnums()
         {
             string xml = TestDataHelper.ReadTestData("TestPatient.xml");
             var pser = new FhirXmlParser();
-            var p = await pser.ParseAsync<Patient>(xml);
+            var p = pser.Parse<Patient>(xml);
             string outp = FhirXmlSerializer.SerializeToString(p);
             Assert.IsTrue(outp.Contains("\"male\""));
 
@@ -304,12 +304,12 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task SerializeJsonWithPlainDiv()
+        public void SerializeJsonWithPlainDiv()
         {
             string json = TestDataHelper.ReadTestData(@"TestPatient.json");
             Assert.IsNotNull(json);
             var parser = new FhirJsonParser( new ParserSettings().UsingMode(DeserializationMode.Recoverable));
-            var pat = await parser.ParseAsync<Patient>(json);
+            var pat = parser.Parse<Patient>(json);
             Assert.IsNotNull(pat);
 
             var xml = FhirXmlSerializer.SerializeToString(pat);
@@ -475,17 +475,17 @@ namespace Hl7.Fhir.Tests.Serialization
         /// This test proves issue 657: https://github.com/FirelyTeam/firely-net-sdk/issues/657
         /// </summary>
         [TestMethod]
-        public async Tasks.Task DateTimeOffsetAccuracyTest()
+        public void DateTimeOffsetAccuracyTest()
         {
             var patient = new Patient { Meta = new Meta { LastUpdated = DateTimeOffset.UtcNow } };
             var json = new FhirJsonSerializer().SerializeToString(patient);
-            var res = await new FhirJsonParser().ParseAsync<Patient>(json);
+            var res = new FhirJsonParser().Parse<Patient>(json);
             Assert.IsTrue(patient.IsExactly(res), "1");
 
             // Is the parsing still correct without milliseconds?
             patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, TimeSpan.Zero) } };
             json = "{\"resourceType\":\"Patient\",\"meta\":{\"lastUpdated\":\"2018-08-13T13:41:56+00:00\"}}";
-            res = await new FhirJsonParser().ParseAsync<Patient>(json);
+            res = new FhirJsonParser().Parse<Patient>(json);
             Assert.IsTrue(patient.IsExactly(res), "2");
 
             // Is the serialization still correct without milliseconds?
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Tests.Serialization
             // Is the parsing still correct with a few milliseconds and TimeZone?
             patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, 12, TimeSpan.Zero) } };
             json = "{\"resourceType\":\"Patient\",\"meta\":{\"lastUpdated\":\"2018-08-13T13:41:56.012+00:00\"}}";
-            res = await new FhirJsonParser().ParseAsync<Patient>(json);
+            res = new FhirJsonParser().Parse<Patient>(json);
             Assert.IsTrue(patient.IsExactly(res), "4");
 
             // Is the serialization still correct with a few milliseconds?
@@ -504,12 +504,15 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task SerializerHandlesEmptyChildObjects()
+        public void SerializerHandlesEmptyChildObjects()
         {
-            var fhirJsonParser = new FhirJsonParser();
+            // Test legacy behaviour
+#pragma warning disable CS0618 // Type or member is obsolete
+            var fhirJsonParser = new FhirJsonParser(new ParserSettings { PermissiveParsing = true });
+#pragma warning restore CS0618 // Type or member is obsolete
 
             string json = TestDataHelper.ReadTestData("TestPatient.json");
-            var poco = await fhirJsonParser.ParseAsync<Patient>(json);
+            var poco = fhirJsonParser.Parse<Patient>(json);
 
             Assert.AreEqual(1, poco.Name.Count);
 
@@ -517,7 +520,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var reserialized = poco.ToJson();
 
-            var newPoco = await fhirJsonParser.ParseAsync<Patient>(reserialized);
+            var newPoco = fhirJsonParser.Parse<Patient>(reserialized);
 
             Assert.AreEqual(1, newPoco.Name.Count);
         }

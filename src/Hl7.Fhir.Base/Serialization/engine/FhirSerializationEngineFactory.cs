@@ -82,7 +82,7 @@ public static partial class FhirSerializationEngineFactory
     private static IFhirSerializationEngine createEngine(ModelInspector inspector,
         FhirJsonConverterOptions? converterOptions, ParserSettings? xmlSettings, DeserializationMode mode)
     {
-        var jsonOptions = (converterOptions ?? new FhirJsonConverterOptions()).WithMode(mode);
+        var jsonOptions = (FhirJsonConverterOptions)(converterOptions ?? new FhirJsonConverterOptions()).UsingMode(mode);
         var xmlOptions = (xmlSettings ?? new ParserSettings()).UsingMode(mode);
 
         return Custom(inspector, jsonOptions, xmlOptions);

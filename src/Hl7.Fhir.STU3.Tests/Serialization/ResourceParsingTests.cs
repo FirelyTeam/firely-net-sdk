@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ConfigureFailOnUnknownMember()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
-            var parser = new FhirXmlParser(new ParserSettings { AllowXsiAttributesOnRoot = true });
+            var parser = new FhirXmlParser();
 
             // parser.Settings.ExceptionHandler = (object source, Utility.ExceptionNotification args) =>
             // {
@@ -157,11 +157,11 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
         [TestMethod]
-        public async Tasks.Task RetainSpacesInAttribute()
+        public void RetainSpacesInAttribute()
         {
             var xml = "<Basic xmlns='http://hl7.org/fhir'><extension url='http://blabla.nl'><valueString value='Daar gaat ie dan" + "&#xA;" + "verdwijnt dit?' /></extension></Basic>";
 
-            var basic = await FhirXmlParser.ParseAsync<DomainResource>(xml);
+            var basic = FhirXmlParser.Parse<DomainResource>(xml);
 
             Assert.IsTrue(basic.GetStringExtension("http://blabla.nl").Contains("\n"));
 
@@ -169,24 +169,27 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(outp.Contains("&#xA;"));
         }
 
-        internal FhirXmlParser FhirXmlParser = new FhirXmlParser();
-        internal FhirJsonParser FhirJsonParser = new FhirJsonParser();
-        internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
-        internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
+        // Test legacy behaviour
+#pragma warning disable CS0618 // Type or member is obsolete
+        internal FhirXmlParser FhirXmlParser = new(new ParserSettings { PermissiveParsing = true });
+        internal FhirJsonParser FhirJsonParser = new(new ParserSettings { PermissiveParsing = true });
+#pragma warning restore CS0618 // Type or member is obsolete
+        internal FhirXmlSerializer FhirXmlSerializer = new();
+        internal FhirJsonSerializer FhirJsonSerializer = new();
 
         [TestMethod]
-        public async Tasks.Task ParsePerfJson()
+        public void ParsePerfJson()
         {
             string json = TestDataHelper.ReadTestData("TestPatient.json");
             var pser = new FhirJsonParser();
 
             // Assume that we can happily read the patient gender when enums are enforced
-            var p = await pser.ParseAsync<Patient>(json);
+            var p = pser.Parse<Patient>(json);
 
             var sw = new Stopwatch();
             sw.Start();
             for (var i = 0; i < 500; i++)
-                p = await pser.ParseAsync<Patient>(json);
+                p = pser.Parse<Patient>(json);
             sw.Stop();
             Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds / 500.0 * 1000} micros");
         }
@@ -210,20 +213,20 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
         [TestMethod]
-        public async Tasks.Task AcceptUnknownEnums()
+        public void AcceptUnknownEnums()
         {
             string json = TestDataHelper.ReadTestData("TestPatient.json");
             var pser = new FhirJsonParser();
 
             // Assume that we can happily read the patient gender when enums are enforced
-            var p = await pser.ParseAsync<Patient>(json);
+            var p = pser.Parse<Patient>(json);
             Assert.IsNotNull(p.Gender);
             Assert.AreEqual("male", p.GenderElement.ObjectValue);
             Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
 
             // Verify that if we relax the restriction that everything still works
             pser.Settings = pser.Settings with { AllowUnrecognizedEnums = true };
-            p = await pser.ParseAsync<Patient>(json);
+            p = pser.Parse<Patient>(json);
 
             Assert.IsNotNull(p.Gender);
             Assert.AreEqual("male", p.GenderElement.ObjectValue);
@@ -237,7 +240,7 @@ namespace Hl7.Fhir.Tests.Serialization
             try
             {
                 pser.Settings = pser.Settings with { AllowUnrecognizedEnums = false };
-                await pser.ParseAsync<Patient>(xml2);
+                pser.Parse<Patient>(xml2);
                 Assert.Fail();
             }
             catch (FormatException)
@@ -247,7 +250,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             // Now, allow unknown enums and check support
             pser.Settings = pser.Settings with { AllowUnrecognizedEnums = true };
-            p = await pser.ParseAsync<Patient>(xml2);
+            p = pser.Parse<Patient>(xml2);
             Assert.ThrowsException<CodedValidationException>(() => p.Gender);
             Assert.AreEqual("superman", p.GenderElement.ObjectValue);
         }
@@ -261,13 +264,13 @@ namespace Hl7.Fhir.Tests.Serialization
             string json = TestDataHelper.ReadTestData("json-edge-cases.json");
             var tempPath = Path.GetTempPath();
 
-            var poco = await FhirJsonParser.ParseAsync<Resource>(json);
+            var poco = FhirJsonParser.Parse<Resource>(json);
             Assert.IsNotNull(poco);
             var xml = FhirXmlSerializer.SerializeToString(poco);
             Assert.IsNotNull(xml);
             await File.WriteAllTextAsync(Path.Combine(tempPath, "edgecase.xml"), xml);
 
-            poco = await FhirXmlParser.ParseAsync<Resource>(xml);
+            poco = FhirXmlParser.Parse<Resource>(xml);
             Assert.IsNotNull(poco);
             var json2 = FhirJsonSerializer.SerializeToString(poco);
             Assert.IsNotNull(json2);
@@ -280,7 +283,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task ContainedBaseIsNotAddedToId()
+        public void ContainedBaseIsNotAddedToId()
         {
             var p = new Patient() { Id = "jaap" };
             var o = new Observation() { Subject = new ResourceReference() { Reference = "#" + p.Id } };
@@ -290,7 +293,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirXmlSerializer.SerializeToString(o);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
 
-            var o2 = await FhirXmlParser.ParseAsync<Observation>(xml);
+            var o2 = FhirXmlParser.Parse<Observation>(xml);
             o2.ResourceBase = new Uri("http://nu.nl/fhir");
             xml = FhirXmlSerializer.SerializeToString(o2);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
@@ -298,21 +301,21 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
         [TestMethod]
-        public async Tasks.Task EmptyRoundTrip()
+        public void EmptyRoundTrip()
         {
             var patient = new Patient
             {
-                Identifier = new List<Identifier>
-                {
+                Identifier =
+                [
                     new Identifier("https://mydomain.com/identifiers/Something", "123"),
                     new Identifier("https://mydomain.com/identifiers/Spaces", "   "),
                     new Identifier("https://mydomain.com/identifiers/Empty", string.Empty),
                     new Identifier("https://mydomain.com/identifiers/Null", null)
-                }
+                ]
             };
 
             var json = FhirJsonSerializer.SerializeToString(patient);
-            var parsedPatient = await FhirJsonParser.ParseAsync<Patient>(json);
+            var parsedPatient = FhirJsonParser.Parse<Patient>(json);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
             for (var i = 0; i < patient.Identifier.Count; i++)
@@ -329,7 +332,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
 
             var xml = FhirXmlSerializer.SerializeToString(patient);
-            parsedPatient = await FhirXmlParser.ParseAsync<Patient>(xml);
+            parsedPatient = FhirXmlParser.Parse<Patient>(xml);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
             for (var i = 0; i < patient.Identifier.Count; i++)
@@ -348,7 +351,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
         [TestMethod]
-        public async Tasks.Task SerializeNarrativeWithQuotes()
+        public void SerializeNarrativeWithQuotes()
         {
             var p = new Patient
             {
@@ -356,19 +359,19 @@ namespace Hl7.Fhir.Tests.Serialization
             };
 
             var xml = FhirXmlSerializer.SerializeToString(p);
-            Assert.IsNotNull(await FhirXmlParser.ParseAsync<Resource>(xml));
+            Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
             var json = FhirJsonSerializer.SerializeToString(p);
-            Assert.IsNotNull(await FhirJsonParser.ParseAsync<Resource>(json));
+            Assert.IsNotNull(FhirJsonParser.Parse<Resource>(json));
         }
 
         [TestMethod]
-        public async Tasks.Task NarrativeMustBeValidXml()
+        public void NarrativeMustBeValidXml()
         {
             try
             {
                 var json =
                     "{\"resourceType\": \"Patient\", \"text\": {\"status\": \"generated\", \"div\": \"text without div\" } }";
-                var patient = await new FhirJsonParser().ParseAsync<Patient>(json);
+                _ = new FhirJsonParser().Parse<Patient>(json);
 
                 Assert.Fail("Should have thrown on invalid Div format");
             }
@@ -388,10 +391,10 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public async Tasks.Task ParseBinaryForR4andHigher()
+        public void ParseBinaryForR4andHigher()
         {
             var json = "{\"resourceType\":\"Binary\",\"content\":\"ZGF0YQ==\"}";
-            var binary = await new FhirJsonParser().ParseAsync<Binary>(json);
+            var binary = new FhirJsonParser().Parse<Binary>(json);
 
             var result = new FhirJsonSerializer().SerializeToString(binary);
 
@@ -404,7 +407,9 @@ namespace Hl7.Fhir.Tests.Serialization
         public async Tasks.Task ParseBinaryForR4andHigherWithUnknownSTU3Element()
         {
             var json = "{\"resourceType\":\"Binary\",\"data\":\"ZGF0YQ==\"}";
+#pragma warning disable CS0618 // Type or member is obsolete
             Func<Tasks.Task> act = () => new FhirJsonParser().ParseAsync<Binary>(json);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             await act.Should().ThrowAsync<StructuralTypeException>();
         }

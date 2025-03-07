@@ -21,9 +21,8 @@ public record ParserSettings
     /// Specifies a filter that can be used to filter out exceptions that are not considered fatal. The filter
     /// returns <c>true</c> for exceptions that should be ignored, and <c>false</c> otherwise.
     /// </summary>
-    /// <remarks>Setting <see cref="AllowUnrecognizedEnums"/>, <see cref="AllowXsiAttributesOnRoot"/>,
-    /// <see cref="AcceptUnknownMembers"/> or <inheritdoc cref="set_PermissiveParsing"/> will augment
-    /// this filter to reflect these settings.</remarks>
+    /// <remarks>Setting <see cref="AllowUnrecognizedEnums"/>,  <see cref="AcceptUnknownMembers"/> or
+    /// <inheritdoc cref="set_PermissiveParsing"/> will augment this filter to reflect these settings.</remarks>
     public Predicate<CodedException>? ExceptionFilter
     {
         get => augmentFilter();
@@ -65,7 +64,6 @@ public record ParserSettings
         var ignored = new List<string>();
 
         // Simulate the old behaviour by selectively enforcing errors.
-        if(AllowXsiAttributesOnRoot) ignored.Add(FhirXmlException.SCHEMALOCATION_DISALLOWED_CODE);
         if(AllowUnrecognizedEnums) ignored.Add(CodedValidationException.INVALID_CODED_VALUE_CODE);
         if(AllowUnrecognizedEnums) ignored.AddRange(
             [FhirXmlException.UNKNOWN_ELEMENT_CODE, FhirXmlException.UNKNOWN_ATTRIBUTE_CODE]);
@@ -79,11 +77,9 @@ public record ParserSettings
     }
 
     /// <summary>
-    /// Suppress an error when an xsi:schemaLocation is encountered.
+    /// Raise an error when an xsi:schemaLocation is encountered.
     /// </summary>
-    /// <remarks>This is the same as calling <see cref="Ignoring"/> with
-    /// <c>FhirXmlException.SCHEMALOCATION_DISALLOWED_CODE</c> as the argument.</remarks>
-    public bool AllowXsiAttributesOnRoot { get; init; }
+    public bool DisallowXsiAttributesOnRoot { get; set; }
 
     /// <summary>
     /// Do not throw when encountering values not parseable as a member of an enumeration in a Poco.

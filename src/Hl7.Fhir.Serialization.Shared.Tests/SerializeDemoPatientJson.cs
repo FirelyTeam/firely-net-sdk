@@ -50,13 +50,13 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public async Tasks.Task CanSerializeFromPoco()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
-            var pser = new FhirJsonParser(new ParserSettings { AllowXsiAttributesOnRoot = true } );
-            var pat = await pser.ParseAsync<Patient>(tp);
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
+            var pser = new FhirJsonParser();
+            var pat = pser.Parse<Patient>(tp);
 
             var output = pat.ToJson();
 
-            List<string> errors = new List<string>();
+            var errors = new List<string>();
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, output, errors);
             Console.WriteLine(String.Join("\r\n", errors));
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pretty = nav.ToJson(pretty: true);
             Assert.IsTrue(pretty[..20].Contains('\n'));
 
-            var p = await new FhirJsonParser().ParseAsync<Patient>(json);
+            var p = new FhirJsonParser().Parse<Patient>(json);
             output = new FhirJsonSerializer().SerializeToString(p, pretty: false);
             Assert.IsFalse(output[..20].Contains('\n'));
             pretty = new FhirJsonSerializer().SerializeToString(p, pretty: true);

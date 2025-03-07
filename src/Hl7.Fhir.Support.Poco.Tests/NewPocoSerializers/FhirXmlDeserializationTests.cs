@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(content);
             reader.Read();
 
-            var deserializer = getTestDeserializer(new());
+            var deserializer = getTestDeserializer(new ParserSettings { DisallowXsiAttributesOnRoot = true });
             var state = new FhirXmlPocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 

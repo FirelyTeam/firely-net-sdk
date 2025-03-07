@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Specification.Tests
             var expected = test.Fail ? null : Load(test.Id, expectedFileNameFormat);
             Assert.IsTrue(test.Fail || expected.HasSnapshot);
 
-            var output = (StructureDefinition)input.DeepCopy();
+            var output = input.DeepCopy();
             Exception exception = null;
             try
             {
