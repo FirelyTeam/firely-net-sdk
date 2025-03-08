@@ -20,10 +20,13 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Configures the FhirClient to use the legacy serialization behaviour, using the <see cref="FhirClientSettings.ParserSettings"/>.
         /// </summary>
-        public static BaseFhirClient WithLegacySerializer(this BaseFhirClient client, ParserSettings? parserSettings = null)
+        public static BaseFhirClient WithLegacySerializer(this BaseFhirClient client)
         {
             client.Settings.SerializationEngine =
-                FhirSerializationEngineFactory.Legacy.FromParserSettings(client.Inspector, parserSettings ?? new ParserSettings());
+                FhirSerializationEngineFactory.Legacy.FromParserSettings(client.Inspector,
+#pragma warning disable CS0618 // Type or member is obsolete
+                    client.Settings.ParserSettings ?? new ParserSettings());
+#pragma warning restore CS0618 // Type or member is obsolete
             return client;
         }
 
