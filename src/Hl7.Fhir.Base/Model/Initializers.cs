@@ -31,105 +31,155 @@
 #nullable enable
 
 using Hl7.Fhir.Introspection;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
-namespace Hl7.Fhir.Model
+namespace Hl7.Fhir.Model;
+
+public partial class HumanName
 {
-    [DebuggerDisplay(@"\{{DebuggerDisplay(null),nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public partial class CodeableConcept
+    public static HumanName ForFamily(string family)
     {
-        internal string DebuggerDisplay(string prefix)
+        var result = new HumanName()
         {
-            if (!string.IsNullOrEmpty(Text))
-                return string.Format("{0}Text=\"{1}\"", prefix, Text);
-            var sb = new StringBuilder();
-            if (_Coding != null)
-            {
-                foreach (var item in _Coding)
-                {
-                    sb.Append("  ");
-                    sb.Append(item.DebuggerDisplay);
-                }
-            }
-            return sb.ToString();
-        }
-
+            Family = family
+        };
+        return result;
     }
 
-    public partial class Identifier
+    public HumanName WithGiven(string given)
     {
-        public Identifier()
-        {
-        }
-
-        public Identifier(string system, string value)
-        {
-            this.System = system;
-            this.Value = value;
-        }
+        this.GivenElement.Add(new FhirString(given));
+        return this;
     }
 
-    [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public partial class Period
+    public HumanName WithPrefix(string prefix)
     {
-        public Period()
-        {
-        }
-
-        public Period(FhirDateTime start, FhirDateTime end)
-        {
-            StartElement = start;
-            EndElement = end;
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        [NotMapped]
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                var sb = new StringBuilder();
-                if (!string.IsNullOrEmpty(this.Start))
-                    sb.AppendFormat(" Start=\"{0}\"", Start);
-                if (!string.IsNullOrEmpty(this.End))
-                    sb.AppendFormat(" End=\"{0}\"", End);
-
-                return sb.ToString();
-            }
-        }
+        this.PrefixElement.Add(new FhirString(prefix));
+        return this;
     }
 
-    public partial class ContactPoint
+    public HumanName WithSuffix(string prefix)
     {
-        public ContactPoint()
-        {
-        }
-
-        public ContactPoint(ContactPointSystem? system, ContactPointUse? use, string value)
-        {
-            this.System = system;
-            this.Use = use;
-            this.Value = value;
-        }
+        this.SuffixElement.Add(new FhirString(prefix));
+        return this;
     }
 
-    public partial class Quantity
+    public HumanName AndFamily(string family)
     {
-        public Quantity()
-        {
-        }
+        this.Family = family;
+        return this;
+    }
 
-        public Quantity(decimal value, string unit, string system = "http://unitsofmeasure.org")
+    public List<HumanName> AsList() => [this];
+}
+
+[DebuggerDisplay(@"\{{DebuggerDisplay(),nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+public partial class Address
+{
+    private string DebuggerDisplay()
+    {
+        if (!String.IsNullOrEmpty(Text))
+            return $"Text=\"{Text}\"";
+        return string.Join(", ", string.Join(", ", Line.ToArray()),
+                   City, State, PostalCode, Country)
+               + (Use.HasValue ? " Use=\"" + Use.Value + "\"" : "")
+               + (Type.HasValue ? " Type=\"" + Type.Value + "\"" : "");
+    }
+}
+
+[DebuggerDisplay(@"\{{DebuggerDisplay(null),nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+public partial class CodeableConcept
+{
+    internal string DebuggerDisplay(string prefix)
+    {
+        if (!string.IsNullOrEmpty(Text))
+            return $"{prefix}Text=\"{Text}\"";
+        var sb = new StringBuilder();
+
+        if (_Coding is null) return sb.ToString();
+
+        foreach (var item in _Coding)
         {
-            Value = value;
-            Unit = unit;
-            Code = unit;
-            System = system;
+            sb.Append("  ");
+            sb.Append(item.DebuggerDisplay);
         }
+        return sb.ToString();
     }
 
 }
 
-#nullable restore
+public partial class Identifier
+{
+    public Identifier()
+    {
+    }
+
+    public Identifier(string system, string value)
+    {
+        this.System = system;
+        this.Value = value;
+    }
+}
+
+[DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+public partial class Period
+{
+    public Period()
+    {
+    }
+
+    public Period(FhirDateTime start, FhirDateTime end)
+    {
+        StartElement = start;
+        EndElement = end;
+    }
+
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    [NotMapped]
+    internal string DebuggerDisplay
+    {
+        get
+        {
+            var sb = new StringBuilder();
+            if (!string.IsNullOrEmpty(this.Start))
+                sb.AppendFormat(" Start=\"{0}\"", Start);
+            if (!string.IsNullOrEmpty(this.End))
+                sb.AppendFormat(" End=\"{0}\"", End);
+
+            return sb.ToString();
+        }
+    }
+}
+
+public partial class ContactPoint
+{
+    public ContactPoint()
+    {
+    }
+
+    public ContactPoint(ContactPointSystem? system, ContactPointUse? use, string value)
+    {
+        this.System = system;
+        this.Use = use;
+        this.Value = value;
+    }
+}
+
+public partial class Quantity
+{
+    public Quantity()
+    {
+    }
+
+    public Quantity(decimal value, string unit, string system = "http://unitsofmeasure.org")
+    {
+        Value = value;
+        Unit = unit;
+        Code = unit;
+        System = system;
+    }
+}
