@@ -93,8 +93,9 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// ParserSettings for the pre-5.0 SDK parsers. Are only used when <see cref="SerializationEngine"/> is not set.
         /// </summary>
-        [Obsolete("Use the SerializationEngine setting instead, chosing one of the options on FhirSerializationEngineFactory.")]
-        public ParserSettings? ParserSettings = new();
+        [Obsolete(
+            "Use the SerializationEngine setting instead, chosing one of the options on FhirSerializationEngineFactory.")]
+        public ParserSettings ParserSettings = new ParserSettings().UsingMode(DeserializationMode.Recoverable);
 
         /// <summary>
         /// How to transfer binary data when sending data to a Binary endpoint.
@@ -105,7 +106,6 @@ namespace Hl7.Fhir.Rest
         /// Whether we ask the server to return us binary data or a Binary resource.
         /// </summary>
         public BinaryTransferBehaviour BinaryReceivePreference = BinaryTransferBehaviour.UseData;
-        
 
         public FhirClientSettings() { }
 

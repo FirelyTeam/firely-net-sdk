@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Specification.Source
         public ParserSettings ParserSettings
         {
             get => _parserSettings;
-            set => _parserSettings = value ?? new ParserSettings();
+            set => _parserSettings = value ?? new ParserSettings().UsingMode(DeserializationMode.Recoverable);
         }
 
         /// <summary>

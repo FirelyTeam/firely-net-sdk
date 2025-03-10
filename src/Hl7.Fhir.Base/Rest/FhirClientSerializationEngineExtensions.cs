@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Rest
             client.Settings.SerializationEngine =
                 FhirSerializationEngineFactory.Legacy.FromParserSettings(client.Inspector,
 #pragma warning disable CS0618 // Type or member is obsolete
-                    client.Settings.ParserSettings ?? new ParserSettings());
+                    client.Settings.ParserSettings);
 #pragma warning restore CS0618 // Type or member is obsolete
             return client;
         }
