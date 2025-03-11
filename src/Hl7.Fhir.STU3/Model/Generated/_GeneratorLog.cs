@@ -219,7 +219,6 @@
   // Used in model class (resource): ExplanationOfBenefit.accident.type
 
 // Generated items
-// Address.cs
 // Age.cs
 // Annotation.cs
 // Contributor.cs
@@ -227,12 +226,9 @@
 // DataRequirement.cs
 // Distance.cs
 // Dosage.cs
-// Duration.cs
 // ElementDefinition.cs
-// HumanName.cs
 // Money.cs
 // ParameterDefinition.cs
-// Ratio.cs
 // RelatedArtifact.cs
 // SampledData.cs
 // Timing.cs
