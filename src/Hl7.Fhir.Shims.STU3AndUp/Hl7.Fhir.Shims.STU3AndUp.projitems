@@ -11,12 +11,9 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ElementModel\VersionedConversionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FhirPath\FhirPathExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\HumanName.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\Initializers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\ModelInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Questionnaire.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\QuestionnaireResponse.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\Ratio.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\FhirClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\FhirClientOperationsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirJsonParser.cs" />

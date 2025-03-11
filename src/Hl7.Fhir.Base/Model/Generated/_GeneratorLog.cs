@@ -326,6 +326,7 @@
 // FhirUrl.cs
 // Uuid.cs
 // XHtml.cs
+// Address.cs
 // Attachment.cs
 // BackboneElement.cs
 // BackboneType.cs
@@ -336,8 +337,10 @@
 // ContactDetail.cs
 // ContactPoint.cs
 // DataType.cs
+// Duration.cs
 // Element.cs
 // Extension.cs
+// HumanName.cs
 // Identifier.cs
 // Meta.cs
 // Narrative.cs
@@ -345,6 +348,7 @@
 // PrimitiveType.cs
 // Quantity.cs
 // Range.cs
+// Ratio.cs
 // ResourceReference.cs
 // Signature.cs
 // UsageContext.cs

@@ -305,7 +305,6 @@
   // Used in model class (resource): SearchParameter.target
 
 // Generated items
-// Address.cs
 // Age.cs
 // Annotation.cs
 // Availability.cs
@@ -314,16 +313,13 @@
 // DataRequirement.cs
 // Distance.cs
 // Dosage.cs
-// Duration.cs
 // Expression.cs
 // ExtendedContactDetail.cs
-// HumanName.cs
 // MarketingStatus.cs
 // MonetaryComponent.cs
 // Money.cs
 // ParameterDefinition.cs
 // ProductShelfLife.cs
-// Ratio.cs
 // RatioRange.cs
 // SampledData.cs
 // Timing.cs
