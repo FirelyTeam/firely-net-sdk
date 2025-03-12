@@ -143,21 +143,7 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.Parse(System.String,System.Type)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.Parse``1(Newtonsoft.Json.JsonReader)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.Parse``1(System.String)</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -171,21 +157,7 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.ParseAsync(System.String,System.Type)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.ParseAsync``1(Newtonsoft.Json.JsonReader)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.ParseAsync``1(System.String)</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -249,62 +221,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonSerializer.#ctor(Hl7.Fhir.Serialization.SerializerSettings)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.Parse(System.String,System.Type)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.Parse(System.Xml.XmlReader,System.Type)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.Parse``1(System.String)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.Parse``1(System.Xml.XmlReader)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.ParseAsync(System.String,System.Type)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.ParseAsync(System.Xml.XmlReader,System.Type)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.ParseAsync``1(System.String)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.ParseAsync``1(System.Xml.XmlReader)</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -480,6 +396,20 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.PocoSerializationExtensions.WriteToAsync(Hl7.Fhir.Model.Base,System.Xml.XmlWriter,Hl7.Fhir.Serialization.FhirXmlSerializationSettings)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Source.DirectorySource.get_ParserSettings</Target>
+    <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Source.DirectorySourceSettings.get_ParserSettings</Target>
     <Left>lib/net8.0/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -577,21 +507,7 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.Parse(System.String,System.Type)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.Parse``1(Newtonsoft.Json.JsonReader)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.Parse``1(System.String)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -605,21 +521,7 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.ParseAsync(System.String,System.Type)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.ParseAsync``1(Newtonsoft.Json.JsonReader)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirJsonParser.ParseAsync``1(System.String)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -683,62 +585,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.FhirJsonSerializer.#ctor(Hl7.Fhir.Serialization.SerializerSettings)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.Parse(System.String,System.Type)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.Parse(System.Xml.XmlReader,System.Type)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.Parse``1(System.String)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.Parse``1(System.Xml.XmlReader)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.ParseAsync(System.String,System.Type)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.ParseAsync(System.Xml.XmlReader,System.Type)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.ParseAsync``1(System.String)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.FhirXmlParser.ParseAsync``1(System.Xml.XmlReader)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -914,6 +760,20 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Serialization.PocoSerializationExtensions.WriteToAsync(Hl7.Fhir.Model.Base,System.Xml.XmlWriter,Hl7.Fhir.Serialization.FhirXmlSerializationSettings)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Source.DirectorySource.get_ParserSettings</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Source.DirectorySourceSettings.get_ParserSettings</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.STU3.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
