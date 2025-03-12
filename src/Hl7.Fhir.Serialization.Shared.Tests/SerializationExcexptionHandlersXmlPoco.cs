@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization.Tests
             where T : Resource
         {
             using var reader = SerializationUtil.XmlReaderFromXmlText(xml);
-            var settings = new ParserSettings()
+            var settings = new DeserializerSettings()
             {
                 ValidateOnFailedParse = true,
                 // Validator = null

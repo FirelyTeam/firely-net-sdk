@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.MoveToContent();
             //reader.MoveToFirstAttribute();
 
-            var deserializer = getTestDeserializer(new ParserSettings());
+            var deserializer = getTestDeserializer(new DeserializerSettings());
             var classMapping = ModelInfo.ModelInspector.ImportType(fhirTargetType)!;
             var target = (PrimitiveType)classMapping.Factory()!;
             var state = new FhirXmlPocoDeserializerState();
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(content);
             reader.Read();
 
-            var deserializer = getTestDeserializer(new ParserSettings { DisallowXsiAttributesOnRoot = true });
+            var deserializer = getTestDeserializer(new DeserializerSettings { DisallowXsiAttributesOnRoot = true });
             var state = new FhirXmlPocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(xml);
             reader.Read();
 
-            var serializer = getTestDeserializer(new ParserSettings { Validator = validator });
+            var serializer = getTestDeserializer(new DeserializerSettings { Validator = validator });
             serializer.TryDeserializeResource(reader, out _, out var issues);
 
             var errors = issues.ToList();
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var actual = FhirXmlSerializer.Default.SerializeToString(patient);
 
             // now parse this back out with the new parser
-            BaseFhirXmlPocoDeserializer ds = getTestDeserializer(new ParserSettings());
+            BaseFhirXmlPocoDeserializer ds = getTestDeserializer(new DeserializerSettings());
 
             var np = ds.DeserializeResource(actual).Should().BeOfType<Patient>().Subject;
             Assert.AreEqual(patient.Text.Div, np.Text.Div, "New narrative should be the same");
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             return reader;
         }
 
-        private static BaseFhirXmlPocoDeserializer getTestDeserializer(ParserSettings settings) =>
+        private static BaseFhirXmlPocoDeserializer getTestDeserializer(DeserializerSettings settings) =>
                 new(typeof(Patient).Assembly, settings);
         
         [TestMethod]
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                       </Patient>
                       """;
             var reader = constructReader(xml);
-            var parsed = getTestDeserializer(new()).TryDeserializeResource(reader, out var instance, out var issues);
+            var parsed = getTestDeserializer(new DeserializerSettings()).TryDeserializeResource(reader, out var instance, out var issues);
 
             return;
         }

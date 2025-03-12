@@ -13,11 +13,15 @@ using Hl7.Fhir.Validation;
 using Hl7.FhirPath.Sprache;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Hl7.Fhir.Serialization;
 
-public record ParserSettings
+
+/// <summary>
+/// Settings that control the behaviour of the <see cref="BaseFhirXmlParser"/>, FhirXmlParser,
+/// <see cref="BaseFhirJsonParser"/> and FhirJsonParser.
+/// </summary>
+public record DeserializerSettings
 {
     /// <summary>
     /// If set, this validator is invoked before the value is set in the object under construction to validate
@@ -30,10 +34,10 @@ public record ParserSettings
     /// returns <c>true</c> for exceptions that should be ignored, and <c>false</c> otherwise.
     /// </summary>
     /// <remarks>Setting <see cref="AllowUnrecognizedEnums"/>,  <see cref="AcceptUnknownMembers"/> or
-    /// <inheritdoc cref="set_PermissiveParsing"/> will augment this filter to reflect these settings.</remarks>
-    public Predicate<CodedException>? ExceptionFilter
+    /// <see cref="ParserSettings.PermissiveParsing" /> will modify this filter to reflect these settings.</remarks>
+    public virtual Predicate<CodedException>? ExceptionFilter
     {
-        get => augmentFilter();
+        get => augmentFilter(_exceptionFilter);
         init => _exceptionFilter = value;
     }
 
@@ -67,21 +71,13 @@ public record ParserSettings
     /// </summary>
     public NarrativeValidationKind NarrativeValidation { get; init; } = NarrativeValidationKind.None;
 
-    private Predicate<CodedException>? augmentFilter()
+    private Predicate<CodedException>? augmentFilter(Predicate<CodedException>? baseFilter = null)
     {
-        var ignored = new List<string>();
-
-        // Simulate the old behaviour by selectively enforcing errors.
-        if(AllowUnrecognizedEnums) ignored.Add(CodedValidationException.INVALID_CODED_VALUE_CODE);
-        if(AcceptUnknownMembers) ignored.AddRange(
+        if(AllowUnrecognizedEnums) baseFilter = baseFilter.Ignore([CodedValidationException.INVALID_CODED_VALUE_CODE]);
+        if (AcceptUnknownMembers) baseFilter = baseFilter.Ignore(
             [FhirXmlException.UNKNOWN_ELEMENT_CODE, FhirXmlException.UNKNOWN_ATTRIBUTE_CODE]);
 
-        var augmentedFilter = _exceptionFilter;
-#pragma warning disable CS0618 // Type or member is obsolete
-        if (PermissiveParsing) augmentedFilter = augmentedFilter.Or(CodedExceptionFilters.IsRecoverableIssue);
-#pragma warning restore CS0618 // Type or member is obsolete
-        if(ignored.Any()) augmentedFilter = augmentedFilter.Ignore(ignored);
-        return augmentedFilter;
+        return baseFilter;
     }
 
     /// <summary>
@@ -94,7 +90,7 @@ public record ParserSettings
     /// </summary>
     /// <remarks>
     /// This is the same as calling <see cref="Ignoring"/> with
-    /// <c>CodedValidationException.INVALID_CODED_VALUE_CODE</c> as the argument.
+    /// <c>CodedValidationException.INVALID_CODED_VALUE_CODE</c> as the argument on these settings.
     /// </remarks>
     public bool AllowUnrecognizedEnums { get; init; }
 
@@ -104,23 +100,16 @@ public record ParserSettings
     /// <remarks>
     /// This is the same as calling <see cref="Ignoring"/> with
     /// <c>FhirXmlException.UNKNOWN_ELEMENT_CODE</c> and <c>FhirXmlException.UNKNOWN_ATTRIBUTE_CODE</c>
-    /// as the arguments.
+    /// as the arguments on these settings.
     /// </remarks>
     public bool AcceptUnknownMembers { get; init; }
-
-    /// <summary>
-    /// Do not raise exceptions for recoverable errors.
-    /// </summary>
-    /// <remarks>This is the same as adding <see cref="CodedExceptionFilters.IsRecoverableIssue"/> to the exception filter.</remarks>
-    [Obsolete("Use WithMode(DeserializationMode.Recoverable) instead.")]
-    public bool PermissiveParsing { get; init; }
 
     /// <summary>
     /// Enables all validation rules that are available.
     /// </summary>
     /// <param name="mode">The selected mode to use, see <see cref="DeserializationMode"/>.</param>
     /// <param name="nvk">How strict to validate the XHtml in FHIR Narrative. Only relevant in mode <see cref="DeserializationMode.Strict"/></param>
-    public ParserSettings UsingMode(DeserializationMode mode,
+    public DeserializerSettings UsingMode(DeserializationMode mode,
         NarrativeValidationKind nvk = NarrativeValidationKind.FhirXhtml) =>
         mode switch
         {
@@ -151,15 +140,38 @@ public record ParserSettings
     /// <summary>
     /// Alters the options to enforce specific parsing exceptions.
     /// </summary>
-    public ParserSettings Enforcing(IEnumerable<string> toEnforce) =>
+    public DeserializerSettings Enforcing(IEnumerable<string> toEnforce) =>
         this with { ExceptionFilter = this.ExceptionFilter.Enforce(toEnforce) };
 
     /// <summary>
     /// Alters the options to ignore specific parsing exceptions.
     /// </summary>
-    public ParserSettings Ignoring(IEnumerable<string> toIgnore) =>
+    public DeserializerSettings Ignoring(IEnumerable<string> toIgnore) =>
         this with { ExceptionFilter = this.ExceptionFilter.Ignore(toIgnore) };
 }
 
-[Obsolete("All parsing settings are unified under ParserSettings. Use that class instead.")]
-public record FhirXmlPocoDeserializerSettings : ParserSettings;
+[Obsolete("All parsing settings are unified under DeserializerSettings. Use that class instead.")]
+public record FhirXmlPocoDeserializerSettings : DeserializerSettings;
+
+[Obsolete("All parsing settings are unified under DeserializerSettings. Use that class instead.")]
+public record ParserSettings : DeserializerSettings
+{
+    /// <inheritdoc />
+    public override Predicate<CodedException>? ExceptionFilter
+    {
+#pragma warning disable CS0618 // Type or member is obsolete
+    //    if (PermissiveParsing) augmentedFilter = augmentedFilter.Or(CodedExceptionFilters.IsRecoverableIssue);
+    get => PermissiveParsing ? base.ExceptionFilter.Or(CodedExceptionFilters.IsRecoverableIssue) : base.ExceptionFilter;
+#pragma warning restore CS0618 // Type or member is obsolete
+
+
+        init => base.ExceptionFilter = value;
+    }
+
+    /// <summary>
+    /// Do not raise exceptions for recoverable errors.
+    /// </summary>
+    /// <remarks>This is the same as adding <see cref="CodedExceptionFilters.IsRecoverableIssue"/> to the exception filter.</remarks>
+    [Obsolete("Use WithMode(DeserializationMode.Recoverable) instead.")]
+    public bool PermissiveParsing { get; init; }
+}

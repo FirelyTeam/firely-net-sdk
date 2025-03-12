@@ -61,8 +61,8 @@ namespace Hl7.Fhir.Specification.Tests
             PermissiveParsing = true
         };
 
-        private static readonly ParserSettings _parserSettings =
-            new ParserSettings().UsingMode(DeserializationMode.Ostrich);
+        private static readonly DeserializerSettings _parserSettings =
+            new DeserializerSettings().UsingMode(DeserializationMode.Ostrich);
 
         static readonly DirectorySourceSettings _dirSourceSettings = new DirectorySourceSettings()
         {
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Exclude expected output, to prevent canonical url conflicts
             // Also include duplicate input file "t24a", conflicts with "t24a-input"
             Excludes = ["manifest.xml", "*-expected*", "*-output*", "t24a.xml"],
-            FormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml,
+            FormatPreference = CommonDirectorySource.DuplicateFilenameResolution.PreferXml,
             XmlParserSettings = _fhirXmlParserSettings
         };
 

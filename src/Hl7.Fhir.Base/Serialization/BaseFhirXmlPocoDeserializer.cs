@@ -28,7 +28,7 @@ public class BaseFhirXmlPocoDeserializer : BaseFhirXmlParser
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new ParserSettings())
+    public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new DeserializerSettings())
     {
         // nothing
     }
@@ -38,7 +38,7 @@ public class BaseFhirXmlPocoDeserializer : BaseFhirXmlParser
     /// </summary>
     /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
     /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirXmlPocoDeserializer(Assembly assembly, ParserSettings settings)
+    public BaseFhirXmlPocoDeserializer(Assembly assembly, DeserializerSettings settings)
         : this(ModelInspector.ForAssembly(assembly), settings)
     {
         // Nothing
@@ -49,7 +49,7 @@ public class BaseFhirXmlPocoDeserializer : BaseFhirXmlParser
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirXmlPocoDeserializer(ModelInspector inspector) : this(inspector, new ParserSettings())
+    public BaseFhirXmlPocoDeserializer(ModelInspector inspector) : this(inspector, new DeserializerSettings())
     {
         // nothing
     }
@@ -60,7 +60,7 @@ public class BaseFhirXmlPocoDeserializer : BaseFhirXmlParser
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
     /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirXmlPocoDeserializer(ModelInspector inspector, ParserSettings settings) : base(inspector, settings)
+    public BaseFhirXmlPocoDeserializer(ModelInspector inspector, DeserializerSettings settings) : base(inspector, settings)
     {
         // Nothing
     }
@@ -76,7 +76,7 @@ public class BaseFhirXmlParser
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirXmlParser(ModelInspector inspector) : this(inspector, new ParserSettings())
+    public BaseFhirXmlParser(ModelInspector inspector) : this(inspector, new DeserializerSettings())
     {
         // nothing
     }
@@ -87,16 +87,16 @@ public class BaseFhirXmlParser
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
     /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirXmlParser(ModelInspector inspector, ParserSettings? settings)
+    public BaseFhirXmlParser(ModelInspector inspector, DeserializerSettings? settings)
     {
-        Settings = settings ?? new ParserSettings();
+        Settings = settings ?? new DeserializerSettings();
         _inspector = inspector;
     }
 
     /// <summary>
     /// The settings that were passed to the constructor.
     /// </summary>
-    public ParserSettings Settings { get; set; }
+    public DeserializerSettings Settings { get; set; }
 
     private readonly ModelInspector _inspector;
 

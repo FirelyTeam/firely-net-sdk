@@ -69,7 +69,7 @@ public class BaseFhirJsonParser
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirJsonParser(ModelInspector inspector) : this(inspector, new ParserSettings())
+    public BaseFhirJsonParser(ModelInspector inspector) : this(inspector, new DeserializerSettings())
     {
         // nothing
     }
@@ -79,16 +79,16 @@ public class BaseFhirJsonParser
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
     /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirJsonParser(ModelInspector inspector, ParserSettings? settings)
+    public BaseFhirJsonParser(ModelInspector inspector, DeserializerSettings? settings)
     {
-        Settings = settings ?? new ParserSettings();
+        Settings = settings ?? new DeserializerSettings();
         _inspector = inspector;
     }
 
     /// <summary>
     /// The settings that were passed to the constructor.
     /// </summary>
-    public ParserSettings Settings { get; set; }
+    public DeserializerSettings Settings { get; set; }
 
     private const string INSTANCE_VALIDATION_KEY_SUFFIX = ":instance";
     private const string PROPERTY_VALIDATION_KEY_SUFFIX = ":property";

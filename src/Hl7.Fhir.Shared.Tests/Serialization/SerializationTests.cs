@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string json = TestDataHelper.ReadTestData(@"TestPatient.json");
             Assert.IsNotNull(json);
-            var parser = new FhirJsonParser( new ParserSettings().UsingMode(DeserializationMode.Recoverable));
+            var parser = new FhirJsonParser( new DeserializerSettings().UsingMode(DeserializationMode.Recoverable));
             var pat = parser.Parse<Patient>(json);
             Assert.IsNotNull(pat);
 

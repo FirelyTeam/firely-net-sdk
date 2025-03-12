@@ -18,7 +18,7 @@ public class FhirXmlPocoDeserializer : BaseFhirXmlPocoDeserializer
     /// Construct a new FHIR XML deserializer, based on the currently used FHIR version.
     /// </summary>
     /// <param name="settings">Deserialization settings</param>
-    public FhirXmlPocoDeserializer(ParserSettings settings) : base(ModelInfo.ModelInspector, settings)
+    public FhirXmlPocoDeserializer(DeserializerSettings settings) : base(ModelInfo.ModelInspector, settings)
     {
     }
 }

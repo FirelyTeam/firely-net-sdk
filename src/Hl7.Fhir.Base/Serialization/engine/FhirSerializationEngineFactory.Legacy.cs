@@ -61,32 +61,36 @@ public static partial class FhirSerializationEngineFactory
         /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the legacy parser and serializer
         /// using <see cref="ParserSettings.PermissiveParsing"/> set to <c>true</c>.
         /// </summary>
-        public static IFhirSerializationEngine FromParserSettings(ModelInspector inspector, ParserSettings settings) =>
+        public static IFhirSerializationEngine FromParserSettings(ModelInspector inspector, DeserializerSettings settings) =>
             new ElementModelSerializationEngine(inspector,
                 buildXmlParsingSettings(settings),
                 buildJsonParserSettings(settings),
                 buildPocoBuilderSettings(settings));
 
 
-        private static PocoBuilderSettings buildPocoBuilderSettings(ParserSettings ps) =>
+        private static PocoBuilderSettings buildPocoBuilderSettings(DeserializerSettings ps) =>
             new()
             {
                 AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
                 IgnoreUnknownMembers = ps.AcceptUnknownMembers,
             };
 
-        private static FhirXmlParsingSettings buildXmlParsingSettings(ParserSettings settings) =>
+        private static FhirXmlParsingSettings buildXmlParsingSettings(DeserializerSettings settings) =>
             new()
             {
                 DisallowSchemaLocation = settings.DisallowXsiAttributesOnRoot,
 #pragma warning disable CS0618 // Type or member is obsolete
-                PermissiveParsing = settings.PermissiveParsing,
+                PermissiveParsing = settings is ParserSettings { PermissiveParsing: true }
 #pragma warning restore CS0618 // Type or member is obsolete
             };
 
-        private static FhirJsonParsingSettings buildJsonParserSettings(ParserSettings settings) =>
+        private static FhirJsonParsingSettings buildJsonParserSettings(DeserializerSettings settings) =>
 #pragma warning disable CS0618 // Type or member is obsolete
-            new() { AllowJsonComments = false, PermissiveParsing = settings.PermissiveParsing };
+            new()
+                {
+                    AllowJsonComments = false,
+                    PermissiveParsing = settings is ParserSettings { PermissiveParsing: true }
+                };
 #pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>

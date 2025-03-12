@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Tests.Serialization
                     "{\"resourceType\": \"Patient\", \"text\": {\"status\": \"generated\", \"div\": \"text without div\" } }";
 
                 new FhirJsonParser(
-                    new ParserSettings { NarrativeValidation = NarrativeValidationKind.FhirXhtml })
+                    new DeserializerSettings { NarrativeValidation = NarrativeValidationKind.FhirXhtml })
                     .Parse<Patient>(json);
 
                 Assert.Fail("Should have thrown on invalid Div format");

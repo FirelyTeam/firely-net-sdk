@@ -346,7 +346,7 @@ public class DirectorySource : ISummarySource, IConformanceSource, IArtifactSour
     }
 
     /// <summary>Gets the configuration settings that the behavior of the PoCo parser.</summary>
-    public ParserSettings ParserSettings => _settings.ParserSettings;
+    public DeserializerSettings ParserSettings => _settings.ParserSettings;
 
     /// <summary>Gets the configuration settings that control the behavior of the XML parser.</summary>
     public FhirXmlParsingSettings XmlParserSettings => _settings.XmlParserSettings;
