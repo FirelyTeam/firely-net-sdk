@@ -66,8 +66,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Height
     {
-      get { return _Height; }
-      set { _Height = value; OnPropertyChanged("Height"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Height))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["height"]);
+        return _Height;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Height))
+          Overflow.Remove("Height");
+        _Height = value;
+        OnPropertyChanged("Height");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _Height;
@@ -79,8 +92,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Width
     {
-      get { return _Width; }
-      set { _Width = value; OnPropertyChanged("Width"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Width))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["width"]);
+        return _Width;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Width))
+          Overflow.Remove("Width");
+        _Width = value;
+        OnPropertyChanged("Width");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _Width;
@@ -92,8 +118,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Depth
     {
-      get { return _Depth; }
-      set { _Depth = value; OnPropertyChanged("Depth"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Depth))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["depth"]);
+        return _Depth;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Depth))
+          Overflow.Remove("Depth");
+        _Depth = value;
+        OnPropertyChanged("Depth");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _Depth;
@@ -105,8 +144,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Weight
     {
-      get { return _Weight; }
-      set { _Weight = value; OnPropertyChanged("Weight"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Weight))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["weight"]);
+        return _Weight;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Weight))
+          Overflow.Remove("Weight");
+        _Weight = value;
+        OnPropertyChanged("Weight");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _Weight;
@@ -118,8 +170,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? NominalVolume
     {
-      get { return _NominalVolume; }
-      set { _NominalVolume = value; OnPropertyChanged("NominalVolume"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_NominalVolume))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["nominalVolume"]);
+        return _NominalVolume;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_NominalVolume))
+          Overflow.Remove("NominalVolume");
+        _NominalVolume = value;
+        OnPropertyChanged("NominalVolume");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _NominalVolume;
@@ -131,8 +196,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? ExternalDiameter
     {
-      get { return _ExternalDiameter; }
-      set { _ExternalDiameter = value; OnPropertyChanged("ExternalDiameter"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_ExternalDiameter))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["externalDiameter"]);
+        return _ExternalDiameter;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_ExternalDiameter))
+          Overflow.Remove("ExternalDiameter");
+        _ExternalDiameter = value;
+        OnPropertyChanged("ExternalDiameter");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _ExternalDiameter;
@@ -144,8 +222,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ShapeElement
     {
-      get { return _ShapeElement; }
-      set { _ShapeElement = value; OnPropertyChanged("ShapeElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ShapeElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["shape"]);
+        return _ShapeElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ShapeElement))
+          Overflow.Remove("ShapeElement");
+        _ShapeElement = value;
+        OnPropertyChanged("ShapeElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _ShapeElement;
@@ -173,8 +264,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ColorElement
     {
-      get => _ColorElement ??= [];
-      set { _ColorElement = value; OnPropertyChanged("ColorElement"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ColorElement))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["color"]);
+        return _ColorElement ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ColorElement))
+          Overflow.Remove("ColorElement");
+        _ColorElement = value;
+        OnPropertyChanged("ColorElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _ColorElement;
@@ -205,8 +309,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ImprintElement
     {
-      get => _ImprintElement ??= [];
-      set { _ImprintElement = value; OnPropertyChanged("ImprintElement"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ImprintElement))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["imprint"]);
+        return _ImprintElement ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ImprintElement))
+          Overflow.Remove("ImprintElement");
+        _ImprintElement = value;
+        OnPropertyChanged("ImprintElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _ImprintElement;
@@ -237,8 +354,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
-      get => _Image ??= [];
-      set { _Image = value; OnPropertyChanged("Image"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Image))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Attachment>), Overflow["image"]);
+        return _Image ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Image))
+          Overflow.Remove("Image");
+        _Image = value;
+        OnPropertyChanged("Image");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Attachment>? _Image;
@@ -250,8 +380,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Scoring
     {
-      get { return _Scoring; }
-      set { _Scoring = value; OnPropertyChanged("Scoring"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Scoring))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["scoring"]);
+        return _Scoring;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Scoring))
+          Overflow.Remove("Scoring");
+        _Scoring = value;
+        OnPropertyChanged("Scoring");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Scoring;

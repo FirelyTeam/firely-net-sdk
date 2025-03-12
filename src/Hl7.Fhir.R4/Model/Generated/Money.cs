@@ -1168,8 +1168,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? ValueElement
     {
-      get { return _ValueElement; }
-      set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ValueElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["value"]);
+        return _ValueElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ValueElement))
+          Overflow.Remove("ValueElement");
+        _ValueElement = value;
+        OnPropertyChanged("ValueElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDecimal? _ValueElement;
@@ -1198,8 +1211,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.Money.Currencies>? CurrencyElement
     {
-      get { return _CurrencyElement; }
-      set { _CurrencyElement = value; OnPropertyChanged("CurrencyElement"); }
+      get
+      {
+        if(OverflowNull<Code<Hl7.Fhir.Model.Money.Currencies>>.InOverflow(_CurrencyElement))
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Money.Currencies>), Overflow["currency"]);
+        return _CurrencyElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Code<Hl7.Fhir.Model.Money.Currencies>>.InOverflow(_CurrencyElement))
+          Overflow.Remove("CurrencyElement");
+        _CurrencyElement = value;
+        OnPropertyChanged("CurrencyElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.Money.Currencies>? _CurrencyElement;

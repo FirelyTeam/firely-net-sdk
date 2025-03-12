@@ -70,8 +70,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
     {
-      get { return _UrlElement; }
-      set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["url"]);
+        return _UrlElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+          Overflow.Remove("UrlElement");
+        _UrlElement = value;
+        OnPropertyChanged("UrlElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirUri? _UrlElement;
@@ -98,8 +111,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Value
     {
-      get { return _Value; }
-      set { _Value = value; OnPropertyChanged("Value"); }
+      get
+      {
+        if(OverflowNull<DynamicDataType>.InOverflow(_Value))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
+        return _Value;
+      }
+
+      set
+      {
+        if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+          Overflow.Remove("Value");
+        _Value = value;
+        OnPropertyChanged("Value");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Value;

@@ -974,8 +974,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.PrimitiveType? RelationElement
       {
-        get { return _RelationElement; }
-        set { _RelationElement = value; OnPropertyChanged("RelationElement"); }
+        get
+        {
+          if(OverflowNull<DynamicPrimitive>.InOverflow(_RelationElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PrimitiveType), Overflow["relation"]);
+          return _RelationElement;
+        }
+
+        set
+        {
+          if (OverflowNull<DynamicPrimitive>.InOverflow(_RelationElement))
+            Overflow.Remove("RelationElement");
+          _RelationElement = value;
+          OnPropertyChanged("RelationElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.PrimitiveType? _RelationElement;
@@ -1018,8 +1031,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? UrlElement
       {
-        get { return _UrlElement; }
-        set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["url"]);
+          return _UrlElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+            Overflow.Remove("UrlElement");
+          _UrlElement = value;
+          OnPropertyChanged("UrlElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirUri? _UrlElement;
@@ -1134,8 +1160,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
       {
-        get => _Link ??= [];
-        set { _Link = value; OnPropertyChanged("Link"); }
+        get
+        {
+          if(OverflowNull<List<Hl7.Fhir.Model.Bundle.LinkComponent>>.InOverflow(_Link))
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Bundle.LinkComponent>), Overflow["link"]);
+          return _Link ??= [];
+        }
+
+        set
+        {
+          if (OverflowNull<List<Hl7.Fhir.Model.Bundle.LinkComponent>>.InOverflow(_Link))
+            Overflow.Remove("Link");
+          _Link = value;
+          OnPropertyChanged("Link");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.Bundle.LinkComponent>? _Link;
@@ -1147,8 +1186,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? FullUrlElement
       {
-        get { return _FullUrlElement; }
-        set { _FullUrlElement = value; OnPropertyChanged("FullUrlElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_FullUrlElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["fullUrl"]);
+          return _FullUrlElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_FullUrlElement))
+            Overflow.Remove("FullUrlElement");
+          _FullUrlElement = value;
+          OnPropertyChanged("FullUrlElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirUri? _FullUrlElement;
@@ -1177,8 +1229,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Resource? Resource
       {
-        get { return _Resource; }
-        set { _Resource = value; OnPropertyChanged("Resource"); }
+        get
+        {
+          if(OverflowNull<DynamicResource>.InOverflow(_Resource))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Resource), Overflow["resource"]);
+          return _Resource;
+        }
+
+        set
+        {
+          if (OverflowNull<DynamicResource>.InOverflow(_Resource))
+            Overflow.Remove("Resource");
+          _Resource = value;
+          OnPropertyChanged("Resource");
+        }
+
       }
 
       private Hl7.Fhir.Model.Resource? _Resource;
@@ -1190,8 +1255,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Bundle.SearchComponent? Search
       {
-        get { return _Search; }
-        set { _Search = value; OnPropertyChanged("Search"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Bundle.SearchComponent>.InOverflow(_Search))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Bundle.SearchComponent), Overflow["search"]);
+          return _Search;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Bundle.SearchComponent>.InOverflow(_Search))
+            Overflow.Remove("Search");
+          _Search = value;
+          OnPropertyChanged("Search");
+        }
+
       }
 
       private Hl7.Fhir.Model.Bundle.SearchComponent? _Search;
@@ -1203,8 +1281,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Bundle.RequestComponent? Request
       {
-        get { return _Request; }
-        set { _Request = value; OnPropertyChanged("Request"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Bundle.RequestComponent>.InOverflow(_Request))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Bundle.RequestComponent), Overflow["request"]);
+          return _Request;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Bundle.RequestComponent>.InOverflow(_Request))
+            Overflow.Remove("Request");
+          _Request = value;
+          OnPropertyChanged("Request");
+        }
+
       }
 
       private Hl7.Fhir.Model.Bundle.RequestComponent? _Request;
@@ -1216,8 +1307,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Bundle.ResponseComponent? Response
       {
-        get { return _Response; }
-        set { _Response = value; OnPropertyChanged("Response"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Bundle.ResponseComponent>.InOverflow(_Response))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Bundle.ResponseComponent), Overflow["response"]);
+          return _Response;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Bundle.ResponseComponent>.InOverflow(_Response))
+            Overflow.Remove("Response");
+          _Response = value;
+          OnPropertyChanged("Response");
+        }
+
       }
 
       private Hl7.Fhir.Model.Bundle.ResponseComponent? _Response;
@@ -1354,8 +1458,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>? ModeElement
       {
-        get { return _ModeElement; }
-        set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
+        get
+        {
+          if(OverflowNull<Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>>.InOverflow(_ModeElement))
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>), Overflow["mode"]);
+          return _ModeElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>>.InOverflow(_ModeElement))
+            Overflow.Remove("ModeElement");
+          _ModeElement = value;
+          OnPropertyChanged("ModeElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>? _ModeElement;
@@ -1382,8 +1499,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? ScoreElement
       {
-        get { return _ScoreElement; }
-        set { _ScoreElement = value; OnPropertyChanged("ScoreElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ScoreElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["score"]);
+          return _ScoreElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ScoreElement))
+            Overflow.Remove("ScoreElement");
+          _ScoreElement = value;
+          OnPropertyChanged("ScoreElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _ScoreElement;
@@ -1500,8 +1630,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.HTTPVerb>? MethodElement
       {
-        get { return _MethodElement; }
-        set { _MethodElement = value; OnPropertyChanged("MethodElement"); }
+        get
+        {
+          if(OverflowNull<Code<Hl7.Fhir.Model.Bundle.HTTPVerb>>.InOverflow(_MethodElement))
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Bundle.HTTPVerb>), Overflow["method"]);
+          return _MethodElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Code<Hl7.Fhir.Model.Bundle.HTTPVerb>>.InOverflow(_MethodElement))
+            Overflow.Remove("MethodElement");
+          _MethodElement = value;
+          OnPropertyChanged("MethodElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.Bundle.HTTPVerb>? _MethodElement;
@@ -1529,8 +1672,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? UrlElement
       {
-        get { return _UrlElement; }
-        set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["url"]);
+          return _UrlElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+            Overflow.Remove("UrlElement");
+          _UrlElement = value;
+          OnPropertyChanged("UrlElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirUri? _UrlElement;
@@ -1557,8 +1713,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? IfNoneMatchElement
       {
-        get { return _IfNoneMatchElement; }
-        set { _IfNoneMatchElement = value; OnPropertyChanged("IfNoneMatchElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IfNoneMatchElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["ifNoneMatch"]);
+          return _IfNoneMatchElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IfNoneMatchElement))
+            Overflow.Remove("IfNoneMatchElement");
+          _IfNoneMatchElement = value;
+          OnPropertyChanged("IfNoneMatchElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _IfNoneMatchElement;
@@ -1585,8 +1754,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Instant? IfModifiedSinceElement
       {
-        get { return _IfModifiedSinceElement; }
-        set { _IfModifiedSinceElement = value; OnPropertyChanged("IfModifiedSinceElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_IfModifiedSinceElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["ifModifiedSince"]);
+          return _IfModifiedSinceElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_IfModifiedSinceElement))
+            Overflow.Remove("IfModifiedSinceElement");
+          _IfModifiedSinceElement = value;
+          OnPropertyChanged("IfModifiedSinceElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.Instant? _IfModifiedSinceElement;
@@ -1613,8 +1795,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? IfMatchElement
       {
-        get { return _IfMatchElement; }
-        set { _IfMatchElement = value; OnPropertyChanged("IfMatchElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IfMatchElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["ifMatch"]);
+          return _IfMatchElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IfMatchElement))
+            Overflow.Remove("IfMatchElement");
+          _IfMatchElement = value;
+          OnPropertyChanged("IfMatchElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _IfMatchElement;
@@ -1641,8 +1836,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? IfNoneExistElement
       {
-        get { return _IfNoneExistElement; }
-        set { _IfNoneExistElement = value; OnPropertyChanged("IfNoneExistElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IfNoneExistElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["ifNoneExist"]);
+          return _IfNoneExistElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IfNoneExistElement))
+            Overflow.Remove("IfNoneExistElement");
+          _IfNoneExistElement = value;
+          OnPropertyChanged("IfNoneExistElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _IfNoneExistElement;
@@ -1793,8 +2001,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? StatusElement
       {
-        get { return _StatusElement; }
-        set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_StatusElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["status"]);
+          return _StatusElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_StatusElement))
+            Overflow.Remove("StatusElement");
+          _StatusElement = value;
+          OnPropertyChanged("StatusElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _StatusElement;
@@ -1821,8 +2042,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? LocationElement
       {
-        get { return _LocationElement; }
-        set { _LocationElement = value; OnPropertyChanged("LocationElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_LocationElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["location"]);
+          return _LocationElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_LocationElement))
+            Overflow.Remove("LocationElement");
+          _LocationElement = value;
+          OnPropertyChanged("LocationElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirUri? _LocationElement;
@@ -1849,8 +2083,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? EtagElement
       {
-        get { return _EtagElement; }
-        set { _EtagElement = value; OnPropertyChanged("EtagElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EtagElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["etag"]);
+          return _EtagElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EtagElement))
+            Overflow.Remove("EtagElement");
+          _EtagElement = value;
+          OnPropertyChanged("EtagElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _EtagElement;
@@ -1877,8 +2124,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Instant? LastModifiedElement
       {
-        get { return _LastModifiedElement; }
-        set { _LastModifiedElement = value; OnPropertyChanged("LastModifiedElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_LastModifiedElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["lastModified"]);
+          return _LastModifiedElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_LastModifiedElement))
+            Overflow.Remove("LastModifiedElement");
+          _LastModifiedElement = value;
+          OnPropertyChanged("LastModifiedElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.Instant? _LastModifiedElement;
@@ -1907,8 +2167,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Resource? Outcome
       {
-        get { return _Outcome; }
-        set { _Outcome = value; OnPropertyChanged("Outcome"); }
+        get
+        {
+          if(OverflowNull<DynamicResource>.InOverflow(_Outcome))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Resource), Overflow["outcome"]);
+          return _Outcome;
+        }
+
+        set
+        {
+          if (OverflowNull<DynamicResource>.InOverflow(_Outcome))
+            Overflow.Remove("Outcome");
+          _Outcome = value;
+          OnPropertyChanged("Outcome");
+        }
+
       }
 
       private Hl7.Fhir.Model.Resource? _Outcome;
@@ -2018,8 +2291,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
     {
-      get { return _Identifier; }
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["identifier"]);
+        return _Identifier;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+          Overflow.Remove("Identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
     private Hl7.Fhir.Model.Identifier? _Identifier;
@@ -2034,8 +2320,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.Bundle.BundleType>? TypeElement
     {
-      get { return _TypeElement; }
-      set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+      get
+      {
+        if(OverflowNull<Code<Hl7.Fhir.Model.Bundle.BundleType>>.InOverflow(_TypeElement))
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Bundle.BundleType>), Overflow["type"]);
+        return _TypeElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Code<Hl7.Fhir.Model.Bundle.BundleType>>.InOverflow(_TypeElement))
+          Overflow.Remove("TypeElement");
+        _TypeElement = value;
+        OnPropertyChanged("TypeElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.Bundle.BundleType>? _TypeElement;
@@ -2065,8 +2364,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Instant? TimestampElement
     {
-      get { return _TimestampElement; }
-      set { _TimestampElement = value; OnPropertyChanged("TimestampElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_TimestampElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["timestamp"]);
+        return _TimestampElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_TimestampElement))
+          Overflow.Remove("TimestampElement");
+        _TimestampElement = value;
+        OnPropertyChanged("TimestampElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Instant? _TimestampElement;
@@ -2093,8 +2405,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? TotalElement
     {
-      get { return _TotalElement; }
-      set { _TotalElement = value; OnPropertyChanged("TotalElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_TotalElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Overflow["total"]);
+        return _TotalElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_TotalElement))
+          Overflow.Remove("TotalElement");
+        _TotalElement = value;
+        OnPropertyChanged("TotalElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.UnsignedInt? _TotalElement;
@@ -2122,8 +2447,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
     {
-      get => _Link ??= [];
-      set { _Link = value; OnPropertyChanged("Link"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Bundle.LinkComponent>>.InOverflow(_Link))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Bundle.LinkComponent>), Overflow["link"]);
+        return _Link ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Bundle.LinkComponent>>.InOverflow(_Link))
+          Overflow.Remove("Link");
+        _Link = value;
+        OnPropertyChanged("Link");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Bundle.LinkComponent>? _Link;
@@ -2136,8 +2474,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Bundle.EntryComponent> Entry
     {
-      get => _Entry ??= [];
-      set { _Entry = value; OnPropertyChanged("Entry"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Bundle.EntryComponent>>.InOverflow(_Entry))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Bundle.EntryComponent>), Overflow["entry"]);
+        return _Entry ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Bundle.EntryComponent>>.InOverflow(_Entry))
+          Overflow.Remove("Entry");
+        _Entry = value;
+        OnPropertyChanged("Entry");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Bundle.EntryComponent>? _Entry;
@@ -2149,8 +2500,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Signature? Signature
     {
-      get { return _Signature; }
-      set { _Signature = value; OnPropertyChanged("Signature"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Signature>.InOverflow(_Signature))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Signature), Overflow["signature"]);
+        return _Signature;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Signature>.InOverflow(_Signature))
+          Overflow.Remove("Signature");
+        _Signature = value;
+        OnPropertyChanged("Signature");
+      }
+
     }
 
     private Hl7.Fhir.Model.Signature? _Signature;
@@ -2167,8 +2531,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Resource? Issues
     {
-      get { return _Issues; }
-      set { _Issues = value; OnPropertyChanged("Issues"); }
+      get
+      {
+        if(OverflowNull<DynamicResource>.InOverflow(_Issues))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Resource), Overflow["issues"]);
+        return _Issues;
+      }
+
+      set
+      {
+        if (OverflowNull<DynamicResource>.InOverflow(_Issues))
+          Overflow.Remove("Issues");
+        _Issues = value;
+        OnPropertyChanged("Issues");
+      }
+
     }
 
     private Hl7.Fhir.Model.Resource? _Issues;

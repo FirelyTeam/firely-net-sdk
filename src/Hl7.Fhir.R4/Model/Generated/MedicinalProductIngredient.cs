@@ -80,8 +80,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Code
       {
-        get { return _Code; }
-        set { _Code = value; OnPropertyChanged("Code"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
+          return _Code;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            Overflow.Remove("Code");
+          _Code = value;
+          OnPropertyChanged("Code");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Code;
@@ -94,8 +107,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Group
       {
-        get { return _Group; }
-        set { _Group = value; OnPropertyChanged("Group"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Group))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["group"]);
+          return _Group;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Group))
+            Overflow.Remove("Group");
+          _Group = value;
+          OnPropertyChanged("Group");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Group;
@@ -107,8 +133,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Confidentiality
       {
-        get { return _Confidentiality; }
-        set { _Confidentiality = value; OnPropertyChanged("Confidentiality"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Confidentiality))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["confidentiality"]);
+          return _Confidentiality;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Confidentiality))
+            Overflow.Remove("Confidentiality");
+          _Confidentiality = value;
+          OnPropertyChanged("Confidentiality");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Confidentiality;
@@ -121,8 +160,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> Strength
       {
-        get => _Strength ??= [];
-        set { _Strength = value; OnPropertyChanged("Strength"); }
+        get
+        {
+          if(OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.InOverflow(_Strength))
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>), Overflow["strength"]);
+          return _Strength ??= [];
+        }
+
+        set
+        {
+          if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.InOverflow(_Strength))
+            Overflow.Remove("Strength");
+          _Strength = value;
+          OnPropertyChanged("Strength");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>? _Strength;
@@ -237,8 +289,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Ratio? Presentation
       {
-        get { return _Presentation; }
-        set { _Presentation = value; OnPropertyChanged("Presentation"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Presentation))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["presentation"]);
+          return _Presentation;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Presentation))
+            Overflow.Remove("Presentation");
+          _Presentation = value;
+          OnPropertyChanged("Presentation");
+        }
+
       }
 
       private Hl7.Fhir.Model.Ratio? _Presentation;
@@ -250,8 +315,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Ratio? PresentationLowLimit
       {
-        get { return _PresentationLowLimit; }
-        set { _PresentationLowLimit = value; OnPropertyChanged("PresentationLowLimit"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_PresentationLowLimit))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["presentationLowLimit"]);
+          return _PresentationLowLimit;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_PresentationLowLimit))
+            Overflow.Remove("PresentationLowLimit");
+          _PresentationLowLimit = value;
+          OnPropertyChanged("PresentationLowLimit");
+        }
+
       }
 
       private Hl7.Fhir.Model.Ratio? _PresentationLowLimit;
@@ -263,8 +341,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Ratio? Concentration
       {
-        get { return _Concentration; }
-        set { _Concentration = value; OnPropertyChanged("Concentration"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Concentration))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["concentration"]);
+          return _Concentration;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Concentration))
+            Overflow.Remove("Concentration");
+          _Concentration = value;
+          OnPropertyChanged("Concentration");
+        }
+
       }
 
       private Hl7.Fhir.Model.Ratio? _Concentration;
@@ -276,8 +367,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Ratio? ConcentrationLowLimit
       {
-        get { return _ConcentrationLowLimit; }
-        set { _ConcentrationLowLimit = value; OnPropertyChanged("ConcentrationLowLimit"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_ConcentrationLowLimit))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["concentrationLowLimit"]);
+          return _ConcentrationLowLimit;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_ConcentrationLowLimit))
+            Overflow.Remove("ConcentrationLowLimit");
+          _ConcentrationLowLimit = value;
+          OnPropertyChanged("ConcentrationLowLimit");
+        }
+
       }
 
       private Hl7.Fhir.Model.Ratio? _ConcentrationLowLimit;
@@ -289,8 +393,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MeasurementPointElement
       {
-        get { return _MeasurementPointElement; }
-        set { _MeasurementPointElement = value; OnPropertyChanged("MeasurementPointElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MeasurementPointElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["measurementPoint"]);
+          return _MeasurementPointElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MeasurementPointElement))
+            Overflow.Remove("MeasurementPointElement");
+          _MeasurementPointElement = value;
+          OnPropertyChanged("MeasurementPointElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _MeasurementPointElement;
@@ -318,8 +435,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
-        get => _Country ??= [];
-        set { _Country = value; OnPropertyChanged("Country"); }
+        get
+        {
+          if(OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Country))
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["country"]);
+          return _Country ??= [];
+        }
+
+        set
+        {
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Country))
+            Overflow.Remove("Country");
+          _Country = value;
+          OnPropertyChanged("Country");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableConcept>? _Country;
@@ -332,8 +462,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent> ReferenceStrength
       {
-        get => _ReferenceStrength ??= [];
-        set { _ReferenceStrength = value; OnPropertyChanged("ReferenceStrength"); }
+        get
+        {
+          if(OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>>.InOverflow(_ReferenceStrength))
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>), Overflow["referenceStrength"]);
+          return _ReferenceStrength ??= [];
+        }
+
+        set
+        {
+          if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>>.InOverflow(_ReferenceStrength))
+            Overflow.Remove("ReferenceStrength");
+          _ReferenceStrength = value;
+          OnPropertyChanged("ReferenceStrength");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>? _ReferenceStrength;
@@ -474,8 +617,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Substance
       {
-        get { return _Substance; }
-        set { _Substance = value; OnPropertyChanged("Substance"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Substance))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["substance"]);
+          return _Substance;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Substance))
+            Overflow.Remove("Substance");
+          _Substance = value;
+          OnPropertyChanged("Substance");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Substance;
@@ -488,8 +644,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Ratio? Strength
       {
-        get { return _Strength; }
-        set { _Strength = value; OnPropertyChanged("Strength"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Strength))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["strength"]);
+          return _Strength;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Strength))
+            Overflow.Remove("Strength");
+          _Strength = value;
+          OnPropertyChanged("Strength");
+        }
+
       }
 
       private Hl7.Fhir.Model.Ratio? _Strength;
@@ -501,8 +670,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Ratio? StrengthLowLimit
       {
-        get { return _StrengthLowLimit; }
-        set { _StrengthLowLimit = value; OnPropertyChanged("StrengthLowLimit"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_StrengthLowLimit))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["strengthLowLimit"]);
+          return _StrengthLowLimit;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_StrengthLowLimit))
+            Overflow.Remove("StrengthLowLimit");
+          _StrengthLowLimit = value;
+          OnPropertyChanged("StrengthLowLimit");
+        }
+
       }
 
       private Hl7.Fhir.Model.Ratio? _StrengthLowLimit;
@@ -514,8 +696,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MeasurementPointElement
       {
-        get { return _MeasurementPointElement; }
-        set { _MeasurementPointElement = value; OnPropertyChanged("MeasurementPointElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MeasurementPointElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["measurementPoint"]);
+          return _MeasurementPointElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MeasurementPointElement))
+            Overflow.Remove("MeasurementPointElement");
+          _MeasurementPointElement = value;
+          OnPropertyChanged("MeasurementPointElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _MeasurementPointElement;
@@ -543,8 +738,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
       {
-        get => _Country ??= [];
-        set { _Country = value; OnPropertyChanged("Country"); }
+        get
+        {
+          if(OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Country))
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["country"]);
+          return _Country ??= [];
+        }
+
+        set
+        {
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Country))
+            Overflow.Remove("Country");
+          _Country = value;
+          OnPropertyChanged("Country");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableConcept>? _Country;
@@ -668,8 +876,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Code
       {
-        get { return _Code; }
-        set { _Code = value; OnPropertyChanged("Code"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
+          return _Code;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            Overflow.Remove("Code");
+          _Code = value;
+          OnPropertyChanged("Code");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Code;
@@ -682,8 +903,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> Strength
       {
-        get => _Strength ??= [];
-        set { _Strength = value; OnPropertyChanged("Strength"); }
+        get
+        {
+          if(OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.InOverflow(_Strength))
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>), Overflow["strength"]);
+          return _Strength ??= [];
+        }
+
+        set
+        {
+          if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.InOverflow(_Strength))
+            Overflow.Remove("Strength");
+          _Strength = value;
+          OnPropertyChanged("Strength");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>? _Strength;
@@ -766,8 +1000,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
     {
-      get { return _Identifier; }
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["identifier"]);
+        return _Identifier;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+          Overflow.Remove("Identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
     private Hl7.Fhir.Model.Identifier? _Identifier;
@@ -780,8 +1027,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Role
     {
-      get { return _Role; }
-      set { _Role = value; OnPropertyChanged("Role"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Role))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["role"]);
+        return _Role;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Role))
+          Overflow.Remove("Role");
+        _Role = value;
+        OnPropertyChanged("Role");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Role;
@@ -793,8 +1053,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? AllergenicIndicatorElement
     {
-      get { return _AllergenicIndicatorElement; }
-      set { _AllergenicIndicatorElement = value; OnPropertyChanged("AllergenicIndicatorElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AllergenicIndicatorElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["allergenicIndicator"]);
+        return _AllergenicIndicatorElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AllergenicIndicatorElement))
+          Overflow.Remove("AllergenicIndicatorElement");
+        _AllergenicIndicatorElement = value;
+        OnPropertyChanged("AllergenicIndicatorElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirBoolean? _AllergenicIndicatorElement;
@@ -824,8 +1097,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get => _Manufacturer ??= [];
-      set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["manufacturer"]);
+        return _Manufacturer ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
+          Overflow.Remove("Manufacturer");
+        _Manufacturer = value;
+        OnPropertyChanged("Manufacturer");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Manufacturer;
@@ -838,8 +1124,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent> SpecifiedSubstance
     {
-      get => _SpecifiedSubstance ??= [];
-      set { _SpecifiedSubstance = value; OnPropertyChanged("SpecifiedSubstance"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>>.InOverflow(_SpecifiedSubstance))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>), Overflow["specifiedSubstance"]);
+        return _SpecifiedSubstance ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>>.InOverflow(_SpecifiedSubstance))
+          Overflow.Remove("SpecifiedSubstance");
+        _SpecifiedSubstance = value;
+        OnPropertyChanged("SpecifiedSubstance");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>? _SpecifiedSubstance;
@@ -851,8 +1150,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent? Substance
     {
-      get { return _Substance; }
-      set { _Substance = value; OnPropertyChanged("Substance"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent>.InOverflow(_Substance))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent), Overflow["substance"]);
+        return _Substance;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent>.InOverflow(_Substance))
+          Overflow.Remove("Substance");
+        _Substance = value;
+        OnPropertyChanged("Substance");
+      }
+
     }
 
     private Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent? _Substance;

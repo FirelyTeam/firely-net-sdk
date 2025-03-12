@@ -110,8 +110,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>? RelationtypeElement
       {
-        get { return _RelationtypeElement; }
-        set { _RelationtypeElement = value; OnPropertyChanged("RelationtypeElement"); }
+        get
+        {
+          if(OverflowNull<Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>>.InOverflow(_RelationtypeElement))
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>), Overflow["relationtype"]);
+          return _RelationtypeElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>>.InOverflow(_RelationtypeElement))
+            Overflow.Remove("RelationtypeElement");
+          _RelationtypeElement = value;
+          OnPropertyChanged("RelationtypeElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>? _RelationtypeElement;
@@ -141,8 +154,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Item
       {
-        get { return _Item; }
-        set { _Item = value; OnPropertyChanged("Item"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Item))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["item"]);
+          return _Item;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Item))
+            Overflow.Remove("Item");
+          _Item = value;
+          OnPropertyChanged("Item");
+        }
+
       }
 
       private Hl7.Fhir.Model.ResourceReference? _Item;
@@ -226,8 +252,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ??= [];
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+          Overflow.Remove("Identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Identifier>? _Identifier;
@@ -239,8 +278,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Type
     {
-      get { return _Type; }
-      set { _Type = value; OnPropertyChanged("Type"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
+        return _Type;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+          Overflow.Remove("Type");
+        _Type = value;
+        OnPropertyChanged("Type");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Type;
@@ -253,8 +305,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? OrderableElement
     {
-      get { return _OrderableElement; }
-      set { _OrderableElement = value; OnPropertyChanged("OrderableElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_OrderableElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["orderable"]);
+        return _OrderableElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_OrderableElement))
+          Overflow.Remove("OrderableElement");
+        _OrderableElement = value;
+        OnPropertyChanged("OrderableElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirBoolean? _OrderableElement;
@@ -284,8 +349,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ReferencedItem
     {
-      get { return _ReferencedItem; }
-      set { _ReferencedItem = value; OnPropertyChanged("ReferencedItem"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ReferencedItem))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["referencedItem"]);
+        return _ReferencedItem;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ReferencedItem))
+          Overflow.Remove("ReferencedItem");
+        _ReferencedItem = value;
+        OnPropertyChanged("ReferencedItem");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _ReferencedItem;
@@ -298,8 +376,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> AdditionalIdentifier
     {
-      get => _AdditionalIdentifier ??= [];
-      set { _AdditionalIdentifier = value; OnPropertyChanged("AdditionalIdentifier"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_AdditionalIdentifier))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["additionalIdentifier"]);
+        return _AdditionalIdentifier ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_AdditionalIdentifier))
+          Overflow.Remove("AdditionalIdentifier");
+        _AdditionalIdentifier = value;
+        OnPropertyChanged("AdditionalIdentifier");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Identifier>? _AdditionalIdentifier;
@@ -312,8 +403,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Classification
     {
-      get => _Classification ??= [];
-      set { _Classification = value; OnPropertyChanged("Classification"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Classification))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["classification"]);
+        return _Classification ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Classification))
+          Overflow.Remove("Classification");
+        _Classification = value;
+        OnPropertyChanged("Classification");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept>? _Classification;
@@ -327,8 +431,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
+        return _StatusElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
+          Overflow.Remove("StatusElement");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.PublicationStatus>? _StatusElement;
@@ -355,8 +472,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Period? ValidityPeriod
     {
-      get { return _ValidityPeriod; }
-      set { _ValidityPeriod = value; OnPropertyChanged("ValidityPeriod"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_ValidityPeriod))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["validityPeriod"]);
+        return _ValidityPeriod;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_ValidityPeriod))
+          Overflow.Remove("ValidityPeriod");
+        _ValidityPeriod = value;
+        OnPropertyChanged("ValidityPeriod");
+      }
+
     }
 
     private Hl7.Fhir.Model.Period? _ValidityPeriod;
@@ -368,8 +498,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? ValidToElement
     {
-      get { return _ValidToElement; }
-      set { _ValidToElement = value; OnPropertyChanged("ValidToElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ValidToElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["validTo"]);
+        return _ValidToElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ValidToElement))
+          Overflow.Remove("ValidToElement");
+        _ValidToElement = value;
+        OnPropertyChanged("ValidToElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDateTime? _ValidToElement;
@@ -396,8 +539,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? LastUpdatedElement
     {
-      get { return _LastUpdatedElement; }
-      set { _LastUpdatedElement = value; OnPropertyChanged("LastUpdatedElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_LastUpdatedElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["lastUpdated"]);
+        return _LastUpdatedElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_LastUpdatedElement))
+          Overflow.Remove("LastUpdatedElement");
+        _LastUpdatedElement = value;
+        OnPropertyChanged("LastUpdatedElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDateTime? _LastUpdatedElement;
@@ -425,8 +581,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalCharacteristic
     {
-      get => _AdditionalCharacteristic ??= [];
-      set { _AdditionalCharacteristic = value; OnPropertyChanged("AdditionalCharacteristic"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_AdditionalCharacteristic))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["additionalCharacteristic"]);
+        return _AdditionalCharacteristic ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_AdditionalCharacteristic))
+          Overflow.Remove("AdditionalCharacteristic");
+        _AdditionalCharacteristic = value;
+        OnPropertyChanged("AdditionalCharacteristic");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept>? _AdditionalCharacteristic;
@@ -439,8 +608,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalClassification
     {
-      get => _AdditionalClassification ??= [];
-      set { _AdditionalClassification = value; OnPropertyChanged("AdditionalClassification"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_AdditionalClassification))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["additionalClassification"]);
+        return _AdditionalClassification ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_AdditionalClassification))
+          Overflow.Remove("AdditionalClassification");
+        _AdditionalClassification = value;
+        OnPropertyChanged("AdditionalClassification");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept>? _AdditionalClassification;
@@ -453,8 +635,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent> RelatedEntry
     {
-      get => _RelatedEntry ??= [];
-      set { _RelatedEntry = value; OnPropertyChanged("RelatedEntry"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent>>.InOverflow(_RelatedEntry))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent>), Overflow["relatedEntry"]);
+        return _RelatedEntry ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent>>.InOverflow(_RelatedEntry))
+          Overflow.Remove("RelatedEntry");
+        _RelatedEntry = value;
+        OnPropertyChanged("RelatedEntry");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent>? _RelatedEntry;

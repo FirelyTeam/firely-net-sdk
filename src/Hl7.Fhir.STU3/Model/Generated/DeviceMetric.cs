@@ -279,8 +279,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>? TypeElement
       {
-        get { return _TypeElement; }
-        set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+        get
+        {
+          if(OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>.InOverflow(_TypeElement))
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>), Overflow["type"]);
+          return _TypeElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>.InOverflow(_TypeElement))
+            Overflow.Remove("TypeElement");
+          _TypeElement = value;
+          OnPropertyChanged("TypeElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>? _TypeElement;
@@ -309,8 +322,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>? StateElement
       {
-        get { return _StateElement; }
-        set { _StateElement = value; OnPropertyChanged("StateElement"); }
+        get
+        {
+          if(OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>.InOverflow(_StateElement))
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>), Overflow["state"]);
+          return _StateElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>.InOverflow(_StateElement))
+            Overflow.Remove("StateElement");
+          _StateElement = value;
+          OnPropertyChanged("StateElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>? _StateElement;
@@ -337,8 +363,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Instant? TimeElement
       {
-        get { return _TimeElement; }
-        set { _TimeElement = value; OnPropertyChanged("TimeElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_TimeElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["time"]);
+          return _TimeElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_TimeElement))
+            Overflow.Remove("TimeElement");
+          _TimeElement = value;
+          OnPropertyChanged("TimeElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.Instant? _TimeElement;
@@ -446,8 +485,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
     {
-      get { return _Identifier; }
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["identifier"]);
+        return _Identifier;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+          Overflow.Remove("Identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
     private Hl7.Fhir.Model.Identifier? _Identifier;
@@ -461,8 +513,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Type
     {
-      get { return _Type; }
-      set { _Type = value; OnPropertyChanged("Type"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
+        return _Type;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+          Overflow.Remove("Type");
+        _Type = value;
+        OnPropertyChanged("Type");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Type;
@@ -475,8 +540,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Unit
     {
-      get { return _Unit; }
-      set { _Unit = value; OnPropertyChanged("Unit"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Unit))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["unit"]);
+        return _Unit;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Unit))
+          Overflow.Remove("Unit");
+        _Unit = value;
+        OnPropertyChanged("Unit");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Unit;
@@ -490,8 +568,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Source
     {
-      get { return _Source; }
-      set { _Source = value; OnPropertyChanged("Source"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Source))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["source"]);
+        return _Source;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Source))
+          Overflow.Remove("Source");
+        _Source = value;
+        OnPropertyChanged("Source");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Source;
@@ -505,8 +596,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Parent
     {
-      get { return _Parent; }
-      set { _Parent = value; OnPropertyChanged("Parent"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Parent))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["parent"]);
+        return _Parent;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Parent))
+          Overflow.Remove("Parent");
+        _Parent = value;
+        OnPropertyChanged("Parent");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Parent;
@@ -520,8 +624,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>? OperationalStatusElement
     {
-      get { return _OperationalStatusElement; }
-      set { _OperationalStatusElement = value; OnPropertyChanged("OperationalStatusElement"); }
+      get
+      {
+        if(OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>.InOverflow(_OperationalStatusElement))
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>), Overflow["operationalStatus"]);
+        return _OperationalStatusElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>.InOverflow(_OperationalStatusElement))
+          Overflow.Remove("OperationalStatusElement");
+        _OperationalStatusElement = value;
+        OnPropertyChanged("OperationalStatusElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>? _OperationalStatusElement;
@@ -550,8 +667,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>? ColorElement
     {
-      get { return _ColorElement; }
-      set { _ColorElement = value; OnPropertyChanged("ColorElement"); }
+      get
+      {
+        if(OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>>.InOverflow(_ColorElement))
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>), Overflow["color"]);
+        return _ColorElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>>.InOverflow(_ColorElement))
+          Overflow.Remove("ColorElement");
+        _ColorElement = value;
+        OnPropertyChanged("ColorElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>? _ColorElement;
@@ -581,8 +711,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>? CategoryElement
     {
-      get { return _CategoryElement; }
-      set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
+      get
+      {
+        if(OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>.InOverflow(_CategoryElement))
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>), Overflow["category"]);
+        return _CategoryElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>.InOverflow(_CategoryElement))
+          Overflow.Remove("CategoryElement");
+        _CategoryElement = value;
+        OnPropertyChanged("CategoryElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>? _CategoryElement;
@@ -609,8 +752,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Timing? MeasurementPeriod
     {
-      get { return _MeasurementPeriod; }
-      set { _MeasurementPeriod = value; OnPropertyChanged("MeasurementPeriod"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Timing>.InOverflow(_MeasurementPeriod))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Timing), Overflow["measurementPeriod"]);
+        return _MeasurementPeriod;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Timing>.InOverflow(_MeasurementPeriod))
+          Overflow.Remove("MeasurementPeriod");
+        _MeasurementPeriod = value;
+        OnPropertyChanged("MeasurementPeriod");
+      }
+
     }
 
     private Hl7.Fhir.Model.Timing? _MeasurementPeriod;
@@ -623,8 +779,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> Calibration
     {
-      get => _Calibration ??= [];
-      set { _Calibration = value; OnPropertyChanged("Calibration"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>.InOverflow(_Calibration))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>), Overflow["calibration"]);
+        return _Calibration ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>.InOverflow(_Calibration))
+          Overflow.Remove("Calibration");
+        _Calibration = value;
+        OnPropertyChanged("Calibration");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>? _Calibration;

@@ -115,8 +115,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>? TypeElement
     {
-      get { return _TypeElement; }
-      set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+      get
+      {
+        if(OverflowNull<Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>>.InOverflow(_TypeElement))
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>), Overflow["type"]);
+        return _TypeElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>>.InOverflow(_TypeElement))
+          Overflow.Remove("TypeElement");
+        _TypeElement = value;
+        OnPropertyChanged("TypeElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>? _TypeElement;
@@ -144,8 +157,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Code
     {
-      get { return _Code; }
-      set { _Code = value; OnPropertyChanged("Code"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
+        return _Code;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+          Overflow.Remove("Code");
+        _Code = value;
+        OnPropertyChanged("Code");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Code;
@@ -157,8 +183,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? FactorElement
     {
-      get { return _FactorElement; }
-      set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_FactorElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["factor"]);
+        return _FactorElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_FactorElement))
+          Overflow.Remove("FactorElement");
+        _FactorElement = value;
+        OnPropertyChanged("FactorElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDecimal? _FactorElement;
@@ -185,8 +224,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Money? Amount
     {
-      get { return _Amount; }
-      set { _Amount = value; OnPropertyChanged("Amount"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_Amount))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Money), Overflow["amount"]);
+        return _Amount;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_Amount))
+          Overflow.Remove("Amount");
+        _Amount = value;
+        OnPropertyChanged("Amount");
+      }
+
     }
 
     private Hl7.Fhir.Model.Money? _Amount;

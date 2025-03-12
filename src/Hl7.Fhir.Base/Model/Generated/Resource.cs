@@ -64,8 +64,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Id? IdElement
     {
-      get { return _IdElement; }
-      set { _IdElement = value; OnPropertyChanged("IdElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Id>.InOverflow(_IdElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["id"]);
+        return _IdElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Id>.InOverflow(_IdElement))
+          Overflow.Remove("IdElement");
+        _IdElement = value;
+        OnPropertyChanged("IdElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Id? _IdElement;
@@ -92,8 +105,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Meta? Meta
     {
-      get { return _Meta; }
-      set { _Meta = value; OnPropertyChanged("Meta"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Meta>.InOverflow(_Meta))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Meta), Overflow["meta"]);
+        return _Meta;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Meta>.InOverflow(_Meta))
+          Overflow.Remove("Meta");
+        _Meta = value;
+        OnPropertyChanged("Meta");
+      }
+
     }
 
     private Hl7.Fhir.Model.Meta? _Meta;
@@ -105,8 +131,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? ImplicitRulesElement
     {
-      get { return _ImplicitRulesElement; }
-      set { _ImplicitRulesElement = value; OnPropertyChanged("ImplicitRulesElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_ImplicitRulesElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["implicitRules"]);
+        return _ImplicitRulesElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_ImplicitRulesElement))
+          Overflow.Remove("ImplicitRulesElement");
+        _ImplicitRulesElement = value;
+        OnPropertyChanged("ImplicitRulesElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirUri? _ImplicitRulesElement;
@@ -134,8 +173,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Code? LanguageElement
     {
-      get { return _LanguageElement; }
-      set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_LanguageElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["language"]);
+        return _LanguageElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_LanguageElement))
+          Overflow.Remove("LanguageElement");
+        _LanguageElement = value;
+        OnPropertyChanged("LanguageElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Code? _LanguageElement;

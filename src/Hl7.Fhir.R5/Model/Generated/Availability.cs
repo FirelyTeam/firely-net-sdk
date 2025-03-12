@@ -82,8 +82,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
-        get => _DaysOfWeekElement ??= [];
-        set { _DaysOfWeekElement = value; OnPropertyChanged("DaysOfWeekElement"); }
+        get
+        {
+          if(OverflowNull<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>.InOverflow(_DaysOfWeekElement))
+            throw CodedValidationException.FromTypes(typeof(List<Code<Hl7.Fhir.Model.DaysOfWeek>>), Overflow["daysOfWeek"]);
+          return _DaysOfWeekElement ??= [];
+        }
+
+        set
+        {
+          if (OverflowNull<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>.InOverflow(_DaysOfWeekElement))
+            Overflow.Remove("DaysOfWeekElement");
+          _DaysOfWeekElement = value;
+          OnPropertyChanged("DaysOfWeekElement");
+        }
+
       }
 
       private List<Code<Hl7.Fhir.Model.DaysOfWeek>>? _DaysOfWeekElement;
@@ -113,8 +126,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? AllDayElement
       {
-        get { return _AllDayElement; }
-        set { _AllDayElement = value; OnPropertyChanged("AllDayElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AllDayElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["allDay"]);
+          return _AllDayElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AllDayElement))
+            Overflow.Remove("AllDayElement");
+          _AllDayElement = value;
+          OnPropertyChanged("AllDayElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirBoolean? _AllDayElement;
@@ -141,8 +167,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Time? AvailableStartTimeElement
       {
-        get { return _AvailableStartTimeElement; }
-        set { _AvailableStartTimeElement = value; OnPropertyChanged("AvailableStartTimeElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Time>.InOverflow(_AvailableStartTimeElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Time), Overflow["availableStartTime"]);
+          return _AvailableStartTimeElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Time>.InOverflow(_AvailableStartTimeElement))
+            Overflow.Remove("AvailableStartTimeElement");
+          _AvailableStartTimeElement = value;
+          OnPropertyChanged("AvailableStartTimeElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.Time? _AvailableStartTimeElement;
@@ -169,8 +208,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Time? AvailableEndTimeElement
       {
-        get { return _AvailableEndTimeElement; }
-        set { _AvailableEndTimeElement = value; OnPropertyChanged("AvailableEndTimeElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Time>.InOverflow(_AvailableEndTimeElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Time), Overflow["availableEndTime"]);
+          return _AvailableEndTimeElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Time>.InOverflow(_AvailableEndTimeElement))
+            Overflow.Remove("AvailableEndTimeElement");
+          _AvailableEndTimeElement = value;
+          OnPropertyChanged("AvailableEndTimeElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.Time? _AvailableEndTimeElement;
@@ -299,8 +351,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
       {
-        get { return _DescriptionElement; }
-        set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["description"]);
+          return _DescriptionElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+            Overflow.Remove("DescriptionElement");
+          _DescriptionElement = value;
+          OnPropertyChanged("DescriptionElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _DescriptionElement;
@@ -327,8 +392,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Period? During
       {
-        get { return _During; }
-        set { _During = value; OnPropertyChanged("During"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_During))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["during"]);
+          return _During;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_During))
+            Overflow.Remove("During");
+          _During = value;
+          OnPropertyChanged("During");
+        }
+
       }
 
       private Hl7.Fhir.Model.Period? _During;
@@ -412,8 +490,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Availability.AvailableTimeComponent> AvailableTime
     {
-      get => _AvailableTime ??= [];
-      set { _AvailableTime = value; OnPropertyChanged("AvailableTime"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>>.InOverflow(_AvailableTime))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>), Overflow["availableTime"]);
+        return _AvailableTime ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>>.InOverflow(_AvailableTime))
+          Overflow.Remove("AvailableTime");
+        _AvailableTime = value;
+        OnPropertyChanged("AvailableTime");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>? _AvailableTime;
@@ -426,8 +517,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent> NotAvailableTime
     {
-      get => _NotAvailableTime ??= [];
-      set { _NotAvailableTime = value; OnPropertyChanged("NotAvailableTime"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>>.InOverflow(_NotAvailableTime))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>), Overflow["notAvailableTime"]);
+        return _NotAvailableTime ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>>.InOverflow(_NotAvailableTime))
+          Overflow.Remove("NotAvailableTime");
+        _NotAvailableTime = value;
+        OnPropertyChanged("NotAvailableTime");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>? _NotAvailableTime;

@@ -65,8 +65,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
-      get => _ModifierExtension ??= [];
-      set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_ModifierExtension))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["modifierExtension"]);
+        return _ModifierExtension ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_ModifierExtension))
+          Overflow.Remove("ModifierExtension");
+        _ModifierExtension = value;
+        OnPropertyChanged("ModifierExtension");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Extension>? _ModifierExtension;

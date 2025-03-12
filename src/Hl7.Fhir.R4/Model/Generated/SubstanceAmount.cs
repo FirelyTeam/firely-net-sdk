@@ -79,8 +79,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Quantity? LowLimit
       {
-        get { return _LowLimit; }
-        set { _LowLimit = value; OnPropertyChanged("LowLimit"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowLimit))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["lowLimit"]);
+          return _LowLimit;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowLimit))
+            Overflow.Remove("LowLimit");
+          _LowLimit = value;
+          OnPropertyChanged("LowLimit");
+        }
+
       }
 
       private Hl7.Fhir.Model.Quantity? _LowLimit;
@@ -92,8 +105,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Quantity? HighLimit
       {
-        get { return _HighLimit; }
-        set { _HighLimit = value; OnPropertyChanged("HighLimit"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighLimit))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["highLimit"]);
+          return _HighLimit;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighLimit))
+            Overflow.Remove("HighLimit");
+          _HighLimit = value;
+          OnPropertyChanged("HighLimit");
+        }
+
       }
 
       private Hl7.Fhir.Model.Quantity? _HighLimit;
@@ -178,8 +204,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Amount
     {
-      get { return _Amount; }
-      set { _Amount = value; OnPropertyChanged("Amount"); }
+      get
+      {
+        if(OverflowNull<DynamicDataType>.InOverflow(_Amount))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["amount"]);
+        return _Amount;
+      }
+
+      set
+      {
+        if (OverflowNull<DynamicDataType>.InOverflow(_Amount))
+          Overflow.Remove("Amount");
+        _Amount = value;
+        OnPropertyChanged("Amount");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Amount;
@@ -191,8 +230,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? AmountType
     {
-      get { return _AmountType; }
-      set { _AmountType = value; OnPropertyChanged("AmountType"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AmountType))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["amountType"]);
+        return _AmountType;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AmountType))
+          Overflow.Remove("AmountType");
+        _AmountType = value;
+        OnPropertyChanged("AmountType");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _AmountType;
@@ -204,8 +256,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? AmountTextElement
     {
-      get { return _AmountTextElement; }
-      set { _AmountTextElement = value; OnPropertyChanged("AmountTextElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AmountTextElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["amountText"]);
+        return _AmountTextElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AmountTextElement))
+          Overflow.Remove("AmountTextElement");
+        _AmountTextElement = value;
+        OnPropertyChanged("AmountTextElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _AmountTextElement;
@@ -232,8 +297,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent? ReferenceRange
     {
-      get { return _ReferenceRange; }
-      set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>.InOverflow(_ReferenceRange))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent), Overflow["referenceRange"]);
+        return _ReferenceRange;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>.InOverflow(_ReferenceRange))
+          Overflow.Remove("ReferenceRange");
+        _ReferenceRange = value;
+        OnPropertyChanged("ReferenceRange");
+      }
+
     }
 
     private Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent? _ReferenceRange;

@@ -36,6 +36,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 
 namespace Hl7.Fhir.Model;
@@ -46,8 +47,10 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     /// FHIR Type Name
     /// </summary>
     public virtual string TypeName => GetType().Name;
-
+    
     private Dictionary<string, object>? _overflow = null;
+    
+    protected bool HasOverflow => _overflow is not null && _overflow.Any();
 
     /// <summary>
     /// A dictionary containing all elements that are not explicitly defined in the class.

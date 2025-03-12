@@ -70,8 +70,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? LowNumerator
     {
-      get { return _LowNumerator; }
-      set { _LowNumerator = value; OnPropertyChanged("LowNumerator"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowNumerator))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["lowNumerator"]);
+        return _LowNumerator;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowNumerator))
+          Overflow.Remove("LowNumerator");
+        _LowNumerator = value;
+        OnPropertyChanged("LowNumerator");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _LowNumerator;
@@ -83,8 +96,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? HighNumerator
     {
-      get { return _HighNumerator; }
-      set { _HighNumerator = value; OnPropertyChanged("HighNumerator"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighNumerator))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["highNumerator"]);
+        return _HighNumerator;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighNumerator))
+          Overflow.Remove("HighNumerator");
+        _HighNumerator = value;
+        OnPropertyChanged("HighNumerator");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _HighNumerator;
@@ -96,8 +122,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Denominator
     {
-      get { return _Denominator; }
-      set { _Denominator = value; OnPropertyChanged("Denominator"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["denominator"]);
+        return _Denominator;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
+          Overflow.Remove("Denominator");
+        _Denominator = value;
+        OnPropertyChanged("Denominator");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _Denominator;

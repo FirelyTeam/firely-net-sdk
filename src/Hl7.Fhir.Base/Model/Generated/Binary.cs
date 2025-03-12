@@ -75,8 +75,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Code? ContentTypeElement
     {
-      get { return _ContentTypeElement; }
-      set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["contentType"]);
+        return _ContentTypeElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+          Overflow.Remove("ContentTypeElement");
+        _ContentTypeElement = value;
+        OnPropertyChanged("ContentTypeElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Code? _ContentTypeElement;
@@ -105,8 +118,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? SecurityContext
     {
-      get { return _SecurityContext; }
-      set { _SecurityContext = value; OnPropertyChanged("SecurityContext"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_SecurityContext))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["securityContext"]);
+        return _SecurityContext;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_SecurityContext))
+          Overflow.Remove("SecurityContext");
+        _SecurityContext = value;
+        OnPropertyChanged("SecurityContext");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _SecurityContext;
@@ -122,8 +148,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? ContentElement
     {
-      get { return _ContentElement; }
-      set { _ContentElement = value; OnPropertyChanged("ContentElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_ContentElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Base64Binary), Overflow["content"]);
+        return _ContentElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_ContentElement))
+          Overflow.Remove("ContentElement");
+        _ContentElement = value;
+        OnPropertyChanged("ContentElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Base64Binary? _ContentElement;
@@ -153,8 +192,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? DataElement
     {
-      get { return _DataElement; }
-      set { _DataElement = value; OnPropertyChanged("DataElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Base64Binary), Overflow["data"]);
+        return _DataElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+          Overflow.Remove("DataElement");
+        _DataElement = value;
+        OnPropertyChanged("DataElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Base64Binary? _DataElement;

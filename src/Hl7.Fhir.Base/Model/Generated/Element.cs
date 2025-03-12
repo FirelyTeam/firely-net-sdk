@@ -64,8 +64,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ElementIdElement
     {
-      get { return _ElementIdElement; }
-      set { _ElementIdElement = value; OnPropertyChanged("ElementIdElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ElementIdElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["id"]);
+        return _ElementIdElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ElementIdElement))
+          Overflow.Remove("ElementIdElement");
+        _ElementIdElement = value;
+        OnPropertyChanged("ElementIdElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _ElementIdElement;
@@ -93,8 +106,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
-      get => _Extension ??= [];
-      set { _Extension = value; OnPropertyChanged("Extension"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_Extension))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["extension"]);
+        return _Extension ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_Extension))
+          Overflow.Remove("Extension");
+        _Extension = value;
+        OnPropertyChanged("Extension");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Extension>? _Extension;

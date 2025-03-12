@@ -67,8 +67,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Coding? ChannelType
     {
-      get { return _ChannelType; }
-      set { _ChannelType = value; OnPropertyChanged("ChannelType"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_ChannelType))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["channelType"]);
+        return _ChannelType;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_ChannelType))
+          Overflow.Remove("ChannelType");
+        _ChannelType = value;
+        OnPropertyChanged("ChannelType");
+      }
+
     }
 
     private Hl7.Fhir.Model.Coding? _ChannelType;
@@ -82,8 +95,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Address
     {
-      get { return _Address; }
-      set { _Address = value; OnPropertyChanged("Address"); }
+      get
+      {
+        if(OverflowNull<DynamicDataType>.InOverflow(_Address))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["address"]);
+        return _Address;
+      }
+
+      set
+      {
+        if (OverflowNull<DynamicDataType>.InOverflow(_Address))
+          Overflow.Remove("Address");
+        _Address = value;
+        OnPropertyChanged("Address");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Address;
@@ -96,8 +122,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUrl> AdditionalInfoElement
     {
-      get => _AdditionalInfoElement ??= [];
-      set { _AdditionalInfoElement = value; OnPropertyChanged("AdditionalInfoElement"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.FhirUrl>>.InOverflow(_AdditionalInfoElement))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirUrl>), Overflow["additionalInfo"]);
+        return _AdditionalInfoElement ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.FhirUrl>>.InOverflow(_AdditionalInfoElement))
+          Overflow.Remove("AdditionalInfoElement");
+        _AdditionalInfoElement = value;
+        OnPropertyChanged("AdditionalInfoElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirUrl>? _AdditionalInfoElement;
@@ -127,8 +166,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? MaxParticipantsElement
     {
-      get { return _MaxParticipantsElement; }
-      set { _MaxParticipantsElement = value; OnPropertyChanged("MaxParticipantsElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_MaxParticipantsElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["maxParticipants"]);
+        return _MaxParticipantsElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_MaxParticipantsElement))
+          Overflow.Remove("MaxParticipantsElement");
+        _MaxParticipantsElement = value;
+        OnPropertyChanged("MaxParticipantsElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.PositiveInt? _MaxParticipantsElement;
@@ -155,8 +207,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SessionKeyElement
     {
-      get { return _SessionKeyElement; }
-      set { _SessionKeyElement = value; OnPropertyChanged("SessionKeyElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SessionKeyElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["sessionKey"]);
+        return _SessionKeyElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SessionKeyElement))
+          Overflow.Remove("SessionKeyElement");
+        _SessionKeyElement = value;
+        OnPropertyChanged("SessionKeyElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _SessionKeyElement;

@@ -71,8 +71,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Coding
     {
-      get => _Coding ??= [];
-      set { _Coding = value; OnPropertyChanged("Coding"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Coding))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Coding>), Overflow["coding"]);
+        return _Coding ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Coding))
+          Overflow.Remove("Coding");
+        _Coding = value;
+        OnPropertyChanged("Coding");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Coding>? _Coding;
@@ -84,8 +97,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TextElement
     {
-      get { return _TextElement; }
-      set { _TextElement = value; OnPropertyChanged("TextElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["text"]);
+        return _TextElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+          Overflow.Remove("TextElement");
+        _TextElement = value;
+        OnPropertyChanged("TextElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _TextElement;

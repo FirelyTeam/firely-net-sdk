@@ -69,8 +69,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Concept
     {
-      get { return _Concept; }
-      set { _Concept = value; OnPropertyChanged("Concept"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Concept))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["concept"]);
+        return _Concept;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Concept))
+          Overflow.Remove("Concept");
+        _Concept = value;
+        OnPropertyChanged("Concept");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Concept;
@@ -82,8 +95,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Reference
     {
-      get { return _Reference; }
-      set { _Reference = value; OnPropertyChanged("Reference"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reference))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["reference"]);
+        return _Reference;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reference))
+          Overflow.Remove("Reference");
+        _Reference = value;
+        OnPropertyChanged("Reference");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Reference;

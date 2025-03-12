@@ -72,8 +72,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get => _Subject ??= [];
-      set { _Subject = value; OnPropertyChanged("Subject"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["subject"]);
+        return _Subject ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+          Overflow.Remove("Subject");
+        _Subject = value;
+        OnPropertyChanged("Subject");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Subject;
@@ -85,8 +98,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? SymptomConditionEffect
     {
-      get { return _SymptomConditionEffect; }
-      set { _SymptomConditionEffect = value; OnPropertyChanged("SymptomConditionEffect"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SymptomConditionEffect))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["symptomConditionEffect"]);
+        return _SymptomConditionEffect;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SymptomConditionEffect))
+          Overflow.Remove("SymptomConditionEffect");
+        _SymptomConditionEffect = value;
+        OnPropertyChanged("SymptomConditionEffect");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _SymptomConditionEffect;
@@ -98,8 +124,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Classification
     {
-      get { return _Classification; }
-      set { _Classification = value; OnPropertyChanged("Classification"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Classification))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["classification"]);
+        return _Classification;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Classification))
+          Overflow.Remove("Classification");
+        _Classification = value;
+        OnPropertyChanged("Classification");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Classification;
@@ -111,8 +150,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? FrequencyOfOccurrence
     {
-      get { return _FrequencyOfOccurrence; }
-      set { _FrequencyOfOccurrence = value; OnPropertyChanged("FrequencyOfOccurrence"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FrequencyOfOccurrence))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["frequencyOfOccurrence"]);
+        return _FrequencyOfOccurrence;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FrequencyOfOccurrence))
+          Overflow.Remove("FrequencyOfOccurrence");
+        _FrequencyOfOccurrence = value;
+        OnPropertyChanged("FrequencyOfOccurrence");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _FrequencyOfOccurrence;
@@ -125,8 +177,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Population> Population
     {
-      get => _Population ??= [];
-      set { _Population = value; OnPropertyChanged("Population"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Population>), Overflow["population"]);
+        return _Population ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
+          Overflow.Remove("Population");
+        _Population = value;
+        OnPropertyChanged("Population");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Population>? _Population;

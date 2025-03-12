@@ -71,8 +71,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Code? ContentTypeElement
     {
-      get { return _ContentTypeElement; }
-      set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["contentType"]);
+        return _ContentTypeElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+          Overflow.Remove("ContentTypeElement");
+        _ContentTypeElement = value;
+        OnPropertyChanged("ContentTypeElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Code? _ContentTypeElement;
@@ -100,8 +113,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Code? LanguageElement
     {
-      get { return _LanguageElement; }
-      set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_LanguageElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["language"]);
+        return _LanguageElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_LanguageElement))
+          Overflow.Remove("LanguageElement");
+        _LanguageElement = value;
+        OnPropertyChanged("LanguageElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Code? _LanguageElement;
@@ -128,8 +154,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? DataElement
     {
-      get { return _DataElement; }
-      set { _DataElement = value; OnPropertyChanged("DataElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Base64Binary), Overflow["data"]);
+        return _DataElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+          Overflow.Remove("DataElement");
+        _DataElement = value;
+        OnPropertyChanged("DataElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Base64Binary? _DataElement;
@@ -166,8 +205,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.PrimitiveType? UrlElement
     {
-      get { return _UrlElement; }
-      set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+      get
+      {
+        if(OverflowNull<DynamicPrimitive>.InOverflow(_UrlElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PrimitiveType), Overflow["url"]);
+        return _UrlElement;
+      }
+
+      set
+      {
+        if (OverflowNull<DynamicPrimitive>.InOverflow(_UrlElement))
+          Overflow.Remove("UrlElement");
+        _UrlElement = value;
+        OnPropertyChanged("UrlElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.PrimitiveType? _UrlElement;
@@ -219,8 +271,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.PrimitiveType? SizeElement
     {
-      get { return _SizeElement; }
-      set { _SizeElement = value; OnPropertyChanged("SizeElement"); }
+      get
+      {
+        if(OverflowNull<DynamicPrimitive>.InOverflow(_SizeElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PrimitiveType), Overflow["size"]);
+        return _SizeElement;
+      }
+
+      set
+      {
+        if (OverflowNull<DynamicPrimitive>.InOverflow(_SizeElement))
+          Overflow.Remove("SizeElement");
+        _SizeElement = value;
+        OnPropertyChanged("SizeElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.PrimitiveType? _SizeElement;
@@ -262,8 +327,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? HashElement
     {
-      get { return _HashElement; }
-      set { _HashElement = value; OnPropertyChanged("HashElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_HashElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Base64Binary), Overflow["hash"]);
+        return _HashElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_HashElement))
+          Overflow.Remove("HashElement");
+        _HashElement = value;
+        OnPropertyChanged("HashElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Base64Binary? _HashElement;
@@ -290,8 +368,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
     {
-      get { return _TitleElement; }
-      set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TitleElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["title"]);
+        return _TitleElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TitleElement))
+          Overflow.Remove("TitleElement");
+        _TitleElement = value;
+        OnPropertyChanged("TitleElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _TitleElement;
@@ -318,8 +409,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreationElement
     {
-      get { return _CreationElement; }
-      set { _CreationElement = value; OnPropertyChanged("CreationElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CreationElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["creation"]);
+        return _CreationElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CreationElement))
+          Overflow.Remove("CreationElement");
+        _CreationElement = value;
+        OnPropertyChanged("CreationElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDateTime? _CreationElement;
@@ -349,8 +453,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? HeightElement
     {
-      get { return _HeightElement; }
-      set { _HeightElement = value; OnPropertyChanged("HeightElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_HeightElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["height"]);
+        return _HeightElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_HeightElement))
+          Overflow.Remove("HeightElement");
+        _HeightElement = value;
+        OnPropertyChanged("HeightElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.PositiveInt? _HeightElement;
@@ -380,8 +497,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? WidthElement
     {
-      get { return _WidthElement; }
-      set { _WidthElement = value; OnPropertyChanged("WidthElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_WidthElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["width"]);
+        return _WidthElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_WidthElement))
+          Overflow.Remove("WidthElement");
+        _WidthElement = value;
+        OnPropertyChanged("WidthElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.PositiveInt? _WidthElement;
@@ -411,8 +541,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? FramesElement
     {
-      get { return _FramesElement; }
-      set { _FramesElement = value; OnPropertyChanged("FramesElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_FramesElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["frames"]);
+        return _FramesElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_FramesElement))
+          Overflow.Remove("FramesElement");
+        _FramesElement = value;
+        OnPropertyChanged("FramesElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.PositiveInt? _FramesElement;
@@ -442,8 +585,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? DurationElement
     {
-      get { return _DurationElement; }
-      set { _DurationElement = value; OnPropertyChanged("DurationElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DurationElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["duration"]);
+        return _DurationElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DurationElement))
+          Overflow.Remove("DurationElement");
+        _DurationElement = value;
+        OnPropertyChanged("DurationElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDecimal? _DurationElement;
@@ -473,8 +629,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? PagesElement
     {
-      get { return _PagesElement; }
-      set { _PagesElement = value; OnPropertyChanged("PagesElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_PagesElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["pages"]);
+        return _PagesElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_PagesElement))
+          Overflow.Remove("PagesElement");
+        _PagesElement = value;
+        OnPropertyChanged("PagesElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.PositiveInt? _PagesElement;

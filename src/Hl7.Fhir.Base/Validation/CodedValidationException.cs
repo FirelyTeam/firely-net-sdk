@@ -40,6 +40,14 @@ public class CodedValidationException : ExtendedCodedException
     public const string LITERAL_INVALID_CODE = "PVAL124";
     public const string POSITIVE_INT_MUST_BE_POSITIVE_CODE = "PVAL125";
     public const string UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE = "PVAL126";
+    public const string EXPECTED_OBJECT_NOT_PRIMITIVE_CODE = "PVAL127";
+    public const string EXPECTED_OBJECT_NOT_ARRAY_CODE = "PVAL128";
+    public const string EXPECTED_PRIMITIVE_NOT_OBJECT_CODE = "PVAL129";
+    public const string EXPECTED_PRIMITIVE_NOT_ARRAY_CODE = "PVAL130";
+    public const string EXPECTED_ARRAY_NOT_PRIMITIVE_CODE = "PVAL131";
+    public const string EXPECTED_ARRAY_NOT_OBJECT_CODE = "PVAL132";
+    public const string UNKNOWN_CHOICE_TYPE_CODE = "PVAL133";
+    public const string UNKNOWN_RESOURCE_TYPE_CODE = "PVAL134";
 
     // A list of all issues mentioned above, to we can filter on them.
     internal static readonly HashSet<string> POCO_VALIDATION_ISSUES =
@@ -58,7 +66,15 @@ public class CodedValidationException : ExtendedCodedException
         INCORRECT_LITERAL_VALUE_TYPE_CODE,
         LITERAL_INVALID_CODE,
         POSITIVE_INT_MUST_BE_POSITIVE_CODE,
-        UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE
+        UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE,
+        EXPECTED_OBJECT_NOT_PRIMITIVE_CODE,
+        EXPECTED_OBJECT_NOT_ARRAY_CODE,
+        EXPECTED_PRIMITIVE_NOT_OBJECT_CODE,
+        EXPECTED_PRIMITIVE_NOT_ARRAY_CODE,
+        EXPECTED_ARRAY_NOT_PRIMITIVE_CODE,
+        EXPECTED_ARRAY_NOT_OBJECT_CODE,
+        UNKNOWN_CHOICE_TYPE_CODE,
+        UNKNOWN_RESOURCE_TYPE_CODE
     ];
 
     internal static COVE CHOICE_TYPE_NOT_ALLOWED(ValidationContext context, string typeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{typeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Structure);
@@ -80,6 +96,30 @@ public class CodedValidationException : ExtendedCodedException
         Initialize(context, POSITIVE_INT_MUST_BE_POSITIVE_CODE, $"Value {value} is not positive, which is required for a PositiveInt.", OO_Sev.Error, OO_Typ.Value);
     internal static COVE UNSIGNED_INT_MUST_NOT_BE_NEGATIVE(ValidationContext? context, int value) =>
         Initialize(context, UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE, $"Value {value} is negative, which is not allowed for an UnsignedInt.", OO_Sev.Error, OO_Typ.Value);
+    
+    internal static COVE EXPECTED_OBJECT_NOT_PRIMITIVE(ValidationContext? context, object? value) =>
+        Initialize(context, EXPECTED_OBJECT_NOT_PRIMITIVE_CODE, $"Expected an object, but found primitive {value}.", OO_Sev.Error, OO_Typ.Value);
+    
+    internal static COVE EXPECTED_OBJECT_NOT_ARRAY(ValidationContext? context, object? value) =>
+        Initialize(context, EXPECTED_OBJECT_NOT_ARRAY_CODE, $"Expected an object, but found array {value}.", OO_Sev.Error, OO_Typ.Value);
+    
+    internal static COVE EXPECTED_PRIMITIVE_NOT_OBJECT(ValidationContext? context, object? value) =>
+        Initialize(context, EXPECTED_PRIMITIVE_NOT_OBJECT_CODE, $"Expected a primitive, but found object {value}.", OO_Sev.Error, OO_Typ.Value);
+    
+    internal static COVE EXPECTED_PRIMITIVE_NOT_ARRAY(ValidationContext? context, object? value) =>
+        Initialize(context, EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, $"Expected a primitive, but found array {value}.", OO_Sev.Error, OO_Typ.Value);
+    
+    internal static COVE EXPECTED_ARRAY_NOT_PRIMITIVE(ValidationContext? context, object? value) =>
+        Initialize(context, EXPECTED_ARRAY_NOT_PRIMITIVE_CODE, $"Expected an array, but found primitive {value}.", OO_Sev.Error, OO_Typ.Value);
+    
+    internal static COVE EXPECTED_ARRAY_NOT_OBJECT(ValidationContext? context, object? value) =>
+        Initialize(context, EXPECTED_ARRAY_NOT_OBJECT_CODE, $"Expected an array, but found object {value}.", OO_Sev.Error, OO_Typ.Value);
+    
+    internal static COVE UNKNOWN_CHOICE_TYPE(ValidationContext? context, string typeName) =>
+        Initialize(context, UNKNOWN_CHOICE_TYPE_CODE, $"Unknown choice type '{typeName}'.", OO_Sev.Error, OO_Typ.Structure);
+    
+    internal static COVE UNKNOWN_RESOURCE_TYPE(ValidationContext? context, string typeName) =>
+        Initialize(context, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown resource type '{typeName}'.", OO_Sev.Error, OO_Typ.Structure);
 
 
     private static string niceValue(object? v)
@@ -120,7 +160,7 @@ public class CodedValidationException : ExtendedCodedException
 
         if (path is not null)
         {
-            // Bit of a hack. The location returned by GetLocation() will be different depending on
+            // A bit of a hack. The location returned by GetLocation() will be different depending on
             // whether this validation is run within the deserializer or the DataAnnotations.Validator.
             // In the latter case, the MemberName will be set, and GetLocation()
             // will return the parent, so we need to add the MemberName.
@@ -141,6 +181,21 @@ public class CodedValidationException : ExtendedCodedException
 
         return codedException;
     }
+
+    internal static CodedValidationException FromTypes(Type expected, object? actual) =>
+        actual switch
+        {
+            PrimitiveType when typeof(PrimitiveType).IsAssignableFrom(expected) => LITERAL_INVALID(null, actual, expected.Name),
+            DynamicDataType dynDT => UNKNOWN_CHOICE_TYPE(null, dynDT.DynamicTypeName!),
+            DynamicResource dynR => UNKNOWN_RESOURCE_TYPE(null, dynR.DynamicTypeName!),
+            PrimitiveType when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_PRIMITIVE(null, actual),
+            PrimitiveType when typeof(Base).IsAssignableFrom(expected) => EXPECTED_OBJECT_NOT_PRIMITIVE(null, actual),
+            Base when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_OBJECT(null, actual),
+            Base when typeof(PrimitiveType).IsAssignableFrom(expected) => EXPECTED_PRIMITIVE_NOT_OBJECT(null, actual),
+            IEnumerable<Base> when typeof(PrimitiveType).IsAssignableFrom(expected) => EXPECTED_PRIMITIVE_NOT_ARRAY(null, actual),
+            IEnumerable<Base> when typeof(Base).IsAssignableFrom(expected) => EXPECTED_OBJECT_NOT_ARRAY(null, actual),
+            _ => new COVE("PVAL100", $"Expected type '{expected.Name}', but found '{actual?.GetType().Name}'")
+        };
 
     internal CodedValidationResult AsResult(ValidationContext? context) =>
         context?.MemberName is { } mn

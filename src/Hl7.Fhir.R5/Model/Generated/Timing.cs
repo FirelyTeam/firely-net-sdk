@@ -313,8 +313,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.DataType? Bounds
       {
-        get { return _Bounds; }
-        set { _Bounds = value; OnPropertyChanged("Bounds"); }
+        get
+        {
+          if(OverflowNull<DynamicDataType>.InOverflow(_Bounds))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["bounds"]);
+          return _Bounds;
+        }
+
+        set
+        {
+          if (OverflowNull<DynamicDataType>.InOverflow(_Bounds))
+            Overflow.Remove("Bounds");
+          _Bounds = value;
+          OnPropertyChanged("Bounds");
+        }
+
       }
 
       private Hl7.Fhir.Model.DataType? _Bounds;
@@ -326,8 +339,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? CountElement
       {
-        get { return _CountElement; }
-        set { _CountElement = value; OnPropertyChanged("CountElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_CountElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["count"]);
+          return _CountElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_CountElement))
+            Overflow.Remove("CountElement");
+          _CountElement = value;
+          OnPropertyChanged("CountElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.PositiveInt? _CountElement;
@@ -354,8 +380,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? CountMaxElement
       {
-        get { return _CountMaxElement; }
-        set { _CountMaxElement = value; OnPropertyChanged("CountMaxElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_CountMaxElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["countMax"]);
+          return _CountMaxElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_CountMaxElement))
+            Overflow.Remove("CountMaxElement");
+          _CountMaxElement = value;
+          OnPropertyChanged("CountMaxElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.PositiveInt? _CountMaxElement;
@@ -382,8 +421,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? DurationElement
       {
-        get { return _DurationElement; }
-        set { _DurationElement = value; OnPropertyChanged("DurationElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DurationElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["duration"]);
+          return _DurationElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DurationElement))
+            Overflow.Remove("DurationElement");
+          _DurationElement = value;
+          OnPropertyChanged("DurationElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _DurationElement;
@@ -410,8 +462,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? DurationMaxElement
       {
-        get { return _DurationMaxElement; }
-        set { _DurationMaxElement = value; OnPropertyChanged("DurationMaxElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DurationMaxElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["durationMax"]);
+          return _DurationMaxElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DurationMaxElement))
+            Overflow.Remove("DurationMaxElement");
+          _DurationMaxElement = value;
+          OnPropertyChanged("DurationMaxElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _DurationMaxElement;
@@ -440,8 +505,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime>? DurationUnitElement
       {
-        get { return _DurationUnitElement; }
-        set { _DurationUnitElement = value; OnPropertyChanged("DurationUnitElement"); }
+        get
+        {
+          if(OverflowNull<Code<Hl7.Fhir.Model.Timing.UnitsOfTime>>.InOverflow(_DurationUnitElement))
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Timing.UnitsOfTime>), Overflow["durationUnit"]);
+          return _DurationUnitElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Code<Hl7.Fhir.Model.Timing.UnitsOfTime>>.InOverflow(_DurationUnitElement))
+            Overflow.Remove("DurationUnitElement");
+          _DurationUnitElement = value;
+          OnPropertyChanged("DurationUnitElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.Timing.UnitsOfTime>? _DurationUnitElement;
@@ -468,8 +546,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? FrequencyElement
       {
-        get { return _FrequencyElement; }
-        set { _FrequencyElement = value; OnPropertyChanged("FrequencyElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_FrequencyElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["frequency"]);
+          return _FrequencyElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_FrequencyElement))
+            Overflow.Remove("FrequencyElement");
+          _FrequencyElement = value;
+          OnPropertyChanged("FrequencyElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.PositiveInt? _FrequencyElement;
@@ -496,8 +587,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? FrequencyMaxElement
       {
-        get { return _FrequencyMaxElement; }
-        set { _FrequencyMaxElement = value; OnPropertyChanged("FrequencyMaxElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_FrequencyMaxElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["frequencyMax"]);
+          return _FrequencyMaxElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_FrequencyMaxElement))
+            Overflow.Remove("FrequencyMaxElement");
+          _FrequencyMaxElement = value;
+          OnPropertyChanged("FrequencyMaxElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.PositiveInt? _FrequencyMaxElement;
@@ -524,8 +628,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? PeriodElement
       {
-        get { return _PeriodElement; }
-        set { _PeriodElement = value; OnPropertyChanged("PeriodElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_PeriodElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["period"]);
+          return _PeriodElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_PeriodElement))
+            Overflow.Remove("PeriodElement");
+          _PeriodElement = value;
+          OnPropertyChanged("PeriodElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _PeriodElement;
@@ -552,8 +669,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? PeriodMaxElement
       {
-        get { return _PeriodMaxElement; }
-        set { _PeriodMaxElement = value; OnPropertyChanged("PeriodMaxElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_PeriodMaxElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["periodMax"]);
+          return _PeriodMaxElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_PeriodMaxElement))
+            Overflow.Remove("PeriodMaxElement");
+          _PeriodMaxElement = value;
+          OnPropertyChanged("PeriodMaxElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _PeriodMaxElement;
@@ -582,8 +712,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime>? PeriodUnitElement
       {
-        get { return _PeriodUnitElement; }
-        set { _PeriodUnitElement = value; OnPropertyChanged("PeriodUnitElement"); }
+        get
+        {
+          if(OverflowNull<Code<Hl7.Fhir.Model.Timing.UnitsOfTime>>.InOverflow(_PeriodUnitElement))
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Timing.UnitsOfTime>), Overflow["periodUnit"]);
+          return _PeriodUnitElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Code<Hl7.Fhir.Model.Timing.UnitsOfTime>>.InOverflow(_PeriodUnitElement))
+            Overflow.Remove("PeriodUnitElement");
+          _PeriodUnitElement = value;
+          OnPropertyChanged("PeriodUnitElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.Timing.UnitsOfTime>? _PeriodUnitElement;
@@ -613,8 +756,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DayOfWeekElement
       {
-        get => _DayOfWeekElement ??= [];
-        set { _DayOfWeekElement = value; OnPropertyChanged("DayOfWeekElement"); }
+        get
+        {
+          if(OverflowNull<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>.InOverflow(_DayOfWeekElement))
+            throw CodedValidationException.FromTypes(typeof(List<Code<Hl7.Fhir.Model.DaysOfWeek>>), Overflow["dayOfWeek"]);
+          return _DayOfWeekElement ??= [];
+        }
+
+        set
+        {
+          if (OverflowNull<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>.InOverflow(_DayOfWeekElement))
+            Overflow.Remove("DayOfWeekElement");
+          _DayOfWeekElement = value;
+          OnPropertyChanged("DayOfWeekElement");
+        }
+
       }
 
       private List<Code<Hl7.Fhir.Model.DaysOfWeek>>? _DayOfWeekElement;
@@ -645,8 +801,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Time> TimeOfDayElement
       {
-        get => _TimeOfDayElement ??= [];
-        set { _TimeOfDayElement = value; OnPropertyChanged("TimeOfDayElement"); }
+        get
+        {
+          if(OverflowNull<List<Hl7.Fhir.Model.Time>>.InOverflow(_TimeOfDayElement))
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Time>), Overflow["timeOfDay"]);
+          return _TimeOfDayElement ??= [];
+        }
+
+        set
+        {
+          if (OverflowNull<List<Hl7.Fhir.Model.Time>>.InOverflow(_TimeOfDayElement))
+            Overflow.Remove("TimeOfDayElement");
+          _TimeOfDayElement = value;
+          OnPropertyChanged("TimeOfDayElement");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.Time>? _TimeOfDayElement;
@@ -679,8 +848,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Timing.EventTiming>> WhenElement
       {
-        get => _WhenElement ??= [];
-        set { _WhenElement = value; OnPropertyChanged("WhenElement"); }
+        get
+        {
+          if(OverflowNull<List<Code<Hl7.Fhir.Model.Timing.EventTiming>>>.InOverflow(_WhenElement))
+            throw CodedValidationException.FromTypes(typeof(List<Code<Hl7.Fhir.Model.Timing.EventTiming>>), Overflow["when"]);
+          return _WhenElement ??= [];
+        }
+
+        set
+        {
+          if (OverflowNull<List<Code<Hl7.Fhir.Model.Timing.EventTiming>>>.InOverflow(_WhenElement))
+            Overflow.Remove("WhenElement");
+          _WhenElement = value;
+          OnPropertyChanged("WhenElement");
+        }
+
       }
 
       private List<Code<Hl7.Fhir.Model.Timing.EventTiming>>? _WhenElement;
@@ -710,8 +892,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? OffsetElement
       {
-        get { return _OffsetElement; }
-        set { _OffsetElement = value; OnPropertyChanged("OffsetElement"); }
+        get
+        {
+          if(OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_OffsetElement))
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Overflow["offset"]);
+          return _OffsetElement;
+        }
+
+        set
+        {
+          if (OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_OffsetElement))
+            Overflow.Remove("OffsetElement");
+          _OffsetElement = value;
+          OnPropertyChanged("OffsetElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.UnsignedInt? _OffsetElement;
@@ -927,8 +1122,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirDateTime> EventElement
     {
-      get => _EventElement ??= [];
-      set { _EventElement = value; OnPropertyChanged("EventElement"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.FhirDateTime>>.InOverflow(_EventElement))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirDateTime>), Overflow["event"]);
+        return _EventElement ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.FhirDateTime>>.InOverflow(_EventElement))
+          Overflow.Remove("EventElement");
+        _EventElement = value;
+        OnPropertyChanged("EventElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirDateTime>? _EventElement;
@@ -958,8 +1166,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Timing.RepeatComponent? Repeat
     {
-      get { return _Repeat; }
-      set { _Repeat = value; OnPropertyChanged("Repeat"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Timing.RepeatComponent>.InOverflow(_Repeat))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Timing.RepeatComponent), Overflow["repeat"]);
+        return _Repeat;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Timing.RepeatComponent>.InOverflow(_Repeat))
+          Overflow.Remove("Repeat");
+        _Repeat = value;
+        OnPropertyChanged("Repeat");
+      }
+
     }
 
     private Hl7.Fhir.Model.Timing.RepeatComponent? _Repeat;
@@ -972,8 +1193,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Code
     {
-      get { return _Code; }
-      set { _Code = value; OnPropertyChanged("Code"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
+        return _Code;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+          Overflow.Remove("Code");
+        _Code = value;
+        OnPropertyChanged("Code");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Code;

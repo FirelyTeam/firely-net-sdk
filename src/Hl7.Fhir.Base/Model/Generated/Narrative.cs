@@ -106,8 +106,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>? StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(OverflowNull<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>.InOverflow(_StatusElement))
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>), Overflow["status"]);
+        return _StatusElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>.InOverflow(_StatusElement))
+          Overflow.Remove("StatusElement");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>? _StatusElement;
@@ -135,8 +148,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.XHtml? DivElement
     {
-      get { return _DivElement; }
-      set { _DivElement = value; OnPropertyChanged("DivElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.XHtml>.InOverflow(_DivElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.XHtml), Overflow["div"]);
+        return _DivElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.XHtml>.InOverflow(_DivElement))
+          Overflow.Remove("DivElement");
+        _DivElement = value;
+        OnPropertyChanged("DivElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.XHtml? _DivElement;

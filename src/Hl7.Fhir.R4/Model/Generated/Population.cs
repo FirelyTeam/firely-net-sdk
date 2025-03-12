@@ -71,8 +71,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Age
     {
-      get { return _Age; }
-      set { _Age = value; OnPropertyChanged("Age"); }
+      get
+      {
+        if(OverflowNull<DynamicDataType>.InOverflow(_Age))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["age"]);
+        return _Age;
+      }
+
+      set
+      {
+        if (OverflowNull<DynamicDataType>.InOverflow(_Age))
+          Overflow.Remove("Age");
+        _Age = value;
+        OnPropertyChanged("Age");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Age;
@@ -84,8 +97,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Gender
     {
-      get { return _Gender; }
-      set { _Gender = value; OnPropertyChanged("Gender"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Gender))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["gender"]);
+        return _Gender;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Gender))
+          Overflow.Remove("Gender");
+        _Gender = value;
+        OnPropertyChanged("Gender");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Gender;
@@ -97,8 +123,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Race
     {
-      get { return _Race; }
-      set { _Race = value; OnPropertyChanged("Race"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Race))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["race"]);
+        return _Race;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Race))
+          Overflow.Remove("Race");
+        _Race = value;
+        OnPropertyChanged("Race");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Race;
@@ -110,8 +149,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? PhysiologicalCondition
     {
-      get { return _PhysiologicalCondition; }
-      set { _PhysiologicalCondition = value; OnPropertyChanged("PhysiologicalCondition"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PhysiologicalCondition))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["physiologicalCondition"]);
+        return _PhysiologicalCondition;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PhysiologicalCondition))
+          Overflow.Remove("PhysiologicalCondition");
+        _PhysiologicalCondition = value;
+        OnPropertyChanged("PhysiologicalCondition");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _PhysiologicalCondition;

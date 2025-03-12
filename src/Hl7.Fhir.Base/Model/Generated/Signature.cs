@@ -75,8 +75,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Type
     {
-      get => _Type ??= [];
-      set { _Type = value; OnPropertyChanged("Type"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Type))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Coding>), Overflow["type"]);
+        return _Type ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Type))
+          Overflow.Remove("Type");
+        _Type = value;
+        OnPropertyChanged("Type");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Coding>? _Type;
@@ -91,8 +104,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Instant? WhenElement
     {
-      get { return _WhenElement; }
-      set { _WhenElement = value; OnPropertyChanged("WhenElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_WhenElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["when"]);
+        return _WhenElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_WhenElement))
+          Overflow.Remove("WhenElement");
+        _WhenElement = value;
+        OnPropertyChanged("WhenElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Instant? _WhenElement;
@@ -129,8 +155,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Who
     {
-      get { return _Who; }
-      set { _Who = value; OnPropertyChanged("Who"); }
+      get
+      {
+        if(OverflowNull<DynamicDataType>.InOverflow(_Who))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["who"]);
+        return _Who;
+      }
+
+      set
+      {
+        if (OverflowNull<DynamicDataType>.InOverflow(_Who))
+          Overflow.Remove("Who");
+        _Who = value;
+        OnPropertyChanged("Who");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Who;
@@ -151,8 +190,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? OnBehalfOf
     {
-      get { return _OnBehalfOf; }
-      set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
+      get
+      {
+        if(OverflowNull<DynamicDataType>.InOverflow(_OnBehalfOf))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["onBehalfOf"]);
+        return _OnBehalfOf;
+      }
+
+      set
+      {
+        if (OverflowNull<DynamicDataType>.InOverflow(_OnBehalfOf))
+          Overflow.Remove("OnBehalfOf");
+        _OnBehalfOf = value;
+        OnPropertyChanged("OnBehalfOf");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _OnBehalfOf;
@@ -169,8 +221,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Code? ContentTypeElement
     {
-      get { return _ContentTypeElement; }
-      set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["contentType"]);
+        return _ContentTypeElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+          Overflow.Remove("ContentTypeElement");
+        _ContentTypeElement = value;
+        OnPropertyChanged("ContentTypeElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Code? _ContentTypeElement;
@@ -201,8 +266,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Code? TargetFormatElement
     {
-      get { return _TargetFormatElement; }
-      set { _TargetFormatElement = value; OnPropertyChanged("TargetFormatElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_TargetFormatElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["targetFormat"]);
+        return _TargetFormatElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_TargetFormatElement))
+          Overflow.Remove("TargetFormatElement");
+        _TargetFormatElement = value;
+        OnPropertyChanged("TargetFormatElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Code? _TargetFormatElement;
@@ -233,8 +311,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Code? SigFormatElement
     {
-      get { return _SigFormatElement; }
-      set { _SigFormatElement = value; OnPropertyChanged("SigFormatElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_SigFormatElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["sigFormat"]);
+        return _SigFormatElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_SigFormatElement))
+          Overflow.Remove("SigFormatElement");
+        _SigFormatElement = value;
+        OnPropertyChanged("SigFormatElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Code? _SigFormatElement;
@@ -265,8 +356,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? BlobElement
     {
-      get { return _BlobElement; }
-      set { _BlobElement = value; OnPropertyChanged("BlobElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_BlobElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Base64Binary), Overflow["blob"]);
+        return _BlobElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_BlobElement))
+          Overflow.Remove("BlobElement");
+        _BlobElement = value;
+        OnPropertyChanged("BlobElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Base64Binary? _BlobElement;
@@ -296,8 +400,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? DataElement
     {
-      get { return _DataElement; }
-      set { _DataElement = value; OnPropertyChanged("DataElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Base64Binary), Overflow["data"]);
+        return _DataElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+          Overflow.Remove("DataElement");
+        _DataElement = value;
+        OnPropertyChanged("DataElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Base64Binary? _DataElement;

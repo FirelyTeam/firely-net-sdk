@@ -64,8 +64,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Narrative? Text
     {
-      get { return _Text; }
-      set { _Text = value; OnPropertyChanged("Text"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Narrative>.InOverflow(_Text))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Narrative), Overflow["text"]);
+        return _Text;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Narrative>.InOverflow(_Text))
+          Overflow.Remove("Text");
+        _Text = value;
+        OnPropertyChanged("Text");
+      }
+
     }
 
     private Hl7.Fhir.Model.Narrative? _Text;
@@ -80,8 +93,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Resource> Contained
     {
-      get => _Contained ??= [];
-      set { _Contained = value; OnPropertyChanged("Contained"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Resource>>.InOverflow(_Contained))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Resource>), Overflow["contained"]);
+        return _Contained ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Resource>>.InOverflow(_Contained))
+          Overflow.Remove("Contained");
+        _Contained = value;
+        OnPropertyChanged("Contained");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Resource>? _Contained;
@@ -94,8 +120,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
-      get => _Extension ??= [];
-      set { _Extension = value; OnPropertyChanged("Extension"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_Extension))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["extension"]);
+        return _Extension ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_Extension))
+          Overflow.Remove("Extension");
+        _Extension = value;
+        OnPropertyChanged("Extension");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Extension>? _Extension;
@@ -108,8 +147,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
-      get => _ModifierExtension ??= [];
-      set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_ModifierExtension))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["modifierExtension"]);
+        return _ModifierExtension ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_ModifierExtension))
+          Overflow.Remove("ModifierExtension");
+        _ModifierExtension = value;
+        OnPropertyChanged("ModifierExtension");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Extension>? _ModifierExtension;

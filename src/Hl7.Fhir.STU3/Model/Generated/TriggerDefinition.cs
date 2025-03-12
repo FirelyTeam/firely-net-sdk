@@ -124,8 +124,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>? TypeElement
     {
-      get { return _TypeElement; }
-      set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+      get
+      {
+        if(OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.InOverflow(_TypeElement))
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>), Overflow["type"]);
+        return _TypeElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.InOverflow(_TypeElement))
+          Overflow.Remove("TypeElement");
+        _TypeElement = value;
+        OnPropertyChanged("TypeElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>? _TypeElement;
@@ -152,8 +165,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? EventNameElement
     {
-      get { return _EventNameElement; }
-      set { _EventNameElement = value; OnPropertyChanged("EventNameElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EventNameElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["eventName"]);
+        return _EventNameElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EventNameElement))
+          Overflow.Remove("EventNameElement");
+        _EventNameElement = value;
+        OnPropertyChanged("EventNameElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _EventNameElement;
@@ -183,8 +209,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? EventTiming
     {
-      get { return _EventTiming; }
-      set { _EventTiming = value; OnPropertyChanged("EventTiming"); }
+      get
+      {
+        if(OverflowNull<DynamicDataType>.InOverflow(_EventTiming))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["eventTiming"]);
+        return _EventTiming;
+      }
+
+      set
+      {
+        if (OverflowNull<DynamicDataType>.InOverflow(_EventTiming))
+          Overflow.Remove("EventTiming");
+        _EventTiming = value;
+        OnPropertyChanged("EventTiming");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _EventTiming;
@@ -196,8 +235,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataRequirement? EventData
     {
-      get { return _EventData; }
-      set { _EventData = value; OnPropertyChanged("EventData"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.DataRequirement>.InOverflow(_EventData))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataRequirement), Overflow["eventData"]);
+        return _EventData;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.DataRequirement>.InOverflow(_EventData))
+          Overflow.Remove("EventData");
+        _EventData = value;
+        OnPropertyChanged("EventData");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataRequirement? _EventData;

@@ -66,8 +66,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Country
     {
-      get { return _Country; }
-      set { _Country = value; OnPropertyChanged("Country"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Country))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["country"]);
+        return _Country;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Country))
+          Overflow.Remove("Country");
+        _Country = value;
+        OnPropertyChanged("Country");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Country;
@@ -79,8 +92,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Jurisdiction
     {
-      get { return _Jurisdiction; }
-      set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Jurisdiction))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["jurisdiction"]);
+        return _Jurisdiction;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Jurisdiction))
+          Overflow.Remove("Jurisdiction");
+        _Jurisdiction = value;
+        OnPropertyChanged("Jurisdiction");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Jurisdiction;
@@ -93,8 +119,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Status
     {
-      get { return _Status; }
-      set { _Status = value; OnPropertyChanged("Status"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Status))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["status"]);
+        return _Status;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Status))
+          Overflow.Remove("Status");
+        _Status = value;
+        OnPropertyChanged("Status");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Status;
@@ -106,8 +145,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Period? DateRange
     {
-      get { return _DateRange; }
-      set { _DateRange = value; OnPropertyChanged("DateRange"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_DateRange))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["dateRange"]);
+        return _DateRange;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_DateRange))
+          Overflow.Remove("DateRange");
+        _DateRange = value;
+        OnPropertyChanged("DateRange");
+      }
+
     }
 
     private Hl7.Fhir.Model.Period? _DateRange;
@@ -119,8 +171,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? RestoreDateElement
     {
-      get { return _RestoreDateElement; }
-      set { _RestoreDateElement = value; OnPropertyChanged("RestoreDateElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_RestoreDateElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["restoreDate"]);
+        return _RestoreDateElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_RestoreDateElement))
+          Overflow.Remove("RestoreDateElement");
+        _RestoreDateElement = value;
+        OnPropertyChanged("RestoreDateElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDateTime? _RestoreDateElement;

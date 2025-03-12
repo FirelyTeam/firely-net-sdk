@@ -70,8 +70,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Low
     {
-      get { return _Low; }
-      set { _Low = value; OnPropertyChanged("Low"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Low))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["low"]);
+        return _Low;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Low))
+          Overflow.Remove("Low");
+        _Low = value;
+        OnPropertyChanged("Low");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _Low;
@@ -83,8 +96,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? High
     {
-      get { return _High; }
-      set { _High = value; OnPropertyChanged("High"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_High))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["high"]);
+        return _High;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_High))
+          Overflow.Remove("High");
+        _High = value;
+        OnPropertyChanged("High");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _High;

@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public string? Value
     {
-      get { return ObjectValue is string or null ? (string?)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
+      get { return ObjectValue is string or null ? (string?)ObjectValue : throw COVE.FromTypes(typeof(Uuid), ObjectValue); }
       set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 
