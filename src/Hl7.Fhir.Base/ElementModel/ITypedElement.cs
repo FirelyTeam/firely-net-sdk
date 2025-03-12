@@ -41,6 +41,8 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// Type of the node. If a FHIR type, this is just a simple string, otherwise a StructureDefinition url for a type defined as a logical model.
         /// </summary>
+        /// <remarks>May be <c>null</c> if the type is not known. This is uncommon when the data is valid,
+        /// but might happen when working with unknown elements or unknown choice types in an instance.</remarks>
         string? InstanceType { get; }
 
         /// <summary>
