@@ -70,21 +70,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Numerator
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Numerator))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["numerator"]);
-        return _Numerator;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Numerator))
-          Overflow.Remove("Numerator");
-        _Numerator = value;
-        OnPropertyChanged("Numerator");
-      }
-
+      get { return _Numerator; }
+      set { _Numerator = value; OnPropertyChanged("Numerator"); }
     }
 
     private Hl7.Fhir.Model.Quantity? _Numerator;
@@ -96,21 +83,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Denominator
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["denominator"]);
-        return _Denominator;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
-          Overflow.Remove("Denominator");
-        _Denominator = value;
-        OnPropertyChanged("Denominator");
-      }
-
+      get { return _Denominator; }
+      set { _Denominator = value; OnPropertyChanged("Denominator"); }
     }
 
     private Hl7.Fhir.Model.Quantity? _Denominator;

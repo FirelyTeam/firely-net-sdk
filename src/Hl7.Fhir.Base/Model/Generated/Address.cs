@@ -141,21 +141,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressUse>? UseElement
     {
-      get
-      {
-        if(OverflowNull<Code<Hl7.Fhir.Model.Address.AddressUse>>.InOverflow(_UseElement))
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Address.AddressUse>), Overflow["use"]);
-        return _UseElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Code<Hl7.Fhir.Model.Address.AddressUse>>.InOverflow(_UseElement))
-          Overflow.Remove("UseElement");
-        _UseElement = value;
-        OnPropertyChanged("UseElement");
-      }
-
+      get { return _UseElement; }
+      set { _UseElement = value; OnPropertyChanged("UseElement"); }
     }
 
     private Code<Hl7.Fhir.Model.Address.AddressUse>? _UseElement;
@@ -184,21 +171,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressType>? TypeElement
     {
-      get
-      {
-        if(OverflowNull<Code<Hl7.Fhir.Model.Address.AddressType>>.InOverflow(_TypeElement))
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Address.AddressType>), Overflow["type"]);
-        return _TypeElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Code<Hl7.Fhir.Model.Address.AddressType>>.InOverflow(_TypeElement))
-          Overflow.Remove("TypeElement");
-        _TypeElement = value;
-        OnPropertyChanged("TypeElement");
-      }
-
+      get { return _TypeElement; }
+      set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
     private Code<Hl7.Fhir.Model.Address.AddressType>? _TypeElement;
@@ -225,21 +199,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TextElement
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["text"]);
-        return _TextElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
-          Overflow.Remove("TextElement");
-        _TextElement = value;
-        OnPropertyChanged("TextElement");
-      }
-
+      get { return _TextElement; }
+      set { _TextElement = value; OnPropertyChanged("TextElement"); }
     }
 
     private Hl7.Fhir.Model.FhirString? _TextElement;
@@ -267,21 +228,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> LineElement
     {
-      get
-      {
-        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_LineElement))
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["line"]);
-        return _LineElement ??= [];
-      }
-
-      set
-      {
-        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_LineElement))
-          Overflow.Remove("LineElement");
-        _LineElement = value;
-        OnPropertyChanged("LineElement");
-      }
-
+      get => _LineElement ??= [];
+      set { _LineElement = value; OnPropertyChanged("LineElement"); }
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _LineElement;
@@ -311,21 +259,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CityElement
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CityElement))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["city"]);
-        return _CityElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CityElement))
-          Overflow.Remove("CityElement");
-        _CityElement = value;
-        OnPropertyChanged("CityElement");
-      }
-
+      get { return _CityElement; }
+      set { _CityElement = value; OnPropertyChanged("CityElement"); }
     }
 
     private Hl7.Fhir.Model.FhirString? _CityElement;
@@ -352,21 +287,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DistrictElement
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DistrictElement))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["district"]);
-        return _DistrictElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DistrictElement))
-          Overflow.Remove("DistrictElement");
-        _DistrictElement = value;
-        OnPropertyChanged("DistrictElement");
-      }
-
+      get { return _DistrictElement; }
+      set { _DistrictElement = value; OnPropertyChanged("DistrictElement"); }
     }
 
     private Hl7.Fhir.Model.FhirString? _DistrictElement;
@@ -393,21 +315,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? StateElement
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_StateElement))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["state"]);
-        return _StateElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_StateElement))
-          Overflow.Remove("StateElement");
-        _StateElement = value;
-        OnPropertyChanged("StateElement");
-      }
-
+      get { return _StateElement; }
+      set { _StateElement = value; OnPropertyChanged("StateElement"); }
     }
 
     private Hl7.Fhir.Model.FhirString? _StateElement;
@@ -434,21 +343,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PostalCodeElement
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PostalCodeElement))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["postalCode"]);
-        return _PostalCodeElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PostalCodeElement))
-          Overflow.Remove("PostalCodeElement");
-        _PostalCodeElement = value;
-        OnPropertyChanged("PostalCodeElement");
-      }
-
+      get { return _PostalCodeElement; }
+      set { _PostalCodeElement = value; OnPropertyChanged("PostalCodeElement"); }
     }
 
     private Hl7.Fhir.Model.FhirString? _PostalCodeElement;
@@ -475,21 +371,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CountryElement
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CountryElement))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["country"]);
-        return _CountryElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CountryElement))
-          Overflow.Remove("CountryElement");
-        _CountryElement = value;
-        OnPropertyChanged("CountryElement");
-      }
-
+      get { return _CountryElement; }
+      set { _CountryElement = value; OnPropertyChanged("CountryElement"); }
     }
 
     private Hl7.Fhir.Model.FhirString? _CountryElement;
@@ -516,21 +399,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
-        return _Period;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
-          Overflow.Remove("Period");
-        _Period = value;
-        OnPropertyChanged("Period");
-      }
-
+      get { return _Period; }
+      set { _Period = value; OnPropertyChanged("Period"); }
     }
 
     private Hl7.Fhir.Model.Period? _Period;

@@ -124,21 +124,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.HumanName.NameUse>? UseElement
     {
-      get
-      {
-        if(OverflowNull<Code<Hl7.Fhir.Model.HumanName.NameUse>>.InOverflow(_UseElement))
-          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.HumanName.NameUse>), Overflow["use"]);
-        return _UseElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Code<Hl7.Fhir.Model.HumanName.NameUse>>.InOverflow(_UseElement))
-          Overflow.Remove("UseElement");
-        _UseElement = value;
-        OnPropertyChanged("UseElement");
-      }
-
+      get { return _UseElement; }
+      set { _UseElement = value; OnPropertyChanged("UseElement"); }
     }
 
     private Code<Hl7.Fhir.Model.HumanName.NameUse>? _UseElement;
@@ -165,21 +152,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TextElement
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["text"]);
-        return _TextElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
-          Overflow.Remove("TextElement");
-        _TextElement = value;
-        OnPropertyChanged("TextElement");
-      }
-
+      get { return _TextElement; }
+      set { _TextElement = value; OnPropertyChanged("TextElement"); }
     }
 
     private Hl7.Fhir.Model.FhirString? _TextElement;
@@ -206,21 +180,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? FamilyElement
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FamilyElement))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["family"]);
-        return _FamilyElement;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FamilyElement))
-          Overflow.Remove("FamilyElement");
-        _FamilyElement = value;
-        OnPropertyChanged("FamilyElement");
-      }
-
+      get { return _FamilyElement; }
+      set { _FamilyElement = value; OnPropertyChanged("FamilyElement"); }
     }
 
     private Hl7.Fhir.Model.FhirString? _FamilyElement;
@@ -248,21 +209,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> GivenElement
     {
-      get
-      {
-        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_GivenElement))
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["given"]);
-        return _GivenElement ??= [];
-      }
-
-      set
-      {
-        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_GivenElement))
-          Overflow.Remove("GivenElement");
-        _GivenElement = value;
-        OnPropertyChanged("GivenElement");
-      }
-
+      get => _GivenElement ??= [];
+      set { _GivenElement = value; OnPropertyChanged("GivenElement"); }
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _GivenElement;
@@ -293,21 +241,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> PrefixElement
     {
-      get
-      {
-        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_PrefixElement))
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["prefix"]);
-        return _PrefixElement ??= [];
-      }
-
-      set
-      {
-        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_PrefixElement))
-          Overflow.Remove("PrefixElement");
-        _PrefixElement = value;
-        OnPropertyChanged("PrefixElement");
-      }
-
+      get => _PrefixElement ??= [];
+      set { _PrefixElement = value; OnPropertyChanged("PrefixElement"); }
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _PrefixElement;
@@ -338,21 +273,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> SuffixElement
     {
-      get
-      {
-        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_SuffixElement))
-          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["suffix"]);
-        return _SuffixElement ??= [];
-      }
-
-      set
-      {
-        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_SuffixElement))
-          Overflow.Remove("SuffixElement");
-        _SuffixElement = value;
-        OnPropertyChanged("SuffixElement");
-      }
-
+      get => _SuffixElement ??= [];
+      set { _SuffixElement = value; OnPropertyChanged("SuffixElement"); }
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _SuffixElement;
@@ -382,21 +304,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
     {
-      get
-      {
-        if(OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
-          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
-        return _Period;
-      }
-
-      set
-      {
-        if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
-          Overflow.Remove("Period");
-        _Period = value;
-        OnPropertyChanged("Period");
-      }
-
+      get { return _Period; }
+      set { _Period = value; OnPropertyChanged("Period"); }
     }
 
     private Hl7.Fhir.Model.Period? _Period;
