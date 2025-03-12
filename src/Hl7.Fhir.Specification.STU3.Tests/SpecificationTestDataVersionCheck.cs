@@ -57,12 +57,12 @@ public class SpecificationTestDataVersionCheck
                 if (new FileInfo(item).Extension == ".xml")
                 {
                     // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                    xmlParser.Parse<Resource>(content);
+                    xmlParser.Deserialize<Resource>(content);
                 }
                 else if (new FileInfo(item).Extension == ".json")
                 {
                     // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                    jsonParser.Parse<Resource>(content);
+                    jsonParser.Deserialize<Resource>(content);
                 }
                 else
                 {

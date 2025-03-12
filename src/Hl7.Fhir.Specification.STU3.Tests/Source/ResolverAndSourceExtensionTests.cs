@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Specification.Tests
             public ResolverResult TryResolveByCanonicalUri(string uri)
             {
                 var customLogicalModelDataTypeXml = File.ReadAllText(Path.Combine("TestData/ccda", "CCDA_ANY.xml"));
-                var sd = new FhirXmlDeserializer().Parse<StructureDefinition>(customLogicalModelDataTypeXml);
+                var sd = new FhirXmlDeserializer().Deserialize<StructureDefinition>(customLogicalModelDataTypeXml);
                 if (sd.Type.Equals(uri))
                     return sd;
 

@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Tests.Serialization
             string xml = TestDataHelper.ReadTestData("TestPatient.xml");
             string json = TestDataHelper.ReadTestData(@"TestPatient.json");
 
-            var once = new FhirXmlDeserializer().Parse<Resource>(xml);
+            var once = new FhirXmlDeserializer().Deserialize<Resource>(xml);
 
             Stopwatch x = new Stopwatch();
 
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             for (int i = 0; i < 1000; i++)
             {
-                var result = new FhirXmlDeserializer().Parse<Resource>(xml);
+                var result = new FhirXmlDeserializer().Deserialize<Resource>(xml);
             }
             x.Stop();
 

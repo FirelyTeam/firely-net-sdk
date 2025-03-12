@@ -19,7 +19,7 @@ public class FhirPathContextTests
     {
         var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
-        _bundle = (new FhirXmlDeserializer()).Parse<Bundle>(bundleXml).ToPocoNode();
+        _bundle = (new FhirXmlDeserializer()).Deserialize<Bundle>(bundleXml).ToPocoNode();
     }
     
     [TestMethod]

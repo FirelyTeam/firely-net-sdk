@@ -34,7 +34,7 @@ namespace Vonk.FhirPath.R4.Tests
         public async Tasks.Task TestSelectMethods()
         {
             await MassiveParallelSelectsShouldBeCorrect("Api", new Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => IValueProviderFPExtensions.Select(nav, expr, context)));
-            await MassiveParallelSelectsShouldBeCorrect("Concurrent", new Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => FhirPathExtensions.Select(nav, expr, context)));
+            await MassiveParallelSelectsShouldBeCorrect("Concurrent", new Func<PocoNode, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => nav.Select(expr, context)));
         }
 
         /// <summary>

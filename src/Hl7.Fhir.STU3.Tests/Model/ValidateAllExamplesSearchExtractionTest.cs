@@ -67,7 +67,7 @@ public class ValidateSearchExtractionAllExamplesTest
                     {
                         // Debug.WriteLine(String.Format("Validating {0}", file));
                         var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
-                        var resource = parser.Parse<Resource>(reader);
+                        var resource = parser.Deserialize<Resource>(reader);
 
                         extractValuesForSearchParameterFromFile(exampleSearchValues, resource);
 

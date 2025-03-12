@@ -25,7 +25,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
-            var bundle = (new FhirXmlDeserializer()).Parse<Bundle>(bundleXml);
+            var bundle = (new FhirXmlDeserializer()).Deserialize<Bundle>(bundleXml);
             Assert.IsNotNull(bundle);
             _bundleNode = new ScopedNode(bundle.ToTypedElement());
         }
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             var exampleUri = "http://example.org/fhir/Bundle/1";
             var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
-            var bundle = (new FhirXmlDeserializer()).Parse<Bundle>(bundleXml);
+            var bundle = (new FhirXmlDeserializer()).Deserialize<Bundle>(bundleXml);
             var bundleNode = new ScopedNode(bundle.ToTypedElement(), exampleUri);
             Assert.AreEqual(exampleUri, bundleNode.InstanceUri);
 

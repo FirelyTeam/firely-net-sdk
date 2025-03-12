@@ -63,7 +63,7 @@ public class RoundTripAttachments
     public void RoundTripAttachmentWithSizeOldParser()
     {
         var parser = new FhirJsonDeserializer();
-        var attachment = parser.Parse<Attachment>(_attachmentJson);
+        var attachment = parser.Deserialize<Attachment>(_attachmentJson);
 #if R5
         attachment.Size.Should().Be(12L);
 #else

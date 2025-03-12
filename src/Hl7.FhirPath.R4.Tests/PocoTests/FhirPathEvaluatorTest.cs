@@ -40,16 +40,16 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
             var parser = FhirXmlDeserializer.OSTRICH; // There are tons of errors in de demo files
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
 
-            TestInput = parser.Parse<Patient>(tpXml);
+            TestInput = parser.Deserialize<Patient>(tpXml);
 
             var epXml = TestData.ReadTextFile("patient-example.xml");
-            PatientExample = parser.Parse<Patient>(epXml);
+            PatientExample = parser.Deserialize<Patient>(epXml);
 
             tpXml = TestData.ReadTextFile("questionnaire-example.xml");
-            Questionnaire = parser.Parse<Questionnaire>(tpXml);
+            Questionnaire = parser.Deserialize<Questionnaire>(tpXml);
 
             tpXml = TestData.ReadTextFile("uuid.profile.xml");
-            UuidProfile = parser.Parse<StructureDefinition>(tpXml);
+            UuidProfile = parser.Deserialize<StructureDefinition>(tpXml);
 
             Xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
         }

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void ParseMetaXml()
         {
-            var poco = (new FhirXmlDeserializer().Parse<Meta>(metaXml));
+            var poco = (new FhirXmlDeserializer().Deserialize<Meta>(metaXml));
             var xml = new FhirXmlSerializer().SerializeToString(poco, rootName: "meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
@@ -59,12 +59,12 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string xmlPacientTest = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var poco = new FhirXmlDeserializer().Parse(xmlPacientTest);
+            var poco = new FhirXmlDeserializer().Deserialize<Patient>(xmlPacientTest);
 
-            Assert.AreEqual(((Patient)poco).Id, "pat1");
-            Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
-            Assert.AreEqual(((Patient)poco).Name.First().Family, "Donald");
-            Assert.AreEqual(((Patient)poco).ManagingOrganization.Reference, "Organization/1");
+            Assert.AreEqual(poco.Id, "pat1");
+            Assert.AreEqual(poco.Contained.First().Id, "1");
+            Assert.AreEqual(poco.Name.First().Family, "Donald");
+            Assert.AreEqual(poco.ManagingOrganization.Reference, "Organization/1");
         }
 
         internal FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void ParseMetaJson()
         {
-            var poco = (new FhirJsonDeserializer().Parse<Meta>(metaJson));
+            var poco = (new FhirJsonDeserializer().Deserialize<Meta>(metaJson));
             var json = FhirJsonSerializer.SerializeToString(poco);
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string jsonPatient = TestDataHelper.ReadTestData("TestPatient.json");
 
-            var poco = new FhirJsonDeserializer().Parse(jsonPatient);
+            var poco = new FhirJsonDeserializer().Deserialize<Resource>(jsonPatient);
 
             Assert.AreEqual(((Patient)poco).Id, "pat1");
             Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var xml = new FhirXmlSerializer().SerializeToString(b);
 
-            b = _fhirXmlDeserializer.Parse<Bundle>(xml);
+            b = _fhirXmlDeserializer.Deserialize<Bundle>(xml);
 
             Assert.IsTrue(!b.NextLink.ToString().EndsWith("/"));
         }
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Tests.Serialization
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
 
             var json = FhirJsonSerializer.SerializeToString(obs);
-            var obs2 = _fhirJsonDeserializer.Parse<Observation>(json);
+            var obs2 = _fhirJsonDeserializer.Deserialize<Observation>(json);
 
             Assert.AreEqual("6", ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
 
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Tests.Serialization
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
 
             json = FhirJsonSerializer.SerializeToString(obs);
-            obs2 = _fhirJsonDeserializer.Parse<Observation>(json);
+            obs2 = _fhirJsonDeserializer.Deserialize<Observation>(json);
 
             Assert.AreEqual("6.0", ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Tests.Serialization
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
 
             var json = FhirJsonSerializer.SerializeToString(obs);
-            var obs2 = _fhirJsonDeserializer.Parse<Observation>(json);
+            var obs2 = _fhirJsonDeserializer.Deserialize<Observation>(json);
 
             Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.GetExtension("http://example.org/DecimalPrecision").Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var json = FhirJsonSerializer.SerializeToString(obs);
             try
             {
-                var obs2 = _fhirJsonDeserializer.Parse<Observation>(json);
+                var obs2 = _fhirJsonDeserializer.Deserialize<Observation>(json);
                 Assert.Fail("valueDecimal is not a known type for Observation");
             }
             catch (FormatException)
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             try
             {
-                _fhirXmlDeserializer.Parse<Resource>(input);
+                _fhirXmlDeserializer.Deserialize<Resource>(input);
 
                 Assert.Fail();
             }
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string xml = TestDataHelper.ReadTestData("TestPatient.xml");
             var pser = new FhirXmlDeserializer();
-            var p = pser.Parse<Patient>(xml);
+            var p = pser.Deserialize<Patient>(xml);
             string outp = FhirXmlSerializer.SerializeToString(p);
             Assert.IsTrue(outp.Contains("\"male\""));
 
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var xml = FhirXmlSerializer.SerializeToString(p);
 
-            var p2 = (new FhirXmlDeserializer()).Parse<Patient>(xml);
+            var p2 = (new FhirXmlDeserializer()).Deserialize<Patient>(xml);
             Assert.AreEqual(1, p2.Extension.Count);
             Assert.AreEqual(1, p2.Contact.Count);
         }
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Tests.Serialization
             string json = TestDataHelper.ReadTestData(@"TestPatient.json");
             Assert.IsNotNull(json);
             var parser = new FhirJsonDeserializer(new DeserializerSettings().UsingMode(DeserializationMode.Recoverable));
-            var pat = parser.Parse<Patient>(json);
+            var pat = parser.Deserialize<Patient>(json);
             Assert.IsNotNull(pat);
 
             var xml = FhirXmlSerializer.SerializeToString(pat);
@@ -495,13 +495,13 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var patient = new Patient { Meta = new Meta { LastUpdated = DateTimeOffset.UtcNow } };
             var json = new FhirJsonSerializer().SerializeToString(patient);
-            var res = new FhirJsonDeserializer().Parse<Patient>(json);
+            var res = new FhirJsonDeserializer().Deserialize<Patient>(json);
             Assert.IsTrue(patient.IsExactly(res), "1");
 
             // Is the parsing still correct without milliseconds?
             patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, TimeSpan.Zero) } };
             json = "{\"resourceType\":\"Patient\",\"meta\":{\"lastUpdated\":\"2018-08-13T13:41:56+00:00\"}}";
-            res = new FhirJsonDeserializer().Parse<Patient>(json);
+            res = new FhirJsonDeserializer().Deserialize<Patient>(json);
             Assert.IsTrue(patient.IsExactly(res), "2");
 
             // Is the serialization still correct without milliseconds?
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Tests.Serialization
             // Is the parsing still correct with a few milliseconds and TimeZone?
             patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, 12, TimeSpan.Zero) } };
             json = "{\"resourceType\":\"Patient\",\"meta\":{\"lastUpdated\":\"2018-08-13T13:41:56.012+00:00\"}}";
-            res = new FhirJsonDeserializer().Parse<Patient>(json);
+            res = new FhirJsonDeserializer().Deserialize<Patient>(json);
             Assert.IsTrue(patient.IsExactly(res), "4");
 
             // Is the serialization still correct with a few milliseconds?
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Tests.Serialization
 #pragma warning restore CS0618 // Type or member is obsolete
 
             string json = TestDataHelper.ReadTestData("TestPatient.json");
-            var poco = fhirJsonParser.Parse<Patient>(json);
+            var poco = fhirJsonParser.Deserialize<Patient>(json);
 
             Assert.AreEqual(1, poco.Name.Count);
 
@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var reserialized = poco.ToJson();
 
-            var newPoco = fhirJsonParser.Parse<Patient>(reserialized);
+            var newPoco = fhirJsonParser.Deserialize<Patient>(reserialized);
 
             Assert.AreEqual(1, newPoco.Name.Count);
         }

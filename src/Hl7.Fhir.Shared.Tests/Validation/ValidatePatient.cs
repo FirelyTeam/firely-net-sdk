@@ -25,26 +25,26 @@ namespace Hl7.Fhir.Tests.Validation
         {
             var s = new StringReader(TestDataHelper.ReadTestData(@"TestPatient.xml"));
 
-            var patient = new FhirXmlDeserializer().Parse<Patient>(XmlReader.Create(s));
+            var patient = new FhirXmlDeserializer().Deserialize<Patient>(XmlReader.Create(s));
 
             ICollection<ValidationResult> results = new List<ValidationResult>();
 
             foreach (var contained in patient.Contained) ((DomainResource)contained).Text = new Narrative() { Div = "<wrong />", Status = Narrative.NarrativeStatus.Generated };
 
-            Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
+            Assert.IsFalse(patient.TryValidate(results, true));
             Assert.IsTrue(results.Count > 0);
 
             results.Clear();
             foreach (DomainResource contained in patient.Contained) contained.Text = null;
 
             // Try again
-            Assert.IsTrue(DotNetAttributeValidation.TryValidate(patient, results, true));
+            Assert.IsTrue(patient.TryValidate(results, true));
 
             patient.Identifier[0].System = "urn:oid:crap really not valid";
 
             results = new List<ValidationResult>();
 
-            Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
+            Assert.IsFalse(patient.TryValidate(results, true));
             Assert.IsTrue(results.Count > 0);
         }
     }

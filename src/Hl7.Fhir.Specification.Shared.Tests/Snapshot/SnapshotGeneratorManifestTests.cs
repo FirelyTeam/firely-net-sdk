@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 #if SERIALIZE_OUTPUT
             // Serialize the generated output to disk, for debugging purposes
-            SaveOutput(test.Id, output);
+            saveOutput(test.Id, output);
 #endif
 #if LOG_OUTPUT
             // Log the generated and expected output to the console, for debugging purposes
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Specification.Tests
                 using (var stream = File.OpenRead(filePath))
                 using (var reader = new XmlTextReader(stream))
                 {
-                    return FHIR_XML_DESERIALIZER.Parse<StructureDefinition>(reader);
+                    return FHIR_XML_DESERIALIZER.Deserialize<StructureDefinition>(reader);
                 }
             }
 
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (File.Exists(filePath))
             {
                 var text = File.ReadAllText(filePath);
-                return FHIR_JSON_DESERIALIZER.Parse<StructureDefinition>(text);
+                return FHIR_JSON_DESERIALIZER.Deserialize<StructureDefinition>(text);
             }
 
             Assert.Fail($"File not found: '{filePath}'");
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Conditional("SERIALIZE_OUTPUT")]
-        static void SaveOutput(string id, StructureDefinition output)
+        private static void saveOutput(string id, StructureDefinition output)
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
             var outputFilePath = Path.Combine(path, string.Format(outputFileNameFormat, id));

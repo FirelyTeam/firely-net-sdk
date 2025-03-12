@@ -464,14 +464,14 @@ public class FhirJsonDeserializationTests
         var reader = constructReader(
             new { name = "Ewout" });
 
-        deserializer.DeserializeObject<ContactDetail>(ref reader).Should().NotBeNull();
+        deserializer.Deserialize<ContactDetail>(ref reader).Should().NotBeNull();
 
         reader = constructReader(
             new { nameX = "Ewout", });
 
         try
         {
-            deserializer.DeserializeObject<ContactDetail>(ref reader);
+            deserializer.Deserialize<ContactDetail>(ref reader);
             Assert.Fail();
         }
         catch (DeserializationFailedException)

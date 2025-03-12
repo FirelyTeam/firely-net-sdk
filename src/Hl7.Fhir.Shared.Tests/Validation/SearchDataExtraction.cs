@@ -49,7 +49,7 @@ public partial class ValidateSearchExtractionAllExamplesTest
                 {
                     // Debug.WriteLine(String.Format("Validating {0}", file));
                     var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
-                    var resource = deserializer.Parse<Resource>(reader);
+                    var resource = deserializer.Deserialize<Resource>(reader);
 
                     extractValuesForSearchParameterFromFile(exampleSearchValues, resource);
 

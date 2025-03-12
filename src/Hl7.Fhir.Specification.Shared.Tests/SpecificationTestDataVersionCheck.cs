@@ -46,12 +46,12 @@ namespace Hl7.Fhir.Specification.Tests
                     if (new FileInfo(item).Extension == ".xml")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        xmlParser.Parse<Resource>(content);
+                        xmlParser.Deserialize<Resource>(content);
                     }
                     else if (new FileInfo(item).Extension == ".json")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        jsonParser.Parse<Resource>(content);
+                        jsonParser.Deserialize<Resource>(content);
                     }
                     else
                     {
@@ -64,8 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         // migrate the content
 
-                        XmlDocument xmlDoc = new XmlDocument();
-                        xmlDoc.PreserveWhitespace = true;
+                        var xmlDoc = new XmlDocument { PreserveWhitespace = true };
                         xmlDoc.LoadXml(content);
                         XmlNamespaceManager nm = new XmlNamespaceManager(xmlDoc.NameTable);
                         nm.AddNamespace("fhir", "http://hl7.org/fhir");
@@ -133,7 +132,7 @@ namespace Hl7.Fhir.Specification.Tests
                         try
                         {
                             // and parse this
-                            xmlParser.Parse<Resource>(xmlDoc.OuterXml);
+                            xmlParser.Deserialize<Resource>(xmlDoc.OuterXml);
                             Console.WriteLine($"        conversion to {ModelInfo.Version} success {new FileInfo(item).Name}");
 
                             // Save this back to the filesystem since it works!
