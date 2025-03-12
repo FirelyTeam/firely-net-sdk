@@ -22,61 +22,17 @@ using ERR = Hl7.Fhir.Serialization.FhirXmlException;
 
 namespace Hl7.Fhir.Serialization;
 
-public class BaseFhirXmlPocoDeserializer : BaseFhirXmlParser
-{
-    /// <summary>
-    /// Initializes an instance of the deserializer.
-    /// </summary>
-    /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new DeserializerSettings())
-    {
-        // nothing
-    }
-
-    /// <summary>
-    /// Initializes an instance of the deserializer.
-    /// </summary>
-    /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-    /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirXmlPocoDeserializer(Assembly assembly, DeserializerSettings settings)
-        : this(ModelInspector.ForAssembly(assembly), settings)
-    {
-        // Nothing
-    }
-
-
-    /// <summary>
-    /// Initializes an instance of the deserializer.
-    /// </summary>
-    /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirXmlPocoDeserializer(ModelInspector inspector) : this(inspector, new DeserializerSettings())
-    {
-        // nothing
-    }
-
-
-    /// <summary>
-    /// Initializes an instance of the deserializer.
-    /// </summary>
-    /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-    /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirXmlPocoDeserializer(ModelInspector inspector, DeserializerSettings settings) : base(inspector, settings)
-    {
-        // Nothing
-    }
-}
-
 /// <summary>
 /// Deserializes XML into FHIR POCO objects.
 /// </summary>
 /// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/xml.html. </remarks>
-public class BaseFhirXmlParser
+public class BaseFhirXmlDeserializer
 {
     /// <summary>
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirXmlParser(ModelInspector inspector) : this(inspector, new DeserializerSettings())
+    public BaseFhirXmlDeserializer(ModelInspector inspector) : this(inspector, new DeserializerSettings())
     {
         // nothing
     }
@@ -87,7 +43,7 @@ public class BaseFhirXmlParser
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
     /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirXmlParser(ModelInspector inspector, DeserializerSettings? settings)
+    public BaseFhirXmlDeserializer(ModelInspector inspector, DeserializerSettings? settings)
     {
         Settings = settings ?? new DeserializerSettings();
         _inspector = inspector;
@@ -656,4 +612,49 @@ internal class FhirXmlPocoDeserializerState
 {
     public readonly ExceptionAggregator Errors = new();
     public readonly PathStack Path = new();
+}
+
+[Obsolete("Use BaseFhirXmlDeserializer instead.")]
+public class BaseFhirXmlPocoDeserializer : BaseFhirXmlDeserializer
+{
+    /// <summary>
+    /// Initializes an instance of the deserializer.
+    /// </summary>
+    /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
+    public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new DeserializerSettings())
+    {
+        // nothing
+    }
+
+    /// <summary>
+    /// Initializes an instance of the deserializer.
+    /// </summary>
+    /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
+    /// <param name="settings">A settings object to be used by this instance.</param>
+    public BaseFhirXmlPocoDeserializer(Assembly assembly, DeserializerSettings settings)
+        : this(ModelInspector.ForAssembly(assembly), settings)
+    {
+        // Nothing
+    }
+
+
+    /// <summary>
+    /// Initializes an instance of the deserializer.
+    /// </summary>
+    /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
+    public BaseFhirXmlPocoDeserializer(ModelInspector inspector) : this(inspector, new DeserializerSettings())
+    {
+        // nothing
+    }
+
+
+    /// <summary>
+    /// Initializes an instance of the deserializer.
+    /// </summary>
+    /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
+    /// <param name="settings">A settings object to be used by this instance.</param>
+    public BaseFhirXmlPocoDeserializer(ModelInspector inspector, DeserializerSettings settings) : base(inspector, settings)
+    {
+        // Nothing
+    }
 }

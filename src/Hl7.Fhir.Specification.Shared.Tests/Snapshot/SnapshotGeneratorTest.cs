@@ -2785,7 +2785,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             using (var reader = XmlReader.Create(stream))
             {
-                var parser = new FhirXmlParser();
+                var parser = new FhirXmlDeserializer();
                 var bundle = parser.Parse<Bundle>(reader);
                 foreach (var entry in bundle.Entry)
                 {

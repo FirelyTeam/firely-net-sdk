@@ -70,8 +70,8 @@ public static partial class FhirSerializationEngineFactory
         FhirJsonConverterOptions converterOptions,
         DeserializerSettings xmlSerializerSettings)
     {
-        var jsonDeserializer = new BaseFhirJsonPocoDeserializer(inspector, converterOptions);
-        var xmlDeserializer = new BaseFhirXmlPocoDeserializer(inspector, xmlSerializerSettings);
+        var jsonDeserializer = new BaseFhirJsonDeserializer(inspector, converterOptions);
+        var xmlDeserializer = new BaseFhirXmlDeserializer(inspector, xmlSerializerSettings);
 
         return new PocoSerializationEngine(jsonDeserializer,
             new BaseFhirJsonSerializer(inspector),

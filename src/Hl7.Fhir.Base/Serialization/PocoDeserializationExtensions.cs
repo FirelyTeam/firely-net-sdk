@@ -31,7 +31,7 @@ public static class PocoDeserializationExtensions
     /// <param name="deserializer">The deserializer to use.</param>
     /// <param name="reader">An xml reader positioned on the first element, or the beginning of the stream.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static Resource DeserializeResource(this BaseFhirXmlParser deserializer, XmlReader reader) =>
+    public static Resource DeserializeResource(this BaseFhirXmlDeserializer deserializer, XmlReader reader) =>
         deserializer.TryDeserializeResource(reader, out var instance, out var issues) ?
             instance : throw new DeserializationFailedException(instance, issues);
 
@@ -41,7 +41,7 @@ public static class PocoDeserializationExtensions
     /// <param name="deserializer">The deserializer to use.</param>
     /// <param name="data">A string containing the XML from which to deserialize the resource.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static Resource DeserializeResource(this BaseFhirXmlParser deserializer, string data)
+    public static Resource DeserializeResource(this BaseFhirXmlDeserializer deserializer, string data)
     {
         using var xmlReader = SerializationUtil.XmlReaderFromXmlText(data);
         return deserializer.DeserializeResource(xmlReader);
@@ -56,7 +56,7 @@ public static class PocoDeserializationExtensions
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
     public static bool TryDeserializeResource(
-        this BaseFhirXmlParser deserializer,
+        this BaseFhirXmlDeserializer deserializer,
         string data,
         [NotNullWhen(true)] out Resource? instance,
         out IEnumerable<CodedException> issues)
@@ -74,7 +74,7 @@ public static class PocoDeserializationExtensions
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
     public static bool TryDeserializeResource(
-        this BaseFhirXmlParser deserializer,
+        this BaseFhirXmlDeserializer deserializer,
         XmlReader reader,
         out Resource? instance,
         out IEnumerable<CodedException> issues)
@@ -89,7 +89,7 @@ public static class PocoDeserializationExtensions
     /// <param name="targetType">The type of POCO to construct and deserialize</param>
     /// <param name="reader">An xml reader positioned on the first element, or the beginning of the stream.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static Base DeserializeElement(this BaseFhirXmlParser deserializer, Type targetType, XmlReader reader) =>
+    public static Base DeserializeElement(this BaseFhirXmlDeserializer deserializer, Type targetType, XmlReader reader) =>
         deserializer.TryDeserializeElement(targetType, reader, out var instance, out var issues) ?
             instance : throw new DeserializationFailedException(instance, issues);
 
@@ -100,7 +100,7 @@ public static class PocoDeserializationExtensions
     /// <param name="deserializer">The deserializer to use.</param>
     /// <param name="reader">An xml reader positioned on the first element, or the beginning of the stream.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static T DeserializeElement<T>(this BaseFhirXmlParser deserializer, XmlReader reader) where T : Base =>
+    public static T DeserializeElement<T>(this BaseFhirXmlDeserializer deserializer, XmlReader reader) where T : Base =>
         (T)deserializer.DeserializeElement(typeof(T), reader);
 
     /// <summary>
@@ -109,7 +109,7 @@ public static class PocoDeserializationExtensions
     /// <param name="deserializer">The deserializer to use.</param>
     /// <param name="reader">A json reader positioned on the first token of the object, or the beginning of the stream.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static Resource DeserializeResource(this BaseFhirJsonParser deserializer, ref Utf8JsonReader reader) =>
+    public static Resource DeserializeResource(this BaseFhirJsonDeserializer deserializer, ref Utf8JsonReader reader) =>
         deserializer.TryDeserializeResource(ref reader, out var instance, out var issues)
             ? instance : throw new DeserializationFailedException(instance, issues);
 
@@ -119,7 +119,7 @@ public static class PocoDeserializationExtensions
     /// <param name="deserializer">The deserializer to use.</param>
     /// <param name="json">A string of json.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static Resource DeserializeResource(this BaseFhirJsonParser deserializer, string json)
+    public static Resource DeserializeResource(this BaseFhirJsonDeserializer deserializer, string json)
     {
         var reader = SerializationUtil.Utf8JsonReaderFromJsonText(json);
         return deserializer.DeserializeResource(ref reader);
@@ -134,7 +134,7 @@ public static class PocoDeserializationExtensions
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
     public static bool TryDeserializeResource(
-        this BaseFhirJsonParser deserializer,
+        this BaseFhirJsonDeserializer deserializer,
         string json,
         [NotNullWhen(true)] out Resource? instance,
         out IEnumerable<CodedException> issues)
@@ -153,7 +153,7 @@ public static class PocoDeserializationExtensions
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
     public static bool TryDeserializeResource(
-        this BaseFhirJsonParser deserializer,
+        this BaseFhirJsonDeserializer deserializer,
         Utf8JsonReader reader,
         out Resource? instance,
         out IEnumerable<CodedException> issues)
@@ -168,7 +168,7 @@ public static class PocoDeserializationExtensions
     /// <param name="targetType">The type of POCO to construct and deserialize</param>
     /// <param name="reader">A json reader positioned on the first token of the object, or the beginning of the stream.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static Base DeserializeObject(this BaseFhirJsonParser deserializer, Type targetType, ref Utf8JsonReader reader) =>
+    public static Base DeserializeObject(this BaseFhirJsonDeserializer deserializer, Type targetType, ref Utf8JsonReader reader) =>
         deserializer.TryDeserializeObject(targetType, ref reader, out var instance, out var issues) ?
             instance! : throw new DeserializationFailedException(instance, issues);
 
@@ -179,7 +179,7 @@ public static class PocoDeserializationExtensions
     /// <param name="targetType">The type of POCO to construct and deserialize</param>
     /// <param name="json">A string of json.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static Base DeserializeObject(this BaseFhirJsonParser deserializer, Type targetType, string json)
+    public static Base DeserializeObject(this BaseFhirJsonDeserializer deserializer, Type targetType, string json)
     {
         var reader = SerializationUtil.Utf8JsonReaderFromJsonText(json);
         return deserializer.DeserializeObject(targetType, ref reader);
@@ -192,6 +192,6 @@ public static class PocoDeserializationExtensions
     /// <param name="deserializer">The deserializer to use.</param>
     /// <param name="reader">A json reader positioned on the first token of the object, or the beginning of the stream.</param>
     /// <returns>A fully initialized POCO with the data from the reader.</returns>
-    public static T DeserializeObject<T>(this BaseFhirJsonParser deserializer, ref Utf8JsonReader reader) where T : Base =>
+    public static T DeserializeObject<T>(this BaseFhirJsonDeserializer deserializer, ref Utf8JsonReader reader) where T : Base =>
         (T)deserializer.DeserializeObject(typeof(T), ref reader);
 }

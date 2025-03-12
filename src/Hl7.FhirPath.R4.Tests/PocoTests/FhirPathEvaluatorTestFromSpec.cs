@@ -181,7 +181,7 @@ namespace Hl7.FhirPath.R4.Tests
 
                 if (!_cache.ContainsKey(inputfile))
                 {
-                    _cache.Add(inputfile, FhirXmlParser.OSTRICH.Parse<Model.DomainResource>(
+                    _cache.Add(inputfile, FhirXmlDeserializer.OSTRICH.Parse<Model.DomainResource>(
                         File.ReadAllText(Path.Combine(basepath, inputfile))));
                 }
                 // Now perform this unit test
@@ -278,7 +278,7 @@ namespace Hl7.FhirPath.R4.Tests
         {
             // obsolete:
             // Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\extension-definitions.xml"));
-            var parser = new FhirXmlParser();
+            var parser = new FhirXmlDeserializer();
             Model.Bundle b = parser.Parse<Model.Bundle>(TestData.ReadTextFile("extension-definitions.xml"));
 
             foreach (Model.Bundle.EntryComponent be in b.Entry)

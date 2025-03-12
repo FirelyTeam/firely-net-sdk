@@ -37,7 +37,7 @@ namespace Hl7.Fhir.FhirPath.R4.Tests
 
         public PatientFixture()
         {
-            var parser = FhirXmlParser.OSTRICH; // There are tons of errors in de demo files
+            var parser = FhirXmlDeserializer.OSTRICH; // There are tons of errors in de demo files
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
 
             TestInput = parser.Parse<Patient>(tpXml);

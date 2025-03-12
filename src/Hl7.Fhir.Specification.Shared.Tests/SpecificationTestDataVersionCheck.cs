@@ -32,8 +32,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             if (skipFiles(path)) return;
 
-            var xmlParser = FhirXmlParser.OSTRICH;
-            var jsonParser = FhirJsonParser.OSTRICH;
+            var xmlParser = FhirXmlDeserializer.OSTRICH;
+            var jsonParser = FhirJsonDeserializer.OSTRICH;
             Console.WriteLine($"Validating test files in {path.Replace(basePath, "")}");
             foreach (var item in Directory.EnumerateFiles(path))
             {

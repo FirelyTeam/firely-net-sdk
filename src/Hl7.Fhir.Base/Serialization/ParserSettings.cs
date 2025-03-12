@@ -18,8 +18,8 @@ namespace Hl7.Fhir.Serialization;
 
 
 /// <summary>
-/// Settings that control the behaviour of the <see cref="BaseFhirXmlParser"/>, FhirXmlParser,
-/// <see cref="BaseFhirJsonParser"/> and FhirJsonParser.
+/// Settings that control the behaviour of the <see cref="BaseFhirXmlDeserializer"/>, FhirXmlParser,
+/// <see cref="BaseFhirJsonDeserializer"/> and FhirJsonParser.
 /// </summary>
 public record DeserializerSettings
 {

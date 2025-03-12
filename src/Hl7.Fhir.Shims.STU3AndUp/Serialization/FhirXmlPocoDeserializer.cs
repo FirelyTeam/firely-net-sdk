@@ -1,10 +1,12 @@
 ﻿#nullable enable
 
 using Hl7.Fhir.Model;
+using System;
 
 namespace Hl7.Fhir.Serialization;
 
 /// <inheritdoc/>
+[Obsolete("Use FhirXmlDeserializer isntead.")]
 public class FhirXmlPocoDeserializer : BaseFhirXmlPocoDeserializer
 {
     /// <summary>

@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ParseBinaryForR4andHigher()
         {
             var json = "{\"resourceType\":\"Binary\",\"contentType\":\"text/plain\",\"data\":\"ZGF0YQ==\"}";
-            var binary = new FhirJsonParser().Parse<Binary>(json);
+            var binary = new FhirJsonDeserializer().Parse<Binary>(json);
 
             var result = new FhirJsonSerializer().SerializeToString(binary);
 
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var json = "{\"resourceType\":\"Binary\",\"content\":\"ZGF0YQ==\"}";
 #pragma warning disable CS0618 // Type or member is obsolete
-            Func<Tasks.Task> act = () => new FhirJsonParser().ParseAsync<Binary>(json);
+            Func<Tasks.Task> act = () => new FhirJsonDeserializer().ParseAsync<Binary>(json);
 #pragma warning restore CS0618 // Type or member is obsolete
 
             await act.Should().ThrowAsync<StructuralTypeException>();

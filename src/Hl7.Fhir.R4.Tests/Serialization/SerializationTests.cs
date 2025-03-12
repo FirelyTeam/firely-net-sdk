@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Tests.Serialization
             });
 
             string json = FhirJsonSerializer.SerializeToString(es);
-            var c2 = new FhirJsonParser().Parse<ExampleScenario>(json);
+            var c2 = new FhirJsonDeserializer().Parse<ExampleScenario>(json);
             Assert.AreEqual("brian", c2.Instance[0].Name);
             Assert.AreEqual("ExampleScenario", c2.Instance[0].ResourceTypeElement.ObjectValue as string);
         }

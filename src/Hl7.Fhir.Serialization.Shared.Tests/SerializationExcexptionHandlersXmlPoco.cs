@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 ValidateOnFailedParse = true,
                 // Validator = null
             };
-            var ds = new FhirXmlPocoDeserializer(settings);
+            var ds = new FhirXmlDeserializer(settings);
             return (T)ds.DeserializeResource(reader);
         }
 

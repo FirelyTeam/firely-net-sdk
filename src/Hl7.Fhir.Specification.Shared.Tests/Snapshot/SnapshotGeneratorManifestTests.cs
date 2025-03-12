@@ -80,8 +80,8 @@ namespace Hl7.Fhir.Specification.Tests
             GenerateSnapshotForExternalProfiles = true
         };
 
-        private static readonly FhirXmlParser FHIR_XML_PARSER = new(_parserSettings);
-        private static readonly FhirJsonParser FHIR_JSON_PARSER = new(_parserSettings);
+        private static readonly FhirXmlDeserializer FHIR_XML_DESERIALIZER = new(_parserSettings);
+        private static readonly FhirJsonDeserializer FHIR_JSON_DESERIALIZER = new(_parserSettings);
         private static readonly FhirXmlSerializer FHIR_XML_SERIALIZER = new();
 
         string _testPath;
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Specification.Tests
                 using (var stream = File.OpenRead(filePath))
                 using (var reader = new XmlTextReader(stream))
                 {
-                    return FHIR_XML_PARSER.Parse<StructureDefinition>(reader);
+                    return FHIR_XML_DESERIALIZER.Parse<StructureDefinition>(reader);
                 }
             }
 
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (File.Exists(filePath))
             {
                 var text = File.ReadAllText(filePath);
-                return FHIR_JSON_PARSER.Parse<StructureDefinition>(text);
+                return FHIR_JSON_DESERIALIZER.Parse<StructureDefinition>(text);
             }
 
             Assert.Fail($"File not found: '{filePath}'");

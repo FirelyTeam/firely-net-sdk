@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             using (var stream = fa.LoadArtifactByName("TestPatient.xml"))
             {
-                var pat = new FhirXmlParser().Parse<Resource>(SerializationUtil.XmlReaderFromStream(stream));
+                var pat = new FhirXmlDeserializer().Parse<Resource>(SerializationUtil.XmlReaderFromStream(stream));
                 Assert.IsNotNull(pat);
             }
         }
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Specification.Tests
             Resource OpenStream(string filePath)
             {
                 using var stream = dirSource.LoadArtifactByName(filePath);
-                return new FhirXmlParser().Parse<Resource>(SerializationUtil.XmlReaderFromStream(stream));
+                return new FhirXmlDeserializer().Parse<Resource>(SerializationUtil.XmlReaderFromStream(stream));
             }
 
             // Retrieve artifacts by full path

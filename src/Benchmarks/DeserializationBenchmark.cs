@@ -14,7 +14,7 @@ namespace Firely.Sdk.Benchmarks
     {
         internal string JsonData;
         internal string XmlData;
-        internal BaseFhirXmlPocoDeserializer XmlDeserializer;
+        internal BaseFhirXmlDeserializer XmlDeserializer;
         internal BaseFhirJsonPocoDeserializer JsonDeserializer;
         internal XmlReader xmlreader;
         internal JsonSerializerOptions options;
@@ -28,7 +28,7 @@ namespace Firely.Sdk.Benchmarks
             var xmlFileName = Path.Combine("TestData", "fp-test-patient.xml");
             XmlData = File.ReadAllText(xmlFileName);
 
-            XmlDeserializer = new FhirXmlPocoDeserializer();
+            XmlDeserializer = new FhirXmlDeserializer();
             JsonDeserializer = new FhirJsonPocoDeserializer();
 
             options = new JsonSerializerOptions().ForFhir();

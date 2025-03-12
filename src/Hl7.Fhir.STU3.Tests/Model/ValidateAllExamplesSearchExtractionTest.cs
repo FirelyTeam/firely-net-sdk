@@ -42,7 +42,7 @@ public class ValidateSearchExtractionAllExamplesTest
 
     private void searchExtractionAllExamplesInternal()
     {
-        var parser = FhirXmlParser.RECOVERABLE;
+        var parser = FhirXmlDeserializer.RECOVERABLE;
         int errorCount = 0;
         int parserErrorCount = 0;
         int testFileCount = 0;

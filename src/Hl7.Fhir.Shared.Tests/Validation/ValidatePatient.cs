@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Tests.Validation
         {
             var s = new StringReader(TestDataHelper.ReadTestData(@"TestPatient.xml"));
 
-            var patient = new FhirXmlParser().Parse<Patient>(XmlReader.Create(s));
+            var patient = new FhirXmlDeserializer().Parse<Patient>(XmlReader.Create(s));
 
             ICollection<ValidationResult> results = new List<ValidationResult>();
 

@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = ReadTestData("TestPatient.xml");
 
-            var p = new FhirXmlParser().Parse<Patient>(xml);
+            var p = new FhirXmlDeserializer().Parse<Patient>(xml);
             var p2 = p.DeepCopy();
             var xml2 = new FhirXmlSerializer().SerializeToString(p2);
             XmlAssert.AreSame("TestPatient.xml", xml, xml2);
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = ReadTestData("TestPatient.xml");
 
-            var p = new FhirXmlParser().Parse<Patient>(xml);
+            var p = new FhirXmlDeserializer().Parse<Patient>(xml);
             var sw = new Stopwatch();
 
             sw.Start();

@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ConfigureFailOnUnknownMember()
         {
             const string xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
-            var parser = new FhirXmlParser();
+            var parser = new FhirXmlDeserializer();
             parser.Settings = parser.Settings with { AllowUnrecognizedEnums = true };
 
             try
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ReturnsLineNumbersXml()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /></Patient>";
-            var parser = new FhirXmlParser();
+            var parser = new FhirXmlDeserializer();
 
             try
             {
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ReturnsLineNumbersJson()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /></Patient>";
-            var parser = new FhirXmlParser();
+            var parser = new FhirXmlDeserializer();
 
             try
             {
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void RequiresHl7Namespace()
         {
             var xml = "<Patient><active value='false' /></Patient>";
-            var parser = new FhirXmlParser();
+            var parser = new FhirXmlDeserializer();
 
             try
             {
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' " +
                             "xsi:schemaLocation='http://hl7.org/fhir ../../schema/fhir-all.xsd'><active value='true' /></Patient>";
-            var parser = new FhirXmlParser();
+            var parser = new FhirXmlDeserializer();
 
             // By default, parser will accept xsi: elements
             parser.Parse<Resource>(xml);
@@ -143,8 +143,8 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var xml = "<ns4:ValueSet xmlns:ns4=\"http://hl7.org/fhir\"><f:identifier xmlns:f=\"http://hl7.org/fhir\"><f:value value=\"....\"/></f:identifier></ns4:ValueSet>";
 
-            FhirXmlParser.Parse<Resource>(xml);
-            Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
+            FhirXmlDeserializer.Parse<Resource>(xml);
+            Assert.IsNotNull(FhirXmlDeserializer.Parse<Resource>(xml));
         }
 
 
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var xml = "<Basic xmlns='http://hl7.org/fhir'><extension url='http://blabla.nl'><valueString value='Daar gaat ie dan" + "&#xA;" + "verdwijnt dit?' /></extension></Basic>";
 
-            var basic = FhirXmlParser.Parse<DomainResource>(xml);
+            var basic = FhirXmlDeserializer.Parse<DomainResource>(xml);
 
             Assert.IsTrue(basic.GetStringExtension("http://blabla.nl").Contains("\n"));
 
@@ -163,8 +163,8 @@ namespace Hl7.Fhir.Tests.Serialization
 
         // Test legacy behaviour
 #pragma warning disable CS0618 // Type or member is obsolete
-        internal FhirXmlParser FhirXmlParser = new(new ParserSettings { PermissiveParsing = true });
-        internal FhirJsonParser FhirJsonParser = new(new ParserSettings { PermissiveParsing = true });
+        internal FhirXmlDeserializer FhirXmlDeserializer = new(new ParserSettings { PermissiveParsing = true });
+        internal FhirJsonDeserializer FhirJsonDeserializer = new(new ParserSettings { PermissiveParsing = true });
 #pragma warning restore CS0618 // Type or member is obsolete
         internal FhirXmlSerializer FhirXmlSerializer = new();
         internal FhirJsonSerializer FhirJsonSerializer = new();
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ParsePerfJson()
         {
             string json = TestDataHelper.ReadTestData("TestPatient.json");
-            var pser = new FhirJsonParser();
+            var pser = new FhirJsonDeserializer();
 
             // Assume that we can happily read the patient gender when enums are enforced
             var p = pser.Parse<Patient>(json);
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ParsePerfXml()
         {
             string xml = TestDataHelper.ReadTestData("TestPatient.xml");
-            var pser = new FhirXmlParser();
+            var pser = new FhirXmlDeserializer();
 
             // Assume that we can happily read the patient gender when enums are enforced
             var p = pser.Parse<Patient>(xml);
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void AcceptUnknownEnums()
         {
             string json = TestDataHelper.ReadTestData("TestPatient.json");
-            var pser = new FhirJsonParser();
+            var pser = new FhirJsonDeserializer();
 
             // Assume that we can happily read the patient gender when enums are enforced
             var p = pser.Parse<Patient>(json);
@@ -256,13 +256,13 @@ namespace Hl7.Fhir.Tests.Serialization
             string json = TestDataHelper.ReadTestData("json-edge-cases.json");
             var tempPath = Path.GetTempPath();
 
-            var poco = FhirJsonParser.Parse<Resource>(json);
+            var poco = FhirJsonDeserializer.Parse<Resource>(json);
             Assert.IsNotNull(poco);
             var xml = FhirXmlSerializer.SerializeToString(poco);
             Assert.IsNotNull(xml);
             await File.WriteAllTextAsync(Path.Combine(tempPath, "edgecase.xml"), xml);
 
-            poco = FhirXmlParser.Parse<Resource>(xml);
+            poco = FhirXmlDeserializer.Parse<Resource>(xml);
             Assert.IsNotNull(poco);
             var json2 = FhirJsonSerializer.SerializeToString(poco);
             Assert.IsNotNull(json2);
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirXmlSerializer.SerializeToString(o);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
 
-            var o2 = FhirXmlParser.Parse<Observation>(xml);
+            var o2 = FhirXmlDeserializer.Parse<Observation>(xml);
             o2.ResourceBase = new Uri("http://nu.nl/fhir");
             xml = FhirXmlSerializer.SerializeToString(o2);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Tests.Serialization
             };
 
             var json = FhirJsonSerializer.SerializeToString(patient);
-            Assert.IsFalse(FhirJsonParser.STRICT.TryDeserializeResource(json, out var resource, out var errors));
+            Assert.IsFalse(FhirJsonDeserializer.STRICT.TryDeserializeResource(json, out var resource, out var errors));
 
             errors.Count().Should().Be(2);
             errors.Select(e => e.ErrorCode).Should().AllBe(FhirJsonException.PROPERTY_MAY_NOT_BE_EMPTY_CODE);
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
 
             var xml = FhirXmlSerializer.SerializeToString(patient);
-            parsedPatient = FhirXmlParser.Parse<Patient>(xml);
+            parsedPatient = FhirXmlDeserializer.Parse<Patient>(xml);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
             for (var i = 0; i < patient.Identifier.Count; i++)
@@ -349,9 +349,9 @@ namespace Hl7.Fhir.Tests.Serialization
             };
 
             var xml = FhirXmlSerializer.SerializeToString(p);
-            Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
+            Assert.IsNotNull(FhirXmlDeserializer.Parse<Resource>(xml));
             var json = FhirJsonSerializer.SerializeToString(p);
-            Assert.IsNotNull(FhirJsonParser.Parse<Resource>(json));
+            Assert.IsNotNull(FhirJsonDeserializer.Parse<Resource>(json));
         }
 
         [TestMethod]
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 var json =
                     "{\"resourceType\": \"Patient\", \"text\": {\"status\": \"generated\", \"div\": \"text without div\" } }";
 
-                new FhirJsonParser(
+                new FhirJsonDeserializer(
                     new DeserializerSettings { NarrativeValidation = NarrativeValidationKind.FhirXhtml })
                     .Parse<Patient>(json);
 
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ParseEmptyContained()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir'><contained></contained></Patient>";
-            var parser = new FhirXmlParser();
+            var parser = new FhirXmlDeserializer();
 
             ExceptionAssert.Throws<DeserializationFailedException>(() => parser.Parse<Patient>(xml));
         }

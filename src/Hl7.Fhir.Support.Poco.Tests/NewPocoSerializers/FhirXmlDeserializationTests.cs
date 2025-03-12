@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Validation;
@@ -504,7 +505,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var actual = FhirXmlSerializer.Default.SerializeToString(patient);
 
             // now parse this back out with the new parser
-            BaseFhirXmlPocoDeserializer ds = getTestDeserializer(new DeserializerSettings());
+            BaseFhirXmlDeserializer ds = getTestDeserializer(new DeserializerSettings());
 
             var np = ds.DeserializeResource(actual).Should().BeOfType<Patient>().Subject;
             Assert.AreEqual(patient.Text.Div, np.Text.Div, "New narrative should be the same");
@@ -538,8 +539,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
             return reader;
         }
 
-        private static BaseFhirXmlPocoDeserializer getTestDeserializer(DeserializerSettings settings) =>
-                new(typeof(Patient).Assembly, settings);
+        private static BaseFhirXmlDeserializer getTestDeserializer(DeserializerSettings settings) =>
+                new(ModelInspector.ForType<Patient>(), settings);
         
         [TestMethod]
         public void TestDateTimeStuff()

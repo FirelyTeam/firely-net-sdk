@@ -32,7 +32,7 @@ public class ValidateSearchExtractionAllExamplesTest
     {
         string examplesZip = @"TestData/examples.zip";
 
-        FhirXmlParser parser = FhirXmlParser.RECOVERABLE;
+        FhirXmlDeserializer deserializer = FhirXmlDeserializer.RECOVERABLE;
         int errorCount = 0;
         int parserErrorCount = 0;
         int testFileCount = 0;
@@ -56,7 +56,7 @@ public class ValidateSearchExtractionAllExamplesTest
                 {
                     // Debug.WriteLine(String.Format("Validating {0}", file));
                     var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
-                    var resource = parser.Parse<Resource>(reader);
+                    var resource = deserializer.Parse<Resource>(reader);
 
                     extractValuesForSearchParameterFromFile(exampleSearchValues, resource);
 
