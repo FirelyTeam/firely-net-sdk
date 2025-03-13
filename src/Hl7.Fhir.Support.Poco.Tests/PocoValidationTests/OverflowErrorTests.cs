@@ -24,6 +24,10 @@ public class OverflowErrorTests
         TestOnArrayElement(new Patient(), COVE.EXPECTED_ARRAY_NOT_OBJECT_CODE);
         TestOnArrayElement(new FhirBoolean(true), COVE.EXPECTED_ARRAY_NOT_PRIMITIVE_CODE);
         TestOnArrayElement(new List<HumanName>(), null);
+        TestOnObjectElement(new FhirBoolean(false), COVE.EXPECTED_OBJECT_NOT_PRIMITIVE_CODE);
+        TestOnObjectElement(new List<HumanName>(), COVE.EXPECTED_OBJECT_NOT_ARRAY_CODE);
+        TestOnObjectElement(new Patient(), COVE.TYPE_MISMATCH_CODE);
+        TestOnObjectElement(new Narrative("<div> this div is not centered </div>"), null);
     }
 
     private static void TestOnPrimitiveElement(object value, string? coveCode)
@@ -43,7 +47,22 @@ public class OverflowErrorTests
         var pat = new Patient();
         pat.SetValue("name", value);
 
-        var act = () => pat.Contact;
-        act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(COVE.EXPECTED_OBJECT_NOT_PRIMITIVE_CODE);
+        var act = () => pat.Name;
+        if (coveCode is null)
+            act.Should().NotThrow();
+        else 
+            act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(coveCode);
+    }
+
+    private static void TestOnObjectElement(object value, string? coveCode)
+    {
+        var pat = new Patient();
+        pat.SetValue("text", value);
+
+        var act = () => pat.Text;
+        if (coveCode is null)
+            act.Should().NotThrow();
+        else 
+            act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(coveCode);
     }
 }
