@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Purpose))
-          Overflow.Remove("Purpose");
+          Overflow.Remove("purpose");
         _Purpose = value;
         OnPropertyChanged("Purpose");
       }
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.HumanName>>.InOverflow(_Name))
-          Overflow.Remove("Name");
+          Overflow.Remove("name");
         _Name = value;
         OnPropertyChanged("Name");
       }
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Telecom))
-          Overflow.Remove("Telecom");
+          Overflow.Remove("telecom");
         _Telecom = value;
         OnPropertyChanged("Telecom");
       }
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Address>.InOverflow(_Address))
-          Overflow.Remove("Address");
+          Overflow.Remove("address");
         _Address = value;
         OnPropertyChanged("Address");
       }
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Organization))
-          Overflow.Remove("Organization");
+          Overflow.Remove("organization");
         _Organization = value;
         OnPropertyChanged("Organization");
       }
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
-          Overflow.Remove("Period");
+          Overflow.Remove("period");
         _Period = value;
         OnPropertyChanged("Period");
       }
@@ -295,22 +295,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "purpose":
-          Purpose = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Purpose = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["purpose"] = value;
+          }
+          else Purpose = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "name":
-          Name = (List<Hl7.Fhir.Model.HumanName>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.HumanName> or null))
+          {
+            Name = OverflowNull<List<Hl7.Fhir.Model.HumanName>>.INSTANCE;
+            Overflow["name"] = value;
+          }
+          else Name = (List<Hl7.Fhir.Model.HumanName>?)value!;
           return this;
         case "telecom":
-          Telecom = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ContactPoint> or null))
+          {
+            Telecom = OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.INSTANCE;
+            Overflow["telecom"] = value;
+          }
+          else Telecom = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         case "address":
-          Address = (Hl7.Fhir.Model.Address?)value;
+          if (value is not (Hl7.Fhir.Model.Address or null))
+          {
+            Address = OverflowNull<Hl7.Fhir.Model.Address>.INSTANCE;
+            Overflow["address"] = value;
+          }
+          else Address = (Hl7.Fhir.Model.Address?)value;
           return this;
         case "organization":
-          Organization = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Organization = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["organization"] = value;
+          }
+          else Organization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period?)value;
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         default:
           return base.SetValue(key, value);

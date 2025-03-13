@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-          Overflow.Remove("Type");
+          Overflow.Remove("type");
         _Type = value;
         OnPropertyChanged("Type");
       }
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_Period))
-          Overflow.Remove("Period");
+          Overflow.Remove("period");
         _Period = value;
         OnPropertyChanged("Period");
       }
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_SpecialPrecautionsForStorage))
-          Overflow.Remove("SpecialPrecautionsForStorage");
+          Overflow.Remove("specialPrecautionsForStorage");
         _SpecialPrecautionsForStorage = value;
         OnPropertyChanged("SpecialPrecautionsForStorage");
       }
@@ -196,13 +196,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Period = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "specialPrecautionsForStorage":
-          SpecialPrecautionsForStorage = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            SpecialPrecautionsForStorage = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["specialPrecautionsForStorage"] = value;
+          }
+          else SpecialPrecautionsForStorage = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

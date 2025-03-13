@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_ModifierExtension))
-          Overflow.Remove("ModifierExtension");
+          Overflow.Remove("modifierExtension");
         _ModifierExtension = value;
         OnPropertyChanged("ModifierExtension");
       }
@@ -123,7 +123,12 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "modifierExtension":
-          ModifierExtension = (List<Hl7.Fhir.Model.Extension>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Extension> or null))
+          {
+            ModifierExtension = OverflowNull<List<Hl7.Fhir.Model.Extension>>.INSTANCE;
+            Overflow["modifierExtension"] = value;
+          }
+          else ModifierExtension = (List<Hl7.Fhir.Model.Extension>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

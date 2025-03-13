@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Substance))
-            Overflow.Remove("Substance");
+            Overflow.Remove("substance");
           _Substance = value;
           OnPropertyChanged("Substance");
         }
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Manifestation))
-            Overflow.Remove("Manifestation");
+            Overflow.Remove("manifestation");
           _Manifestation = value;
           OnPropertyChanged("Manifestation");
         }
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
-            Overflow.Remove("DescriptionElement");
+            Overflow.Remove("description");
           _DescriptionElement = value;
           OnPropertyChanged("DescriptionElement");
         }
@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_OnsetElement))
-            Overflow.Remove("OnsetElement");
+            Overflow.Remove("onset");
           _OnsetElement = value;
           OnPropertyChanged("OnsetElement");
         }
@@ -409,7 +409,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>>.InOverflow(_SeverityElement))
-            Overflow.Remove("SeverityElement");
+            Overflow.Remove("severity");
           _SeverityElement = value;
           OnPropertyChanged("SeverityElement");
         }
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ExposureRoute))
-            Overflow.Remove("ExposureRoute");
+            Overflow.Remove("exposureRoute");
           _ExposureRoute = value;
           OnPropertyChanged("ExposureRoute");
         }
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
-            Overflow.Remove("Note");
+            Overflow.Remove("note");
           _Note = value;
           OnPropertyChanged("Note");
         }
@@ -563,25 +563,60 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "substance":
-            Substance = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Substance = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["substance"] = value;
+            }
+            else Substance = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "manifestation":
-            Manifestation = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Manifestation = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["manifestation"] = value;
+            }
+            else Manifestation = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "description":
-            DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              DescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["description"] = value;
+            }
+            else DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "onset":
-            OnsetElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+            {
+              OnsetElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+              Overflow["onset"] = value;
+            }
+            else OnsetElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           case "severity":
-            SeverityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity> or null))
+            {
+              SeverityElement = OverflowNull<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>>.INSTANCE;
+              Overflow["severity"] = value;
+            }
+            else SeverityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>?)value;
             return this;
           case "exposureRoute":
-            ExposureRoute = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              ExposureRoute = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["exposureRoute"] = value;
+            }
+            else ExposureRoute = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "note":
-            Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
+            {
+              Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
+              Overflow["note"] = value;
+            }
+            else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -621,7 +656,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -648,7 +683,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ClinicalStatus))
-          Overflow.Remove("ClinicalStatus");
+          Overflow.Remove("clinicalStatus");
         _ClinicalStatus = value;
         OnPropertyChanged("ClinicalStatus");
       }
@@ -675,7 +710,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_VerificationStatus))
-          Overflow.Remove("VerificationStatus");
+          Overflow.Remove("verificationStatus");
         _VerificationStatus = value;
         OnPropertyChanged("VerificationStatus");
       }
@@ -703,7 +738,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>>.InOverflow(_TypeElement))
-          Overflow.Remove("TypeElement");
+          Overflow.Remove("type");
         _TypeElement = value;
         OnPropertyChanged("TypeElement");
       }
@@ -747,7 +782,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>>.InOverflow(_CategoryElement))
-          Overflow.Remove("CategoryElement");
+          Overflow.Remove("category");
         _CategoryElement = value;
         OnPropertyChanged("CategoryElement");
       }
@@ -793,7 +828,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>>.InOverflow(_CriticalityElement))
-          Overflow.Remove("CriticalityElement");
+          Overflow.Remove("criticality");
         _CriticalityElement = value;
         OnPropertyChanged("CriticalityElement");
       }
@@ -835,7 +870,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
-          Overflow.Remove("Code");
+          Overflow.Remove("code");
         _Code = value;
         OnPropertyChanged("Code");
       }
@@ -864,7 +899,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
-          Overflow.Remove("Patient");
+          Overflow.Remove("patient");
         _Patient = value;
         OnPropertyChanged("Patient");
       }
@@ -892,7 +927,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
-          Overflow.Remove("Encounter");
+          Overflow.Remove("encounter");
         _Encounter = value;
         OnPropertyChanged("Encounter");
       }
@@ -920,7 +955,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_Onset))
-          Overflow.Remove("Onset");
+          Overflow.Remove("onset");
         _Onset = value;
         OnPropertyChanged("Onset");
       }
@@ -946,7 +981,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_RecordedDateElement))
-          Overflow.Remove("RecordedDateElement");
+          Overflow.Remove("recordedDate");
         _RecordedDateElement = value;
         OnPropertyChanged("RecordedDateElement");
       }
@@ -989,7 +1024,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Recorder))
-          Overflow.Remove("Recorder");
+          Overflow.Remove("recorder");
         _Recorder = value;
         OnPropertyChanged("Recorder");
       }
@@ -1017,7 +1052,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Asserter))
-          Overflow.Remove("Asserter");
+          Overflow.Remove("asserter");
         _Asserter = value;
         OnPropertyChanged("Asserter");
       }
@@ -1043,7 +1078,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_LastOccurrenceElement))
-          Overflow.Remove("LastOccurrenceElement");
+          Overflow.Remove("lastOccurrence");
         _LastOccurrenceElement = value;
         OnPropertyChanged("LastOccurrenceElement");
       }
@@ -1085,7 +1120,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
-          Overflow.Remove("Note");
+          Overflow.Remove("note");
         _Note = value;
         OnPropertyChanged("Note");
       }
@@ -1112,7 +1147,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>>.InOverflow(_Reaction))
-          Overflow.Remove("Reaction");
+          Overflow.Remove("reaction");
         _Reaction = value;
         OnPropertyChanged("Reaction");
       }
@@ -1247,52 +1282,132 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "clinicalStatus":
-          ClinicalStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            ClinicalStatus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["clinicalStatus"] = value;
+          }
+          else ClinicalStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "verificationStatus":
-          VerificationStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            VerificationStatus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["verificationStatus"] = value;
+          }
+          else VerificationStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType> or null))
+          {
+            TypeElement = OverflowNull<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else TypeElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>?)value;
           return this;
         case "category":
-          CategoryElement = (List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>?)value!;
+          if (value is not (List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>> or null))
+          {
+            CategoryElement = OverflowNull<List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>>.INSTANCE;
+            Overflow["category"] = value;
+          }
+          else CategoryElement = (List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>?)value!;
           return this;
         case "criticality":
-          CriticalityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> or null))
+          {
+            CriticalityElement = OverflowNull<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>>.INSTANCE;
+            Overflow["criticality"] = value;
+          }
+          else CriticalityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>?)value;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["code"] = value;
+          }
+          else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["patient"] = value;
+          }
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Encounter = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["encounter"] = value;
+          }
+          else Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "onset":
-          Onset = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Onset = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["onset"] = value;
+          }
+          else Onset = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "recordedDate":
-          RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            RecordedDateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["recordedDate"] = value;
+          }
+          else RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "recorder":
-          Recorder = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Recorder = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["recorder"] = value;
+          }
+          else Recorder = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "asserter":
-          Asserter = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Asserter = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["asserter"] = value;
+          }
+          else Asserter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "lastOccurrence":
-          LastOccurrenceElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            LastOccurrenceElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["lastOccurrence"] = value;
+          }
+          else LastOccurrenceElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
+          {
+            Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
+            Overflow["note"] = value;
+          }
+          else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         case "reaction":
-          Reaction = (List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> or null))
+          {
+            Reaction = OverflowNull<List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>>.INSTANCE;
+            Overflow["reaction"] = value;
+          }
+          else Reaction = (List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

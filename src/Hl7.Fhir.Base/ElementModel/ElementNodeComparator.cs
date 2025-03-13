@@ -39,14 +39,14 @@ namespace Hl7.Fhir.ElementModel
             foreach (var exp in childrenExp)
             {
                 if (!childrenActual.MoveNext())
-                    TreeComparisonResult.Fail(actual.Location, $"number of children was different");
+                    TreeComparisonResult.Fail(actual.Location, $"number of children was different"); // TODO add return
 
                 var result = exp.IsEqualTo(childrenActual.Current);
                 if (!result.Success)
                     return result;
             }
             if (childrenActual.MoveNext())
-                TreeComparisonResult.Fail(actual.Location, $"number of children was different");
+                TreeComparisonResult.Fail(actual.Location, $"number of children was different"); // TODO add return
 
             return TreeComparisonResult.OK;
         }

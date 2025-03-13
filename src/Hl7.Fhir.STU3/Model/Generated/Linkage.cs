@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.Linkage.LinkageType>>.InOverflow(_TypeElement))
-            Overflow.Remove("TypeElement");
+            Overflow.Remove("type");
           _TypeElement = value;
           OnPropertyChanged("TypeElement");
         }
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Resource))
-            Overflow.Remove("Resource");
+            Overflow.Remove("resource");
           _Resource = value;
           OnPropertyChanged("Resource");
         }
@@ -228,10 +228,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            TypeElement = (Code<Hl7.Fhir.Model.Linkage.LinkageType>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.Linkage.LinkageType> or null))
+            {
+              TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Linkage.LinkageType>>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else TypeElement = (Code<Hl7.Fhir.Model.Linkage.LinkageType>?)value;
             return this;
           case "resource":
-            Resource = (Hl7.Fhir.Model.ResourceReference?)value;
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Resource = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["resource"] = value;
+            }
+            else Resource = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -265,7 +275,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
-          Overflow.Remove("ActiveElement");
+          Overflow.Remove("active");
         _ActiveElement = value;
         OnPropertyChanged("ActiveElement");
       }
@@ -308,7 +318,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Author))
-          Overflow.Remove("Author");
+          Overflow.Remove("author");
         _Author = value;
         OnPropertyChanged("Author");
       }
@@ -335,7 +345,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Linkage.ItemComponent>>.InOverflow(_Item))
-          Overflow.Remove("Item");
+          Overflow.Remove("item");
         _Item = value;
         OnPropertyChanged("Item");
       }
@@ -400,13 +410,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "active":
-          ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+          if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+          {
+            ActiveElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+            Overflow["active"] = value;
+          }
+          else ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "author":
-          Author = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Author = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["author"] = value;
+          }
+          else Author = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "item":
-          Item = (List<Hl7.Fhir.Model.Linkage.ItemComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Linkage.ItemComponent> or null))
+          {
+            Item = OverflowNull<List<Hl7.Fhir.Model.Linkage.ItemComponent>>.INSTANCE;
+            Overflow["item"] = value;
+          }
+          else Item = (List<Hl7.Fhir.Model.Linkage.ItemComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

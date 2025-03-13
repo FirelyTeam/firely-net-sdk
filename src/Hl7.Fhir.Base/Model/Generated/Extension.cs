@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
-          Overflow.Remove("UrlElement");
+          Overflow.Remove("url");
         _UrlElement = value;
         OnPropertyChanged("UrlElement");
       }
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_Value))
-          Overflow.Remove("Value");
+          Overflow.Remove("value");
         _Value = value;
         OnPropertyChanged("Value");
       }
@@ -181,10 +181,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "url":
-          UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            UrlElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["url"] = value;
+          }
+          else UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "value":
-          Value = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Value = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["value"] = value;
+          }
+          else Value = (Hl7.Fhir.Model.DataType?)value;
           return this;
         default:
           return base.SetValue(key, value);

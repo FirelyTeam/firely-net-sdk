@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Concept))
-          Overflow.Remove("Concept");
+          Overflow.Remove("concept");
         _Concept = value;
         OnPropertyChanged("Concept");
       }
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reference))
-          Overflow.Remove("Reference");
+          Overflow.Remove("reference");
         _Reference = value;
         OnPropertyChanged("Reference");
       }
@@ -165,10 +165,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "concept":
-          Concept = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Concept = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["concept"] = value;
+          }
+          else Concept = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "reference":
-          Reference = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Reference = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["reference"] = value;
+          }
+          else Reference = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);

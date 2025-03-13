@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
-          Overflow.Remove("ContentTypeElement");
+          Overflow.Remove("contentType");
         _ContentTypeElement = value;
         OnPropertyChanged("ContentTypeElement");
       }
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_SecurityContext))
-          Overflow.Remove("SecurityContext");
+          Overflow.Remove("securityContext");
         _SecurityContext = value;
         OnPropertyChanged("SecurityContext");
       }
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_ContentElement))
-          Overflow.Remove("ContentElement");
+          Overflow.Remove("content");
         _ContentElement = value;
         OnPropertyChanged("ContentElement");
       }
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
-          Overflow.Remove("DataElement");
+          Overflow.Remove("data");
         _DataElement = value;
         OnPropertyChanged("DataElement");
       }
@@ -287,16 +287,36 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "contentType":
-          ContentTypeElement = (Hl7.Fhir.Model.Code?)value;
+          if (value is not (Hl7.Fhir.Model.Code or null))
+          {
+            ContentTypeElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
+            Overflow["contentType"] = value;
+          }
+          else ContentTypeElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "securityContext":
-          SecurityContext = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            SecurityContext = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["securityContext"] = value;
+          }
+          else SecurityContext = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "content":
-          ContentElement = (Hl7.Fhir.Model.Base64Binary?)value;
+          if (value is not (Hl7.Fhir.Model.Base64Binary or null))
+          {
+            ContentElement = OverflowNull<Hl7.Fhir.Model.Base64Binary>.INSTANCE;
+            Overflow["content"] = value;
+          }
+          else ContentElement = (Hl7.Fhir.Model.Base64Binary?)value;
           return this;
         case "data":
-          DataElement = (Hl7.Fhir.Model.Base64Binary?)value;
+          if (value is not (Hl7.Fhir.Model.Base64Binary or null))
+          {
+            DataElement = OverflowNull<Hl7.Fhir.Model.Base64Binary>.INSTANCE;
+            Overflow["data"] = value;
+          }
+          else DataElement = (Hl7.Fhir.Model.Base64Binary?)value;
           return this;
         default:
           return base.SetValue(key, value);

@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Coding))
-          Overflow.Remove("Coding");
+          Overflow.Remove("coding");
         _Coding = value;
         OnPropertyChanged("Coding");
       }
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
-          Overflow.Remove("TextElement");
+          Overflow.Remove("text");
         _TextElement = value;
         OnPropertyChanged("TextElement");
       }
@@ -182,10 +182,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "coding":
-          Coding = (List<Hl7.Fhir.Model.Coding>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Coding> or null))
+          {
+            Coding = OverflowNull<List<Hl7.Fhir.Model.Coding>>.INSTANCE;
+            Overflow["coding"] = value;
+          }
+          else Coding = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         case "text":
-          TextElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            TextElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["text"] = value;
+          }
+          else TextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         default:
           return base.SetValue(key, value);

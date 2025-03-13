@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Origin))
-          Overflow.Remove("Origin");
+          Overflow.Remove("origin");
         _Origin = value;
         OnPropertyChanged("Origin");
       }
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_PeriodElement))
-          Overflow.Remove("PeriodElement");
+          Overflow.Remove("period");
         _PeriodElement = value;
         OnPropertyChanged("PeriodElement");
       }
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_FactorElement))
-          Overflow.Remove("FactorElement");
+          Overflow.Remove("factor");
         _FactorElement = value;
         OnPropertyChanged("FactorElement");
       }
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_LowerLimitElement))
-          Overflow.Remove("LowerLimitElement");
+          Overflow.Remove("lowerLimit");
         _LowerLimitElement = value;
         OnPropertyChanged("LowerLimitElement");
       }
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_UpperLimitElement))
-          Overflow.Remove("UpperLimitElement");
+          Overflow.Remove("upperLimit");
         _UpperLimitElement = value;
         OnPropertyChanged("UpperLimitElement");
       }
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_DimensionsElement))
-          Overflow.Remove("DimensionsElement");
+          Overflow.Remove("dimensions");
         _DimensionsElement = value;
         OnPropertyChanged("DimensionsElement");
       }
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DataElement))
-          Overflow.Remove("DataElement");
+          Overflow.Remove("data");
         _DataElement = value;
         OnPropertyChanged("DataElement");
       }
@@ -415,25 +415,60 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "origin":
-          Origin = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Origin = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["origin"] = value;
+          }
+          else Origin = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "period":
-          PeriodElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+          {
+            PeriodElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else PeriodElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "factor":
-          FactorElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+          {
+            FactorElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+            Overflow["factor"] = value;
+          }
+          else FactorElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "lowerLimit":
-          LowerLimitElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+          {
+            LowerLimitElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+            Overflow["lowerLimit"] = value;
+          }
+          else LowerLimitElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "upperLimit":
-          UpperLimitElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+          {
+            UpperLimitElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+            Overflow["upperLimit"] = value;
+          }
+          else UpperLimitElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "dimensions":
-          DimensionsElement = (Hl7.Fhir.Model.PositiveInt?)value;
+          if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+          {
+            DimensionsElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+            Overflow["dimensions"] = value;
+          }
+          else DimensionsElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "data":
-          DataElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            DataElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["data"] = value;
+          }
+          else DataElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         default:
           return base.SetValue(key, value);

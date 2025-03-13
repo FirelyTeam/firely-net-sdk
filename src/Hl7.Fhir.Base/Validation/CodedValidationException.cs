@@ -12,6 +12,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
@@ -48,6 +49,7 @@ public class CodedValidationException : ExtendedCodedException
     public const string EXPECTED_ARRAY_NOT_OBJECT_CODE = "PVAL132";
     public const string UNKNOWN_CHOICE_TYPE_CODE = "PVAL133";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "PVAL134";
+    public const string TYPE_MISMATCH_CODE = "PVAL135";
 
     // A list of all issues mentioned above, to we can filter on them.
     internal static readonly HashSet<string> POCO_VALIDATION_ISSUES =
@@ -120,6 +122,9 @@ public class CodedValidationException : ExtendedCodedException
     
     internal static COVE UNKNOWN_RESOURCE_TYPE(ValidationContext? context, string typeName) =>
         Initialize(context, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown resource type '{typeName}'.", OO_Sev.Error, OO_Typ.Structure);
+    
+    internal static COVE TYPE_MISMATCH(ValidationContext? context, string expected, string actual) =>
+        Initialize(context, TYPE_MISMATCH_CODE, $"Expected type '{expected}', but found '{actual}'.", OO_Sev.Error, OO_Typ.Structure);
 
 
     private static string niceValue(object? v)
@@ -185,16 +190,18 @@ public class CodedValidationException : ExtendedCodedException
     internal static CodedValidationException FromTypes(Type expected, object? actual) =>
         actual switch
         {
-            PrimitiveType when typeof(PrimitiveType).IsAssignableFrom(expected) => LITERAL_INVALID(null, actual, expected.Name),
             DynamicDataType dynDT => UNKNOWN_CHOICE_TYPE(null, dynDT.DynamicTypeName!),
             DynamicResource dynR => UNKNOWN_RESOURCE_TYPE(null, dynR.DynamicTypeName!),
+            PrimitiveType when typeof(PrimitiveType).IsAssignableFrom(expected) => TYPE_MISMATCH(null, expected.Name, actual.GetType().Name),
             PrimitiveType when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_PRIMITIVE(null, actual),
             PrimitiveType when typeof(Base).IsAssignableFrom(expected) => EXPECTED_OBJECT_NOT_PRIMITIVE(null, actual),
             Base when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_OBJECT(null, actual),
             Base when typeof(PrimitiveType).IsAssignableFrom(expected) => EXPECTED_PRIMITIVE_NOT_OBJECT(null, actual),
+            Base when typeof(Base).IsAssignableFrom(expected) => TYPE_MISMATCH(null, expected.Name, actual.GetType().Name),
+            IEnumerable<Base> when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => TYPE_MISMATCH(null, expected.Name, actual.GetType().Name),
             IEnumerable<Base> when typeof(PrimitiveType).IsAssignableFrom(expected) => EXPECTED_PRIMITIVE_NOT_ARRAY(null, actual),
             IEnumerable<Base> when typeof(Base).IsAssignableFrom(expected) => EXPECTED_OBJECT_NOT_ARRAY(null, actual),
-            _ => new COVE("PVAL100", $"Expected type '{expected.Name}', but found '{actual?.GetType().Name}'")
+            _ => TYPE_MISMATCH(null, expected.Name, actual?.GetType().Name ?? "null")
         };
 
     internal CodedValidationResult AsResult(ValidationContext? context) =>

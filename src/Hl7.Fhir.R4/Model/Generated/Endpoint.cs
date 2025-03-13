@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>>.InOverflow(_StatusElement))
-          Overflow.Remove("StatusElement");
+          Overflow.Remove("status");
         _StatusElement = value;
         OnPropertyChanged("StatusElement");
       }
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_ConnectionType))
-          Overflow.Remove("ConnectionType");
+          Overflow.Remove("connectionType");
         _ConnectionType = value;
         OnPropertyChanged("ConnectionType");
       }
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
-          Overflow.Remove("NameElement");
+          Overflow.Remove("name");
         _NameElement = value;
         OnPropertyChanged("NameElement");
       }
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ManagingOrganization))
-          Overflow.Remove("ManagingOrganization");
+          Overflow.Remove("managingOrganization");
         _ManagingOrganization = value;
         OnPropertyChanged("ManagingOrganization");
       }
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Contact))
-          Overflow.Remove("Contact");
+          Overflow.Remove("contact");
         _Contact = value;
         OnPropertyChanged("Contact");
       }
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
-          Overflow.Remove("Period");
+          Overflow.Remove("period");
         _Period = value;
         OnPropertyChanged("Period");
       }
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_PayloadType))
-          Overflow.Remove("PayloadType");
+          Overflow.Remove("payloadType");
         _PayloadType = value;
         OnPropertyChanged("PayloadType");
       }
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Code>>.InOverflow(_PayloadMimeTypeElement))
-          Overflow.Remove("PayloadMimeTypeElement");
+          Overflow.Remove("payloadMimeType");
         _PayloadMimeTypeElement = value;
         OnPropertyChanged("PayloadMimeTypeElement");
       }
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirUrl>.InOverflow(_AddressElement))
-          Overflow.Remove("AddressElement");
+          Overflow.Remove("address");
         _AddressElement = value;
         OnPropertyChanged("AddressElement");
       }
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_HeaderElement))
-          Overflow.Remove("HeaderElement");
+          Overflow.Remove("header");
         _HeaderElement = value;
         OnPropertyChanged("HeaderElement");
       }
@@ -588,37 +588,92 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>?)value;
           return this;
         case "connectionType":
-          ConnectionType = (Hl7.Fhir.Model.Coding?)value;
+          if (value is not (Hl7.Fhir.Model.Coding or null))
+          {
+            ConnectionType = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
+            Overflow["connectionType"] = value;
+          }
+          else ConnectionType = (Hl7.Fhir.Model.Coding?)value;
           return this;
         case "name":
-          NameElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["name"] = value;
+          }
+          else NameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "managingOrganization":
-          ManagingOrganization = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            ManagingOrganization = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["managingOrganization"] = value;
+          }
+          else ManagingOrganization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "contact":
-          Contact = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ContactPoint> or null))
+          {
+            Contact = OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.INSTANCE;
+            Overflow["contact"] = value;
+          }
+          else Contact = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period?)value;
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "payloadType":
-          PayloadType = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            PayloadType = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["payloadType"] = value;
+          }
+          else PayloadType = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "payloadMimeType":
-          PayloadMimeTypeElement = (List<Hl7.Fhir.Model.Code>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Code> or null))
+          {
+            PayloadMimeTypeElement = OverflowNull<List<Hl7.Fhir.Model.Code>>.INSTANCE;
+            Overflow["payloadMimeType"] = value;
+          }
+          else PayloadMimeTypeElement = (List<Hl7.Fhir.Model.Code>?)value!;
           return this;
         case "address":
-          AddressElement = (Hl7.Fhir.Model.FhirUrl?)value;
+          if (value is not (Hl7.Fhir.Model.FhirUrl or null))
+          {
+            AddressElement = OverflowNull<Hl7.Fhir.Model.FhirUrl>.INSTANCE;
+            Overflow["address"] = value;
+          }
+          else AddressElement = (Hl7.Fhir.Model.FhirUrl?)value;
           return this;
         case "header":
-          HeaderElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            HeaderElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["header"] = value;
+          }
+          else HeaderElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

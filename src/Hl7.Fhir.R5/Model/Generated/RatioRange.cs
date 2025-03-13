@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowNumerator))
-          Overflow.Remove("LowNumerator");
+          Overflow.Remove("lowNumerator");
         _LowNumerator = value;
         OnPropertyChanged("LowNumerator");
       }
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighNumerator))
-          Overflow.Remove("HighNumerator");
+          Overflow.Remove("highNumerator");
         _HighNumerator = value;
         OnPropertyChanged("HighNumerator");
       }
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
-          Overflow.Remove("Denominator");
+          Overflow.Remove("denominator");
         _Denominator = value;
         OnPropertyChanged("Denominator");
       }
@@ -197,13 +197,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "lowNumerator":
-          LowNumerator = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            LowNumerator = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["lowNumerator"] = value;
+          }
+          else LowNumerator = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "highNumerator":
-          HighNumerator = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            HighNumerator = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["highNumerator"] = value;
+          }
+          else HighNumerator = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "denominator":
-          Denominator = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Denominator = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["denominator"] = value;
+          }
+          else Denominator = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         default:
           return base.SetValue(key, value);

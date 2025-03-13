@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Type))
-          Overflow.Remove("Type");
+          Overflow.Remove("type");
         _Type = value;
         OnPropertyChanged("Type");
       }
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_WhenElement))
-          Overflow.Remove("WhenElement");
+          Overflow.Remove("when");
         _WhenElement = value;
         OnPropertyChanged("WhenElement");
       }
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_Who))
-          Overflow.Remove("Who");
+          Overflow.Remove("who");
         _Who = value;
         OnPropertyChanged("Who");
       }
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_OnBehalfOf))
-          Overflow.Remove("OnBehalfOf");
+          Overflow.Remove("onBehalfOf");
         _OnBehalfOf = value;
         OnPropertyChanged("OnBehalfOf");
       }
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
-          Overflow.Remove("ContentTypeElement");
+          Overflow.Remove("contentType");
         _ContentTypeElement = value;
         OnPropertyChanged("ContentTypeElement");
       }
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_TargetFormatElement))
-          Overflow.Remove("TargetFormatElement");
+          Overflow.Remove("targetFormat");
         _TargetFormatElement = value;
         OnPropertyChanged("TargetFormatElement");
       }
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_SigFormatElement))
-          Overflow.Remove("SigFormatElement");
+          Overflow.Remove("sigFormat");
         _SigFormatElement = value;
         OnPropertyChanged("SigFormatElement");
       }
@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_BlobElement))
-          Overflow.Remove("BlobElement");
+          Overflow.Remove("blob");
         _BlobElement = value;
         OnPropertyChanged("BlobElement");
       }
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
-          Overflow.Remove("DataElement");
+          Overflow.Remove("data");
         _DataElement = value;
         OnPropertyChanged("DataElement");
       }
@@ -520,31 +520,76 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          Type = (List<Hl7.Fhir.Model.Coding>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Coding> or null))
+          {
+            Type = OverflowNull<List<Hl7.Fhir.Model.Coding>>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else Type = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         case "when":
-          WhenElement = (Hl7.Fhir.Model.Instant?)value;
+          if (value is not (Hl7.Fhir.Model.Instant or null))
+          {
+            WhenElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+            Overflow["when"] = value;
+          }
+          else WhenElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "who":
-          Who = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Who = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["who"] = value;
+          }
+          else Who = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "onBehalfOf":
-          OnBehalfOf = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            OnBehalfOf = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["onBehalfOf"] = value;
+          }
+          else OnBehalfOf = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "contentType":
-          ContentTypeElement = (Hl7.Fhir.Model.Code?)value;
+          if (value is not (Hl7.Fhir.Model.Code or null))
+          {
+            ContentTypeElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
+            Overflow["contentType"] = value;
+          }
+          else ContentTypeElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "targetFormat":
-          TargetFormatElement = (Hl7.Fhir.Model.Code?)value;
+          if (value is not (Hl7.Fhir.Model.Code or null))
+          {
+            TargetFormatElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
+            Overflow["targetFormat"] = value;
+          }
+          else TargetFormatElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "sigFormat":
-          SigFormatElement = (Hl7.Fhir.Model.Code?)value;
+          if (value is not (Hl7.Fhir.Model.Code or null))
+          {
+            SigFormatElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
+            Overflow["sigFormat"] = value;
+          }
+          else SigFormatElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         case "blob":
-          BlobElement = (Hl7.Fhir.Model.Base64Binary?)value;
+          if (value is not (Hl7.Fhir.Model.Base64Binary or null))
+          {
+            BlobElement = OverflowNull<Hl7.Fhir.Model.Base64Binary>.INSTANCE;
+            Overflow["blob"] = value;
+          }
+          else BlobElement = (Hl7.Fhir.Model.Base64Binary?)value;
           return this;
         case "data":
-          DataElement = (Hl7.Fhir.Model.Base64Binary?)value;
+          if (value is not (Hl7.Fhir.Model.Base64Binary or null))
+          {
+            DataElement = OverflowNull<Hl7.Fhir.Model.Base64Binary>.INSTANCE;
+            Overflow["data"] = value;
+          }
+          else DataElement = (Hl7.Fhir.Model.Base64Binary?)value;
           return this;
         default:
           return base.SetValue(key, value);

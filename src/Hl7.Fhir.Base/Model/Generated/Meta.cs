@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Id>.InOverflow(_VersionIdElement))
-          Overflow.Remove("VersionIdElement");
+          Overflow.Remove("versionId");
         _VersionIdElement = value;
         OnPropertyChanged("VersionIdElement");
       }
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_LastUpdatedElement))
-          Overflow.Remove("LastUpdatedElement");
+          Overflow.Remove("lastUpdated");
         _LastUpdatedElement = value;
         OnPropertyChanged("LastUpdatedElement");
       }
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_SourceElement))
-          Overflow.Remove("SourceElement");
+          Overflow.Remove("source");
         _SourceElement = value;
         OnPropertyChanged("SourceElement");
       }
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.PrimitiveType>>.InOverflow(_ProfileElement))
-          Overflow.Remove("ProfileElement");
+          Overflow.Remove("profile");
         _ProfileElement = value;
         OnPropertyChanged("ProfileElement");
       }
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Security))
-          Overflow.Remove("Security");
+          Overflow.Remove("security");
         _Security = value;
         OnPropertyChanged("Security");
       }
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Tag))
-          Overflow.Remove("Tag");
+          Overflow.Remove("tag");
         _Tag = value;
         OnPropertyChanged("Tag");
       }
@@ -388,22 +388,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "versionId":
-          VersionIdElement = (Hl7.Fhir.Model.Id?)value;
+          if (value is not (Hl7.Fhir.Model.Id or null))
+          {
+            VersionIdElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+            Overflow["versionId"] = value;
+          }
+          else VersionIdElement = (Hl7.Fhir.Model.Id?)value;
           return this;
         case "lastUpdated":
-          LastUpdatedElement = (Hl7.Fhir.Model.Instant?)value;
+          if (value is not (Hl7.Fhir.Model.Instant or null))
+          {
+            LastUpdatedElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+            Overflow["lastUpdated"] = value;
+          }
+          else LastUpdatedElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "source":
-          SourceElement = (Hl7.Fhir.Model.FhirUri?)value;
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            SourceElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["source"] = value;
+          }
+          else SourceElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "profile":
-          ProfileElement = (List<Hl7.Fhir.Model.PrimitiveType>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.PrimitiveType> or null))
+          {
+            ProfileElement = OverflowNull<List<Hl7.Fhir.Model.PrimitiveType>>.INSTANCE;
+            Overflow["profile"] = value;
+          }
+          else ProfileElement = (List<Hl7.Fhir.Model.PrimitiveType>?)value!;
           return this;
         case "security":
-          Security = (List<Hl7.Fhir.Model.Coding>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Coding> or null))
+          {
+            Security = OverflowNull<List<Hl7.Fhir.Model.Coding>>.INSTANCE;
+            Overflow["security"] = value;
+          }
+          else Security = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         case "tag":
-          Tag = (List<Hl7.Fhir.Model.Coding>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Coding> or null))
+          {
+            Tag = OverflowNull<List<Hl7.Fhir.Model.Coding>>.INSTANCE;
+            Overflow["tag"] = value;
+          }
+          else Tag = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

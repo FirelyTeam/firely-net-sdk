@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_TherapyRelationshipType))
-            Overflow.Remove("TherapyRelationshipType");
+            Overflow.Remove("therapyRelationshipType");
           _TherapyRelationshipType = value;
           OnPropertyChanged("TherapyRelationshipType");
         }
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<DynamicDataType>.InOverflow(_Medication))
-            Overflow.Remove("Medication");
+            Overflow.Remove("medication");
           _Medication = value;
           OnPropertyChanged("Medication");
         }
@@ -183,10 +183,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "therapyRelationshipType":
-            TherapyRelationshipType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              TherapyRelationshipType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["therapyRelationshipType"] = value;
+            }
+            else TherapyRelationshipType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "medication":
-            Medication = (Hl7.Fhir.Model.DataType?)value;
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Medication = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["medication"] = value;
+            }
+            else Medication = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -223,7 +233,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
-          Overflow.Remove("Subject");
+          Overflow.Remove("subject");
         _Subject = value;
         OnPropertyChanged("Subject");
       }
@@ -249,7 +259,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Disease))
-          Overflow.Remove("Disease");
+          Overflow.Remove("disease");
         _Disease = value;
         OnPropertyChanged("Disease");
       }
@@ -275,7 +285,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DiseaseStatus))
-          Overflow.Remove("DiseaseStatus");
+          Overflow.Remove("diseaseStatus");
         _DiseaseStatus = value;
         OnPropertyChanged("DiseaseStatus");
       }
@@ -302,7 +312,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Comorbidity))
-          Overflow.Remove("Comorbidity");
+          Overflow.Remove("comorbidity");
         _Comorbidity = value;
         OnPropertyChanged("Comorbidity");
       }
@@ -331,7 +341,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_TherapeuticIndication))
-          Overflow.Remove("TherapeuticIndication");
+          Overflow.Remove("therapeuticIndication");
         _TherapeuticIndication = value;
         OnPropertyChanged("TherapeuticIndication");
       }
@@ -358,7 +368,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent>>.InOverflow(_OtherTherapy))
-          Overflow.Remove("OtherTherapy");
+          Overflow.Remove("otherTherapy");
         _OtherTherapy = value;
         OnPropertyChanged("OtherTherapy");
       }
@@ -385,7 +395,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
-          Overflow.Remove("Population");
+          Overflow.Remove("population");
         _Population = value;
         OnPropertyChanged("Population");
       }
@@ -470,25 +480,60 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "subject":
-          Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Subject = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["subject"] = value;
+          }
+          else Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "disease":
-          Disease = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Disease = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["disease"] = value;
+          }
+          else Disease = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "diseaseStatus":
-          DiseaseStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            DiseaseStatus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["diseaseStatus"] = value;
+          }
+          else DiseaseStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "comorbidity":
-          Comorbidity = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            Comorbidity = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["comorbidity"] = value;
+          }
+          else Comorbidity = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "therapeuticIndication":
-          TherapeuticIndication = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            TherapeuticIndication = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["therapeuticIndication"] = value;
+          }
+          else TherapeuticIndication = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "otherTherapy":
-          OtherTherapy = (List<Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent> or null))
+          {
+            OtherTherapy = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent>>.INSTANCE;
+            Overflow["otherTherapy"] = value;
+          }
+          else OtherTherapy = (List<Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent>?)value!;
           return this;
         case "population":
-          Population = (List<Hl7.Fhir.Model.Population>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Population> or null))
+          {
+            Population = OverflowNull<List<Hl7.Fhir.Model.Population>>.INSTANCE;
+            Overflow["population"] = value;
+          }
+          else Population = (List<Hl7.Fhir.Model.Population>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

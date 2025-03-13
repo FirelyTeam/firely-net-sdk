@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FractionElement))
-            Overflow.Remove("FractionElement");
+            Overflow.Remove("fraction");
           _FractionElement = value;
           OnPropertyChanged("FractionElement");
         }
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_MaterialType))
-            Overflow.Remove("MaterialType");
+            Overflow.Remove("materialType");
           _MaterialType = value;
           OnPropertyChanged("MaterialType");
         }
@@ -190,10 +190,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "fraction":
-            FractionElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              FractionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["fraction"] = value;
+            }
+            else FractionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "materialType":
-            MaterialType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              MaterialType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["materialType"] = value;
+            }
+            else MaterialType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -240,7 +250,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Family))
-            Overflow.Remove("Family");
+            Overflow.Remove("family");
           _Family = value;
           OnPropertyChanged("Family");
         }
@@ -266,7 +276,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Genus))
-            Overflow.Remove("Genus");
+            Overflow.Remove("genus");
           _Genus = value;
           OnPropertyChanged("Genus");
         }
@@ -292,7 +302,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Species))
-            Overflow.Remove("Species");
+            Overflow.Remove("species");
           _Species = value;
           OnPropertyChanged("Species");
         }
@@ -318,7 +328,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_IntraspecificType))
-            Overflow.Remove("IntraspecificType");
+            Overflow.Remove("intraspecificType");
           _IntraspecificType = value;
           OnPropertyChanged("IntraspecificType");
         }
@@ -344,7 +354,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IntraspecificDescriptionElement))
-            Overflow.Remove("IntraspecificDescriptionElement");
+            Overflow.Remove("intraspecificDescription");
           _IntraspecificDescriptionElement = value;
           OnPropertyChanged("IntraspecificDescriptionElement");
         }
@@ -386,7 +396,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>>.InOverflow(_Author))
-            Overflow.Remove("Author");
+            Overflow.Remove("author");
           _Author = value;
           OnPropertyChanged("Author");
         }
@@ -412,7 +422,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent>.InOverflow(_Hybrid))
-            Overflow.Remove("Hybrid");
+            Overflow.Remove("hybrid");
           _Hybrid = value;
           OnPropertyChanged("Hybrid");
         }
@@ -438,7 +448,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent>.InOverflow(_OrganismGeneral))
-            Overflow.Remove("OrganismGeneral");
+            Overflow.Remove("organismGeneral");
           _OrganismGeneral = value;
           OnPropertyChanged("OrganismGeneral");
         }
@@ -528,28 +538,68 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "family":
-            Family = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Family = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["family"] = value;
+            }
+            else Family = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "genus":
-            Genus = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Genus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["genus"] = value;
+            }
+            else Genus = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "species":
-            Species = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Species = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["species"] = value;
+            }
+            else Species = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "intraspecificType":
-            IntraspecificType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              IntraspecificType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["intraspecificType"] = value;
+            }
+            else IntraspecificType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "intraspecificDescription":
-            IntraspecificDescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              IntraspecificDescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["intraspecificDescription"] = value;
+            }
+            else IntraspecificDescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "author":
-            Author = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent> or null))
+            {
+              Author = OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>>.INSTANCE;
+              Overflow["author"] = value;
+            }
+            else Author = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>?)value!;
             return this;
           case "hybrid":
-            Hybrid = (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent?)value;
+            if (value is not (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent or null))
+            {
+              Hybrid = OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent>.INSTANCE;
+              Overflow["hybrid"] = value;
+            }
+            else Hybrid = (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent?)value;
             return this;
           case "organismGeneral":
-            OrganismGeneral = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent?)value;
+            if (value is not (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent or null))
+            {
+              OrganismGeneral = OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent>.INSTANCE;
+              Overflow["organismGeneral"] = value;
+            }
+            else OrganismGeneral = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -602,7 +652,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AuthorType))
-            Overflow.Remove("AuthorType");
+            Overflow.Remove("authorType");
           _AuthorType = value;
           OnPropertyChanged("AuthorType");
         }
@@ -628,7 +678,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AuthorDescriptionElement))
-            Overflow.Remove("AuthorDescriptionElement");
+            Overflow.Remove("authorDescription");
           _AuthorDescriptionElement = value;
           OnPropertyChanged("AuthorDescriptionElement");
         }
@@ -703,10 +753,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "authorType":
-            AuthorType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              AuthorType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["authorType"] = value;
+            }
+            else AuthorType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "authorDescription":
-            AuthorDescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              AuthorDescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["authorDescription"] = value;
+            }
+            else AuthorDescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -753,7 +813,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MaternalOrganismIdElement))
-            Overflow.Remove("MaternalOrganismIdElement");
+            Overflow.Remove("maternalOrganismId");
           _MaternalOrganismIdElement = value;
           OnPropertyChanged("MaternalOrganismIdElement");
         }
@@ -794,7 +854,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MaternalOrganismNameElement))
-            Overflow.Remove("MaternalOrganismNameElement");
+            Overflow.Remove("maternalOrganismName");
           _MaternalOrganismNameElement = value;
           OnPropertyChanged("MaternalOrganismNameElement");
         }
@@ -835,7 +895,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PaternalOrganismIdElement))
-            Overflow.Remove("PaternalOrganismIdElement");
+            Overflow.Remove("paternalOrganismId");
           _PaternalOrganismIdElement = value;
           OnPropertyChanged("PaternalOrganismIdElement");
         }
@@ -876,7 +936,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PaternalOrganismNameElement))
-            Overflow.Remove("PaternalOrganismNameElement");
+            Overflow.Remove("paternalOrganismName");
           _PaternalOrganismNameElement = value;
           OnPropertyChanged("PaternalOrganismNameElement");
         }
@@ -917,7 +977,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_HybridType))
-            Overflow.Remove("HybridType");
+            Overflow.Remove("hybridType");
           _HybridType = value;
           OnPropertyChanged("HybridType");
         }
@@ -992,19 +1052,44 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "maternalOrganismId":
-            MaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              MaternalOrganismIdElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["maternalOrganismId"] = value;
+            }
+            else MaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "maternalOrganismName":
-            MaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              MaternalOrganismNameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["maternalOrganismName"] = value;
+            }
+            else MaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "paternalOrganismId":
-            PaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              PaternalOrganismIdElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["paternalOrganismId"] = value;
+            }
+            else PaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "paternalOrganismName":
-            PaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              PaternalOrganismNameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["paternalOrganismName"] = value;
+            }
+            else PaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "hybridType":
-            HybridType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              HybridType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["hybridType"] = value;
+            }
+            else HybridType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1054,7 +1139,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Kingdom))
-            Overflow.Remove("Kingdom");
+            Overflow.Remove("kingdom");
           _Kingdom = value;
           OnPropertyChanged("Kingdom");
         }
@@ -1080,7 +1165,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Phylum))
-            Overflow.Remove("Phylum");
+            Overflow.Remove("phylum");
           _Phylum = value;
           OnPropertyChanged("Phylum");
         }
@@ -1106,7 +1191,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Class))
-            Overflow.Remove("Class");
+            Overflow.Remove("class");
           _Class = value;
           OnPropertyChanged("Class");
         }
@@ -1132,7 +1217,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Order))
-            Overflow.Remove("Order");
+            Overflow.Remove("order");
           _Order = value;
           OnPropertyChanged("Order");
         }
@@ -1202,16 +1287,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "kingdom":
-            Kingdom = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Kingdom = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["kingdom"] = value;
+            }
+            else Kingdom = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "phylum":
-            Phylum = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Phylum = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["phylum"] = value;
+            }
+            else Phylum = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "class":
-            Class = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Class = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["class"] = value;
+            }
+            else Class = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "order":
-            Order = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Order = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["order"] = value;
+            }
+            else Order = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1260,7 +1365,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Part))
-            Overflow.Remove("Part");
+            Overflow.Remove("part");
           _Part = value;
           OnPropertyChanged("Part");
         }
@@ -1286,7 +1391,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PartLocation))
-            Overflow.Remove("PartLocation");
+            Overflow.Remove("partLocation");
           _PartLocation = value;
           OnPropertyChanged("PartLocation");
         }
@@ -1346,10 +1451,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "part":
-            Part = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Part = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["part"] = value;
+            }
+            else Part = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "partLocation":
-            PartLocation = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              PartLocation = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["partLocation"] = value;
+            }
+            else PartLocation = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1383,7 +1498,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SourceMaterialClass))
-          Overflow.Remove("SourceMaterialClass");
+          Overflow.Remove("sourceMaterialClass");
         _SourceMaterialClass = value;
         OnPropertyChanged("SourceMaterialClass");
       }
@@ -1409,7 +1524,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SourceMaterialType))
-          Overflow.Remove("SourceMaterialType");
+          Overflow.Remove("sourceMaterialType");
         _SourceMaterialType = value;
         OnPropertyChanged("SourceMaterialType");
       }
@@ -1435,7 +1550,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SourceMaterialState))
-          Overflow.Remove("SourceMaterialState");
+          Overflow.Remove("sourceMaterialState");
         _SourceMaterialState = value;
         OnPropertyChanged("SourceMaterialState");
       }
@@ -1461,7 +1576,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_OrganismId))
-          Overflow.Remove("OrganismId");
+          Overflow.Remove("organismId");
         _OrganismId = value;
         OnPropertyChanged("OrganismId");
       }
@@ -1487,7 +1602,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_OrganismNameElement))
-          Overflow.Remove("OrganismNameElement");
+          Overflow.Remove("organismName");
         _OrganismNameElement = value;
         OnPropertyChanged("OrganismNameElement");
       }
@@ -1529,7 +1644,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_ParentSubstanceId))
-          Overflow.Remove("ParentSubstanceId");
+          Overflow.Remove("parentSubstanceId");
         _ParentSubstanceId = value;
         OnPropertyChanged("ParentSubstanceId");
       }
@@ -1556,7 +1671,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ParentSubstanceNameElement))
-          Overflow.Remove("ParentSubstanceNameElement");
+          Overflow.Remove("parentSubstanceName");
         _ParentSubstanceNameElement = value;
         OnPropertyChanged("ParentSubstanceNameElement");
       }
@@ -1601,7 +1716,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_CountryOfOrigin))
-          Overflow.Remove("CountryOfOrigin");
+          Overflow.Remove("countryOfOrigin");
         _CountryOfOrigin = value;
         OnPropertyChanged("CountryOfOrigin");
       }
@@ -1628,7 +1743,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_GeographicalLocationElement))
-          Overflow.Remove("GeographicalLocationElement");
+          Overflow.Remove("geographicalLocation");
         _GeographicalLocationElement = value;
         OnPropertyChanged("GeographicalLocationElement");
       }
@@ -1672,7 +1787,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DevelopmentStage))
-          Overflow.Remove("DevelopmentStage");
+          Overflow.Remove("developmentStage");
         _DevelopmentStage = value;
         OnPropertyChanged("DevelopmentStage");
       }
@@ -1699,7 +1814,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>>.InOverflow(_FractionDescription))
-          Overflow.Remove("FractionDescription");
+          Overflow.Remove("fractionDescription");
         _FractionDescription = value;
         OnPropertyChanged("FractionDescription");
       }
@@ -1725,7 +1840,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent>.InOverflow(_Organism))
-          Overflow.Remove("Organism");
+          Overflow.Remove("organism");
         _Organism = value;
         OnPropertyChanged("Organism");
       }
@@ -1752,7 +1867,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>>.InOverflow(_PartDescription))
-          Overflow.Remove("PartDescription");
+          Overflow.Remove("partDescription");
         _PartDescription = value;
         OnPropertyChanged("PartDescription");
       }
@@ -1867,43 +1982,108 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "sourceMaterialClass":
-          SourceMaterialClass = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            SourceMaterialClass = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["sourceMaterialClass"] = value;
+          }
+          else SourceMaterialClass = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "sourceMaterialType":
-          SourceMaterialType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            SourceMaterialType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["sourceMaterialType"] = value;
+          }
+          else SourceMaterialType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "sourceMaterialState":
-          SourceMaterialState = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            SourceMaterialState = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["sourceMaterialState"] = value;
+          }
+          else SourceMaterialState = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "organismId":
-          OrganismId = (Hl7.Fhir.Model.Identifier?)value;
+          if (value is not (Hl7.Fhir.Model.Identifier or null))
+          {
+            OrganismId = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+            Overflow["organismId"] = value;
+          }
+          else OrganismId = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "organismName":
-          OrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            OrganismNameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["organismName"] = value;
+          }
+          else OrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "parentSubstanceId":
-          ParentSubstanceId = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            ParentSubstanceId = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["parentSubstanceId"] = value;
+          }
+          else ParentSubstanceId = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "parentSubstanceName":
-          ParentSubstanceNameElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            ParentSubstanceNameElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["parentSubstanceName"] = value;
+          }
+          else ParentSubstanceNameElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "countryOfOrigin":
-          CountryOfOrigin = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            CountryOfOrigin = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["countryOfOrigin"] = value;
+          }
+          else CountryOfOrigin = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "geographicalLocation":
-          GeographicalLocationElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            GeographicalLocationElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["geographicalLocation"] = value;
+          }
+          else GeographicalLocationElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "developmentStage":
-          DevelopmentStage = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            DevelopmentStage = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["developmentStage"] = value;
+          }
+          else DevelopmentStage = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "fractionDescription":
-          FractionDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent> or null))
+          {
+            FractionDescription = OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>>.INSTANCE;
+            Overflow["fractionDescription"] = value;
+          }
+          else FractionDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>?)value!;
           return this;
         case "organism":
-          Organism = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent?)value;
+          if (value is not (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent or null))
+          {
+            Organism = OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent>.INSTANCE;
+            Overflow["organism"] = value;
+          }
+          else Organism = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent?)value;
           return this;
         case "partDescription":
-          PartDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent> or null))
+          {
+            PartDescription = OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>>.INSTANCE;
+            Overflow["partDescription"] = value;
+          }
+          else PartDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

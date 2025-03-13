@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>>.InOverflow(_SeverityElement))
-            Overflow.Remove("SeverityElement");
+            Overflow.Remove("severity");
           _SeverityElement = value;
           OnPropertyChanged("SeverityElement");
         }
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.OperationOutcome.IssueType>>.InOverflow(_CodeElement))
-            Overflow.Remove("CodeElement");
+            Overflow.Remove("code");
           _CodeElement = value;
           OnPropertyChanged("CodeElement");
         }
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Details))
-            Overflow.Remove("Details");
+            Overflow.Remove("details");
           _Details = value;
           OnPropertyChanged("Details");
         }
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DiagnosticsElement))
-            Overflow.Remove("DiagnosticsElement");
+            Overflow.Remove("diagnostics");
           _DiagnosticsElement = value;
           OnPropertyChanged("DiagnosticsElement");
         }
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_LocationElement))
-            Overflow.Remove("LocationElement");
+            Overflow.Remove("location");
           _LocationElement = value;
           OnPropertyChanged("LocationElement");
         }
@@ -547,7 +547,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ExpressionElement))
-            Overflow.Remove("ExpressionElement");
+            Overflow.Remove("expression");
           _ExpressionElement = value;
           OnPropertyChanged("ExpressionElement");
         }
@@ -645,22 +645,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "severity":
-            SeverityElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> or null))
+            {
+              SeverityElement = OverflowNull<Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>>.INSTANCE;
+              Overflow["severity"] = value;
+            }
+            else SeverityElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>?)value;
             return this;
           case "code":
-            CodeElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueType>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.OperationOutcome.IssueType> or null))
+            {
+              CodeElement = OverflowNull<Code<Hl7.Fhir.Model.OperationOutcome.IssueType>>.INSTANCE;
+              Overflow["code"] = value;
+            }
+            else CodeElement = (Code<Hl7.Fhir.Model.OperationOutcome.IssueType>?)value;
             return this;
           case "details":
-            Details = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Details = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["details"] = value;
+            }
+            else Details = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "diagnostics":
-            DiagnosticsElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              DiagnosticsElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["diagnostics"] = value;
+            }
+            else DiagnosticsElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "location":
-            LocationElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+            {
+              LocationElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+              Overflow["location"] = value;
+            }
+            else LocationElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
             return this;
           case "expression":
-            ExpressionElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+            {
+              ExpressionElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+              Overflow["expression"] = value;
+            }
+            else ExpressionElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -699,7 +729,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>>.InOverflow(_Issue))
-          Overflow.Remove("Issue");
+          Overflow.Remove("issue");
         _Issue = value;
         OnPropertyChanged("Issue");
       }
@@ -754,7 +784,12 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "issue":
-          Issue = (List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.OperationOutcome.IssueComponent> or null))
+          {
+            Issue = OverflowNull<List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>>.INSTANCE;
+            Overflow["issue"] = value;
+          }
+          else Issue = (List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

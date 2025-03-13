@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Low))
-          Overflow.Remove("Low");
+          Overflow.Remove("low");
         _Low = value;
         OnPropertyChanged("Low");
       }
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_High))
-          Overflow.Remove("High");
+          Overflow.Remove("high");
         _High = value;
         OnPropertyChanged("High");
       }
@@ -166,10 +166,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "low":
-          Low = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Low = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["low"] = value;
+          }
+          else Low = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "high":
-          High = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            High = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["high"] = value;
+          }
+          else High = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         default:
           return base.SetValue(key, value);

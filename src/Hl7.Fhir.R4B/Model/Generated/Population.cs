@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_Age))
-          Overflow.Remove("Age");
+          Overflow.Remove("age");
         _Age = value;
         OnPropertyChanged("Age");
       }
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Gender))
-          Overflow.Remove("Gender");
+          Overflow.Remove("gender");
         _Gender = value;
         OnPropertyChanged("Gender");
       }
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Race))
-          Overflow.Remove("Race");
+          Overflow.Remove("race");
         _Race = value;
         OnPropertyChanged("Race");
       }
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PhysiologicalCondition))
-          Overflow.Remove("PhysiologicalCondition");
+          Overflow.Remove("physiologicalCondition");
         _PhysiologicalCondition = value;
         OnPropertyChanged("PhysiologicalCondition");
       }
@@ -229,16 +229,36 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "age":
-          Age = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Age = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["age"] = value;
+          }
+          else Age = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "gender":
-          Gender = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Gender = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["gender"] = value;
+          }
+          else Gender = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "race":
-          Race = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Race = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["race"] = value;
+          }
+          else Race = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "physiologicalCondition":
-          PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            PhysiologicalCondition = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["physiologicalCondition"] = value;
+          }
+          else PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         default:
           return base.SetValue(key, value);

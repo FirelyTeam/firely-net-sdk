@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowLimit))
-            Overflow.Remove("LowLimit");
+            Overflow.Remove("lowLimit");
           _LowLimit = value;
           OnPropertyChanged("LowLimit");
         }
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighLimit))
-            Overflow.Remove("HighLimit");
+            Overflow.Remove("highLimit");
           _HighLimit = value;
           OnPropertyChanged("HighLimit");
         }
@@ -175,10 +175,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "lowLimit":
-            LowLimit = (Hl7.Fhir.Model.Quantity?)value;
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              LowLimit = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["lowLimit"] = value;
+            }
+            else LowLimit = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "highLimit":
-            HighLimit = (Hl7.Fhir.Model.Quantity?)value;
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              HighLimit = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["highLimit"] = value;
+            }
+            else HighLimit = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -214,7 +224,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_Amount))
-          Overflow.Remove("Amount");
+          Overflow.Remove("amount");
         _Amount = value;
         OnPropertyChanged("Amount");
       }
@@ -240,7 +250,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AmountType))
-          Overflow.Remove("AmountType");
+          Overflow.Remove("amountType");
         _AmountType = value;
         OnPropertyChanged("AmountType");
       }
@@ -266,7 +276,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AmountTextElement))
-          Overflow.Remove("AmountTextElement");
+          Overflow.Remove("amountText");
         _AmountTextElement = value;
         OnPropertyChanged("AmountTextElement");
       }
@@ -307,7 +317,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>.InOverflow(_ReferenceRange))
-          Overflow.Remove("ReferenceRange");
+          Overflow.Remove("referenceRange");
         _ReferenceRange = value;
         OnPropertyChanged("ReferenceRange");
       }
@@ -377,16 +387,36 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "amount":
-          Amount = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Amount = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["amount"] = value;
+          }
+          else Amount = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "amountType":
-          AmountType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            AmountType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["amountType"] = value;
+          }
+          else AmountType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "amountText":
-          AmountTextElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            AmountTextElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["amountText"] = value;
+          }
+          else AmountTextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "referenceRange":
-          ReferenceRange = (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent?)value;
+          if (value is not (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent or null))
+          {
+            ReferenceRange = OverflowNull<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>.INSTANCE;
+            Overflow["referenceRange"] = value;
+          }
+          else ReferenceRange = (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent?)value;
           return this;
         default:
           return base.SetValue(key, value);

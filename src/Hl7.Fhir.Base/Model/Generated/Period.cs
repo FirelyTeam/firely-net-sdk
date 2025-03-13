@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StartElement))
-          Overflow.Remove("StartElement");
+          Overflow.Remove("start");
         _StartElement = value;
         OnPropertyChanged("StartElement");
       }
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_EndElement))
-          Overflow.Remove("EndElement");
+          Overflow.Remove("end");
         _EndElement = value;
         OnPropertyChanged("EndElement");
       }
@@ -197,10 +197,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "start":
-          StartElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            StartElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["start"] = value;
+          }
+          else StartElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "end":
-          EndElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            EndElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["end"] = value;
+          }
+          else EndElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         default:
           return base.SetValue(key, value);

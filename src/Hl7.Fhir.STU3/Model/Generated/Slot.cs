@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ServiceCategory))
-          Overflow.Remove("ServiceCategory");
+          Overflow.Remove("serviceCategory");
         _ServiceCategory = value;
         OnPropertyChanged("ServiceCategory");
       }
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ServiceType))
-          Overflow.Remove("ServiceType");
+          Overflow.Remove("serviceType");
         _ServiceType = value;
         OnPropertyChanged("ServiceType");
       }
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Specialty))
-          Overflow.Remove("Specialty");
+          Overflow.Remove("specialty");
         _Specialty = value;
         OnPropertyChanged("Specialty");
       }
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AppointmentType))
-          Overflow.Remove("AppointmentType");
+          Overflow.Remove("appointmentType");
         _AppointmentType = value;
         OnPropertyChanged("AppointmentType");
       }
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Schedule))
-          Overflow.Remove("Schedule");
+          Overflow.Remove("schedule");
         _Schedule = value;
         OnPropertyChanged("Schedule");
       }
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.Slot.SlotStatus>>.InOverflow(_StatusElement))
-          Overflow.Remove("StatusElement");
+          Overflow.Remove("status");
         _StatusElement = value;
         OnPropertyChanged("StatusElement");
       }
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_StartElement))
-          Overflow.Remove("StartElement");
+          Overflow.Remove("start");
         _StartElement = value;
         OnPropertyChanged("StartElement");
       }
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_EndElement))
-          Overflow.Remove("EndElement");
+          Overflow.Remove("end");
         _EndElement = value;
         OnPropertyChanged("EndElement");
       }
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_OverbookedElement))
-          Overflow.Remove("OverbookedElement");
+          Overflow.Remove("overbooked");
         _OverbookedElement = value;
         OnPropertyChanged("OverbookedElement");
       }
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CommentElement))
-          Overflow.Remove("CommentElement");
+          Overflow.Remove("comment");
         _CommentElement = value;
         OnPropertyChanged("CommentElement");
       }
@@ -573,37 +573,92 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "serviceCategory":
-          ServiceCategory = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            ServiceCategory = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["serviceCategory"] = value;
+          }
+          else ServiceCategory = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "serviceType":
-          ServiceType = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            ServiceType = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["serviceType"] = value;
+          }
+          else ServiceType = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "specialty":
-          Specialty = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            Specialty = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["specialty"] = value;
+          }
+          else Specialty = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "appointmentType":
-          AppointmentType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            AppointmentType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["appointmentType"] = value;
+          }
+          else AppointmentType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "schedule":
-          Schedule = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Schedule = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["schedule"] = value;
+          }
+          else Schedule = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Slot.SlotStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.Slot.SlotStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Slot.SlotStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.Slot.SlotStatus>?)value;
           return this;
         case "start":
-          StartElement = (Hl7.Fhir.Model.Instant?)value;
+          if (value is not (Hl7.Fhir.Model.Instant or null))
+          {
+            StartElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+            Overflow["start"] = value;
+          }
+          else StartElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "end":
-          EndElement = (Hl7.Fhir.Model.Instant?)value;
+          if (value is not (Hl7.Fhir.Model.Instant or null))
+          {
+            EndElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+            Overflow["end"] = value;
+          }
+          else EndElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "overbooked":
-          OverbookedElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+          if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+          {
+            OverbookedElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+            Overflow["overbooked"] = value;
+          }
+          else OverbookedElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "comment":
-          CommentElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            CommentElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["comment"] = value;
+          }
+          else CommentElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         default:
           return base.SetValue(key, value);

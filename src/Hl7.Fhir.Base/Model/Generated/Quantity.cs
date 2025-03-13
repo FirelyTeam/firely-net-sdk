@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ValueElement))
-          Overflow.Remove("ValueElement");
+          Overflow.Remove("value");
         _ValueElement = value;
         OnPropertyChanged("ValueElement");
       }
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.Quantity.QuantityComparator>>.InOverflow(_ComparatorElement))
-          Overflow.Remove("ComparatorElement");
+          Overflow.Remove("comparator");
         _ComparatorElement = value;
         OnPropertyChanged("ComparatorElement");
       }
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_UnitElement))
-          Overflow.Remove("UnitElement");
+          Overflow.Remove("unit");
         _UnitElement = value;
         OnPropertyChanged("UnitElement");
       }
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_SystemElement))
-          Overflow.Remove("SystemElement");
+          Overflow.Remove("system");
         _SystemElement = value;
         OnPropertyChanged("SystemElement");
       }
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
-          Overflow.Remove("CodeElement");
+          Overflow.Remove("code");
         _CodeElement = value;
         OnPropertyChanged("CodeElement");
       }
@@ -376,19 +376,44 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "value":
-          ValueElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+          {
+            ValueElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+            Overflow["value"] = value;
+          }
+          else ValueElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "comparator":
-          ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.Quantity.QuantityComparator> or null))
+          {
+            ComparatorElement = OverflowNull<Code<Hl7.Fhir.Model.Quantity.QuantityComparator>>.INSTANCE;
+            Overflow["comparator"] = value;
+          }
+          else ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityComparator>?)value;
           return this;
         case "unit":
-          UnitElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            UnitElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["unit"] = value;
+          }
+          else UnitElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "system":
-          SystemElement = (Hl7.Fhir.Model.FhirUri?)value;
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            SystemElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["system"] = value;
+          }
+          else SystemElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "code":
-          CodeElement = (Hl7.Fhir.Model.Code?)value;
+          if (value is not (Hl7.Fhir.Model.Code or null))
+          {
+            CodeElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
+            Overflow["code"] = value;
+          }
+          else CodeElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         default:
           return base.SetValue(key, value);

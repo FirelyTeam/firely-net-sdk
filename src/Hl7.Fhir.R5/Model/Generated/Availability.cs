@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>.InOverflow(_DaysOfWeekElement))
-            Overflow.Remove("DaysOfWeekElement");
+            Overflow.Remove("daysOfWeek");
           _DaysOfWeekElement = value;
           OnPropertyChanged("DaysOfWeekElement");
         }
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AllDayElement))
-            Overflow.Remove("AllDayElement");
+            Overflow.Remove("allDay");
           _AllDayElement = value;
           OnPropertyChanged("AllDayElement");
         }
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Time>.InOverflow(_AvailableStartTimeElement))
-            Overflow.Remove("AvailableStartTimeElement");
+            Overflow.Remove("availableStartTime");
           _AvailableStartTimeElement = value;
           OnPropertyChanged("AvailableStartTimeElement");
         }
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Time>.InOverflow(_AvailableEndTimeElement))
-            Overflow.Remove("AvailableEndTimeElement");
+            Overflow.Remove("availableEndTime");
           _AvailableEndTimeElement = value;
           OnPropertyChanged("AvailableEndTimeElement");
         }
@@ -303,16 +303,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "daysOfWeek":
-            DaysOfWeekElement = (List<Code<Hl7.Fhir.Model.DaysOfWeek>>?)value!;
+            if (value is not (List<Code<Hl7.Fhir.Model.DaysOfWeek>> or null))
+            {
+              DaysOfWeekElement = OverflowNull<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>.INSTANCE;
+              Overflow["daysOfWeek"] = value;
+            }
+            else DaysOfWeekElement = (List<Code<Hl7.Fhir.Model.DaysOfWeek>>?)value!;
             return this;
           case "allDay":
-            AllDayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+            {
+              AllDayElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+              Overflow["allDay"] = value;
+            }
+            else AllDayElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "availableStartTime":
-            AvailableStartTimeElement = (Hl7.Fhir.Model.Time?)value;
+            if (value is not (Hl7.Fhir.Model.Time or null))
+            {
+              AvailableStartTimeElement = OverflowNull<Hl7.Fhir.Model.Time>.INSTANCE;
+              Overflow["availableStartTime"] = value;
+            }
+            else AvailableStartTimeElement = (Hl7.Fhir.Model.Time?)value;
             return this;
           case "availableEndTime":
-            AvailableEndTimeElement = (Hl7.Fhir.Model.Time?)value;
+            if (value is not (Hl7.Fhir.Model.Time or null))
+            {
+              AvailableEndTimeElement = OverflowNull<Hl7.Fhir.Model.Time>.INSTANCE;
+              Overflow["availableEndTime"] = value;
+            }
+            else AvailableEndTimeElement = (Hl7.Fhir.Model.Time?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -361,7 +381,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
-            Overflow.Remove("DescriptionElement");
+            Overflow.Remove("description");
           _DescriptionElement = value;
           OnPropertyChanged("DescriptionElement");
         }
@@ -402,7 +422,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_During))
-            Overflow.Remove("During");
+            Overflow.Remove("during");
           _During = value;
           OnPropertyChanged("During");
         }
@@ -462,10 +482,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              DescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["description"] = value;
+            }
+            else DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "during":
-            During = (Hl7.Fhir.Model.Period?)value;
+            if (value is not (Hl7.Fhir.Model.Period or null))
+            {
+              During = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+              Overflow["during"] = value;
+            }
+            else During = (Hl7.Fhir.Model.Period?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -500,7 +530,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>>.InOverflow(_AvailableTime))
-          Overflow.Remove("AvailableTime");
+          Overflow.Remove("availableTime");
         _AvailableTime = value;
         OnPropertyChanged("AvailableTime");
       }
@@ -527,7 +557,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>>.InOverflow(_NotAvailableTime))
-          Overflow.Remove("NotAvailableTime");
+          Overflow.Remove("notAvailableTime");
         _NotAvailableTime = value;
         OnPropertyChanged("NotAvailableTime");
       }
@@ -587,10 +617,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "availableTime":
-          AvailableTime = (List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Availability.AvailableTimeComponent> or null))
+          {
+            AvailableTime = OverflowNull<List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>>.INSTANCE;
+            Overflow["availableTime"] = value;
+          }
+          else AvailableTime = (List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>?)value!;
           return this;
         case "notAvailableTime":
-          NotAvailableTime = (List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent> or null))
+          {
+            NotAvailableTime = OverflowNull<List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>>.INSTANCE;
+            Overflow["notAvailableTime"] = value;
+          }
+          else NotAvailableTime = (List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

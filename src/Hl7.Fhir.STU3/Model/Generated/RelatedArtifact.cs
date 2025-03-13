@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>.InOverflow(_TypeElement))
-          Overflow.Remove("TypeElement");
+          Overflow.Remove("type");
         _TypeElement = value;
         OnPropertyChanged("TypeElement");
       }
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DisplayElement))
-          Overflow.Remove("DisplayElement");
+          Overflow.Remove("display");
         _DisplayElement = value;
         OnPropertyChanged("DisplayElement");
       }
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CitationElement))
-          Overflow.Remove("CitationElement");
+          Overflow.Remove("citation");
         _CitationElement = value;
         OnPropertyChanged("CitationElement");
       }
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
-          Overflow.Remove("UrlElement");
+          Overflow.Remove("url");
         _UrlElement = value;
         OnPropertyChanged("UrlElement");
       }
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_Document))
-          Overflow.Remove("Document");
+          Overflow.Remove("document");
         _Document = value;
         OnPropertyChanged("Document");
       }
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Resource))
-          Overflow.Remove("Resource");
+          Overflow.Remove("resource");
         _Resource = value;
         OnPropertyChanged("Resource");
       }
@@ -417,22 +417,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> or null))
+          {
+            TypeElement = OverflowNull<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>?)value;
           return this;
         case "display":
-          DisplayElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            DisplayElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["display"] = value;
+          }
+          else DisplayElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "citation":
-          CitationElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            CitationElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["citation"] = value;
+          }
+          else CitationElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "url":
-          UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            UrlElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["url"] = value;
+          }
+          else UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "document":
-          Document = (Hl7.Fhir.Model.Attachment?)value;
+          if (value is not (Hl7.Fhir.Model.Attachment or null))
+          {
+            Document = OverflowNull<Hl7.Fhir.Model.Attachment>.INSTANCE;
+            Overflow["document"] = value;
+          }
+          else Document = (Hl7.Fhir.Model.Attachment?)value;
           return this;
         case "resource":
-          Resource = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Resource = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["resource"] = value;
+          }
+          else Resource = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);

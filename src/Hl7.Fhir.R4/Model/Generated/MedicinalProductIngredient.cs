@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
-            Overflow.Remove("Code");
+            Overflow.Remove("code");
           _Code = value;
           OnPropertyChanged("Code");
         }
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Group))
-            Overflow.Remove("Group");
+            Overflow.Remove("group");
           _Group = value;
           OnPropertyChanged("Group");
         }
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Confidentiality))
-            Overflow.Remove("Confidentiality");
+            Overflow.Remove("confidentiality");
           _Confidentiality = value;
           OnPropertyChanged("Confidentiality");
         }
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.InOverflow(_Strength))
-            Overflow.Remove("Strength");
+            Overflow.Remove("strength");
           _Strength = value;
           OnPropertyChanged("Strength");
         }
@@ -240,16 +240,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["code"] = value;
+            }
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "group":
-            Group = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Group = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["group"] = value;
+            }
+            else Group = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "confidentiality":
-            Confidentiality = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Confidentiality = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["confidentiality"] = value;
+            }
+            else Confidentiality = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "strength":
-            Strength = (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> or null))
+            {
+              Strength = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.INSTANCE;
+              Overflow["strength"] = value;
+            }
+            else Strength = (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -299,7 +319,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Presentation))
-            Overflow.Remove("Presentation");
+            Overflow.Remove("presentation");
           _Presentation = value;
           OnPropertyChanged("Presentation");
         }
@@ -325,7 +345,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_PresentationLowLimit))
-            Overflow.Remove("PresentationLowLimit");
+            Overflow.Remove("presentationLowLimit");
           _PresentationLowLimit = value;
           OnPropertyChanged("PresentationLowLimit");
         }
@@ -351,7 +371,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Concentration))
-            Overflow.Remove("Concentration");
+            Overflow.Remove("concentration");
           _Concentration = value;
           OnPropertyChanged("Concentration");
         }
@@ -377,7 +397,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_ConcentrationLowLimit))
-            Overflow.Remove("ConcentrationLowLimit");
+            Overflow.Remove("concentrationLowLimit");
           _ConcentrationLowLimit = value;
           OnPropertyChanged("ConcentrationLowLimit");
         }
@@ -403,7 +423,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MeasurementPointElement))
-            Overflow.Remove("MeasurementPointElement");
+            Overflow.Remove("measurementPoint");
           _MeasurementPointElement = value;
           OnPropertyChanged("MeasurementPointElement");
         }
@@ -445,7 +465,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Country))
-            Overflow.Remove("Country");
+            Overflow.Remove("country");
           _Country = value;
           OnPropertyChanged("Country");
         }
@@ -472,7 +492,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>>.InOverflow(_ReferenceStrength))
-            Overflow.Remove("ReferenceStrength");
+            Overflow.Remove("referenceStrength");
           _ReferenceStrength = value;
           OnPropertyChanged("ReferenceStrength");
         }
@@ -557,25 +577,60 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "presentation":
-            Presentation = (Hl7.Fhir.Model.Ratio?)value;
+            if (value is not (Hl7.Fhir.Model.Ratio or null))
+            {
+              Presentation = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
+              Overflow["presentation"] = value;
+            }
+            else Presentation = (Hl7.Fhir.Model.Ratio?)value;
             return this;
           case "presentationLowLimit":
-            PresentationLowLimit = (Hl7.Fhir.Model.Ratio?)value;
+            if (value is not (Hl7.Fhir.Model.Ratio or null))
+            {
+              PresentationLowLimit = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
+              Overflow["presentationLowLimit"] = value;
+            }
+            else PresentationLowLimit = (Hl7.Fhir.Model.Ratio?)value;
             return this;
           case "concentration":
-            Concentration = (Hl7.Fhir.Model.Ratio?)value;
+            if (value is not (Hl7.Fhir.Model.Ratio or null))
+            {
+              Concentration = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
+              Overflow["concentration"] = value;
+            }
+            else Concentration = (Hl7.Fhir.Model.Ratio?)value;
             return this;
           case "concentrationLowLimit":
-            ConcentrationLowLimit = (Hl7.Fhir.Model.Ratio?)value;
+            if (value is not (Hl7.Fhir.Model.Ratio or null))
+            {
+              ConcentrationLowLimit = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
+              Overflow["concentrationLowLimit"] = value;
+            }
+            else ConcentrationLowLimit = (Hl7.Fhir.Model.Ratio?)value;
             return this;
           case "measurementPoint":
-            MeasurementPointElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              MeasurementPointElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["measurementPoint"] = value;
+            }
+            else MeasurementPointElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "country":
-            Country = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Country = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["country"] = value;
+            }
+            else Country = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "referenceStrength":
-            ReferenceStrength = (List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent> or null))
+            {
+              ReferenceStrength = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>>.INSTANCE;
+              Overflow["referenceStrength"] = value;
+            }
+            else ReferenceStrength = (List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -627,7 +682,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Substance))
-            Overflow.Remove("Substance");
+            Overflow.Remove("substance");
           _Substance = value;
           OnPropertyChanged("Substance");
         }
@@ -654,7 +709,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Strength))
-            Overflow.Remove("Strength");
+            Overflow.Remove("strength");
           _Strength = value;
           OnPropertyChanged("Strength");
         }
@@ -680,7 +735,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_StrengthLowLimit))
-            Overflow.Remove("StrengthLowLimit");
+            Overflow.Remove("strengthLowLimit");
           _StrengthLowLimit = value;
           OnPropertyChanged("StrengthLowLimit");
         }
@@ -706,7 +761,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MeasurementPointElement))
-            Overflow.Remove("MeasurementPointElement");
+            Overflow.Remove("measurementPoint");
           _MeasurementPointElement = value;
           OnPropertyChanged("MeasurementPointElement");
         }
@@ -748,7 +803,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Country))
-            Overflow.Remove("Country");
+            Overflow.Remove("country");
           _Country = value;
           OnPropertyChanged("Country");
         }
@@ -823,19 +878,44 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "substance":
-            Substance = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Substance = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["substance"] = value;
+            }
+            else Substance = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "strength":
-            Strength = (Hl7.Fhir.Model.Ratio?)value;
+            if (value is not (Hl7.Fhir.Model.Ratio or null))
+            {
+              Strength = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
+              Overflow["strength"] = value;
+            }
+            else Strength = (Hl7.Fhir.Model.Ratio?)value;
             return this;
           case "strengthLowLimit":
-            StrengthLowLimit = (Hl7.Fhir.Model.Ratio?)value;
+            if (value is not (Hl7.Fhir.Model.Ratio or null))
+            {
+              StrengthLowLimit = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
+              Overflow["strengthLowLimit"] = value;
+            }
+            else StrengthLowLimit = (Hl7.Fhir.Model.Ratio?)value;
             return this;
           case "measurementPoint":
-            MeasurementPointElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              MeasurementPointElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["measurementPoint"] = value;
+            }
+            else MeasurementPointElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "country":
-            Country = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Country = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["country"] = value;
+            }
+            else Country = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -886,7 +966,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
-            Overflow.Remove("Code");
+            Overflow.Remove("code");
           _Code = value;
           OnPropertyChanged("Code");
         }
@@ -913,7 +993,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.InOverflow(_Strength))
-            Overflow.Remove("Strength");
+            Overflow.Remove("strength");
           _Strength = value;
           OnPropertyChanged("Strength");
         }
@@ -973,10 +1053,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["code"] = value;
+            }
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "strength":
-            Strength = (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent> or null))
+            {
+              Strength = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.INSTANCE;
+              Overflow["strength"] = value;
+            }
+            else Strength = (List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1010,7 +1100,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -1037,7 +1127,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Role))
-          Overflow.Remove("Role");
+          Overflow.Remove("role");
         _Role = value;
         OnPropertyChanged("Role");
       }
@@ -1063,7 +1153,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AllergenicIndicatorElement))
-          Overflow.Remove("AllergenicIndicatorElement");
+          Overflow.Remove("allergenicIndicator");
         _AllergenicIndicatorElement = value;
         OnPropertyChanged("AllergenicIndicatorElement");
       }
@@ -1107,7 +1197,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
-          Overflow.Remove("Manufacturer");
+          Overflow.Remove("manufacturer");
         _Manufacturer = value;
         OnPropertyChanged("Manufacturer");
       }
@@ -1134,7 +1224,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>>.InOverflow(_SpecifiedSubstance))
-          Overflow.Remove("SpecifiedSubstance");
+          Overflow.Remove("specifiedSubstance");
         _SpecifiedSubstance = value;
         OnPropertyChanged("SpecifiedSubstance");
       }
@@ -1160,7 +1250,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent>.InOverflow(_Substance))
-          Overflow.Remove("Substance");
+          Overflow.Remove("substance");
         _Substance = value;
         OnPropertyChanged("Substance");
       }
@@ -1242,22 +1332,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier?)value;
+          if (value is not (Hl7.Fhir.Model.Identifier or null))
+          {
+            Identifier = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "role":
-          Role = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Role = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["role"] = value;
+          }
+          else Role = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "allergenicIndicator":
-          AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+          if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+          {
+            AllergenicIndicatorElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+            Overflow["allergenicIndicator"] = value;
+          }
+          else AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "manufacturer":
-          Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Manufacturer = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["manufacturer"] = value;
+          }
+          else Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "specifiedSubstance":
-          SpecifiedSubstance = (List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent> or null))
+          {
+            SpecifiedSubstance = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>>.INSTANCE;
+            Overflow["specifiedSubstance"] = value;
+          }
+          else SpecifiedSubstance = (List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>?)value!;
           return this;
         case "substance":
-          Substance = (Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent?)value;
+          if (value is not (Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent or null))
+          {
+            Substance = OverflowNull<Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent>.INSTANCE;
+            Overflow["substance"] = value;
+          }
+          else Substance = (Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent?)value;
           return this;
         default:
           return base.SetValue(key, value);

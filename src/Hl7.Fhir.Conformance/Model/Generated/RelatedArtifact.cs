@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>.InOverflow(_TypeElement))
-          Overflow.Remove("TypeElement");
+          Overflow.Remove("type");
         _TypeElement = value;
         OnPropertyChanged("TypeElement");
       }
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Classifier))
-          Overflow.Remove("Classifier");
+          Overflow.Remove("classifier");
         _Classifier = value;
         OnPropertyChanged("Classifier");
       }
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LabelElement))
-          Overflow.Remove("LabelElement");
+          Overflow.Remove("label");
         _LabelElement = value;
         OnPropertyChanged("LabelElement");
       }
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DisplayElement))
-          Overflow.Remove("DisplayElement");
+          Overflow.Remove("display");
         _DisplayElement = value;
         OnPropertyChanged("DisplayElement");
       }
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_CitationElement))
-          Overflow.Remove("CitationElement");
+          Overflow.Remove("citation");
         _CitationElement = value;
         OnPropertyChanged("CitationElement");
       }
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirUrl>.InOverflow(_UrlElement))
-          Overflow.Remove("UrlElement");
+          Overflow.Remove("url");
         _UrlElement = value;
         OnPropertyChanged("UrlElement");
       }
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_Document))
-          Overflow.Remove("Document");
+          Overflow.Remove("document");
         _Document = value;
         OnPropertyChanged("Document");
       }
@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_ResourceElement))
-          Overflow.Remove("ResourceElement");
+          Overflow.Remove("resource");
         _ResourceElement = value;
         OnPropertyChanged("ResourceElement");
       }
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ResourceReference))
-          Overflow.Remove("ResourceReference");
+          Overflow.Remove("resourceReference");
         _ResourceReference = value;
         OnPropertyChanged("ResourceReference");
       }
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_PublicationStatusElement))
-          Overflow.Remove("PublicationStatusElement");
+          Overflow.Remove("publicationStatus");
         _PublicationStatusElement = value;
         OnPropertyChanged("PublicationStatusElement");
       }
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_PublicationDateElement))
-          Overflow.Remove("PublicationDateElement");
+          Overflow.Remove("publicationDate");
         _PublicationDateElement = value;
         OnPropertyChanged("PublicationDateElement");
       }
@@ -816,37 +816,92 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType> or null))
+          {
+            TypeElement = OverflowNull<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else TypeElement = (Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>?)value;
           return this;
         case "classifier":
-          Classifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            Classifier = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["classifier"] = value;
+          }
+          else Classifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "label":
-          LabelElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            LabelElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["label"] = value;
+          }
+          else LabelElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "display":
-          DisplayElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            DisplayElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["display"] = value;
+          }
+          else DisplayElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "citation":
-          CitationElement = (Hl7.Fhir.Model.Markdown?)value;
+          if (value is not (Hl7.Fhir.Model.Markdown or null))
+          {
+            CitationElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
+            Overflow["citation"] = value;
+          }
+          else CitationElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "url":
-          UrlElement = (Hl7.Fhir.Model.FhirUrl?)value;
+          if (value is not (Hl7.Fhir.Model.FhirUrl or null))
+          {
+            UrlElement = OverflowNull<Hl7.Fhir.Model.FhirUrl>.INSTANCE;
+            Overflow["url"] = value;
+          }
+          else UrlElement = (Hl7.Fhir.Model.FhirUrl?)value;
           return this;
         case "document":
-          Document = (Hl7.Fhir.Model.Attachment?)value;
+          if (value is not (Hl7.Fhir.Model.Attachment or null))
+          {
+            Document = OverflowNull<Hl7.Fhir.Model.Attachment>.INSTANCE;
+            Overflow["document"] = value;
+          }
+          else Document = (Hl7.Fhir.Model.Attachment?)value;
           return this;
         case "resource":
-          ResourceElement = (Hl7.Fhir.Model.Canonical?)value;
+          if (value is not (Hl7.Fhir.Model.Canonical or null))
+          {
+            ResourceElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
+            Overflow["resource"] = value;
+          }
+          else ResourceElement = (Hl7.Fhir.Model.Canonical?)value;
           return this;
         case "resourceReference":
-          ResourceReference = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            ResourceReference = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["resourceReference"] = value;
+          }
+          else ResourceReference = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "publicationStatus":
-          PublicationStatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.PublicationStatus> or null))
+          {
+            PublicationStatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
+            Overflow["publicationStatus"] = value;
+          }
+          else PublicationStatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
           return this;
         case "publicationDate":
-          PublicationDateElement = (Hl7.Fhir.Model.Date?)value;
+          if (value is not (Hl7.Fhir.Model.Date or null))
+          {
+            PublicationDateElement = OverflowNull<Hl7.Fhir.Model.Date>.INSTANCE;
+            Overflow["publicationDate"] = value;
+          }
+          else PublicationDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         default:
           return base.SetValue(key, value);

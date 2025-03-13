@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_Author))
-          Overflow.Remove("Author");
+          Overflow.Remove("author");
         _Author = value;
         OnPropertyChanged("Author");
       }
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_TimeElement))
-          Overflow.Remove("TimeElement");
+          Overflow.Remove("time");
         _TimeElement = value;
         OnPropertyChanged("TimeElement");
       }
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_TextElement))
-          Overflow.Remove("TextElement");
+          Overflow.Remove("text");
         _TextElement = value;
         OnPropertyChanged("TextElement");
       }
@@ -231,13 +231,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "author":
-          Author = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Author = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["author"] = value;
+          }
+          else Author = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "time":
-          TimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            TimeElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["time"] = value;
+          }
+          else TimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "text":
-          TextElement = (Hl7.Fhir.Model.Markdown?)value;
+          if (value is not (Hl7.Fhir.Model.Markdown or null))
+          {
+            TextElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
+            Overflow["text"] = value;
+          }
+          else TextElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         default:
           return base.SetValue(key, value);

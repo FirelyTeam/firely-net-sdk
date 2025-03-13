@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Location))
-            Overflow.Remove("Location");
+            Overflow.Remove("location");
           _Location = value;
           OnPropertyChanged("Location");
         }
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ItemStatus))
-            Overflow.Remove("ItemStatus");
+            Overflow.Remove("itemStatus");
           _ItemStatus = value;
           OnPropertyChanged("ItemStatus");
         }
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CountingDateTimeElement))
-            Overflow.Remove("CountingDateTimeElement");
+            Overflow.Remove("countingDateTime");
           _CountingDateTimeElement = value;
           OnPropertyChanged("CountingDateTimeElement");
         }
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.InventoryReport.ItemComponent>>.InOverflow(_Item))
-            Overflow.Remove("Item");
+            Overflow.Remove("item");
           _Item = value;
           OnPropertyChanged("Item");
         }
@@ -311,16 +311,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "location":
-            Location = (Hl7.Fhir.Model.ResourceReference?)value;
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Location = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["location"] = value;
+            }
+            else Location = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "itemStatus":
-            ItemStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              ItemStatus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["itemStatus"] = value;
+            }
+            else ItemStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "countingDateTime":
-            CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+            {
+              CountingDateTimeElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+              Overflow["countingDateTime"] = value;
+            }
+            else CountingDateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           case "item":
-            Item = (List<Hl7.Fhir.Model.InventoryReport.ItemComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.InventoryReport.ItemComponent> or null))
+            {
+              Item = OverflowNull<List<Hl7.Fhir.Model.InventoryReport.ItemComponent>>.INSTANCE;
+              Overflow["item"] = value;
+            }
+            else Item = (List<Hl7.Fhir.Model.InventoryReport.ItemComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -369,7 +389,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Category))
-            Overflow.Remove("Category");
+            Overflow.Remove("category");
           _Category = value;
           OnPropertyChanged("Category");
         }
@@ -396,7 +416,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
-            Overflow.Remove("Quantity");
+            Overflow.Remove("quantity");
           _Quantity = value;
           OnPropertyChanged("Quantity");
         }
@@ -423,7 +443,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_Item))
-            Overflow.Remove("Item");
+            Overflow.Remove("item");
           _Item = value;
           OnPropertyChanged("Item");
         }
@@ -488,13 +508,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "category":
-            Category = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Category = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["category"] = value;
+            }
+            else Category = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity?)value;
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              Quantity = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["quantity"] = value;
+            }
+            else Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "item":
-            Item = (Hl7.Fhir.Model.CodeableReference?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableReference or null))
+            {
+              Item = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
+              Overflow["item"] = value;
+            }
+            else Item = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -530,7 +565,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -559,7 +594,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>>.InOverflow(_StatusElement))
-          Overflow.Remove("StatusElement");
+          Overflow.Remove("status");
         _StatusElement = value;
         OnPropertyChanged("StatusElement");
       }
@@ -603,7 +638,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>>.InOverflow(_CountTypeElement))
-          Overflow.Remove("CountTypeElement");
+          Overflow.Remove("countType");
         _CountTypeElement = value;
         OnPropertyChanged("CountTypeElement");
       }
@@ -644,7 +679,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_OperationType))
-          Overflow.Remove("OperationType");
+          Overflow.Remove("operationType");
         _OperationType = value;
         OnPropertyChanged("OperationType");
       }
@@ -670,7 +705,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_OperationTypeReason))
-          Overflow.Remove("OperationTypeReason");
+          Overflow.Remove("operationTypeReason");
         _OperationTypeReason = value;
         OnPropertyChanged("OperationTypeReason");
       }
@@ -697,7 +732,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ReportedDateTimeElement))
-          Overflow.Remove("ReportedDateTimeElement");
+          Overflow.Remove("reportedDateTime");
         _ReportedDateTimeElement = value;
         OnPropertyChanged("ReportedDateTimeElement");
       }
@@ -740,7 +775,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reporter))
-          Overflow.Remove("Reporter");
+          Overflow.Remove("reporter");
         _Reporter = value;
         OnPropertyChanged("Reporter");
       }
@@ -766,7 +801,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_ReportingPeriod))
-          Overflow.Remove("ReportingPeriod");
+          Overflow.Remove("reportingPeriod");
         _ReportingPeriod = value;
         OnPropertyChanged("ReportingPeriod");
       }
@@ -793,7 +828,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>>.InOverflow(_InventoryListing))
-          Overflow.Remove("InventoryListing");
+          Overflow.Remove("inventoryListing");
         _InventoryListing = value;
         OnPropertyChanged("InventoryListing");
       }
@@ -820,7 +855,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
-          Overflow.Remove("Note");
+          Overflow.Remove("note");
         _Note = value;
         OnPropertyChanged("Note");
       }
@@ -922,34 +957,84 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>?)value;
           return this;
         case "countType":
-          CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType> or null))
+          {
+            CountTypeElement = OverflowNull<Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>>.INSTANCE;
+            Overflow["countType"] = value;
+          }
+          else CountTypeElement = (Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>?)value;
           return this;
         case "operationType":
-          OperationType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            OperationType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["operationType"] = value;
+          }
+          else OperationType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "operationTypeReason":
-          OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            OperationTypeReason = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["operationTypeReason"] = value;
+          }
+          else OperationTypeReason = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "reportedDateTime":
-          ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            ReportedDateTimeElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["reportedDateTime"] = value;
+          }
+          else ReportedDateTimeElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "reporter":
-          Reporter = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Reporter = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["reporter"] = value;
+          }
+          else Reporter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "reportingPeriod":
-          ReportingPeriod = (Hl7.Fhir.Model.Period?)value;
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            ReportingPeriod = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["reportingPeriod"] = value;
+          }
+          else ReportingPeriod = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "inventoryListing":
-          InventoryListing = (List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent> or null))
+          {
+            InventoryListing = OverflowNull<List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>>.INSTANCE;
+            Overflow["inventoryListing"] = value;
+          }
+          else InventoryListing = (List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>?)value!;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
+          {
+            Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
+            Overflow["note"] = value;
+          }
+          else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

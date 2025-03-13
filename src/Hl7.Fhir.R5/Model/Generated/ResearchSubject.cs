@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-            Overflow.Remove("Type");
+            Overflow.Remove("type");
           _Type = value;
           OnPropertyChanged("Type");
         }
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SubjectState))
-            Overflow.Remove("SubjectState");
+            Overflow.Remove("subjectState");
           _SubjectState = value;
           OnPropertyChanged("SubjectState");
         }
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Milestone))
-            Overflow.Remove("Milestone");
+            Overflow.Remove("milestone");
           _Milestone = value;
           OnPropertyChanged("Milestone");
         }
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Reason))
-            Overflow.Remove("Reason");
+            Overflow.Remove("reason");
           _Reason = value;
           OnPropertyChanged("Reason");
         }
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StartDateElement))
-            Overflow.Remove("StartDateElement");
+            Overflow.Remove("startDate");
           _StartDateElement = value;
           OnPropertyChanged("StartDateElement");
         }
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_EndDateElement))
-            Overflow.Remove("EndDateElement");
+            Overflow.Remove("endDate");
           _EndDateElement = value;
           OnPropertyChanged("EndDateElement");
         }
@@ -430,22 +430,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "subjectState":
-            SubjectState = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              SubjectState = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["subjectState"] = value;
+            }
+            else SubjectState = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "milestone":
-            Milestone = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Milestone = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["milestone"] = value;
+            }
+            else Milestone = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "reason":
-            Reason = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Reason = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["reason"] = value;
+            }
+            else Reason = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "startDate":
-            StartDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+            {
+              StartDateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+              Overflow["startDate"] = value;
+            }
+            else StartDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           case "endDate":
-            EndDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+            {
+              EndDateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+              Overflow["endDate"] = value;
+            }
+            else EndDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -484,7 +514,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -513,7 +543,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
-          Overflow.Remove("StatusElement");
+          Overflow.Remove("status");
         _StatusElement = value;
         OnPropertyChanged("StatusElement");
       }
@@ -555,7 +585,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>>.InOverflow(_Progress))
-          Overflow.Remove("Progress");
+          Overflow.Remove("progress");
         _Progress = value;
         OnPropertyChanged("Progress");
       }
@@ -581,7 +611,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
-          Overflow.Remove("Period");
+          Overflow.Remove("period");
         _Period = value;
         OnPropertyChanged("Period");
       }
@@ -610,7 +640,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Study))
-          Overflow.Remove("Study");
+          Overflow.Remove("study");
         _Study = value;
         OnPropertyChanged("Study");
       }
@@ -639,7 +669,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
-          Overflow.Remove("Subject");
+          Overflow.Remove("subject");
         _Subject = value;
         OnPropertyChanged("Subject");
       }
@@ -665,7 +695,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Id>.InOverflow(_AssignedComparisonGroupElement))
-          Overflow.Remove("AssignedComparisonGroupElement");
+          Overflow.Remove("assignedComparisonGroup");
         _AssignedComparisonGroupElement = value;
         OnPropertyChanged("AssignedComparisonGroupElement");
       }
@@ -706,7 +736,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Id>.InOverflow(_ActualComparisonGroupElement))
-          Overflow.Remove("ActualComparisonGroupElement");
+          Overflow.Remove("actualComparisonGroup");
         _ActualComparisonGroupElement = value;
         OnPropertyChanged("ActualComparisonGroupElement");
       }
@@ -750,7 +780,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Consent))
-          Overflow.Remove("Consent");
+          Overflow.Remove("consent");
         _Consent = value;
         OnPropertyChanged("Consent");
       }
@@ -847,31 +877,76 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.PublicationStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
           return this;
         case "progress":
-          Progress = (List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent> or null))
+          {
+            Progress = OverflowNull<List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>>.INSTANCE;
+            Overflow["progress"] = value;
+          }
+          else Progress = (List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>?)value!;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period?)value;
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "study":
-          Study = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Study = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["study"] = value;
+          }
+          else Study = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["subject"] = value;
+          }
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "assignedComparisonGroup":
-          AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id?)value;
+          if (value is not (Hl7.Fhir.Model.Id or null))
+          {
+            AssignedComparisonGroupElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+            Overflow["assignedComparisonGroup"] = value;
+          }
+          else AssignedComparisonGroupElement = (Hl7.Fhir.Model.Id?)value;
           return this;
         case "actualComparisonGroup":
-          ActualComparisonGroupElement = (Hl7.Fhir.Model.Id?)value;
+          if (value is not (Hl7.Fhir.Model.Id or null))
+          {
+            ActualComparisonGroupElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+            Overflow["actualComparisonGroup"] = value;
+          }
+          else ActualComparisonGroupElement = (Hl7.Fhir.Model.Id?)value;
           return this;
         case "consent":
-          Consent = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Consent = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["consent"] = value;
+          }
+          else Consent = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

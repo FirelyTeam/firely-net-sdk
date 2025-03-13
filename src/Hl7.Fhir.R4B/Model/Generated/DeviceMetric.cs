@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>.InOverflow(_TypeElement))
-            Overflow.Remove("TypeElement");
+            Overflow.Remove("type");
           _TypeElement = value;
           OnPropertyChanged("TypeElement");
         }
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>.InOverflow(_StateElement))
-            Overflow.Remove("StateElement");
+            Overflow.Remove("state");
           _StateElement = value;
           OnPropertyChanged("StateElement");
         }
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_TimeElement))
-            Overflow.Remove("TimeElement");
+            Overflow.Remove("time");
           _TimeElement = value;
           OnPropertyChanged("TimeElement");
         }
@@ -453,13 +453,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            TypeElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType> or null))
+            {
+              TypeElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else TypeElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>?)value;
             return this;
           case "state":
-            StateElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState> or null))
+            {
+              StateElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>.INSTANCE;
+              Overflow["state"] = value;
+            }
+            else StateElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>?)value;
             return this;
           case "time":
-            TimeElement = (Hl7.Fhir.Model.Instant?)value;
+            if (value is not (Hl7.Fhir.Model.Instant or null))
+            {
+              TimeElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+              Overflow["time"] = value;
+            }
+            else TimeElement = (Hl7.Fhir.Model.Instant?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -495,7 +510,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -523,7 +538,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-          Overflow.Remove("Type");
+          Overflow.Remove("type");
         _Type = value;
         OnPropertyChanged("Type");
       }
@@ -550,7 +565,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Unit))
-          Overflow.Remove("Unit");
+          Overflow.Remove("unit");
         _Unit = value;
         OnPropertyChanged("Unit");
       }
@@ -578,7 +593,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Source))
-          Overflow.Remove("Source");
+          Overflow.Remove("source");
         _Source = value;
         OnPropertyChanged("Source");
       }
@@ -606,7 +621,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Parent))
-          Overflow.Remove("Parent");
+          Overflow.Remove("parent");
         _Parent = value;
         OnPropertyChanged("Parent");
       }
@@ -634,7 +649,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>.InOverflow(_OperationalStatusElement))
-          Overflow.Remove("OperationalStatusElement");
+          Overflow.Remove("operationalStatus");
         _OperationalStatusElement = value;
         OnPropertyChanged("OperationalStatusElement");
       }
@@ -677,7 +692,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>>.InOverflow(_ColorElement))
-          Overflow.Remove("ColorElement");
+          Overflow.Remove("color");
         _ColorElement = value;
         OnPropertyChanged("ColorElement");
       }
@@ -721,7 +736,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>.InOverflow(_CategoryElement))
-          Overflow.Remove("CategoryElement");
+          Overflow.Remove("category");
         _CategoryElement = value;
         OnPropertyChanged("CategoryElement");
       }
@@ -762,7 +777,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Timing>.InOverflow(_MeasurementPeriod))
-          Overflow.Remove("MeasurementPeriod");
+          Overflow.Remove("measurementPeriod");
         _MeasurementPeriod = value;
         OnPropertyChanged("MeasurementPeriod");
       }
@@ -789,7 +804,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>.InOverflow(_Calibration))
-          Overflow.Remove("Calibration");
+          Overflow.Remove("calibration");
         _Calibration = value;
         OnPropertyChanged("Calibration");
       }
@@ -891,34 +906,84 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "unit":
-          Unit = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Unit = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["unit"] = value;
+          }
+          else Unit = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "source":
-          Source = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Source = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["source"] = value;
+          }
+          else Source = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "parent":
-          Parent = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Parent = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["parent"] = value;
+          }
+          else Parent = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "operationalStatus":
-          OperationalStatusElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus> or null))
+          {
+            OperationalStatusElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>.INSTANCE;
+            Overflow["operationalStatus"] = value;
+          }
+          else OperationalStatusElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>?)value;
           return this;
         case "color":
-          ColorElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor> or null))
+          {
+            ColorElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>>.INSTANCE;
+            Overflow["color"] = value;
+          }
+          else ColorElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>?)value;
           return this;
         case "category":
-          CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory> or null))
+          {
+            CategoryElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>.INSTANCE;
+            Overflow["category"] = value;
+          }
+          else CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>?)value;
           return this;
         case "measurementPeriod":
-          MeasurementPeriod = (Hl7.Fhir.Model.Timing?)value;
+          if (value is not (Hl7.Fhir.Model.Timing or null))
+          {
+            MeasurementPeriod = OverflowNull<Hl7.Fhir.Model.Timing>.INSTANCE;
+            Overflow["measurementPeriod"] = value;
+          }
+          else MeasurementPeriod = (Hl7.Fhir.Model.Timing?)value;
           return this;
         case "calibration":
-          Calibration = (List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> or null))
+          {
+            Calibration = OverflowNull<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>.INSTANCE;
+            Overflow["calibration"] = value;
+          }
+          else Calibration = (List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Height))
-          Overflow.Remove("Height");
+          Overflow.Remove("height");
         _Height = value;
         OnPropertyChanged("Height");
       }
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Width))
-          Overflow.Remove("Width");
+          Overflow.Remove("width");
         _Width = value;
         OnPropertyChanged("Width");
       }
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Depth))
-          Overflow.Remove("Depth");
+          Overflow.Remove("depth");
         _Depth = value;
         OnPropertyChanged("Depth");
       }
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Weight))
-          Overflow.Remove("Weight");
+          Overflow.Remove("weight");
         _Weight = value;
         OnPropertyChanged("Weight");
       }
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_NominalVolume))
-          Overflow.Remove("NominalVolume");
+          Overflow.Remove("nominalVolume");
         _NominalVolume = value;
         OnPropertyChanged("NominalVolume");
       }
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_ExternalDiameter))
-          Overflow.Remove("ExternalDiameter");
+          Overflow.Remove("externalDiameter");
         _ExternalDiameter = value;
         OnPropertyChanged("ExternalDiameter");
       }
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ShapeElement))
-          Overflow.Remove("ShapeElement");
+          Overflow.Remove("shape");
         _ShapeElement = value;
         OnPropertyChanged("ShapeElement");
       }
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ColorElement))
-          Overflow.Remove("ColorElement");
+          Overflow.Remove("color");
         _ColorElement = value;
         OnPropertyChanged("ColorElement");
       }
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ImprintElement))
-          Overflow.Remove("ImprintElement");
+          Overflow.Remove("imprint");
         _ImprintElement = value;
         OnPropertyChanged("ImprintElement");
       }
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Image))
-          Overflow.Remove("Image");
+          Overflow.Remove("image");
         _Image = value;
         OnPropertyChanged("Image");
       }
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Scoring))
-          Overflow.Remove("Scoring");
+          Overflow.Remove("scoring");
         _Scoring = value;
         OnPropertyChanged("Scoring");
       }
@@ -495,37 +495,92 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "height":
-          Height = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Height = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["height"] = value;
+          }
+          else Height = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "width":
-          Width = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Width = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["width"] = value;
+          }
+          else Width = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "depth":
-          Depth = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Depth = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["depth"] = value;
+          }
+          else Depth = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "weight":
-          Weight = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Weight = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["weight"] = value;
+          }
+          else Weight = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "nominalVolume":
-          NominalVolume = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            NominalVolume = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["nominalVolume"] = value;
+          }
+          else NominalVolume = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "externalDiameter":
-          ExternalDiameter = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            ExternalDiameter = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["externalDiameter"] = value;
+          }
+          else ExternalDiameter = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "shape":
-          ShapeElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ShapeElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["shape"] = value;
+          }
+          else ShapeElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "color":
-          ColorElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            ColorElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["color"] = value;
+          }
+          else ColorElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "imprint":
-          ImprintElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            ImprintElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["imprint"] = value;
+          }
+          else ImprintElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "image":
-          Image = (List<Hl7.Fhir.Model.Attachment>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Attachment> or null))
+          {
+            Image = OverflowNull<List<Hl7.Fhir.Model.Attachment>>.INSTANCE;
+            Overflow["image"] = value;
+          }
+          else Image = (List<Hl7.Fhir.Model.Attachment>?)value!;
           return this;
         case "scoring":
-          Scoring = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Scoring = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["scoring"] = value;
+          }
+          else Scoring = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         default:
           return base.SetValue(key, value);

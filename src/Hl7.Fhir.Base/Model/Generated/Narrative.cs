@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>.InOverflow(_StatusElement))
-          Overflow.Remove("StatusElement");
+          Overflow.Remove("status");
         _StatusElement = value;
         OnPropertyChanged("StatusElement");
       }
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.XHtml>.InOverflow(_DivElement))
-          Overflow.Remove("DivElement");
+          Overflow.Remove("div");
         _DivElement = value;
         OnPropertyChanged("DivElement");
       }
@@ -233,10 +233,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>?)value;
           return this;
         case "div":
-          DivElement = (Hl7.Fhir.Model.XHtml?)value;
+          if (value is not (Hl7.Fhir.Model.XHtml or null))
+          {
+            DivElement = OverflowNull<Hl7.Fhir.Model.XHtml>.INSTANCE;
+            Overflow["div"] = value;
+          }
+          else DivElement = (Hl7.Fhir.Model.XHtml?)value;
           return this;
         default:
           return base.SetValue(key, value);

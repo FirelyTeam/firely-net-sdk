@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ElementIdElement))
-          Overflow.Remove("ElementIdElement");
+          Overflow.Remove("id");
         _ElementIdElement = value;
         OnPropertyChanged("ElementIdElement");
       }
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_Extension))
-          Overflow.Remove("Extension");
+          Overflow.Remove("extension");
         _Extension = value;
         OnPropertyChanged("Extension");
       }
@@ -169,10 +169,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "id":
-          ElementIdElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ElementIdElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["id"] = value;
+          }
+          else ElementIdElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "extension":
-          Extension = (List<Hl7.Fhir.Model.Extension>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Extension> or null))
+          {
+            Extension = OverflowNull<List<Hl7.Fhir.Model.Extension>>.INSTANCE;
+            Overflow["extension"] = value;
+          }
+          else Extension = (List<Hl7.Fhir.Model.Extension>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

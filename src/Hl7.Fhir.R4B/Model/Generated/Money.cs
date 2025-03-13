@@ -1178,7 +1178,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ValueElement))
-          Overflow.Remove("ValueElement");
+          Overflow.Remove("value");
         _ValueElement = value;
         OnPropertyChanged("ValueElement");
       }
@@ -1221,7 +1221,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.Money.Currencies>>.InOverflow(_CurrencyElement))
-          Overflow.Remove("CurrencyElement");
+          Overflow.Remove("currency");
         _CurrencyElement = value;
         OnPropertyChanged("CurrencyElement");
       }
@@ -1296,10 +1296,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "value":
-          ValueElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+          {
+            ValueElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+            Overflow["value"] = value;
+          }
+          else ValueElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "currency":
-          CurrencyElement = (Code<Hl7.Fhir.Model.Money.Currencies>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.Money.Currencies> or null))
+          {
+            CurrencyElement = OverflowNull<Code<Hl7.Fhir.Model.Money.Currencies>>.INSTANCE;
+            Overflow["currency"] = value;
+          }
+          else CurrencyElement = (Code<Hl7.Fhir.Model.Money.Currencies>?)value;
           return this;
         default:
           return base.SetValue(key, value);

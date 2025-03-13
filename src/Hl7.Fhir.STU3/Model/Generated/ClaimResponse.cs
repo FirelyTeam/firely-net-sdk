@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_SequenceLinkIdElement))
-            Overflow.Remove("SequenceLinkIdElement");
+            Overflow.Remove("sequenceLinkId");
           _SequenceLinkIdElement = value;
           OnPropertyChanged("SequenceLinkIdElement");
         }
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.InOverflow(_NoteNumberElement))
-            Overflow.Remove("NoteNumberElement");
+            Overflow.Remove("noteNumber");
           _NoteNumberElement = value;
           OnPropertyChanged("NoteNumberElement");
         }
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>>.InOverflow(_Adjudication))
-            Overflow.Remove("Adjudication");
+            Overflow.Remove("adjudication");
           _Adjudication = value;
           OnPropertyChanged("Adjudication");
         }
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.ItemDetailComponent>>.InOverflow(_Detail))
-            Overflow.Remove("Detail");
+            Overflow.Remove("detail");
           _Detail = value;
           OnPropertyChanged("Detail");
         }
@@ -280,16 +280,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "sequenceLinkId":
-            SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+            {
+              SequenceLinkIdElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+              Overflow["sequenceLinkId"] = value;
+            }
+            else SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "noteNumber":
-            NoteNumberElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.PositiveInt> or null))
+            {
+              NoteNumberElement = OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.INSTANCE;
+              Overflow["noteNumber"] = value;
+            }
+            else NoteNumberElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
             return this;
           case "adjudication":
-            Adjudication = (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent> or null))
+            {
+              Adjudication = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>>.INSTANCE;
+              Overflow["adjudication"] = value;
+            }
+            else Adjudication = (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>?)value!;
             return this;
           case "detail":
-            Detail = (List<Hl7.Fhir.Model.ClaimResponse.ItemDetailComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ClaimResponse.ItemDetailComponent> or null))
+            {
+              Detail = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.ItemDetailComponent>>.INSTANCE;
+              Overflow["detail"] = value;
+            }
+            else Detail = (List<Hl7.Fhir.Model.ClaimResponse.ItemDetailComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -343,7 +363,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Category))
-            Overflow.Remove("Category");
+            Overflow.Remove("category");
           _Category = value;
           OnPropertyChanged("Category");
         }
@@ -370,7 +390,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Reason))
-            Overflow.Remove("Reason");
+            Overflow.Remove("reason");
           _Reason = value;
           OnPropertyChanged("Reason");
         }
@@ -396,7 +416,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_Amount))
-            Overflow.Remove("Amount");
+            Overflow.Remove("amount");
           _Amount = value;
           OnPropertyChanged("Amount");
         }
@@ -422,7 +442,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ValueElement))
-            Overflow.Remove("ValueElement");
+            Overflow.Remove("value");
           _ValueElement = value;
           OnPropertyChanged("ValueElement");
         }
@@ -507,16 +527,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "category":
-            Category = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Category = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["category"] = value;
+            }
+            else Category = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "reason":
-            Reason = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Reason = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["reason"] = value;
+            }
+            else Reason = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.Money?)value;
+            if (value is not (Hl7.Fhir.Model.Money or null))
+            {
+              Amount = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
+              Overflow["amount"] = value;
+            }
+            else Amount = (Hl7.Fhir.Model.Money?)value;
             return this;
           case "value":
-            ValueElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+            {
+              ValueElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else ValueElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -569,7 +609,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_SequenceLinkIdElement))
-            Overflow.Remove("SequenceLinkIdElement");
+            Overflow.Remove("sequenceLinkId");
           _SequenceLinkIdElement = value;
           OnPropertyChanged("SequenceLinkIdElement");
         }
@@ -611,7 +651,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.InOverflow(_NoteNumberElement))
-            Overflow.Remove("NoteNumberElement");
+            Overflow.Remove("noteNumber");
           _NoteNumberElement = value;
           OnPropertyChanged("NoteNumberElement");
         }
@@ -656,7 +696,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>>.InOverflow(_Adjudication))
-            Overflow.Remove("Adjudication");
+            Overflow.Remove("adjudication");
           _Adjudication = value;
           OnPropertyChanged("Adjudication");
         }
@@ -683,7 +723,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.SubDetailComponent>>.InOverflow(_SubDetail))
-            Overflow.Remove("SubDetail");
+            Overflow.Remove("subDetail");
           _SubDetail = value;
           OnPropertyChanged("SubDetail");
         }
@@ -753,16 +793,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "sequenceLinkId":
-            SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+            {
+              SequenceLinkIdElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+              Overflow["sequenceLinkId"] = value;
+            }
+            else SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "noteNumber":
-            NoteNumberElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.PositiveInt> or null))
+            {
+              NoteNumberElement = OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.INSTANCE;
+              Overflow["noteNumber"] = value;
+            }
+            else NoteNumberElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
             return this;
           case "adjudication":
-            Adjudication = (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent> or null))
+            {
+              Adjudication = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>>.INSTANCE;
+              Overflow["adjudication"] = value;
+            }
+            else Adjudication = (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>?)value!;
             return this;
           case "subDetail":
-            SubDetail = (List<Hl7.Fhir.Model.ClaimResponse.SubDetailComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ClaimResponse.SubDetailComponent> or null))
+            {
+              SubDetail = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.SubDetailComponent>>.INSTANCE;
+              Overflow["subDetail"] = value;
+            }
+            else SubDetail = (List<Hl7.Fhir.Model.ClaimResponse.SubDetailComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -815,7 +875,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_SequenceLinkIdElement))
-            Overflow.Remove("SequenceLinkIdElement");
+            Overflow.Remove("sequenceLinkId");
           _SequenceLinkIdElement = value;
           OnPropertyChanged("SequenceLinkIdElement");
         }
@@ -857,7 +917,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.InOverflow(_NoteNumberElement))
-            Overflow.Remove("NoteNumberElement");
+            Overflow.Remove("noteNumber");
           _NoteNumberElement = value;
           OnPropertyChanged("NoteNumberElement");
         }
@@ -902,7 +962,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>>.InOverflow(_Adjudication))
-            Overflow.Remove("Adjudication");
+            Overflow.Remove("adjudication");
           _Adjudication = value;
           OnPropertyChanged("Adjudication");
         }
@@ -967,13 +1027,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "sequenceLinkId":
-            SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+            {
+              SequenceLinkIdElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+              Overflow["sequenceLinkId"] = value;
+            }
+            else SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "noteNumber":
-            NoteNumberElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.PositiveInt> or null))
+            {
+              NoteNumberElement = OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.INSTANCE;
+              Overflow["noteNumber"] = value;
+            }
+            else NoteNumberElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
             return this;
           case "adjudication":
-            Adjudication = (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent> or null))
+            {
+              Adjudication = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>>.INSTANCE;
+              Overflow["adjudication"] = value;
+            }
+            else Adjudication = (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1025,7 +1100,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.InOverflow(_SequenceLinkIdElement))
-            Overflow.Remove("SequenceLinkIdElement");
+            Overflow.Remove("sequenceLinkId");
           _SequenceLinkIdElement = value;
           OnPropertyChanged("SequenceLinkIdElement");
         }
@@ -1070,7 +1145,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Revenue))
-            Overflow.Remove("Revenue");
+            Overflow.Remove("revenue");
           _Revenue = value;
           OnPropertyChanged("Revenue");
         }
@@ -1097,7 +1172,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Category))
-            Overflow.Remove("Category");
+            Overflow.Remove("category");
           _Category = value;
           OnPropertyChanged("Category");
         }
@@ -1124,7 +1199,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Service))
-            Overflow.Remove("Service");
+            Overflow.Remove("service");
           _Service = value;
           OnPropertyChanged("Service");
         }
@@ -1152,7 +1227,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Modifier))
-            Overflow.Remove("Modifier");
+            Overflow.Remove("modifier");
           _Modifier = value;
           OnPropertyChanged("Modifier");
         }
@@ -1178,7 +1253,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_Fee))
-            Overflow.Remove("Fee");
+            Overflow.Remove("fee");
           _Fee = value;
           OnPropertyChanged("Fee");
         }
@@ -1205,7 +1280,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.InOverflow(_NoteNumberElement))
-            Overflow.Remove("NoteNumberElement");
+            Overflow.Remove("noteNumber");
           _NoteNumberElement = value;
           OnPropertyChanged("NoteNumberElement");
         }
@@ -1250,7 +1325,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>>.InOverflow(_Adjudication))
-            Overflow.Remove("Adjudication");
+            Overflow.Remove("adjudication");
           _Adjudication = value;
           OnPropertyChanged("Adjudication");
         }
@@ -1277,7 +1352,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AddedItemsDetailComponent>>.InOverflow(_Detail))
-            Overflow.Remove("Detail");
+            Overflow.Remove("detail");
           _Detail = value;
           OnPropertyChanged("Detail");
         }
@@ -1372,31 +1447,76 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "sequenceLinkId":
-            SequenceLinkIdElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.PositiveInt> or null))
+            {
+              SequenceLinkIdElement = OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.INSTANCE;
+              Overflow["sequenceLinkId"] = value;
+            }
+            else SequenceLinkIdElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
             return this;
           case "revenue":
-            Revenue = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Revenue = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["revenue"] = value;
+            }
+            else Revenue = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "category":
-            Category = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Category = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["category"] = value;
+            }
+            else Category = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "service":
-            Service = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Service = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["service"] = value;
+            }
+            else Service = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "modifier":
-            Modifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Modifier = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["modifier"] = value;
+            }
+            else Modifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "fee":
-            Fee = (Hl7.Fhir.Model.Money?)value;
+            if (value is not (Hl7.Fhir.Model.Money or null))
+            {
+              Fee = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
+              Overflow["fee"] = value;
+            }
+            else Fee = (Hl7.Fhir.Model.Money?)value;
             return this;
           case "noteNumber":
-            NoteNumberElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.PositiveInt> or null))
+            {
+              NoteNumberElement = OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.INSTANCE;
+              Overflow["noteNumber"] = value;
+            }
+            else NoteNumberElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
             return this;
           case "adjudication":
-            Adjudication = (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent> or null))
+            {
+              Adjudication = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>>.INSTANCE;
+              Overflow["adjudication"] = value;
+            }
+            else Adjudication = (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>?)value!;
             return this;
           case "detail":
-            Detail = (List<Hl7.Fhir.Model.ClaimResponse.AddedItemsDetailComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ClaimResponse.AddedItemsDetailComponent> or null))
+            {
+              Detail = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AddedItemsDetailComponent>>.INSTANCE;
+              Overflow["detail"] = value;
+            }
+            else Detail = (List<Hl7.Fhir.Model.ClaimResponse.AddedItemsDetailComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1454,7 +1574,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Revenue))
-            Overflow.Remove("Revenue");
+            Overflow.Remove("revenue");
           _Revenue = value;
           OnPropertyChanged("Revenue");
         }
@@ -1481,7 +1601,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Category))
-            Overflow.Remove("Category");
+            Overflow.Remove("category");
           _Category = value;
           OnPropertyChanged("Category");
         }
@@ -1508,7 +1628,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Service))
-            Overflow.Remove("Service");
+            Overflow.Remove("service");
           _Service = value;
           OnPropertyChanged("Service");
         }
@@ -1536,7 +1656,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Modifier))
-            Overflow.Remove("Modifier");
+            Overflow.Remove("modifier");
           _Modifier = value;
           OnPropertyChanged("Modifier");
         }
@@ -1562,7 +1682,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_Fee))
-            Overflow.Remove("Fee");
+            Overflow.Remove("fee");
           _Fee = value;
           OnPropertyChanged("Fee");
         }
@@ -1589,7 +1709,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.InOverflow(_NoteNumberElement))
-            Overflow.Remove("NoteNumberElement");
+            Overflow.Remove("noteNumber");
           _NoteNumberElement = value;
           OnPropertyChanged("NoteNumberElement");
         }
@@ -1634,7 +1754,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>>.InOverflow(_Adjudication))
-            Overflow.Remove("Adjudication");
+            Overflow.Remove("adjudication");
           _Adjudication = value;
           OnPropertyChanged("Adjudication");
         }
@@ -1719,25 +1839,60 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "revenue":
-            Revenue = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Revenue = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["revenue"] = value;
+            }
+            else Revenue = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "category":
-            Category = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Category = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["category"] = value;
+            }
+            else Category = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "service":
-            Service = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Service = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["service"] = value;
+            }
+            else Service = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "modifier":
-            Modifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Modifier = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["modifier"] = value;
+            }
+            else Modifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "fee":
-            Fee = (Hl7.Fhir.Model.Money?)value;
+            if (value is not (Hl7.Fhir.Model.Money or null))
+            {
+              Fee = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
+              Overflow["fee"] = value;
+            }
+            else Fee = (Hl7.Fhir.Model.Money?)value;
             return this;
           case "noteNumber":
-            NoteNumberElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.PositiveInt> or null))
+            {
+              NoteNumberElement = OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.INSTANCE;
+              Overflow["noteNumber"] = value;
+            }
+            else NoteNumberElement = (List<Hl7.Fhir.Model.PositiveInt>?)value!;
             return this;
           case "adjudication":
-            Adjudication = (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent> or null))
+            {
+              Adjudication = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>>.INSTANCE;
+              Overflow["adjudication"] = value;
+            }
+            else Adjudication = (List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1792,7 +1947,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_SequenceLinkIdElement))
-            Overflow.Remove("SequenceLinkIdElement");
+            Overflow.Remove("sequenceLinkId");
           _SequenceLinkIdElement = value;
           OnPropertyChanged("SequenceLinkIdElement");
         }
@@ -1833,7 +1988,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_DetailSequenceLinkIdElement))
-            Overflow.Remove("DetailSequenceLinkIdElement");
+            Overflow.Remove("detailSequenceLinkId");
           _DetailSequenceLinkIdElement = value;
           OnPropertyChanged("DetailSequenceLinkIdElement");
         }
@@ -1874,7 +2029,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_SubdetailSequenceLinkIdElement))
-            Overflow.Remove("SubdetailSequenceLinkIdElement");
+            Overflow.Remove("subdetailSequenceLinkId");
           _SubdetailSequenceLinkIdElement = value;
           OnPropertyChanged("SubdetailSequenceLinkIdElement");
         }
@@ -1917,7 +2072,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
-            Overflow.Remove("Code");
+            Overflow.Remove("code");
           _Code = value;
           OnPropertyChanged("Code");
         }
@@ -1987,16 +2142,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "sequenceLinkId":
-            SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+            {
+              SequenceLinkIdElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+              Overflow["sequenceLinkId"] = value;
+            }
+            else SequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "detailSequenceLinkId":
-            DetailSequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+            {
+              DetailSequenceLinkIdElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+              Overflow["detailSequenceLinkId"] = value;
+            }
+            else DetailSequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "subdetailSequenceLinkId":
-            SubdetailSequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+            {
+              SubdetailSequenceLinkIdElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+              Overflow["subdetailSequenceLinkId"] = value;
+            }
+            else SubdetailSequenceLinkIdElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["code"] = value;
+            }
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2049,7 +2224,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-            Overflow.Remove("Type");
+            Overflow.Remove("type");
           _Type = value;
           OnPropertyChanged("Type");
         }
@@ -2075,7 +2250,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_Adjustment))
-            Overflow.Remove("Adjustment");
+            Overflow.Remove("adjustment");
           _Adjustment = value;
           OnPropertyChanged("Adjustment");
         }
@@ -2102,7 +2277,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AdjustmentReason))
-            Overflow.Remove("AdjustmentReason");
+            Overflow.Remove("adjustmentReason");
           _AdjustmentReason = value;
           OnPropertyChanged("AdjustmentReason");
         }
@@ -2128,7 +2303,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_DateElement))
-            Overflow.Remove("DateElement");
+            Overflow.Remove("date");
           _DateElement = value;
           OnPropertyChanged("DateElement");
         }
@@ -2169,7 +2344,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_Amount))
-            Overflow.Remove("Amount");
+            Overflow.Remove("amount");
           _Amount = value;
           OnPropertyChanged("Amount");
         }
@@ -2195,7 +2370,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
-            Overflow.Remove("Identifier");
+            Overflow.Remove("identifier");
           _Identifier = value;
           OnPropertyChanged("Identifier");
         }
@@ -2275,22 +2450,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "adjustment":
-            Adjustment = (Hl7.Fhir.Model.Money?)value;
+            if (value is not (Hl7.Fhir.Model.Money or null))
+            {
+              Adjustment = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
+              Overflow["adjustment"] = value;
+            }
+            else Adjustment = (Hl7.Fhir.Model.Money?)value;
             return this;
           case "adjustmentReason":
-            AdjustmentReason = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              AdjustmentReason = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["adjustmentReason"] = value;
+            }
+            else AdjustmentReason = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "date":
-            DateElement = (Hl7.Fhir.Model.Date?)value;
+            if (value is not (Hl7.Fhir.Model.Date or null))
+            {
+              DateElement = OverflowNull<Hl7.Fhir.Model.Date>.INSTANCE;
+              Overflow["date"] = value;
+            }
+            else DateElement = (Hl7.Fhir.Model.Date?)value;
             return this;
           case "amount":
-            Amount = (Hl7.Fhir.Model.Money?)value;
+            if (value is not (Hl7.Fhir.Model.Money or null))
+            {
+              Amount = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
+              Overflow["amount"] = value;
+            }
+            else Amount = (Hl7.Fhir.Model.Money?)value;
             return this;
           case "identifier":
-            Identifier = (Hl7.Fhir.Model.Identifier?)value;
+            if (value is not (Hl7.Fhir.Model.Identifier or null))
+            {
+              Identifier = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+              Overflow["identifier"] = value;
+            }
+            else Identifier = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2344,7 +2549,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_NumberElement))
-            Overflow.Remove("NumberElement");
+            Overflow.Remove("number");
           _NumberElement = value;
           OnPropertyChanged("NumberElement");
         }
@@ -2386,7 +2591,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-            Overflow.Remove("Type");
+            Overflow.Remove("type");
           _Type = value;
           OnPropertyChanged("Type");
         }
@@ -2412,7 +2617,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
-            Overflow.Remove("TextElement");
+            Overflow.Remove("text");
           _TextElement = value;
           OnPropertyChanged("TextElement");
         }
@@ -2454,7 +2659,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Language))
-            Overflow.Remove("Language");
+            Overflow.Remove("language");
           _Language = value;
           OnPropertyChanged("Language");
         }
@@ -2524,16 +2729,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "number":
-            NumberElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+            {
+              NumberElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+              Overflow["number"] = value;
+            }
+            else NumberElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "text":
-            TextElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              TextElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["text"] = value;
+            }
+            else TextElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "language":
-            Language = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Language = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["language"] = value;
+            }
+            else Language = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2586,7 +2811,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_SequenceElement))
-            Overflow.Remove("SequenceElement");
+            Overflow.Remove("sequence");
           _SequenceElement = value;
           OnPropertyChanged("SequenceElement");
         }
@@ -2628,7 +2853,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_FocalElement))
-            Overflow.Remove("FocalElement");
+            Overflow.Remove("focal");
           _FocalElement = value;
           OnPropertyChanged("FocalElement");
         }
@@ -2672,7 +2897,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Coverage))
-            Overflow.Remove("Coverage");
+            Overflow.Remove("coverage");
           _Coverage = value;
           OnPropertyChanged("Coverage");
         }
@@ -2698,7 +2923,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_BusinessArrangementElement))
-            Overflow.Remove("BusinessArrangementElement");
+            Overflow.Remove("businessArrangement");
           _BusinessArrangementElement = value;
           OnPropertyChanged("BusinessArrangementElement");
         }
@@ -2740,7 +2965,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_PreAuthRefElement))
-            Overflow.Remove("PreAuthRefElement");
+            Overflow.Remove("preAuthRef");
           _PreAuthRefElement = value;
           OnPropertyChanged("PreAuthRefElement");
         }
@@ -2786,7 +3011,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ClaimResponse))
-            Overflow.Remove("ClaimResponse");
+            Overflow.Remove("claimResponse");
           _ClaimResponse = value;
           OnPropertyChanged("ClaimResponse");
         }
@@ -2866,22 +3091,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "sequence":
-            SequenceElement = (Hl7.Fhir.Model.PositiveInt?)value;
+            if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+            {
+              SequenceElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+              Overflow["sequence"] = value;
+            }
+            else SequenceElement = (Hl7.Fhir.Model.PositiveInt?)value;
             return this;
           case "focal":
-            FocalElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+            {
+              FocalElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+              Overflow["focal"] = value;
+            }
+            else FocalElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "coverage":
-            Coverage = (Hl7.Fhir.Model.ResourceReference?)value;
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Coverage = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["coverage"] = value;
+            }
+            else Coverage = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "businessArrangement":
-            BusinessArrangementElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              BusinessArrangementElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["businessArrangement"] = value;
+            }
+            else BusinessArrangementElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "preAuthRef":
-            PreAuthRefElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+            {
+              PreAuthRefElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+              Overflow["preAuthRef"] = value;
+            }
+            else PreAuthRefElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
             return this;
           case "claimResponse":
-            ClaimResponse = (Hl7.Fhir.Model.ResourceReference?)value;
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              ClaimResponse = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["claimResponse"] = value;
+            }
+            else ClaimResponse = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2920,7 +3175,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -2948,7 +3203,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.InOverflow(_StatusElement))
-          Overflow.Remove("StatusElement");
+          Overflow.Remove("status");
         _StatusElement = value;
         OnPropertyChanged("StatusElement");
       }
@@ -2991,7 +3246,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
-          Overflow.Remove("Patient");
+          Overflow.Remove("patient");
         _Patient = value;
         OnPropertyChanged("Patient");
       }
@@ -3017,7 +3272,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CreatedElement))
-          Overflow.Remove("CreatedElement");
+          Overflow.Remove("created");
         _CreatedElement = value;
         OnPropertyChanged("CreatedElement");
       }
@@ -3060,7 +3315,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Insurer))
-          Overflow.Remove("Insurer");
+          Overflow.Remove("insurer");
         _Insurer = value;
         OnPropertyChanged("Insurer");
       }
@@ -3088,7 +3343,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_RequestProvider))
-          Overflow.Remove("RequestProvider");
+          Overflow.Remove("requestProvider");
         _RequestProvider = value;
         OnPropertyChanged("RequestProvider");
       }
@@ -3116,7 +3371,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_RequestOrganization))
-          Overflow.Remove("RequestOrganization");
+          Overflow.Remove("requestOrganization");
         _RequestOrganization = value;
         OnPropertyChanged("RequestOrganization");
       }
@@ -3144,7 +3399,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Request))
-          Overflow.Remove("Request");
+          Overflow.Remove("request");
         _Request = value;
         OnPropertyChanged("Request");
       }
@@ -3171,7 +3426,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Outcome))
-          Overflow.Remove("Outcome");
+          Overflow.Remove("outcome");
         _Outcome = value;
         OnPropertyChanged("Outcome");
       }
@@ -3197,7 +3452,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DispositionElement))
-          Overflow.Remove("DispositionElement");
+          Overflow.Remove("disposition");
         _DispositionElement = value;
         OnPropertyChanged("DispositionElement");
       }
@@ -3239,7 +3494,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PayeeType))
-          Overflow.Remove("PayeeType");
+          Overflow.Remove("payeeType");
         _PayeeType = value;
         OnPropertyChanged("PayeeType");
       }
@@ -3266,7 +3521,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.ItemComponent>>.InOverflow(_Item))
-          Overflow.Remove("Item");
+          Overflow.Remove("item");
         _Item = value;
         OnPropertyChanged("Item");
       }
@@ -3293,7 +3548,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent>>.InOverflow(_AddItem))
-          Overflow.Remove("AddItem");
+          Overflow.Remove("addItem");
         _AddItem = value;
         OnPropertyChanged("AddItem");
       }
@@ -3320,7 +3575,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.ErrorComponent>>.InOverflow(_Error))
-          Overflow.Remove("Error");
+          Overflow.Remove("error");
         _Error = value;
         OnPropertyChanged("Error");
       }
@@ -3346,7 +3601,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_TotalCost))
-          Overflow.Remove("TotalCost");
+          Overflow.Remove("totalCost");
         _TotalCost = value;
         OnPropertyChanged("TotalCost");
       }
@@ -3372,7 +3627,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_UnallocDeductable))
-          Overflow.Remove("UnallocDeductable");
+          Overflow.Remove("unallocDeductable");
         _UnallocDeductable = value;
         OnPropertyChanged("UnallocDeductable");
       }
@@ -3398,7 +3653,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_TotalBenefit))
-          Overflow.Remove("TotalBenefit");
+          Overflow.Remove("totalBenefit");
         _TotalBenefit = value;
         OnPropertyChanged("TotalBenefit");
       }
@@ -3424,7 +3679,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ClaimResponse.PaymentComponent>.InOverflow(_Payment))
-          Overflow.Remove("Payment");
+          Overflow.Remove("payment");
         _Payment = value;
         OnPropertyChanged("Payment");
       }
@@ -3451,7 +3706,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_Reserved))
-          Overflow.Remove("Reserved");
+          Overflow.Remove("reserved");
         _Reserved = value;
         OnPropertyChanged("Reserved");
       }
@@ -3478,7 +3733,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Form))
-          Overflow.Remove("Form");
+          Overflow.Remove("form");
         _Form = value;
         OnPropertyChanged("Form");
       }
@@ -3505,7 +3760,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.NoteComponent>>.InOverflow(_ProcessNote))
-          Overflow.Remove("ProcessNote");
+          Overflow.Remove("processNote");
         _ProcessNote = value;
         OnPropertyChanged("ProcessNote");
       }
@@ -3534,7 +3789,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_CommunicationRequest))
-          Overflow.Remove("CommunicationRequest");
+          Overflow.Remove("communicationRequest");
         _CommunicationRequest = value;
         OnPropertyChanged("CommunicationRequest");
       }
@@ -3561,7 +3816,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent>>.InOverflow(_Insurance))
-          Overflow.Remove("Insurance");
+          Overflow.Remove("insurance");
         _Insurance = value;
         OnPropertyChanged("Insurance");
       }
@@ -3728,73 +3983,188 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["patient"] = value;
+          }
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "created":
-          CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            CreatedElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["created"] = value;
+          }
+          else CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "insurer":
-          Insurer = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Insurer = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["insurer"] = value;
+          }
+          else Insurer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "requestProvider":
-          RequestProvider = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            RequestProvider = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["requestProvider"] = value;
+          }
+          else RequestProvider = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "requestOrganization":
-          RequestOrganization = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            RequestOrganization = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["requestOrganization"] = value;
+          }
+          else RequestOrganization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "request":
-          Request = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Request = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["request"] = value;
+          }
+          else Request = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "outcome":
-          Outcome = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Outcome = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["outcome"] = value;
+          }
+          else Outcome = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "disposition":
-          DispositionElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            DispositionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["disposition"] = value;
+          }
+          else DispositionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "payeeType":
-          PayeeType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            PayeeType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["payeeType"] = value;
+          }
+          else PayeeType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "item":
-          Item = (List<Hl7.Fhir.Model.ClaimResponse.ItemComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ClaimResponse.ItemComponent> or null))
+          {
+            Item = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.ItemComponent>>.INSTANCE;
+            Overflow["item"] = value;
+          }
+          else Item = (List<Hl7.Fhir.Model.ClaimResponse.ItemComponent>?)value!;
           return this;
         case "addItem":
-          AddItem = (List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent> or null))
+          {
+            AddItem = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent>>.INSTANCE;
+            Overflow["addItem"] = value;
+          }
+          else AddItem = (List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent>?)value!;
           return this;
         case "error":
-          Error = (List<Hl7.Fhir.Model.ClaimResponse.ErrorComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ClaimResponse.ErrorComponent> or null))
+          {
+            Error = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.ErrorComponent>>.INSTANCE;
+            Overflow["error"] = value;
+          }
+          else Error = (List<Hl7.Fhir.Model.ClaimResponse.ErrorComponent>?)value!;
           return this;
         case "totalCost":
-          TotalCost = (Hl7.Fhir.Model.Money?)value;
+          if (value is not (Hl7.Fhir.Model.Money or null))
+          {
+            TotalCost = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
+            Overflow["totalCost"] = value;
+          }
+          else TotalCost = (Hl7.Fhir.Model.Money?)value;
           return this;
         case "unallocDeductable":
-          UnallocDeductable = (Hl7.Fhir.Model.Money?)value;
+          if (value is not (Hl7.Fhir.Model.Money or null))
+          {
+            UnallocDeductable = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
+            Overflow["unallocDeductable"] = value;
+          }
+          else UnallocDeductable = (Hl7.Fhir.Model.Money?)value;
           return this;
         case "totalBenefit":
-          TotalBenefit = (Hl7.Fhir.Model.Money?)value;
+          if (value is not (Hl7.Fhir.Model.Money or null))
+          {
+            TotalBenefit = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
+            Overflow["totalBenefit"] = value;
+          }
+          else TotalBenefit = (Hl7.Fhir.Model.Money?)value;
           return this;
         case "payment":
-          Payment = (Hl7.Fhir.Model.ClaimResponse.PaymentComponent?)value;
+          if (value is not (Hl7.Fhir.Model.ClaimResponse.PaymentComponent or null))
+          {
+            Payment = OverflowNull<Hl7.Fhir.Model.ClaimResponse.PaymentComponent>.INSTANCE;
+            Overflow["payment"] = value;
+          }
+          else Payment = (Hl7.Fhir.Model.ClaimResponse.PaymentComponent?)value;
           return this;
         case "reserved":
-          Reserved = (Hl7.Fhir.Model.Coding?)value;
+          if (value is not (Hl7.Fhir.Model.Coding or null))
+          {
+            Reserved = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
+            Overflow["reserved"] = value;
+          }
+          else Reserved = (Hl7.Fhir.Model.Coding?)value;
           return this;
         case "form":
-          Form = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Form = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["form"] = value;
+          }
+          else Form = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "processNote":
-          ProcessNote = (List<Hl7.Fhir.Model.ClaimResponse.NoteComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ClaimResponse.NoteComponent> or null))
+          {
+            ProcessNote = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.NoteComponent>>.INSTANCE;
+            Overflow["processNote"] = value;
+          }
+          else ProcessNote = (List<Hl7.Fhir.Model.ClaimResponse.NoteComponent>?)value!;
           return this;
         case "communicationRequest":
-          CommunicationRequest = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            CommunicationRequest = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["communicationRequest"] = value;
+          }
+          else CommunicationRequest = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "insurance":
-          Insurance = (List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent> or null))
+          {
+            Insurance = OverflowNull<List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent>>.INSTANCE;
+            Overflow["insurance"] = value;
+          }
+          else Insurance = (List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

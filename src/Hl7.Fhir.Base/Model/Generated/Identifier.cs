@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.Identifier.IdentifierUse>>.InOverflow(_UseElement))
-          Overflow.Remove("UseElement");
+          Overflow.Remove("use");
         _UseElement = value;
         OnPropertyChanged("UseElement");
       }
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-          Overflow.Remove("Type");
+          Overflow.Remove("type");
         _Type = value;
         OnPropertyChanged("Type");
       }
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_SystemElement))
-          Overflow.Remove("SystemElement");
+          Overflow.Remove("system");
         _SystemElement = value;
         OnPropertyChanged("SystemElement");
       }
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
-          Overflow.Remove("ValueElement");
+          Overflow.Remove("value");
         _ValueElement = value;
         OnPropertyChanged("ValueElement");
       }
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
-          Overflow.Remove("Period");
+          Overflow.Remove("period");
         _Period = value;
         OnPropertyChanged("Period");
       }
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Assigner))
-          Overflow.Remove("Assigner");
+          Overflow.Remove("assigner");
         _Assigner = value;
         OnPropertyChanged("Assigner");
       }
@@ -380,22 +380,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "use":
-          UseElement = (Code<Hl7.Fhir.Model.Identifier.IdentifierUse>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.Identifier.IdentifierUse> or null))
+          {
+            UseElement = OverflowNull<Code<Hl7.Fhir.Model.Identifier.IdentifierUse>>.INSTANCE;
+            Overflow["use"] = value;
+          }
+          else UseElement = (Code<Hl7.Fhir.Model.Identifier.IdentifierUse>?)value;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "system":
-          SystemElement = (Hl7.Fhir.Model.FhirUri?)value;
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            SystemElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["system"] = value;
+          }
+          else SystemElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "value":
-          ValueElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ValueElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["value"] = value;
+          }
+          else ValueElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period?)value;
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "assigner":
-          Assigner = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Assigner = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["assigner"] = value;
+          }
+          else Assigner = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);

@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_Code))
-          Overflow.Remove("Code");
+          Overflow.Remove("code");
         _Code = value;
         OnPropertyChanged("Code");
       }
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_Value))
-          Overflow.Remove("Value");
+          Overflow.Remove("value");
         _Value = value;
         OnPropertyChanged("Value");
       }
@@ -172,10 +172,20 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "code":
-          Code = (Hl7.Fhir.Model.Coding?)value;
+          if (value is not (Hl7.Fhir.Model.Coding or null))
+          {
+            Code = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
+            Overflow["code"] = value;
+          }
+          else Code = (Hl7.Fhir.Model.Coding?)value;
           return this;
         case "value":
-          Value = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Value = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["value"] = value;
+          }
+          else Value = (Hl7.Fhir.Model.DataType?)value;
           return this;
         default:
           return base.SetValue(key, value);

@@ -984,7 +984,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<DynamicPrimitive>.InOverflow(_RelationElement))
-            Overflow.Remove("RelationElement");
+            Overflow.Remove("relation");
           _RelationElement = value;
           OnPropertyChanged("RelationElement");
         }
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
-            Overflow.Remove("UrlElement");
+            Overflow.Remove("url");
           _UrlElement = value;
           OnPropertyChanged("UrlElement");
         }
@@ -1116,10 +1116,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "relation":
-            RelationElement = (Hl7.Fhir.Model.PrimitiveType?)value;
+            if (value is not (Hl7.Fhir.Model.PrimitiveType or null))
+            {
+              RelationElement = OverflowNull<DynamicPrimitive>.INSTANCE;
+              Overflow["relation"] = value;
+            }
+            else RelationElement = (Hl7.Fhir.Model.PrimitiveType?)value;
             return this;
           case "url":
-            UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
+            if (value is not (Hl7.Fhir.Model.FhirUri or null))
+            {
+              UrlElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+              Overflow["url"] = value;
+            }
+            else UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1170,7 +1180,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.Bundle.LinkComponent>>.InOverflow(_Link))
-            Overflow.Remove("Link");
+            Overflow.Remove("link");
           _Link = value;
           OnPropertyChanged("Link");
         }
@@ -1196,7 +1206,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_FullUrlElement))
-            Overflow.Remove("FullUrlElement");
+            Overflow.Remove("fullUrl");
           _FullUrlElement = value;
           OnPropertyChanged("FullUrlElement");
         }
@@ -1239,7 +1249,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<DynamicResource>.InOverflow(_Resource))
-            Overflow.Remove("Resource");
+            Overflow.Remove("resource");
           _Resource = value;
           OnPropertyChanged("Resource");
         }
@@ -1265,7 +1275,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Bundle.SearchComponent>.InOverflow(_Search))
-            Overflow.Remove("Search");
+            Overflow.Remove("search");
           _Search = value;
           OnPropertyChanged("Search");
         }
@@ -1291,7 +1301,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Bundle.RequestComponent>.InOverflow(_Request))
-            Overflow.Remove("Request");
+            Overflow.Remove("request");
           _Request = value;
           OnPropertyChanged("Request");
         }
@@ -1317,7 +1327,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Bundle.ResponseComponent>.InOverflow(_Response))
-            Overflow.Remove("Response");
+            Overflow.Remove("response");
           _Response = value;
           OnPropertyChanged("Response");
         }
@@ -1397,22 +1407,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "link":
-            Link = (List<Hl7.Fhir.Model.Bundle.LinkComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.Bundle.LinkComponent> or null))
+            {
+              Link = OverflowNull<List<Hl7.Fhir.Model.Bundle.LinkComponent>>.INSTANCE;
+              Overflow["link"] = value;
+            }
+            else Link = (List<Hl7.Fhir.Model.Bundle.LinkComponent>?)value!;
             return this;
           case "fullUrl":
-            FullUrlElement = (Hl7.Fhir.Model.FhirUri?)value;
+            if (value is not (Hl7.Fhir.Model.FhirUri or null))
+            {
+              FullUrlElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+              Overflow["fullUrl"] = value;
+            }
+            else FullUrlElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "resource":
-            Resource = (Hl7.Fhir.Model.Resource?)value;
+            if (value is not (Hl7.Fhir.Model.Resource or null))
+            {
+              Resource = OverflowNull<DynamicResource>.INSTANCE;
+              Overflow["resource"] = value;
+            }
+            else Resource = (Hl7.Fhir.Model.Resource?)value;
             return this;
           case "search":
-            Search = (Hl7.Fhir.Model.Bundle.SearchComponent?)value;
+            if (value is not (Hl7.Fhir.Model.Bundle.SearchComponent or null))
+            {
+              Search = OverflowNull<Hl7.Fhir.Model.Bundle.SearchComponent>.INSTANCE;
+              Overflow["search"] = value;
+            }
+            else Search = (Hl7.Fhir.Model.Bundle.SearchComponent?)value;
             return this;
           case "request":
-            Request = (Hl7.Fhir.Model.Bundle.RequestComponent?)value;
+            if (value is not (Hl7.Fhir.Model.Bundle.RequestComponent or null))
+            {
+              Request = OverflowNull<Hl7.Fhir.Model.Bundle.RequestComponent>.INSTANCE;
+              Overflow["request"] = value;
+            }
+            else Request = (Hl7.Fhir.Model.Bundle.RequestComponent?)value;
             return this;
           case "response":
-            Response = (Hl7.Fhir.Model.Bundle.ResponseComponent?)value;
+            if (value is not (Hl7.Fhir.Model.Bundle.ResponseComponent or null))
+            {
+              Response = OverflowNull<Hl7.Fhir.Model.Bundle.ResponseComponent>.INSTANCE;
+              Overflow["response"] = value;
+            }
+            else Response = (Hl7.Fhir.Model.Bundle.ResponseComponent?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1468,7 +1508,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>>.InOverflow(_ModeElement))
-            Overflow.Remove("ModeElement");
+            Overflow.Remove("mode");
           _ModeElement = value;
           OnPropertyChanged("ModeElement");
         }
@@ -1509,7 +1549,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ScoreElement))
-            Overflow.Remove("ScoreElement");
+            Overflow.Remove("score");
           _ScoreElement = value;
           OnPropertyChanged("ScoreElement");
         }
@@ -1584,10 +1624,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "mode":
-            ModeElement = (Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> or null))
+            {
+              ModeElement = OverflowNull<Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>>.INSTANCE;
+              Overflow["mode"] = value;
+            }
+            else ModeElement = (Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>?)value;
             return this;
           case "score":
-            ScoreElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+            {
+              ScoreElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+              Overflow["score"] = value;
+            }
+            else ScoreElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1640,7 +1690,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.Bundle.HTTPVerb>>.InOverflow(_MethodElement))
-            Overflow.Remove("MethodElement");
+            Overflow.Remove("method");
           _MethodElement = value;
           OnPropertyChanged("MethodElement");
         }
@@ -1682,7 +1732,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
-            Overflow.Remove("UrlElement");
+            Overflow.Remove("url");
           _UrlElement = value;
           OnPropertyChanged("UrlElement");
         }
@@ -1723,7 +1773,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IfNoneMatchElement))
-            Overflow.Remove("IfNoneMatchElement");
+            Overflow.Remove("ifNoneMatch");
           _IfNoneMatchElement = value;
           OnPropertyChanged("IfNoneMatchElement");
         }
@@ -1764,7 +1814,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_IfModifiedSinceElement))
-            Overflow.Remove("IfModifiedSinceElement");
+            Overflow.Remove("ifModifiedSince");
           _IfModifiedSinceElement = value;
           OnPropertyChanged("IfModifiedSinceElement");
         }
@@ -1805,7 +1855,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IfMatchElement))
-            Overflow.Remove("IfMatchElement");
+            Overflow.Remove("ifMatch");
           _IfMatchElement = value;
           OnPropertyChanged("IfMatchElement");
         }
@@ -1846,7 +1896,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IfNoneExistElement))
-            Overflow.Remove("IfNoneExistElement");
+            Overflow.Remove("ifNoneExist");
           _IfNoneExistElement = value;
           OnPropertyChanged("IfNoneExistElement");
         }
@@ -1941,22 +1991,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "method":
-            MethodElement = (Code<Hl7.Fhir.Model.Bundle.HTTPVerb>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.Bundle.HTTPVerb> or null))
+            {
+              MethodElement = OverflowNull<Code<Hl7.Fhir.Model.Bundle.HTTPVerb>>.INSTANCE;
+              Overflow["method"] = value;
+            }
+            else MethodElement = (Code<Hl7.Fhir.Model.Bundle.HTTPVerb>?)value;
             return this;
           case "url":
-            UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
+            if (value is not (Hl7.Fhir.Model.FhirUri or null))
+            {
+              UrlElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+              Overflow["url"] = value;
+            }
+            else UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "ifNoneMatch":
-            IfNoneMatchElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              IfNoneMatchElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["ifNoneMatch"] = value;
+            }
+            else IfNoneMatchElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "ifModifiedSince":
-            IfModifiedSinceElement = (Hl7.Fhir.Model.Instant?)value;
+            if (value is not (Hl7.Fhir.Model.Instant or null))
+            {
+              IfModifiedSinceElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+              Overflow["ifModifiedSince"] = value;
+            }
+            else IfModifiedSinceElement = (Hl7.Fhir.Model.Instant?)value;
             return this;
           case "ifMatch":
-            IfMatchElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              IfMatchElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["ifMatch"] = value;
+            }
+            else IfMatchElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "ifNoneExist":
-            IfNoneExistElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              IfNoneExistElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["ifNoneExist"] = value;
+            }
+            else IfNoneExistElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2011,7 +2091,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_StatusElement))
-            Overflow.Remove("StatusElement");
+            Overflow.Remove("status");
           _StatusElement = value;
           OnPropertyChanged("StatusElement");
         }
@@ -2052,7 +2132,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_LocationElement))
-            Overflow.Remove("LocationElement");
+            Overflow.Remove("location");
           _LocationElement = value;
           OnPropertyChanged("LocationElement");
         }
@@ -2093,7 +2173,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EtagElement))
-            Overflow.Remove("EtagElement");
+            Overflow.Remove("etag");
           _EtagElement = value;
           OnPropertyChanged("EtagElement");
         }
@@ -2134,7 +2214,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_LastModifiedElement))
-            Overflow.Remove("LastModifiedElement");
+            Overflow.Remove("lastModified");
           _LastModifiedElement = value;
           OnPropertyChanged("LastModifiedElement");
         }
@@ -2177,7 +2257,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<DynamicResource>.InOverflow(_Outcome))
-            Overflow.Remove("Outcome");
+            Overflow.Remove("outcome");
           _Outcome = value;
           OnPropertyChanged("Outcome");
         }
@@ -2252,19 +2332,44 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "status":
-            StatusElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              StatusElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["status"] = value;
+            }
+            else StatusElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "location":
-            LocationElement = (Hl7.Fhir.Model.FhirUri?)value;
+            if (value is not (Hl7.Fhir.Model.FhirUri or null))
+            {
+              LocationElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+              Overflow["location"] = value;
+            }
+            else LocationElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "etag":
-            EtagElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              EtagElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["etag"] = value;
+            }
+            else EtagElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "lastModified":
-            LastModifiedElement = (Hl7.Fhir.Model.Instant?)value;
+            if (value is not (Hl7.Fhir.Model.Instant or null))
+            {
+              LastModifiedElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+              Overflow["lastModified"] = value;
+            }
+            else LastModifiedElement = (Hl7.Fhir.Model.Instant?)value;
             return this;
           case "outcome":
-            Outcome = (Hl7.Fhir.Model.Resource?)value;
+            if (value is not (Hl7.Fhir.Model.Resource or null))
+            {
+              Outcome = OverflowNull<DynamicResource>.INSTANCE;
+              Overflow["outcome"] = value;
+            }
+            else Outcome = (Hl7.Fhir.Model.Resource?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2301,7 +2406,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -2330,7 +2435,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.Bundle.BundleType>>.InOverflow(_TypeElement))
-          Overflow.Remove("TypeElement");
+          Overflow.Remove("type");
         _TypeElement = value;
         OnPropertyChanged("TypeElement");
       }
@@ -2374,7 +2479,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_TimestampElement))
-          Overflow.Remove("TimestampElement");
+          Overflow.Remove("timestamp");
         _TimestampElement = value;
         OnPropertyChanged("TimestampElement");
       }
@@ -2415,7 +2520,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_TotalElement))
-          Overflow.Remove("TotalElement");
+          Overflow.Remove("total");
         _TotalElement = value;
         OnPropertyChanged("TotalElement");
       }
@@ -2457,7 +2562,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Bundle.LinkComponent>>.InOverflow(_Link))
-          Overflow.Remove("Link");
+          Overflow.Remove("link");
         _Link = value;
         OnPropertyChanged("Link");
       }
@@ -2484,7 +2589,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Bundle.EntryComponent>>.InOverflow(_Entry))
-          Overflow.Remove("Entry");
+          Overflow.Remove("entry");
         _Entry = value;
         OnPropertyChanged("Entry");
       }
@@ -2510,7 +2615,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Signature>.InOverflow(_Signature))
-          Overflow.Remove("Signature");
+          Overflow.Remove("signature");
         _Signature = value;
         OnPropertyChanged("Signature");
       }
@@ -2541,7 +2646,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicResource>.InOverflow(_Issues))
-          Overflow.Remove("Issues");
+          Overflow.Remove("issues");
         _Issues = value;
         OnPropertyChanged("Issues");
       }
@@ -2633,28 +2738,68 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier?)value;
+          if (value is not (Hl7.Fhir.Model.Identifier or null))
+          {
+            Identifier = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.Bundle.BundleType> or null))
+          {
+            TypeElement = OverflowNull<Code<Hl7.Fhir.Model.Bundle.BundleType>>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>?)value;
           return this;
         case "timestamp":
-          TimestampElement = (Hl7.Fhir.Model.Instant?)value;
+          if (value is not (Hl7.Fhir.Model.Instant or null))
+          {
+            TimestampElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+            Overflow["timestamp"] = value;
+          }
+          else TimestampElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "total":
-          TotalElement = (Hl7.Fhir.Model.UnsignedInt?)value;
+          if (value is not (Hl7.Fhir.Model.UnsignedInt or null))
+          {
+            TotalElement = OverflowNull<Hl7.Fhir.Model.UnsignedInt>.INSTANCE;
+            Overflow["total"] = value;
+          }
+          else TotalElement = (Hl7.Fhir.Model.UnsignedInt?)value;
           return this;
         case "link":
-          Link = (List<Hl7.Fhir.Model.Bundle.LinkComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Bundle.LinkComponent> or null))
+          {
+            Link = OverflowNull<List<Hl7.Fhir.Model.Bundle.LinkComponent>>.INSTANCE;
+            Overflow["link"] = value;
+          }
+          else Link = (List<Hl7.Fhir.Model.Bundle.LinkComponent>?)value!;
           return this;
         case "entry":
-          Entry = (List<Hl7.Fhir.Model.Bundle.EntryComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Bundle.EntryComponent> or null))
+          {
+            Entry = OverflowNull<List<Hl7.Fhir.Model.Bundle.EntryComponent>>.INSTANCE;
+            Overflow["entry"] = value;
+          }
+          else Entry = (List<Hl7.Fhir.Model.Bundle.EntryComponent>?)value!;
           return this;
         case "signature":
-          Signature = (Hl7.Fhir.Model.Signature?)value;
+          if (value is not (Hl7.Fhir.Model.Signature or null))
+          {
+            Signature = OverflowNull<Hl7.Fhir.Model.Signature>.INSTANCE;
+            Overflow["signature"] = value;
+          }
+          else Signature = (Hl7.Fhir.Model.Signature?)value;
           return this;
         case "issues":
-          Issues = (Hl7.Fhir.Model.Resource?)value;
+          if (value is not (Hl7.Fhir.Model.Resource or null))
+          {
+            Issues = OverflowNull<DynamicResource>.INSTANCE;
+            Overflow["issues"] = value;
+          }
+          else Issues = (Hl7.Fhir.Model.Resource?)value;
           return this;
         default:
           return base.SetValue(key, value);

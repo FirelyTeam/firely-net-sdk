@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DeviceIdentifierElement))
-            Overflow.Remove("DeviceIdentifierElement");
+            Overflow.Remove("deviceIdentifier");
           _DeviceIdentifierElement = value;
           OnPropertyChanged("DeviceIdentifierElement");
         }
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_IssuerElement))
-            Overflow.Remove("IssuerElement");
+            Overflow.Remove("issuer");
           _IssuerElement = value;
           OnPropertyChanged("IssuerElement");
         }
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_JurisdictionElement))
-            Overflow.Remove("JurisdictionElement");
+            Overflow.Remove("jurisdiction");
           _JurisdictionElement = value;
           OnPropertyChanged("JurisdictionElement");
         }
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierMarketDistributionComponent>>.InOverflow(_MarketDistribution))
-            Overflow.Remove("MarketDistribution");
+            Overflow.Remove("marketDistribution");
           _MarketDistribution = value;
           OnPropertyChanged("MarketDistribution");
         }
@@ -395,16 +395,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "deviceIdentifier":
-            DeviceIdentifierElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              DeviceIdentifierElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["deviceIdentifier"] = value;
+            }
+            else DeviceIdentifierElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "issuer":
-            IssuerElement = (Hl7.Fhir.Model.FhirUri?)value;
+            if (value is not (Hl7.Fhir.Model.FhirUri or null))
+            {
+              IssuerElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+              Overflow["issuer"] = value;
+            }
+            else IssuerElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "jurisdiction":
-            JurisdictionElement = (Hl7.Fhir.Model.FhirUri?)value;
+            if (value is not (Hl7.Fhir.Model.FhirUri or null))
+            {
+              JurisdictionElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+              Overflow["jurisdiction"] = value;
+            }
+            else JurisdictionElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "marketDistribution":
-            MarketDistribution = (List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierMarketDistributionComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierMarketDistributionComponent> or null))
+            {
+              MarketDistribution = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierMarketDistributionComponent>>.INSTANCE;
+              Overflow["marketDistribution"] = value;
+            }
+            else MarketDistribution = (List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierMarketDistributionComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -457,7 +477,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_MarketPeriod))
-            Overflow.Remove("MarketPeriod");
+            Overflow.Remove("marketPeriod");
           _MarketPeriod = value;
           OnPropertyChanged("MarketPeriod");
         }
@@ -484,7 +504,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_SubJurisdictionElement))
-            Overflow.Remove("SubJurisdictionElement");
+            Overflow.Remove("subJurisdiction");
           _SubJurisdictionElement = value;
           OnPropertyChanged("SubJurisdictionElement");
         }
@@ -559,10 +579,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "marketPeriod":
-            MarketPeriod = (Hl7.Fhir.Model.Period?)value;
+            if (value is not (Hl7.Fhir.Model.Period or null))
+            {
+              MarketPeriod = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+              Overflow["marketPeriod"] = value;
+            }
+            else MarketPeriod = (Hl7.Fhir.Model.Period?)value;
             return this;
           case "subJurisdiction":
-            SubJurisdictionElement = (Hl7.Fhir.Model.FhirUri?)value;
+            if (value is not (Hl7.Fhir.Model.FhirUri or null))
+            {
+              SubJurisdictionElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+              Overflow["subJurisdiction"] = value;
+            }
+            else SubJurisdictionElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -616,7 +646,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceDefinitionRegulatoryIdentifierType>>.InOverflow(_TypeElement))
-            Overflow.Remove("TypeElement");
+            Overflow.Remove("type");
           _TypeElement = value;
           OnPropertyChanged("TypeElement");
         }
@@ -658,7 +688,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DeviceIdentifierElement))
-            Overflow.Remove("DeviceIdentifierElement");
+            Overflow.Remove("deviceIdentifier");
           _DeviceIdentifierElement = value;
           OnPropertyChanged("DeviceIdentifierElement");
         }
@@ -700,7 +730,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_IssuerElement))
-            Overflow.Remove("IssuerElement");
+            Overflow.Remove("issuer");
           _IssuerElement = value;
           OnPropertyChanged("IssuerElement");
         }
@@ -742,7 +772,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_JurisdictionElement))
-            Overflow.Remove("JurisdictionElement");
+            Overflow.Remove("jurisdiction");
           _JurisdictionElement = value;
           OnPropertyChanged("JurisdictionElement");
         }
@@ -827,16 +857,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            TypeElement = (Code<Hl7.Fhir.Model.DeviceDefinition.DeviceDefinitionRegulatoryIdentifierType>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.DeviceDefinition.DeviceDefinitionRegulatoryIdentifierType> or null))
+            {
+              TypeElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceDefinitionRegulatoryIdentifierType>>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else TypeElement = (Code<Hl7.Fhir.Model.DeviceDefinition.DeviceDefinitionRegulatoryIdentifierType>?)value;
             return this;
           case "deviceIdentifier":
-            DeviceIdentifierElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              DeviceIdentifierElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["deviceIdentifier"] = value;
+            }
+            else DeviceIdentifierElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "issuer":
-            IssuerElement = (Hl7.Fhir.Model.FhirUri?)value;
+            if (value is not (Hl7.Fhir.Model.FhirUri or null))
+            {
+              IssuerElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+              Overflow["issuer"] = value;
+            }
+            else IssuerElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           case "jurisdiction":
-            JurisdictionElement = (Hl7.Fhir.Model.FhirUri?)value;
+            if (value is not (Hl7.Fhir.Model.FhirUri or null))
+            {
+              JurisdictionElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+              Overflow["jurisdiction"] = value;
+            }
+            else JurisdictionElement = (Hl7.Fhir.Model.FhirUri?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -886,7 +936,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
-            Overflow.Remove("NameElement");
+            Overflow.Remove("name");
           _NameElement = value;
           OnPropertyChanged("NameElement");
         }
@@ -930,7 +980,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.DeviceNameType>>.InOverflow(_TypeElement))
-            Overflow.Remove("TypeElement");
+            Overflow.Remove("type");
           _TypeElement = value;
           OnPropertyChanged("TypeElement");
         }
@@ -1005,10 +1055,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["name"] = value;
+            }
+            else NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "type":
-            TypeElement = (Code<Hl7.Fhir.Model.DeviceNameType>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.DeviceNameType> or null))
+            {
+              TypeElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceNameType>>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else TypeElement = (Code<Hl7.Fhir.Model.DeviceNameType>?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1060,7 +1120,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-            Overflow.Remove("Type");
+            Overflow.Remove("type");
           _Type = value;
           OnPropertyChanged("Type");
         }
@@ -1087,7 +1147,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.InOverflow(_Justification))
-            Overflow.Remove("Justification");
+            Overflow.Remove("justification");
           _Justification = value;
           OnPropertyChanged("Justification");
         }
@@ -1147,10 +1207,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "justification":
-            Justification = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.RelatedArtifact> or null))
+            {
+              Justification = OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.INSTANCE;
+              Overflow["justification"] = value;
+            }
+            else Justification = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1201,7 +1271,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Category))
-            Overflow.Remove("Category");
+            Overflow.Remove("category");
           _Category = value;
           OnPropertyChanged("Category");
         }
@@ -1229,7 +1299,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Specification))
-            Overflow.Remove("Specification");
+            Overflow.Remove("specification");
           _Specification = value;
           OnPropertyChanged("Specification");
         }
@@ -1256,7 +1326,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_VersionElement))
-            Overflow.Remove("VersionElement");
+            Overflow.Remove("version");
           _VersionElement = value;
           OnPropertyChanged("VersionElement");
         }
@@ -1301,7 +1371,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.InOverflow(_Source))
-            Overflow.Remove("Source");
+            Overflow.Remove("source");
           _Source = value;
           OnPropertyChanged("Source");
         }
@@ -1371,16 +1441,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "category":
-            Category = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Category = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["category"] = value;
+            }
+            else Category = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "specification":
-            Specification = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Specification = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["specification"] = value;
+            }
+            else Specification = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "version":
-            VersionElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+            {
+              VersionElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+              Overflow["version"] = value;
+            }
+            else VersionElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
             return this;
           case "source":
-            Source = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.RelatedArtifact> or null))
+            {
+              Source = OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.INSTANCE;
+              Overflow["source"] = value;
+            }
+            else Source = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1435,7 +1525,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reference))
-            Overflow.Remove("Reference");
+            Overflow.Remove("reference");
           _Reference = value;
           OnPropertyChanged("Reference");
         }
@@ -1461,7 +1551,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_CountElement))
-            Overflow.Remove("CountElement");
+            Overflow.Remove("count");
           _CountElement = value;
           OnPropertyChanged("CountElement");
         }
@@ -1536,10 +1626,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "reference":
-            Reference = (Hl7.Fhir.Model.ResourceReference?)value;
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Reference = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["reference"] = value;
+            }
+            else Reference = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "count":
-            CountElement = (Hl7.Fhir.Model.Integer?)value;
+            if (value is not (Hl7.Fhir.Model.Integer or null))
+            {
+              CountElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
+              Overflow["count"] = value;
+            }
+            else CountElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1586,7 +1686,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
-            Overflow.Remove("Identifier");
+            Overflow.Remove("identifier");
           _Identifier = value;
           OnPropertyChanged("Identifier");
         }
@@ -1612,7 +1712,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-            Overflow.Remove("Type");
+            Overflow.Remove("type");
           _Type = value;
           OnPropertyChanged("Type");
         }
@@ -1638,7 +1738,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_CountElement))
-            Overflow.Remove("CountElement");
+            Overflow.Remove("count");
           _CountElement = value;
           OnPropertyChanged("CountElement");
         }
@@ -1680,7 +1780,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.PackagingDistributorComponent>>.InOverflow(_Distributor))
-            Overflow.Remove("Distributor");
+            Overflow.Remove("distributor");
           _Distributor = value;
           OnPropertyChanged("Distributor");
         }
@@ -1707,7 +1807,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>>.InOverflow(_UdiDeviceIdentifier))
-            Overflow.Remove("UdiDeviceIdentifier");
+            Overflow.Remove("udiDeviceIdentifier");
           _UdiDeviceIdentifier = value;
           OnPropertyChanged("UdiDeviceIdentifier");
         }
@@ -1734,7 +1834,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>>.InOverflow(_Packaging))
-            Overflow.Remove("Packaging");
+            Overflow.Remove("packaging");
           _Packaging = value;
           OnPropertyChanged("Packaging");
         }
@@ -1814,22 +1914,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
-            Identifier = (Hl7.Fhir.Model.Identifier?)value;
+            if (value is not (Hl7.Fhir.Model.Identifier or null))
+            {
+              Identifier = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+              Overflow["identifier"] = value;
+            }
+            else Identifier = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "count":
-            CountElement = (Hl7.Fhir.Model.Integer?)value;
+            if (value is not (Hl7.Fhir.Model.Integer or null))
+            {
+              CountElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
+              Overflow["count"] = value;
+            }
+            else CountElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "distributor":
-            Distributor = (List<Hl7.Fhir.Model.DeviceDefinition.PackagingDistributorComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.PackagingDistributorComponent> or null))
+            {
+              Distributor = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.PackagingDistributorComponent>>.INSTANCE;
+              Overflow["distributor"] = value;
+            }
+            else Distributor = (List<Hl7.Fhir.Model.DeviceDefinition.PackagingDistributorComponent>?)value!;
             return this;
           case "udiDeviceIdentifier":
-            UdiDeviceIdentifier = (List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent> or null))
+            {
+              UdiDeviceIdentifier = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>>.INSTANCE;
+              Overflow["udiDeviceIdentifier"] = value;
+            }
+            else UdiDeviceIdentifier = (List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>?)value!;
             return this;
           case "packaging":
-            Packaging = (List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent> or null))
+            {
+              Packaging = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>>.INSTANCE;
+              Overflow["packaging"] = value;
+            }
+            else Packaging = (List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1880,7 +2010,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
-            Overflow.Remove("NameElement");
+            Overflow.Remove("name");
           _NameElement = value;
           OnPropertyChanged("NameElement");
         }
@@ -1924,7 +2054,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_OrganizationReference))
-            Overflow.Remove("OrganizationReference");
+            Overflow.Remove("organizationReference");
           _OrganizationReference = value;
           OnPropertyChanged("OrganizationReference");
         }
@@ -1984,10 +2114,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["name"] = value;
+            }
+            else NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "organizationReference":
-            OrganizationReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+            {
+              OrganizationReference = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+              Overflow["organizationReference"] = value;
+            }
+            else OrganizationReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2034,7 +2174,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-            Overflow.Remove("Type");
+            Overflow.Remove("type");
           _Type = value;
           OnPropertyChanged("Type");
         }
@@ -2060,7 +2200,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Component))
-            Overflow.Remove("Component");
+            Overflow.Remove("component");
           _Component = value;
           OnPropertyChanged("Component");
         }
@@ -2087,7 +2227,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
-            Overflow.Remove("ValueElement");
+            Overflow.Remove("value");
           _ValueElement = value;
           OnPropertyChanged("ValueElement");
         }
@@ -2167,13 +2307,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "component":
-            Component = (Hl7.Fhir.Model.Identifier?)value;
+            if (value is not (Hl7.Fhir.Model.Identifier or null))
+            {
+              Component = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+              Overflow["component"] = value;
+            }
+            else Component = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "value":
-            ValueElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              ValueElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else ValueElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2227,7 +2382,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-            Overflow.Remove("Type");
+            Overflow.Remove("type");
           _Type = value;
           OnPropertyChanged("Type");
         }
@@ -2256,7 +2411,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<DynamicDataType>.InOverflow(_Value))
-            Overflow.Remove("Value");
+            Overflow.Remove("value");
           _Value = value;
           OnPropertyChanged("Value");
         }
@@ -2316,10 +2471,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType?)value;
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Value = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2368,7 +2533,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_Relation))
-            Overflow.Remove("Relation");
+            Overflow.Remove("relation");
           _Relation = value;
           OnPropertyChanged("Relation");
         }
@@ -2395,7 +2560,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_RelatedDevice))
-            Overflow.Remove("RelatedDevice");
+            Overflow.Remove("relatedDevice");
           _RelatedDevice = value;
           OnPropertyChanged("RelatedDevice");
         }
@@ -2455,10 +2620,20 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "relation":
-            Relation = (Hl7.Fhir.Model.Coding?)value;
+            if (value is not (Hl7.Fhir.Model.Coding or null))
+            {
+              Relation = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
+              Overflow["relation"] = value;
+            }
+            else Relation = (Hl7.Fhir.Model.Coding?)value;
             return this;
           case "relatedDevice":
-            RelatedDevice = (Hl7.Fhir.Model.CodeableReference?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableReference or null))
+            {
+              RelatedDevice = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
+              Overflow["relatedDevice"] = value;
+            }
+            else RelatedDevice = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2506,7 +2681,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Substance))
-            Overflow.Remove("Substance");
+            Overflow.Remove("substance");
           _Substance = value;
           OnPropertyChanged("Substance");
         }
@@ -2532,7 +2707,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AlternateElement))
-            Overflow.Remove("AlternateElement");
+            Overflow.Remove("alternate");
           _AlternateElement = value;
           OnPropertyChanged("AlternateElement");
         }
@@ -2573,7 +2748,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AllergenicIndicatorElement))
-            Overflow.Remove("AllergenicIndicatorElement");
+            Overflow.Remove("allergenicIndicator");
           _AllergenicIndicatorElement = value;
           OnPropertyChanged("AllergenicIndicatorElement");
         }
@@ -2653,13 +2828,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "substance":
-            Substance = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Substance = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["substance"] = value;
+            }
+            else Substance = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "alternate":
-            AlternateElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+            {
+              AlternateElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+              Overflow["alternate"] = value;
+            }
+            else AlternateElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "allergenicIndicator":
-            AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+            {
+              AllergenicIndicatorElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+              Overflow["allergenicIndicator"] = value;
+            }
+            else AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -2711,7 +2901,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.InOverflow(_UseContext))
-            Overflow.Remove("UseContext");
+            Overflow.Remove("useContext");
           _UseContext = value;
           OnPropertyChanged("UseContext");
         }
@@ -2737,7 +2927,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_UsageInstructionElement))
-            Overflow.Remove("UsageInstructionElement");
+            Overflow.Remove("usageInstruction");
           _UsageInstructionElement = value;
           OnPropertyChanged("UsageInstructionElement");
         }
@@ -2779,7 +2969,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.InOverflow(_RelatedArtifact))
-            Overflow.Remove("RelatedArtifact");
+            Overflow.Remove("relatedArtifact");
           _RelatedArtifact = value;
           OnPropertyChanged("RelatedArtifact");
         }
@@ -2806,7 +2996,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Indication))
-            Overflow.Remove("Indication");
+            Overflow.Remove("indication");
           _Indication = value;
           OnPropertyChanged("Indication");
         }
@@ -2833,7 +3023,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Contraindication))
-            Overflow.Remove("Contraindication");
+            Overflow.Remove("contraindication");
           _Contraindication = value;
           OnPropertyChanged("Contraindication");
         }
@@ -2860,7 +3050,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Warning))
-            Overflow.Remove("Warning");
+            Overflow.Remove("warning");
           _Warning = value;
           OnPropertyChanged("Warning");
         }
@@ -2886,7 +3076,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IntendedUseElement))
-            Overflow.Remove("IntendedUseElement");
+            Overflow.Remove("intendedUse");
           _IntendedUseElement = value;
           OnPropertyChanged("IntendedUseElement");
         }
@@ -2986,25 +3176,60 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "useContext":
-            UseContext = (List<Hl7.Fhir.Model.UsageContext>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.UsageContext> or null))
+            {
+              UseContext = OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.INSTANCE;
+              Overflow["useContext"] = value;
+            }
+            else UseContext = (List<Hl7.Fhir.Model.UsageContext>?)value!;
             return this;
           case "usageInstruction":
-            UsageInstructionElement = (Hl7.Fhir.Model.Markdown?)value;
+            if (value is not (Hl7.Fhir.Model.Markdown or null))
+            {
+              UsageInstructionElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
+              Overflow["usageInstruction"] = value;
+            }
+            else UsageInstructionElement = (Hl7.Fhir.Model.Markdown?)value;
             return this;
           case "relatedArtifact":
-            RelatedArtifact = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.RelatedArtifact> or null))
+            {
+              RelatedArtifact = OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.INSTANCE;
+              Overflow["relatedArtifact"] = value;
+            }
+            else RelatedArtifact = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
             return this;
           case "indication":
-            Indication = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Indication = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["indication"] = value;
+            }
+            else Indication = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "contraindication":
-            Contraindication = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Contraindication = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["contraindication"] = value;
+            }
+            else Contraindication = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "warning":
-            Warning = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Warning = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["warning"] = value;
+            }
+            else Warning = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "intendedUse":
-            IntendedUseElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              IntendedUseElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["intendedUse"] = value;
+            }
+            else IntendedUseElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -3057,7 +3282,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_RecallElement))
-            Overflow.Remove("RecallElement");
+            Overflow.Remove("recall");
           _RecallElement = value;
           OnPropertyChanged("RecallElement");
         }
@@ -3100,7 +3325,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceCorrectiveActionScope>>.InOverflow(_ScopeElement))
-            Overflow.Remove("ScopeElement");
+            Overflow.Remove("scope");
           _ScopeElement = value;
           OnPropertyChanged("ScopeElement");
         }
@@ -3142,7 +3367,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
-            Overflow.Remove("Period");
+            Overflow.Remove("period");
           _Period = value;
           OnPropertyChanged("Period");
         }
@@ -3207,13 +3432,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "recall":
-            RecallElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+            {
+              RecallElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+              Overflow["recall"] = value;
+            }
+            else RecallElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "scope":
-            ScopeElement = (Code<Hl7.Fhir.Model.DeviceDefinition.DeviceCorrectiveActionScope>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.DeviceDefinition.DeviceCorrectiveActionScope> or null))
+            {
+              ScopeElement = OverflowNull<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceCorrectiveActionScope>>.INSTANCE;
+              Overflow["scope"] = value;
+            }
+            else ScopeElement = (Code<Hl7.Fhir.Model.DeviceDefinition.DeviceCorrectiveActionScope>?)value;
             return this;
           case "period":
-            Period = (Hl7.Fhir.Model.Period?)value;
+            if (value is not (Hl7.Fhir.Model.Period or null))
+            {
+              Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+              Overflow["period"] = value;
+            }
+            else Period = (Hl7.Fhir.Model.Period?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -3262,7 +3502,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_ChargeItemCode))
-            Overflow.Remove("ChargeItemCode");
+            Overflow.Remove("chargeItemCode");
           _ChargeItemCode = value;
           OnPropertyChanged("ChargeItemCode");
         }
@@ -3289,7 +3529,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Count))
-            Overflow.Remove("Count");
+            Overflow.Remove("count");
           _Count = value;
           OnPropertyChanged("Count");
         }
@@ -3315,7 +3555,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_EffectivePeriod))
-            Overflow.Remove("EffectivePeriod");
+            Overflow.Remove("effectivePeriod");
           _EffectivePeriod = value;
           OnPropertyChanged("EffectivePeriod");
         }
@@ -3342,7 +3582,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.InOverflow(_UseContext))
-            Overflow.Remove("UseContext");
+            Overflow.Remove("useContext");
           _UseContext = value;
           OnPropertyChanged("UseContext");
         }
@@ -3412,16 +3652,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "chargeItemCode":
-            ChargeItemCode = (Hl7.Fhir.Model.CodeableReference?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableReference or null))
+            {
+              ChargeItemCode = OverflowNull<Hl7.Fhir.Model.CodeableReference>.INSTANCE;
+              Overflow["chargeItemCode"] = value;
+            }
+            else ChargeItemCode = (Hl7.Fhir.Model.CodeableReference?)value;
             return this;
           case "count":
-            Count = (Hl7.Fhir.Model.Quantity?)value;
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              Count = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["count"] = value;
+            }
+            else Count = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "effectivePeriod":
-            EffectivePeriod = (Hl7.Fhir.Model.Period?)value;
+            if (value is not (Hl7.Fhir.Model.Period or null))
+            {
+              EffectivePeriod = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+              Overflow["effectivePeriod"] = value;
+            }
+            else EffectivePeriod = (Hl7.Fhir.Model.Period?)value;
             return this;
           case "useContext":
-            UseContext = (List<Hl7.Fhir.Model.UsageContext>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.UsageContext> or null))
+            {
+              UseContext = OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.INSTANCE;
+              Overflow["useContext"] = value;
+            }
+            else UseContext = (List<Hl7.Fhir.Model.UsageContext>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -3457,7 +3717,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_DescriptionElement))
-          Overflow.Remove("DescriptionElement");
+          Overflow.Remove("description");
         _DescriptionElement = value;
         OnPropertyChanged("DescriptionElement");
       }
@@ -3499,7 +3759,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -3526,7 +3786,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>>.InOverflow(_UdiDeviceIdentifier))
-          Overflow.Remove("UdiDeviceIdentifier");
+          Overflow.Remove("udiDeviceIdentifier");
         _UdiDeviceIdentifier = value;
         OnPropertyChanged("UdiDeviceIdentifier");
       }
@@ -3553,7 +3813,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.RegulatoryIdentifierComponent>>.InOverflow(_RegulatoryIdentifier))
-          Overflow.Remove("RegulatoryIdentifier");
+          Overflow.Remove("regulatoryIdentifier");
         _RegulatoryIdentifier = value;
         OnPropertyChanged("RegulatoryIdentifier");
       }
@@ -3579,7 +3839,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PartNumberElement))
-          Overflow.Remove("PartNumberElement");
+          Overflow.Remove("partNumber");
         _PartNumberElement = value;
         OnPropertyChanged("PartNumberElement");
       }
@@ -3622,7 +3882,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Manufacturer))
-          Overflow.Remove("Manufacturer");
+          Overflow.Remove("manufacturer");
         _Manufacturer = value;
         OnPropertyChanged("Manufacturer");
       }
@@ -3649,7 +3909,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent>>.InOverflow(_DeviceName))
-          Overflow.Remove("DeviceName");
+          Overflow.Remove("deviceName");
         _DeviceName = value;
         OnPropertyChanged("DeviceName");
       }
@@ -3675,7 +3935,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ModelNumberElement))
-          Overflow.Remove("ModelNumberElement");
+          Overflow.Remove("modelNumber");
         _ModelNumberElement = value;
         OnPropertyChanged("ModelNumberElement");
       }
@@ -3717,7 +3977,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.ClassificationComponent>>.InOverflow(_Classification))
-          Overflow.Remove("Classification");
+          Overflow.Remove("classification");
         _Classification = value;
         OnPropertyChanged("Classification");
       }
@@ -3744,7 +4004,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.ConformsToComponent>>.InOverflow(_ConformsTo))
-          Overflow.Remove("ConformsTo");
+          Overflow.Remove("conformsTo");
         _ConformsTo = value;
         OnPropertyChanged("ConformsTo");
       }
@@ -3771,7 +4031,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.HasPartComponent>>.InOverflow(_HasPart))
-          Overflow.Remove("HasPart");
+          Overflow.Remove("hasPart");
         _HasPart = value;
         OnPropertyChanged("HasPart");
       }
@@ -3798,7 +4058,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>>.InOverflow(_Packaging))
-          Overflow.Remove("Packaging");
+          Overflow.Remove("packaging");
         _Packaging = value;
         OnPropertyChanged("Packaging");
       }
@@ -3825,7 +4085,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.VersionComponent>>.InOverflow(_Version))
-          Overflow.Remove("Version");
+          Overflow.Remove("version");
         _Version = value;
         OnPropertyChanged("Version");
       }
@@ -3853,7 +4113,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Safety))
-          Overflow.Remove("Safety");
+          Overflow.Remove("safety");
         _Safety = value;
         OnPropertyChanged("Safety");
       }
@@ -3880,7 +4140,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ProductShelfLife>>.InOverflow(_ShelfLifeStorage))
-          Overflow.Remove("ShelfLifeStorage");
+          Overflow.Remove("shelfLifeStorage");
         _ShelfLifeStorage = value;
         OnPropertyChanged("ShelfLifeStorage");
       }
@@ -3907,7 +4167,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_LanguageCode))
-          Overflow.Remove("LanguageCode");
+          Overflow.Remove("languageCode");
         _LanguageCode = value;
         OnPropertyChanged("LanguageCode");
       }
@@ -3934,7 +4194,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent>>.InOverflow(_Property))
-          Overflow.Remove("Property");
+          Overflow.Remove("property");
         _Property = value;
         OnPropertyChanged("Property");
       }
@@ -3962,7 +4222,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Owner))
-          Overflow.Remove("Owner");
+          Overflow.Remove("owner");
         _Owner = value;
         OnPropertyChanged("Owner");
       }
@@ -3989,7 +4249,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Contact))
-          Overflow.Remove("Contact");
+          Overflow.Remove("contact");
         _Contact = value;
         OnPropertyChanged("Contact");
       }
@@ -4016,7 +4276,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.LinkComponent>>.InOverflow(_Link))
-          Overflow.Remove("Link");
+          Overflow.Remove("link");
         _Link = value;
         OnPropertyChanged("Link");
       }
@@ -4043,7 +4303,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
-          Overflow.Remove("Note");
+          Overflow.Remove("note");
         _Note = value;
         OnPropertyChanged("Note");
       }
@@ -4070,7 +4330,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent>>.InOverflow(_Material))
-          Overflow.Remove("Material");
+          Overflow.Remove("material");
         _Material = value;
         OnPropertyChanged("Material");
       }
@@ -4099,7 +4359,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>>.InOverflow(_ProductionIdentifierInUDIElement))
-          Overflow.Remove("ProductionIdentifierInUDIElement");
+          Overflow.Remove("productionIdentifierInUDI");
         _ProductionIdentifierInUDIElement = value;
         OnPropertyChanged("ProductionIdentifierInUDIElement");
       }
@@ -4143,7 +4403,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.DeviceDefinition.GuidelineComponent>.InOverflow(_Guideline))
-          Overflow.Remove("Guideline");
+          Overflow.Remove("guideline");
         _Guideline = value;
         OnPropertyChanged("Guideline");
       }
@@ -4169,7 +4429,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.DeviceDefinition.CorrectiveActionComponent>.InOverflow(_CorrectiveAction))
-          Overflow.Remove("CorrectiveAction");
+          Overflow.Remove("correctiveAction");
         _CorrectiveAction = value;
         OnPropertyChanged("CorrectiveAction");
       }
@@ -4196,7 +4456,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.ChargeItemComponent>>.InOverflow(_ChargeItem))
-          Overflow.Remove("ChargeItem");
+          Overflow.Remove("chargeItem");
         _ChargeItem = value;
         OnPropertyChanged("ChargeItem");
       }
@@ -4378,82 +4638,212 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
+          if (value is not (Hl7.Fhir.Model.Markdown or null))
+          {
+            DescriptionElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
+            Overflow["description"] = value;
+          }
+          else DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "udiDeviceIdentifier":
-          UdiDeviceIdentifier = (List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent> or null))
+          {
+            UdiDeviceIdentifier = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>>.INSTANCE;
+            Overflow["udiDeviceIdentifier"] = value;
+          }
+          else UdiDeviceIdentifier = (List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>?)value!;
           return this;
         case "regulatoryIdentifier":
-          RegulatoryIdentifier = (List<Hl7.Fhir.Model.DeviceDefinition.RegulatoryIdentifierComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.RegulatoryIdentifierComponent> or null))
+          {
+            RegulatoryIdentifier = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.RegulatoryIdentifierComponent>>.INSTANCE;
+            Overflow["regulatoryIdentifier"] = value;
+          }
+          else RegulatoryIdentifier = (List<Hl7.Fhir.Model.DeviceDefinition.RegulatoryIdentifierComponent>?)value!;
           return this;
         case "partNumber":
-          PartNumberElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            PartNumberElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["partNumber"] = value;
+          }
+          else PartNumberElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "manufacturer":
-          Manufacturer = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Manufacturer = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["manufacturer"] = value;
+          }
+          else Manufacturer = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "deviceName":
-          DeviceName = (List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent> or null))
+          {
+            DeviceName = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent>>.INSTANCE;
+            Overflow["deviceName"] = value;
+          }
+          else DeviceName = (List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent>?)value!;
           return this;
         case "modelNumber":
-          ModelNumberElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ModelNumberElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["modelNumber"] = value;
+          }
+          else ModelNumberElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "classification":
-          Classification = (List<Hl7.Fhir.Model.DeviceDefinition.ClassificationComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.ClassificationComponent> or null))
+          {
+            Classification = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.ClassificationComponent>>.INSTANCE;
+            Overflow["classification"] = value;
+          }
+          else Classification = (List<Hl7.Fhir.Model.DeviceDefinition.ClassificationComponent>?)value!;
           return this;
         case "conformsTo":
-          ConformsTo = (List<Hl7.Fhir.Model.DeviceDefinition.ConformsToComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.ConformsToComponent> or null))
+          {
+            ConformsTo = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.ConformsToComponent>>.INSTANCE;
+            Overflow["conformsTo"] = value;
+          }
+          else ConformsTo = (List<Hl7.Fhir.Model.DeviceDefinition.ConformsToComponent>?)value!;
           return this;
         case "hasPart":
-          HasPart = (List<Hl7.Fhir.Model.DeviceDefinition.HasPartComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.HasPartComponent> or null))
+          {
+            HasPart = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.HasPartComponent>>.INSTANCE;
+            Overflow["hasPart"] = value;
+          }
+          else HasPart = (List<Hl7.Fhir.Model.DeviceDefinition.HasPartComponent>?)value!;
           return this;
         case "packaging":
-          Packaging = (List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent> or null))
+          {
+            Packaging = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>>.INSTANCE;
+            Overflow["packaging"] = value;
+          }
+          else Packaging = (List<Hl7.Fhir.Model.DeviceDefinition.PackagingComponent>?)value!;
           return this;
         case "version":
-          Version = (List<Hl7.Fhir.Model.DeviceDefinition.VersionComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.VersionComponent> or null))
+          {
+            Version = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.VersionComponent>>.INSTANCE;
+            Overflow["version"] = value;
+          }
+          else Version = (List<Hl7.Fhir.Model.DeviceDefinition.VersionComponent>?)value!;
           return this;
         case "safety":
-          Safety = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            Safety = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["safety"] = value;
+          }
+          else Safety = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "shelfLifeStorage":
-          ShelfLifeStorage = (List<Hl7.Fhir.Model.ProductShelfLife>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ProductShelfLife> or null))
+          {
+            ShelfLifeStorage = OverflowNull<List<Hl7.Fhir.Model.ProductShelfLife>>.INSTANCE;
+            Overflow["shelfLifeStorage"] = value;
+          }
+          else ShelfLifeStorage = (List<Hl7.Fhir.Model.ProductShelfLife>?)value!;
           return this;
         case "languageCode":
-          LanguageCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            LanguageCode = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["languageCode"] = value;
+          }
+          else LanguageCode = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "property":
-          Property = (List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent> or null))
+          {
+            Property = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent>>.INSTANCE;
+            Overflow["property"] = value;
+          }
+          else Property = (List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent>?)value!;
           return this;
         case "owner":
-          Owner = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Owner = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["owner"] = value;
+          }
+          else Owner = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "contact":
-          Contact = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ContactPoint> or null))
+          {
+            Contact = OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.INSTANCE;
+            Overflow["contact"] = value;
+          }
+          else Contact = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         case "link":
-          Link = (List<Hl7.Fhir.Model.DeviceDefinition.LinkComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.LinkComponent> or null))
+          {
+            Link = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.LinkComponent>>.INSTANCE;
+            Overflow["link"] = value;
+          }
+          else Link = (List<Hl7.Fhir.Model.DeviceDefinition.LinkComponent>?)value!;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
+          {
+            Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
+            Overflow["note"] = value;
+          }
+          else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         case "material":
-          Material = (List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent> or null))
+          {
+            Material = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent>>.INSTANCE;
+            Overflow["material"] = value;
+          }
+          else Material = (List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent>?)value!;
           return this;
         case "productionIdentifierInUDI":
-          ProductionIdentifierInUDIElement = (List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>?)value!;
+          if (value is not (List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>> or null))
+          {
+            ProductionIdentifierInUDIElement = OverflowNull<List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>>.INSTANCE;
+            Overflow["productionIdentifierInUDI"] = value;
+          }
+          else ProductionIdentifierInUDIElement = (List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>>?)value!;
           return this;
         case "guideline":
-          Guideline = (Hl7.Fhir.Model.DeviceDefinition.GuidelineComponent?)value;
+          if (value is not (Hl7.Fhir.Model.DeviceDefinition.GuidelineComponent or null))
+          {
+            Guideline = OverflowNull<Hl7.Fhir.Model.DeviceDefinition.GuidelineComponent>.INSTANCE;
+            Overflow["guideline"] = value;
+          }
+          else Guideline = (Hl7.Fhir.Model.DeviceDefinition.GuidelineComponent?)value;
           return this;
         case "correctiveAction":
-          CorrectiveAction = (Hl7.Fhir.Model.DeviceDefinition.CorrectiveActionComponent?)value;
+          if (value is not (Hl7.Fhir.Model.DeviceDefinition.CorrectiveActionComponent or null))
+          {
+            CorrectiveAction = OverflowNull<Hl7.Fhir.Model.DeviceDefinition.CorrectiveActionComponent>.INSTANCE;
+            Overflow["correctiveAction"] = value;
+          }
+          else CorrectiveAction = (Hl7.Fhir.Model.DeviceDefinition.CorrectiveActionComponent?)value;
           return this;
         case "chargeItem":
-          ChargeItem = (List<Hl7.Fhir.Model.DeviceDefinition.ChargeItemComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DeviceDefinition.ChargeItemComponent> or null))
+          {
+            ChargeItem = OverflowNull<List<Hl7.Fhir.Model.DeviceDefinition.ChargeItemComponent>>.INSTANCE;
+            Overflow["chargeItem"] = value;
+          }
+          else ChargeItem = (List<Hl7.Fhir.Model.DeviceDefinition.ChargeItemComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

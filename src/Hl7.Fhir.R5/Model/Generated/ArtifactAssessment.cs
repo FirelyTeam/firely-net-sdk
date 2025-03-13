@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>>.InOverflow(_InformationTypeElement))
-            Overflow.Remove("InformationTypeElement");
+            Overflow.Remove("informationType");
           _InformationTypeElement = value;
           OnPropertyChanged("InformationTypeElement");
         }
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_SummaryElement))
-            Overflow.Remove("SummaryElement");
+            Overflow.Remove("summary");
           _SummaryElement = value;
           OnPropertyChanged("SummaryElement");
         }
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
-            Overflow.Remove("Type");
+            Overflow.Remove("type");
           _Type = value;
           OnPropertyChanged("Type");
         }
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Classifier))
-            Overflow.Remove("Classifier");
+            Overflow.Remove("classifier");
           _Classifier = value;
           OnPropertyChanged("Classifier");
         }
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
-            Overflow.Remove("Quantity");
+            Overflow.Remove("quantity");
           _Quantity = value;
           OnPropertyChanged("Quantity");
         }
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Author))
-            Overflow.Remove("Author");
+            Overflow.Remove("author");
           _Author = value;
           OnPropertyChanged("Author");
         }
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.FhirUri>>.InOverflow(_PathElement))
-            Overflow.Remove("PathElement");
+            Overflow.Remove("path");
           _PathElement = value;
           OnPropertyChanged("PathElement");
         }
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.InOverflow(_RelatedArtifact))
-            Overflow.Remove("RelatedArtifact");
+            Overflow.Remove("relatedArtifact");
           _RelatedArtifact = value;
           OnPropertyChanged("RelatedArtifact");
         }
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_FreeToShareElement))
-            Overflow.Remove("FreeToShareElement");
+            Overflow.Remove("freeToShare");
           _FreeToShareElement = value;
           OnPropertyChanged("FreeToShareElement");
         }
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>>.InOverflow(_Component))
-            Overflow.Remove("Component");
+            Overflow.Remove("component");
           _Component = value;
           OnPropertyChanged("Component");
         }
@@ -658,34 +658,84 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "informationType":
-            InformationTypeElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType> or null))
+            {
+              InformationTypeElement = OverflowNull<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>>.INSTANCE;
+              Overflow["informationType"] = value;
+            }
+            else InformationTypeElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>?)value;
             return this;
           case "summary":
-            SummaryElement = (Hl7.Fhir.Model.Markdown?)value;
+            if (value is not (Hl7.Fhir.Model.Markdown or null))
+            {
+              SummaryElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
+              Overflow["summary"] = value;
+            }
+            else SummaryElement = (Hl7.Fhir.Model.Markdown?)value;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "classifier":
-            Classifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Classifier = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["classifier"] = value;
+            }
+            else Classifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity?)value;
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              Quantity = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["quantity"] = value;
+            }
+            else Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "author":
-            Author = (Hl7.Fhir.Model.ResourceReference?)value;
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Author = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["author"] = value;
+            }
+            else Author = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "path":
-            PathElement = (List<Hl7.Fhir.Model.FhirUri>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.FhirUri> or null))
+            {
+              PathElement = OverflowNull<List<Hl7.Fhir.Model.FhirUri>>.INSTANCE;
+              Overflow["path"] = value;
+            }
+            else PathElement = (List<Hl7.Fhir.Model.FhirUri>?)value!;
             return this;
           case "relatedArtifact":
-            RelatedArtifact = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.RelatedArtifact> or null))
+            {
+              RelatedArtifact = OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.INSTANCE;
+              Overflow["relatedArtifact"] = value;
+            }
+            else RelatedArtifact = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
             return this;
           case "freeToShare":
-            FreeToShareElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+            {
+              FreeToShareElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+              Overflow["freeToShare"] = value;
+            }
+            else FreeToShareElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "component":
-            Component = (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> or null))
+            {
+              Component = OverflowNull<List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>>.INSTANCE;
+              Overflow["component"] = value;
+            }
+            else Component = (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -728,7 +778,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -754,7 +804,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TitleElement))
-          Overflow.Remove("TitleElement");
+          Overflow.Remove("title");
         _TitleElement = value;
         OnPropertyChanged("TitleElement");
       }
@@ -798,7 +848,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_CiteAs))
-          Overflow.Remove("CiteAs");
+          Overflow.Remove("citeAs");
         _CiteAs = value;
         OnPropertyChanged("CiteAs");
       }
@@ -824,7 +874,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
-          Overflow.Remove("DateElement");
+          Overflow.Remove("date");
         _DateElement = value;
         OnPropertyChanged("DateElement");
       }
@@ -865,7 +915,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_CopyrightElement))
-          Overflow.Remove("CopyrightElement");
+          Overflow.Remove("copyright");
         _CopyrightElement = value;
         OnPropertyChanged("CopyrightElement");
       }
@@ -906,7 +956,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_ApprovalDateElement))
-          Overflow.Remove("ApprovalDateElement");
+          Overflow.Remove("approvalDate");
         _ApprovalDateElement = value;
         OnPropertyChanged("ApprovalDateElement");
       }
@@ -947,7 +997,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_LastReviewDateElement))
-          Overflow.Remove("LastReviewDateElement");
+          Overflow.Remove("lastReviewDate");
         _LastReviewDateElement = value;
         OnPropertyChanged("LastReviewDateElement");
       }
@@ -992,7 +1042,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<DynamicDataType>.InOverflow(_Artifact))
-          Overflow.Remove("Artifact");
+          Overflow.Remove("artifact");
         _Artifact = value;
         OnPropertyChanged("Artifact");
       }
@@ -1019,7 +1069,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>>.InOverflow(_Content))
-          Overflow.Remove("Content");
+          Overflow.Remove("content");
         _Content = value;
         OnPropertyChanged("Content");
       }
@@ -1047,7 +1097,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>>.InOverflow(_WorkflowStatusElement))
-          Overflow.Remove("WorkflowStatusElement");
+          Overflow.Remove("workflowStatus");
         _WorkflowStatusElement = value;
         OnPropertyChanged("WorkflowStatusElement");
       }
@@ -1090,7 +1140,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>>.InOverflow(_DispositionElement))
-          Overflow.Remove("DispositionElement");
+          Overflow.Remove("disposition");
         _DispositionElement = value;
         OnPropertyChanged("DispositionElement");
       }
@@ -1212,37 +1262,92 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "title":
-          TitleElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            TitleElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["title"] = value;
+          }
+          else TitleElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "citeAs":
-          CiteAs = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            CiteAs = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["citeAs"] = value;
+          }
+          else CiteAs = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "date":
-          DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            DateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["date"] = value;
+          }
+          else DateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "copyright":
-          CopyrightElement = (Hl7.Fhir.Model.Markdown?)value;
+          if (value is not (Hl7.Fhir.Model.Markdown or null))
+          {
+            CopyrightElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
+            Overflow["copyright"] = value;
+          }
+          else CopyrightElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "approvalDate":
-          ApprovalDateElement = (Hl7.Fhir.Model.Date?)value;
+          if (value is not (Hl7.Fhir.Model.Date or null))
+          {
+            ApprovalDateElement = OverflowNull<Hl7.Fhir.Model.Date>.INSTANCE;
+            Overflow["approvalDate"] = value;
+          }
+          else ApprovalDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "lastReviewDate":
-          LastReviewDateElement = (Hl7.Fhir.Model.Date?)value;
+          if (value is not (Hl7.Fhir.Model.Date or null))
+          {
+            LastReviewDateElement = OverflowNull<Hl7.Fhir.Model.Date>.INSTANCE;
+            Overflow["lastReviewDate"] = value;
+          }
+          else LastReviewDateElement = (Hl7.Fhir.Model.Date?)value;
           return this;
         case "artifact":
-          Artifact = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Artifact = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["artifact"] = value;
+          }
+          else Artifact = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "content":
-          Content = (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent> or null))
+          {
+            Content = OverflowNull<List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>>.INSTANCE;
+            Overflow["content"] = value;
+          }
+          else Content = (List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>?)value!;
           return this;
         case "workflowStatus":
-          WorkflowStatusElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus> or null))
+          {
+            WorkflowStatusElement = OverflowNull<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>>.INSTANCE;
+            Overflow["workflowStatus"] = value;
+          }
+          else WorkflowStatusElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>?)value;
           return this;
         case "disposition":
-          DispositionElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition> or null))
+          {
+            DispositionElement = OverflowNull<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>>.INSTANCE;
+            Overflow["disposition"] = value;
+          }
+          else DispositionElement = (Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>?)value;
           return this;
         default:
           return base.SetValue(key, value);

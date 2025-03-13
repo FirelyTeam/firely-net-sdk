@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
-            Overflow.Remove("NameElement");
+            Overflow.Remove("name");
           _NameElement = value;
           OnPropertyChanged("NameElement");
         }
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<DynamicDataType>.InOverflow(_Value))
-            Overflow.Remove("Value");
+            Overflow.Remove("value");
           _Value = value;
           OnPropertyChanged("Value");
         }
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<DynamicResource>.InOverflow(_Resource))
-            Overflow.Remove("Resource");
+            Overflow.Remove("resource");
           _Resource = value;
           OnPropertyChanged("Resource");
         }
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
         set
         {
           if (OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.InOverflow(_Part))
-            Overflow.Remove("Part");
+            Overflow.Remove("part");
           _Part = value;
           OnPropertyChanged("Part");
         }
@@ -263,16 +263,36 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "name":
-            NameElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["name"] = value;
+            }
+            else NameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType?)value;
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Value = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "resource":
-            Resource = (Hl7.Fhir.Model.Resource?)value;
+            if (value is not (Hl7.Fhir.Model.Resource or null))
+            {
+              Resource = OverflowNull<DynamicResource>.INSTANCE;
+              Overflow["resource"] = value;
+            }
+            else Resource = (Hl7.Fhir.Model.Resource?)value;
             return this;
           case "part":
-            Part = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.Parameters.ParameterComponent> or null))
+            {
+              Part = OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.INSTANCE;
+              Overflow["part"] = value;
+            }
+            else Part = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -309,7 +329,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.InOverflow(_Parameter))
-          Overflow.Remove("Parameter");
+          Overflow.Remove("parameter");
         _Parameter = value;
         OnPropertyChanged("Parameter");
       }
@@ -364,7 +384,12 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "parameter":
-          Parameter = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Parameters.ParameterComponent> or null))
+          {
+            Parameter = OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.INSTANCE;
+            Overflow["parameter"] = value;
+          }
+          else Parameter = (List<Hl7.Fhir.Model.Parameters.ParameterComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);

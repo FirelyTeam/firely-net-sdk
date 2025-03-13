@@ -124,8 +124,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.HumanName.NameUse>? UseElement
     {
-      get { return _UseElement; }
-      set { _UseElement = value; OnPropertyChanged("UseElement"); }
+      get
+      {
+        if(OverflowNull<Code<Hl7.Fhir.Model.HumanName.NameUse>>.InOverflow(_UseElement))
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.HumanName.NameUse>), Overflow["use"]);
+        return _UseElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Code<Hl7.Fhir.Model.HumanName.NameUse>>.InOverflow(_UseElement))
+          Overflow.Remove("use");
+        _UseElement = value;
+        OnPropertyChanged("UseElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.HumanName.NameUse>? _UseElement;
@@ -152,8 +165,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TextElement
     {
-      get { return _TextElement; }
-      set { _TextElement = value; OnPropertyChanged("TextElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["text"]);
+        return _TextElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+          Overflow.Remove("text");
+        _TextElement = value;
+        OnPropertyChanged("TextElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _TextElement;
@@ -180,8 +206,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? FamilyElement
     {
-      get { return _FamilyElement; }
-      set { _FamilyElement = value; OnPropertyChanged("FamilyElement"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FamilyElement))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["family"]);
+        return _FamilyElement;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FamilyElement))
+          Overflow.Remove("family");
+        _FamilyElement = value;
+        OnPropertyChanged("FamilyElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _FamilyElement;
@@ -209,8 +248,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> GivenElement
     {
-      get => _GivenElement ??= [];
-      set { _GivenElement = value; OnPropertyChanged("GivenElement"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_GivenElement))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["given"]);
+        return _GivenElement ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_GivenElement))
+          Overflow.Remove("given");
+        _GivenElement = value;
+        OnPropertyChanged("GivenElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _GivenElement;
@@ -241,8 +293,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> PrefixElement
     {
-      get => _PrefixElement ??= [];
-      set { _PrefixElement = value; OnPropertyChanged("PrefixElement"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_PrefixElement))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["prefix"]);
+        return _PrefixElement ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_PrefixElement))
+          Overflow.Remove("prefix");
+        _PrefixElement = value;
+        OnPropertyChanged("PrefixElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _PrefixElement;
@@ -273,8 +338,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> SuffixElement
     {
-      get => _SuffixElement ??= [];
-      set { _SuffixElement = value; OnPropertyChanged("SuffixElement"); }
+      get
+      {
+        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_SuffixElement))
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["suffix"]);
+        return _SuffixElement ??= [];
+      }
+
+      set
+      {
+        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_SuffixElement))
+          Overflow.Remove("suffix");
+        _SuffixElement = value;
+        OnPropertyChanged("SuffixElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _SuffixElement;
@@ -304,8 +382,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
     {
-      get { return _Period; }
-      set { _Period = value; OnPropertyChanged("Period"); }
+      get
+      {
+        if(OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
+        return _Period;
+      }
+
+      set
+      {
+        if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+          Overflow.Remove("period");
+        _Period = value;
+        OnPropertyChanged("Period");
+      }
+
     }
 
     private Hl7.Fhir.Model.Period? _Period;
@@ -386,25 +477,60 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "use":
-          UseElement = (Code<Hl7.Fhir.Model.HumanName.NameUse>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.HumanName.NameUse> or null))
+          {
+            UseElement = OverflowNull<Code<Hl7.Fhir.Model.HumanName.NameUse>>.INSTANCE;
+            Overflow["use"] = value;
+          }
+          else UseElement = (Code<Hl7.Fhir.Model.HumanName.NameUse>?)value;
           return this;
         case "text":
-          TextElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            TextElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["text"] = value;
+          }
+          else TextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "family":
-          FamilyElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            FamilyElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["family"] = value;
+          }
+          else FamilyElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "given":
-          GivenElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            GivenElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["given"] = value;
+          }
+          else GivenElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "prefix":
-          PrefixElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            PrefixElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["prefix"] = value;
+          }
+          else PrefixElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "suffix":
-          SuffixElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            SuffixElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["suffix"] = value;
+          }
+          else SuffixElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period?)value;
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         default:
           return base.SetValue(key, value);

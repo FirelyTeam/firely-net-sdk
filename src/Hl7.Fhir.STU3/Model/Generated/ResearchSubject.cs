@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
-          Overflow.Remove("Identifier");
+          Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
       }
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>.InOverflow(_StatusElement))
-          Overflow.Remove("StatusElement");
+          Overflow.Remove("status");
         _StatusElement = value;
         OnPropertyChanged("StatusElement");
       }
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
-          Overflow.Remove("Period");
+          Overflow.Remove("period");
         _Period = value;
         OnPropertyChanged("Period");
       }
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Study))
-          Overflow.Remove("Study");
+          Overflow.Remove("study");
         _Study = value;
         OnPropertyChanged("Study");
       }
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Individual))
-          Overflow.Remove("Individual");
+          Overflow.Remove("individual");
         _Individual = value;
         OnPropertyChanged("Individual");
       }
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AssignedArmElement))
-          Overflow.Remove("AssignedArmElement");
+          Overflow.Remove("assignedArm");
         _AssignedArmElement = value;
         OnPropertyChanged("AssignedArmElement");
       }
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ActualArmElement))
-          Overflow.Remove("ActualArmElement");
+          Overflow.Remove("actualArm");
         _ActualArmElement = value;
         OnPropertyChanged("ActualArmElement");
       }
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
       set
       {
         if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Consent))
-          Overflow.Remove("Consent");
+          Overflow.Remove("consent");
         _Consent = value;
         OnPropertyChanged("Consent");
       }
@@ -456,28 +456,68 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          Identifier = (Hl7.Fhir.Model.Identifier?)value;
+          if (value is not (Hl7.Fhir.Model.Identifier or null))
+          {
+            Identifier = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period?)value;
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "study":
-          Study = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Study = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["study"] = value;
+          }
+          else Study = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "individual":
-          Individual = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Individual = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["individual"] = value;
+          }
+          else Individual = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "assignedArm":
-          AssignedArmElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            AssignedArmElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["assignedArm"] = value;
+          }
+          else AssignedArmElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "actualArm":
-          ActualArmElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ActualArmElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["actualArm"] = value;
+          }
+          else ActualArmElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "consent":
-          Consent = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Consent = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["consent"] = value;
+          }
+          else Consent = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
