@@ -73,14 +73,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Coding))
+        if(_Coding.InOverflow<List<Hl7.Fhir.Model.Coding>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Coding>), Overflow["coding"]);
         return _Coding ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Coding))
+        if (_Coding.InOverflow<List<Hl7.Fhir.Model.Coding>>())
           Overflow.Remove("coding");
         _Coding = value;
         OnPropertyChanged("Coding");
@@ -99,14 +99,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+        if(_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["text"]);
         return _TextElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+        if (_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("text");
         _TextElement = value;
         OnPropertyChanged("TextElement");
@@ -166,17 +166,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "coding":
-          if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Coding))
+          if (_Coding.InOverflow<List<Hl7.Fhir.Model.Coding>>())
+          {
             value = Overflow["coding"];
-          else
-            value = _Coding;
-          return _Coding?.Any() == true;
+            return true;
+          }
+          value = _Coding;
+          return (value as List<Hl7.Fhir.Model.Coding>)?.Any() is true;
         case "text":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+          if (_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["text"];
-          else
-            value = _TextElement;
-          return _TextElement is not null;
+            return true;
+          }
+          value = _TextElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -213,8 +217,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Coding?.Any() == true) yield return new KeyValuePair<string,object>("coding",_Coding);
-      if (_TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (!_Coding.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _Coding?.Any() is true) yield return new KeyValuePair<string,object>("coding",_Coding);
+      if (!_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
     }
 
   }

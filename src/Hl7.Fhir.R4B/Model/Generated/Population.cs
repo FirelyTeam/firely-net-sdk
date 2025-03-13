@@ -73,14 +73,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<DynamicDataType>.InOverflow(_Age))
+        if(_Age.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["age"]);
         return _Age;
       }
 
       set
       {
-        if (OverflowNull<DynamicDataType>.InOverflow(_Age))
+        if (_Age.InOverflow<DynamicDataType>())
           Overflow.Remove("age");
         _Age = value;
         OnPropertyChanged("Age");
@@ -99,14 +99,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Gender))
+        if(_Gender.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["gender"]);
         return _Gender;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Gender))
+        if (_Gender.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("gender");
         _Gender = value;
         OnPropertyChanged("Gender");
@@ -125,14 +125,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Race))
+        if(_Race.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["race"]);
         return _Race;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Race))
+        if (_Race.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("race");
         _Race = value;
         OnPropertyChanged("Race");
@@ -151,14 +151,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PhysiologicalCondition))
+        if(_PhysiologicalCondition.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["physiologicalCondition"]);
         return _PhysiologicalCondition;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PhysiologicalCondition))
+        if (_PhysiologicalCondition.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("physiologicalCondition");
         _PhysiologicalCondition = value;
         OnPropertyChanged("PhysiologicalCondition");
@@ -207,29 +207,37 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "age":
-          if (OverflowNull<DynamicDataType>.InOverflow(_Age))
+          if (_Age.InOverflow<DynamicDataType>())
+          {
             value = Overflow["age"];
-          else
-            value = _Age;
-          return _Age is not null;
+            return true;
+          }
+          value = _Age;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "gender":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Gender))
+          if (_Gender.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["gender"];
-          else
-            value = _Gender;
-          return _Gender is not null;
+            return true;
+          }
+          value = _Gender;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "race":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Race))
+          if (_Race.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["race"];
-          else
-            value = _Race;
-          return _Race is not null;
+            return true;
+          }
+          value = _Race;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "physiologicalCondition":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PhysiologicalCondition))
+          if (_PhysiologicalCondition.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["physiologicalCondition"];
-          else
-            value = _PhysiologicalCondition;
-          return _PhysiologicalCondition is not null;
+            return true;
+          }
+          value = _PhysiologicalCondition;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -282,10 +290,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Age is not null) yield return new KeyValuePair<string,object>("age",_Age);
-      if (_Gender is not null) yield return new KeyValuePair<string,object>("gender",_Gender);
-      if (_Race is not null) yield return new KeyValuePair<string,object>("race",_Race);
-      if (_PhysiologicalCondition is not null) yield return new KeyValuePair<string,object>("physiologicalCondition",_PhysiologicalCondition);
+      if (!_Age.InOverflow<DynamicDataType>() && _Age is not null) yield return new KeyValuePair<string,object>("age",_Age);
+      if (!_Gender.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Gender is not null) yield return new KeyValuePair<string,object>("gender",_Gender);
+      if (!_Race.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Race is not null) yield return new KeyValuePair<string,object>("race",_Race);
+      if (!_PhysiologicalCondition.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _PhysiologicalCondition is not null) yield return new KeyValuePair<string,object>("physiologicalCondition",_PhysiologicalCondition);
     }
 
   }

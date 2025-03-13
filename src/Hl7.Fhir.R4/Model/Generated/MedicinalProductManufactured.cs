@@ -69,14 +69,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ManufacturedDoseForm))
+        if(_ManufacturedDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["manufacturedDoseForm"]);
         return _ManufacturedDoseForm;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ManufacturedDoseForm))
+        if (_ManufacturedDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("manufacturedDoseForm");
         _ManufacturedDoseForm = value;
         OnPropertyChanged("ManufacturedDoseForm");
@@ -95,14 +95,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_UnitOfPresentation))
+        if(_UnitOfPresentation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["unitOfPresentation"]);
         return _UnitOfPresentation;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_UnitOfPresentation))
+        if (_UnitOfPresentation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("unitOfPresentation");
         _UnitOfPresentation = value;
         OnPropertyChanged("UnitOfPresentation");
@@ -122,14 +122,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+        if(_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["quantity"]);
         return _Quantity;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+        if (_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
           Overflow.Remove("quantity");
         _Quantity = value;
         OnPropertyChanged("Quantity");
@@ -151,14 +151,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
+        if(_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["manufacturer"]);
         return _Manufacturer ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
+        if (_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           Overflow.Remove("manufacturer");
         _Manufacturer = value;
         OnPropertyChanged("Manufacturer");
@@ -180,14 +180,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Ingredient))
+        if(_Ingredient.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["ingredient"]);
         return _Ingredient ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Ingredient))
+        if (_Ingredient.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           Overflow.Remove("ingredient");
         _Ingredient = value;
         OnPropertyChanged("Ingredient");
@@ -206,14 +206,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.ProdCharacteristic>.InOverflow(_PhysicalCharacteristics))
+        if(_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ProdCharacteristic), Overflow["physicalCharacteristics"]);
         return _PhysicalCharacteristics;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.ProdCharacteristic>.InOverflow(_PhysicalCharacteristics))
+        if (_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>())
           Overflow.Remove("physicalCharacteristics");
         _PhysicalCharacteristics = value;
         OnPropertyChanged("PhysicalCharacteristics");
@@ -233,14 +233,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_OtherCharacteristics))
+        if(_OtherCharacteristics.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["otherCharacteristics"]);
         return _OtherCharacteristics ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_OtherCharacteristics))
+        if (_OtherCharacteristics.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
           Overflow.Remove("otherCharacteristics");
         _OtherCharacteristics = value;
         OnPropertyChanged("OtherCharacteristics");
@@ -295,47 +295,61 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "manufacturedDoseForm":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ManufacturedDoseForm))
+          if (_ManufacturedDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["manufacturedDoseForm"];
-          else
-            value = _ManufacturedDoseForm;
-          return _ManufacturedDoseForm is not null;
+            return true;
+          }
+          value = _ManufacturedDoseForm;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "unitOfPresentation":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_UnitOfPresentation))
+          if (_UnitOfPresentation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["unitOfPresentation"];
-          else
-            value = _UnitOfPresentation;
-          return _UnitOfPresentation is not null;
+            return true;
+          }
+          value = _UnitOfPresentation;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "quantity":
-          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+          if (_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
             value = Overflow["quantity"];
-          else
-            value = _Quantity;
-          return _Quantity is not null;
+            return true;
+          }
+          value = _Quantity;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "manufacturer":
-          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
+          if (_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
             value = Overflow["manufacturer"];
-          else
-            value = _Manufacturer;
-          return _Manufacturer?.Any() == true;
+            return true;
+          }
+          value = _Manufacturer;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "ingredient":
-          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Ingredient))
+          if (_Ingredient.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
             value = Overflow["ingredient"];
-          else
-            value = _Ingredient;
-          return _Ingredient?.Any() == true;
+            return true;
+          }
+          value = _Ingredient;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "physicalCharacteristics":
-          if (OverflowNull<Hl7.Fhir.Model.ProdCharacteristic>.InOverflow(_PhysicalCharacteristics))
+          if (_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>())
+          {
             value = Overflow["physicalCharacteristics"];
-          else
-            value = _PhysicalCharacteristics;
-          return _PhysicalCharacteristics is not null;
+            return true;
+          }
+          value = _PhysicalCharacteristics;
+          return (value as Hl7.Fhir.Model.ProdCharacteristic) is not null;
         case "otherCharacteristics":
-          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_OtherCharacteristics))
+          if (_OtherCharacteristics.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
             value = Overflow["otherCharacteristics"];
-          else
-            value = _OtherCharacteristics;
-          return _OtherCharacteristics?.Any() == true;
+            return true;
+          }
+          value = _OtherCharacteristics;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -412,13 +426,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_ManufacturedDoseForm is not null) yield return new KeyValuePair<string,object>("manufacturedDoseForm",_ManufacturedDoseForm);
-      if (_UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",_UnitOfPresentation);
-      if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
-      if (_Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
-      if (_Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",_Ingredient);
-      if (_PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",_PhysicalCharacteristics);
-      if (_OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",_OtherCharacteristics);
+      if (!_ManufacturedDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ManufacturedDoseForm is not null) yield return new KeyValuePair<string,object>("manufacturedDoseForm",_ManufacturedDoseForm);
+      if (!_UnitOfPresentation.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",_UnitOfPresentation);
+      if (!_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+      if (!_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Manufacturer?.Any() is true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (!_Ingredient.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Ingredient?.Any() is true) yield return new KeyValuePair<string,object>("ingredient",_Ingredient);
+      if (!_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>() && _PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",_PhysicalCharacteristics);
+      if (!_OtherCharacteristics.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _OtherCharacteristics?.Any() is true) yield return new KeyValuePair<string,object>("otherCharacteristics",_OtherCharacteristics);
     }
 
   }

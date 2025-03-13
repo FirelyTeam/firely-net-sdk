@@ -133,7 +133,7 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     /// <returns><c>true</c> if the given value was set in the POCO or present in the overflow dictionary, <c>false</c> otherwise.
     /// For lists, this means they should not be empty.</returns>
     public virtual bool TryGetValue(string key, [NotNullWhen(true)] out object? value) =>
-        Overflow.TryGetValue(key, out value) && (value is not IReadOnlyList<Base> list || list.Count > 0);
+        Overflow.TryGetValue(key, out value);
 
     /// <summary>
     /// Enumerates all non-empty elements in the POCO and the overflow dictionary.

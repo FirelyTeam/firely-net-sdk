@@ -126,14 +126,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.InOverflow(_TypeElement))
+        if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>), Overflow["type"]);
         return _TypeElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.InOverflow(_TypeElement))
+        if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
           Overflow.Remove("type");
         _TypeElement = value;
         OnPropertyChanged("TypeElement");
@@ -167,14 +167,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EventNameElement))
+        if(_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["eventName"]);
         return _EventNameElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EventNameElement))
+        if (_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("eventName");
         _EventNameElement = value;
         OnPropertyChanged("EventNameElement");
@@ -211,14 +211,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<DynamicDataType>.InOverflow(_EventTiming))
+        if(_EventTiming.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["eventTiming"]);
         return _EventTiming;
       }
 
       set
       {
-        if (OverflowNull<DynamicDataType>.InOverflow(_EventTiming))
+        if (_EventTiming.InOverflow<DynamicDataType>())
           Overflow.Remove("eventTiming");
         _EventTiming = value;
         OnPropertyChanged("EventTiming");
@@ -237,14 +237,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.DataRequirement>.InOverflow(_EventData))
+        if(_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataRequirement), Overflow["eventData"]);
         return _EventData;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.DataRequirement>.InOverflow(_EventData))
+        if (_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>())
           Overflow.Remove("eventData");
         _EventData = value;
         OnPropertyChanged("EventData");
@@ -293,29 +293,37 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          if (OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.InOverflow(_TypeElement))
+          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
+          {
             value = Overflow["type"];
-          else
-            value = _TypeElement;
-          return _TypeElement is not null;
+            return true;
+          }
+          value = _TypeElement;
+          return (value as Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>) is not null;
         case "eventName":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EventNameElement))
+          if (_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["eventName"];
-          else
-            value = _EventNameElement;
-          return _EventNameElement is not null;
+            return true;
+          }
+          value = _EventNameElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "eventTiming":
-          if (OverflowNull<DynamicDataType>.InOverflow(_EventTiming))
+          if (_EventTiming.InOverflow<DynamicDataType>())
+          {
             value = Overflow["eventTiming"];
-          else
-            value = _EventTiming;
-          return _EventTiming is not null;
+            return true;
+          }
+          value = _EventTiming;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "eventData":
-          if (OverflowNull<Hl7.Fhir.Model.DataRequirement>.InOverflow(_EventData))
+          if (_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>())
+          {
             value = Overflow["eventData"];
-          else
-            value = _EventData;
-          return _EventData is not null;
+            return true;
+          }
+          value = _EventData;
+          return (value as Hl7.Fhir.Model.DataRequirement) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -368,10 +376,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (_EventNameElement is not null) yield return new KeyValuePair<string,object>("eventName",_EventNameElement);
-      if (_EventTiming is not null) yield return new KeyValuePair<string,object>("eventTiming",_EventTiming);
-      if (_EventData is not null) yield return new KeyValuePair<string,object>("eventData",_EventData);
+      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (!_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _EventNameElement is not null) yield return new KeyValuePair<string,object>("eventName",_EventNameElement);
+      if (!_EventTiming.InOverflow<DynamicDataType>() && _EventTiming is not null) yield return new KeyValuePair<string,object>("eventTiming",_EventTiming);
+      if (!_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>() && _EventData is not null) yield return new KeyValuePair<string,object>("eventData",_EventData);
     }
 
   }

@@ -71,14 +71,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Concept))
+        if(_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["concept"]);
         return _Concept;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Concept))
+        if (_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("concept");
         _Concept = value;
         OnPropertyChanged("Concept");
@@ -97,14 +97,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reference))
+        if(_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["reference"]);
         return _Reference;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reference))
+        if (_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           Overflow.Remove("reference");
         _Reference = value;
         OnPropertyChanged("Reference");
@@ -149,17 +149,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "concept":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Concept))
+          if (_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["concept"];
-          else
-            value = _Concept;
-          return _Concept is not null;
+            return true;
+          }
+          value = _Concept;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "reference":
-          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reference))
+          if (_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
             value = Overflow["reference"];
-          else
-            value = _Reference;
-          return _Reference is not null;
+            return true;
+          }
+          value = _Reference;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -196,8 +200,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Concept is not null) yield return new KeyValuePair<string,object>("concept",_Concept);
-      if (_Reference is not null) yield return new KeyValuePair<string,object>("reference",_Reference);
+      if (!_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Concept is not null) yield return new KeyValuePair<string,object>("concept",_Concept);
+      if (!_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Reference is not null) yield return new KeyValuePair<string,object>("reference",_Reference);
     }
 
   }

@@ -72,14 +72,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Numerator))
+        if(_Numerator.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["numerator"]);
         return _Numerator;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Numerator))
+        if (_Numerator.InOverflow<Hl7.Fhir.Model.Quantity>())
           Overflow.Remove("numerator");
         _Numerator = value;
         OnPropertyChanged("Numerator");
@@ -98,14 +98,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
+        if(_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["denominator"]);
         return _Denominator;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
+        if (_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
           Overflow.Remove("denominator");
         _Denominator = value;
         OnPropertyChanged("Denominator");
@@ -150,17 +150,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "numerator":
-          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Numerator))
+          if (_Numerator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
             value = Overflow["numerator"];
-          else
-            value = _Numerator;
-          return _Numerator is not null;
+            return true;
+          }
+          value = _Numerator;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "denominator":
-          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
+          if (_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
             value = Overflow["denominator"];
-          else
-            value = _Denominator;
-          return _Denominator is not null;
+            return true;
+          }
+          value = _Denominator;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -197,8 +201,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Numerator is not null) yield return new KeyValuePair<string,object>("numerator",_Numerator);
-      if (_Denominator is not null) yield return new KeyValuePair<string,object>("denominator",_Denominator);
+      if (!_Numerator.InOverflow<Hl7.Fhir.Model.Quantity>() && _Numerator is not null) yield return new KeyValuePair<string,object>("numerator",_Numerator);
+      if (!_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>() && _Denominator is not null) yield return new KeyValuePair<string,object>("denominator",_Denominator);
     }
 
   }

@@ -85,14 +85,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_TherapyRelationshipType))
+          if(_TherapyRelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["therapyRelationshipType"]);
           return _TherapyRelationshipType;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_TherapyRelationshipType))
+          if (_TherapyRelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             Overflow.Remove("therapyRelationshipType");
           _TherapyRelationshipType = value;
           OnPropertyChanged("TherapyRelationshipType");
@@ -115,14 +115,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<DynamicDataType>.InOverflow(_Medication))
+          if(_Medication.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["medication"]);
           return _Medication;
         }
 
         set
         {
-          if (OverflowNull<DynamicDataType>.InOverflow(_Medication))
+          if (_Medication.InOverflow<DynamicDataType>())
             Overflow.Remove("medication");
           _Medication = value;
           OnPropertyChanged("Medication");
@@ -167,17 +167,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "therapyRelationshipType":
-            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_TherapyRelationshipType))
+            if (_TherapyRelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
               value = Overflow["therapyRelationshipType"];
-            else
-              value = _TherapyRelationshipType;
-            return _TherapyRelationshipType is not null;
+              return true;
+            }
+            value = _TherapyRelationshipType;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "medication":
-            if (OverflowNull<DynamicDataType>.InOverflow(_Medication))
+            if (_Medication.InOverflow<DynamicDataType>())
+            {
               value = Overflow["medication"];
-            else
-              value = _Medication;
-            return _Medication is not null;
+              return true;
+            }
+            value = _Medication;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -214,8 +218,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_TherapyRelationshipType is not null) yield return new KeyValuePair<string,object>("therapyRelationshipType",_TherapyRelationshipType);
-        if (_Medication is not null) yield return new KeyValuePair<string,object>("medication",_Medication);
+        if (!_TherapyRelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _TherapyRelationshipType is not null) yield return new KeyValuePair<string,object>("therapyRelationshipType",_TherapyRelationshipType);
+        if (!_Medication.InOverflow<DynamicDataType>() && _Medication is not null) yield return new KeyValuePair<string,object>("medication",_Medication);
       }
 
     }
@@ -232,14 +236,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+        if(_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["subject"]);
         return _Subject ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+        if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           Overflow.Remove("subject");
         _Subject = value;
         OnPropertyChanged("Subject");
@@ -258,14 +262,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DiseaseSymptomProcedure))
+        if(_DiseaseSymptomProcedure.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["diseaseSymptomProcedure"]);
         return _DiseaseSymptomProcedure;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DiseaseSymptomProcedure))
+        if (_DiseaseSymptomProcedure.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("diseaseSymptomProcedure");
         _DiseaseSymptomProcedure = value;
         OnPropertyChanged("DiseaseSymptomProcedure");
@@ -284,14 +288,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DiseaseStatus))
+        if(_DiseaseStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["diseaseStatus"]);
         return _DiseaseStatus;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DiseaseStatus))
+        if (_DiseaseStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("diseaseStatus");
         _DiseaseStatus = value;
         OnPropertyChanged("DiseaseStatus");
@@ -311,14 +315,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Comorbidity))
+        if(_Comorbidity.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["comorbidity"]);
         return _Comorbidity ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Comorbidity))
+        if (_Comorbidity.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
           Overflow.Remove("comorbidity");
         _Comorbidity = value;
         OnPropertyChanged("Comorbidity");
@@ -337,14 +341,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_IntendedEffect))
+        if(_IntendedEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["intendedEffect"]);
         return _IntendedEffect;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_IntendedEffect))
+        if (_IntendedEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("intendedEffect");
         _IntendedEffect = value;
         OnPropertyChanged("IntendedEffect");
@@ -363,14 +367,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Duration))
+        if(_Duration.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["duration"]);
         return _Duration;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Duration))
+        if (_Duration.InOverflow<Hl7.Fhir.Model.Quantity>())
           Overflow.Remove("duration");
         _Duration = value;
         OnPropertyChanged("Duration");
@@ -390,14 +394,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>>.InOverflow(_OtherTherapy))
+        if(_OtherTherapy.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>), Overflow["otherTherapy"]);
         return _OtherTherapy ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>>.InOverflow(_OtherTherapy))
+        if (_OtherTherapy.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>>())
           Overflow.Remove("otherTherapy");
         _OtherTherapy = value;
         OnPropertyChanged("OtherTherapy");
@@ -419,14 +423,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_UndesirableEffect))
+        if(_UndesirableEffect.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["undesirableEffect"]);
         return _UndesirableEffect ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_UndesirableEffect))
+        if (_UndesirableEffect.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           Overflow.Remove("undesirableEffect");
         _UndesirableEffect = value;
         OnPropertyChanged("UndesirableEffect");
@@ -446,14 +450,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
+        if(_Population.InOverflow<List<Hl7.Fhir.Model.Population>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Population>), Overflow["population"]);
         return _Population ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
+        if (_Population.InOverflow<List<Hl7.Fhir.Model.Population>>())
           Overflow.Remove("population");
         _Population = value;
         OnPropertyChanged("Population");
@@ -512,59 +516,77 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "subject":
-          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+          if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
             value = Overflow["subject"];
-          else
-            value = _Subject;
-          return _Subject?.Any() == true;
+            return true;
+          }
+          value = _Subject;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "diseaseSymptomProcedure":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DiseaseSymptomProcedure))
+          if (_DiseaseSymptomProcedure.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["diseaseSymptomProcedure"];
-          else
-            value = _DiseaseSymptomProcedure;
-          return _DiseaseSymptomProcedure is not null;
+            return true;
+          }
+          value = _DiseaseSymptomProcedure;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "diseaseStatus":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DiseaseStatus))
+          if (_DiseaseStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["diseaseStatus"];
-          else
-            value = _DiseaseStatus;
-          return _DiseaseStatus is not null;
+            return true;
+          }
+          value = _DiseaseStatus;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "comorbidity":
-          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Comorbidity))
+          if (_Comorbidity.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
             value = Overflow["comorbidity"];
-          else
-            value = _Comorbidity;
-          return _Comorbidity?.Any() == true;
+            return true;
+          }
+          value = _Comorbidity;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "intendedEffect":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_IntendedEffect))
+          if (_IntendedEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["intendedEffect"];
-          else
-            value = _IntendedEffect;
-          return _IntendedEffect is not null;
+            return true;
+          }
+          value = _IntendedEffect;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "duration":
-          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Duration))
+          if (_Duration.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
             value = Overflow["duration"];
-          else
-            value = _Duration;
-          return _Duration is not null;
+            return true;
+          }
+          value = _Duration;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "otherTherapy":
-          if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>>.InOverflow(_OtherTherapy))
+          if (_OtherTherapy.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>>())
+          {
             value = Overflow["otherTherapy"];
-          else
-            value = _OtherTherapy;
-          return _OtherTherapy?.Any() == true;
+            return true;
+          }
+          value = _OtherTherapy;
+          return (value as List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>)?.Any() is true;
         case "undesirableEffect":
-          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_UndesirableEffect))
+          if (_UndesirableEffect.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
             value = Overflow["undesirableEffect"];
-          else
-            value = _UndesirableEffect;
-          return _UndesirableEffect?.Any() == true;
+            return true;
+          }
+          value = _UndesirableEffect;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "population":
-          if (OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
+          if (_Population.InOverflow<List<Hl7.Fhir.Model.Population>>())
+          {
             value = Overflow["population"];
-          else
-            value = _Population;
-          return _Population?.Any() == true;
+            return true;
+          }
+          value = _Population;
+          return (value as List<Hl7.Fhir.Model.Population>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -657,15 +679,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",_DiseaseSymptomProcedure);
-      if (_DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",_DiseaseStatus);
-      if (_Comorbidity?.Any() == true) yield return new KeyValuePair<string,object>("comorbidity",_Comorbidity);
-      if (_IntendedEffect is not null) yield return new KeyValuePair<string,object>("intendedEffect",_IntendedEffect);
-      if (_Duration is not null) yield return new KeyValuePair<string,object>("duration",_Duration);
-      if (_OtherTherapy?.Any() == true) yield return new KeyValuePair<string,object>("otherTherapy",_OtherTherapy);
-      if (_UndesirableEffect?.Any() == true) yield return new KeyValuePair<string,object>("undesirableEffect",_UndesirableEffect);
-      if (_Population?.Any() == true) yield return new KeyValuePair<string,object>("population",_Population);
+      if (!_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Subject?.Any() is true) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (!_DiseaseSymptomProcedure.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",_DiseaseSymptomProcedure);
+      if (!_DiseaseStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",_DiseaseStatus);
+      if (!_Comorbidity.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Comorbidity?.Any() is true) yield return new KeyValuePair<string,object>("comorbidity",_Comorbidity);
+      if (!_IntendedEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _IntendedEffect is not null) yield return new KeyValuePair<string,object>("intendedEffect",_IntendedEffect);
+      if (!_Duration.InOverflow<Hl7.Fhir.Model.Quantity>() && _Duration is not null) yield return new KeyValuePair<string,object>("duration",_Duration);
+      if (!_OtherTherapy.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>>() && _OtherTherapy?.Any() is true) yield return new KeyValuePair<string,object>("otherTherapy",_OtherTherapy);
+      if (!_UndesirableEffect.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _UndesirableEffect?.Any() is true) yield return new KeyValuePair<string,object>("undesirableEffect",_UndesirableEffect);
+      if (!_Population.InOverflow<List<Hl7.Fhir.Model.Population>>() && _Population?.Any() is true) yield return new KeyValuePair<string,object>("population",_Population);
     }
 
   }

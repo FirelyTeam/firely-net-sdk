@@ -118,14 +118,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Code<Hl7.Fhir.Model.Linkage.LinkageType>>.InOverflow(_TypeElement))
+          if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Linkage.LinkageType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Linkage.LinkageType>), Overflow["type"]);
           return _TypeElement;
         }
 
         set
         {
-          if (OverflowNull<Code<Hl7.Fhir.Model.Linkage.LinkageType>>.InOverflow(_TypeElement))
+          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Linkage.LinkageType>>())
             Overflow.Remove("type");
           _TypeElement = value;
           OnPropertyChanged("TypeElement");
@@ -162,14 +162,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Resource))
+          if(_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["resource"]);
           return _Resource;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Resource))
+          if (_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>())
             Overflow.Remove("resource");
           _Resource = value;
           OnPropertyChanged("Resource");
@@ -214,17 +214,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            if (OverflowNull<Code<Hl7.Fhir.Model.Linkage.LinkageType>>.InOverflow(_TypeElement))
+            if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Linkage.LinkageType>>())
+            {
               value = Overflow["type"];
-            else
-              value = _TypeElement;
-            return _TypeElement is not null;
+              return true;
+            }
+            value = _TypeElement;
+            return (value as Code<Hl7.Fhir.Model.Linkage.LinkageType>) is not null;
           case "resource":
-            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Resource))
+            if (_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
               value = Overflow["resource"];
-            else
-              value = _Resource;
-            return _Resource is not null;
+              return true;
+            }
+            value = _Resource;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -261,8 +265,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-        if (_Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Linkage.LinkageType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (!_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
       }
 
     }
@@ -276,14 +280,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+        if(_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["active"]);
         return _ActiveElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+        if (_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           Overflow.Remove("active");
         _ActiveElement = value;
         OnPropertyChanged("ActiveElement");
@@ -319,14 +323,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Author))
+        if(_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["author"]);
         return _Author;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Author))
+        if (_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           Overflow.Remove("author");
         _Author = value;
         OnPropertyChanged("Author");
@@ -346,14 +350,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.Linkage.ItemComponent>>.InOverflow(_Item))
+        if(_Item.InOverflow<List<Hl7.Fhir.Model.Linkage.ItemComponent>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Linkage.ItemComponent>), Overflow["item"]);
         return _Item ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.Linkage.ItemComponent>>.InOverflow(_Item))
+        if (_Item.InOverflow<List<Hl7.Fhir.Model.Linkage.ItemComponent>>())
           Overflow.Remove("item");
         _Item = value;
         OnPropertyChanged("Item");
@@ -400,23 +404,29 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "active":
-          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+          if (_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+          {
             value = Overflow["active"];
-          else
-            value = _ActiveElement;
-          return _ActiveElement is not null;
+            return true;
+          }
+          value = _ActiveElement;
+          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
         case "author":
-          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Author))
+          if (_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
             value = Overflow["author"];
-          else
-            value = _Author;
-          return _Author is not null;
+            return true;
+          }
+          value = _Author;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "item":
-          if (OverflowNull<List<Hl7.Fhir.Model.Linkage.ItemComponent>>.InOverflow(_Item))
+          if (_Item.InOverflow<List<Hl7.Fhir.Model.Linkage.ItemComponent>>())
+          {
             value = Overflow["item"];
-          else
-            value = _Item;
-          return _Item?.Any() == true;
+            return true;
+          }
+          value = _Item;
+          return (value as List<Hl7.Fhir.Model.Linkage.ItemComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -461,9 +471,9 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
-      if (_Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
-      if (_Item?.Any() == true) yield return new KeyValuePair<string,object>("item",_Item);
+      if (!_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (!_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
+      if (!_Item.InOverflow<List<Hl7.Fhir.Model.Linkage.ItemComponent>>() && _Item?.Any() is true) yield return new KeyValuePair<string,object>("item",_Item);
     }
 
   }

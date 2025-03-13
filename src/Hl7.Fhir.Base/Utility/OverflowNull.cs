@@ -1,4 +1,5 @@
 using Hl7.Fhir.Model;
+using System.Threading;
 
 namespace Hl7.Fhir.Utility;
 
@@ -7,5 +8,9 @@ namespace Hl7.Fhir.Utility;
 internal static class OverflowNull<T> where T: new()
 {
     public static readonly T INSTANCE = new();
-    public static bool InOverflow(object? x) => ReferenceEquals(x, INSTANCE);
+}
+
+internal static class OverflowNull
+{
+    public static bool InOverflow<T>(this object? value) where T : new() => ReferenceEquals(OverflowNull<T>.INSTANCE, value);
 }

@@ -72,14 +72,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Low))
+        if(_Low.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["low"]);
         return _Low;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Low))
+        if (_Low.InOverflow<Hl7.Fhir.Model.Quantity>())
           Overflow.Remove("low");
         _Low = value;
         OnPropertyChanged("Low");
@@ -98,14 +98,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_High))
+        if(_High.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["high"]);
         return _High;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_High))
+        if (_High.InOverflow<Hl7.Fhir.Model.Quantity>())
           Overflow.Remove("high");
         _High = value;
         OnPropertyChanged("High");
@@ -150,17 +150,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "low":
-          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Low))
+          if (_Low.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
             value = Overflow["low"];
-          else
-            value = _Low;
-          return _Low is not null;
+            return true;
+          }
+          value = _Low;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "high":
-          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_High))
+          if (_High.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
             value = Overflow["high"];
-          else
-            value = _High;
-          return _High is not null;
+            return true;
+          }
+          value = _High;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -197,8 +201,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Low is not null) yield return new KeyValuePair<string,object>("low",_Low);
-      if (_High is not null) yield return new KeyValuePair<string,object>("high",_High);
+      if (!_Low.InOverflow<Hl7.Fhir.Model.Quantity>() && _Low is not null) yield return new KeyValuePair<string,object>("low",_Low);
+      if (!_High.InOverflow<Hl7.Fhir.Model.Quantity>() && _High is not null) yield return new KeyValuePair<string,object>("high",_High);
     }
 
   }

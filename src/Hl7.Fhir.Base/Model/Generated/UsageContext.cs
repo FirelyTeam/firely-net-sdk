@@ -73,14 +73,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_Code))
+        if(_Code.InOverflow<Hl7.Fhir.Model.Coding>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["code"]);
         return _Code;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_Code))
+        if (_Code.InOverflow<Hl7.Fhir.Model.Coding>())
           Overflow.Remove("code");
         _Code = value;
         OnPropertyChanged("Code");
@@ -104,14 +104,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<DynamicDataType>.InOverflow(_Value))
+        if(_Value.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
         return _Value;
       }
 
       set
       {
-        if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+        if (_Value.InOverflow<DynamicDataType>())
           Overflow.Remove("value");
         _Value = value;
         OnPropertyChanged("Value");
@@ -156,17 +156,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "code":
-          if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_Code))
+          if (_Code.InOverflow<Hl7.Fhir.Model.Coding>())
+          {
             value = Overflow["code"];
-          else
-            value = _Code;
-          return _Code is not null;
+            return true;
+          }
+          value = _Code;
+          return (value as Hl7.Fhir.Model.Coding) is not null;
         case "value":
-          if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+          if (_Value.InOverflow<DynamicDataType>())
+          {
             value = Overflow["value"];
-          else
-            value = _Value;
-          return _Value is not null;
+            return true;
+          }
+          value = _Value;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -203,8 +207,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+      if (!_Code.InOverflow<Hl7.Fhir.Model.Coding>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (!_Value.InOverflow<DynamicDataType>() && _Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
     }
 
   }

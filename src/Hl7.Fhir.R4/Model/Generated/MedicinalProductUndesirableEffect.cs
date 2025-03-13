@@ -74,14 +74,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+        if(_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["subject"]);
         return _Subject ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+        if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           Overflow.Remove("subject");
         _Subject = value;
         OnPropertyChanged("Subject");
@@ -100,14 +100,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SymptomConditionEffect))
+        if(_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["symptomConditionEffect"]);
         return _SymptomConditionEffect;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SymptomConditionEffect))
+        if (_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("symptomConditionEffect");
         _SymptomConditionEffect = value;
         OnPropertyChanged("SymptomConditionEffect");
@@ -126,14 +126,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Classification))
+        if(_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["classification"]);
         return _Classification;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Classification))
+        if (_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("classification");
         _Classification = value;
         OnPropertyChanged("Classification");
@@ -152,14 +152,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FrequencyOfOccurrence))
+        if(_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["frequencyOfOccurrence"]);
         return _FrequencyOfOccurrence;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FrequencyOfOccurrence))
+        if (_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("frequencyOfOccurrence");
         _FrequencyOfOccurrence = value;
         OnPropertyChanged("FrequencyOfOccurrence");
@@ -179,14 +179,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
+        if(_Population.InOverflow<List<Hl7.Fhir.Model.Population>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Population>), Overflow["population"]);
         return _Population ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
+        if (_Population.InOverflow<List<Hl7.Fhir.Model.Population>>())
           Overflow.Remove("population");
         _Population = value;
         OnPropertyChanged("Population");
@@ -237,35 +237,45 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "subject":
-          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+          if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
             value = Overflow["subject"];
-          else
-            value = _Subject;
-          return _Subject?.Any() == true;
+            return true;
+          }
+          value = _Subject;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "symptomConditionEffect":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SymptomConditionEffect))
+          if (_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["symptomConditionEffect"];
-          else
-            value = _SymptomConditionEffect;
-          return _SymptomConditionEffect is not null;
+            return true;
+          }
+          value = _SymptomConditionEffect;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "classification":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Classification))
+          if (_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["classification"];
-          else
-            value = _Classification;
-          return _Classification is not null;
+            return true;
+          }
+          value = _Classification;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "frequencyOfOccurrence":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FrequencyOfOccurrence))
+          if (_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["frequencyOfOccurrence"];
-          else
-            value = _FrequencyOfOccurrence;
-          return _FrequencyOfOccurrence is not null;
+            return true;
+          }
+          value = _FrequencyOfOccurrence;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "population":
-          if (OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
+          if (_Population.InOverflow<List<Hl7.Fhir.Model.Population>>())
+          {
             value = Overflow["population"];
-          else
-            value = _Population;
-          return _Population?.Any() == true;
+            return true;
+          }
+          value = _Population;
+          return (value as List<Hl7.Fhir.Model.Population>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -326,11 +336,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_SymptomConditionEffect is not null) yield return new KeyValuePair<string,object>("symptomConditionEffect",_SymptomConditionEffect);
-      if (_Classification is not null) yield return new KeyValuePair<string,object>("classification",_Classification);
-      if (_FrequencyOfOccurrence is not null) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",_FrequencyOfOccurrence);
-      if (_Population?.Any() == true) yield return new KeyValuePair<string,object>("population",_Population);
+      if (!_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Subject?.Any() is true) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (!_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SymptomConditionEffect is not null) yield return new KeyValuePair<string,object>("symptomConditionEffect",_SymptomConditionEffect);
+      if (!_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Classification is not null) yield return new KeyValuePair<string,object>("classification",_Classification);
+      if (!_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _FrequencyOfOccurrence is not null) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",_FrequencyOfOccurrence);
+      if (!_Population.InOverflow<List<Hl7.Fhir.Model.Population>>() && _Population?.Any() is true) yield return new KeyValuePair<string,object>("population",_Population);
     }
 
   }

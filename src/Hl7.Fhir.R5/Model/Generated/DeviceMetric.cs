@@ -223,14 +223,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>.InOverflow(_TypeElement))
+          if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>), Overflow["type"]);
           return _TypeElement;
         }
 
         set
         {
-          if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>.InOverflow(_TypeElement))
+          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>())
             Overflow.Remove("type");
           _TypeElement = value;
           OnPropertyChanged("TypeElement");
@@ -266,14 +266,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>.InOverflow(_StateElement))
+          if(_StateElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>), Overflow["state"]);
           return _StateElement;
         }
 
         set
         {
-          if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>.InOverflow(_StateElement))
+          if (_StateElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>())
             Overflow.Remove("state");
           _StateElement = value;
           OnPropertyChanged("StateElement");
@@ -307,14 +307,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_TimeElement))
+          if(_TimeElement.InOverflow<Hl7.Fhir.Model.Instant>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["time"]);
           return _TimeElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_TimeElement))
+          if (_TimeElement.InOverflow<Hl7.Fhir.Model.Instant>())
             Overflow.Remove("time");
           _TimeElement = value;
           OnPropertyChanged("TimeElement");
@@ -376,23 +376,29 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>.InOverflow(_TypeElement))
+            if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>())
+            {
               value = Overflow["type"];
-            else
-              value = _TypeElement;
-            return _TypeElement is not null;
+              return true;
+            }
+            value = _TypeElement;
+            return (value as Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>) is not null;
           case "state":
-            if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>.InOverflow(_StateElement))
+            if (_StateElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>())
+            {
               value = Overflow["state"];
-            else
-              value = _StateElement;
-            return _StateElement is not null;
+              return true;
+            }
+            value = _StateElement;
+            return (value as Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>) is not null;
           case "time":
-            if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_TimeElement))
+            if (_TimeElement.InOverflow<Hl7.Fhir.Model.Instant>())
+            {
               value = Overflow["time"];
-            else
-              value = _TimeElement;
-            return _TimeElement is not null;
+              return true;
+            }
+            value = _TimeElement;
+            return (value as Hl7.Fhir.Model.Instant) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -437,9 +443,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-        if (_StateElement is not null) yield return new KeyValuePair<string,object>("state",_StateElement);
-        if (_TimeElement is not null) yield return new KeyValuePair<string,object>("time",_TimeElement);
+        if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (!_StateElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>() && _StateElement is not null) yield return new KeyValuePair<string,object>("state",_StateElement);
+        if (!_TimeElement.InOverflow<Hl7.Fhir.Model.Instant>() && _TimeElement is not null) yield return new KeyValuePair<string,object>("time",_TimeElement);
       }
 
     }
@@ -454,14 +460,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
         return _Identifier ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
           Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
@@ -482,14 +488,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+        if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
         return _Type;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+        if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("type");
         _Type = value;
         OnPropertyChanged("Type");
@@ -509,14 +515,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Unit))
+        if(_Unit.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["unit"]);
         return _Unit;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Unit))
+        if (_Unit.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("unit");
         _Unit = value;
         OnPropertyChanged("Unit");
@@ -538,14 +544,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Device))
+        if(_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["device"]);
         return _Device;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Device))
+        if (_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           Overflow.Remove("device");
         _Device = value;
         OnPropertyChanged("Device");
@@ -566,14 +572,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>.InOverflow(_OperationalStatusElement))
+        if(_OperationalStatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>), Overflow["operationalStatus"]);
         return _OperationalStatusElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>.InOverflow(_OperationalStatusElement))
+        if (_OperationalStatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>())
           Overflow.Remove("operationalStatus");
         _OperationalStatusElement = value;
         OnPropertyChanged("OperationalStatusElement");
@@ -607,14 +613,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ColorElement))
+        if(_ColorElement.InOverflow<Hl7.Fhir.Model.Code>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["color"]);
         return _ColorElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ColorElement))
+        if (_ColorElement.InOverflow<Hl7.Fhir.Model.Code>())
           Overflow.Remove("color");
         _ColorElement = value;
         OnPropertyChanged("ColorElement");
@@ -651,14 +657,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>.InOverflow(_CategoryElement))
+        if(_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>), Overflow["category"]);
         return _CategoryElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>.InOverflow(_CategoryElement))
+        if (_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>())
           Overflow.Remove("category");
         _CategoryElement = value;
         OnPropertyChanged("CategoryElement");
@@ -692,14 +698,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_MeasurementFrequency))
+        if(_MeasurementFrequency.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["measurementFrequency"]);
         return _MeasurementFrequency;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_MeasurementFrequency))
+        if (_MeasurementFrequency.InOverflow<Hl7.Fhir.Model.Quantity>())
           Overflow.Remove("measurementFrequency");
         _MeasurementFrequency = value;
         OnPropertyChanged("MeasurementFrequency");
@@ -719,14 +725,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>.InOverflow(_Calibration))
+        if(_Calibration.InOverflow<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>), Overflow["calibration"]);
         return _Calibration ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>.InOverflow(_Calibration))
+        if (_Calibration.InOverflow<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>())
           Overflow.Remove("calibration");
         _Calibration = value;
         OnPropertyChanged("Calibration");
@@ -787,59 +793,77 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
             value = Overflow["identifier"];
-          else
-            value = _Identifier;
-          return _Identifier?.Any() == true;
+            return true;
+          }
+          value = _Identifier;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "type":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["type"];
-          else
-            value = _Type;
-          return _Type is not null;
+            return true;
+          }
+          value = _Type;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "unit":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Unit))
+          if (_Unit.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["unit"];
-          else
-            value = _Unit;
-          return _Unit is not null;
+            return true;
+          }
+          value = _Unit;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "device":
-          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Device))
+          if (_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
             value = Overflow["device"];
-          else
-            value = _Device;
-          return _Device is not null;
+            return true;
+          }
+          value = _Device;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "operationalStatus":
-          if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>.InOverflow(_OperationalStatusElement))
+          if (_OperationalStatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>())
+          {
             value = Overflow["operationalStatus"];
-          else
-            value = _OperationalStatusElement;
-          return _OperationalStatusElement is not null;
+            return true;
+          }
+          value = _OperationalStatusElement;
+          return (value as Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>) is not null;
         case "color":
-          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ColorElement))
+          if (_ColorElement.InOverflow<Hl7.Fhir.Model.Code>())
+          {
             value = Overflow["color"];
-          else
-            value = _ColorElement;
-          return _ColorElement is not null;
+            return true;
+          }
+          value = _ColorElement;
+          return (value as Hl7.Fhir.Model.Code) is not null;
         case "category":
-          if (OverflowNull<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>.InOverflow(_CategoryElement))
+          if (_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>())
+          {
             value = Overflow["category"];
-          else
-            value = _CategoryElement;
-          return _CategoryElement is not null;
+            return true;
+          }
+          value = _CategoryElement;
+          return (value as Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>) is not null;
         case "measurementFrequency":
-          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_MeasurementFrequency))
+          if (_MeasurementFrequency.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
             value = Overflow["measurementFrequency"];
-          else
-            value = _MeasurementFrequency;
-          return _MeasurementFrequency is not null;
+            return true;
+          }
+          value = _MeasurementFrequency;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "calibration":
-          if (OverflowNull<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>.InOverflow(_Calibration))
+          if (_Calibration.InOverflow<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>())
+          {
             value = Overflow["calibration"];
-          else
-            value = _Calibration;
-          return _Calibration?.Any() == true;
+            return true;
+          }
+          value = _Calibration;
+          return (value as List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -932,15 +956,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (_Unit is not null) yield return new KeyValuePair<string,object>("unit",_Unit);
-      if (_Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
-      if (_OperationalStatusElement is not null) yield return new KeyValuePair<string,object>("operationalStatus",_OperationalStatusElement);
-      if (_ColorElement is not null) yield return new KeyValuePair<string,object>("color",_ColorElement);
-      if (_CategoryElement is not null) yield return new KeyValuePair<string,object>("category",_CategoryElement);
-      if (_MeasurementFrequency is not null) yield return new KeyValuePair<string,object>("measurementFrequency",_MeasurementFrequency);
-      if (_Calibration?.Any() == true) yield return new KeyValuePair<string,object>("calibration",_Calibration);
+      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (!_Unit.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Unit is not null) yield return new KeyValuePair<string,object>("unit",_Unit);
+      if (!_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
+      if (!_OperationalStatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>() && _OperationalStatusElement is not null) yield return new KeyValuePair<string,object>("operationalStatus",_OperationalStatusElement);
+      if (!_ColorElement.InOverflow<Hl7.Fhir.Model.Code>() && _ColorElement is not null) yield return new KeyValuePair<string,object>("color",_ColorElement);
+      if (!_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>() && _CategoryElement is not null) yield return new KeyValuePair<string,object>("category",_CategoryElement);
+      if (!_MeasurementFrequency.InOverflow<Hl7.Fhir.Model.Quantity>() && _MeasurementFrequency is not null) yield return new KeyValuePair<string,object>("measurementFrequency",_MeasurementFrequency);
+      if (!_Calibration.InOverflow<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>() && _Calibration?.Any() is true) yield return new KeyValuePair<string,object>("calibration",_Calibration);
     }
 
   }

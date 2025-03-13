@@ -126,14 +126,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.HumanName.NameUse>>.InOverflow(_UseElement))
+        if(_UseElement.InOverflow<Code<Hl7.Fhir.Model.HumanName.NameUse>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.HumanName.NameUse>), Overflow["use"]);
         return _UseElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.HumanName.NameUse>>.InOverflow(_UseElement))
+        if (_UseElement.InOverflow<Code<Hl7.Fhir.Model.HumanName.NameUse>>())
           Overflow.Remove("use");
         _UseElement = value;
         OnPropertyChanged("UseElement");
@@ -167,14 +167,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+        if(_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["text"]);
         return _TextElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+        if (_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("text");
         _TextElement = value;
         OnPropertyChanged("TextElement");
@@ -208,14 +208,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FamilyElement))
+        if(_FamilyElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["family"]);
         return _FamilyElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FamilyElement))
+        if (_FamilyElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("family");
         _FamilyElement = value;
         OnPropertyChanged("FamilyElement");
@@ -250,14 +250,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_GivenElement))
+        if(_GivenElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["given"]);
         return _GivenElement ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_GivenElement))
+        if (_GivenElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
           Overflow.Remove("given");
         _GivenElement = value;
         OnPropertyChanged("GivenElement");
@@ -295,14 +295,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_PrefixElement))
+        if(_PrefixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["prefix"]);
         return _PrefixElement ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_PrefixElement))
+        if (_PrefixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
           Overflow.Remove("prefix");
         _PrefixElement = value;
         OnPropertyChanged("PrefixElement");
@@ -340,14 +340,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_SuffixElement))
+        if(_SuffixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["suffix"]);
         return _SuffixElement ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_SuffixElement))
+        if (_SuffixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
           Overflow.Remove("suffix");
         _SuffixElement = value;
         OnPropertyChanged("SuffixElement");
@@ -384,14 +384,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+        if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
         return _Period;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+        if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
           Overflow.Remove("period");
         _Period = value;
         OnPropertyChanged("Period");
@@ -446,47 +446,61 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "use":
-          if (OverflowNull<Code<Hl7.Fhir.Model.HumanName.NameUse>>.InOverflow(_UseElement))
+          if (_UseElement.InOverflow<Code<Hl7.Fhir.Model.HumanName.NameUse>>())
+          {
             value = Overflow["use"];
-          else
-            value = _UseElement;
-          return _UseElement is not null;
+            return true;
+          }
+          value = _UseElement;
+          return (value as Code<Hl7.Fhir.Model.HumanName.NameUse>) is not null;
         case "text":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+          if (_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["text"];
-          else
-            value = _TextElement;
-          return _TextElement is not null;
+            return true;
+          }
+          value = _TextElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "family":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FamilyElement))
+          if (_FamilyElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["family"];
-          else
-            value = _FamilyElement;
-          return _FamilyElement is not null;
+            return true;
+          }
+          value = _FamilyElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "given":
-          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_GivenElement))
+          if (_GivenElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          {
             value = Overflow["given"];
-          else
-            value = _GivenElement;
-          return _GivenElement?.Any() == true;
+            return true;
+          }
+          value = _GivenElement;
+          return (value as List<Hl7.Fhir.Model.FhirString>)?.Any() is true;
         case "prefix":
-          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_PrefixElement))
+          if (_PrefixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          {
             value = Overflow["prefix"];
-          else
-            value = _PrefixElement;
-          return _PrefixElement?.Any() == true;
+            return true;
+          }
+          value = _PrefixElement;
+          return (value as List<Hl7.Fhir.Model.FhirString>)?.Any() is true;
         case "suffix":
-          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_SuffixElement))
+          if (_SuffixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          {
             value = Overflow["suffix"];
-          else
-            value = _SuffixElement;
-          return _SuffixElement?.Any() == true;
+            return true;
+          }
+          value = _SuffixElement;
+          return (value as List<Hl7.Fhir.Model.FhirString>)?.Any() is true;
         case "period":
-          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+          if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          {
             value = Overflow["period"];
-          else
-            value = _Period;
-          return _Period is not null;
+            return true;
+          }
+          value = _Period;
+          return (value as Hl7.Fhir.Model.Period) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -563,13 +577,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_UseElement is not null) yield return new KeyValuePair<string,object>("use",_UseElement);
-      if (_TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
-      if (_FamilyElement is not null) yield return new KeyValuePair<string,object>("family",_FamilyElement);
-      if (_GivenElement?.Any() == true) yield return new KeyValuePair<string,object>("given",_GivenElement);
-      if (_PrefixElement?.Any() == true) yield return new KeyValuePair<string,object>("prefix",_PrefixElement);
-      if (_SuffixElement?.Any() == true) yield return new KeyValuePair<string,object>("suffix",_SuffixElement);
-      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (!_UseElement.InOverflow<Code<Hl7.Fhir.Model.HumanName.NameUse>>() && _UseElement is not null) yield return new KeyValuePair<string,object>("use",_UseElement);
+      if (!_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (!_FamilyElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _FamilyElement is not null) yield return new KeyValuePair<string,object>("family",_FamilyElement);
+      if (!_GivenElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _GivenElement?.Any() is true) yield return new KeyValuePair<string,object>("given",_GivenElement);
+      if (!_PrefixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _PrefixElement?.Any() is true) yield return new KeyValuePair<string,object>("prefix",_PrefixElement);
+      if (!_SuffixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _SuffixElement?.Any() is true) yield return new KeyValuePair<string,object>("suffix",_SuffixElement);
+      if (!_Period.InOverflow<Hl7.Fhir.Model.Period>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
     }
 
   }

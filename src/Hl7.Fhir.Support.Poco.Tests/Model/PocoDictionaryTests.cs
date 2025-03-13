@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using Hl7.Fhir.Support.Poco.Tests;
 
 namespace Hl7.Fhir.Tests.Model;
 
@@ -86,5 +87,24 @@ public class PocoDictionaryTests
         extension.Should().BeAssignableTo<Base>()
             .Which["url"].Should().BeOfType<FhirUri>()
             .Which.ObjectValue.Should().Be("http://nu.nl");
+    }
+
+    /// <summary>
+    /// see <see cref="OverflowErrorTests"/> for more tests on getting invalid values and the associated errors
+    /// </summary>
+    [TestMethod]
+    public void CanContainInvalidData()
+    {
+        var name = new HumanName();
+        
+        name["given"] = new FhirString("John");
+        name["given"].Should().BeOfType<FhirString>().Which.ObjectValue.Should().Be("John");
+        name["given"] = new List<HumanName>([new HumanName()]);
+        name["given"].Should().BeOfType<List<HumanName>>().Which.Should().ContainSingle().Which.Should().NotBeNull();
+        name["given"] = new List<FhirString>([new FhirString("ji")]);
+        name["given"].Should().BeOfType<List<FhirString>>().Which.Should().ContainSingle().Which.ObjectValue.Should().Be("ji");
+        name["given"] = null!;
+        var act = () => name["given"];
+        act.Should().Throw<KeyNotFoundException>();
     }
 }

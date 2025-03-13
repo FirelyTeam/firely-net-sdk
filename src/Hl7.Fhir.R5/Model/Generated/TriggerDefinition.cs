@@ -133,14 +133,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.InOverflow(_TypeElement))
+        if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>), Overflow["type"]);
         return _TypeElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.InOverflow(_TypeElement))
+        if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
           Overflow.Remove("type");
         _TypeElement = value;
         OnPropertyChanged("TypeElement");
@@ -174,14 +174,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+        if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
         return _NameElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+        if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("name");
         _NameElement = value;
         OnPropertyChanged("NameElement");
@@ -215,14 +215,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+        if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
         return _Code;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+        if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("code");
         _Code = value;
         OnPropertyChanged("Code");
@@ -241,14 +241,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_SubscriptionTopicElement))
+        if(_SubscriptionTopicElement.InOverflow<Hl7.Fhir.Model.Canonical>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["subscriptionTopic"]);
         return _SubscriptionTopicElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_SubscriptionTopicElement))
+        if (_SubscriptionTopicElement.InOverflow<Hl7.Fhir.Model.Canonical>())
           Overflow.Remove("subscriptionTopic");
         _SubscriptionTopicElement = value;
         OnPropertyChanged("SubscriptionTopicElement");
@@ -285,14 +285,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<DynamicDataType>.InOverflow(_Timing))
+        if(_Timing.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["timing"]);
         return _Timing;
       }
 
       set
       {
-        if (OverflowNull<DynamicDataType>.InOverflow(_Timing))
+        if (_Timing.InOverflow<DynamicDataType>())
           Overflow.Remove("timing");
         _Timing = value;
         OnPropertyChanged("Timing");
@@ -312,14 +312,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.DataRequirement>>.InOverflow(_Data))
+        if(_Data.InOverflow<List<Hl7.Fhir.Model.DataRequirement>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.DataRequirement>), Overflow["data"]);
         return _Data ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.DataRequirement>>.InOverflow(_Data))
+        if (_Data.InOverflow<List<Hl7.Fhir.Model.DataRequirement>>())
           Overflow.Remove("data");
         _Data = value;
         OnPropertyChanged("Data");
@@ -338,14 +338,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Expression>.InOverflow(_Condition))
+        if(_Condition.InOverflow<Hl7.Fhir.Model.Expression>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Expression), Overflow["condition"]);
         return _Condition;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Expression>.InOverflow(_Condition))
+        if (_Condition.InOverflow<Hl7.Fhir.Model.Expression>())
           Overflow.Remove("condition");
         _Condition = value;
         OnPropertyChanged("Condition");
@@ -400,47 +400,61 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          if (OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.InOverflow(_TypeElement))
+          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
+          {
             value = Overflow["type"];
-          else
-            value = _TypeElement;
-          return _TypeElement is not null;
+            return true;
+          }
+          value = _TypeElement;
+          return (value as Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>) is not null;
         case "name":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+          if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["name"];
-          else
-            value = _NameElement;
-          return _NameElement is not null;
+            return true;
+          }
+          value = _NameElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "code":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+          if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["code"];
-          else
-            value = _Code;
-          return _Code is not null;
+            return true;
+          }
+          value = _Code;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "subscriptionTopic":
-          if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_SubscriptionTopicElement))
+          if (_SubscriptionTopicElement.InOverflow<Hl7.Fhir.Model.Canonical>())
+          {
             value = Overflow["subscriptionTopic"];
-          else
-            value = _SubscriptionTopicElement;
-          return _SubscriptionTopicElement is not null;
+            return true;
+          }
+          value = _SubscriptionTopicElement;
+          return (value as Hl7.Fhir.Model.Canonical) is not null;
         case "timing":
-          if (OverflowNull<DynamicDataType>.InOverflow(_Timing))
+          if (_Timing.InOverflow<DynamicDataType>())
+          {
             value = Overflow["timing"];
-          else
-            value = _Timing;
-          return _Timing is not null;
+            return true;
+          }
+          value = _Timing;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "data":
-          if (OverflowNull<List<Hl7.Fhir.Model.DataRequirement>>.InOverflow(_Data))
+          if (_Data.InOverflow<List<Hl7.Fhir.Model.DataRequirement>>())
+          {
             value = Overflow["data"];
-          else
-            value = _Data;
-          return _Data?.Any() == true;
+            return true;
+          }
+          value = _Data;
+          return (value as List<Hl7.Fhir.Model.DataRequirement>)?.Any() is true;
         case "condition":
-          if (OverflowNull<Hl7.Fhir.Model.Expression>.InOverflow(_Condition))
+          if (_Condition.InOverflow<Hl7.Fhir.Model.Expression>())
+          {
             value = Overflow["condition"];
-          else
-            value = _Condition;
-          return _Condition is not null;
+            return true;
+          }
+          value = _Condition;
+          return (value as Hl7.Fhir.Model.Expression) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -517,13 +531,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (_SubscriptionTopicElement is not null) yield return new KeyValuePair<string,object>("subscriptionTopic",_SubscriptionTopicElement);
-      if (_Timing is not null) yield return new KeyValuePair<string,object>("timing",_Timing);
-      if (_Data?.Any() == true) yield return new KeyValuePair<string,object>("data",_Data);
-      if (_Condition is not null) yield return new KeyValuePair<string,object>("condition",_Condition);
+      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (!_SubscriptionTopicElement.InOverflow<Hl7.Fhir.Model.Canonical>() && _SubscriptionTopicElement is not null) yield return new KeyValuePair<string,object>("subscriptionTopic",_SubscriptionTopicElement);
+      if (!_Timing.InOverflow<DynamicDataType>() && _Timing is not null) yield return new KeyValuePair<string,object>("timing",_Timing);
+      if (!_Data.InOverflow<List<Hl7.Fhir.Model.DataRequirement>>() && _Data?.Any() is true) yield return new KeyValuePair<string,object>("data",_Data);
+      if (!_Condition.InOverflow<Hl7.Fhir.Model.Expression>() && _Condition is not null) yield return new KeyValuePair<string,object>("condition",_Condition);
     }
 
   }

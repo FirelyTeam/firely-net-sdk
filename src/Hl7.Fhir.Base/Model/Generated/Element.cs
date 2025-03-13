@@ -66,14 +66,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ElementIdElement))
+        if(_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["id"]);
         return _ElementIdElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ElementIdElement))
+        if (_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("id");
         _ElementIdElement = value;
         OnPropertyChanged("ElementIdElement");
@@ -108,14 +108,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_Extension))
+        if(_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["extension"]);
         return _Extension ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_Extension))
+        if (_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
           Overflow.Remove("extension");
         _Extension = value;
         OnPropertyChanged("Extension");
@@ -153,17 +153,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "id":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ElementIdElement))
+          if (_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["id"];
-          else
-            value = _ElementIdElement;
-          return _ElementIdElement is not null;
+            return true;
+          }
+          value = _ElementIdElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "extension":
-          if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_Extension))
+          if (_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          {
             value = Overflow["extension"];
-          else
-            value = _Extension;
-          return _Extension?.Any() == true;
+            return true;
+          }
+          value = _Extension;
+          return (value as List<Hl7.Fhir.Model.Extension>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -200,8 +204,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_ElementIdElement is not null) yield return new KeyValuePair<string,object>("id",_ElementIdElement);
-      if (_Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",_Extension);
+      if (!_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ElementIdElement is not null) yield return new KeyValuePair<string,object>("id",_ElementIdElement);
+      if (!_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>() && _Extension?.Any() is true) yield return new KeyValuePair<string,object>("extension",_Extension);
     }
 
   }

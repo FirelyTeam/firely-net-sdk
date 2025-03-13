@@ -81,14 +81,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_SubunitElement))
+          if(_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["subunit"]);
           return _SubunitElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_SubunitElement))
+          if (_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>())
             Overflow.Remove("subunit");
           _SubunitElement = value;
           OnPropertyChanged("SubunitElement");
@@ -122,14 +122,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SequenceElement))
+          if(_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["sequence"]);
           return _SequenceElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SequenceElement))
+          if (_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("sequence");
           _SequenceElement = value;
           OnPropertyChanged("SequenceElement");
@@ -163,14 +163,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_LengthElement))
+          if(_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["length"]);
           return _LengthElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_LengthElement))
+          if (_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>())
             Overflow.Remove("length");
           _LengthElement = value;
           OnPropertyChanged("LengthElement");
@@ -204,14 +204,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_SequenceAttachment))
+          if(_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Attachment), Overflow["sequenceAttachment"]);
           return _SequenceAttachment;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_SequenceAttachment))
+          if (_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>())
             Overflow.Remove("sequenceAttachment");
           _SequenceAttachment = value;
           OnPropertyChanged("SequenceAttachment");
@@ -230,14 +230,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_NTerminalModificationId))
+          if(_NTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["nTerminalModificationId"]);
           return _NTerminalModificationId;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_NTerminalModificationId))
+          if (_NTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
             Overflow.Remove("nTerminalModificationId");
           _NTerminalModificationId = value;
           OnPropertyChanged("NTerminalModificationId");
@@ -256,14 +256,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NTerminalModificationElement))
+          if(_NTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["nTerminalModification"]);
           return _NTerminalModificationElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NTerminalModificationElement))
+          if (_NTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("nTerminalModification");
           _NTerminalModificationElement = value;
           OnPropertyChanged("NTerminalModificationElement");
@@ -297,14 +297,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_CTerminalModificationId))
+          if(_CTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["cTerminalModificationId"]);
           return _CTerminalModificationId;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_CTerminalModificationId))
+          if (_CTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
             Overflow.Remove("cTerminalModificationId");
           _CTerminalModificationId = value;
           OnPropertyChanged("CTerminalModificationId");
@@ -323,14 +323,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CTerminalModificationElement))
+          if(_CTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["cTerminalModification"]);
           return _CTerminalModificationElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CTerminalModificationElement))
+          if (_CTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("cTerminalModification");
           _CTerminalModificationElement = value;
           OnPropertyChanged("CTerminalModificationElement");
@@ -402,53 +402,69 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "subunit":
-            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_SubunitElement))
+            if (_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
               value = Overflow["subunit"];
-            else
-              value = _SubunitElement;
-            return _SubunitElement is not null;
+              return true;
+            }
+            value = _SubunitElement;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           case "sequence":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SequenceElement))
+            if (_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["sequence"];
-            else
-              value = _SequenceElement;
-            return _SequenceElement is not null;
+              return true;
+            }
+            value = _SequenceElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "length":
-            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_LengthElement))
+            if (_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
               value = Overflow["length"];
-            else
-              value = _LengthElement;
-            return _LengthElement is not null;
+              return true;
+            }
+            value = _LengthElement;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           case "sequenceAttachment":
-            if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_SequenceAttachment))
+            if (_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>())
+            {
               value = Overflow["sequenceAttachment"];
-            else
-              value = _SequenceAttachment;
-            return _SequenceAttachment is not null;
+              return true;
+            }
+            value = _SequenceAttachment;
+            return (value as Hl7.Fhir.Model.Attachment) is not null;
           case "nTerminalModificationId":
-            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_NTerminalModificationId))
+            if (_NTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
+            {
               value = Overflow["nTerminalModificationId"];
-            else
-              value = _NTerminalModificationId;
-            return _NTerminalModificationId is not null;
+              return true;
+            }
+            value = _NTerminalModificationId;
+            return (value as Hl7.Fhir.Model.Identifier) is not null;
           case "nTerminalModification":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NTerminalModificationElement))
+            if (_NTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["nTerminalModification"];
-            else
-              value = _NTerminalModificationElement;
-            return _NTerminalModificationElement is not null;
+              return true;
+            }
+            value = _NTerminalModificationElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "cTerminalModificationId":
-            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_CTerminalModificationId))
+            if (_CTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>())
+            {
               value = Overflow["cTerminalModificationId"];
-            else
-              value = _CTerminalModificationId;
-            return _CTerminalModificationId is not null;
+              return true;
+            }
+            value = _CTerminalModificationId;
+            return (value as Hl7.Fhir.Model.Identifier) is not null;
           case "cTerminalModification":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CTerminalModificationElement))
+            if (_CTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["cTerminalModification"];
-            else
-              value = _CTerminalModificationElement;
-            return _CTerminalModificationElement is not null;
+              return true;
+            }
+            value = _CTerminalModificationElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -533,14 +549,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",_SubunitElement);
-        if (_SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
-        if (_LengthElement is not null) yield return new KeyValuePair<string,object>("length",_LengthElement);
-        if (_SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",_SequenceAttachment);
-        if (_NTerminalModificationId is not null) yield return new KeyValuePair<string,object>("nTerminalModificationId",_NTerminalModificationId);
-        if (_NTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("nTerminalModification",_NTerminalModificationElement);
-        if (_CTerminalModificationId is not null) yield return new KeyValuePair<string,object>("cTerminalModificationId",_CTerminalModificationId);
-        if (_CTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("cTerminalModification",_CTerminalModificationElement);
+        if (!_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>() && _SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",_SubunitElement);
+        if (!_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
+        if (!_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>() && _LengthElement is not null) yield return new KeyValuePair<string,object>("length",_LengthElement);
+        if (!_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>() && _SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",_SequenceAttachment);
+        if (!_NTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>() && _NTerminalModificationId is not null) yield return new KeyValuePair<string,object>("nTerminalModificationId",_NTerminalModificationId);
+        if (!_NTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("nTerminalModification",_NTerminalModificationElement);
+        if (!_CTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>() && _CTerminalModificationId is not null) yield return new KeyValuePair<string,object>("cTerminalModificationId",_CTerminalModificationId);
+        if (!_CTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("cTerminalModification",_CTerminalModificationElement);
       }
 
     }
@@ -554,14 +570,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SequenceType))
+        if(_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["sequenceType"]);
         return _SequenceType;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SequenceType))
+        if (_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("sequenceType");
         _SequenceType = value;
         OnPropertyChanged("SequenceType");
@@ -580,14 +596,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_NumberOfSubunitsElement))
+        if(_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["numberOfSubunits"]);
         return _NumberOfSubunitsElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_NumberOfSubunitsElement))
+        if (_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>())
           Overflow.Remove("numberOfSubunits");
         _NumberOfSubunitsElement = value;
         OnPropertyChanged("NumberOfSubunitsElement");
@@ -622,14 +638,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_DisulfideLinkageElement))
+        if(_DisulfideLinkageElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["disulfideLinkage"]);
         return _DisulfideLinkageElement ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_DisulfideLinkageElement))
+        if (_DisulfideLinkageElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
           Overflow.Remove("disulfideLinkage");
         _DisulfideLinkageElement = value;
         OnPropertyChanged("DisulfideLinkageElement");
@@ -667,14 +683,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>.InOverflow(_Subunit))
+        if(_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>), Overflow["subunit"]);
         return _Subunit ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>.InOverflow(_Subunit))
+        if (_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>())
           Overflow.Remove("subunit");
         _Subunit = value;
         OnPropertyChanged("Subunit");
@@ -723,29 +739,37 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "sequenceType":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SequenceType))
+          if (_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["sequenceType"];
-          else
-            value = _SequenceType;
-          return _SequenceType is not null;
+            return true;
+          }
+          value = _SequenceType;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "numberOfSubunits":
-          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_NumberOfSubunitsElement))
+          if (_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>())
+          {
             value = Overflow["numberOfSubunits"];
-          else
-            value = _NumberOfSubunitsElement;
-          return _NumberOfSubunitsElement is not null;
+            return true;
+          }
+          value = _NumberOfSubunitsElement;
+          return (value as Hl7.Fhir.Model.Integer) is not null;
         case "disulfideLinkage":
-          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_DisulfideLinkageElement))
+          if (_DisulfideLinkageElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          {
             value = Overflow["disulfideLinkage"];
-          else
-            value = _DisulfideLinkageElement;
-          return _DisulfideLinkageElement?.Any() == true;
+            return true;
+          }
+          value = _DisulfideLinkageElement;
+          return (value as List<Hl7.Fhir.Model.FhirString>)?.Any() is true;
         case "subunit":
-          if (OverflowNull<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>.InOverflow(_Subunit))
+          if (_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>())
+          {
             value = Overflow["subunit"];
-          else
-            value = _Subunit;
-          return _Subunit?.Any() == true;
+            return true;
+          }
+          value = _Subunit;
+          return (value as List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -798,10 +822,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",_SequenceType);
-      if (_NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",_NumberOfSubunitsElement);
-      if (_DisulfideLinkageElement?.Any() == true) yield return new KeyValuePair<string,object>("disulfideLinkage",_DisulfideLinkageElement);
-      if (_Subunit?.Any() == true) yield return new KeyValuePair<string,object>("subunit",_Subunit);
+      if (!_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",_SequenceType);
+      if (!_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>() && _NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",_NumberOfSubunitsElement);
+      if (!_DisulfideLinkageElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _DisulfideLinkageElement?.Any() is true) yield return new KeyValuePair<string,object>("disulfideLinkage",_DisulfideLinkageElement);
+      if (!_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>() && _Subunit?.Any() is true) yield return new KeyValuePair<string,object>("subunit",_Subunit);
     }
 
   }

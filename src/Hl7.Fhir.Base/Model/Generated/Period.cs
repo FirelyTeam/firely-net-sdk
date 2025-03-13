@@ -73,14 +73,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StartElement))
+        if(_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["start"]);
         return _StartElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StartElement))
+        if (_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           Overflow.Remove("start");
         _StartElement = value;
         OnPropertyChanged("StartElement");
@@ -114,14 +114,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_EndElement))
+        if(_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["end"]);
         return _EndElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_EndElement))
+        if (_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           Overflow.Remove("end");
         _EndElement = value;
         OnPropertyChanged("EndElement");
@@ -181,17 +181,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "start":
-          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StartElement))
+          if (_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
             value = Overflow["start"];
-          else
-            value = _StartElement;
-          return _StartElement is not null;
+            return true;
+          }
+          value = _StartElement;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         case "end":
-          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_EndElement))
+          if (_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
             value = Overflow["end"];
-          else
-            value = _EndElement;
-          return _EndElement is not null;
+            return true;
+          }
+          value = _EndElement;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -228,8 +232,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
-      if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
+      if (!_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
+      if (!_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
     }
 
   }

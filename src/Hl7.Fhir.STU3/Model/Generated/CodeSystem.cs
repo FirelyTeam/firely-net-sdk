@@ -202,14 +202,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+          if(_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["code"]);
           return _CodeElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+          if (_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
             Overflow.Remove("code");
           _CodeElement = value;
           OnPropertyChanged("CodeElement");
@@ -243,14 +243,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+          if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["description"]);
           return _DescriptionElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("description");
           _DescriptionElement = value;
           OnPropertyChanged("DescriptionElement");
@@ -287,14 +287,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<List<Code<Hl7.Fhir.Model.FilterOperator>>>.InOverflow(_OperatorElement))
+          if(_OperatorElement.InOverflow<List<Code<Hl7.Fhir.Model.FilterOperator>>>())
             throw CodedValidationException.FromTypes(typeof(List<Code<Hl7.Fhir.Model.FilterOperator>>), Overflow["operator"]);
           return _OperatorElement ??= [];
         }
 
         set
         {
-          if (OverflowNull<List<Code<Hl7.Fhir.Model.FilterOperator>>>.InOverflow(_OperatorElement))
+          if (_OperatorElement.InOverflow<List<Code<Hl7.Fhir.Model.FilterOperator>>>())
             Overflow.Remove("operator");
           _OperatorElement = value;
           OnPropertyChanged("OperatorElement");
@@ -332,14 +332,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
+          if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["value"]);
           return _ValueElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
+          if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("value");
           _ValueElement = value;
           OnPropertyChanged("ValueElement");
@@ -403,29 +403,37 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+            if (_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
+            {
               value = Overflow["code"];
-            else
-              value = _CodeElement;
-            return _CodeElement is not null;
+              return true;
+            }
+            value = _CodeElement;
+            return (value as Hl7.Fhir.Model.Code) is not null;
           case "description":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+            if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["description"];
-            else
-              value = _DescriptionElement;
-            return _DescriptionElement is not null;
+              return true;
+            }
+            value = _DescriptionElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "operator":
-            if (OverflowNull<List<Code<Hl7.Fhir.Model.FilterOperator>>>.InOverflow(_OperatorElement))
+            if (_OperatorElement.InOverflow<List<Code<Hl7.Fhir.Model.FilterOperator>>>())
+            {
               value = Overflow["operator"];
-            else
-              value = _OperatorElement;
-            return _OperatorElement?.Any() == true;
+              return true;
+            }
+            value = _OperatorElement;
+            return (value as List<Code<Hl7.Fhir.Model.FilterOperator>>)?.Any() is true;
           case "value":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
+            if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["value"];
-            else
-              value = _ValueElement;
-            return _ValueElement is not null;
+              return true;
+            }
+            value = _ValueElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -478,10 +486,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
-        if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (_OperatorElement?.Any() == true) yield return new KeyValuePair<string,object>("operator",_OperatorElement);
-        if (_ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (!_CodeElement.InOverflow<Hl7.Fhir.Model.Code>() && _CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
+        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (!_OperatorElement.InOverflow<List<Code<Hl7.Fhir.Model.FilterOperator>>>() && _OperatorElement?.Any() is true) yield return new KeyValuePair<string,object>("operator",_OperatorElement);
+        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -512,14 +520,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+          if(_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["code"]);
           return _CodeElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+          if (_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
             Overflow.Remove("code");
           _CodeElement = value;
           OnPropertyChanged("CodeElement");
@@ -553,14 +561,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UriElement))
+          if(_UriElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["uri"]);
           return _UriElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UriElement))
+          if (_UriElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
             Overflow.Remove("uri");
           _UriElement = value;
           OnPropertyChanged("UriElement");
@@ -594,14 +602,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+          if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["description"]);
           return _DescriptionElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("description");
           _DescriptionElement = value;
           OnPropertyChanged("DescriptionElement");
@@ -638,14 +646,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Code<Hl7.Fhir.Model.CodeSystem.PropertyType>>.InOverflow(_TypeElement))
+          if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.PropertyType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.CodeSystem.PropertyType>), Overflow["type"]);
           return _TypeElement;
         }
 
         set
         {
-          if (OverflowNull<Code<Hl7.Fhir.Model.CodeSystem.PropertyType>>.InOverflow(_TypeElement))
+          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.PropertyType>>())
             Overflow.Remove("type");
           _TypeElement = value;
           OnPropertyChanged("TypeElement");
@@ -709,29 +717,37 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+            if (_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
+            {
               value = Overflow["code"];
-            else
-              value = _CodeElement;
-            return _CodeElement is not null;
+              return true;
+            }
+            value = _CodeElement;
+            return (value as Hl7.Fhir.Model.Code) is not null;
           case "uri":
-            if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UriElement))
+            if (_UriElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+            {
               value = Overflow["uri"];
-            else
-              value = _UriElement;
-            return _UriElement is not null;
+              return true;
+            }
+            value = _UriElement;
+            return (value as Hl7.Fhir.Model.FhirUri) is not null;
           case "description":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+            if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["description"];
-            else
-              value = _DescriptionElement;
-            return _DescriptionElement is not null;
+              return true;
+            }
+            value = _DescriptionElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "type":
-            if (OverflowNull<Code<Hl7.Fhir.Model.CodeSystem.PropertyType>>.InOverflow(_TypeElement))
+            if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.PropertyType>>())
+            {
               value = Overflow["type"];
-            else
-              value = _TypeElement;
-            return _TypeElement is not null;
+              return true;
+            }
+            value = _TypeElement;
+            return (value as Code<Hl7.Fhir.Model.CodeSystem.PropertyType>) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -784,10 +800,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
-        if (_UriElement is not null) yield return new KeyValuePair<string,object>("uri",_UriElement);
-        if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (!_CodeElement.InOverflow<Hl7.Fhir.Model.Code>() && _CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
+        if (!_UriElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _UriElement is not null) yield return new KeyValuePair<string,object>("uri",_UriElement);
+        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.PropertyType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
       }
 
     }
@@ -819,14 +835,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+          if(_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["code"]);
           return _CodeElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+          if (_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
             Overflow.Remove("code");
           _CodeElement = value;
           OnPropertyChanged("CodeElement");
@@ -860,14 +876,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DisplayElement))
+          if(_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["display"]);
           return _DisplayElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DisplayElement))
+          if (_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("display");
           _DisplayElement = value;
           OnPropertyChanged("DisplayElement");
@@ -901,14 +917,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DefinitionElement))
+          if(_DefinitionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["definition"]);
           return _DefinitionElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DefinitionElement))
+          if (_DefinitionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("definition");
           _DefinitionElement = value;
           OnPropertyChanged("DefinitionElement");
@@ -943,14 +959,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>>.InOverflow(_Designation))
+          if(_Designation.InOverflow<List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>>())
             throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>), Overflow["designation"]);
           return _Designation ??= [];
         }
 
         set
         {
-          if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>>.InOverflow(_Designation))
+          if (_Designation.InOverflow<List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>>())
             Overflow.Remove("designation");
           _Designation = value;
           OnPropertyChanged("Designation");
@@ -970,14 +986,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>>.InOverflow(_Property))
+          if(_Property.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>>())
             throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>), Overflow["property"]);
           return _Property ??= [];
         }
 
         set
         {
-          if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>>.InOverflow(_Property))
+          if (_Property.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>>())
             Overflow.Remove("property");
           _Property = value;
           OnPropertyChanged("Property");
@@ -997,14 +1013,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>.InOverflow(_Concept))
+          if(_Concept.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>())
             throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>), Overflow["concept"]);
           return _Concept ??= [];
         }
 
         set
         {
-          if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>.InOverflow(_Concept))
+          if (_Concept.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>())
             Overflow.Remove("concept");
           _Concept = value;
           OnPropertyChanged("Concept");
@@ -1057,41 +1073,53 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+            if (_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
+            {
               value = Overflow["code"];
-            else
-              value = _CodeElement;
-            return _CodeElement is not null;
+              return true;
+            }
+            value = _CodeElement;
+            return (value as Hl7.Fhir.Model.Code) is not null;
           case "display":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DisplayElement))
+            if (_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["display"];
-            else
-              value = _DisplayElement;
-            return _DisplayElement is not null;
+              return true;
+            }
+            value = _DisplayElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "definition":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DefinitionElement))
+            if (_DefinitionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["definition"];
-            else
-              value = _DefinitionElement;
-            return _DefinitionElement is not null;
+              return true;
+            }
+            value = _DefinitionElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "designation":
-            if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>>.InOverflow(_Designation))
+            if (_Designation.InOverflow<List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>>())
+            {
               value = Overflow["designation"];
-            else
-              value = _Designation;
-            return _Designation?.Any() == true;
+              return true;
+            }
+            value = _Designation;
+            return (value as List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>)?.Any() is true;
           case "property":
-            if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>>.InOverflow(_Property))
+            if (_Property.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>>())
+            {
               value = Overflow["property"];
-            else
-              value = _Property;
-            return _Property?.Any() == true;
+              return true;
+            }
+            value = _Property;
+            return (value as List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>)?.Any() is true;
           case "concept":
-            if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>.InOverflow(_Concept))
+            if (_Concept.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>())
+            {
               value = Overflow["concept"];
-            else
-              value = _Concept;
-            return _Concept?.Any() == true;
+              return true;
+            }
+            value = _Concept;
+            return (value as List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -1160,12 +1188,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
-        if (_DisplayElement is not null) yield return new KeyValuePair<string,object>("display",_DisplayElement);
-        if (_DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",_DefinitionElement);
-        if (_Designation?.Any() == true) yield return new KeyValuePair<string,object>("designation",_Designation);
-        if (_Property?.Any() == true) yield return new KeyValuePair<string,object>("property",_Property);
-        if (_Concept?.Any() == true) yield return new KeyValuePair<string,object>("concept",_Concept);
+        if (!_CodeElement.InOverflow<Hl7.Fhir.Model.Code>() && _CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
+        if (!_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DisplayElement is not null) yield return new KeyValuePair<string,object>("display",_DisplayElement);
+        if (!_DefinitionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",_DefinitionElement);
+        if (!_Designation.InOverflow<List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>>() && _Designation?.Any() is true) yield return new KeyValuePair<string,object>("designation",_Designation);
+        if (!_Property.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>>() && _Property?.Any() is true) yield return new KeyValuePair<string,object>("property",_Property);
+        if (!_Concept.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>() && _Concept?.Any() is true) yield return new KeyValuePair<string,object>("concept",_Concept);
       }
 
     }
@@ -1196,14 +1224,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_LanguageElement))
+          if(_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["language"]);
           return _LanguageElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_LanguageElement))
+          if (_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>())
             Overflow.Remove("language");
           _LanguageElement = value;
           OnPropertyChanged("LanguageElement");
@@ -1238,14 +1266,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_Use))
+          if(_Use.InOverflow<Hl7.Fhir.Model.Coding>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["use"]);
           return _Use;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_Use))
+          if (_Use.InOverflow<Hl7.Fhir.Model.Coding>())
             Overflow.Remove("use");
           _Use = value;
           OnPropertyChanged("Use");
@@ -1265,14 +1293,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
+          if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["value"]);
           return _ValueElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
+          if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("value");
           _ValueElement = value;
           OnPropertyChanged("ValueElement");
@@ -1334,23 +1362,29 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "language":
-            if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_LanguageElement))
+            if (_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>())
+            {
               value = Overflow["language"];
-            else
-              value = _LanguageElement;
-            return _LanguageElement is not null;
+              return true;
+            }
+            value = _LanguageElement;
+            return (value as Hl7.Fhir.Model.Code) is not null;
           case "use":
-            if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_Use))
+            if (_Use.InOverflow<Hl7.Fhir.Model.Coding>())
+            {
               value = Overflow["use"];
-            else
-              value = _Use;
-            return _Use is not null;
+              return true;
+            }
+            value = _Use;
+            return (value as Hl7.Fhir.Model.Coding) is not null;
           case "value":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
+            if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["value"];
-            else
-              value = _ValueElement;
-            return _ValueElement is not null;
+              return true;
+            }
+            value = _ValueElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -1395,9 +1429,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_LanguageElement is not null) yield return new KeyValuePair<string,object>("language",_LanguageElement);
-        if (_Use is not null) yield return new KeyValuePair<string,object>("use",_Use);
-        if (_ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (!_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>() && _LanguageElement is not null) yield return new KeyValuePair<string,object>("language",_LanguageElement);
+        if (!_Use.InOverflow<Hl7.Fhir.Model.Coding>() && _Use is not null) yield return new KeyValuePair<string,object>("use",_Use);
+        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -1428,14 +1462,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+          if(_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["code"]);
           return _CodeElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+          if (_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
             Overflow.Remove("code");
           _CodeElement = value;
           OnPropertyChanged("CodeElement");
@@ -1472,14 +1506,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<DynamicDataType>.InOverflow(_Value))
+          if(_Value.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
           return _Value;
         }
 
         set
         {
-          if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+          if (_Value.InOverflow<DynamicDataType>())
             Overflow.Remove("value");
           _Value = value;
           OnPropertyChanged("Value");
@@ -1524,17 +1558,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+            if (_CodeElement.InOverflow<Hl7.Fhir.Model.Code>())
+            {
               value = Overflow["code"];
-            else
-              value = _CodeElement;
-            return _CodeElement is not null;
+              return true;
+            }
+            value = _CodeElement;
+            return (value as Hl7.Fhir.Model.Code) is not null;
           case "value":
-            if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+            if (_Value.InOverflow<DynamicDataType>())
+            {
               value = Overflow["value"];
-            else
-              value = _Value;
-            return _Value is not null;
+              return true;
+            }
+            value = _Value;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -1571,8 +1609,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
-        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (!_CodeElement.InOverflow<Hl7.Fhir.Model.Code>() && _CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
+        if (!_Value.InOverflow<DynamicDataType>() && _Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -1586,14 +1624,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+        if(_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["url"]);
         return _UrlElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+        if (_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
           Overflow.Remove("url");
         _UrlElement = value;
         OnPropertyChanged("UrlElement");
@@ -1627,14 +1665,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+        if(_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["identifier"]);
         return _Identifier;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+        if (_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
           Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
@@ -1653,14 +1691,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_VersionElement))
+        if(_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["version"]);
         return _VersionElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_VersionElement))
+        if (_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("version");
         _VersionElement = value;
         OnPropertyChanged("VersionElement");
@@ -1694,14 +1732,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+        if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
         return _NameElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+        if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("name");
         _NameElement = value;
         OnPropertyChanged("NameElement");
@@ -1735,14 +1773,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TitleElement))
+        if(_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["title"]);
         return _TitleElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TitleElement))
+        if (_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("title");
         _TitleElement = value;
         OnPropertyChanged("TitleElement");
@@ -1779,14 +1817,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
         return _StatusElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
           Overflow.Remove("status");
         _StatusElement = value;
         OnPropertyChanged("StatusElement");
@@ -1820,14 +1858,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ExperimentalElement))
+        if(_ExperimentalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["experimental"]);
         return _ExperimentalElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ExperimentalElement))
+        if (_ExperimentalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           Overflow.Remove("experimental");
         _ExperimentalElement = value;
         OnPropertyChanged("ExperimentalElement");
@@ -1861,14 +1899,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+        if(_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["date"]);
         return _DateElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+        if (_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           Overflow.Remove("date");
         _DateElement = value;
         OnPropertyChanged("DateElement");
@@ -1902,14 +1940,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PublisherElement))
+        if(_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["publisher"]);
         return _PublisherElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PublisherElement))
+        if (_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("publisher");
         _PublisherElement = value;
         OnPropertyChanged("PublisherElement");
@@ -1944,14 +1982,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.InOverflow(_Contact))
+        if(_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ContactDetail>), Overflow["contact"]);
         return _Contact ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.InOverflow(_Contact))
+        if (_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
           Overflow.Remove("contact");
         _Contact = value;
         OnPropertyChanged("Contact");
@@ -1970,14 +2008,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_DescriptionElement))
+        if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["description"]);
         return _DescriptionElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_DescriptionElement))
+        if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
           Overflow.Remove("description");
         _DescriptionElement = value;
         OnPropertyChanged("DescriptionElement");
@@ -2012,14 +2050,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.InOverflow(_UseContext))
+        if(_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.UsageContext>), Overflow["useContext"]);
         return _UseContext ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.InOverflow(_UseContext))
+        if (_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>())
           Overflow.Remove("useContext");
         _UseContext = value;
         OnPropertyChanged("UseContext");
@@ -2040,14 +2078,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Jurisdiction))
+        if(_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["jurisdiction"]);
         return _Jurisdiction ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Jurisdiction))
+        if (_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
           Overflow.Remove("jurisdiction");
         _Jurisdiction = value;
         OnPropertyChanged("Jurisdiction");
@@ -2066,14 +2104,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_PurposeElement))
+        if(_PurposeElement.InOverflow<Hl7.Fhir.Model.Markdown>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["purpose"]);
         return _PurposeElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_PurposeElement))
+        if (_PurposeElement.InOverflow<Hl7.Fhir.Model.Markdown>())
           Overflow.Remove("purpose");
         _PurposeElement = value;
         OnPropertyChanged("PurposeElement");
@@ -2107,14 +2145,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_CopyrightElement))
+        if(_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["copyright"]);
         return _CopyrightElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_CopyrightElement))
+        if (_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>())
           Overflow.Remove("copyright");
         _CopyrightElement = value;
         OnPropertyChanged("CopyrightElement");
@@ -2148,14 +2186,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_CaseSensitiveElement))
+        if(_CaseSensitiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["caseSensitive"]);
         return _CaseSensitiveElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_CaseSensitiveElement))
+        if (_CaseSensitiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           Overflow.Remove("caseSensitive");
         _CaseSensitiveElement = value;
         OnPropertyChanged("CaseSensitiveElement");
@@ -2189,14 +2227,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_ValueSetElement))
+        if(_ValueSetElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["valueSet"]);
         return _ValueSetElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_ValueSetElement))
+        if (_ValueSetElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
           Overflow.Remove("valueSet");
         _ValueSetElement = value;
         OnPropertyChanged("ValueSetElement");
@@ -2232,14 +2270,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>>.InOverflow(_HierarchyMeaningElement))
+        if(_HierarchyMeaningElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>), Overflow["hierarchyMeaning"]);
         return _HierarchyMeaningElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>>.InOverflow(_HierarchyMeaningElement))
+        if (_HierarchyMeaningElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>>())
           Overflow.Remove("hierarchyMeaning");
         _HierarchyMeaningElement = value;
         OnPropertyChanged("HierarchyMeaningElement");
@@ -2273,14 +2311,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_CompositionalElement))
+        if(_CompositionalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["compositional"]);
         return _CompositionalElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_CompositionalElement))
+        if (_CompositionalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           Overflow.Remove("compositional");
         _CompositionalElement = value;
         OnPropertyChanged("CompositionalElement");
@@ -2314,14 +2352,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_VersionNeededElement))
+        if(_VersionNeededElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["versionNeeded"]);
         return _VersionNeededElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_VersionNeededElement))
+        if (_VersionNeededElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
           Overflow.Remove("versionNeeded");
         _VersionNeededElement = value;
         OnPropertyChanged("VersionNeededElement");
@@ -2358,14 +2396,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>>.InOverflow(_ContentElement))
+        if(_ContentElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>), Overflow["content"]);
         return _ContentElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>>.InOverflow(_ContentElement))
+        if (_ContentElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>>())
           Overflow.Remove("content");
         _ContentElement = value;
         OnPropertyChanged("ContentElement");
@@ -2399,14 +2437,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_CountElement))
+        if(_CountElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Overflow["count"]);
         return _CountElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_CountElement))
+        if (_CountElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
           Overflow.Remove("count");
         _CountElement = value;
         OnPropertyChanged("CountElement");
@@ -2441,14 +2479,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.CodeSystem.FilterComponent>>.InOverflow(_Filter))
+        if(_Filter.InOverflow<List<Hl7.Fhir.Model.CodeSystem.FilterComponent>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeSystem.FilterComponent>), Overflow["filter"]);
         return _Filter ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.FilterComponent>>.InOverflow(_Filter))
+        if (_Filter.InOverflow<List<Hl7.Fhir.Model.CodeSystem.FilterComponent>>())
           Overflow.Remove("filter");
         _Filter = value;
         OnPropertyChanged("Filter");
@@ -2468,14 +2506,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>>.InOverflow(_Property))
+        if(_Property.InOverflow<List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>), Overflow["property"]);
         return _Property ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>>.InOverflow(_Property))
+        if (_Property.InOverflow<List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>>())
           Overflow.Remove("property");
         _Property = value;
         OnPropertyChanged("Property");
@@ -2495,14 +2533,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>.InOverflow(_Concept))
+        if(_Concept.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>), Overflow["concept"]);
         return _Concept ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>.InOverflow(_Concept))
+        if (_Concept.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>())
           Overflow.Remove("concept");
         _Concept = value;
         OnPropertyChanged("Concept");
@@ -2595,155 +2633,205 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "url":
-          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+          if (_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          {
             value = Overflow["url"];
-          else
-            value = _UrlElement;
-          return _UrlElement is not null;
+            return true;
+          }
+          value = _UrlElement;
+          return (value as Hl7.Fhir.Model.FhirUri) is not null;
         case "identifier":
-          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+          if (_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>())
+          {
             value = Overflow["identifier"];
-          else
-            value = _Identifier;
-          return _Identifier is not null;
+            return true;
+          }
+          value = _Identifier;
+          return (value as Hl7.Fhir.Model.Identifier) is not null;
         case "version":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_VersionElement))
+          if (_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["version"];
-          else
-            value = _VersionElement;
-          return _VersionElement is not null;
+            return true;
+          }
+          value = _VersionElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "name":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+          if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["name"];
-          else
-            value = _NameElement;
-          return _NameElement is not null;
+            return true;
+          }
+          value = _NameElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "title":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TitleElement))
+          if (_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["title"];
-          else
-            value = _TitleElement;
-          return _TitleElement is not null;
+            return true;
+          }
+          value = _TitleElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "status":
-          if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
+          {
             value = Overflow["status"];
-          else
-            value = _StatusElement;
-          return _StatusElement is not null;
+            return true;
+          }
+          value = _StatusElement;
+          return (value as Code<Hl7.Fhir.Model.PublicationStatus>) is not null;
         case "experimental":
-          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ExperimentalElement))
+          if (_ExperimentalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+          {
             value = Overflow["experimental"];
-          else
-            value = _ExperimentalElement;
-          return _ExperimentalElement is not null;
+            return true;
+          }
+          value = _ExperimentalElement;
+          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
         case "date":
-          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+          if (_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
             value = Overflow["date"];
-          else
-            value = _DateElement;
-          return _DateElement is not null;
+            return true;
+          }
+          value = _DateElement;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         case "publisher":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PublisherElement))
+          if (_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["publisher"];
-          else
-            value = _PublisherElement;
-          return _PublisherElement is not null;
+            return true;
+          }
+          value = _PublisherElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "contact":
-          if (OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.InOverflow(_Contact))
+          if (_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          {
             value = Overflow["contact"];
-          else
-            value = _Contact;
-          return _Contact?.Any() == true;
+            return true;
+          }
+          value = _Contact;
+          return (value as List<Hl7.Fhir.Model.ContactDetail>)?.Any() is true;
         case "description":
-          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_DescriptionElement))
+          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
+          {
             value = Overflow["description"];
-          else
-            value = _DescriptionElement;
-          return _DescriptionElement is not null;
+            return true;
+          }
+          value = _DescriptionElement;
+          return (value as Hl7.Fhir.Model.Markdown) is not null;
         case "useContext":
-          if (OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.InOverflow(_UseContext))
+          if (_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>())
+          {
             value = Overflow["useContext"];
-          else
-            value = _UseContext;
-          return _UseContext?.Any() == true;
+            return true;
+          }
+          value = _UseContext;
+          return (value as List<Hl7.Fhir.Model.UsageContext>)?.Any() is true;
         case "jurisdiction":
-          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Jurisdiction))
+          if (_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
             value = Overflow["jurisdiction"];
-          else
-            value = _Jurisdiction;
-          return _Jurisdiction?.Any() == true;
+            return true;
+          }
+          value = _Jurisdiction;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "purpose":
-          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_PurposeElement))
+          if (_PurposeElement.InOverflow<Hl7.Fhir.Model.Markdown>())
+          {
             value = Overflow["purpose"];
-          else
-            value = _PurposeElement;
-          return _PurposeElement is not null;
+            return true;
+          }
+          value = _PurposeElement;
+          return (value as Hl7.Fhir.Model.Markdown) is not null;
         case "copyright":
-          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_CopyrightElement))
+          if (_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>())
+          {
             value = Overflow["copyright"];
-          else
-            value = _CopyrightElement;
-          return _CopyrightElement is not null;
+            return true;
+          }
+          value = _CopyrightElement;
+          return (value as Hl7.Fhir.Model.Markdown) is not null;
         case "caseSensitive":
-          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_CaseSensitiveElement))
+          if (_CaseSensitiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+          {
             value = Overflow["caseSensitive"];
-          else
-            value = _CaseSensitiveElement;
-          return _CaseSensitiveElement is not null;
+            return true;
+          }
+          value = _CaseSensitiveElement;
+          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
         case "valueSet":
-          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_ValueSetElement))
+          if (_ValueSetElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          {
             value = Overflow["valueSet"];
-          else
-            value = _ValueSetElement;
-          return _ValueSetElement is not null;
+            return true;
+          }
+          value = _ValueSetElement;
+          return (value as Hl7.Fhir.Model.FhirUri) is not null;
         case "hierarchyMeaning":
-          if (OverflowNull<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>>.InOverflow(_HierarchyMeaningElement))
+          if (_HierarchyMeaningElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>>())
+          {
             value = Overflow["hierarchyMeaning"];
-          else
-            value = _HierarchyMeaningElement;
-          return _HierarchyMeaningElement is not null;
+            return true;
+          }
+          value = _HierarchyMeaningElement;
+          return (value as Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>) is not null;
         case "compositional":
-          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_CompositionalElement))
+          if (_CompositionalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+          {
             value = Overflow["compositional"];
-          else
-            value = _CompositionalElement;
-          return _CompositionalElement is not null;
+            return true;
+          }
+          value = _CompositionalElement;
+          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
         case "versionNeeded":
-          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_VersionNeededElement))
+          if (_VersionNeededElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+          {
             value = Overflow["versionNeeded"];
-          else
-            value = _VersionNeededElement;
-          return _VersionNeededElement is not null;
+            return true;
+          }
+          value = _VersionNeededElement;
+          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
         case "content":
-          if (OverflowNull<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>>.InOverflow(_ContentElement))
+          if (_ContentElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>>())
+          {
             value = Overflow["content"];
-          else
-            value = _ContentElement;
-          return _ContentElement is not null;
+            return true;
+          }
+          value = _ContentElement;
+          return (value as Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>) is not null;
         case "count":
-          if (OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_CountElement))
+          if (_CountElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>())
+          {
             value = Overflow["count"];
-          else
-            value = _CountElement;
-          return _CountElement is not null;
+            return true;
+          }
+          value = _CountElement;
+          return (value as Hl7.Fhir.Model.UnsignedInt) is not null;
         case "filter":
-          if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.FilterComponent>>.InOverflow(_Filter))
+          if (_Filter.InOverflow<List<Hl7.Fhir.Model.CodeSystem.FilterComponent>>())
+          {
             value = Overflow["filter"];
-          else
-            value = _Filter;
-          return _Filter?.Any() == true;
+            return true;
+          }
+          value = _Filter;
+          return (value as List<Hl7.Fhir.Model.CodeSystem.FilterComponent>)?.Any() is true;
         case "property":
-          if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>>.InOverflow(_Property))
+          if (_Property.InOverflow<List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>>())
+          {
             value = Overflow["property"];
-          else
-            value = _Property;
-          return _Property?.Any() == true;
+            return true;
+          }
+          value = _Property;
+          return (value as List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>)?.Any() is true;
         case "concept":
-          if (OverflowNull<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>.InOverflow(_Concept))
+          if (_Concept.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>())
+          {
             value = Overflow["concept"];
-          else
-            value = _Concept;
-          return _Concept?.Any() == true;
+            return true;
+          }
+          value = _Concept;
+          return (value as List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -2964,31 +3052,31 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
-      if (_Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_VersionElement is not null) yield return new KeyValuePair<string,object>("version",_VersionElement);
-      if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-      if (_TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
-      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (_ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",_ExperimentalElement);
-      if (_DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-      if (_PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",_PublisherElement);
-      if (_Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",_Contact);
-      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (_UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",_UseContext);
-      if (_Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
-      if (_PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",_PurposeElement);
-      if (_CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",_CopyrightElement);
-      if (_CaseSensitiveElement is not null) yield return new KeyValuePair<string,object>("caseSensitive",_CaseSensitiveElement);
-      if (_ValueSetElement is not null) yield return new KeyValuePair<string,object>("valueSet",_ValueSetElement);
-      if (_HierarchyMeaningElement is not null) yield return new KeyValuePair<string,object>("hierarchyMeaning",_HierarchyMeaningElement);
-      if (_CompositionalElement is not null) yield return new KeyValuePair<string,object>("compositional",_CompositionalElement);
-      if (_VersionNeededElement is not null) yield return new KeyValuePair<string,object>("versionNeeded",_VersionNeededElement);
-      if (_ContentElement is not null) yield return new KeyValuePair<string,object>("content",_ContentElement);
-      if (_CountElement is not null) yield return new KeyValuePair<string,object>("count",_CountElement);
-      if (_Filter?.Any() == true) yield return new KeyValuePair<string,object>("filter",_Filter);
-      if (_Property?.Any() == true) yield return new KeyValuePair<string,object>("property",_Property);
-      if (_Concept?.Any() == true) yield return new KeyValuePair<string,object>("concept",_Concept);
+      if (!_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (!_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _VersionElement is not null) yield return new KeyValuePair<string,object>("version",_VersionElement);
+      if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (!_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
+      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (!_ExperimentalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",_ExperimentalElement);
+      if (!_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (!_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",_PublisherElement);
+      if (!_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>() && _Contact?.Any() is true) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (!_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>() && _UseContext?.Any() is true) yield return new KeyValuePair<string,object>("useContext",_UseContext);
+      if (!_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Jurisdiction?.Any() is true) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
+      if (!_PurposeElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",_PurposeElement);
+      if (!_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",_CopyrightElement);
+      if (!_CaseSensitiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _CaseSensitiveElement is not null) yield return new KeyValuePair<string,object>("caseSensitive",_CaseSensitiveElement);
+      if (!_ValueSetElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _ValueSetElement is not null) yield return new KeyValuePair<string,object>("valueSet",_ValueSetElement);
+      if (!_HierarchyMeaningElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>>() && _HierarchyMeaningElement is not null) yield return new KeyValuePair<string,object>("hierarchyMeaning",_HierarchyMeaningElement);
+      if (!_CompositionalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _CompositionalElement is not null) yield return new KeyValuePair<string,object>("compositional",_CompositionalElement);
+      if (!_VersionNeededElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _VersionNeededElement is not null) yield return new KeyValuePair<string,object>("versionNeeded",_VersionNeededElement);
+      if (!_ContentElement.InOverflow<Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode>>() && _ContentElement is not null) yield return new KeyValuePair<string,object>("content",_ContentElement);
+      if (!_CountElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>() && _CountElement is not null) yield return new KeyValuePair<string,object>("count",_CountElement);
+      if (!_Filter.InOverflow<List<Hl7.Fhir.Model.CodeSystem.FilterComponent>>() && _Filter?.Any() is true) yield return new KeyValuePair<string,object>("filter",_Filter);
+      if (!_Property.InOverflow<List<Hl7.Fhir.Model.CodeSystem.PropertyComponent>>() && _Property?.Any() is true) yield return new KeyValuePair<string,object>("property",_Property);
+      if (!_Concept.InOverflow<List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>>() && _Concept?.Any() is true) yield return new KeyValuePair<string,object>("concept",_Concept);
     }
 
   }

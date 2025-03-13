@@ -72,14 +72,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowNumerator))
+        if(_LowNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["lowNumerator"]);
         return _LowNumerator;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowNumerator))
+        if (_LowNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
           Overflow.Remove("lowNumerator");
         _LowNumerator = value;
         OnPropertyChanged("LowNumerator");
@@ -98,14 +98,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighNumerator))
+        if(_HighNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["highNumerator"]);
         return _HighNumerator;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighNumerator))
+        if (_HighNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
           Overflow.Remove("highNumerator");
         _HighNumerator = value;
         OnPropertyChanged("HighNumerator");
@@ -124,14 +124,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
+        if(_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["denominator"]);
         return _Denominator;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
+        if (_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
           Overflow.Remove("denominator");
         _Denominator = value;
         OnPropertyChanged("Denominator");
@@ -178,23 +178,29 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "lowNumerator":
-          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowNumerator))
+          if (_LowNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
             value = Overflow["lowNumerator"];
-          else
-            value = _LowNumerator;
-          return _LowNumerator is not null;
+            return true;
+          }
+          value = _LowNumerator;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "highNumerator":
-          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighNumerator))
+          if (_HighNumerator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
             value = Overflow["highNumerator"];
-          else
-            value = _HighNumerator;
-          return _HighNumerator is not null;
+            return true;
+          }
+          value = _HighNumerator;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "denominator":
-          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
+          if (_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
             value = Overflow["denominator"];
-          else
-            value = _Denominator;
-          return _Denominator is not null;
+            return true;
+          }
+          value = _Denominator;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -239,9 +245,9 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_LowNumerator is not null) yield return new KeyValuePair<string,object>("lowNumerator",_LowNumerator);
-      if (_HighNumerator is not null) yield return new KeyValuePair<string,object>("highNumerator",_HighNumerator);
-      if (_Denominator is not null) yield return new KeyValuePair<string,object>("denominator",_Denominator);
+      if (!_LowNumerator.InOverflow<Hl7.Fhir.Model.Quantity>() && _LowNumerator is not null) yield return new KeyValuePair<string,object>("lowNumerator",_LowNumerator);
+      if (!_HighNumerator.InOverflow<Hl7.Fhir.Model.Quantity>() && _HighNumerator is not null) yield return new KeyValuePair<string,object>("highNumerator",_HighNumerator);
+      if (!_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>() && _Denominator is not null) yield return new KeyValuePair<string,object>("denominator",_Denominator);
     }
 
   }

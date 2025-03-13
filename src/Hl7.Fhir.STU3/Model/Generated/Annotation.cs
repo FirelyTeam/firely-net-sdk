@@ -75,14 +75,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<DynamicDataType>.InOverflow(_Author))
+        if(_Author.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["author"]);
         return _Author;
       }
 
       set
       {
-        if (OverflowNull<DynamicDataType>.InOverflow(_Author))
+        if (_Author.InOverflow<DynamicDataType>())
           Overflow.Remove("author");
         _Author = value;
         OnPropertyChanged("Author");
@@ -101,14 +101,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_TimeElement))
+        if(_TimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["time"]);
         return _TimeElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_TimeElement))
+        if (_TimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
           Overflow.Remove("time");
         _TimeElement = value;
         OnPropertyChanged("TimeElement");
@@ -143,14 +143,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+        if(_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["text"]);
         return _TextElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+        if (_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("text");
         _TextElement = value;
         OnPropertyChanged("TextElement");
@@ -212,23 +212,29 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "author":
-          if (OverflowNull<DynamicDataType>.InOverflow(_Author))
+          if (_Author.InOverflow<DynamicDataType>())
+          {
             value = Overflow["author"];
-          else
-            value = _Author;
-          return _Author is not null;
+            return true;
+          }
+          value = _Author;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "time":
-          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_TimeElement))
+          if (_TimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
             value = Overflow["time"];
-          else
-            value = _TimeElement;
-          return _TimeElement is not null;
+            return true;
+          }
+          value = _TimeElement;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         case "text":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+          if (_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["text"];
-          else
-            value = _TextElement;
-          return _TextElement is not null;
+            return true;
+          }
+          value = _TextElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -273,9 +279,9 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
-      if (_TimeElement is not null) yield return new KeyValuePair<string,object>("time",_TimeElement);
-      if (_TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (!_Author.InOverflow<DynamicDataType>() && _Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
+      if (!_TimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _TimeElement is not null) yield return new KeyValuePair<string,object>("time",_TimeElement);
+      if (!_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
     }
 
   }

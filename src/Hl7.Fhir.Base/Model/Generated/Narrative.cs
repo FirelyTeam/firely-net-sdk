@@ -108,14 +108,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>.InOverflow(_StatusElement))
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>), Overflow["status"]);
         return _StatusElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>.InOverflow(_StatusElement))
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>())
           Overflow.Remove("status");
         _StatusElement = value;
         OnPropertyChanged("StatusElement");
@@ -150,14 +150,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.XHtml>.InOverflow(_DivElement))
+        if(_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.XHtml), Overflow["div"]);
         return _DivElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.XHtml>.InOverflow(_DivElement))
+        if (_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>())
           Overflow.Remove("div");
         _DivElement = value;
         OnPropertyChanged("DivElement");
@@ -217,17 +217,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "status":
-          if (OverflowNull<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>.InOverflow(_StatusElement))
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>())
+          {
             value = Overflow["status"];
-          else
-            value = _StatusElement;
-          return _StatusElement is not null;
+            return true;
+          }
+          value = _StatusElement;
+          return (value as Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>) is not null;
         case "div":
-          if (OverflowNull<Hl7.Fhir.Model.XHtml>.InOverflow(_DivElement))
+          if (_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>())
+          {
             value = Overflow["div"];
-          else
-            value = _DivElement;
-          return _DivElement is not null;
+            return true;
+          }
+          value = _DivElement;
+          return (value as Hl7.Fhir.Model.XHtml) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -264,8 +268,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (_DivElement is not null) yield return new KeyValuePair<string,object>("div",_DivElement);
+      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (!_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>() && _DivElement is not null) yield return new KeyValuePair<string,object>("div",_DivElement);
     }
 
   }

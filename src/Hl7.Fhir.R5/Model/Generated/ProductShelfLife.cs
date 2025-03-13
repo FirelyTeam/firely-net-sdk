@@ -68,14 +68,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+        if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
         return _Type;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+        if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
           Overflow.Remove("type");
         _Type = value;
         OnPropertyChanged("Type");
@@ -96,14 +96,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<DynamicDataType>.InOverflow(_Period))
+        if(_Period.InOverflow<DynamicDataType>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["period"]);
         return _Period;
       }
 
       set
       {
-        if (OverflowNull<DynamicDataType>.InOverflow(_Period))
+        if (_Period.InOverflow<DynamicDataType>())
           Overflow.Remove("period");
         _Period = value;
         OnPropertyChanged("Period");
@@ -123,14 +123,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_SpecialPrecautionsForStorage))
+        if(_SpecialPrecautionsForStorage.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["specialPrecautionsForStorage"]);
         return _SpecialPrecautionsForStorage ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_SpecialPrecautionsForStorage))
+        if (_SpecialPrecautionsForStorage.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
           Overflow.Remove("specialPrecautionsForStorage");
         _SpecialPrecautionsForStorage = value;
         OnPropertyChanged("SpecialPrecautionsForStorage");
@@ -177,23 +177,29 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
             value = Overflow["type"];
-          else
-            value = _Type;
-          return _Type is not null;
+            return true;
+          }
+          value = _Type;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "period":
-          if (OverflowNull<DynamicDataType>.InOverflow(_Period))
+          if (_Period.InOverflow<DynamicDataType>())
+          {
             value = Overflow["period"];
-          else
-            value = _Period;
-          return _Period is not null;
+            return true;
+          }
+          value = _Period;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "specialPrecautionsForStorage":
-          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_SpecialPrecautionsForStorage))
+          if (_SpecialPrecautionsForStorage.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
             value = Overflow["specialPrecautionsForStorage"];
-          else
-            value = _SpecialPrecautionsForStorage;
-          return _SpecialPrecautionsForStorage?.Any() == true;
+            return true;
+          }
+          value = _SpecialPrecautionsForStorage;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -238,9 +244,9 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
-      if (_SpecialPrecautionsForStorage?.Any() == true) yield return new KeyValuePair<string,object>("specialPrecautionsForStorage",_SpecialPrecautionsForStorage);
+      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+      if (!_Period.InOverflow<DynamicDataType>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (!_SpecialPrecautionsForStorage.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _SpecialPrecautionsForStorage?.Any() is true) yield return new KeyValuePair<string,object>("specialPrecautionsForStorage",_SpecialPrecautionsForStorage);
     }
 
   }

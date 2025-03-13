@@ -1170,14 +1170,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ValueElement))
+        if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["value"]);
         return _ValueElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ValueElement))
+        if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
           Overflow.Remove("value");
         _ValueElement = value;
         OnPropertyChanged("ValueElement");
@@ -1213,14 +1213,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.Money.Currencies>>.InOverflow(_CurrencyElement))
+        if(_CurrencyElement.InOverflow<Code<Hl7.Fhir.Model.Money.Currencies>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.Money.Currencies>), Overflow["currency"]);
         return _CurrencyElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.Money.Currencies>>.InOverflow(_CurrencyElement))
+        if (_CurrencyElement.InOverflow<Code<Hl7.Fhir.Model.Money.Currencies>>())
           Overflow.Remove("currency");
         _CurrencyElement = value;
         OnPropertyChanged("CurrencyElement");
@@ -1280,17 +1280,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "value":
-          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ValueElement))
+          if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+          {
             value = Overflow["value"];
-          else
-            value = _ValueElement;
-          return _ValueElement is not null;
+            return true;
+          }
+          value = _ValueElement;
+          return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
         case "currency":
-          if (OverflowNull<Code<Hl7.Fhir.Model.Money.Currencies>>.InOverflow(_CurrencyElement))
+          if (_CurrencyElement.InOverflow<Code<Hl7.Fhir.Model.Money.Currencies>>())
+          {
             value = Overflow["currency"];
-          else
-            value = _CurrencyElement;
-          return _CurrencyElement is not null;
+            return true;
+          }
+          value = _CurrencyElement;
+          return (value as Code<Hl7.Fhir.Model.Money.Currencies>) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -1327,8 +1331,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
-      if (_CurrencyElement is not null) yield return new KeyValuePair<string,object>("currency",_CurrencyElement);
+      if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (!_CurrencyElement.InOverflow<Code<Hl7.Fhir.Model.Money.Currencies>>() && _CurrencyElement is not null) yield return new KeyValuePair<string,object>("currency",_CurrencyElement);
     }
 
   }

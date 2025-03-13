@@ -155,14 +155,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_CoordinateSystem))
+          if(_CoordinateSystem.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["coordinateSystem"]);
           return _CoordinateSystem;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_CoordinateSystem))
+          if (_CoordinateSystem.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             Overflow.Remove("coordinateSystem");
           _CoordinateSystem = value;
           OnPropertyChanged("CoordinateSystem");
@@ -181,14 +181,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_OrdinalPositionElement))
+          if(_OrdinalPositionElement.InOverflow<Hl7.Fhir.Model.Integer>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["ordinalPosition"]);
           return _OrdinalPositionElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_OrdinalPositionElement))
+          if (_OrdinalPositionElement.InOverflow<Hl7.Fhir.Model.Integer>())
             Overflow.Remove("ordinalPosition");
           _OrdinalPositionElement = value;
           OnPropertyChanged("OrdinalPositionElement");
@@ -222,14 +222,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Range>.InOverflow(_SequenceRange))
+          if(_SequenceRange.InOverflow<Hl7.Fhir.Model.Range>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Range), Overflow["sequenceRange"]);
           return _SequenceRange;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Range>.InOverflow(_SequenceRange))
+          if (_SequenceRange.InOverflow<Hl7.Fhir.Model.Range>())
             Overflow.Remove("sequenceRange");
           _SequenceRange = value;
           OnPropertyChanged("SequenceRange");
@@ -248,14 +248,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent>.InOverflow(_StartingSequence))
+          if(_StartingSequence.InOverflow<Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent), Overflow["startingSequence"]);
           return _StartingSequence;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent>.InOverflow(_StartingSequence))
+          if (_StartingSequence.InOverflow<Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent>())
             Overflow.Remove("startingSequence");
           _StartingSequence = value;
           OnPropertyChanged("StartingSequence");
@@ -275,14 +275,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<List<Hl7.Fhir.Model.MolecularSequence.EditComponent>>.InOverflow(_Edit))
+          if(_Edit.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.EditComponent>>())
             throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MolecularSequence.EditComponent>), Overflow["edit"]);
           return _Edit ??= [];
         }
 
         set
         {
-          if (OverflowNull<List<Hl7.Fhir.Model.MolecularSequence.EditComponent>>.InOverflow(_Edit))
+          if (_Edit.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.EditComponent>>())
             Overflow.Remove("edit");
           _Edit = value;
           OnPropertyChanged("Edit");
@@ -333,35 +333,45 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "coordinateSystem":
-            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_CoordinateSystem))
+            if (_CoordinateSystem.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
               value = Overflow["coordinateSystem"];
-            else
-              value = _CoordinateSystem;
-            return _CoordinateSystem is not null;
+              return true;
+            }
+            value = _CoordinateSystem;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "ordinalPosition":
-            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_OrdinalPositionElement))
+            if (_OrdinalPositionElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
               value = Overflow["ordinalPosition"];
-            else
-              value = _OrdinalPositionElement;
-            return _OrdinalPositionElement is not null;
+              return true;
+            }
+            value = _OrdinalPositionElement;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           case "sequenceRange":
-            if (OverflowNull<Hl7.Fhir.Model.Range>.InOverflow(_SequenceRange))
+            if (_SequenceRange.InOverflow<Hl7.Fhir.Model.Range>())
+            {
               value = Overflow["sequenceRange"];
-            else
-              value = _SequenceRange;
-            return _SequenceRange is not null;
+              return true;
+            }
+            value = _SequenceRange;
+            return (value as Hl7.Fhir.Model.Range) is not null;
           case "startingSequence":
-            if (OverflowNull<Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent>.InOverflow(_StartingSequence))
+            if (_StartingSequence.InOverflow<Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent>())
+            {
               value = Overflow["startingSequence"];
-            else
-              value = _StartingSequence;
-            return _StartingSequence is not null;
+              return true;
+            }
+            value = _StartingSequence;
+            return (value as Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent) is not null;
           case "edit":
-            if (OverflowNull<List<Hl7.Fhir.Model.MolecularSequence.EditComponent>>.InOverflow(_Edit))
+            if (_Edit.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.EditComponent>>())
+            {
               value = Overflow["edit"];
-            else
-              value = _Edit;
-            return _Edit?.Any() == true;
+              return true;
+            }
+            value = _Edit;
+            return (value as List<Hl7.Fhir.Model.MolecularSequence.EditComponent>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -422,11 +432,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_CoordinateSystem is not null) yield return new KeyValuePair<string,object>("coordinateSystem",_CoordinateSystem);
-        if (_OrdinalPositionElement is not null) yield return new KeyValuePair<string,object>("ordinalPosition",_OrdinalPositionElement);
-        if (_SequenceRange is not null) yield return new KeyValuePair<string,object>("sequenceRange",_SequenceRange);
-        if (_StartingSequence is not null) yield return new KeyValuePair<string,object>("startingSequence",_StartingSequence);
-        if (_Edit?.Any() == true) yield return new KeyValuePair<string,object>("edit",_Edit);
+        if (!_CoordinateSystem.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _CoordinateSystem is not null) yield return new KeyValuePair<string,object>("coordinateSystem",_CoordinateSystem);
+        if (!_OrdinalPositionElement.InOverflow<Hl7.Fhir.Model.Integer>() && _OrdinalPositionElement is not null) yield return new KeyValuePair<string,object>("ordinalPosition",_OrdinalPositionElement);
+        if (!_SequenceRange.InOverflow<Hl7.Fhir.Model.Range>() && _SequenceRange is not null) yield return new KeyValuePair<string,object>("sequenceRange",_SequenceRange);
+        if (!_StartingSequence.InOverflow<Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent>() && _StartingSequence is not null) yield return new KeyValuePair<string,object>("startingSequence",_StartingSequence);
+        if (!_Edit.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.EditComponent>>() && _Edit?.Any() is true) yield return new KeyValuePair<string,object>("edit",_Edit);
       }
 
     }
@@ -457,14 +467,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_GenomeAssembly))
+          if(_GenomeAssembly.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["genomeAssembly"]);
           return _GenomeAssembly;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_GenomeAssembly))
+          if (_GenomeAssembly.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             Overflow.Remove("genomeAssembly");
           _GenomeAssembly = value;
           OnPropertyChanged("GenomeAssembly");
@@ -484,14 +494,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Chromosome))
+          if(_Chromosome.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["chromosome"]);
           return _Chromosome;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Chromosome))
+          if (_Chromosome.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
             Overflow.Remove("chromosome");
           _Chromosome = value;
           OnPropertyChanged("Chromosome");
@@ -514,14 +524,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<DynamicDataType>.InOverflow(_Sequence))
+          if(_Sequence.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["sequence"]);
           return _Sequence;
         }
 
         set
         {
-          if (OverflowNull<DynamicDataType>.InOverflow(_Sequence))
+          if (_Sequence.InOverflow<DynamicDataType>())
             Overflow.Remove("sequence");
           _Sequence = value;
           OnPropertyChanged("Sequence");
@@ -540,14 +550,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_WindowStartElement))
+          if(_WindowStartElement.InOverflow<Hl7.Fhir.Model.Integer>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["windowStart"]);
           return _WindowStartElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_WindowStartElement))
+          if (_WindowStartElement.InOverflow<Hl7.Fhir.Model.Integer>())
             Overflow.Remove("windowStart");
           _WindowStartElement = value;
           OnPropertyChanged("WindowStartElement");
@@ -581,14 +591,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_WindowEndElement))
+          if(_WindowEndElement.InOverflow<Hl7.Fhir.Model.Integer>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["windowEnd"]);
           return _WindowEndElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_WindowEndElement))
+          if (_WindowEndElement.InOverflow<Hl7.Fhir.Model.Integer>())
             Overflow.Remove("windowEnd");
           _WindowEndElement = value;
           OnPropertyChanged("WindowEndElement");
@@ -624,14 +634,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>>.InOverflow(_OrientationElement))
+          if(_OrientationElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>), Overflow["orientation"]);
           return _OrientationElement;
         }
 
         set
         {
-          if (OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>>.InOverflow(_OrientationElement))
+          if (_OrientationElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>>())
             Overflow.Remove("orientation");
           _OrientationElement = value;
           OnPropertyChanged("OrientationElement");
@@ -667,14 +677,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.StrandType>>.InOverflow(_StrandElement))
+          if(_StrandElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.StrandType>>())
             throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MolecularSequence.StrandType>), Overflow["strand"]);
           return _StrandElement;
         }
 
         set
         {
-          if (OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.StrandType>>.InOverflow(_StrandElement))
+          if (_StrandElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.StrandType>>())
             Overflow.Remove("strand");
           _StrandElement = value;
           OnPropertyChanged("StrandElement");
@@ -744,47 +754,61 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "genomeAssembly":
-            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_GenomeAssembly))
+            if (_GenomeAssembly.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
               value = Overflow["genomeAssembly"];
-            else
-              value = _GenomeAssembly;
-            return _GenomeAssembly is not null;
+              return true;
+            }
+            value = _GenomeAssembly;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "chromosome":
-            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Chromosome))
+            if (_Chromosome.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
               value = Overflow["chromosome"];
-            else
-              value = _Chromosome;
-            return _Chromosome is not null;
+              return true;
+            }
+            value = _Chromosome;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "sequence":
-            if (OverflowNull<DynamicDataType>.InOverflow(_Sequence))
+            if (_Sequence.InOverflow<DynamicDataType>())
+            {
               value = Overflow["sequence"];
-            else
-              value = _Sequence;
-            return _Sequence is not null;
+              return true;
+            }
+            value = _Sequence;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "windowStart":
-            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_WindowStartElement))
+            if (_WindowStartElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
               value = Overflow["windowStart"];
-            else
-              value = _WindowStartElement;
-            return _WindowStartElement is not null;
+              return true;
+            }
+            value = _WindowStartElement;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           case "windowEnd":
-            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_WindowEndElement))
+            if (_WindowEndElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
               value = Overflow["windowEnd"];
-            else
-              value = _WindowEndElement;
-            return _WindowEndElement is not null;
+              return true;
+            }
+            value = _WindowEndElement;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           case "orientation":
-            if (OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>>.InOverflow(_OrientationElement))
+            if (_OrientationElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>>())
+            {
               value = Overflow["orientation"];
-            else
-              value = _OrientationElement;
-            return _OrientationElement is not null;
+              return true;
+            }
+            value = _OrientationElement;
+            return (value as Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>) is not null;
           case "strand":
-            if (OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.StrandType>>.InOverflow(_StrandElement))
+            if (_StrandElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.StrandType>>())
+            {
               value = Overflow["strand"];
-            else
-              value = _StrandElement;
-            return _StrandElement is not null;
+              return true;
+            }
+            value = _StrandElement;
+            return (value as Code<Hl7.Fhir.Model.MolecularSequence.StrandType>) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -861,13 +885,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_GenomeAssembly is not null) yield return new KeyValuePair<string,object>("genomeAssembly",_GenomeAssembly);
-        if (_Chromosome is not null) yield return new KeyValuePair<string,object>("chromosome",_Chromosome);
-        if (_Sequence is not null) yield return new KeyValuePair<string,object>("sequence",_Sequence);
-        if (_WindowStartElement is not null) yield return new KeyValuePair<string,object>("windowStart",_WindowStartElement);
-        if (_WindowEndElement is not null) yield return new KeyValuePair<string,object>("windowEnd",_WindowEndElement);
-        if (_OrientationElement is not null) yield return new KeyValuePair<string,object>("orientation",_OrientationElement);
-        if (_StrandElement is not null) yield return new KeyValuePair<string,object>("strand",_StrandElement);
+        if (!_GenomeAssembly.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _GenomeAssembly is not null) yield return new KeyValuePair<string,object>("genomeAssembly",_GenomeAssembly);
+        if (!_Chromosome.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Chromosome is not null) yield return new KeyValuePair<string,object>("chromosome",_Chromosome);
+        if (!_Sequence.InOverflow<DynamicDataType>() && _Sequence is not null) yield return new KeyValuePair<string,object>("sequence",_Sequence);
+        if (!_WindowStartElement.InOverflow<Hl7.Fhir.Model.Integer>() && _WindowStartElement is not null) yield return new KeyValuePair<string,object>("windowStart",_WindowStartElement);
+        if (!_WindowEndElement.InOverflow<Hl7.Fhir.Model.Integer>() && _WindowEndElement is not null) yield return new KeyValuePair<string,object>("windowEnd",_WindowEndElement);
+        if (!_OrientationElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>>() && _OrientationElement is not null) yield return new KeyValuePair<string,object>("orientation",_OrientationElement);
+        if (!_StrandElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.StrandType>>() && _StrandElement is not null) yield return new KeyValuePair<string,object>("strand",_StrandElement);
       }
 
     }
@@ -894,14 +918,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_StartElement))
+          if(_StartElement.InOverflow<Hl7.Fhir.Model.Integer>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["start"]);
           return _StartElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_StartElement))
+          if (_StartElement.InOverflow<Hl7.Fhir.Model.Integer>())
             Overflow.Remove("start");
           _StartElement = value;
           OnPropertyChanged("StartElement");
@@ -935,14 +959,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_EndElement))
+          if(_EndElement.InOverflow<Hl7.Fhir.Model.Integer>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["end"]);
           return _EndElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_EndElement))
+          if (_EndElement.InOverflow<Hl7.Fhir.Model.Integer>())
             Overflow.Remove("end");
           _EndElement = value;
           OnPropertyChanged("EndElement");
@@ -976,14 +1000,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReplacementSequenceElement))
+          if(_ReplacementSequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["replacementSequence"]);
           return _ReplacementSequenceElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReplacementSequenceElement))
+          if (_ReplacementSequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("replacementSequence");
           _ReplacementSequenceElement = value;
           OnPropertyChanged("ReplacementSequenceElement");
@@ -1017,14 +1041,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReplacedSequenceElement))
+          if(_ReplacedSequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["replacedSequence"]);
           return _ReplacedSequenceElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReplacedSequenceElement))
+          if (_ReplacedSequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("replacedSequence");
           _ReplacedSequenceElement = value;
           OnPropertyChanged("ReplacedSequenceElement");
@@ -1088,29 +1112,37 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "start":
-            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_StartElement))
+            if (_StartElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
               value = Overflow["start"];
-            else
-              value = _StartElement;
-            return _StartElement is not null;
+              return true;
+            }
+            value = _StartElement;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           case "end":
-            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_EndElement))
+            if (_EndElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
               value = Overflow["end"];
-            else
-              value = _EndElement;
-            return _EndElement is not null;
+              return true;
+            }
+            value = _EndElement;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           case "replacementSequence":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReplacementSequenceElement))
+            if (_ReplacementSequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["replacementSequence"];
-            else
-              value = _ReplacementSequenceElement;
-            return _ReplacementSequenceElement is not null;
+              return true;
+            }
+            value = _ReplacementSequenceElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "replacedSequence":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReplacedSequenceElement))
+            if (_ReplacedSequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["replacedSequence"];
-            else
-              value = _ReplacedSequenceElement;
-            return _ReplacedSequenceElement is not null;
+              return true;
+            }
+            value = _ReplacedSequenceElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -1163,10 +1195,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
-        if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
-        if (_ReplacementSequenceElement is not null) yield return new KeyValuePair<string,object>("replacementSequence",_ReplacementSequenceElement);
-        if (_ReplacedSequenceElement is not null) yield return new KeyValuePair<string,object>("replacedSequence",_ReplacedSequenceElement);
+        if (!_StartElement.InOverflow<Hl7.Fhir.Model.Integer>() && _StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
+        if (!_EndElement.InOverflow<Hl7.Fhir.Model.Integer>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
+        if (!_ReplacementSequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ReplacementSequenceElement is not null) yield return new KeyValuePair<string,object>("replacementSequence",_ReplacementSequenceElement);
+        if (!_ReplacedSequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ReplacedSequenceElement is not null) yield return new KeyValuePair<string,object>("replacedSequence",_ReplacedSequenceElement);
       }
 
     }
@@ -1181,14 +1213,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
         return _Identifier ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
           Overflow.Remove("identifier");
         _Identifier = value;
         OnPropertyChanged("Identifier");
@@ -1209,14 +1241,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>>.InOverflow(_TypeElement))
+        if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>>())
           throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>), Overflow["type"]);
         return _TypeElement;
       }
 
       set
       {
-        if (OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>>.InOverflow(_TypeElement))
+        if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>>())
           Overflow.Remove("type");
         _TypeElement = value;
         OnPropertyChanged("TypeElement");
@@ -1252,14 +1284,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+        if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
         return _Subject;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+        if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           Overflow.Remove("subject");
         _Subject = value;
         OnPropertyChanged("Subject");
@@ -1281,14 +1313,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Focus))
+        if(_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["focus"]);
         return _Focus ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Focus))
+        if (_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
           Overflow.Remove("focus");
         _Focus = value;
         OnPropertyChanged("Focus");
@@ -1309,14 +1341,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Specimen))
+        if(_Specimen.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["specimen"]);
         return _Specimen;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Specimen))
+        if (_Specimen.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           Overflow.Remove("specimen");
         _Specimen = value;
         OnPropertyChanged("Specimen");
@@ -1337,14 +1369,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Device))
+        if(_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["device"]);
         return _Device;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Device))
+        if (_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           Overflow.Remove("device");
         _Device = value;
         OnPropertyChanged("Device");
@@ -1365,14 +1397,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Performer))
+        if(_Performer.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["performer"]);
         return _Performer;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Performer))
+        if (_Performer.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           Overflow.Remove("performer");
         _Performer = value;
         OnPropertyChanged("Performer");
@@ -1391,14 +1423,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LiteralElement))
+        if(_LiteralElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["literal"]);
         return _LiteralElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LiteralElement))
+        if (_LiteralElement.InOverflow<Hl7.Fhir.Model.FhirString>())
           Overflow.Remove("literal");
         _LiteralElement = value;
         OnPropertyChanged("LiteralElement");
@@ -1433,14 +1465,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Formatted))
+        if(_Formatted.InOverflow<List<Hl7.Fhir.Model.Attachment>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Attachment>), Overflow["formatted"]);
         return _Formatted ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Formatted))
+        if (_Formatted.InOverflow<List<Hl7.Fhir.Model.Attachment>>())
           Overflow.Remove("formatted");
         _Formatted = value;
         OnPropertyChanged("Formatted");
@@ -1460,14 +1492,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>>.InOverflow(_Relative))
+        if(_Relative.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>), Overflow["relative"]);
         return _Relative ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>>.InOverflow(_Relative))
+        if (_Relative.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>>())
           Overflow.Remove("relative");
         _Relative = value;
         OnPropertyChanged("Relative");
@@ -1530,65 +1562,85 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
             value = Overflow["identifier"];
-          else
-            value = _Identifier;
-          return _Identifier?.Any() == true;
+            return true;
+          }
+          value = _Identifier;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "type":
-          if (OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>>.InOverflow(_TypeElement))
+          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>>())
+          {
             value = Overflow["type"];
-          else
-            value = _TypeElement;
-          return _TypeElement is not null;
+            return true;
+          }
+          value = _TypeElement;
+          return (value as Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>) is not null;
         case "subject":
-          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+          if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
             value = Overflow["subject"];
-          else
-            value = _Subject;
-          return _Subject is not null;
+            return true;
+          }
+          value = _Subject;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "focus":
-          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Focus))
+          if (_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
             value = Overflow["focus"];
-          else
-            value = _Focus;
-          return _Focus?.Any() == true;
+            return true;
+          }
+          value = _Focus;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "specimen":
-          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Specimen))
+          if (_Specimen.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
             value = Overflow["specimen"];
-          else
-            value = _Specimen;
-          return _Specimen is not null;
+            return true;
+          }
+          value = _Specimen;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "device":
-          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Device))
+          if (_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
             value = Overflow["device"];
-          else
-            value = _Device;
-          return _Device is not null;
+            return true;
+          }
+          value = _Device;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "performer":
-          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Performer))
+          if (_Performer.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
             value = Overflow["performer"];
-          else
-            value = _Performer;
-          return _Performer is not null;
+            return true;
+          }
+          value = _Performer;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "literal":
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LiteralElement))
+          if (_LiteralElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
             value = Overflow["literal"];
-          else
-            value = _LiteralElement;
-          return _LiteralElement is not null;
+            return true;
+          }
+          value = _LiteralElement;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "formatted":
-          if (OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Formatted))
+          if (_Formatted.InOverflow<List<Hl7.Fhir.Model.Attachment>>())
+          {
             value = Overflow["formatted"];
-          else
-            value = _Formatted;
-          return _Formatted?.Any() == true;
+            return true;
+          }
+          value = _Formatted;
+          return (value as List<Hl7.Fhir.Model.Attachment>)?.Any() is true;
         case "relative":
-          if (OverflowNull<List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>>.InOverflow(_Relative))
+          if (_Relative.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>>())
+          {
             value = Overflow["relative"];
-          else
-            value = _Relative;
-          return _Relative?.Any() == true;
+            return true;
+          }
+          value = _Relative;
+          return (value as List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -1689,16 +1741,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",_Focus);
-      if (_Specimen is not null) yield return new KeyValuePair<string,object>("specimen",_Specimen);
-      if (_Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
-      if (_Performer is not null) yield return new KeyValuePair<string,object>("performer",_Performer);
-      if (_LiteralElement is not null) yield return new KeyValuePair<string,object>("literal",_LiteralElement);
-      if (_Formatted?.Any() == true) yield return new KeyValuePair<string,object>("formatted",_Formatted);
-      if (_Relative?.Any() == true) yield return new KeyValuePair<string,object>("relative",_Relative);
+      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (!_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Focus?.Any() is true) yield return new KeyValuePair<string,object>("focus",_Focus);
+      if (!_Specimen.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Specimen is not null) yield return new KeyValuePair<string,object>("specimen",_Specimen);
+      if (!_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
+      if (!_Performer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Performer is not null) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (!_LiteralElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _LiteralElement is not null) yield return new KeyValuePair<string,object>("literal",_LiteralElement);
+      if (!_Formatted.InOverflow<List<Hl7.Fhir.Model.Attachment>>() && _Formatted?.Any() is true) yield return new KeyValuePair<string,object>("formatted",_Formatted);
+      if (!_Relative.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>>() && _Relative?.Any() is true) yield return new KeyValuePair<string,object>("relative",_Relative);
     }
 
   }

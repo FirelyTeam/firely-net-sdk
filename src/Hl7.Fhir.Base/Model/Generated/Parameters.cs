@@ -89,14 +89,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+          if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
           return _NameElement;
         }
 
         set
         {
-          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+          if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
             Overflow.Remove("name");
           _NameElement = value;
           OnPropertyChanged("NameElement");
@@ -130,14 +130,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<DynamicDataType>.InOverflow(_Value))
+          if(_Value.InOverflow<DynamicDataType>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
           return _Value;
         }
 
         set
         {
-          if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+          if (_Value.InOverflow<DynamicDataType>())
             Overflow.Remove("value");
           _Value = value;
           OnPropertyChanged("Value");
@@ -158,14 +158,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<DynamicResource>.InOverflow(_Resource))
+          if(_Resource.InOverflow<DynamicResource>())
             throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Resource), Overflow["resource"]);
           return _Resource;
         }
 
         set
         {
-          if (OverflowNull<DynamicResource>.InOverflow(_Resource))
+          if (_Resource.InOverflow<DynamicResource>())
             Overflow.Remove("resource");
           _Resource = value;
           OnPropertyChanged("Resource");
@@ -185,14 +185,14 @@ namespace Hl7.Fhir.Model
       {
         get
         {
-          if(OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.InOverflow(_Part))
+          if(_Part.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
             throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Parameters.ParameterComponent>), Overflow["part"]);
           return _Part ??= [];
         }
 
         set
         {
-          if (OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.InOverflow(_Part))
+          if (_Part.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
             Overflow.Remove("part");
           _Part = value;
           OnPropertyChanged("Part");
@@ -241,29 +241,37 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "name":
-            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
               value = Overflow["name"];
-            else
-              value = _NameElement;
-            return _NameElement is not null;
+              return true;
+            }
+            value = _NameElement;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "value":
-            if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+            if (_Value.InOverflow<DynamicDataType>())
+            {
               value = Overflow["value"];
-            else
-              value = _Value;
-            return _Value is not null;
+              return true;
+            }
+            value = _Value;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "resource":
-            if (OverflowNull<DynamicResource>.InOverflow(_Resource))
+            if (_Resource.InOverflow<DynamicResource>())
+            {
               value = Overflow["resource"];
-            else
-              value = _Resource;
-            return _Resource is not null;
+              return true;
+            }
+            value = _Resource;
+            return (value as Hl7.Fhir.Model.Resource) is not null;
           case "part":
-            if (OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.InOverflow(_Part))
+            if (_Part.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
+            {
               value = Overflow["part"];
-            else
-              value = _Part;
-            return _Part?.Any() == true;
+              return true;
+            }
+            value = _Part;
+            return (value as List<Hl7.Fhir.Model.Parameters.ParameterComponent>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -316,10 +324,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
-        if (_Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
-        if (_Part?.Any() == true) yield return new KeyValuePair<string,object>("part",_Part);
+        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (!_Value.InOverflow<DynamicDataType>() && _Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (!_Resource.InOverflow<DynamicResource>() && _Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (!_Part.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>() && _Part?.Any() is true) yield return new KeyValuePair<string,object>("part",_Part);
       }
 
     }
@@ -334,14 +342,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.InOverflow(_Parameter))
+        if(_Parameter.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
           throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Parameters.ParameterComponent>), Overflow["parameter"]);
         return _Parameter ??= [];
       }
 
       set
       {
-        if (OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.InOverflow(_Parameter))
+        if (_Parameter.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
           Overflow.Remove("parameter");
         _Parameter = value;
         OnPropertyChanged("Parameter");
@@ -384,11 +392,13 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "parameter":
-          if (OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.InOverflow(_Parameter))
+          if (_Parameter.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>())
+          {
             value = Overflow["parameter"];
-          else
-            value = _Parameter;
-          return _Parameter?.Any() == true;
+            return true;
+          }
+          value = _Parameter;
+          return (value as List<Hl7.Fhir.Model.Parameters.ParameterComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -417,7 +427,7 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",_Parameter);
+      if (!_Parameter.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>() && _Parameter?.Any() is true) yield return new KeyValuePair<string,object>("parameter",_Parameter);
     }
 
   }

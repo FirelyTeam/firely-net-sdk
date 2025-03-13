@@ -77,14 +77,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+        if(_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["contentType"]);
         return _ContentTypeElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+        if (_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
           Overflow.Remove("contentType");
         _ContentTypeElement = value;
         OnPropertyChanged("ContentTypeElement");
@@ -120,14 +120,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_SecurityContext))
+        if(_SecurityContext.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["securityContext"]);
         return _SecurityContext;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_SecurityContext))
+        if (_SecurityContext.InOverflow<Hl7.Fhir.Model.ResourceReference>())
           Overflow.Remove("securityContext");
         _SecurityContext = value;
         OnPropertyChanged("SecurityContext");
@@ -150,14 +150,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_ContentElement))
+        if(_ContentElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Base64Binary), Overflow["content"]);
         return _ContentElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_ContentElement))
+        if (_ContentElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
           Overflow.Remove("content");
         _ContentElement = value;
         OnPropertyChanged("ContentElement");
@@ -194,14 +194,14 @@ namespace Hl7.Fhir.Model
     {
       get
       {
-        if(OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+        if(_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
           throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Base64Binary), Overflow["data"]);
         return _DataElement;
       }
 
       set
       {
-        if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+        if (_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
           Overflow.Remove("data");
         _DataElement = value;
         OnPropertyChanged("DataElement");
@@ -265,29 +265,37 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "contentType":
-          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+          if (_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>())
+          {
             value = Overflow["contentType"];
-          else
-            value = _ContentTypeElement;
-          return _ContentTypeElement is not null;
+            return true;
+          }
+          value = _ContentTypeElement;
+          return (value as Hl7.Fhir.Model.Code) is not null;
         case "securityContext":
-          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_SecurityContext))
+          if (_SecurityContext.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
             value = Overflow["securityContext"];
-          else
-            value = _SecurityContext;
-          return _SecurityContext is not null;
+            return true;
+          }
+          value = _SecurityContext;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "content":
-          if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_ContentElement))
+          if (_ContentElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
+          {
             value = Overflow["content"];
-          else
-            value = _ContentElement;
-          return _ContentElement is not null;
+            return true;
+          }
+          value = _ContentElement;
+          return (value as Hl7.Fhir.Model.Base64Binary) is not null;
         case "data":
-          if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+          if (_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>())
+          {
             value = Overflow["data"];
-          else
-            value = _DataElement;
-          return _DataElement is not null;
+            return true;
+          }
+          value = _DataElement;
+          return (value as Hl7.Fhir.Model.Base64Binary) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -340,10 +348,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
-      if (_SecurityContext is not null) yield return new KeyValuePair<string,object>("securityContext",_SecurityContext);
-      if (_ContentElement is not null) yield return new KeyValuePair<string,object>("content",_ContentElement);
-      if (_DataElement is not null) yield return new KeyValuePair<string,object>("data",_DataElement);
+      if (!_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>() && _ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
+      if (!_SecurityContext.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _SecurityContext is not null) yield return new KeyValuePair<string,object>("securityContext",_SecurityContext);
+      if (!_ContentElement.InOverflow<Hl7.Fhir.Model.Base64Binary>() && _ContentElement is not null) yield return new KeyValuePair<string,object>("content",_ContentElement);
+      if (!_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>() && _DataElement is not null) yield return new KeyValuePair<string,object>("data",_DataElement);
     }
 
   }
