@@ -47,9 +47,7 @@ public class CodedValidationException : ExtendedCodedException
     public const string EXPECTED_PRIMITIVE_NOT_ARRAY_CODE = "PVAL130";
     public const string EXPECTED_ARRAY_NOT_PRIMITIVE_CODE = "PVAL131";
     public const string EXPECTED_ARRAY_NOT_OBJECT_CODE = "PVAL132";
-    public const string UNKNOWN_CHOICE_TYPE_CODE = "PVAL133";
-    public const string UNKNOWN_RESOURCE_TYPE_CODE = "PVAL134";
-    public const string TYPE_MISMATCH_CODE = "PVAL135";
+    public const string TYPE_MISMATCH_CODE = "PVAL133";
 
     // A list of all issues mentioned above, to we can filter on them.
     internal static readonly HashSet<string> POCO_VALIDATION_ISSUES =
@@ -75,8 +73,7 @@ public class CodedValidationException : ExtendedCodedException
         EXPECTED_PRIMITIVE_NOT_ARRAY_CODE,
         EXPECTED_ARRAY_NOT_PRIMITIVE_CODE,
         EXPECTED_ARRAY_NOT_OBJECT_CODE,
-        UNKNOWN_CHOICE_TYPE_CODE,
-        UNKNOWN_RESOURCE_TYPE_CODE
+        TYPE_MISMATCH_CODE
     ];
 
     internal static COVE CHOICE_TYPE_NOT_ALLOWED(ValidationContext context, string typeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{typeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Structure);
@@ -116,12 +113,6 @@ public class CodedValidationException : ExtendedCodedException
     
     internal static COVE EXPECTED_ARRAY_NOT_OBJECT(ValidationContext? context, object? value) =>
         Initialize(context, EXPECTED_ARRAY_NOT_OBJECT_CODE, $"Expected an array, but found object {value}.", OO_Sev.Error, OO_Typ.Value);
-    
-    internal static COVE UNKNOWN_CHOICE_TYPE(ValidationContext? context, string typeName) =>
-        Initialize(context, UNKNOWN_CHOICE_TYPE_CODE, $"Unknown choice type '{typeName}'.", OO_Sev.Error, OO_Typ.Structure);
-    
-    internal static COVE UNKNOWN_RESOURCE_TYPE(ValidationContext? context, string typeName) =>
-        Initialize(context, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown resource type '{typeName}'.", OO_Sev.Error, OO_Typ.Structure);
     
     internal static COVE TYPE_MISMATCH(ValidationContext? context, string expected, string actual) =>
         Initialize(context, TYPE_MISMATCH_CODE, $"Expected type '{expected}', but found '{actual}'.", OO_Sev.Error, OO_Typ.Structure);
@@ -190,8 +181,6 @@ public class CodedValidationException : ExtendedCodedException
     internal static CodedValidationException FromTypes(Type expected, object? actual) =>
         actual switch
         {
-            DynamicDataType dynDT => UNKNOWN_CHOICE_TYPE(null, dynDT.DynamicTypeName!),
-            DynamicResource dynR => UNKNOWN_RESOURCE_TYPE(null, dynR.DynamicTypeName!),
             PrimitiveType when typeof(PrimitiveType).IsAssignableFrom(expected) => TYPE_MISMATCH(null, expected.Name, actual.GetType().Name),
             PrimitiveType when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_PRIMITIVE(null, actual),
             PrimitiveType when typeof(Base).IsAssignableFrom(expected) => EXPECTED_OBJECT_NOT_PRIMITIVE(null, actual),
