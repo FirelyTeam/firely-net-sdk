@@ -246,13 +246,22 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Contributor.ContributorType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "contact":
-          value = _Contact;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.InOverflow(_Contact))
+            value = Overflow["contact"];
+          else
+            value = _Contact;
           return _Contact?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

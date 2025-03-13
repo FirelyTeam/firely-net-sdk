@@ -286,13 +286,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "specType":
-            value = _SpecType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SpecType))
+              value = Overflow["specType"];
+            else
+              value = _SpecType;
             return _SpecType is not null;
           case "componentId":
-            value = _ComponentId;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_ComponentId))
+              value = Overflow["componentId"];
+            else
+              value = _ComponentId;
             return _ComponentId is not null;
           case "productionSpec":
-            value = _ProductionSpecElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ProductionSpecElement))
+              value = Overflow["productionSpec"];
+            else
+              value = _ProductionSpecElement;
             return _ProductionSpecElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -702,34 +711,64 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "lastSystemChange":
-          value = _LastSystemChangeElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_LastSystemChangeElement))
+            value = Overflow["lastSystemChange"];
+          else
+            value = _LastSystemChangeElement;
           return _LastSystemChangeElement is not null;
         case "source":
-          value = _Source;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Source))
+            value = Overflow["source"];
+          else
+            value = _Source;
           return _Source is not null;
         case "parent":
-          value = _Parent;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Parent))
+            value = Overflow["parent"];
+          else
+            value = _Parent;
           return _Parent is not null;
         case "operationalStatus":
-          value = _OperationalStatus;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_OperationalStatus))
+            value = Overflow["operationalStatus"];
+          else
+            value = _OperationalStatus;
           return _OperationalStatus?.Any() == true;
         case "parameterGroup":
-          value = _ParameterGroup;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ParameterGroup))
+            value = Overflow["parameterGroup"];
+          else
+            value = _ParameterGroup;
           return _ParameterGroup is not null;
         case "measurementPrinciple":
-          value = _MeasurementPrincipleElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>>.InOverflow(_MeasurementPrincipleElement))
+            value = Overflow["measurementPrinciple"];
+          else
+            value = _MeasurementPrincipleElement;
           return _MeasurementPrincipleElement is not null;
         case "productionSpecification":
-          value = _ProductionSpecification;
+          if (OverflowNull<List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>>.InOverflow(_ProductionSpecification))
+            value = Overflow["productionSpecification"];
+          else
+            value = _ProductionSpecification;
           return _ProductionSpecification?.Any() == true;
         case "languageCode":
-          value = _LanguageCode;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_LanguageCode))
+            value = Overflow["languageCode"];
+          else
+            value = _LanguageCode;
           return _LanguageCode is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -364,22 +364,40 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type?.Any() == true;
           case "schedule":
-            value = _Schedule;
+            if (OverflowNull<List<Hl7.Fhir.Model.Timing>>.InOverflow(_Schedule))
+              value = Overflow["schedule"];
+            else
+              value = _Schedule;
             return _Schedule?.Any() == true;
           case "nutrient":
-            value = _Nutrient;
+            if (OverflowNull<List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>>.InOverflow(_Nutrient))
+              value = Overflow["nutrient"];
+            else
+              value = _Nutrient;
             return _Nutrient?.Any() == true;
           case "texture":
-            value = _Texture;
+            if (OverflowNull<List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>>.InOverflow(_Texture))
+              value = Overflow["texture"];
+            else
+              value = _Texture;
             return _Texture?.Any() == true;
           case "fluidConsistencyType":
-            value = _FluidConsistencyType;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_FluidConsistencyType))
+              value = Overflow["fluidConsistencyType"];
+            else
+              value = _FluidConsistencyType;
             return _FluidConsistencyType?.Any() == true;
           case "instruction":
-            value = _InstructionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_InstructionElement))
+              value = Overflow["instruction"];
+            else
+              value = _InstructionElement;
             return _InstructionElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -563,10 +581,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "modifier":
-            value = _Modifier;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Modifier))
+              value = Overflow["modifier"];
+            else
+              value = _Modifier;
             return _Modifier is not null;
           case "amount":
-            value = _Amount;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Amount))
+              value = Overflow["amount"];
+            else
+              value = _Amount;
             return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -715,10 +739,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "modifier":
-            value = _Modifier;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Modifier))
+              value = Overflow["modifier"];
+            else
+              value = _Modifier;
             return _Modifier is not null;
           case "foodType":
-            value = _FoodType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FoodType))
+              value = Overflow["foodType"];
+            else
+              value = _FoodType;
             return _FoodType is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -981,19 +1011,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "productName":
-            value = _ProductNameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ProductNameElement))
+              value = Overflow["productName"];
+            else
+              value = _ProductNameElement;
             return _ProductNameElement is not null;
           case "schedule":
-            value = _Schedule;
+            if (OverflowNull<List<Hl7.Fhir.Model.Timing>>.InOverflow(_Schedule))
+              value = Overflow["schedule"];
+            else
+              value = _Schedule;
             return _Schedule?.Any() == true;
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "instruction":
-            value = _InstructionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_InstructionElement))
+              value = Overflow["instruction"];
+            else
+              value = _InstructionElement;
             return _InstructionElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1412,31 +1457,58 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "baseFormulaType":
-            value = _BaseFormulaType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_BaseFormulaType))
+              value = Overflow["baseFormulaType"];
+            else
+              value = _BaseFormulaType;
             return _BaseFormulaType is not null;
           case "baseFormulaProductName":
-            value = _BaseFormulaProductNameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_BaseFormulaProductNameElement))
+              value = Overflow["baseFormulaProductName"];
+            else
+              value = _BaseFormulaProductNameElement;
             return _BaseFormulaProductNameElement is not null;
           case "additiveType":
-            value = _AdditiveType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AdditiveType))
+              value = Overflow["additiveType"];
+            else
+              value = _AdditiveType;
             return _AdditiveType is not null;
           case "additiveProductName":
-            value = _AdditiveProductNameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AdditiveProductNameElement))
+              value = Overflow["additiveProductName"];
+            else
+              value = _AdditiveProductNameElement;
             return _AdditiveProductNameElement is not null;
           case "caloricDensity":
-            value = _CaloricDensity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_CaloricDensity))
+              value = Overflow["caloricDensity"];
+            else
+              value = _CaloricDensity;
             return _CaloricDensity is not null;
           case "routeofAdministration":
-            value = _RouteofAdministration;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_RouteofAdministration))
+              value = Overflow["routeofAdministration"];
+            else
+              value = _RouteofAdministration;
             return _RouteofAdministration is not null;
           case "administration":
-            value = _Administration;
+            if (OverflowNull<List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>>.InOverflow(_Administration))
+              value = Overflow["administration"];
+            else
+              value = _Administration;
             return _Administration?.Any() == true;
           case "maxVolumeToDeliver":
-            value = _MaxVolumeToDeliver;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_MaxVolumeToDeliver))
+              value = Overflow["maxVolumeToDeliver"];
+            else
+              value = _MaxVolumeToDeliver;
             return _MaxVolumeToDeliver is not null;
           case "administrationInstruction":
-            value = _AdministrationInstructionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AdministrationInstructionElement))
+              value = Overflow["administrationInstruction"];
+            else
+              value = _AdministrationInstructionElement;
             return _AdministrationInstructionElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1677,13 +1749,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "schedule":
-            value = _Schedule;
+            if (OverflowNull<Hl7.Fhir.Model.Timing>.InOverflow(_Schedule))
+              value = Overflow["schedule"];
+            else
+              value = _Schedule;
             return _Schedule is not null;
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "rate":
-            value = _Rate;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Rate))
+              value = Overflow["rate"];
+            else
+              value = _Rate;
             return _Rate is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -2154,40 +2235,76 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "dateTime":
-          value = _DateTimeElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateTimeElement))
+            value = Overflow["dateTime"];
+          else
+            value = _DateTimeElement;
           return _DateTimeElement is not null;
         case "orderer":
-          value = _Orderer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Orderer))
+            value = Overflow["orderer"];
+          else
+            value = _Orderer;
           return _Orderer is not null;
         case "allergyIntolerance":
-          value = _AllergyIntolerance;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_AllergyIntolerance))
+            value = Overflow["allergyIntolerance"];
+          else
+            value = _AllergyIntolerance;
           return _AllergyIntolerance?.Any() == true;
         case "foodPreferenceModifier":
-          value = _FoodPreferenceModifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_FoodPreferenceModifier))
+            value = Overflow["foodPreferenceModifier"];
+          else
+            value = _FoodPreferenceModifier;
           return _FoodPreferenceModifier?.Any() == true;
         case "excludeFoodModifier":
-          value = _ExcludeFoodModifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ExcludeFoodModifier))
+            value = Overflow["excludeFoodModifier"];
+          else
+            value = _ExcludeFoodModifier;
           return _ExcludeFoodModifier?.Any() == true;
         case "oralDiet":
-          value = _OralDiet;
+          if (OverflowNull<Hl7.Fhir.Model.NutritionOrder.OralDietComponent>.InOverflow(_OralDiet))
+            value = Overflow["oralDiet"];
+          else
+            value = _OralDiet;
           return _OralDiet is not null;
         case "supplement":
-          value = _Supplement;
+          if (OverflowNull<List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>>.InOverflow(_Supplement))
+            value = Overflow["supplement"];
+          else
+            value = _Supplement;
           return _Supplement?.Any() == true;
         case "enteralFormula":
-          value = _EnteralFormula;
+          if (OverflowNull<Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent>.InOverflow(_EnteralFormula))
+            value = Overflow["enteralFormula"];
+          else
+            value = _EnteralFormula;
           return _EnteralFormula is not null;
         default:
           return base.TryGetValue(key, out value);

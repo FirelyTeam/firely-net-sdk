@@ -221,10 +221,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "reason":
-            value = _Reason;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Reason))
+              value = Overflow["reason"];
+            else
+              value = _Reason;
             return _Reason?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -833,55 +839,106 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "basedOn":
-          value = _BasedOn;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_BasedOn))
+            value = Overflow["basedOn"];
+          else
+            value = _BasedOn;
           return _BasedOn?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "category":
-          value = _Category;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Category))
+            value = Overflow["category"];
+          else
+            value = _Category;
           return _Category?.Any() == true;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "derivedFrom":
-          value = _DerivedFrom;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_DerivedFrom))
+            value = Overflow["derivedFrom"];
+          else
+            value = _DerivedFrom;
           return _DerivedFrom?.Any() == true;
         case "context":
-          value = _Context;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Context))
+            value = Overflow["context"];
+          else
+            value = _Context;
           return _Context is not null;
         case "timing":
-          value = _Timing;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Timing))
+            value = Overflow["timing"];
+          else
+            value = _Timing;
           return _Timing is not null;
         case "dateAsserted":
-          value = _DateAssertedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateAssertedElement))
+            value = Overflow["dateAsserted"];
+          else
+            value = _DateAssertedElement;
           return _DateAssertedElement is not null;
         case "usageStatus":
-          value = _UsageStatus;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_UsageStatus))
+            value = Overflow["usageStatus"];
+          else
+            value = _UsageStatus;
           return _UsageStatus is not null;
         case "usageReason":
-          value = _UsageReason;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_UsageReason))
+            value = Overflow["usageReason"];
+          else
+            value = _UsageReason;
           return _UsageReason?.Any() == true;
         case "adherence":
-          value = _Adherence;
+          if (OverflowNull<Hl7.Fhir.Model.DeviceUsage.AdherenceComponent>.InOverflow(_Adherence))
+            value = Overflow["adherence"];
+          else
+            value = _Adherence;
           return _Adherence is not null;
         case "informationSource":
-          value = _InformationSource;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_InformationSource))
+            value = Overflow["informationSource"];
+          else
+            value = _InformationSource;
           return _InformationSource is not null;
         case "device":
-          value = _Device;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_Device))
+            value = Overflow["device"];
+          else
+            value = _Device;
           return _Device is not null;
         case "reason":
-          value = _Reason;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_Reason))
+            value = Overflow["reason"];
+          else
+            value = _Reason;
           return _Reason?.Any() == true;
         case "bodySite":
-          value = _BodySite;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_BodySite))
+            value = Overflow["bodySite"];
+          else
+            value = _BodySite;
           return _BodySite is not null;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

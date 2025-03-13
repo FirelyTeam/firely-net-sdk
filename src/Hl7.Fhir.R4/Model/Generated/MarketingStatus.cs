@@ -248,19 +248,34 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "country":
-          value = _Country;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Country))
+            value = Overflow["country"];
+          else
+            value = _Country;
           return _Country is not null;
         case "jurisdiction":
-          value = _Jurisdiction;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Jurisdiction))
+            value = Overflow["jurisdiction"];
+          else
+            value = _Jurisdiction;
           return _Jurisdiction is not null;
         case "status":
-          value = _Status;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Status))
+            value = Overflow["status"];
+          else
+            value = _Status;
           return _Status is not null;
         case "dateRange":
-          value = _DateRange;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_DateRange))
+            value = Overflow["dateRange"];
+          else
+            value = _DateRange;
           return _DateRange is not null;
         case "restoreDate":
-          value = _RestoreDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_RestoreDateElement))
+            value = Overflow["restoreDate"];
+          else
+            value = _RestoreDateElement;
           return _RestoreDateElement is not null;
         default:
           return base.TryGetValue(key, out value);

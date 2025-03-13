@@ -480,34 +480,64 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "isDerived":
-            value = _IsDerivedElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_IsDerivedElement))
+              value = Overflow["isDerived"];
+            else
+              value = _IsDerivedElement;
             return _IsDerivedElement is not null;
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "preference":
-            value = _PreferenceElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference>>.InOverflow(_PreferenceElement))
+              value = Overflow["preference"];
+            else
+              value = _PreferenceElement;
             return _PreferenceElement is not null;
           case "container":
-            value = _Container;
+            if (OverflowNull<Hl7.Fhir.Model.SpecimenDefinition.ContainerComponent>.InOverflow(_Container))
+              value = Overflow["container"];
+            else
+              value = _Container;
             return _Container is not null;
           case "requirement":
-            value = _RequirementElement;
+            if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_RequirementElement))
+              value = Overflow["requirement"];
+            else
+              value = _RequirementElement;
             return _RequirementElement is not null;
           case "retentionTime":
-            value = _RetentionTime;
+            if (OverflowNull<Hl7.Fhir.Model.Duration>.InOverflow(_RetentionTime))
+              value = Overflow["retentionTime"];
+            else
+              value = _RetentionTime;
             return _RetentionTime is not null;
           case "singleUse":
-            value = _SingleUseElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_SingleUseElement))
+              value = Overflow["singleUse"];
+            else
+              value = _SingleUseElement;
             return _SingleUseElement is not null;
           case "rejectionCriterion":
-            value = _RejectionCriterion;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_RejectionCriterion))
+              value = Overflow["rejectionCriterion"];
+            else
+              value = _RejectionCriterion;
             return _RejectionCriterion?.Any() == true;
           case "handling":
-            value = _Handling;
+            if (OverflowNull<List<Hl7.Fhir.Model.SpecimenDefinition.HandlingComponent>>.InOverflow(_Handling))
+              value = Overflow["handling"];
+            else
+              value = _Handling;
             return _Handling?.Any() == true;
           case "testingDestination":
-            value = _TestingDestination;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_TestingDestination))
+              value = Overflow["testingDestination"];
+            else
+              value = _TestingDestination;
             return _TestingDestination?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -927,28 +957,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "material":
-            value = _Material;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Material))
+              value = Overflow["material"];
+            else
+              value = _Material;
             return _Material is not null;
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "cap":
-            value = _Cap;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Cap))
+              value = Overflow["cap"];
+            else
+              value = _Cap;
             return _Cap is not null;
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "capacity":
-            value = _Capacity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Capacity))
+              value = Overflow["capacity"];
+            else
+              value = _Capacity;
             return _Capacity is not null;
           case "minimumVolume":
-            value = _MinimumVolume;
+            if (OverflowNull<DynamicDataType>.InOverflow(_MinimumVolume))
+              value = Overflow["minimumVolume"];
+            else
+              value = _MinimumVolume;
             return _MinimumVolume is not null;
           case "additive":
-            value = _Additive;
+            if (OverflowNull<List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent>>.InOverflow(_Additive))
+              value = Overflow["additive"];
+            else
+              value = _Additive;
             return _Additive?.Any() == true;
           case "preparation":
-            value = _PreparationElement;
+            if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_PreparationElement))
+              value = Overflow["preparation"];
+            else
+              value = _PreparationElement;
             return _PreparationElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1126,7 +1180,10 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "additive":
-            value = _Additive;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Additive))
+              value = Overflow["additive"];
+            else
+              value = _Additive;
             return _Additive is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1336,16 +1393,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "temperatureQualifier":
-            value = _TemperatureQualifier;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_TemperatureQualifier))
+              value = Overflow["temperatureQualifier"];
+            else
+              value = _TemperatureQualifier;
             return _TemperatureQualifier is not null;
           case "temperatureRange":
-            value = _TemperatureRange;
+            if (OverflowNull<Hl7.Fhir.Model.Range>.InOverflow(_TemperatureRange))
+              value = Overflow["temperatureRange"];
+            else
+              value = _TemperatureRange;
             return _TemperatureRange is not null;
           case "maxDuration":
-            value = _MaxDuration;
+            if (OverflowNull<Hl7.Fhir.Model.Duration>.InOverflow(_MaxDuration))
+              value = Overflow["maxDuration"];
+            else
+              value = _MaxDuration;
             return _MaxDuration is not null;
           case "instruction":
-            value = _InstructionElement;
+            if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_InstructionElement))
+              value = Overflow["instruction"];
+            else
+              value = _InstructionElement;
             return _InstructionElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -2505,88 +2574,172 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "url":
-          value = _UrlElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+            value = Overflow["url"];
+          else
+            value = _UrlElement;
           return _UrlElement is not null;
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier is not null;
         case "version":
-          value = _VersionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_VersionElement))
+            value = Overflow["version"];
+          else
+            value = _VersionElement;
           return _VersionElement is not null;
         case "versionAlgorithm":
-          value = _VersionAlgorithm;
+          if (OverflowNull<DynamicDataType>.InOverflow(_VersionAlgorithm))
+            value = Overflow["versionAlgorithm"];
+          else
+            value = _VersionAlgorithm;
           return _VersionAlgorithm is not null;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "title":
-          value = _TitleElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TitleElement))
+            value = Overflow["title"];
+          else
+            value = _TitleElement;
           return _TitleElement is not null;
         case "derivedFromCanonical":
-          value = _DerivedFromCanonicalElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.Canonical>>.InOverflow(_DerivedFromCanonicalElement))
+            value = Overflow["derivedFromCanonical"];
+          else
+            value = _DerivedFromCanonicalElement;
           return _DerivedFromCanonicalElement?.Any() == true;
         case "derivedFromUri":
-          value = _DerivedFromUriElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirUri>>.InOverflow(_DerivedFromUriElement))
+            value = Overflow["derivedFromUri"];
+          else
+            value = _DerivedFromUriElement;
           return _DerivedFromUriElement?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "experimental":
-          value = _ExperimentalElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ExperimentalElement))
+            value = Overflow["experimental"];
+          else
+            value = _ExperimentalElement;
           return _ExperimentalElement is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "date":
-          value = _DateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+            value = Overflow["date"];
+          else
+            value = _DateElement;
           return _DateElement is not null;
         case "publisher":
-          value = _PublisherElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PublisherElement))
+            value = Overflow["publisher"];
+          else
+            value = _PublisherElement;
           return _PublisherElement is not null;
         case "contact":
-          value = _Contact;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.InOverflow(_Contact))
+            value = Overflow["contact"];
+          else
+            value = _Contact;
           return _Contact?.Any() == true;
         case "description":
-          value = _DescriptionElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_DescriptionElement))
+            value = Overflow["description"];
+          else
+            value = _DescriptionElement;
           return _DescriptionElement is not null;
         case "useContext":
-          value = _UseContext;
+          if (OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.InOverflow(_UseContext))
+            value = Overflow["useContext"];
+          else
+            value = _UseContext;
           return _UseContext?.Any() == true;
         case "jurisdiction":
-          value = _Jurisdiction;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Jurisdiction))
+            value = Overflow["jurisdiction"];
+          else
+            value = _Jurisdiction;
           return _Jurisdiction?.Any() == true;
         case "purpose":
-          value = _PurposeElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_PurposeElement))
+            value = Overflow["purpose"];
+          else
+            value = _PurposeElement;
           return _PurposeElement is not null;
         case "copyright":
-          value = _CopyrightElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_CopyrightElement))
+            value = Overflow["copyright"];
+          else
+            value = _CopyrightElement;
           return _CopyrightElement is not null;
         case "copyrightLabel":
-          value = _CopyrightLabelElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CopyrightLabelElement))
+            value = Overflow["copyrightLabel"];
+          else
+            value = _CopyrightLabelElement;
           return _CopyrightLabelElement is not null;
         case "approvalDate":
-          value = _ApprovalDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_ApprovalDateElement))
+            value = Overflow["approvalDate"];
+          else
+            value = _ApprovalDateElement;
           return _ApprovalDateElement is not null;
         case "lastReviewDate":
-          value = _LastReviewDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_LastReviewDateElement))
+            value = Overflow["lastReviewDate"];
+          else
+            value = _LastReviewDateElement;
           return _LastReviewDateElement is not null;
         case "effectivePeriod":
-          value = _EffectivePeriod;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_EffectivePeriod))
+            value = Overflow["effectivePeriod"];
+          else
+            value = _EffectivePeriod;
           return _EffectivePeriod is not null;
         case "typeCollected":
-          value = _TypeCollected;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_TypeCollected))
+            value = Overflow["typeCollected"];
+          else
+            value = _TypeCollected;
           return _TypeCollected is not null;
         case "patientPreparation":
-          value = _PatientPreparation;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_PatientPreparation))
+            value = Overflow["patientPreparation"];
+          else
+            value = _PatientPreparation;
           return _PatientPreparation?.Any() == true;
         case "timeAspect":
-          value = _TimeAspectElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TimeAspectElement))
+            value = Overflow["timeAspect"];
+          else
+            value = _TimeAspectElement;
           return _TimeAspectElement is not null;
         case "collection":
-          value = _Collection;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Collection))
+            value = Overflow["collection"];
+          else
+            value = _Collection;
           return _Collection?.Any() == true;
         case "typeTested":
-          value = _TypeTested;
+          if (OverflowNull<List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent>>.InOverflow(_TypeTested))
+            value = Overflow["typeTested"];
+          else
+            value = _TypeTested;
           return _TypeTested?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

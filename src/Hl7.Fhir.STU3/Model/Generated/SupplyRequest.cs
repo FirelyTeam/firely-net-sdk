@@ -219,10 +219,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "item":
-            value = _Item;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -374,10 +380,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "agent":
-            value = _Agent;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Agent))
+              value = Overflow["agent"];
+            else
+              value = _Agent;
             return _Agent is not null;
           case "onBehalfOf":
-            value = _OnBehalfOf;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_OnBehalfOf))
+              value = Overflow["onBehalfOf"];
+            else
+              value = _OnBehalfOf;
             return _OnBehalfOf is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -853,40 +865,76 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "category":
-          value = _Category;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Category))
+            value = Overflow["category"];
+          else
+            value = _Category;
           return _Category is not null;
         case "priority":
-          value = _PriorityElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.RequestPriority>>.InOverflow(_PriorityElement))
+            value = Overflow["priority"];
+          else
+            value = _PriorityElement;
           return _PriorityElement is not null;
         case "orderedItem":
-          value = _OrderedItem;
+          if (OverflowNull<Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent>.InOverflow(_OrderedItem))
+            value = Overflow["orderedItem"];
+          else
+            value = _OrderedItem;
           return _OrderedItem is not null;
         case "occurrence":
-          value = _Occurrence;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Occurrence))
+            value = Overflow["occurrence"];
+          else
+            value = _Occurrence;
           return _Occurrence is not null;
         case "authoredOn":
-          value = _AuthoredOnElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_AuthoredOnElement))
+            value = Overflow["authoredOn"];
+          else
+            value = _AuthoredOnElement;
           return _AuthoredOnElement is not null;
         case "requester":
-          value = _Requester;
+          if (OverflowNull<Hl7.Fhir.Model.SupplyRequest.RequesterComponent>.InOverflow(_Requester))
+            value = Overflow["requester"];
+          else
+            value = _Requester;
           return _Requester is not null;
         case "supplier":
-          value = _Supplier;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Supplier))
+            value = Overflow["supplier"];
+          else
+            value = _Supplier;
           return _Supplier?.Any() == true;
         case "reason":
-          value = _Reason;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Reason))
+            value = Overflow["reason"];
+          else
+            value = _Reason;
           return _Reason is not null;
         case "deliverFrom":
-          value = _DeliverFrom;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_DeliverFrom))
+            value = Overflow["deliverFrom"];
+          else
+            value = _DeliverFrom;
           return _DeliverFrom is not null;
         case "deliverTo":
-          value = _DeliverTo;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_DeliverTo))
+            value = Overflow["deliverTo"];
+          else
+            value = _DeliverTo;
           return _DeliverTo is not null;
         default:
           return base.TryGetValue(key, out value);

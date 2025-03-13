@@ -387,28 +387,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "appointment":
-          value = _Appointment;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Appointment))
+            value = Overflow["appointment"];
+          else
+            value = _Appointment;
           return _Appointment is not null;
         case "start":
-          value = _StartElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_StartElement))
+            value = Overflow["start"];
+          else
+            value = _StartElement;
           return _StartElement is not null;
         case "end":
-          value = _EndElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_EndElement))
+            value = Overflow["end"];
+          else
+            value = _EndElement;
           return _EndElement is not null;
         case "participantType":
-          value = _ParticipantType;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ParticipantType))
+            value = Overflow["participantType"];
+          else
+            value = _ParticipantType;
           return _ParticipantType?.Any() == true;
         case "actor":
-          value = _Actor;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Actor))
+            value = Overflow["actor"];
+          else
+            value = _Actor;
           return _Actor is not null;
         case "participantStatus":
-          value = _ParticipantStatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.ParticipationStatus>>.InOverflow(_ParticipantStatusElement))
+            value = Overflow["participantStatus"];
+          else
+            value = _ParticipantStatusElement;
           return _ParticipantStatusElement is not null;
         case "comment":
-          value = _CommentElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CommentElement))
+            value = Overflow["comment"];
+          else
+            value = _CommentElement;
           return _CommentElement is not null;
         default:
           return base.TryGetValue(key, out value);

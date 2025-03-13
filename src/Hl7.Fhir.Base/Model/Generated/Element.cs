@@ -153,10 +153,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "id":
-          value = _ElementIdElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ElementIdElement))
+            value = Overflow["id"];
+          else
+            value = _ElementIdElement;
           return _ElementIdElement is not null;
         case "extension":
-          value = _Extension;
+          if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_Extension))
+            value = Overflow["extension"];
+          else
+            value = _Extension;
           return _Extension?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

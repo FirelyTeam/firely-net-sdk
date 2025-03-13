@@ -160,10 +160,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "outerPackaging":
-            value = _OuterPackaging;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_OuterPackaging))
+              value = Overflow["outerPackaging"];
+            else
+              value = _OuterPackaging;
             return _OuterPackaging is not null;
           case "immediatePackaging":
-            value = _ImmediatePackaging;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_ImmediatePackaging))
+              value = Overflow["immediatePackaging"];
+            else
+              value = _ImmediatePackaging;
             return _ImmediatePackaging is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -604,40 +610,76 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier?.Any() == true;
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "material":
-            value = _Material;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Material))
+              value = Overflow["material"];
+            else
+              value = _Material;
             return _Material?.Any() == true;
           case "alternateMaterial":
-            value = _AlternateMaterial;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_AlternateMaterial))
+              value = Overflow["alternateMaterial"];
+            else
+              value = _AlternateMaterial;
             return _AlternateMaterial?.Any() == true;
           case "device":
-            value = _Device;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Device))
+              value = Overflow["device"];
+            else
+              value = _Device;
             return _Device?.Any() == true;
           case "manufacturedItem":
-            value = _ManufacturedItem;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_ManufacturedItem))
+              value = Overflow["manufacturedItem"];
+            else
+              value = _ManufacturedItem;
             return _ManufacturedItem?.Any() == true;
           case "packageItem":
-            value = _PackageItem;
+            if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>.InOverflow(_PackageItem))
+              value = Overflow["packageItem"];
+            else
+              value = _PackageItem;
             return _PackageItem?.Any() == true;
           case "physicalCharacteristics":
-            value = _PhysicalCharacteristics;
+            if (OverflowNull<Hl7.Fhir.Model.ProdCharacteristic>.InOverflow(_PhysicalCharacteristics))
+              value = Overflow["physicalCharacteristics"];
+            else
+              value = _PhysicalCharacteristics;
             return _PhysicalCharacteristics is not null;
           case "otherCharacteristics":
-            value = _OtherCharacteristics;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_OtherCharacteristics))
+              value = Overflow["otherCharacteristics"];
+            else
+              value = _OtherCharacteristics;
             return _OtherCharacteristics?.Any() == true;
           case "shelfLifeStorage":
-            value = _ShelfLifeStorage;
+            if (OverflowNull<List<Hl7.Fhir.Model.ProductShelfLife>>.InOverflow(_ShelfLifeStorage))
+              value = Overflow["shelfLifeStorage"];
+            else
+              value = _ShelfLifeStorage;
             return _ShelfLifeStorage?.Any() == true;
           case "manufacturer":
-            value = _Manufacturer;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
+              value = Overflow["manufacturer"];
+            else
+              value = _Manufacturer;
             return _Manufacturer?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1083,31 +1125,58 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject?.Any() == true;
         case "description":
-          value = _DescriptionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+            value = Overflow["description"];
+          else
+            value = _DescriptionElement;
           return _DescriptionElement is not null;
         case "legalStatusOfSupply":
-          value = _LegalStatusOfSupply;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_LegalStatusOfSupply))
+            value = Overflow["legalStatusOfSupply"];
+          else
+            value = _LegalStatusOfSupply;
           return _LegalStatusOfSupply is not null;
         case "marketingStatus":
-          value = _MarketingStatus;
+          if (OverflowNull<List<Hl7.Fhir.Model.MarketingStatus>>.InOverflow(_MarketingStatus))
+            value = Overflow["marketingStatus"];
+          else
+            value = _MarketingStatus;
           return _MarketingStatus?.Any() == true;
         case "marketingAuthorization":
-          value = _MarketingAuthorization;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_MarketingAuthorization))
+            value = Overflow["marketingAuthorization"];
+          else
+            value = _MarketingAuthorization;
           return _MarketingAuthorization is not null;
         case "manufacturer":
-          value = _Manufacturer;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
+            value = Overflow["manufacturer"];
+          else
+            value = _Manufacturer;
           return _Manufacturer?.Any() == true;
         case "batchIdentifier":
-          value = _BatchIdentifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>>.InOverflow(_BatchIdentifier))
+            value = Overflow["batchIdentifier"];
+          else
+            value = _BatchIdentifier;
           return _BatchIdentifier?.Any() == true;
         case "packageItem":
-          value = _PackageItem;
+          if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>.InOverflow(_PackageItem))
+            value = Overflow["packageItem"];
+          else
+            value = _PackageItem;
           return _PackageItem?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

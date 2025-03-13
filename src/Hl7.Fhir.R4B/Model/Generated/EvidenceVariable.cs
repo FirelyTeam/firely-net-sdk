@@ -383,25 +383,46 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "definition":
-            value = _Definition;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Definition))
+              value = Overflow["definition"];
+            else
+              value = _Definition;
             return _Definition is not null;
           case "method":
-            value = _Method;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Method))
+              value = Overflow["method"];
+            else
+              value = _Method;
             return _Method is not null;
           case "device":
-            value = _Device;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Device))
+              value = Overflow["device"];
+            else
+              value = _Device;
             return _Device is not null;
           case "exclude":
-            value = _ExcludeElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ExcludeElement))
+              value = Overflow["exclude"];
+            else
+              value = _ExcludeElement;
             return _ExcludeElement is not null;
           case "timeFromStart":
-            value = _TimeFromStart;
+            if (OverflowNull<Hl7.Fhir.Model.EvidenceVariable.TimeFromStartComponent>.InOverflow(_TimeFromStart))
+              value = Overflow["timeFromStart"];
+            else
+              value = _TimeFromStart;
             return _TimeFromStart is not null;
           case "groupMeasure":
-            value = _GroupMeasureElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.GroupMeasureCode>>.InOverflow(_GroupMeasureElement))
+              value = Overflow["groupMeasure"];
+            else
+              value = _GroupMeasureElement;
             return _GroupMeasureElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -665,16 +686,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "range":
-            value = _Range;
+            if (OverflowNull<Hl7.Fhir.Model.Range>.InOverflow(_Range))
+              value = Overflow["range"];
+            else
+              value = _Range;
             return _Range is not null;
           case "note":
-            value = _Note;
+            if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+              value = Overflow["note"];
+            else
+              value = _Note;
             return _Note?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -856,10 +889,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "name":
-            value = _NameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+              value = Overflow["name"];
+            else
+              value = _NameElement;
             return _NameElement is not null;
           case "value":
-            value = _Value;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1821,76 +1860,148 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "url":
-          value = _UrlElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+            value = Overflow["url"];
+          else
+            value = _UrlElement;
           return _UrlElement is not null;
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "version":
-          value = _VersionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_VersionElement))
+            value = Overflow["version"];
+          else
+            value = _VersionElement;
           return _VersionElement is not null;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "title":
-          value = _TitleElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TitleElement))
+            value = Overflow["title"];
+          else
+            value = _TitleElement;
           return _TitleElement is not null;
         case "shortTitle":
-          value = _ShortTitleElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ShortTitleElement))
+            value = Overflow["shortTitle"];
+          else
+            value = _ShortTitleElement;
           return _ShortTitleElement is not null;
         case "subtitle":
-          value = _SubtitleElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SubtitleElement))
+            value = Overflow["subtitle"];
+          else
+            value = _SubtitleElement;
           return _SubtitleElement is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "date":
-          value = _DateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+            value = Overflow["date"];
+          else
+            value = _DateElement;
           return _DateElement is not null;
         case "description":
-          value = _DescriptionElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_DescriptionElement))
+            value = Overflow["description"];
+          else
+            value = _DescriptionElement;
           return _DescriptionElement is not null;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         case "useContext":
-          value = _UseContext;
+          if (OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.InOverflow(_UseContext))
+            value = Overflow["useContext"];
+          else
+            value = _UseContext;
           return _UseContext?.Any() == true;
         case "publisher":
-          value = _PublisherElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PublisherElement))
+            value = Overflow["publisher"];
+          else
+            value = _PublisherElement;
           return _PublisherElement is not null;
         case "contact":
-          value = _Contact;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.InOverflow(_Contact))
+            value = Overflow["contact"];
+          else
+            value = _Contact;
           return _Contact?.Any() == true;
         case "author":
-          value = _Author;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.InOverflow(_Author))
+            value = Overflow["author"];
+          else
+            value = _Author;
           return _Author?.Any() == true;
         case "editor":
-          value = _Editor;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.InOverflow(_Editor))
+            value = Overflow["editor"];
+          else
+            value = _Editor;
           return _Editor?.Any() == true;
         case "reviewer":
-          value = _Reviewer;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.InOverflow(_Reviewer))
+            value = Overflow["reviewer"];
+          else
+            value = _Reviewer;
           return _Reviewer?.Any() == true;
         case "endorser":
-          value = _Endorser;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.InOverflow(_Endorser))
+            value = Overflow["endorser"];
+          else
+            value = _Endorser;
           return _Endorser?.Any() == true;
         case "relatedArtifact":
-          value = _RelatedArtifact;
+          if (OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.InOverflow(_RelatedArtifact))
+            value = Overflow["relatedArtifact"];
+          else
+            value = _RelatedArtifact;
           return _RelatedArtifact?.Any() == true;
         case "actual":
-          value = _ActualElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActualElement))
+            value = Overflow["actual"];
+          else
+            value = _ActualElement;
           return _ActualElement is not null;
         case "characteristicCombination":
-          value = _CharacteristicCombinationElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationCode>>.InOverflow(_CharacteristicCombinationElement))
+            value = Overflow["characteristicCombination"];
+          else
+            value = _CharacteristicCombinationElement;
           return _CharacteristicCombinationElement is not null;
         case "characteristic":
-          value = _Characteristic;
+          if (OverflowNull<List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent>>.InOverflow(_Characteristic))
+            value = Overflow["characteristic"];
+          else
+            value = _Characteristic;
           return _Characteristic?.Any() == true;
         case "handling":
-          value = _HandlingElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.EvidenceVariableHandling>>.InOverflow(_HandlingElement))
+            value = Overflow["handling"];
+          else
+            value = _HandlingElement;
           return _HandlingElement is not null;
         case "category":
-          value = _Category;
+          if (OverflowNull<List<Hl7.Fhir.Model.EvidenceVariable.CategoryComponent>>.InOverflow(_Category))
+            value = Overflow["category"];
+          else
+            value = _Category;
           return _Category?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

@@ -339,19 +339,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "linkId":
-            value = _LinkIdElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LinkIdElement))
+              value = Overflow["linkId"];
+            else
+              value = _LinkIdElement;
             return _LinkIdElement is not null;
           case "definition":
-            value = _DefinitionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_DefinitionElement))
+              value = Overflow["definition"];
+            else
+              value = _DefinitionElement;
             return _DefinitionElement is not null;
           case "text":
-            value = _TextElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+              value = Overflow["text"];
+            else
+              value = _TextElement;
             return _TextElement is not null;
           case "answer":
-            value = _Answer;
+            if (OverflowNull<List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>>.InOverflow(_Answer))
+              value = Overflow["answer"];
+            else
+              value = _Answer;
             return _Answer?.Any() == true;
           case "item":
-            value = _Item;
+            if (OverflowNull<List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -531,10 +546,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "value":
-            value = _Value;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           case "item":
-            value = _Item;
+            if (OverflowNull<List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -982,37 +1003,70 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier is not null;
         case "basedOn":
-          value = _BasedOn;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_BasedOn))
+            value = Overflow["basedOn"];
+          else
+            value = _BasedOn;
           return _BasedOn?.Any() == true;
         case "partOf":
-          value = _PartOf;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_PartOf))
+            value = Overflow["partOf"];
+          else
+            value = _PartOf;
           return _PartOf?.Any() == true;
         case "questionnaire":
-          value = _QuestionnaireElement;
+          if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_QuestionnaireElement))
+            value = Overflow["questionnaire"];
+          else
+            value = _QuestionnaireElement;
           return _QuestionnaireElement is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "authored":
-          value = _AuthoredElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_AuthoredElement))
+            value = Overflow["authored"];
+          else
+            value = _AuthoredElement;
           return _AuthoredElement is not null;
         case "author":
-          value = _Author;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Author))
+            value = Overflow["author"];
+          else
+            value = _Author;
           return _Author is not null;
         case "source":
-          value = _Source;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Source))
+            value = Overflow["source"];
+          else
+            value = _Source;
           return _Source is not null;
         case "item":
-          value = _Item;
+          if (OverflowNull<List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>>.InOverflow(_Item))
+            value = Overflow["item"];
+          else
+            value = _Item;
           return _Item?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

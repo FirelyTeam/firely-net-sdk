@@ -285,16 +285,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "population":
-            value = _Population;
+            if (OverflowNull<List<Hl7.Fhir.Model.MeasureReport.PopulationComponent>>.InOverflow(_Population))
+              value = Overflow["population"];
+            else
+              value = _Population;
             return _Population?.Any() == true;
           case "measureScore":
-            value = _MeasureScore;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_MeasureScore))
+              value = Overflow["measureScore"];
+            else
+              value = _MeasureScore;
             return _MeasureScore is not null;
           case "stratifier":
-            value = _Stratifier;
+            if (OverflowNull<List<Hl7.Fhir.Model.MeasureReport.StratifierComponent>>.InOverflow(_Stratifier))
+              value = Overflow["stratifier"];
+            else
+              value = _Stratifier;
             return _Stratifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -505,13 +517,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "count":
-            value = _CountElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_CountElement))
+              value = Overflow["count"];
+            else
+              value = _CountElement;
             return _CountElement is not null;
           case "subjectResults":
-            value = _SubjectResults;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_SubjectResults))
+              value = Overflow["subjectResults"];
+            else
+              value = _SubjectResults;
             return _SubjectResults is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -669,10 +690,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code?.Any() == true;
           case "stratum":
-            value = _Stratum;
+            if (OverflowNull<List<Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent>>.InOverflow(_Stratum))
+              value = Overflow["stratum"];
+            else
+              value = _Stratum;
             return _Stratum?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -877,16 +904,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "value":
-            value = _Value;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           case "component":
-            value = _Component;
+            if (OverflowNull<List<Hl7.Fhir.Model.MeasureReport.ComponentComponent>>.InOverflow(_Component))
+              value = Overflow["component"];
+            else
+              value = _Component;
             return _Component?.Any() == true;
           case "population":
-            value = _Population;
+            if (OverflowNull<List<Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent>>.InOverflow(_Population))
+              value = Overflow["population"];
+            else
+              value = _Population;
             return _Population?.Any() == true;
           case "measureScore":
-            value = _MeasureScore;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_MeasureScore))
+              value = Overflow["measureScore"];
+            else
+              value = _MeasureScore;
             return _MeasureScore is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1053,10 +1092,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "value":
-            value = _Value;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1249,13 +1294,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "count":
-            value = _CountElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_CountElement))
+              value = Overflow["count"];
+            else
+              value = _CountElement;
             return _CountElement is not null;
           case "subjectResults":
-            value = _SubjectResults;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_SubjectResults))
+              value = Overflow["subjectResults"];
+            else
+              value = _SubjectResults;
             return _SubjectResults is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1727,37 +1781,70 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "measure":
-          value = _MeasureElement;
+          if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_MeasureElement))
+            value = Overflow["measure"];
+          else
+            value = _MeasureElement;
           return _MeasureElement is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "date":
-          value = _DateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+            value = Overflow["date"];
+          else
+            value = _DateElement;
           return _DateElement is not null;
         case "reporter":
-          value = _Reporter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reporter))
+            value = Overflow["reporter"];
+          else
+            value = _Reporter;
           return _Reporter is not null;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         case "improvementNotation":
-          value = _ImprovementNotation;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ImprovementNotation))
+            value = Overflow["improvementNotation"];
+          else
+            value = _ImprovementNotation;
           return _ImprovementNotation is not null;
         case "group":
-          value = _Group;
+          if (OverflowNull<List<Hl7.Fhir.Model.MeasureReport.GroupComponent>>.InOverflow(_Group))
+            value = Overflow["group"];
+          else
+            value = _Group;
           return _Group?.Any() == true;
         case "evaluatedResource":
-          value = _EvaluatedResource;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_EvaluatedResource))
+            value = Overflow["evaluatedResource"];
+          else
+            value = _EvaluatedResource;
           return _EvaluatedResource?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

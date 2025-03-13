@@ -181,10 +181,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "start":
-          value = _StartElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StartElement))
+            value = Overflow["start"];
+          else
+            value = _StartElement;
           return _StartElement is not null;
         case "end":
-          value = _EndElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_EndElement))
+            value = Overflow["end"];
+          else
+            value = _EndElement;
           return _EndElement is not null;
         default:
           return base.TryGetValue(key, out value);

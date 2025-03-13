@@ -156,10 +156,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "value":
-          value = _Value;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+            value = Overflow["value"];
+          else
+            value = _Value;
           return _Value is not null;
         default:
           return base.TryGetValue(key, out value);

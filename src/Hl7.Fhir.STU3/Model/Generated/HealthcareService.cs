@@ -285,16 +285,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "daysOfWeek":
-            value = _DaysOfWeekElement;
+            if (OverflowNull<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>.InOverflow(_DaysOfWeekElement))
+              value = Overflow["daysOfWeek"];
+            else
+              value = _DaysOfWeekElement;
             return _DaysOfWeekElement?.Any() == true;
           case "allDay":
-            value = _AllDayElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AllDayElement))
+              value = Overflow["allDay"];
+            else
+              value = _AllDayElement;
             return _AllDayElement is not null;
           case "availableStartTime":
-            value = _AvailableStartTimeElement;
+            if (OverflowNull<Hl7.Fhir.Model.Time>.InOverflow(_AvailableStartTimeElement))
+              value = Overflow["availableStartTime"];
+            else
+              value = _AvailableStartTimeElement;
             return _AvailableStartTimeElement is not null;
           case "availableEndTime":
-            value = _AvailableEndTimeElement;
+            if (OverflowNull<Hl7.Fhir.Model.Time>.InOverflow(_AvailableEndTimeElement))
+              value = Overflow["availableEndTime"];
+            else
+              value = _AvailableEndTimeElement;
             return _AvailableEndTimeElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -475,10 +487,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "during":
-            value = _During;
+            if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_During))
+              value = Overflow["during"];
+            else
+              value = _During;
             return _During is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1378,76 +1396,148 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "active":
-          value = _ActiveElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+            value = Overflow["active"];
+          else
+            value = _ActiveElement;
           return _ActiveElement is not null;
         case "providedBy":
-          value = _ProvidedBy;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ProvidedBy))
+            value = Overflow["providedBy"];
+          else
+            value = _ProvidedBy;
           return _ProvidedBy is not null;
         case "category":
-          value = _Category;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Category))
+            value = Overflow["category"];
+          else
+            value = _Category;
           return _Category is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type?.Any() == true;
         case "specialty":
-          value = _Specialty;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Specialty))
+            value = Overflow["specialty"];
+          else
+            value = _Specialty;
           return _Specialty?.Any() == true;
         case "location":
-          value = _Location;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Location))
+            value = Overflow["location"];
+          else
+            value = _Location;
           return _Location?.Any() == true;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "comment":
-          value = _CommentElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CommentElement))
+            value = Overflow["comment"];
+          else
+            value = _CommentElement;
           return _CommentElement is not null;
         case "extraDetails":
-          value = _ExtraDetailsElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ExtraDetailsElement))
+            value = Overflow["extraDetails"];
+          else
+            value = _ExtraDetailsElement;
           return _ExtraDetailsElement is not null;
         case "photo":
-          value = _Photo;
+          if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_Photo))
+            value = Overflow["photo"];
+          else
+            value = _Photo;
           return _Photo is not null;
         case "telecom":
-          value = _Telecom;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Telecom))
+            value = Overflow["telecom"];
+          else
+            value = _Telecom;
           return _Telecom?.Any() == true;
         case "coverageArea":
-          value = _CoverageArea;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_CoverageArea))
+            value = Overflow["coverageArea"];
+          else
+            value = _CoverageArea;
           return _CoverageArea?.Any() == true;
         case "serviceProvisionCode":
-          value = _ServiceProvisionCode;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ServiceProvisionCode))
+            value = Overflow["serviceProvisionCode"];
+          else
+            value = _ServiceProvisionCode;
           return _ServiceProvisionCode?.Any() == true;
         case "eligibility":
-          value = _Eligibility;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Eligibility))
+            value = Overflow["eligibility"];
+          else
+            value = _Eligibility;
           return _Eligibility is not null;
         case "eligibilityNote":
-          value = _EligibilityNoteElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EligibilityNoteElement))
+            value = Overflow["eligibilityNote"];
+          else
+            value = _EligibilityNoteElement;
           return _EligibilityNoteElement is not null;
         case "programName":
-          value = _ProgramNameElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ProgramNameElement))
+            value = Overflow["programName"];
+          else
+            value = _ProgramNameElement;
           return _ProgramNameElement?.Any() == true;
         case "characteristic":
-          value = _Characteristic;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Characteristic))
+            value = Overflow["characteristic"];
+          else
+            value = _Characteristic;
           return _Characteristic?.Any() == true;
         case "referralMethod":
-          value = _ReferralMethod;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ReferralMethod))
+            value = Overflow["referralMethod"];
+          else
+            value = _ReferralMethod;
           return _ReferralMethod?.Any() == true;
         case "appointmentRequired":
-          value = _AppointmentRequiredElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AppointmentRequiredElement))
+            value = Overflow["appointmentRequired"];
+          else
+            value = _AppointmentRequiredElement;
           return _AppointmentRequiredElement is not null;
         case "availableTime":
-          value = _AvailableTime;
+          if (OverflowNull<List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>>.InOverflow(_AvailableTime))
+            value = Overflow["availableTime"];
+          else
+            value = _AvailableTime;
           return _AvailableTime?.Any() == true;
         case "notAvailable":
-          value = _NotAvailable;
+          if (OverflowNull<List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>>.InOverflow(_NotAvailable))
+            value = Overflow["notAvailable"];
+          else
+            value = _NotAvailable;
           return _NotAvailable?.Any() == true;
         case "availabilityExceptions":
-          value = _AvailabilityExceptionsElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AvailabilityExceptionsElement))
+            value = Overflow["availabilityExceptions"];
+          else
+            value = _AvailabilityExceptionsElement;
           return _AvailabilityExceptionsElement is not null;
         case "endpoint":
-          value = _Endpoint;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Endpoint))
+            value = Overflow["endpoint"];
+          else
+            value = _Endpoint;
           return _Endpoint?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

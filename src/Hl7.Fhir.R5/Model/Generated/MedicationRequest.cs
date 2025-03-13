@@ -502,31 +502,58 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "initialFill":
-            value = _InitialFill;
+            if (OverflowNull<Hl7.Fhir.Model.MedicationRequest.InitialFillComponent>.InOverflow(_InitialFill))
+              value = Overflow["initialFill"];
+            else
+              value = _InitialFill;
             return _InitialFill is not null;
           case "dispenseInterval":
-            value = _DispenseInterval;
+            if (OverflowNull<Hl7.Fhir.Model.Duration>.InOverflow(_DispenseInterval))
+              value = Overflow["dispenseInterval"];
+            else
+              value = _DispenseInterval;
             return _DispenseInterval is not null;
           case "validityPeriod":
-            value = _ValidityPeriod;
+            if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_ValidityPeriod))
+              value = Overflow["validityPeriod"];
+            else
+              value = _ValidityPeriod;
             return _ValidityPeriod is not null;
           case "numberOfRepeatsAllowed":
-            value = _NumberOfRepeatsAllowedElement;
+            if (OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_NumberOfRepeatsAllowedElement))
+              value = Overflow["numberOfRepeatsAllowed"];
+            else
+              value = _NumberOfRepeatsAllowedElement;
             return _NumberOfRepeatsAllowedElement is not null;
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "expectedSupplyDuration":
-            value = _ExpectedSupplyDuration;
+            if (OverflowNull<Hl7.Fhir.Model.Duration>.InOverflow(_ExpectedSupplyDuration))
+              value = Overflow["expectedSupplyDuration"];
+            else
+              value = _ExpectedSupplyDuration;
             return _ExpectedSupplyDuration is not null;
           case "dispenser":
-            value = _Dispenser;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Dispenser))
+              value = Overflow["dispenser"];
+            else
+              value = _Dispenser;
             return _Dispenser is not null;
           case "dispenserInstruction":
-            value = _DispenserInstruction;
+            if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_DispenserInstruction))
+              value = Overflow["dispenserInstruction"];
+            else
+              value = _DispenserInstruction;
             return _DispenserInstruction?.Any() == true;
           case "doseAdministrationAid":
-            value = _DoseAdministrationAid;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DoseAdministrationAid))
+              value = Overflow["doseAdministrationAid"];
+            else
+              value = _DoseAdministrationAid;
             return _DoseAdministrationAid is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -737,10 +764,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "duration":
-            value = _Duration;
+            if (OverflowNull<Hl7.Fhir.Model.Duration>.InOverflow(_Duration))
+              value = Overflow["duration"];
+            else
+              value = _Duration;
             return _Duration is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -892,10 +925,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "allowed":
-            value = _Allowed;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Allowed))
+              value = Overflow["allowed"];
+            else
+              value = _Allowed;
             return _Allowed is not null;
           case "reason":
-            value = _Reason;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Reason))
+              value = Overflow["reason"];
+            else
+              value = _Reason;
             return _Reason is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -2066,103 +2105,202 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "basedOn":
-          value = _BasedOn;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_BasedOn))
+            value = Overflow["basedOn"];
+          else
+            value = _BasedOn;
           return _BasedOn?.Any() == true;
         case "priorPrescription":
-          value = _PriorPrescription;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_PriorPrescription))
+            value = Overflow["priorPrescription"];
+          else
+            value = _PriorPrescription;
           return _PriorPrescription is not null;
         case "groupIdentifier":
-          value = _GroupIdentifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_GroupIdentifier))
+            value = Overflow["groupIdentifier"];
+          else
+            value = _GroupIdentifier;
           return _GroupIdentifier is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "statusReason":
-          value = _StatusReason;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_StatusReason))
+            value = Overflow["statusReason"];
+          else
+            value = _StatusReason;
           return _StatusReason is not null;
         case "statusChanged":
-          value = _StatusChangedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StatusChangedElement))
+            value = Overflow["statusChanged"];
+          else
+            value = _StatusChangedElement;
           return _StatusChangedElement is not null;
         case "intent":
-          value = _IntentElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent>>.InOverflow(_IntentElement))
+            value = Overflow["intent"];
+          else
+            value = _IntentElement;
           return _IntentElement is not null;
         case "category":
-          value = _Category;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Category))
+            value = Overflow["category"];
+          else
+            value = _Category;
           return _Category?.Any() == true;
         case "priority":
-          value = _PriorityElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.RequestPriority>>.InOverflow(_PriorityElement))
+            value = Overflow["priority"];
+          else
+            value = _PriorityElement;
           return _PriorityElement is not null;
         case "doNotPerform":
-          value = _DoNotPerformElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_DoNotPerformElement))
+            value = Overflow["doNotPerform"];
+          else
+            value = _DoNotPerformElement;
           return _DoNotPerformElement is not null;
         case "medication":
-          value = _Medication;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_Medication))
+            value = Overflow["medication"];
+          else
+            value = _Medication;
           return _Medication is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "informationSource":
-          value = _InformationSource;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_InformationSource))
+            value = Overflow["informationSource"];
+          else
+            value = _InformationSource;
           return _InformationSource?.Any() == true;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "supportingInformation":
-          value = _SupportingInformation;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_SupportingInformation))
+            value = Overflow["supportingInformation"];
+          else
+            value = _SupportingInformation;
           return _SupportingInformation?.Any() == true;
         case "authoredOn":
-          value = _AuthoredOnElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_AuthoredOnElement))
+            value = Overflow["authoredOn"];
+          else
+            value = _AuthoredOnElement;
           return _AuthoredOnElement is not null;
         case "requester":
-          value = _Requester;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Requester))
+            value = Overflow["requester"];
+          else
+            value = _Requester;
           return _Requester is not null;
         case "reported":
-          value = _ReportedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ReportedElement))
+            value = Overflow["reported"];
+          else
+            value = _ReportedElement;
           return _ReportedElement is not null;
         case "performerType":
-          value = _PerformerType;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PerformerType))
+            value = Overflow["performerType"];
+          else
+            value = _PerformerType;
           return _PerformerType is not null;
         case "performer":
-          value = _Performer;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Performer))
+            value = Overflow["performer"];
+          else
+            value = _Performer;
           return _Performer?.Any() == true;
         case "device":
-          value = _Device;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_Device))
+            value = Overflow["device"];
+          else
+            value = _Device;
           return _Device?.Any() == true;
         case "recorder":
-          value = _Recorder;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Recorder))
+            value = Overflow["recorder"];
+          else
+            value = _Recorder;
           return _Recorder is not null;
         case "reason":
-          value = _Reason;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_Reason))
+            value = Overflow["reason"];
+          else
+            value = _Reason;
           return _Reason?.Any() == true;
         case "courseOfTherapyType":
-          value = _CourseOfTherapyType;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_CourseOfTherapyType))
+            value = Overflow["courseOfTherapyType"];
+          else
+            value = _CourseOfTherapyType;
           return _CourseOfTherapyType is not null;
         case "insurance":
-          value = _Insurance;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Insurance))
+            value = Overflow["insurance"];
+          else
+            value = _Insurance;
           return _Insurance?.Any() == true;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         case "renderedDosageInstruction":
-          value = _RenderedDosageInstructionElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_RenderedDosageInstructionElement))
+            value = Overflow["renderedDosageInstruction"];
+          else
+            value = _RenderedDosageInstructionElement;
           return _RenderedDosageInstructionElement is not null;
         case "effectiveDosePeriod":
-          value = _EffectiveDosePeriod;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_EffectiveDosePeriod))
+            value = Overflow["effectiveDosePeriod"];
+          else
+            value = _EffectiveDosePeriod;
           return _EffectiveDosePeriod is not null;
         case "dosageInstruction":
-          value = _DosageInstruction;
+          if (OverflowNull<List<Hl7.Fhir.Model.Dosage>>.InOverflow(_DosageInstruction))
+            value = Overflow["dosageInstruction"];
+          else
+            value = _DosageInstruction;
           return _DosageInstruction?.Any() == true;
         case "dispenseRequest":
-          value = _DispenseRequest;
+          if (OverflowNull<Hl7.Fhir.Model.MedicationRequest.DispenseRequestComponent>.InOverflow(_DispenseRequest))
+            value = Overflow["dispenseRequest"];
+          else
+            value = _DispenseRequest;
           return _DispenseRequest is not null;
         case "substitution":
-          value = _Substitution;
+          if (OverflowNull<Hl7.Fhir.Model.MedicationRequest.SubstitutionComponent>.InOverflow(_Substitution))
+            value = Overflow["substitution"];
+          else
+            value = _Substitution;
           return _Substitution is not null;
         case "eventHistory":
-          value = _EventHistory;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_EventHistory))
+            value = Overflow["eventHistory"];
+          else
+            value = _EventHistory;
           return _EventHistory?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

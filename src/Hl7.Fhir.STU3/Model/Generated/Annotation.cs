@@ -212,13 +212,22 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "author":
-          value = _Author;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Author))
+            value = Overflow["author"];
+          else
+            value = _Author;
           return _Author is not null;
         case "time":
-          value = _TimeElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_TimeElement))
+            value = Overflow["time"];
+          else
+            value = _TimeElement;
           return _TimeElement is not null;
         case "text":
-          value = _TextElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+            value = Overflow["text"];
+          else
+            value = _TextElement;
           return _TextElement is not null;
         default:
           return base.TryGetValue(key, out value);

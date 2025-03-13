@@ -359,19 +359,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "resourceType":
-            value = _ResourceTypeElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_ResourceTypeElement))
+              value = Overflow["resourceType"];
+            else
+              value = _ResourceTypeElement;
             return _ResourceTypeElement is not null;
           case "filterParameter":
-            value = _FilterParameterElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FilterParameterElement))
+              value = Overflow["filterParameter"];
+            else
+              value = _FilterParameterElement;
             return _FilterParameterElement is not null;
           case "comparator":
-            value = _ComparatorElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.SearchComparator>>.InOverflow(_ComparatorElement))
+              value = Overflow["comparator"];
+            else
+              value = _ComparatorElement;
             return _ComparatorElement is not null;
           case "modifier":
-            value = _ModifierElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.SearchModifierCode>>.InOverflow(_ModifierElement))
+              value = Overflow["modifier"];
+            else
+              value = _ModifierElement;
             return _ModifierElement is not null;
           case "value":
-            value = _ValueElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
+              value = Overflow["value"];
+            else
+              value = _ValueElement;
             return _ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -578,10 +593,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "name":
-            value = _NameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+              value = Overflow["name"];
+            else
+              value = _NameElement;
             return _NameElement is not null;
           case "value":
-            value = _ValueElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
+              value = Overflow["value"];
+            else
+              value = _ValueElement;
             return _ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1314,55 +1335,106 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "topic":
-          value = _TopicElement;
+          if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_TopicElement))
+            value = Overflow["topic"];
+          else
+            value = _TopicElement;
           return _TopicElement is not null;
         case "contact":
-          value = _Contact;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Contact))
+            value = Overflow["contact"];
+          else
+            value = _Contact;
           return _Contact?.Any() == true;
         case "end":
-          value = _EndElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_EndElement))
+            value = Overflow["end"];
+          else
+            value = _EndElement;
           return _EndElement is not null;
         case "managingEntity":
-          value = _ManagingEntity;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ManagingEntity))
+            value = Overflow["managingEntity"];
+          else
+            value = _ManagingEntity;
           return _ManagingEntity is not null;
         case "reason":
-          value = _ReasonElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReasonElement))
+            value = Overflow["reason"];
+          else
+            value = _ReasonElement;
           return _ReasonElement is not null;
         case "filterBy":
-          value = _FilterBy;
+          if (OverflowNull<List<Hl7.Fhir.Model.Subscription.FilterByComponent>>.InOverflow(_FilterBy))
+            value = Overflow["filterBy"];
+          else
+            value = _FilterBy;
           return _FilterBy?.Any() == true;
         case "channelType":
-          value = _ChannelType;
+          if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_ChannelType))
+            value = Overflow["channelType"];
+          else
+            value = _ChannelType;
           return _ChannelType is not null;
         case "endpoint":
-          value = _EndpointElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUrl>.InOverflow(_EndpointElement))
+            value = Overflow["endpoint"];
+          else
+            value = _EndpointElement;
           return _EndpointElement is not null;
         case "parameter":
-          value = _Parameter;
+          if (OverflowNull<List<Hl7.Fhir.Model.Subscription.ParameterComponent>>.InOverflow(_Parameter))
+            value = Overflow["parameter"];
+          else
+            value = _Parameter;
           return _Parameter?.Any() == true;
         case "heartbeatPeriod":
-          value = _HeartbeatPeriodElement;
+          if (OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_HeartbeatPeriodElement))
+            value = Overflow["heartbeatPeriod"];
+          else
+            value = _HeartbeatPeriodElement;
           return _HeartbeatPeriodElement is not null;
         case "timeout":
-          value = _TimeoutElement;
+          if (OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_TimeoutElement))
+            value = Overflow["timeout"];
+          else
+            value = _TimeoutElement;
           return _TimeoutElement is not null;
         case "contentType":
-          value = _ContentTypeElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+            value = Overflow["contentType"];
+          else
+            value = _ContentTypeElement;
           return _ContentTypeElement is not null;
         case "content":
-          value = _ContentElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>>.InOverflow(_ContentElement))
+            value = Overflow["content"];
+          else
+            value = _ContentElement;
           return _ContentElement is not null;
         case "maxCount":
-          value = _MaxCountElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_MaxCountElement))
+            value = Overflow["maxCount"];
+          else
+            value = _MaxCountElement;
           return _MaxCountElement is not null;
         default:
           return base.TryGetValue(key, out value);

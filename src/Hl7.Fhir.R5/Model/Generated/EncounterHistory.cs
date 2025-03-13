@@ -170,10 +170,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "location":
-            value = _Location;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Location))
+              value = Overflow["location"];
+            else
+              value = _Location;
             return _Location is not null;
           case "form":
-            value = _Form;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Form))
+              value = Overflow["form"];
+            else
+              value = _Form;
             return _Form is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -675,43 +681,82 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.EncounterStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "class":
-          value = _Class;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Class))
+            value = Overflow["class"];
+          else
+            value = _Class;
           return _Class is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type?.Any() == true;
         case "serviceType":
-          value = _ServiceType;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_ServiceType))
+            value = Overflow["serviceType"];
+          else
+            value = _ServiceType;
           return _ServiceType?.Any() == true;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "subjectStatus":
-          value = _SubjectStatus;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SubjectStatus))
+            value = Overflow["subjectStatus"];
+          else
+            value = _SubjectStatus;
           return _SubjectStatus is not null;
         case "actualPeriod":
-          value = _ActualPeriod;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_ActualPeriod))
+            value = Overflow["actualPeriod"];
+          else
+            value = _ActualPeriod;
           return _ActualPeriod is not null;
         case "plannedStartDate":
-          value = _PlannedStartDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_PlannedStartDateElement))
+            value = Overflow["plannedStartDate"];
+          else
+            value = _PlannedStartDateElement;
           return _PlannedStartDateElement is not null;
         case "plannedEndDate":
-          value = _PlannedEndDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_PlannedEndDateElement))
+            value = Overflow["plannedEndDate"];
+          else
+            value = _PlannedEndDateElement;
           return _PlannedEndDateElement is not null;
         case "length":
-          value = _Length;
+          if (OverflowNull<Hl7.Fhir.Model.Duration>.InOverflow(_Length))
+            value = Overflow["length"];
+          else
+            value = _Length;
           return _Length is not null;
         case "location":
-          value = _Location;
+          if (OverflowNull<List<Hl7.Fhir.Model.EncounterHistory.LocationComponent>>.InOverflow(_Location))
+            value = Overflow["location"];
+          else
+            value = _Location;
           return _Location?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

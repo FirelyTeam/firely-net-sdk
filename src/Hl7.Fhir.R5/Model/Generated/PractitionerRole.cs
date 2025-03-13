@@ -526,46 +526,88 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "active":
-          value = _ActiveElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+            value = Overflow["active"];
+          else
+            value = _ActiveElement;
           return _ActiveElement is not null;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         case "practitioner":
-          value = _Practitioner;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Practitioner))
+            value = Overflow["practitioner"];
+          else
+            value = _Practitioner;
           return _Practitioner is not null;
         case "organization":
-          value = _Organization;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Organization))
+            value = Overflow["organization"];
+          else
+            value = _Organization;
           return _Organization is not null;
         case "code":
-          value = _Code;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code?.Any() == true;
         case "specialty":
-          value = _Specialty;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Specialty))
+            value = Overflow["specialty"];
+          else
+            value = _Specialty;
           return _Specialty?.Any() == true;
         case "location":
-          value = _Location;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Location))
+            value = Overflow["location"];
+          else
+            value = _Location;
           return _Location?.Any() == true;
         case "healthcareService":
-          value = _HealthcareService;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_HealthcareService))
+            value = Overflow["healthcareService"];
+          else
+            value = _HealthcareService;
           return _HealthcareService?.Any() == true;
         case "contact":
-          value = _Contact;
+          if (OverflowNull<List<Hl7.Fhir.Model.ExtendedContactDetail>>.InOverflow(_Contact))
+            value = Overflow["contact"];
+          else
+            value = _Contact;
           return _Contact?.Any() == true;
         case "characteristic":
-          value = _Characteristic;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Characteristic))
+            value = Overflow["characteristic"];
+          else
+            value = _Characteristic;
           return _Characteristic?.Any() == true;
         case "communication":
-          value = _Communication;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Communication))
+            value = Overflow["communication"];
+          else
+            value = _Communication;
           return _Communication?.Any() == true;
         case "availability":
-          value = _Availability;
+          if (OverflowNull<List<Hl7.Fhir.Model.Availability>>.InOverflow(_Availability))
+            value = Overflow["availability"];
+          else
+            value = _Availability;
           return _Availability?.Any() == true;
         case "endpoint":
-          value = _Endpoint;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Endpoint))
+            value = Overflow["endpoint"];
+          else
+            value = _Endpoint;
           return _Endpoint?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

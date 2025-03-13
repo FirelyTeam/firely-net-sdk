@@ -531,37 +531,70 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "serviceCategory":
-          value = _ServiceCategory;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ServiceCategory))
+            value = Overflow["serviceCategory"];
+          else
+            value = _ServiceCategory;
           return _ServiceCategory?.Any() == true;
         case "serviceType":
-          value = _ServiceType;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ServiceType))
+            value = Overflow["serviceType"];
+          else
+            value = _ServiceType;
           return _ServiceType?.Any() == true;
         case "specialty":
-          value = _Specialty;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Specialty))
+            value = Overflow["specialty"];
+          else
+            value = _Specialty;
           return _Specialty?.Any() == true;
         case "appointmentType":
-          value = _AppointmentType;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AppointmentType))
+            value = Overflow["appointmentType"];
+          else
+            value = _AppointmentType;
           return _AppointmentType is not null;
         case "schedule":
-          value = _Schedule;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Schedule))
+            value = Overflow["schedule"];
+          else
+            value = _Schedule;
           return _Schedule is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Slot.SlotStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "start":
-          value = _StartElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_StartElement))
+            value = Overflow["start"];
+          else
+            value = _StartElement;
           return _StartElement is not null;
         case "end":
-          value = _EndElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_EndElement))
+            value = Overflow["end"];
+          else
+            value = _EndElement;
           return _EndElement is not null;
         case "overbooked":
-          value = _OverbookedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_OverbookedElement))
+            value = Overflow["overbooked"];
+          else
+            value = _OverbookedElement;
           return _OverbookedElement is not null;
         case "comment":
-          value = _CommentElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CommentElement))
+            value = Overflow["comment"];
+          else
+            value = _CommentElement;
           return _CommentElement is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -290,16 +290,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "value":
-            value = _Value;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           case "exclude":
-            value = _ExcludeElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ExcludeElement))
+              value = Overflow["exclude"];
+            else
+              value = _ExcludeElement;
             return _ExcludeElement is not null;
           case "period":
-            value = _Period;
+            if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+              value = Overflow["period"];
+            else
+              value = _Period;
             return _Period is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -510,13 +522,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "entity":
-            value = _Entity;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Entity))
+              value = Overflow["entity"];
+            else
+              value = _Entity;
             return _Entity is not null;
           case "period":
-            value = _Period;
+            if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+              value = Overflow["period"];
+            else
+              value = _Period;
             return _Period is not null;
           case "inactive":
-            value = _InactiveElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_InactiveElement))
+              value = Overflow["inactive"];
+            else
+              value = _InactiveElement;
             return _InactiveElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -937,31 +958,58 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "active":
-          value = _ActiveElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+            value = Overflow["active"];
+          else
+            value = _ActiveElement;
           return _ActiveElement is not null;
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Group.GroupType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "actual":
-          value = _ActualElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActualElement))
+            value = Overflow["actual"];
+          else
+            value = _ActualElement;
           return _ActualElement is not null;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "quantity":
-          value = _QuantityElement;
+          if (OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_QuantityElement))
+            value = Overflow["quantity"];
+          else
+            value = _QuantityElement;
           return _QuantityElement is not null;
         case "characteristic":
-          value = _Characteristic;
+          if (OverflowNull<List<Hl7.Fhir.Model.Group.CharacteristicComponent>>.InOverflow(_Characteristic))
+            value = Overflow["characteristic"];
+          else
+            value = _Characteristic;
           return _Characteristic?.Any() == true;
         case "member":
-          value = _Member;
+          if (OverflowNull<List<Hl7.Fhir.Model.Group.MemberComponent>>.InOverflow(_Member))
+            value = Overflow["member"];
+          else
+            value = _Member;
           return _Member?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

@@ -483,31 +483,58 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          value = _Type;
+          if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type?.Any() == true;
         case "when":
-          value = _WhenElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_WhenElement))
+            value = Overflow["when"];
+          else
+            value = _WhenElement;
           return _WhenElement is not null;
         case "who":
-          value = _Who;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Who))
+            value = Overflow["who"];
+          else
+            value = _Who;
           return _Who is not null;
         case "onBehalfOf":
-          value = _OnBehalfOf;
+          if (OverflowNull<DynamicDataType>.InOverflow(_OnBehalfOf))
+            value = Overflow["onBehalfOf"];
+          else
+            value = _OnBehalfOf;
           return _OnBehalfOf is not null;
         case "contentType":
-          value = _ContentTypeElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+            value = Overflow["contentType"];
+          else
+            value = _ContentTypeElement;
           return _ContentTypeElement is not null;
         case "targetFormat":
-          value = _TargetFormatElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_TargetFormatElement))
+            value = Overflow["targetFormat"];
+          else
+            value = _TargetFormatElement;
           return _TargetFormatElement is not null;
         case "sigFormat":
-          value = _SigFormatElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_SigFormatElement))
+            value = Overflow["sigFormat"];
+          else
+            value = _SigFormatElement;
           return _SigFormatElement is not null;
         case "blob":
-          value = _BlobElement;
+          if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_BlobElement))
+            value = Overflow["blob"];
+          else
+            value = _BlobElement;
           return _BlobElement is not null;
         case "data":
-          value = _DataElement;
+          if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+            value = Overflow["data"];
+          else
+            value = _DataElement;
           return _DataElement is not null;
         default:
           return base.TryGetValue(key, out value);

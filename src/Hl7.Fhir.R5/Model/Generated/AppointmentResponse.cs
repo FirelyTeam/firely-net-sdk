@@ -599,40 +599,76 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "appointment":
-          value = _Appointment;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Appointment))
+            value = Overflow["appointment"];
+          else
+            value = _Appointment;
           return _Appointment is not null;
         case "proposedNewTime":
-          value = _ProposedNewTimeElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ProposedNewTimeElement))
+            value = Overflow["proposedNewTime"];
+          else
+            value = _ProposedNewTimeElement;
           return _ProposedNewTimeElement is not null;
         case "start":
-          value = _StartElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_StartElement))
+            value = Overflow["start"];
+          else
+            value = _StartElement;
           return _StartElement is not null;
         case "end":
-          value = _EndElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_EndElement))
+            value = Overflow["end"];
+          else
+            value = _EndElement;
           return _EndElement is not null;
         case "participantType":
-          value = _ParticipantType;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ParticipantType))
+            value = Overflow["participantType"];
+          else
+            value = _ParticipantType;
           return _ParticipantType?.Any() == true;
         case "actor":
-          value = _Actor;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Actor))
+            value = Overflow["actor"];
+          else
+            value = _Actor;
           return _Actor is not null;
         case "participantStatus":
-          value = _ParticipantStatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>>.InOverflow(_ParticipantStatusElement))
+            value = Overflow["participantStatus"];
+          else
+            value = _ParticipantStatusElement;
           return _ParticipantStatusElement is not null;
         case "comment":
-          value = _CommentElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_CommentElement))
+            value = Overflow["comment"];
+          else
+            value = _CommentElement;
           return _CommentElement is not null;
         case "recurring":
-          value = _RecurringElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_RecurringElement))
+            value = Overflow["recurring"];
+          else
+            value = _RecurringElement;
           return _RecurringElement is not null;
         case "occurrenceDate":
-          value = _OccurrenceDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_OccurrenceDateElement))
+            value = Overflow["occurrenceDate"];
+          else
+            value = _OccurrenceDateElement;
           return _OccurrenceDateElement is not null;
         case "recurrenceId":
-          value = _RecurrenceIdElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_RecurrenceIdElement))
+            value = Overflow["recurrenceId"];
+          else
+            value = _RecurrenceIdElement;
           return _RecurrenceIdElement is not null;
         default:
           return base.TryGetValue(key, out value);

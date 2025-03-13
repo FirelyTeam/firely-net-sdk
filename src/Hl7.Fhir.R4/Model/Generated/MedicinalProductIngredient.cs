@@ -218,16 +218,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "group":
-            value = _Group;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Group))
+              value = Overflow["group"];
+            else
+              value = _Group;
             return _Group is not null;
           case "confidentiality":
-            value = _Confidentiality;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Confidentiality))
+              value = Overflow["confidentiality"];
+            else
+              value = _Confidentiality;
             return _Confidentiality is not null;
           case "strength":
-            value = _Strength;
+            if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.InOverflow(_Strength))
+              value = Overflow["strength"];
+            else
+              value = _Strength;
             return _Strength?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -547,25 +559,46 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "presentation":
-            value = _Presentation;
+            if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Presentation))
+              value = Overflow["presentation"];
+            else
+              value = _Presentation;
             return _Presentation is not null;
           case "presentationLowLimit":
-            value = _PresentationLowLimit;
+            if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_PresentationLowLimit))
+              value = Overflow["presentationLowLimit"];
+            else
+              value = _PresentationLowLimit;
             return _PresentationLowLimit is not null;
           case "concentration":
-            value = _Concentration;
+            if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Concentration))
+              value = Overflow["concentration"];
+            else
+              value = _Concentration;
             return _Concentration is not null;
           case "concentrationLowLimit":
-            value = _ConcentrationLowLimit;
+            if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_ConcentrationLowLimit))
+              value = Overflow["concentrationLowLimit"];
+            else
+              value = _ConcentrationLowLimit;
             return _ConcentrationLowLimit is not null;
           case "measurementPoint":
-            value = _MeasurementPointElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MeasurementPointElement))
+              value = Overflow["measurementPoint"];
+            else
+              value = _MeasurementPointElement;
             return _MeasurementPointElement is not null;
           case "country":
-            value = _Country;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Country))
+              value = Overflow["country"];
+            else
+              value = _Country;
             return _Country?.Any() == true;
           case "referenceStrength":
-            value = _ReferenceStrength;
+            if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent>>.InOverflow(_ReferenceStrength))
+              value = Overflow["referenceStrength"];
+            else
+              value = _ReferenceStrength;
             return _ReferenceStrength?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -855,19 +888,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "substance":
-            value = _Substance;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Substance))
+              value = Overflow["substance"];
+            else
+              value = _Substance;
             return _Substance is not null;
           case "strength":
-            value = _Strength;
+            if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Strength))
+              value = Overflow["strength"];
+            else
+              value = _Strength;
             return _Strength is not null;
           case "strengthLowLimit":
-            value = _StrengthLowLimit;
+            if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_StrengthLowLimit))
+              value = Overflow["strengthLowLimit"];
+            else
+              value = _StrengthLowLimit;
             return _StrengthLowLimit is not null;
           case "measurementPoint":
-            value = _MeasurementPointElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MeasurementPointElement))
+              value = Overflow["measurementPoint"];
+            else
+              value = _MeasurementPointElement;
             return _MeasurementPointElement is not null;
           case "country":
-            value = _Country;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Country))
+              value = Overflow["country"];
+            else
+              value = _Country;
             return _Country?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1040,10 +1088,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "strength":
-            value = _Strength;
+            if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent>>.InOverflow(_Strength))
+              value = Overflow["strength"];
+            else
+              value = _Strength;
             return _Strength?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1308,22 +1362,40 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier is not null;
         case "role":
-          value = _Role;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Role))
+            value = Overflow["role"];
+          else
+            value = _Role;
           return _Role is not null;
         case "allergenicIndicator":
-          value = _AllergenicIndicatorElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AllergenicIndicatorElement))
+            value = Overflow["allergenicIndicator"];
+          else
+            value = _AllergenicIndicatorElement;
           return _AllergenicIndicatorElement is not null;
         case "manufacturer":
-          value = _Manufacturer;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
+            value = Overflow["manufacturer"];
+          else
+            value = _Manufacturer;
           return _Manufacturer?.Any() == true;
         case "specifiedSubstance":
-          value = _SpecifiedSubstance;
+          if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent>>.InOverflow(_SpecifiedSubstance))
+            value = Overflow["specifiedSubstance"];
+          else
+            value = _SpecifiedSubstance;
           return _SpecifiedSubstance?.Any() == true;
         case "substance":
-          value = _Substance;
+          if (OverflowNull<Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent>.InOverflow(_Substance))
+            value = Overflow["substance"];
+          else
+            value = _Substance;
           return _Substance is not null;
         default:
           return base.TryGetValue(key, out value);

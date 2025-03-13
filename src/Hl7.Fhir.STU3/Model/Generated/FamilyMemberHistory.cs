@@ -262,16 +262,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "outcome":
-            value = _Outcome;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Outcome))
+              value = Overflow["outcome"];
+            else
+              value = _Outcome;
             return _Outcome is not null;
           case "onset":
-            value = _Onset;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Onset))
+              value = Overflow["onset"];
+            else
+              value = _Onset;
             return _Onset is not null;
           case "note":
-            value = _Note;
+            if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+              value = Overflow["note"];
+            else
+              value = _Note;
             return _Note?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -988,58 +1000,112 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "definition":
-          value = _Definition;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Definition))
+            value = Overflow["definition"];
+          else
+            value = _Definition;
           return _Definition?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "notDone":
-          value = _NotDoneElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_NotDoneElement))
+            value = Overflow["notDone"];
+          else
+            value = _NotDoneElement;
           return _NotDoneElement is not null;
         case "notDoneReason":
-          value = _NotDoneReason;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_NotDoneReason))
+            value = Overflow["notDoneReason"];
+          else
+            value = _NotDoneReason;
           return _NotDoneReason is not null;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "date":
-          value = _DateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+            value = Overflow["date"];
+          else
+            value = _DateElement;
           return _DateElement is not null;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "relationship":
-          value = _Relationship;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Relationship))
+            value = Overflow["relationship"];
+          else
+            value = _Relationship;
           return _Relationship is not null;
         case "gender":
-          value = _GenderElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.AdministrativeGender>>.InOverflow(_GenderElement))
+            value = Overflow["gender"];
+          else
+            value = _GenderElement;
           return _GenderElement is not null;
         case "born":
-          value = _Born;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Born))
+            value = Overflow["born"];
+          else
+            value = _Born;
           return _Born is not null;
         case "age":
-          value = _Age;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Age))
+            value = Overflow["age"];
+          else
+            value = _Age;
           return _Age is not null;
         case "estimatedAge":
-          value = _EstimatedAgeElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_EstimatedAgeElement))
+            value = Overflow["estimatedAge"];
+          else
+            value = _EstimatedAgeElement;
           return _EstimatedAgeElement is not null;
         case "deceased":
-          value = _Deceased;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Deceased))
+            value = Overflow["deceased"];
+          else
+            value = _Deceased;
           return _Deceased is not null;
         case "reasonCode":
-          value = _ReasonCode;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ReasonCode))
+            value = Overflow["reasonCode"];
+          else
+            value = _ReasonCode;
           return _ReasonCode?.Any() == true;
         case "reasonReference":
-          value = _ReasonReference;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_ReasonReference))
+            value = Overflow["reasonReference"];
+          else
+            value = _ReasonReference;
           return _ReasonReference?.Any() == true;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         case "condition":
-          value = _Condition;
+          if (OverflowNull<List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent>>.InOverflow(_Condition))
+            value = Overflow["condition"];
+          else
+            value = _Condition;
           return _Condition?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

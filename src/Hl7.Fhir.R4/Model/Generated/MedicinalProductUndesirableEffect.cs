@@ -237,19 +237,34 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "subject":
-          value = _Subject;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject?.Any() == true;
         case "symptomConditionEffect":
-          value = _SymptomConditionEffect;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SymptomConditionEffect))
+            value = Overflow["symptomConditionEffect"];
+          else
+            value = _SymptomConditionEffect;
           return _SymptomConditionEffect is not null;
         case "classification":
-          value = _Classification;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Classification))
+            value = Overflow["classification"];
+          else
+            value = _Classification;
           return _Classification is not null;
         case "frequencyOfOccurrence":
-          value = _FrequencyOfOccurrence;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FrequencyOfOccurrence))
+            value = Overflow["frequencyOfOccurrence"];
+          else
+            value = _FrequencyOfOccurrence;
           return _FrequencyOfOccurrence is not null;
         case "population":
-          value = _Population;
+          if (OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
+            value = Overflow["population"];
+          else
+            value = _Population;
           return _Population?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

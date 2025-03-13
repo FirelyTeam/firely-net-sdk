@@ -281,16 +281,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "daysOfWeek":
-            value = _DaysOfWeekElement;
+            if (OverflowNull<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>.InOverflow(_DaysOfWeekElement))
+              value = Overflow["daysOfWeek"];
+            else
+              value = _DaysOfWeekElement;
             return _DaysOfWeekElement?.Any() == true;
           case "allDay":
-            value = _AllDayElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AllDayElement))
+              value = Overflow["allDay"];
+            else
+              value = _AllDayElement;
             return _AllDayElement is not null;
           case "availableStartTime":
-            value = _AvailableStartTimeElement;
+            if (OverflowNull<Hl7.Fhir.Model.Time>.InOverflow(_AvailableStartTimeElement))
+              value = Overflow["availableStartTime"];
+            else
+              value = _AvailableStartTimeElement;
             return _AvailableStartTimeElement is not null;
           case "availableEndTime":
-            value = _AvailableEndTimeElement;
+            if (OverflowNull<Hl7.Fhir.Model.Time>.InOverflow(_AvailableEndTimeElement))
+              value = Overflow["availableEndTime"];
+            else
+              value = _AvailableEndTimeElement;
             return _AvailableEndTimeElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -467,10 +479,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "during":
-            value = _During;
+            if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_During))
+              value = Overflow["during"];
+            else
+              value = _During;
             return _During is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -603,10 +621,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "availableTime":
-          value = _AvailableTime;
+          if (OverflowNull<List<Hl7.Fhir.Model.Availability.AvailableTimeComponent>>.InOverflow(_AvailableTime))
+            value = Overflow["availableTime"];
+          else
+            value = _AvailableTime;
           return _AvailableTime?.Any() == true;
         case "notAvailableTime":
-          value = _NotAvailableTime;
+          if (OverflowNull<List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent>>.InOverflow(_NotAvailableTime))
+            value = Overflow["notAvailableTime"];
+          else
+            value = _NotAvailableTime;
           return _NotAvailableTime?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

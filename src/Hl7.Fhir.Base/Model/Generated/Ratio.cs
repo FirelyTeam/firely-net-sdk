@@ -150,10 +150,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "numerator":
-          value = _Numerator;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Numerator))
+            value = Overflow["numerator"];
+          else
+            value = _Numerator;
           return _Numerator is not null;
         case "denominator":
-          value = _Denominator;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
+            value = Overflow["denominator"];
+          else
+            value = _Denominator;
           return _Denominator is not null;
         default:
           return base.TryGetValue(key, out value);

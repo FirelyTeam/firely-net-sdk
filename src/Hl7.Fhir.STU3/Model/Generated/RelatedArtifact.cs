@@ -389,22 +389,40 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "display":
-          value = _DisplayElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DisplayElement))
+            value = Overflow["display"];
+          else
+            value = _DisplayElement;
           return _DisplayElement is not null;
         case "citation":
-          value = _CitationElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CitationElement))
+            value = Overflow["citation"];
+          else
+            value = _CitationElement;
           return _CitationElement is not null;
         case "url":
-          value = _UrlElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+            value = Overflow["url"];
+          else
+            value = _UrlElement;
           return _UrlElement is not null;
         case "document":
-          value = _Document;
+          if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_Document))
+            value = Overflow["document"];
+          else
+            value = _Document;
           return _Document is not null;
         case "resource":
-          value = _Resource;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Resource))
+            value = Overflow["resource"];
+          else
+            value = _Resource;
           return _Resource is not null;
         default:
           return base.TryGetValue(key, out value);

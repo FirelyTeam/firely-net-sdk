@@ -236,10 +236,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "status":
-            value = _StatusElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>>.InOverflow(_StatusElement))
+              value = Overflow["status"];
+            else
+              value = _StatusElement;
             return _StatusElement is not null;
           case "period":
-            value = _Period;
+            if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+              value = Overflow["period"];
+            else
+              value = _Period;
             return _Period is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -430,13 +436,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "condition":
-            value = _Condition;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Condition))
+              value = Overflow["condition"];
+            else
+              value = _Condition;
             return _Condition is not null;
           case "role":
-            value = _Role;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Role))
+              value = Overflow["role"];
+            else
+              value = _Role;
             return _Role is not null;
           case "rank":
-            value = _RankElement;
+            if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_RankElement))
+              value = Overflow["rank"];
+            else
+              value = _RankElement;
             return _RankElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -900,40 +915,76 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "statusHistory":
-          value = _StatusHistory;
+          if (OverflowNull<List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>>.InOverflow(_StatusHistory))
+            value = Overflow["statusHistory"];
+          else
+            value = _StatusHistory;
           return _StatusHistory?.Any() == true;
         case "type":
-          value = _Type;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type?.Any() == true;
         case "diagnosis":
-          value = _Diagnosis;
+          if (OverflowNull<List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent>>.InOverflow(_Diagnosis))
+            value = Overflow["diagnosis"];
+          else
+            value = _Diagnosis;
           return _Diagnosis?.Any() == true;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "managingOrganization":
-          value = _ManagingOrganization;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ManagingOrganization))
+            value = Overflow["managingOrganization"];
+          else
+            value = _ManagingOrganization;
           return _ManagingOrganization is not null;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         case "referralRequest":
-          value = _ReferralRequest;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_ReferralRequest))
+            value = Overflow["referralRequest"];
+          else
+            value = _ReferralRequest;
           return _ReferralRequest?.Any() == true;
         case "careManager":
-          value = _CareManager;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_CareManager))
+            value = Overflow["careManager"];
+          else
+            value = _CareManager;
           return _CareManager is not null;
         case "team":
-          value = _Team;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Team))
+            value = Overflow["team"];
+          else
+            value = _Team;
           return _Team?.Any() == true;
         case "account":
-          value = _Account;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Account))
+            value = Overflow["account"];
+          else
+            value = _Account;
           return _Account?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

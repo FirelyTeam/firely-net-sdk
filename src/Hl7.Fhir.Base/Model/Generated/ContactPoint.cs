@@ -389,19 +389,34 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "system":
-          value = _SystemElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>>.InOverflow(_SystemElement))
+            value = Overflow["system"];
+          else
+            value = _SystemElement;
           return _SystemElement is not null;
         case "value":
-          value = _ValueElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
+            value = Overflow["value"];
+          else
+            value = _ValueElement;
           return _ValueElement is not null;
         case "use":
-          value = _UseElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>>.InOverflow(_UseElement))
+            value = Overflow["use"];
+          else
+            value = _UseElement;
           return _UseElement is not null;
         case "rank":
-          value = _RankElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_RankElement))
+            value = Overflow["rank"];
+          else
+            value = _RankElement;
           return _RankElement is not null;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -160,10 +160,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "ratioType":
-            value = _RatioType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_RatioType))
+              value = Overflow["ratioType"];
+            else
+              value = _RatioType;
             return _RatioType is not null;
           case "startingMaterial":
-            value = _StartingMaterial;
+            if (OverflowNull<List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>>.InOverflow(_StartingMaterial))
+              value = Overflow["startingMaterial"];
+            else
+              value = _StartingMaterial;
             return _StartingMaterial?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -378,16 +384,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "category":
-            value = _Category;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Category))
+              value = Overflow["category"];
+            else
+              value = _Category;
             return _Category is not null;
           case "isDefining":
-            value = _IsDefiningElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_IsDefiningElement))
+              value = Overflow["isDefining"];
+            else
+              value = _IsDefiningElement;
             return _IsDefiningElement is not null;
           case "amount":
-            value = _Amount;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Amount))
+              value = Overflow["amount"];
+            else
+              value = _Amount;
             return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -593,13 +611,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "averageMolecularFormula":
-            value = _AverageMolecularFormulaElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AverageMolecularFormulaElement))
+              value = Overflow["averageMolecularFormula"];
+            else
+              value = _AverageMolecularFormulaElement;
             return _AverageMolecularFormulaElement is not null;
           case "repeatUnitAmountType":
-            value = _RepeatUnitAmountType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_RepeatUnitAmountType))
+              value = Overflow["repeatUnitAmountType"];
+            else
+              value = _RepeatUnitAmountType;
             return _RepeatUnitAmountType is not null;
           case "repeatUnit":
-            value = _RepeatUnit;
+            if (OverflowNull<List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>>.InOverflow(_RepeatUnit))
+              value = Overflow["repeatUnit"];
+            else
+              value = _RepeatUnit;
             return _RepeatUnit?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -868,19 +895,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "unit":
-            value = _UnitElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_UnitElement))
+              value = Overflow["unit"];
+            else
+              value = _UnitElement;
             return _UnitElement is not null;
           case "orientation":
-            value = _Orientation;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Orientation))
+              value = Overflow["orientation"];
+            else
+              value = _Orientation;
             return _Orientation is not null;
           case "amount":
-            value = _AmountElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_AmountElement))
+              value = Overflow["amount"];
+            else
+              value = _AmountElement;
             return _AmountElement is not null;
           case "degreeOfPolymerisation":
-            value = _DegreeOfPolymerisation;
+            if (OverflowNull<List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>>.InOverflow(_DegreeOfPolymerisation))
+              value = Overflow["degreeOfPolymerisation"];
+            else
+              value = _DegreeOfPolymerisation;
             return _DegreeOfPolymerisation?.Any() == true;
           case "structuralRepresentation":
-            value = _StructuralRepresentation;
+            if (OverflowNull<List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>>.InOverflow(_StructuralRepresentation))
+              value = Overflow["structuralRepresentation"];
+            else
+              value = _StructuralRepresentation;
             return _StructuralRepresentation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1152,16 +1194,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "average":
-            value = _AverageElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_AverageElement))
+              value = Overflow["average"];
+            else
+              value = _AverageElement;
             return _AverageElement is not null;
           case "low":
-            value = _LowElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_LowElement))
+              value = Overflow["low"];
+            else
+              value = _LowElement;
             return _LowElement is not null;
           case "high":
-            value = _HighElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_HighElement))
+              value = Overflow["high"];
+            else
+              value = _HighElement;
             return _HighElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1394,16 +1448,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "representation":
-            value = _RepresentationElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_RepresentationElement))
+              value = Overflow["representation"];
+            else
+              value = _RepresentationElement;
             return _RepresentationElement is not null;
           case "format":
-            value = _Format;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Format))
+              value = Overflow["format"];
+            else
+              value = _Format;
             return _Format is not null;
           case "attachment":
-            value = _Attachment;
+            if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_Attachment))
+              value = Overflow["attachment"];
+            else
+              value = _Attachment;
             return _Attachment is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1712,25 +1778,46 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier is not null;
         case "class":
-          value = _Class;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Class))
+            value = Overflow["class"];
+          else
+            value = _Class;
           return _Class is not null;
         case "geometry":
-          value = _Geometry;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Geometry))
+            value = Overflow["geometry"];
+          else
+            value = _Geometry;
           return _Geometry is not null;
         case "copolymerConnectivity":
-          value = _CopolymerConnectivity;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_CopolymerConnectivity))
+            value = Overflow["copolymerConnectivity"];
+          else
+            value = _CopolymerConnectivity;
           return _CopolymerConnectivity?.Any() == true;
         case "modification":
-          value = _ModificationElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ModificationElement))
+            value = Overflow["modification"];
+          else
+            value = _ModificationElement;
           return _ModificationElement is not null;
         case "monomerSet":
-          value = _MonomerSet;
+          if (OverflowNull<List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>>.InOverflow(_MonomerSet))
+            value = Overflow["monomerSet"];
+          else
+            value = _MonomerSet;
           return _MonomerSet?.Any() == true;
         case "repeat":
-          value = _Repeat;
+          if (OverflowNull<List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>>.InOverflow(_Repeat))
+            value = Overflow["repeat"];
+          else
+            value = _Repeat;
           return _Repeat?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

@@ -618,34 +618,64 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "informationType":
-            value = _InformationTypeElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>>.InOverflow(_InformationTypeElement))
+              value = Overflow["informationType"];
+            else
+              value = _InformationTypeElement;
             return _InformationTypeElement is not null;
           case "summary":
-            value = _SummaryElement;
+            if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_SummaryElement))
+              value = Overflow["summary"];
+            else
+              value = _SummaryElement;
             return _SummaryElement is not null;
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "classifier":
-            value = _Classifier;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Classifier))
+              value = Overflow["classifier"];
+            else
+              value = _Classifier;
             return _Classifier?.Any() == true;
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "author":
-            value = _Author;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Author))
+              value = Overflow["author"];
+            else
+              value = _Author;
             return _Author is not null;
           case "path":
-            value = _PathElement;
+            if (OverflowNull<List<Hl7.Fhir.Model.FhirUri>>.InOverflow(_PathElement))
+              value = Overflow["path"];
+            else
+              value = _PathElement;
             return _PathElement?.Any() == true;
           case "relatedArtifact":
-            value = _RelatedArtifact;
+            if (OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.InOverflow(_RelatedArtifact))
+              value = Overflow["relatedArtifact"];
+            else
+              value = _RelatedArtifact;
             return _RelatedArtifact?.Any() == true;
           case "freeToShare":
-            value = _FreeToShareElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_FreeToShareElement))
+              value = Overflow["freeToShare"];
+            else
+              value = _FreeToShareElement;
             return _FreeToShareElement is not null;
           case "component":
-            value = _Component;
+            if (OverflowNull<List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>>.InOverflow(_Component))
+              value = Overflow["component"];
+            else
+              value = _Component;
             return _Component?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1220,37 +1250,70 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "title":
-          value = _TitleElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TitleElement))
+            value = Overflow["title"];
+          else
+            value = _TitleElement;
           return _TitleElement is not null;
         case "citeAs":
-          value = _CiteAs;
+          if (OverflowNull<DynamicDataType>.InOverflow(_CiteAs))
+            value = Overflow["citeAs"];
+          else
+            value = _CiteAs;
           return _CiteAs is not null;
         case "date":
-          value = _DateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+            value = Overflow["date"];
+          else
+            value = _DateElement;
           return _DateElement is not null;
         case "copyright":
-          value = _CopyrightElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_CopyrightElement))
+            value = Overflow["copyright"];
+          else
+            value = _CopyrightElement;
           return _CopyrightElement is not null;
         case "approvalDate":
-          value = _ApprovalDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_ApprovalDateElement))
+            value = Overflow["approvalDate"];
+          else
+            value = _ApprovalDateElement;
           return _ApprovalDateElement is not null;
         case "lastReviewDate":
-          value = _LastReviewDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_LastReviewDateElement))
+            value = Overflow["lastReviewDate"];
+          else
+            value = _LastReviewDateElement;
           return _LastReviewDateElement is not null;
         case "artifact":
-          value = _Artifact;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Artifact))
+            value = Overflow["artifact"];
+          else
+            value = _Artifact;
           return _Artifact is not null;
         case "content":
-          value = _Content;
+          if (OverflowNull<List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>>.InOverflow(_Content))
+            value = Overflow["content"];
+          else
+            value = _Content;
           return _Content?.Any() == true;
         case "workflowStatus":
-          value = _WorkflowStatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>>.InOverflow(_WorkflowStatusElement))
+            value = Overflow["workflowStatus"];
+          else
+            value = _WorkflowStatusElement;
           return _WorkflowStatusElement is not null;
         case "disposition":
-          value = _DispositionElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>>.InOverflow(_DispositionElement))
+            value = Overflow["disposition"];
+          else
+            value = _DispositionElement;
           return _DispositionElement is not null;
         default:
           return base.TryGetValue(key, out value);

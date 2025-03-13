@@ -586,34 +586,64 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "use":
-          value = _UseElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Address.AddressUse>>.InOverflow(_UseElement))
+            value = Overflow["use"];
+          else
+            value = _UseElement;
           return _UseElement is not null;
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Address.AddressType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "text":
-          value = _TextElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+            value = Overflow["text"];
+          else
+            value = _TextElement;
           return _TextElement is not null;
         case "line":
-          value = _LineElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_LineElement))
+            value = Overflow["line"];
+          else
+            value = _LineElement;
           return _LineElement?.Any() == true;
         case "city":
-          value = _CityElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CityElement))
+            value = Overflow["city"];
+          else
+            value = _CityElement;
           return _CityElement is not null;
         case "district":
-          value = _DistrictElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DistrictElement))
+            value = Overflow["district"];
+          else
+            value = _DistrictElement;
           return _DistrictElement is not null;
         case "state":
-          value = _StateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_StateElement))
+            value = Overflow["state"];
+          else
+            value = _StateElement;
           return _StateElement is not null;
         case "postalCode":
-          value = _PostalCodeElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PostalCodeElement))
+            value = Overflow["postalCode"];
+          else
+            value = _PostalCodeElement;
           return _PostalCodeElement is not null;
         case "country":
-          value = _CountryElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CountryElement))
+            value = Overflow["country"];
+          else
+            value = _CountryElement;
           return _CountryElement is not null;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         default:
           return base.TryGetValue(key, out value);

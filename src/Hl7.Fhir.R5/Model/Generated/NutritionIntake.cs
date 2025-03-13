@@ -322,25 +322,46 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "nutritionProduct":
-            value = _NutritionProduct;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_NutritionProduct))
+              value = Overflow["nutritionProduct"];
+            else
+              value = _NutritionProduct;
             return _NutritionProduct is not null;
           case "schedule":
-            value = _Schedule;
+            if (OverflowNull<Hl7.Fhir.Model.Timing>.InOverflow(_Schedule))
+              value = Overflow["schedule"];
+            else
+              value = _Schedule;
             return _Schedule is not null;
           case "amount":
-            value = _Amount;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Amount))
+              value = Overflow["amount"];
+            else
+              value = _Amount;
             return _Amount is not null;
           case "rate":
-            value = _Rate;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Rate))
+              value = Overflow["rate"];
+            else
+              value = _Rate;
             return _Rate is not null;
           case "notConsumed":
-            value = _NotConsumedElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_NotConsumedElement))
+              value = Overflow["notConsumed"];
+            else
+              value = _NotConsumedElement;
             return _NotConsumedElement is not null;
           case "notConsumedReason":
-            value = _NotConsumedReason;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_NotConsumedReason))
+              value = Overflow["notConsumedReason"];
+            else
+              value = _NotConsumedReason;
             return _NotConsumedReason is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -536,10 +557,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "nutrient":
-            value = _Nutrient;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_Nutrient))
+              value = Overflow["nutrient"];
+            else
+              value = _Nutrient;
             return _Nutrient is not null;
           case "amount":
-            value = _Amount;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Amount))
+              value = Overflow["amount"];
+            else
+              value = _Amount;
             return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -690,10 +717,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "function":
-            value = _Function;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Function))
+              value = Overflow["function"];
+            else
+              value = _Function;
             return _Function is not null;
           case "actor":
-            value = _Actor;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Actor))
+              value = Overflow["actor"];
+            else
+              value = _Actor;
             return _Actor is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1432,64 +1465,124 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "instantiatesCanonical":
-          value = _InstantiatesCanonicalElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.Canonical>>.InOverflow(_InstantiatesCanonicalElement))
+            value = Overflow["instantiatesCanonical"];
+          else
+            value = _InstantiatesCanonicalElement;
           return _InstantiatesCanonicalElement?.Any() == true;
         case "instantiatesUri":
-          value = _InstantiatesUriElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirUri>>.InOverflow(_InstantiatesUriElement))
+            value = Overflow["instantiatesUri"];
+          else
+            value = _InstantiatesUriElement;
           return _InstantiatesUriElement?.Any() == true;
         case "basedOn":
-          value = _BasedOn;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_BasedOn))
+            value = Overflow["basedOn"];
+          else
+            value = _BasedOn;
           return _BasedOn?.Any() == true;
         case "partOf":
-          value = _PartOf;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_PartOf))
+            value = Overflow["partOf"];
+          else
+            value = _PartOf;
           return _PartOf?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.EventStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "statusReason":
-          value = _StatusReason;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_StatusReason))
+            value = Overflow["statusReason"];
+          else
+            value = _StatusReason;
           return _StatusReason?.Any() == true;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "occurrence":
-          value = _Occurrence;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Occurrence))
+            value = Overflow["occurrence"];
+          else
+            value = _Occurrence;
           return _Occurrence is not null;
         case "recorded":
-          value = _RecordedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_RecordedElement))
+            value = Overflow["recorded"];
+          else
+            value = _RecordedElement;
           return _RecordedElement is not null;
         case "reported":
-          value = _Reported;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Reported))
+            value = Overflow["reported"];
+          else
+            value = _Reported;
           return _Reported is not null;
         case "consumedItem":
-          value = _ConsumedItem;
+          if (OverflowNull<List<Hl7.Fhir.Model.NutritionIntake.ConsumedItemComponent>>.InOverflow(_ConsumedItem))
+            value = Overflow["consumedItem"];
+          else
+            value = _ConsumedItem;
           return _ConsumedItem?.Any() == true;
         case "ingredientLabel":
-          value = _IngredientLabel;
+          if (OverflowNull<List<Hl7.Fhir.Model.NutritionIntake.IngredientLabelComponent>>.InOverflow(_IngredientLabel))
+            value = Overflow["ingredientLabel"];
+          else
+            value = _IngredientLabel;
           return _IngredientLabel?.Any() == true;
         case "performer":
-          value = _Performer;
+          if (OverflowNull<List<Hl7.Fhir.Model.NutritionIntake.PerformerComponent>>.InOverflow(_Performer))
+            value = Overflow["performer"];
+          else
+            value = _Performer;
           return _Performer?.Any() == true;
         case "location":
-          value = _Location;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Location))
+            value = Overflow["location"];
+          else
+            value = _Location;
           return _Location is not null;
         case "derivedFrom":
-          value = _DerivedFrom;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_DerivedFrom))
+            value = Overflow["derivedFrom"];
+          else
+            value = _DerivedFrom;
           return _DerivedFrom?.Any() == true;
         case "reason":
-          value = _Reason;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_Reason))
+            value = Overflow["reason"];
+          else
+            value = _Reason;
           return _Reason?.Any() == true;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

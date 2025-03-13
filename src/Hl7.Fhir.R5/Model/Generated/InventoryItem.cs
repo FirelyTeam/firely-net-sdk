@@ -260,13 +260,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "nameType":
-            value = _NameType;
+            if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_NameType))
+              value = Overflow["nameType"];
+            else
+              value = _NameType;
             return _NameType is not null;
           case "language":
-            value = _LanguageElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.CommonLanguages>>.InOverflow(_LanguageElement))
+              value = Overflow["language"];
+            else
+              value = _LanguageElement;
             return _LanguageElement is not null;
           case "name":
-            value = _NameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+              value = Overflow["name"];
+            else
+              value = _NameElement;
             return _NameElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -423,10 +432,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "role":
-            value = _Role;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Role))
+              value = Overflow["role"];
+            else
+              value = _Role;
             return _Role is not null;
           case "organization":
-            value = _Organization;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Organization))
+              value = Overflow["organization"];
+            else
+              value = _Organization;
             return _Organization is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -605,10 +620,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "language":
-            value = _LanguageElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.CommonLanguages>>.InOverflow(_LanguageElement))
+              value = Overflow["language"];
+            else
+              value = _LanguageElement;
             return _LanguageElement is not null;
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -785,13 +806,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "associationType":
-            value = _AssociationType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AssociationType))
+              value = Overflow["associationType"];
+            else
+              value = _AssociationType;
             return _AssociationType is not null;
           case "relatedItem":
-            value = _RelatedItem;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_RelatedItem))
+              value = Overflow["relatedItem"];
+            else
+              value = _RelatedItem;
             return _RelatedItem is not null;
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -951,10 +981,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "characteristicType":
-            value = _CharacteristicType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_CharacteristicType))
+              value = Overflow["characteristicType"];
+            else
+              value = _CharacteristicType;
             return _CharacteristicType is not null;
           case "value":
-            value = _Value;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1217,19 +1253,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier?.Any() == true;
           case "lotNumber":
-            value = _LotNumberElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LotNumberElement))
+              value = Overflow["lotNumber"];
+            else
+              value = _LotNumberElement;
             return _LotNumberElement is not null;
           case "expiry":
-            value = _ExpiryElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ExpiryElement))
+              value = Overflow["expiry"];
+            else
+              value = _ExpiryElement;
             return _ExpiryElement is not null;
           case "subject":
-            value = _Subject;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+              value = Overflow["subject"];
+            else
+              value = _Subject;
             return _Subject is not null;
           case "location":
-            value = _Location;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Location))
+              value = Overflow["location"];
+            else
+              value = _Location;
             return _Location is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1753,46 +1804,88 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "category":
-          value = _Category;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Category))
+            value = Overflow["category"];
+          else
+            value = _Category;
           return _Category?.Any() == true;
         case "code":
-          value = _Code;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code?.Any() == true;
         case "name":
-          value = _Name;
+          if (OverflowNull<List<Hl7.Fhir.Model.InventoryItem.NameComponent>>.InOverflow(_Name))
+            value = Overflow["name"];
+          else
+            value = _Name;
           return _Name?.Any() == true;
         case "responsibleOrganization":
-          value = _ResponsibleOrganization;
+          if (OverflowNull<List<Hl7.Fhir.Model.InventoryItem.ResponsibleOrganizationComponent>>.InOverflow(_ResponsibleOrganization))
+            value = Overflow["responsibleOrganization"];
+          else
+            value = _ResponsibleOrganization;
           return _ResponsibleOrganization?.Any() == true;
         case "description":
-          value = _Description;
+          if (OverflowNull<Hl7.Fhir.Model.InventoryItem.DescriptionComponent>.InOverflow(_Description))
+            value = Overflow["description"];
+          else
+            value = _Description;
           return _Description is not null;
         case "inventoryStatus":
-          value = _InventoryStatus;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_InventoryStatus))
+            value = Overflow["inventoryStatus"];
+          else
+            value = _InventoryStatus;
           return _InventoryStatus?.Any() == true;
         case "baseUnit":
-          value = _BaseUnit;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_BaseUnit))
+            value = Overflow["baseUnit"];
+          else
+            value = _BaseUnit;
           return _BaseUnit is not null;
         case "netContent":
-          value = _NetContent;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_NetContent))
+            value = Overflow["netContent"];
+          else
+            value = _NetContent;
           return _NetContent is not null;
         case "association":
-          value = _Association;
+          if (OverflowNull<List<Hl7.Fhir.Model.InventoryItem.AssociationComponent>>.InOverflow(_Association))
+            value = Overflow["association"];
+          else
+            value = _Association;
           return _Association?.Any() == true;
         case "characteristic":
-          value = _Characteristic;
+          if (OverflowNull<List<Hl7.Fhir.Model.InventoryItem.CharacteristicComponent>>.InOverflow(_Characteristic))
+            value = Overflow["characteristic"];
+          else
+            value = _Characteristic;
           return _Characteristic?.Any() == true;
         case "instance":
-          value = _Instance;
+          if (OverflowNull<Hl7.Fhir.Model.InventoryItem.InstanceComponent>.InOverflow(_Instance))
+            value = Overflow["instance"];
+          else
+            value = _Instance;
           return _Instance is not null;
         case "productReference":
-          value = _ProductReference;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ProductReference))
+            value = Overflow["productReference"];
+          else
+            value = _ProductReference;
           return _ProductReference is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -329,19 +329,34 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "timing":
-          value = _Timing;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Timing))
+            value = Overflow["timing"];
+          else
+            value = _Timing;
           return _Timing is not null;
         case "data":
-          value = _Data;
+          if (OverflowNull<List<Hl7.Fhir.Model.DataRequirement>>.InOverflow(_Data))
+            value = Overflow["data"];
+          else
+            value = _Data;
           return _Data?.Any() == true;
         case "condition":
-          value = _Condition;
+          if (OverflowNull<Hl7.Fhir.Model.Expression>.InOverflow(_Condition))
+            value = Overflow["condition"];
+          else
+            value = _Condition;
           return _Condition is not null;
         default:
           return base.TryGetValue(key, out value);

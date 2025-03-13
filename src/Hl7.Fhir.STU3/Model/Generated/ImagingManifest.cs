@@ -244,16 +244,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "uid":
-            value = _UidElement;
+            if (OverflowNull<Hl7.Fhir.Model.Oid>.InOverflow(_UidElement))
+              value = Overflow["uid"];
+            else
+              value = _UidElement;
             return _UidElement is not null;
           case "imagingStudy":
-            value = _ImagingStudy;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ImagingStudy))
+              value = Overflow["imagingStudy"];
+            else
+              value = _ImagingStudy;
             return _ImagingStudy is not null;
           case "endpoint":
-            value = _Endpoint;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Endpoint))
+              value = Overflow["endpoint"];
+            else
+              value = _Endpoint;
             return _Endpoint?.Any() == true;
           case "series":
-            value = _Series;
+            if (OverflowNull<List<Hl7.Fhir.Model.ImagingManifest.SeriesComponent>>.InOverflow(_Series))
+              value = Overflow["series"];
+            else
+              value = _Series;
             return _Series?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -467,13 +479,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "uid":
-            value = _UidElement;
+            if (OverflowNull<Hl7.Fhir.Model.Oid>.InOverflow(_UidElement))
+              value = Overflow["uid"];
+            else
+              value = _UidElement;
             return _UidElement is not null;
           case "endpoint":
-            value = _Endpoint;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Endpoint))
+              value = Overflow["endpoint"];
+            else
+              value = _Endpoint;
             return _Endpoint?.Any() == true;
           case "instance":
-            value = _Instance;
+            if (OverflowNull<List<Hl7.Fhir.Model.ImagingManifest.InstanceComponent>>.InOverflow(_Instance))
+              value = Overflow["instance"];
+            else
+              value = _Instance;
             return _Instance?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -662,10 +683,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "sopClass":
-            value = _SopClassElement;
+            if (OverflowNull<Hl7.Fhir.Model.Oid>.InOverflow(_SopClassElement))
+              value = Overflow["sopClass"];
+            else
+              value = _SopClassElement;
             return _SopClassElement is not null;
           case "uid":
-            value = _UidElement;
+            if (OverflowNull<Hl7.Fhir.Model.Oid>.InOverflow(_UidElement))
+              value = Overflow["uid"];
+            else
+              value = _UidElement;
             return _UidElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -946,22 +973,40 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier is not null;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "authoringTime":
-          value = _AuthoringTimeElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_AuthoringTimeElement))
+            value = Overflow["authoringTime"];
+          else
+            value = _AuthoringTimeElement;
           return _AuthoringTimeElement is not null;
         case "author":
-          value = _Author;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Author))
+            value = Overflow["author"];
+          else
+            value = _Author;
           return _Author is not null;
         case "description":
-          value = _DescriptionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+            value = Overflow["description"];
+          else
+            value = _DescriptionElement;
           return _DescriptionElement is not null;
         case "study":
-          value = _Study;
+          if (OverflowNull<List<Hl7.Fhir.Model.ImagingManifest.StudyComponent>>.InOverflow(_Study))
+            value = Overflow["study"];
+          else
+            value = _Study;
           return _Study?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

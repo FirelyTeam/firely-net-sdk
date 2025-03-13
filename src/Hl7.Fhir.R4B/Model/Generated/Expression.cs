@@ -310,19 +310,34 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "description":
-          value = _DescriptionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+            value = Overflow["description"];
+          else
+            value = _DescriptionElement;
           return _DescriptionElement is not null;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.Id>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "language":
-          value = _LanguageElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_LanguageElement))
+            value = Overflow["language"];
+          else
+            value = _LanguageElement;
           return _LanguageElement is not null;
         case "expression":
-          value = _ExpressionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ExpressionElement))
+            value = Overflow["expression"];
+          else
+            value = _ExpressionElement;
           return _ExpressionElement is not null;
         case "reference":
-          value = _ReferenceElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_ReferenceElement))
+            value = Overflow["reference"];
+          else
+            value = _ReferenceElement;
           return _ReferenceElement is not null;
         default:
           return base.TryGetValue(key, out value);

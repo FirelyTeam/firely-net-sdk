@@ -258,19 +258,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "structure":
-            value = _Structure;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Structure))
+              value = Overflow["structure"];
+            else
+              value = _Structure;
             return _Structure is not null;
           case "laterality":
-            value = _Laterality;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Laterality))
+              value = Overflow["laterality"];
+            else
+              value = _Laterality;
             return _Laterality is not null;
           case "bodyLandmarkOrientation":
-            value = _BodyLandmarkOrientation;
+            if (OverflowNull<List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>>.InOverflow(_BodyLandmarkOrientation))
+              value = Overflow["bodyLandmarkOrientation"];
+            else
+              value = _BodyLandmarkOrientation;
             return _BodyLandmarkOrientation?.Any() == true;
           case "spatialReference":
-            value = _SpatialReference;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_SpatialReference))
+              value = Overflow["spatialReference"];
+            else
+              value = _SpatialReference;
             return _SpatialReference?.Any() == true;
           case "qualifier":
-            value = _Qualifier;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Qualifier))
+              value = Overflow["qualifier"];
+            else
+              value = _Qualifier;
             return _Qualifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -507,16 +522,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "landmarkDescription":
-            value = _LandmarkDescription;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_LandmarkDescription))
+              value = Overflow["landmarkDescription"];
+            else
+              value = _LandmarkDescription;
             return _LandmarkDescription?.Any() == true;
           case "clockFacePosition":
-            value = _ClockFacePosition;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ClockFacePosition))
+              value = Overflow["clockFacePosition"];
+            else
+              value = _ClockFacePosition;
             return _ClockFacePosition?.Any() == true;
           case "distanceFromLandmark":
-            value = _DistanceFromLandmark;
+            if (OverflowNull<List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>>.InOverflow(_DistanceFromLandmark))
+              value = Overflow["distanceFromLandmark"];
+            else
+              value = _DistanceFromLandmark;
             return _DistanceFromLandmark?.Any() == true;
           case "surfaceOrientation":
-            value = _SurfaceOrientation;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_SurfaceOrientation))
+              value = Overflow["surfaceOrientation"];
+            else
+              value = _SurfaceOrientation;
             return _SurfaceOrientation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -684,10 +711,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "device":
-            value = _Device;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_Device))
+              value = Overflow["device"];
+            else
+              value = _Device;
             return _Device?.Any() == true;
           case "value":
-            value = _Value;
+            if (OverflowNull<List<Hl7.Fhir.Model.Quantity>>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1026,28 +1059,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "active":
-          value = _ActiveElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+            value = Overflow["active"];
+          else
+            value = _ActiveElement;
           return _ActiveElement is not null;
         case "morphology":
-          value = _Morphology;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Morphology))
+            value = Overflow["morphology"];
+          else
+            value = _Morphology;
           return _Morphology is not null;
         case "includedStructure":
-          value = _IncludedStructure;
+          if (OverflowNull<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>.InOverflow(_IncludedStructure))
+            value = Overflow["includedStructure"];
+          else
+            value = _IncludedStructure;
           return _IncludedStructure?.Any() == true;
         case "excludedStructure":
-          value = _ExcludedStructure;
+          if (OverflowNull<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>.InOverflow(_ExcludedStructure))
+            value = Overflow["excludedStructure"];
+          else
+            value = _ExcludedStructure;
           return _ExcludedStructure?.Any() == true;
         case "description":
-          value = _DescriptionElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_DescriptionElement))
+            value = Overflow["description"];
+          else
+            value = _DescriptionElement;
           return _DescriptionElement is not null;
         case "image":
-          value = _Image;
+          if (OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Image))
+            value = Overflow["image"];
+          else
+            value = _Image;
           return _Image?.Any() == true;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         default:
           return base.TryGetValue(key, out value);

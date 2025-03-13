@@ -352,22 +352,40 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "use":
-          value = _UseElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Identifier.IdentifierUse>>.InOverflow(_UseElement))
+            value = Overflow["use"];
+          else
+            value = _UseElement;
           return _UseElement is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "system":
-          value = _SystemElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_SystemElement))
+            value = Overflow["system"];
+          else
+            value = _SystemElement;
           return _SystemElement is not null;
         case "value":
-          value = _ValueElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ValueElement))
+            value = Overflow["value"];
+          else
+            value = _ValueElement;
           return _ValueElement is not null;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         case "assigner":
-          value = _Assigner;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Assigner))
+            value = Overflow["assigner"];
+          else
+            value = _Assigner;
           return _Assigner is not null;
         default:
           return base.TryGetValue(key, out value);

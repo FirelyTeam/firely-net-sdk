@@ -362,16 +362,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _TypeElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>>.InOverflow(_TypeElement))
+              value = Overflow["type"];
+            else
+              value = _TypeElement;
             return _TypeElement is not null;
           case "endpoint":
-            value = _EndpointElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_EndpointElement))
+              value = Overflow["endpoint"];
+            else
+              value = _EndpointElement;
             return _EndpointElement is not null;
           case "payload":
-            value = _PayloadElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PayloadElement))
+              value = Overflow["payload"];
+            else
+              value = _PayloadElement;
             return _PayloadElement is not null;
           case "header":
-            value = _HeaderElement;
+            if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_HeaderElement))
+              value = Overflow["header"];
+            else
+              value = _HeaderElement;
             return _HeaderElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -772,28 +784,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "contact":
-          value = _Contact;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Contact))
+            value = Overflow["contact"];
+          else
+            value = _Contact;
           return _Contact?.Any() == true;
         case "end":
-          value = _EndElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_EndElement))
+            value = Overflow["end"];
+          else
+            value = _EndElement;
           return _EndElement is not null;
         case "reason":
-          value = _ReasonElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReasonElement))
+            value = Overflow["reason"];
+          else
+            value = _ReasonElement;
           return _ReasonElement is not null;
         case "criteria":
-          value = _CriteriaElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CriteriaElement))
+            value = Overflow["criteria"];
+          else
+            value = _CriteriaElement;
           return _CriteriaElement is not null;
         case "error":
-          value = _ErrorElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ErrorElement))
+            value = Overflow["error"];
+          else
+            value = _ErrorElement;
           return _ErrorElement is not null;
         case "channel":
-          value = _Channel;
+          if (OverflowNull<Hl7.Fhir.Model.Subscription.ChannelComponent>.InOverflow(_Channel))
+            value = Overflow["channel"];
+          else
+            value = _Channel;
           return _Channel is not null;
         case "tag":
-          value = _Tag;
+          if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Tag))
+            value = Overflow["tag"];
+          else
+            value = _Tag;
           return _Tag?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

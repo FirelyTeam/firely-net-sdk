@@ -400,25 +400,46 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "use":
-          value = _UseElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.OperationParameterUse>>.InOverflow(_UseElement))
+            value = Overflow["use"];
+          else
+            value = _UseElement;
           return _UseElement is not null;
         case "min":
-          value = _MinElement;
+          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_MinElement))
+            value = Overflow["min"];
+          else
+            value = _MinElement;
           return _MinElement is not null;
         case "max":
-          value = _MaxElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MaxElement))
+            value = Overflow["max"];
+          else
+            value = _MaxElement;
           return _MaxElement is not null;
         case "documentation":
-          value = _DocumentationElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DocumentationElement))
+            value = Overflow["documentation"];
+          else
+            value = _DocumentationElement;
           return _DocumentationElement is not null;
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.FHIRAllTypes>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "profile":
-          value = _ProfileElement;
+          if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_ProfileElement))
+            value = Overflow["profile"];
+          else
+            value = _ProfileElement;
           return _ProfileElement is not null;
         default:
           return base.TryGetValue(key, out value);

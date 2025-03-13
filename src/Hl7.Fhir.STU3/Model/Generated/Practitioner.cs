@@ -224,16 +224,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier?.Any() == true;
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "period":
-            value = _Period;
+            if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+              value = Overflow["period"];
+            else
+              value = _Period;
             return _Period is not null;
           case "issuer":
-            value = _Issuer;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Issuer))
+              value = Overflow["issuer"];
+            else
+              value = _Issuer;
             return _Issuer is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -663,34 +675,64 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "active":
-          value = _ActiveElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+            value = Overflow["active"];
+          else
+            value = _ActiveElement;
           return _ActiveElement is not null;
         case "name":
-          value = _Name;
+          if (OverflowNull<List<Hl7.Fhir.Model.HumanName>>.InOverflow(_Name))
+            value = Overflow["name"];
+          else
+            value = _Name;
           return _Name?.Any() == true;
         case "telecom":
-          value = _Telecom;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Telecom))
+            value = Overflow["telecom"];
+          else
+            value = _Telecom;
           return _Telecom?.Any() == true;
         case "address":
-          value = _Address;
+          if (OverflowNull<List<Hl7.Fhir.Model.Address>>.InOverflow(_Address))
+            value = Overflow["address"];
+          else
+            value = _Address;
           return _Address?.Any() == true;
         case "gender":
-          value = _GenderElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.AdministrativeGender>>.InOverflow(_GenderElement))
+            value = Overflow["gender"];
+          else
+            value = _GenderElement;
           return _GenderElement is not null;
         case "birthDate":
-          value = _BirthDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_BirthDateElement))
+            value = Overflow["birthDate"];
+          else
+            value = _BirthDateElement;
           return _BirthDateElement is not null;
         case "photo":
-          value = _Photo;
+          if (OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Photo))
+            value = Overflow["photo"];
+          else
+            value = _Photo;
           return _Photo?.Any() == true;
         case "qualification":
-          value = _Qualification;
+          if (OverflowNull<List<Hl7.Fhir.Model.Practitioner.QualificationComponent>>.InOverflow(_Qualification))
+            value = Overflow["qualification"];
+          else
+            value = _Qualification;
           return _Qualification?.Any() == true;
         case "communication":
-          value = _Communication;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Communication))
+            value = Overflow["communication"];
+          else
+            value = _Communication;
           return _Communication?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

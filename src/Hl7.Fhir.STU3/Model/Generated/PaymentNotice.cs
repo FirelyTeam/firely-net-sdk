@@ -434,34 +434,64 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "request":
-          value = _Request;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Request))
+            value = Overflow["request"];
+          else
+            value = _Request;
           return _Request is not null;
         case "response":
-          value = _Response;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Response))
+            value = Overflow["response"];
+          else
+            value = _Response;
           return _Response is not null;
         case "statusDate":
-          value = _StatusDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_StatusDateElement))
+            value = Overflow["statusDate"];
+          else
+            value = _StatusDateElement;
           return _StatusDateElement is not null;
         case "created":
-          value = _CreatedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CreatedElement))
+            value = Overflow["created"];
+          else
+            value = _CreatedElement;
           return _CreatedElement is not null;
         case "target":
-          value = _Target;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Target))
+            value = Overflow["target"];
+          else
+            value = _Target;
           return _Target is not null;
         case "provider":
-          value = _Provider;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Provider))
+            value = Overflow["provider"];
+          else
+            value = _Provider;
           return _Provider is not null;
         case "organization":
-          value = _Organization;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Organization))
+            value = Overflow["organization"];
+          else
+            value = _Organization;
           return _Organization is not null;
         case "paymentStatus":
-          value = _PaymentStatus;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PaymentStatus))
+            value = Overflow["paymentStatus"];
+          else
+            value = _PaymentStatus;
           return _PaymentStatus is not null;
         default:
           return base.TryGetValue(key, out value);

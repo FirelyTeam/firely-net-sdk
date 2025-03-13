@@ -204,10 +204,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "when":
-            value = _When;
+            if (OverflowNull<DynamicDataType>.InOverflow(_When))
+              value = Overflow["when"];
+            else
+              value = _When;
             return _When is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -417,13 +423,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "sequence":
-            value = _SequenceElement;
+            if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_SequenceElement))
+              value = Overflow["sequence"];
+            else
+              value = _SequenceElement;
             return _SequenceElement is not null;
           case "information":
-            value = _Information;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Information))
+              value = Overflow["information"];
+            else
+              value = _Information;
             return _Information is not null;
           case "appliesToAll":
-            value = _AppliesToAllElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AppliesToAllElement))
+              value = Overflow["appliesToAll"];
+            else
+              value = _AppliesToAllElement;
             return _AppliesToAllElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -641,13 +656,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "focal":
-            value = _FocalElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_FocalElement))
+              value = Overflow["focal"];
+            else
+              value = _FocalElement;
             return _FocalElement is not null;
           case "coverage":
-            value = _Coverage;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Coverage))
+              value = Overflow["coverage"];
+            else
+              value = _Coverage;
             return _Coverage is not null;
           case "businessArrangement":
-            value = _BusinessArrangementElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_BusinessArrangementElement))
+              value = Overflow["businessArrangement"];
+            else
+              value = _BusinessArrangementElement;
             return _BusinessArrangementElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1058,34 +1082,64 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "supportingInfoSequence":
-            value = _SupportingInfoSequenceElement;
+            if (OverflowNull<List<Hl7.Fhir.Model.PositiveInt>>.InOverflow(_SupportingInfoSequenceElement))
+              value = Overflow["supportingInfoSequence"];
+            else
+              value = _SupportingInfoSequenceElement;
             return _SupportingInfoSequenceElement?.Any() == true;
           case "category":
-            value = _Category;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Category))
+              value = Overflow["category"];
+            else
+              value = _Category;
             return _Category is not null;
           case "productOrService":
-            value = _ProductOrService;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ProductOrService))
+              value = Overflow["productOrService"];
+            else
+              value = _ProductOrService;
             return _ProductOrService is not null;
           case "modifier":
-            value = _Modifier;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Modifier))
+              value = Overflow["modifier"];
+            else
+              value = _Modifier;
             return _Modifier?.Any() == true;
           case "provider":
-            value = _Provider;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Provider))
+              value = Overflow["provider"];
+            else
+              value = _Provider;
             return _Provider is not null;
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "unitPrice":
-            value = _UnitPrice;
+            if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_UnitPrice))
+              value = Overflow["unitPrice"];
+            else
+              value = _UnitPrice;
             return _UnitPrice is not null;
           case "facility":
-            value = _Facility;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Facility))
+              value = Overflow["facility"];
+            else
+              value = _Facility;
             return _Facility is not null;
           case "diagnosis":
-            value = _Diagnosis;
+            if (OverflowNull<List<Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent>>.InOverflow(_Diagnosis))
+              value = Overflow["diagnosis"];
+            else
+              value = _Diagnosis;
             return _Diagnosis?.Any() == true;
           case "detail":
-            value = _Detail;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Detail))
+              value = Overflow["detail"];
+            else
+              value = _Detail;
             return _Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1280,7 +1334,10 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "diagnosis":
-            value = _Diagnosis;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Diagnosis))
+              value = Overflow["diagnosis"];
+            else
+              value = _Diagnosis;
             return _Diagnosis is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1843,49 +1900,94 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "priority":
-          value = _Priority;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Priority))
+            value = Overflow["priority"];
+          else
+            value = _Priority;
           return _Priority is not null;
         case "purpose":
-          value = _PurposeElement;
+          if (OverflowNull<List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>>>.InOverflow(_PurposeElement))
+            value = Overflow["purpose"];
+          else
+            value = _PurposeElement;
           return _PurposeElement?.Any() == true;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "event":
-          value = _Event;
+          if (OverflowNull<List<Hl7.Fhir.Model.CoverageEligibilityRequest.EventComponent>>.InOverflow(_Event))
+            value = Overflow["event"];
+          else
+            value = _Event;
           return _Event?.Any() == true;
         case "serviced":
-          value = _Serviced;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Serviced))
+            value = Overflow["serviced"];
+          else
+            value = _Serviced;
           return _Serviced is not null;
         case "created":
-          value = _CreatedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CreatedElement))
+            value = Overflow["created"];
+          else
+            value = _CreatedElement;
           return _CreatedElement is not null;
         case "enterer":
-          value = _Enterer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Enterer))
+            value = Overflow["enterer"];
+          else
+            value = _Enterer;
           return _Enterer is not null;
         case "provider":
-          value = _Provider;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Provider))
+            value = Overflow["provider"];
+          else
+            value = _Provider;
           return _Provider is not null;
         case "insurer":
-          value = _Insurer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Insurer))
+            value = Overflow["insurer"];
+          else
+            value = _Insurer;
           return _Insurer is not null;
         case "facility":
-          value = _Facility;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Facility))
+            value = Overflow["facility"];
+          else
+            value = _Facility;
           return _Facility is not null;
         case "supportingInfo":
-          value = _SupportingInfo;
+          if (OverflowNull<List<Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent>>.InOverflow(_SupportingInfo))
+            value = Overflow["supportingInfo"];
+          else
+            value = _SupportingInfo;
           return _SupportingInfo?.Any() == true;
         case "insurance":
-          value = _Insurance;
+          if (OverflowNull<List<Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent>>.InOverflow(_Insurance))
+            value = Overflow["insurance"];
+          else
+            value = _Insurance;
           return _Insurance?.Any() == true;
         case "item":
-          value = _Item;
+          if (OverflowNull<List<Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent>>.InOverflow(_Item))
+            value = Overflow["item"];
+          else
+            value = _Item;
           return _Item?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

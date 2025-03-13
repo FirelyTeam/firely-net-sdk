@@ -110,7 +110,10 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "modifierExtension":
-          value = _ModifierExtension;
+          if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_ModifierExtension))
+            value = Overflow["modifierExtension"];
+          else
+            value = _ModifierExtension;
           return _ModifierExtension?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

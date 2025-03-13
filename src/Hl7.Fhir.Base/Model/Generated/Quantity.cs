@@ -351,19 +351,34 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "value":
-          value = _ValueElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ValueElement))
+            value = Overflow["value"];
+          else
+            value = _ValueElement;
           return _ValueElement is not null;
         case "comparator":
-          value = _ComparatorElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Quantity.QuantityComparator>>.InOverflow(_ComparatorElement))
+            value = Overflow["comparator"];
+          else
+            value = _ComparatorElement;
           return _ComparatorElement is not null;
         case "unit":
-          value = _UnitElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_UnitElement))
+            value = Overflow["unit"];
+          else
+            value = _UnitElement;
           return _UnitElement is not null;
         case "system":
-          value = _SystemElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_SystemElement))
+            value = Overflow["system"];
+          else
+            value = _SystemElement;
           return _SystemElement is not null;
         case "code":
-          value = _CodeElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+            value = Overflow["code"];
+          else
+            value = _CodeElement;
           return _CodeElement is not null;
         default:
           return base.TryGetValue(key, out value);

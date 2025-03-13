@@ -242,13 +242,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "item":
-            value = _Item;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item is not null;
           case "isActive":
-            value = _IsActiveElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_IsActiveElement))
+              value = Overflow["isActive"];
+            else
+              value = _IsActiveElement;
             return _IsActiveElement is not null;
           case "strength":
-            value = _Strength;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Strength))
+              value = Overflow["strength"];
+            else
+              value = _Strength;
             return _Strength is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -434,10 +443,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "lotNumber":
-            value = _LotNumberElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LotNumberElement))
+              value = Overflow["lotNumber"];
+            else
+              value = _LotNumberElement;
             return _LotNumberElement is not null;
           case "expirationDate":
-            value = _ExpirationDateElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ExpirationDateElement))
+              value = Overflow["expirationDate"];
+            else
+              value = _ExpirationDateElement;
             return _ExpirationDateElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -791,31 +806,58 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Medication.MedicationStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "marketingAuthorizationHolder":
-          value = _MarketingAuthorizationHolder;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_MarketingAuthorizationHolder))
+            value = Overflow["marketingAuthorizationHolder"];
+          else
+            value = _MarketingAuthorizationHolder;
           return _MarketingAuthorizationHolder is not null;
         case "doseForm":
-          value = _DoseForm;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DoseForm))
+            value = Overflow["doseForm"];
+          else
+            value = _DoseForm;
           return _DoseForm is not null;
         case "totalVolume":
-          value = _TotalVolume;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_TotalVolume))
+            value = Overflow["totalVolume"];
+          else
+            value = _TotalVolume;
           return _TotalVolume is not null;
         case "ingredient":
-          value = _Ingredient;
+          if (OverflowNull<List<Hl7.Fhir.Model.Medication.IngredientComponent>>.InOverflow(_Ingredient))
+            value = Overflow["ingredient"];
+          else
+            value = _Ingredient;
           return _Ingredient?.Any() == true;
         case "batch":
-          value = _Batch;
+          if (OverflowNull<Hl7.Fhir.Model.Medication.BatchComponent>.InOverflow(_Batch))
+            value = Overflow["batch"];
+          else
+            value = _Batch;
           return _Batch is not null;
         case "definition":
-          value = _Definition;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Definition))
+            value = Overflow["definition"];
+          else
+            value = _Definition;
           return _Definition is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -291,19 +291,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "diseaseSymptomProcedure":
-            value = _DiseaseSymptomProcedure;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_DiseaseSymptomProcedure))
+              value = Overflow["diseaseSymptomProcedure"];
+            else
+              value = _DiseaseSymptomProcedure;
             return _DiseaseSymptomProcedure is not null;
           case "diseaseStatus":
-            value = _DiseaseStatus;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_DiseaseStatus))
+              value = Overflow["diseaseStatus"];
+            else
+              value = _DiseaseStatus;
             return _DiseaseStatus is not null;
           case "comorbidity":
-            value = _Comorbidity;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_Comorbidity))
+              value = Overflow["comorbidity"];
+            else
+              value = _Comorbidity;
             return _Comorbidity?.Any() == true;
           case "indication":
-            value = _Indication;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Indication))
+              value = Overflow["indication"];
+            else
+              value = _Indication;
             return _Indication?.Any() == true;
           case "otherTherapy":
-            value = _OtherTherapy;
+            if (OverflowNull<List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>>.InOverflow(_OtherTherapy))
+              value = Overflow["otherTherapy"];
+            else
+              value = _OtherTherapy;
             return _OtherTherapy?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -481,10 +496,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "relationshipType":
-            value = _RelationshipType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_RelationshipType))
+              value = Overflow["relationshipType"];
+            else
+              value = _RelationshipType;
             return _RelationshipType is not null;
           case "therapy":
-            value = _Therapy;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_Therapy))
+              value = Overflow["therapy"];
+            else
+              value = _Therapy;
             return _Therapy is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -779,25 +800,46 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "diseaseSymptomProcedure":
-            value = _DiseaseSymptomProcedure;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_DiseaseSymptomProcedure))
+              value = Overflow["diseaseSymptomProcedure"];
+            else
+              value = _DiseaseSymptomProcedure;
             return _DiseaseSymptomProcedure is not null;
           case "diseaseStatus":
-            value = _DiseaseStatus;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_DiseaseStatus))
+              value = Overflow["diseaseStatus"];
+            else
+              value = _DiseaseStatus;
             return _DiseaseStatus is not null;
           case "comorbidity":
-            value = _Comorbidity;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_Comorbidity))
+              value = Overflow["comorbidity"];
+            else
+              value = _Comorbidity;
             return _Comorbidity?.Any() == true;
           case "intendedEffect":
-            value = _IntendedEffect;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_IntendedEffect))
+              value = Overflow["intendedEffect"];
+            else
+              value = _IntendedEffect;
             return _IntendedEffect is not null;
           case "duration":
-            value = _Duration;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Duration))
+              value = Overflow["duration"];
+            else
+              value = _Duration;
             return _Duration is not null;
           case "undesirableEffect":
-            value = _UndesirableEffect;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_UndesirableEffect))
+              value = Overflow["undesirableEffect"];
+            else
+              value = _UndesirableEffect;
             return _UndesirableEffect?.Any() == true;
           case "otherTherapy":
-            value = _OtherTherapy;
+            if (OverflowNull<List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>>.InOverflow(_OtherTherapy))
+              value = Overflow["otherTherapy"];
+            else
+              value = _OtherTherapy;
             return _OtherTherapy?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1076,19 +1118,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "interactant":
-            value = _Interactant;
+            if (OverflowNull<List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent>>.InOverflow(_Interactant))
+              value = Overflow["interactant"];
+            else
+              value = _Interactant;
             return _Interactant?.Any() == true;
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "effect":
-            value = _Effect;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_Effect))
+              value = Overflow["effect"];
+            else
+              value = _Effect;
             return _Effect is not null;
           case "incidence":
-            value = _Incidence;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Incidence))
+              value = Overflow["incidence"];
+            else
+              value = _Incidence;
             return _Incidence is not null;
           case "management":
-            value = _Management;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Management))
+              value = Overflow["management"];
+            else
+              value = _Management;
             return _Management?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1236,7 +1293,10 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "item":
-            value = _Item;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1405,13 +1465,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "symptomConditionEffect":
-            value = _SymptomConditionEffect;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_SymptomConditionEffect))
+              value = Overflow["symptomConditionEffect"];
+            else
+              value = _SymptomConditionEffect;
             return _SymptomConditionEffect is not null;
           case "classification":
-            value = _Classification;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Classification))
+              value = Overflow["classification"];
+            else
+              value = _Classification;
             return _Classification is not null;
           case "frequencyOfOccurrence":
-            value = _FrequencyOfOccurrence;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FrequencyOfOccurrence))
+              value = Overflow["frequencyOfOccurrence"];
+            else
+              value = _FrequencyOfOccurrence;
             return _FrequencyOfOccurrence is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1583,10 +1652,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1999,37 +2074,70 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "category":
-          value = _Category;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Category))
+            value = Overflow["category"];
+          else
+            value = _Category;
           return _Category?.Any() == true;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject?.Any() == true;
         case "status":
-          value = _Status;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Status))
+            value = Overflow["status"];
+          else
+            value = _Status;
           return _Status is not null;
         case "contraindication":
-          value = _Contraindication;
+          if (OverflowNull<Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent>.InOverflow(_Contraindication))
+            value = Overflow["contraindication"];
+          else
+            value = _Contraindication;
           return _Contraindication is not null;
         case "indication":
-          value = _Indication;
+          if (OverflowNull<Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent>.InOverflow(_Indication))
+            value = Overflow["indication"];
+          else
+            value = _Indication;
           return _Indication is not null;
         case "interaction":
-          value = _Interaction;
+          if (OverflowNull<Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent>.InOverflow(_Interaction))
+            value = Overflow["interaction"];
+          else
+            value = _Interaction;
           return _Interaction is not null;
         case "population":
-          value = _Population;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Population))
+            value = Overflow["population"];
+          else
+            value = _Population;
           return _Population?.Any() == true;
         case "undesirableEffect":
-          value = _UndesirableEffect;
+          if (OverflowNull<Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent>.InOverflow(_UndesirableEffect))
+            value = Overflow["undesirableEffect"];
+          else
+            value = _UndesirableEffect;
           return _UndesirableEffect is not null;
         case "warning":
-          value = _Warning;
+          if (OverflowNull<Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent>.InOverflow(_Warning))
+            value = Overflow["warning"];
+          else
+            value = _Warning;
           return _Warning is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -191,10 +191,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "role":
-            value = _Role;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Role))
+              value = Overflow["role"];
+            else
+              value = _Role;
             return _Role is not null;
           case "actor":
-            value = _Actor;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Actor))
+              value = Overflow["actor"];
+            else
+              value = _Actor;
             return _Actor is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -345,10 +351,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "reason":
-            value = _Reason;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Reason))
+              value = Overflow["reason"];
+            else
+              value = _Reason;
             return _Reason?.Any() == true;
           case "reasonNotGiven":
-            value = _ReasonNotGiven;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ReasonNotGiven))
+              value = Overflow["reasonNotGiven"];
+            else
+              value = _ReasonNotGiven;
             return _ReasonNotGiven?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -556,13 +568,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "date":
-            value = _DateElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+              value = Overflow["date"];
+            else
+              value = _DateElement;
             return _DateElement is not null;
           case "detail":
-            value = _Detail;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Detail))
+              value = Overflow["detail"];
+            else
+              value = _Detail;
             return _Detail is not null;
           case "reported":
-            value = _ReportedElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ReportedElement))
+              value = Overflow["reported"];
+            else
+              value = _ReportedElement;
             return _ReportedElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -953,28 +974,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "doseSequence":
-            value = _DoseSequenceElement;
+            if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_DoseSequenceElement))
+              value = Overflow["doseSequence"];
+            else
+              value = _DoseSequenceElement;
             return _DoseSequenceElement is not null;
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "authority":
-            value = _Authority;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Authority))
+              value = Overflow["authority"];
+            else
+              value = _Authority;
             return _Authority is not null;
           case "series":
-            value = _SeriesElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SeriesElement))
+              value = Overflow["series"];
+            else
+              value = _SeriesElement;
             return _SeriesElement is not null;
           case "seriesDoses":
-            value = _SeriesDosesElement;
+            if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_SeriesDosesElement))
+              value = Overflow["seriesDoses"];
+            else
+              value = _SeriesDosesElement;
             return _SeriesDosesElement is not null;
           case "targetDisease":
-            value = _TargetDisease;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_TargetDisease))
+              value = Overflow["targetDisease"];
+            else
+              value = _TargetDisease;
             return _TargetDisease?.Any() == true;
           case "doseStatus":
-            value = _DoseStatus;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DoseStatus))
+              value = Overflow["doseStatus"];
+            else
+              value = _DoseStatus;
             return _DoseStatus is not null;
           case "doseStatusReason":
-            value = _DoseStatusReason;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DoseStatusReason))
+              value = Overflow["doseStatusReason"];
+            else
+              value = _DoseStatusReason;
             return _DoseStatusReason is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1807,67 +1852,130 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "notGiven":
-          value = _NotGivenElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_NotGivenElement))
+            value = Overflow["notGiven"];
+          else
+            value = _NotGivenElement;
           return _NotGivenElement is not null;
         case "vaccineCode":
-          value = _VaccineCode;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_VaccineCode))
+            value = Overflow["vaccineCode"];
+          else
+            value = _VaccineCode;
           return _VaccineCode is not null;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "date":
-          value = _DateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+            value = Overflow["date"];
+          else
+            value = _DateElement;
           return _DateElement is not null;
         case "primarySource":
-          value = _PrimarySourceElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_PrimarySourceElement))
+            value = Overflow["primarySource"];
+          else
+            value = _PrimarySourceElement;
           return _PrimarySourceElement is not null;
         case "reportOrigin":
-          value = _ReportOrigin;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ReportOrigin))
+            value = Overflow["reportOrigin"];
+          else
+            value = _ReportOrigin;
           return _ReportOrigin is not null;
         case "location":
-          value = _Location;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Location))
+            value = Overflow["location"];
+          else
+            value = _Location;
           return _Location is not null;
         case "manufacturer":
-          value = _Manufacturer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Manufacturer))
+            value = Overflow["manufacturer"];
+          else
+            value = _Manufacturer;
           return _Manufacturer is not null;
         case "lotNumber":
-          value = _LotNumberElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LotNumberElement))
+            value = Overflow["lotNumber"];
+          else
+            value = _LotNumberElement;
           return _LotNumberElement is not null;
         case "expirationDate":
-          value = _ExpirationDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_ExpirationDateElement))
+            value = Overflow["expirationDate"];
+          else
+            value = _ExpirationDateElement;
           return _ExpirationDateElement is not null;
         case "site":
-          value = _Site;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Site))
+            value = Overflow["site"];
+          else
+            value = _Site;
           return _Site is not null;
         case "route":
-          value = _Route;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Route))
+            value = Overflow["route"];
+          else
+            value = _Route;
           return _Route is not null;
         case "doseQuantity":
-          value = _DoseQuantity;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_DoseQuantity))
+            value = Overflow["doseQuantity"];
+          else
+            value = _DoseQuantity;
           return _DoseQuantity is not null;
         case "practitioner":
-          value = _Practitioner;
+          if (OverflowNull<List<Hl7.Fhir.Model.Immunization.PractitionerComponent>>.InOverflow(_Practitioner))
+            value = Overflow["practitioner"];
+          else
+            value = _Practitioner;
           return _Practitioner?.Any() == true;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         case "explanation":
-          value = _Explanation;
+          if (OverflowNull<Hl7.Fhir.Model.Immunization.ExplanationComponent>.InOverflow(_Explanation))
+            value = Overflow["explanation"];
+          else
+            value = _Explanation;
           return _Explanation is not null;
         case "reaction":
-          value = _Reaction;
+          if (OverflowNull<List<Hl7.Fhir.Model.Immunization.ReactionComponent>>.InOverflow(_Reaction))
+            value = Overflow["reaction"];
+          else
+            value = _Reaction;
           return _Reaction?.Any() == true;
         case "vaccinationProtocol":
-          value = _VaccinationProtocol;
+          if (OverflowNull<List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>>.InOverflow(_VaccinationProtocol))
+            value = Overflow["vaccinationProtocol"];
+          else
+            value = _VaccinationProtocol;
           return _VaccinationProtocol?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

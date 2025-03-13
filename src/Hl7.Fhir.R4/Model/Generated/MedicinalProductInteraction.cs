@@ -138,7 +138,10 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "item":
-            value = _Item;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -419,25 +422,46 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "subject":
-          value = _Subject;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject?.Any() == true;
         case "description":
-          value = _DescriptionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+            value = Overflow["description"];
+          else
+            value = _DescriptionElement;
           return _DescriptionElement is not null;
         case "interactant":
-          value = _Interactant;
+          if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>>.InOverflow(_Interactant))
+            value = Overflow["interactant"];
+          else
+            value = _Interactant;
           return _Interactant?.Any() == true;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "effect":
-          value = _Effect;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Effect))
+            value = Overflow["effect"];
+          else
+            value = _Effect;
           return _Effect is not null;
         case "incidence":
-          value = _Incidence;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Incidence))
+            value = Overflow["incidence"];
+          else
+            value = _Incidence;
           return _Incidence is not null;
         case "management":
-          value = _Management;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Management))
+            value = Overflow["management"];
+          else
+            value = _Management;
           return _Management is not null;
         default:
           return base.TryGetValue(key, out value);

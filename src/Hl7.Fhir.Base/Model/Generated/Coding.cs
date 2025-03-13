@@ -308,19 +308,34 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "system":
-          value = _SystemElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_SystemElement))
+            value = Overflow["system"];
+          else
+            value = _SystemElement;
           return _SystemElement is not null;
         case "version":
-          value = _VersionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_VersionElement))
+            value = Overflow["version"];
+          else
+            value = _VersionElement;
           return _VersionElement is not null;
         case "code":
-          value = _CodeElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_CodeElement))
+            value = Overflow["code"];
+          else
+            value = _CodeElement;
           return _CodeElement is not null;
         case "display":
-          value = _DisplayElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DisplayElement))
+            value = Overflow["display"];
+          else
+            value = _DisplayElement;
           return _DisplayElement is not null;
         case "userSelected":
-          value = _UserSelectedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_UserSelectedElement))
+            value = Overflow["userSelected"];
+          else
+            value = _UserSelectedElement;
           return _UserSelectedElement is not null;
         default:
           return base.TryGetValue(key, out value);

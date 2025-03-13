@@ -358,28 +358,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "active":
-          value = _ActiveElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+            value = Overflow["active"];
+          else
+            value = _ActiveElement;
           return _ActiveElement is not null;
         case "morphology":
-          value = _Morphology;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Morphology))
+            value = Overflow["morphology"];
+          else
+            value = _Morphology;
           return _Morphology is not null;
         case "location":
-          value = _Location;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Location))
+            value = Overflow["location"];
+          else
+            value = _Location;
           return _Location is not null;
         case "locationQualifier":
-          value = _LocationQualifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_LocationQualifier))
+            value = Overflow["locationQualifier"];
+          else
+            value = _LocationQualifier;
           return _LocationQualifier?.Any() == true;
         case "description":
-          value = _DescriptionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+            value = Overflow["description"];
+          else
+            value = _DescriptionElement;
           return _DescriptionElement is not null;
         case "image":
-          value = _Image;
+          if (OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Image))
+            value = Overflow["image"];
+          else
+            value = _Image;
           return _Image?.Any() == true;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         default:
           return base.TryGetValue(key, out value);

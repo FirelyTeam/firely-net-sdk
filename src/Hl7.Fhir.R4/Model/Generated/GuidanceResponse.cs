@@ -620,49 +620,94 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "requestIdentifier":
-          value = _RequestIdentifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_RequestIdentifier))
+            value = Overflow["requestIdentifier"];
+          else
+            value = _RequestIdentifier;
           return _RequestIdentifier is not null;
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "module":
-          value = _Module;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Module))
+            value = Overflow["module"];
+          else
+            value = _Module;
           return _Module is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "occurrenceDateTime":
-          value = _OccurrenceDateTimeElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_OccurrenceDateTimeElement))
+            value = Overflow["occurrenceDateTime"];
+          else
+            value = _OccurrenceDateTimeElement;
           return _OccurrenceDateTimeElement is not null;
         case "performer":
-          value = _Performer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Performer))
+            value = Overflow["performer"];
+          else
+            value = _Performer;
           return _Performer is not null;
         case "reasonCode":
-          value = _ReasonCode;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ReasonCode))
+            value = Overflow["reasonCode"];
+          else
+            value = _ReasonCode;
           return _ReasonCode?.Any() == true;
         case "reasonReference":
-          value = _ReasonReference;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_ReasonReference))
+            value = Overflow["reasonReference"];
+          else
+            value = _ReasonReference;
           return _ReasonReference?.Any() == true;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         case "evaluationMessage":
-          value = _EvaluationMessage;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_EvaluationMessage))
+            value = Overflow["evaluationMessage"];
+          else
+            value = _EvaluationMessage;
           return _EvaluationMessage?.Any() == true;
         case "outputParameters":
-          value = _OutputParameters;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_OutputParameters))
+            value = Overflow["outputParameters"];
+          else
+            value = _OutputParameters;
           return _OutputParameters is not null;
         case "result":
-          value = _Result;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Result))
+            value = Overflow["result"];
+          else
+            value = _Result;
           return _Result is not null;
         case "dataRequirement":
-          value = _DataRequirement;
+          if (OverflowNull<List<Hl7.Fhir.Model.DataRequirement>>.InOverflow(_DataRequirement))
+            value = Overflow["dataRequirement"];
+          else
+            value = _DataRequirement;
           return _DataRequirement?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

@@ -167,10 +167,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "therapyRelationshipType":
-            value = _TherapyRelationshipType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_TherapyRelationshipType))
+              value = Overflow["therapyRelationshipType"];
+            else
+              value = _TherapyRelationshipType;
             return _TherapyRelationshipType is not null;
           case "medication":
-            value = _Medication;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Medication))
+              value = Overflow["medication"];
+            else
+              value = _Medication;
             return _Medication is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -450,25 +456,46 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "subject":
-          value = _Subject;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject?.Any() == true;
         case "disease":
-          value = _Disease;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Disease))
+            value = Overflow["disease"];
+          else
+            value = _Disease;
           return _Disease is not null;
         case "diseaseStatus":
-          value = _DiseaseStatus;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DiseaseStatus))
+            value = Overflow["diseaseStatus"];
+          else
+            value = _DiseaseStatus;
           return _DiseaseStatus is not null;
         case "comorbidity":
-          value = _Comorbidity;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Comorbidity))
+            value = Overflow["comorbidity"];
+          else
+            value = _Comorbidity;
           return _Comorbidity?.Any() == true;
         case "therapeuticIndication":
-          value = _TherapeuticIndication;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_TherapeuticIndication))
+            value = Overflow["therapeuticIndication"];
+          else
+            value = _TherapeuticIndication;
           return _TherapeuticIndication?.Any() == true;
         case "otherTherapy":
-          value = _OtherTherapy;
+          if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent>>.InOverflow(_OtherTherapy))
+            value = Overflow["otherTherapy"];
+          else
+            value = _OtherTherapy;
           return _OtherTherapy?.Any() == true;
         case "population":
-          value = _Population;
+          if (OverflowNull<List<Hl7.Fhir.Model.Population>>.InOverflow(_Population))
+            value = Overflow["population"];
+          else
+            value = _Population;
           return _Population?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

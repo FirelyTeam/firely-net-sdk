@@ -178,10 +178,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "value":
-          value = _ValueElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ValueElement))
+            value = Overflow["value"];
+          else
+            value = _ValueElement;
           return _ValueElement is not null;
         case "currency":
-          value = _CurrencyElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Currencies>>.InOverflow(_CurrencyElement))
+            value = Overflow["currency"];
+          else
+            value = _CurrencyElement;
           return _CurrencyElement is not null;
         default:
           return base.TryGetValue(key, out value);

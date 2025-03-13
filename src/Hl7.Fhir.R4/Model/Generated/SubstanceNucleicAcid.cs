@@ -374,28 +374,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "subunit":
-            value = _SubunitElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_SubunitElement))
+              value = Overflow["subunit"];
+            else
+              value = _SubunitElement;
             return _SubunitElement is not null;
           case "sequence":
-            value = _SequenceElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SequenceElement))
+              value = Overflow["sequence"];
+            else
+              value = _SequenceElement;
             return _SequenceElement is not null;
           case "length":
-            value = _LengthElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_LengthElement))
+              value = Overflow["length"];
+            else
+              value = _LengthElement;
             return _LengthElement is not null;
           case "sequenceAttachment":
-            value = _SequenceAttachment;
+            if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_SequenceAttachment))
+              value = Overflow["sequenceAttachment"];
+            else
+              value = _SequenceAttachment;
             return _SequenceAttachment is not null;
           case "fivePrime":
-            value = _FivePrime;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FivePrime))
+              value = Overflow["fivePrime"];
+            else
+              value = _FivePrime;
             return _FivePrime is not null;
           case "threePrime":
-            value = _ThreePrime;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ThreePrime))
+              value = Overflow["threePrime"];
+            else
+              value = _ThreePrime;
             return _ThreePrime is not null;
           case "linkage":
-            value = _Linkage;
+            if (OverflowNull<List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>>.InOverflow(_Linkage))
+              value = Overflow["linkage"];
+            else
+              value = _Linkage;
             return _Linkage?.Any() == true;
           case "sugar":
-            value = _Sugar;
+            if (OverflowNull<List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>>.InOverflow(_Sugar))
+              value = Overflow["sugar"];
+            else
+              value = _Sugar;
             return _Sugar?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -694,16 +718,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "connectivity":
-            value = _ConnectivityElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ConnectivityElement))
+              value = Overflow["connectivity"];
+            else
+              value = _ConnectivityElement;
             return _ConnectivityElement is not null;
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier is not null;
           case "name":
-            value = _NameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+              value = Overflow["name"];
+            else
+              value = _NameElement;
             return _NameElement is not null;
           case "residueSite":
-            value = _ResidueSiteElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ResidueSiteElement))
+              value = Overflow["residueSite"];
+            else
+              value = _ResidueSiteElement;
             return _ResidueSiteElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -923,13 +959,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier is not null;
           case "name":
-            value = _NameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+              value = Overflow["name"];
+            else
+              value = _NameElement;
             return _NameElement is not null;
           case "residueSite":
-            value = _ResidueSiteElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ResidueSiteElement))
+              value = Overflow["residueSite"];
+            else
+              value = _ResidueSiteElement;
             return _ResidueSiteElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1184,19 +1229,34 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "sequenceType":
-          value = _SequenceType;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SequenceType))
+            value = Overflow["sequenceType"];
+          else
+            value = _SequenceType;
           return _SequenceType is not null;
         case "numberOfSubunits":
-          value = _NumberOfSubunitsElement;
+          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_NumberOfSubunitsElement))
+            value = Overflow["numberOfSubunits"];
+          else
+            value = _NumberOfSubunitsElement;
           return _NumberOfSubunitsElement is not null;
         case "areaOfHybridisation":
-          value = _AreaOfHybridisationElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AreaOfHybridisationElement))
+            value = Overflow["areaOfHybridisation"];
+          else
+            value = _AreaOfHybridisationElement;
           return _AreaOfHybridisationElement is not null;
         case "oligoNucleotideType":
-          value = _OligoNucleotideType;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_OligoNucleotideType))
+            value = Overflow["oligoNucleotideType"];
+          else
+            value = _OligoNucleotideType;
           return _OligoNucleotideType is not null;
         case "subunit":
-          value = _Subunit;
+          if (OverflowNull<List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>>.InOverflow(_Subunit))
+            value = Overflow["subunit"];
+          else
+            value = _Subunit;
           return _Subunit?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

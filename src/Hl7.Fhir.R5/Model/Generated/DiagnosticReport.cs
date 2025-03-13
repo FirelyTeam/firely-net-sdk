@@ -247,10 +247,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "reference":
-            value = _Reference;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reference))
+              value = Overflow["reference"];
+            else
+              value = _Reference;
             return _Reference is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -415,10 +421,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "comment":
-            value = _CommentElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CommentElement))
+              value = Overflow["comment"];
+            else
+              value = _CommentElement;
             return _CommentElement is not null;
           case "link":
-            value = _Link;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Link))
+              value = Overflow["link"];
+            else
+              value = _Link;
             return _Link is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1168,67 +1180,130 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "basedOn":
-          value = _BasedOn;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_BasedOn))
+            value = Overflow["basedOn"];
+          else
+            value = _BasedOn;
           return _BasedOn?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "category":
-          value = _Category;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Category))
+            value = Overflow["category"];
+          else
+            value = _Category;
           return _Category?.Any() == true;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "effective":
-          value = _Effective;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Effective))
+            value = Overflow["effective"];
+          else
+            value = _Effective;
           return _Effective is not null;
         case "issued":
-          value = _IssuedElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_IssuedElement))
+            value = Overflow["issued"];
+          else
+            value = _IssuedElement;
           return _IssuedElement is not null;
         case "performer":
-          value = _Performer;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Performer))
+            value = Overflow["performer"];
+          else
+            value = _Performer;
           return _Performer?.Any() == true;
         case "resultsInterpreter":
-          value = _ResultsInterpreter;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_ResultsInterpreter))
+            value = Overflow["resultsInterpreter"];
+          else
+            value = _ResultsInterpreter;
           return _ResultsInterpreter?.Any() == true;
         case "specimen":
-          value = _Specimen;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Specimen))
+            value = Overflow["specimen"];
+          else
+            value = _Specimen;
           return _Specimen?.Any() == true;
         case "result":
-          value = _Result;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Result))
+            value = Overflow["result"];
+          else
+            value = _Result;
           return _Result?.Any() == true;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         case "study":
-          value = _Study;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Study))
+            value = Overflow["study"];
+          else
+            value = _Study;
           return _Study?.Any() == true;
         case "supportingInfo":
-          value = _SupportingInfo;
+          if (OverflowNull<List<Hl7.Fhir.Model.DiagnosticReport.SupportingInfoComponent>>.InOverflow(_SupportingInfo))
+            value = Overflow["supportingInfo"];
+          else
+            value = _SupportingInfo;
           return _SupportingInfo?.Any() == true;
         case "media":
-          value = _Media;
+          if (OverflowNull<List<Hl7.Fhir.Model.DiagnosticReport.MediaComponent>>.InOverflow(_Media))
+            value = Overflow["media"];
+          else
+            value = _Media;
           return _Media?.Any() == true;
         case "composition":
-          value = _Composition;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Composition))
+            value = Overflow["composition"];
+          else
+            value = _Composition;
           return _Composition is not null;
         case "conclusion":
-          value = _ConclusionElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_ConclusionElement))
+            value = Overflow["conclusion"];
+          else
+            value = _ConclusionElement;
           return _ConclusionElement is not null;
         case "conclusionCode":
-          value = _ConclusionCode;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ConclusionCode))
+            value = Overflow["conclusionCode"];
+          else
+            value = _ConclusionCode;
           return _ConclusionCode?.Any() == true;
         case "presentedForm":
-          value = _PresentedForm;
+          if (OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_PresentedForm))
+            value = Overflow["presentedForm"];
+          else
+            value = _PresentedForm;
           return _PresentedForm?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

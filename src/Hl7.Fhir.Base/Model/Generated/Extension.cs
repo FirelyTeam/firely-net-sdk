@@ -165,10 +165,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "url":
-          value = _UrlElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+            value = Overflow["url"];
+          else
+            value = _UrlElement;
           return _UrlElement is not null;
         case "value":
-          value = _Value;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+            value = Overflow["value"];
+          else
+            value = _Value;
           return _Value is not null;
         default:
           return base.TryGetValue(key, out value);

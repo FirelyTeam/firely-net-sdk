@@ -333,19 +333,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "coordinateSystem":
-            value = _CoordinateSystem;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_CoordinateSystem))
+              value = Overflow["coordinateSystem"];
+            else
+              value = _CoordinateSystem;
             return _CoordinateSystem is not null;
           case "ordinalPosition":
-            value = _OrdinalPositionElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_OrdinalPositionElement))
+              value = Overflow["ordinalPosition"];
+            else
+              value = _OrdinalPositionElement;
             return _OrdinalPositionElement is not null;
           case "sequenceRange":
-            value = _SequenceRange;
+            if (OverflowNull<Hl7.Fhir.Model.Range>.InOverflow(_SequenceRange))
+              value = Overflow["sequenceRange"];
+            else
+              value = _SequenceRange;
             return _SequenceRange is not null;
           case "startingSequence":
-            value = _StartingSequence;
+            if (OverflowNull<Hl7.Fhir.Model.MolecularSequence.StartingSequenceComponent>.InOverflow(_StartingSequence))
+              value = Overflow["startingSequence"];
+            else
+              value = _StartingSequence;
             return _StartingSequence is not null;
           case "edit":
-            value = _Edit;
+            if (OverflowNull<List<Hl7.Fhir.Model.MolecularSequence.EditComponent>>.InOverflow(_Edit))
+              value = Overflow["edit"];
+            else
+              value = _Edit;
             return _Edit?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -729,25 +744,46 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "genomeAssembly":
-            value = _GenomeAssembly;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_GenomeAssembly))
+              value = Overflow["genomeAssembly"];
+            else
+              value = _GenomeAssembly;
             return _GenomeAssembly is not null;
           case "chromosome":
-            value = _Chromosome;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Chromosome))
+              value = Overflow["chromosome"];
+            else
+              value = _Chromosome;
             return _Chromosome is not null;
           case "sequence":
-            value = _Sequence;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Sequence))
+              value = Overflow["sequence"];
+            else
+              value = _Sequence;
             return _Sequence is not null;
           case "windowStart":
-            value = _WindowStartElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_WindowStartElement))
+              value = Overflow["windowStart"];
+            else
+              value = _WindowStartElement;
             return _WindowStartElement is not null;
           case "windowEnd":
-            value = _WindowEndElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_WindowEndElement))
+              value = Overflow["windowEnd"];
+            else
+              value = _WindowEndElement;
             return _WindowEndElement is not null;
           case "orientation":
-            value = _OrientationElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>>.InOverflow(_OrientationElement))
+              value = Overflow["orientation"];
+            else
+              value = _OrientationElement;
             return _OrientationElement is not null;
           case "strand":
-            value = _StrandElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.StrandType>>.InOverflow(_StrandElement))
+              value = Overflow["strand"];
+            else
+              value = _StrandElement;
             return _StrandElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1052,16 +1088,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "start":
-            value = _StartElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_StartElement))
+              value = Overflow["start"];
+            else
+              value = _StartElement;
             return _StartElement is not null;
           case "end":
-            value = _EndElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_EndElement))
+              value = Overflow["end"];
+            else
+              value = _EndElement;
             return _EndElement is not null;
           case "replacementSequence":
-            value = _ReplacementSequenceElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReplacementSequenceElement))
+              value = Overflow["replacementSequence"];
+            else
+              value = _ReplacementSequenceElement;
             return _ReplacementSequenceElement is not null;
           case "replacedSequence":
-            value = _ReplacedSequenceElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReplacedSequenceElement))
+              value = Overflow["replacedSequence"];
+            else
+              value = _ReplacedSequenceElement;
             return _ReplacedSequenceElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1482,34 +1530,64 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "focus":
-          value = _Focus;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Focus))
+            value = Overflow["focus"];
+          else
+            value = _Focus;
           return _Focus?.Any() == true;
         case "specimen":
-          value = _Specimen;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Specimen))
+            value = Overflow["specimen"];
+          else
+            value = _Specimen;
           return _Specimen is not null;
         case "device":
-          value = _Device;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Device))
+            value = Overflow["device"];
+          else
+            value = _Device;
           return _Device is not null;
         case "performer":
-          value = _Performer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Performer))
+            value = Overflow["performer"];
+          else
+            value = _Performer;
           return _Performer is not null;
         case "literal":
-          value = _LiteralElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LiteralElement))
+            value = Overflow["literal"];
+          else
+            value = _LiteralElement;
           return _LiteralElement is not null;
         case "formatted":
-          value = _Formatted;
+          if (OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Formatted))
+            value = Overflow["formatted"];
+          else
+            value = _Formatted;
           return _Formatted?.Any() == true;
         case "relative":
-          value = _Relative;
+          if (OverflowNull<List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent>>.InOverflow(_Relative))
+            value = Overflow["relative"];
+          else
+            value = _Relative;
           return _Relative?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

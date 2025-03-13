@@ -165,10 +165,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "telecom":
-          value = _Telecom;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Telecom))
+            value = Overflow["telecom"];
+          else
+            value = _Telecom;
           return _Telecom?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

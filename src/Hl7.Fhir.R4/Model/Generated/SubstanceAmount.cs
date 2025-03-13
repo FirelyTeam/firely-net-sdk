@@ -159,10 +159,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "lowLimit":
-            value = _LowLimit;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowLimit))
+              value = Overflow["lowLimit"];
+            else
+              value = _LowLimit;
             return _LowLimit is not null;
           case "highLimit":
-            value = _HighLimit;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighLimit))
+              value = Overflow["highLimit"];
+            else
+              value = _HighLimit;
             return _HighLimit is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -366,16 +372,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "amount":
-          value = _Amount;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Amount))
+            value = Overflow["amount"];
+          else
+            value = _Amount;
           return _Amount is not null;
         case "amountType":
-          value = _AmountType;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AmountType))
+            value = Overflow["amountType"];
+          else
+            value = _AmountType;
           return _AmountType is not null;
         case "amountText":
-          value = _AmountTextElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AmountTextElement))
+            value = Overflow["amountText"];
+          else
+            value = _AmountTextElement;
           return _AmountTextElement is not null;
         case "referenceRange":
-          value = _ReferenceRange;
+          if (OverflowNull<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>.InOverflow(_ReferenceRange))
+            value = Overflow["referenceRange"];
+          else
+            value = _ReferenceRange;
           return _ReferenceRange is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -416,34 +416,64 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier is not null;
           case "predecessor":
-            value = _Predecessor;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Predecessor))
+              value = Overflow["predecessor"];
+            else
+              value = _Predecessor;
             return _Predecessor is not null;
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "request":
-            value = _Request;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Request))
+              value = Overflow["request"];
+            else
+              value = _Request;
             return _Request is not null;
           case "submitter":
-            value = _Submitter;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Submitter))
+              value = Overflow["submitter"];
+            else
+              value = _Submitter;
             return _Submitter is not null;
           case "response":
-            value = _Response;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Response))
+              value = Overflow["response"];
+            else
+              value = _Response;
             return _Response is not null;
           case "date":
-            value = _DateElement;
+            if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_DateElement))
+              value = Overflow["date"];
+            else
+              value = _DateElement;
             return _DateElement is not null;
           case "responsible":
-            value = _Responsible;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Responsible))
+              value = Overflow["responsible"];
+            else
+              value = _Responsible;
             return _Responsible is not null;
           case "payee":
-            value = _Payee;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Payee))
+              value = Overflow["payee"];
+            else
+              value = _Payee;
             return _Payee is not null;
           case "amount":
-            value = _Amount;
+            if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_Amount))
+              value = Overflow["amount"];
+            else
+              value = _Amount;
             return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -694,10 +724,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _TypeElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.NoteType>>.InOverflow(_TypeElement))
+              value = Overflow["type"];
+            else
+              value = _TypeElement;
             return _TypeElement is not null;
           case "text":
-            value = _TextElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+              value = Overflow["text"];
+            else
+              value = _TextElement;
             return _TextElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1287,49 +1323,94 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         case "created":
-          value = _CreatedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CreatedElement))
+            value = Overflow["created"];
+          else
+            value = _CreatedElement;
           return _CreatedElement is not null;
         case "paymentIssuer":
-          value = _PaymentIssuer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_PaymentIssuer))
+            value = Overflow["paymentIssuer"];
+          else
+            value = _PaymentIssuer;
           return _PaymentIssuer is not null;
         case "request":
-          value = _Request;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Request))
+            value = Overflow["request"];
+          else
+            value = _Request;
           return _Request is not null;
         case "requestor":
-          value = _Requestor;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Requestor))
+            value = Overflow["requestor"];
+          else
+            value = _Requestor;
           return _Requestor is not null;
         case "outcome":
-          value = _OutcomeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.RemittanceOutcome>>.InOverflow(_OutcomeElement))
+            value = Overflow["outcome"];
+          else
+            value = _OutcomeElement;
           return _OutcomeElement is not null;
         case "disposition":
-          value = _DispositionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DispositionElement))
+            value = Overflow["disposition"];
+          else
+            value = _DispositionElement;
           return _DispositionElement is not null;
         case "paymentDate":
-          value = _PaymentDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_PaymentDateElement))
+            value = Overflow["paymentDate"];
+          else
+            value = _PaymentDateElement;
           return _PaymentDateElement is not null;
         case "paymentAmount":
-          value = _PaymentAmount;
+          if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_PaymentAmount))
+            value = Overflow["paymentAmount"];
+          else
+            value = _PaymentAmount;
           return _PaymentAmount is not null;
         case "paymentIdentifier":
-          value = _PaymentIdentifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_PaymentIdentifier))
+            value = Overflow["paymentIdentifier"];
+          else
+            value = _PaymentIdentifier;
           return _PaymentIdentifier is not null;
         case "detail":
-          value = _Detail;
+          if (OverflowNull<List<Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent>>.InOverflow(_Detail))
+            value = Overflow["detail"];
+          else
+            value = _Detail;
           return _Detail?.Any() == true;
         case "formCode":
-          value = _FormCode;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FormCode))
+            value = Overflow["formCode"];
+          else
+            value = _FormCode;
           return _FormCode is not null;
         case "processNote":
-          value = _ProcessNote;
+          if (OverflowNull<List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent>>.InOverflow(_ProcessNote))
+            value = Overflow["processNote"];
+          else
+            value = _ProcessNote;
           return _ProcessNote?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

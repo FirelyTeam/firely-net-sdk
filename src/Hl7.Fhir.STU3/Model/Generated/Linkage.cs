@@ -212,10 +212,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _TypeElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.Linkage.LinkageType>>.InOverflow(_TypeElement))
+              value = Overflow["type"];
+            else
+              value = _TypeElement;
             return _TypeElement is not null;
           case "resource":
-            value = _Resource;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Resource))
+              value = Overflow["resource"];
+            else
+              value = _Resource;
             return _Resource is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -392,13 +398,22 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "active":
-          value = _ActiveElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+            value = Overflow["active"];
+          else
+            value = _ActiveElement;
           return _ActiveElement is not null;
         case "author":
-          value = _Author;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Author))
+            value = Overflow["author"];
+          else
+            value = _Author;
           return _Author is not null;
         case "item":
-          value = _Item;
+          if (OverflowNull<List<Hl7.Fhir.Model.Linkage.ItemComponent>>.InOverflow(_Item))
+            value = Overflow["item"];
+          else
+            value = _Item;
           return _Item?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

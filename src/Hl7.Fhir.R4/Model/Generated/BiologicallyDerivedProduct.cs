@@ -288,13 +288,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "collector":
-            value = _Collector;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Collector))
+              value = Overflow["collector"];
+            else
+              value = _Collector;
             return _Collector is not null;
           case "source":
-            value = _Source;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Source))
+              value = Overflow["source"];
+            else
+              value = _Source;
             return _Source is not null;
           case "collected":
-            value = _Collected;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Collected))
+              value = Overflow["collected"];
+            else
+              value = _Collected;
             return _Collected is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -526,16 +535,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "procedure":
-            value = _Procedure;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Procedure))
+              value = Overflow["procedure"];
+            else
+              value = _Procedure;
             return _Procedure is not null;
           case "additive":
-            value = _Additive;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Additive))
+              value = Overflow["additive"];
+            else
+              value = _Additive;
             return _Additive is not null;
           case "time":
-            value = _Time;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Time))
+              value = Overflow["time"];
+            else
+              value = _Time;
             return _Time is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -717,10 +738,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "time":
-            value = _Time;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Time))
+              value = Overflow["time"];
+            else
+              value = _Time;
             return _Time is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -967,16 +994,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "temperature":
-            value = _TemperatureElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_TemperatureElement))
+              value = Overflow["temperature"];
+            else
+              value = _TemperatureElement;
             return _TemperatureElement is not null;
           case "scale":
-            value = _ScaleElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale>>.InOverflow(_ScaleElement))
+              value = Overflow["scale"];
+            else
+              value = _ScaleElement;
             return _ScaleElement is not null;
           case "duration":
-            value = _Duration;
+            if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Duration))
+              value = Overflow["duration"];
+            else
+              value = _Duration;
             return _Duration is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1438,37 +1477,70 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "productCategory":
-          value = _ProductCategoryElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory>>.InOverflow(_ProductCategoryElement))
+            value = Overflow["productCategory"];
+          else
+            value = _ProductCategoryElement;
           return _ProductCategoryElement is not null;
         case "productCode":
-          value = _ProductCode;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ProductCode))
+            value = Overflow["productCode"];
+          else
+            value = _ProductCode;
           return _ProductCode is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "request":
-          value = _Request;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Request))
+            value = Overflow["request"];
+          else
+            value = _Request;
           return _Request?.Any() == true;
         case "quantity":
-          value = _QuantityElement;
+          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_QuantityElement))
+            value = Overflow["quantity"];
+          else
+            value = _QuantityElement;
           return _QuantityElement is not null;
         case "parent":
-          value = _Parent;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Parent))
+            value = Overflow["parent"];
+          else
+            value = _Parent;
           return _Parent?.Any() == true;
         case "collection":
-          value = _Collection;
+          if (OverflowNull<Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent>.InOverflow(_Collection))
+            value = Overflow["collection"];
+          else
+            value = _Collection;
           return _Collection is not null;
         case "processing":
-          value = _Processing;
+          if (OverflowNull<List<Hl7.Fhir.Model.BiologicallyDerivedProduct.ProcessingComponent>>.InOverflow(_Processing))
+            value = Overflow["processing"];
+          else
+            value = _Processing;
           return _Processing?.Any() == true;
         case "manipulation":
-          value = _Manipulation;
+          if (OverflowNull<Hl7.Fhir.Model.BiologicallyDerivedProduct.ManipulationComponent>.InOverflow(_Manipulation))
+            value = Overflow["manipulation"];
+          else
+            value = _Manipulation;
           return _Manipulation is not null;
         case "storage":
-          value = _Storage;
+          if (OverflowNull<List<Hl7.Fhir.Model.BiologicallyDerivedProduct.StorageComponent>>.InOverflow(_Storage))
+            value = Overflow["storage"];
+          else
+            value = _Storage;
           return _Storage?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

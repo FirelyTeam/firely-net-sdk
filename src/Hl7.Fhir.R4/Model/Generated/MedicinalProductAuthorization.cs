@@ -245,19 +245,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier?.Any() == true;
           case "country":
-            value = _Country;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Country))
+              value = Overflow["country"];
+            else
+              value = _Country;
             return _Country is not null;
           case "jurisdiction":
-            value = _Jurisdiction;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Jurisdiction))
+              value = Overflow["jurisdiction"];
+            else
+              value = _Jurisdiction;
             return _Jurisdiction?.Any() == true;
           case "legalStatusOfSupply":
-            value = _LegalStatusOfSupply;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_LegalStatusOfSupply))
+              value = Overflow["legalStatusOfSupply"];
+            else
+              value = _LegalStatusOfSupply;
             return _LegalStatusOfSupply is not null;
           case "validityPeriod":
-            value = _ValidityPeriod;
+            if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_ValidityPeriod))
+              value = Overflow["validityPeriod"];
+            else
+              value = _ValidityPeriod;
             return _ValidityPeriod is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -488,16 +503,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier is not null;
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "date":
-            value = _Date;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Date))
+              value = Overflow["date"];
+            else
+              value = _Date;
             return _Date is not null;
           case "application":
-            value = _Application;
+            if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>>.InOverflow(_Application))
+              value = Overflow["application"];
+            else
+              value = _Application;
             return _Application?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1110,52 +1137,100 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "country":
-          value = _Country;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Country))
+            value = Overflow["country"];
+          else
+            value = _Country;
           return _Country?.Any() == true;
         case "jurisdiction":
-          value = _Jurisdiction;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Jurisdiction))
+            value = Overflow["jurisdiction"];
+          else
+            value = _Jurisdiction;
           return _Jurisdiction?.Any() == true;
         case "status":
-          value = _Status;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Status))
+            value = Overflow["status"];
+          else
+            value = _Status;
           return _Status is not null;
         case "statusDate":
-          value = _StatusDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StatusDateElement))
+            value = Overflow["statusDate"];
+          else
+            value = _StatusDateElement;
           return _StatusDateElement is not null;
         case "restoreDate":
-          value = _RestoreDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_RestoreDateElement))
+            value = Overflow["restoreDate"];
+          else
+            value = _RestoreDateElement;
           return _RestoreDateElement is not null;
         case "validityPeriod":
-          value = _ValidityPeriod;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_ValidityPeriod))
+            value = Overflow["validityPeriod"];
+          else
+            value = _ValidityPeriod;
           return _ValidityPeriod is not null;
         case "dataExclusivityPeriod":
-          value = _DataExclusivityPeriod;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_DataExclusivityPeriod))
+            value = Overflow["dataExclusivityPeriod"];
+          else
+            value = _DataExclusivityPeriod;
           return _DataExclusivityPeriod is not null;
         case "dateOfFirstAuthorization":
-          value = _DateOfFirstAuthorizationElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateOfFirstAuthorizationElement))
+            value = Overflow["dateOfFirstAuthorization"];
+          else
+            value = _DateOfFirstAuthorizationElement;
           return _DateOfFirstAuthorizationElement is not null;
         case "internationalBirthDate":
-          value = _InternationalBirthDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_InternationalBirthDateElement))
+            value = Overflow["internationalBirthDate"];
+          else
+            value = _InternationalBirthDateElement;
           return _InternationalBirthDateElement is not null;
         case "legalBasis":
-          value = _LegalBasis;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_LegalBasis))
+            value = Overflow["legalBasis"];
+          else
+            value = _LegalBasis;
           return _LegalBasis is not null;
         case "jurisdictionalAuthorization":
-          value = _JurisdictionalAuthorization;
+          if (OverflowNull<List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent>>.InOverflow(_JurisdictionalAuthorization))
+            value = Overflow["jurisdictionalAuthorization"];
+          else
+            value = _JurisdictionalAuthorization;
           return _JurisdictionalAuthorization?.Any() == true;
         case "holder":
-          value = _Holder;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Holder))
+            value = Overflow["holder"];
+          else
+            value = _Holder;
           return _Holder is not null;
         case "regulator":
-          value = _Regulator;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Regulator))
+            value = Overflow["regulator"];
+          else
+            value = _Regulator;
           return _Regulator is not null;
         case "procedure":
-          value = _Procedure;
+          if (OverflowNull<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>.InOverflow(_Procedure))
+            value = Overflow["procedure"];
+          else
+            value = _Procedure;
           return _Procedure is not null;
         default:
           return base.TryGetValue(key, out value);

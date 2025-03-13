@@ -358,16 +358,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "customaryUnit":
-            value = _CustomaryUnit;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_CustomaryUnit))
+              value = Overflow["customaryUnit"];
+            else
+              value = _CustomaryUnit;
             return _CustomaryUnit is not null;
           case "unit":
-            value = _Unit;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Unit))
+              value = Overflow["unit"];
+            else
+              value = _Unit;
             return _Unit is not null;
           case "conversionFactor":
-            value = _ConversionFactorElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ConversionFactorElement))
+              value = Overflow["conversionFactor"];
+            else
+              value = _ConversionFactorElement;
             return _ConversionFactorElement is not null;
           case "decimalPrecision":
-            value = _DecimalPrecisionElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_DecimalPrecisionElement))
+              value = Overflow["decimalPrecision"];
+            else
+              value = _DecimalPrecisionElement;
             return _DecimalPrecisionElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -752,28 +764,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "category":
-            value = _CategoryElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>>.InOverflow(_CategoryElement))
+              value = Overflow["category"];
+            else
+              value = _CategoryElement;
             return _CategoryElement is not null;
           case "range":
-            value = _Range;
+            if (OverflowNull<Hl7.Fhir.Model.Range>.InOverflow(_Range))
+              value = Overflow["range"];
+            else
+              value = _Range;
             return _Range is not null;
           case "context":
-            value = _Context;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Context))
+              value = Overflow["context"];
+            else
+              value = _Context;
             return _Context is not null;
           case "appliesTo":
-            value = _AppliesTo;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_AppliesTo))
+              value = Overflow["appliesTo"];
+            else
+              value = _AppliesTo;
             return _AppliesTo?.Any() == true;
           case "gender":
-            value = _GenderElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.AdministrativeGender>>.InOverflow(_GenderElement))
+              value = Overflow["gender"];
+            else
+              value = _GenderElement;
             return _GenderElement is not null;
           case "age":
-            value = _Age;
+            if (OverflowNull<Hl7.Fhir.Model.Range>.InOverflow(_Age))
+              value = Overflow["age"];
+            else
+              value = _Age;
             return _Age is not null;
           case "gestationalAge":
-            value = _GestationalAge;
+            if (OverflowNull<Hl7.Fhir.Model.Range>.InOverflow(_GestationalAge))
+              value = Overflow["gestationalAge"];
+            else
+              value = _GestationalAge;
             return _GestationalAge is not null;
           case "condition":
-            value = _ConditionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ConditionElement))
+              value = Overflow["condition"];
+            else
+              value = _ConditionElement;
             return _ConditionElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1337,43 +1373,82 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "category":
-          value = _Category;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Category))
+            value = Overflow["category"];
+          else
+            value = _Category;
           return _Category?.Any() == true;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "permittedDataType":
-          value = _PermittedDataTypeElement;
+          if (OverflowNull<List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>>.InOverflow(_PermittedDataTypeElement))
+            value = Overflow["permittedDataType"];
+          else
+            value = _PermittedDataTypeElement;
           return _PermittedDataTypeElement?.Any() == true;
         case "multipleResultsAllowed":
-          value = _MultipleResultsAllowedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_MultipleResultsAllowedElement))
+            value = Overflow["multipleResultsAllowed"];
+          else
+            value = _MultipleResultsAllowedElement;
           return _MultipleResultsAllowedElement is not null;
         case "method":
-          value = _Method;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Method))
+            value = Overflow["method"];
+          else
+            value = _Method;
           return _Method is not null;
         case "preferredReportName":
-          value = _PreferredReportNameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PreferredReportNameElement))
+            value = Overflow["preferredReportName"];
+          else
+            value = _PreferredReportNameElement;
           return _PreferredReportNameElement is not null;
         case "quantitativeDetails":
-          value = _QuantitativeDetails;
+          if (OverflowNull<Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent>.InOverflow(_QuantitativeDetails))
+            value = Overflow["quantitativeDetails"];
+          else
+            value = _QuantitativeDetails;
           return _QuantitativeDetails is not null;
         case "qualifiedInterval":
-          value = _QualifiedInterval;
+          if (OverflowNull<List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent>>.InOverflow(_QualifiedInterval))
+            value = Overflow["qualifiedInterval"];
+          else
+            value = _QualifiedInterval;
           return _QualifiedInterval?.Any() == true;
         case "validCodedValueSet":
-          value = _ValidCodedValueSet;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ValidCodedValueSet))
+            value = Overflow["validCodedValueSet"];
+          else
+            value = _ValidCodedValueSet;
           return _ValidCodedValueSet is not null;
         case "normalCodedValueSet":
-          value = _NormalCodedValueSet;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_NormalCodedValueSet))
+            value = Overflow["normalCodedValueSet"];
+          else
+            value = _NormalCodedValueSet;
           return _NormalCodedValueSet is not null;
         case "abnormalCodedValueSet":
-          value = _AbnormalCodedValueSet;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_AbnormalCodedValueSet))
+            value = Overflow["abnormalCodedValueSet"];
+          else
+            value = _AbnormalCodedValueSet;
           return _AbnormalCodedValueSet is not null;
         case "criticalCodedValueSet":
-          value = _CriticalCodedValueSet;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_CriticalCodedValueSet))
+            value = Overflow["criticalCodedValueSet"];
+          else
+            value = _CriticalCodedValueSet;
           return _CriticalCodedValueSet is not null;
         default:
           return base.TryGetValue(key, out value);

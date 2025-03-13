@@ -267,22 +267,40 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "purpose":
-          value = _Purpose;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Purpose))
+            value = Overflow["purpose"];
+          else
+            value = _Purpose;
           return _Purpose is not null;
         case "name":
-          value = _Name;
+          if (OverflowNull<List<Hl7.Fhir.Model.HumanName>>.InOverflow(_Name))
+            value = Overflow["name"];
+          else
+            value = _Name;
           return _Name?.Any() == true;
         case "telecom":
-          value = _Telecom;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Telecom))
+            value = Overflow["telecom"];
+          else
+            value = _Telecom;
           return _Telecom?.Any() == true;
         case "address":
-          value = _Address;
+          if (OverflowNull<Hl7.Fhir.Model.Address>.InOverflow(_Address))
+            value = Overflow["address"];
+          else
+            value = _Address;
           return _Address is not null;
         case "organization":
-          value = _Organization;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Organization))
+            value = Overflow["organization"];
+          else
+            value = _Organization;
           return _Organization is not null;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         default:
           return base.TryGetValue(key, out value);

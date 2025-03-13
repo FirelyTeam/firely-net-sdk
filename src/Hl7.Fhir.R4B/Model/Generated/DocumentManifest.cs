@@ -168,10 +168,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier is not null;
           case "ref":
-            value = _Ref;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Ref))
+              value = Overflow["ref"];
+            else
+              value = _Ref;
             return _Ref is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -661,40 +667,76 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "masterIdentifier":
-          value = _MasterIdentifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_MasterIdentifier))
+            value = Overflow["masterIdentifier"];
+          else
+            value = _MasterIdentifier;
           return _MasterIdentifier is not null;
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.DocumentReferenceStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "created":
-          value = _CreatedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CreatedElement))
+            value = Overflow["created"];
+          else
+            value = _CreatedElement;
           return _CreatedElement is not null;
         case "author":
-          value = _Author;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Author))
+            value = Overflow["author"];
+          else
+            value = _Author;
           return _Author?.Any() == true;
         case "recipient":
-          value = _Recipient;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Recipient))
+            value = Overflow["recipient"];
+          else
+            value = _Recipient;
           return _Recipient?.Any() == true;
         case "source":
-          value = _SourceElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_SourceElement))
+            value = Overflow["source"];
+          else
+            value = _SourceElement;
           return _SourceElement is not null;
         case "description":
-          value = _DescriptionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+            value = Overflow["description"];
+          else
+            value = _DescriptionElement;
           return _DescriptionElement is not null;
         case "content":
-          value = _Content;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Content))
+            value = Overflow["content"];
+          else
+            value = _Content;
           return _Content?.Any() == true;
         case "related":
-          value = _Related;
+          if (OverflowNull<List<Hl7.Fhir.Model.DocumentManifest.RelatedComponent>>.InOverflow(_Related))
+            value = Overflow["related"];
+          else
+            value = _Related;
           return _Related?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

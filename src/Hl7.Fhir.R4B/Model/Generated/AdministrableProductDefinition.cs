@@ -195,13 +195,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "value":
-            value = _Value;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           case "status":
-            value = _Status;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Status))
+              value = Overflow["status"];
+            else
+              value = _Status;
             return _Status is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -500,25 +509,46 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "firstDose":
-            value = _FirstDose;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_FirstDose))
+              value = Overflow["firstDose"];
+            else
+              value = _FirstDose;
             return _FirstDose is not null;
           case "maxSingleDose":
-            value = _MaxSingleDose;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_MaxSingleDose))
+              value = Overflow["maxSingleDose"];
+            else
+              value = _MaxSingleDose;
             return _MaxSingleDose is not null;
           case "maxDosePerDay":
-            value = _MaxDosePerDay;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_MaxDosePerDay))
+              value = Overflow["maxDosePerDay"];
+            else
+              value = _MaxDosePerDay;
             return _MaxDosePerDay is not null;
           case "maxDosePerTreatmentPeriod":
-            value = _MaxDosePerTreatmentPeriod;
+            if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_MaxDosePerTreatmentPeriod))
+              value = Overflow["maxDosePerTreatmentPeriod"];
+            else
+              value = _MaxDosePerTreatmentPeriod;
             return _MaxDosePerTreatmentPeriod is not null;
           case "maxTreatmentPeriod":
-            value = _MaxTreatmentPeriod;
+            if (OverflowNull<Hl7.Fhir.Model.Duration>.InOverflow(_MaxTreatmentPeriod))
+              value = Overflow["maxTreatmentPeriod"];
+            else
+              value = _MaxTreatmentPeriod;
             return _MaxTreatmentPeriod is not null;
           case "targetSpecies":
-            value = _TargetSpecies;
+            if (OverflowNull<List<Hl7.Fhir.Model.AdministrableProductDefinition.TargetSpeciesComponent>>.InOverflow(_TargetSpecies))
+              value = Overflow["targetSpecies"];
+            else
+              value = _TargetSpecies;
             return _TargetSpecies?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -710,10 +740,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "withdrawalPeriod":
-            value = _WithdrawalPeriod;
+            if (OverflowNull<List<Hl7.Fhir.Model.AdministrableProductDefinition.WithdrawalPeriodComponent>>.InOverflow(_WithdrawalPeriod))
+              value = Overflow["withdrawalPeriod"];
+            else
+              value = _WithdrawalPeriod;
             return _WithdrawalPeriod?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -903,13 +939,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "tissue":
-            value = _Tissue;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Tissue))
+              value = Overflow["tissue"];
+            else
+              value = _Tissue;
             return _Tissue is not null;
           case "value":
-            value = _Value;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           case "supportingInformation":
-            value = _SupportingInformationElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SupportingInformationElement))
+              value = Overflow["supportingInformation"];
+            else
+              value = _SupportingInformationElement;
             return _SupportingInformationElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1308,34 +1353,64 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "formOf":
-          value = _FormOf;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_FormOf))
+            value = Overflow["formOf"];
+          else
+            value = _FormOf;
           return _FormOf?.Any() == true;
         case "administrableDoseForm":
-          value = _AdministrableDoseForm;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AdministrableDoseForm))
+            value = Overflow["administrableDoseForm"];
+          else
+            value = _AdministrableDoseForm;
           return _AdministrableDoseForm is not null;
         case "unitOfPresentation":
-          value = _UnitOfPresentation;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_UnitOfPresentation))
+            value = Overflow["unitOfPresentation"];
+          else
+            value = _UnitOfPresentation;
           return _UnitOfPresentation is not null;
         case "producedFrom":
-          value = _ProducedFrom;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_ProducedFrom))
+            value = Overflow["producedFrom"];
+          else
+            value = _ProducedFrom;
           return _ProducedFrom?.Any() == true;
         case "ingredient":
-          value = _Ingredient;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Ingredient))
+            value = Overflow["ingredient"];
+          else
+            value = _Ingredient;
           return _Ingredient?.Any() == true;
         case "device":
-          value = _Device;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Device))
+            value = Overflow["device"];
+          else
+            value = _Device;
           return _Device is not null;
         case "property":
-          value = _Property;
+          if (OverflowNull<List<Hl7.Fhir.Model.AdministrableProductDefinition.PropertyComponent>>.InOverflow(_Property))
+            value = Overflow["property"];
+          else
+            value = _Property;
           return _Property?.Any() == true;
         case "routeOfAdministration":
-          value = _RouteOfAdministration;
+          if (OverflowNull<List<Hl7.Fhir.Model.AdministrableProductDefinition.RouteOfAdministrationComponent>>.InOverflow(_RouteOfAdministration))
+            value = Overflow["routeOfAdministration"];
+          else
+            value = _RouteOfAdministration;
           return _RouteOfAdministration?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

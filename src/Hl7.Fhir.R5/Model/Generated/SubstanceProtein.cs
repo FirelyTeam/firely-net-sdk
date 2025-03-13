@@ -402,28 +402,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "subunit":
-            value = _SubunitElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_SubunitElement))
+              value = Overflow["subunit"];
+            else
+              value = _SubunitElement;
             return _SubunitElement is not null;
           case "sequence":
-            value = _SequenceElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SequenceElement))
+              value = Overflow["sequence"];
+            else
+              value = _SequenceElement;
             return _SequenceElement is not null;
           case "length":
-            value = _LengthElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_LengthElement))
+              value = Overflow["length"];
+            else
+              value = _LengthElement;
             return _LengthElement is not null;
           case "sequenceAttachment":
-            value = _SequenceAttachment;
+            if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_SequenceAttachment))
+              value = Overflow["sequenceAttachment"];
+            else
+              value = _SequenceAttachment;
             return _SequenceAttachment is not null;
           case "nTerminalModificationId":
-            value = _NTerminalModificationId;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_NTerminalModificationId))
+              value = Overflow["nTerminalModificationId"];
+            else
+              value = _NTerminalModificationId;
             return _NTerminalModificationId is not null;
           case "nTerminalModification":
-            value = _NTerminalModificationElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NTerminalModificationElement))
+              value = Overflow["nTerminalModification"];
+            else
+              value = _NTerminalModificationElement;
             return _NTerminalModificationElement is not null;
           case "cTerminalModificationId":
-            value = _CTerminalModificationId;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_CTerminalModificationId))
+              value = Overflow["cTerminalModificationId"];
+            else
+              value = _CTerminalModificationId;
             return _CTerminalModificationId is not null;
           case "cTerminalModification":
-            value = _CTerminalModificationElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CTerminalModificationElement))
+              value = Overflow["cTerminalModification"];
+            else
+              value = _CTerminalModificationElement;
             return _CTerminalModificationElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -699,16 +723,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "sequenceType":
-          value = _SequenceType;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SequenceType))
+            value = Overflow["sequenceType"];
+          else
+            value = _SequenceType;
           return _SequenceType is not null;
         case "numberOfSubunits":
-          value = _NumberOfSubunitsElement;
+          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_NumberOfSubunitsElement))
+            value = Overflow["numberOfSubunits"];
+          else
+            value = _NumberOfSubunitsElement;
           return _NumberOfSubunitsElement is not null;
         case "disulfideLinkage":
-          value = _DisulfideLinkageElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_DisulfideLinkageElement))
+            value = Overflow["disulfideLinkage"];
+          else
+            value = _DisulfideLinkageElement;
           return _DisulfideLinkageElement?.Any() == true;
         case "subunit":
-          value = _Subunit;
+          if (OverflowNull<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>.InOverflow(_Subunit))
+            value = Overflow["subunit"];
+          else
+            value = _Subunit;
           return _Subunit?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

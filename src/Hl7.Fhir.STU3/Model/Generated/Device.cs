@@ -493,25 +493,46 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "deviceIdentifier":
-            value = _DeviceIdentifierElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DeviceIdentifierElement))
+              value = Overflow["deviceIdentifier"];
+            else
+              value = _DeviceIdentifierElement;
             return _DeviceIdentifierElement is not null;
           case "name":
-            value = _NameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+              value = Overflow["name"];
+            else
+              value = _NameElement;
             return _NameElement is not null;
           case "jurisdiction":
-            value = _JurisdictionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_JurisdictionElement))
+              value = Overflow["jurisdiction"];
+            else
+              value = _JurisdictionElement;
             return _JurisdictionElement is not null;
           case "carrierHRF":
-            value = _CarrierHRFElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CarrierHRFElement))
+              value = Overflow["carrierHRF"];
+            else
+              value = _CarrierHRFElement;
             return _CarrierHRFElement is not null;
           case "carrierAIDC":
-            value = _CarrierAIDCElement;
+            if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_CarrierAIDCElement))
+              value = Overflow["carrierAIDC"];
+            else
+              value = _CarrierAIDCElement;
             return _CarrierAIDCElement is not null;
           case "issuer":
-            value = _IssuerElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_IssuerElement))
+              value = Overflow["issuer"];
+            else
+              value = _IssuerElement;
             return _IssuerElement is not null;
           case "entryType":
-            value = _EntryTypeElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.Device.UDIEntryType>>.InOverflow(_EntryTypeElement))
+              value = Overflow["entryType"];
+            else
+              value = _EntryTypeElement;
             return _EntryTypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1243,55 +1264,106 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "udi":
-          value = _Udi;
+          if (OverflowNull<Hl7.Fhir.Model.Device.UdiComponent>.InOverflow(_Udi))
+            value = Overflow["udi"];
+          else
+            value = _Udi;
           return _Udi is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "lotNumber":
-          value = _LotNumberElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LotNumberElement))
+            value = Overflow["lotNumber"];
+          else
+            value = _LotNumberElement;
           return _LotNumberElement is not null;
         case "manufacturer":
-          value = _ManufacturerElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ManufacturerElement))
+            value = Overflow["manufacturer"];
+          else
+            value = _ManufacturerElement;
           return _ManufacturerElement is not null;
         case "manufactureDate":
-          value = _ManufactureDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ManufactureDateElement))
+            value = Overflow["manufactureDate"];
+          else
+            value = _ManufactureDateElement;
           return _ManufactureDateElement is not null;
         case "expirationDate":
-          value = _ExpirationDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ExpirationDateElement))
+            value = Overflow["expirationDate"];
+          else
+            value = _ExpirationDateElement;
           return _ExpirationDateElement is not null;
         case "model":
-          value = _ModelElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ModelElement))
+            value = Overflow["model"];
+          else
+            value = _ModelElement;
           return _ModelElement is not null;
         case "version":
-          value = _VersionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_VersionElement))
+            value = Overflow["version"];
+          else
+            value = _VersionElement;
           return _VersionElement is not null;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "owner":
-          value = _Owner;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Owner))
+            value = Overflow["owner"];
+          else
+            value = _Owner;
           return _Owner is not null;
         case "contact":
-          value = _Contact;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Contact))
+            value = Overflow["contact"];
+          else
+            value = _Contact;
           return _Contact?.Any() == true;
         case "location":
-          value = _Location;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Location))
+            value = Overflow["location"];
+          else
+            value = _Location;
           return _Location is not null;
         case "url":
-          value = _UrlElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UrlElement))
+            value = Overflow["url"];
+          else
+            value = _UrlElement;
           return _UrlElement is not null;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         case "safety":
-          value = _Safety;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Safety))
+            value = Overflow["safety"];
+          else
+            value = _Safety;
           return _Safety?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

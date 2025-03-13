@@ -207,16 +207,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "age":
-          value = _Age;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Age))
+            value = Overflow["age"];
+          else
+            value = _Age;
           return _Age is not null;
         case "gender":
-          value = _Gender;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Gender))
+            value = Overflow["gender"];
+          else
+            value = _Gender;
           return _Gender is not null;
         case "race":
-          value = _Race;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Race))
+            value = Overflow["race"];
+          else
+            value = _Race;
           return _Race is not null;
         case "physiologicalCondition":
-          value = _PhysiologicalCondition;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PhysiologicalCondition))
+            value = Overflow["physiologicalCondition"];
+          else
+            value = _PhysiologicalCondition;
           return _PhysiologicalCondition is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -332,25 +332,46 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "created":
-          value = _CreatedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CreatedElement))
+            value = Overflow["created"];
+          else
+            value = _CreatedElement;
           return _CreatedElement is not null;
         case "insurer":
-          value = _Insurer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Insurer))
+            value = Overflow["insurer"];
+          else
+            value = _Insurer;
           return _Insurer is not null;
         case "provider":
-          value = _Provider;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Provider))
+            value = Overflow["provider"];
+          else
+            value = _Provider;
           return _Provider is not null;
         case "candidate":
-          value = _Candidate;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Candidate))
+            value = Overflow["candidate"];
+          else
+            value = _Candidate;
           return _Candidate is not null;
         case "coverage":
-          value = _Coverage;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Coverage))
+            value = Overflow["coverage"];
+          else
+            value = _Coverage;
           return _Coverage is not null;
         default:
           return base.TryGetValue(key, out value);

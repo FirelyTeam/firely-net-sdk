@@ -282,16 +282,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "factor":
-          value = _FactorElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_FactorElement))
+            value = Overflow["factor"];
+          else
+            value = _FactorElement;
           return _FactorElement is not null;
         case "amount":
-          value = _Amount;
+          if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_Amount))
+            value = Overflow["amount"];
+          else
+            value = _Amount;
           return _Amount is not null;
         default:
           return base.TryGetValue(key, out value);

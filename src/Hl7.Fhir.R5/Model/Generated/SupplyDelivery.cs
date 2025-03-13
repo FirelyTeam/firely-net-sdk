@@ -231,10 +231,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "item":
-            value = _Item;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -656,37 +662,70 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "basedOn":
-          value = _BasedOn;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_BasedOn))
+            value = Overflow["basedOn"];
+          else
+            value = _BasedOn;
           return _BasedOn?.Any() == true;
         case "partOf":
-          value = _PartOf;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_PartOf))
+            value = Overflow["partOf"];
+          else
+            value = _PartOf;
           return _PartOf?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "suppliedItem":
-          value = _SuppliedItem;
+          if (OverflowNull<List<Hl7.Fhir.Model.SupplyDelivery.SuppliedItemComponent>>.InOverflow(_SuppliedItem))
+            value = Overflow["suppliedItem"];
+          else
+            value = _SuppliedItem;
           return _SuppliedItem?.Any() == true;
         case "occurrence":
-          value = _Occurrence;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Occurrence))
+            value = Overflow["occurrence"];
+          else
+            value = _Occurrence;
           return _Occurrence is not null;
         case "supplier":
-          value = _Supplier;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Supplier))
+            value = Overflow["supplier"];
+          else
+            value = _Supplier;
           return _Supplier is not null;
         case "destination":
-          value = _Destination;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Destination))
+            value = Overflow["destination"];
+          else
+            value = _Destination;
           return _Destination is not null;
         case "receiver":
-          value = _Receiver;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Receiver))
+            value = Overflow["receiver"];
+          else
+            value = _Receiver;
           return _Receiver?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

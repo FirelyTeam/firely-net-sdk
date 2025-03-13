@@ -360,22 +360,40 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "versionId":
-          value = _VersionIdElement;
+          if (OverflowNull<Hl7.Fhir.Model.Id>.InOverflow(_VersionIdElement))
+            value = Overflow["versionId"];
+          else
+            value = _VersionIdElement;
           return _VersionIdElement is not null;
         case "lastUpdated":
-          value = _LastUpdatedElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_LastUpdatedElement))
+            value = Overflow["lastUpdated"];
+          else
+            value = _LastUpdatedElement;
           return _LastUpdatedElement is not null;
         case "source":
-          value = _SourceElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_SourceElement))
+            value = Overflow["source"];
+          else
+            value = _SourceElement;
           return _SourceElement is not null;
         case "profile":
-          value = _ProfileElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.PrimitiveType>>.InOverflow(_ProfileElement))
+            value = Overflow["profile"];
+          else
+            value = _ProfileElement;
           return _ProfileElement?.Any() == true;
         case "security":
-          value = _Security;
+          if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Security))
+            value = Overflow["security"];
+          else
+            value = _Security;
           return _Security?.Any() == true;
         case "tag":
-          value = _Tag;
+          if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Tag))
+            value = Overflow["tag"];
+          else
+            value = _Tag;
           return _Tag?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

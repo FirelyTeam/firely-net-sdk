@@ -383,25 +383,46 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "origin":
-          value = _Origin;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Origin))
+            value = Overflow["origin"];
+          else
+            value = _Origin;
           return _Origin is not null;
         case "period":
-          value = _PeriodElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_PeriodElement))
+            value = Overflow["period"];
+          else
+            value = _PeriodElement;
           return _PeriodElement is not null;
         case "factor":
-          value = _FactorElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_FactorElement))
+            value = Overflow["factor"];
+          else
+            value = _FactorElement;
           return _FactorElement is not null;
         case "lowerLimit":
-          value = _LowerLimitElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_LowerLimitElement))
+            value = Overflow["lowerLimit"];
+          else
+            value = _LowerLimitElement;
           return _LowerLimitElement is not null;
         case "upperLimit":
-          value = _UpperLimitElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_UpperLimitElement))
+            value = Overflow["upperLimit"];
+          else
+            value = _UpperLimitElement;
           return _UpperLimitElement is not null;
         case "dimensions":
-          value = _DimensionsElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_DimensionsElement))
+            value = Overflow["dimensions"];
+          else
+            value = _DimensionsElement;
           return _DimensionsElement is not null;
         case "data":
-          value = _DataElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DataElement))
+            value = Overflow["data"];
+          else
+            value = _DataElement;
           return _DataElement is not null;
         default:
           return base.TryGetValue(key, out value);

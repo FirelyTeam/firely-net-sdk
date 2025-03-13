@@ -314,22 +314,40 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "outcome":
-            value = _Outcome;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Outcome))
+              value = Overflow["outcome"];
+            else
+              value = _Outcome;
             return _Outcome is not null;
           case "probability":
-            value = _Probability;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Probability))
+              value = Overflow["probability"];
+            else
+              value = _Probability;
             return _Probability is not null;
           case "qualitativeRisk":
-            value = _QualitativeRisk;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_QualitativeRisk))
+              value = Overflow["qualitativeRisk"];
+            else
+              value = _QualitativeRisk;
             return _QualitativeRisk is not null;
           case "relativeRisk":
-            value = _RelativeRiskElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_RelativeRiskElement))
+              value = Overflow["relativeRisk"];
+            else
+              value = _RelativeRiskElement;
             return _RelativeRiskElement is not null;
           case "when":
-            value = _When;
+            if (OverflowNull<DynamicDataType>.InOverflow(_When))
+              value = Overflow["when"];
+            else
+              value = _When;
             return _When is not null;
           case "rationale":
-            value = _RationaleElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_RationaleElement))
+              value = Overflow["rationale"];
+            else
+              value = _RationaleElement;
             return _RationaleElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -977,55 +995,106 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "basedOn":
-          value = _BasedOn;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_BasedOn))
+            value = Overflow["basedOn"];
+          else
+            value = _BasedOn;
           return _BasedOn is not null;
         case "parent":
-          value = _Parent;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Parent))
+            value = Overflow["parent"];
+          else
+            value = _Parent;
           return _Parent is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.ObservationStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "method":
-          value = _Method;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Method))
+            value = Overflow["method"];
+          else
+            value = _Method;
           return _Method is not null;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "occurrence":
-          value = _Occurrence;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Occurrence))
+            value = Overflow["occurrence"];
+          else
+            value = _Occurrence;
           return _Occurrence is not null;
         case "condition":
-          value = _Condition;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Condition))
+            value = Overflow["condition"];
+          else
+            value = _Condition;
           return _Condition is not null;
         case "performer":
-          value = _Performer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Performer))
+            value = Overflow["performer"];
+          else
+            value = _Performer;
           return _Performer is not null;
         case "reasonCode":
-          value = _ReasonCode;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ReasonCode))
+            value = Overflow["reasonCode"];
+          else
+            value = _ReasonCode;
           return _ReasonCode?.Any() == true;
         case "reasonReference":
-          value = _ReasonReference;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_ReasonReference))
+            value = Overflow["reasonReference"];
+          else
+            value = _ReasonReference;
           return _ReasonReference?.Any() == true;
         case "basis":
-          value = _Basis;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Basis))
+            value = Overflow["basis"];
+          else
+            value = _Basis;
           return _Basis?.Any() == true;
         case "prediction":
-          value = _Prediction;
+          if (OverflowNull<List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>>.InOverflow(_Prediction))
+            value = Overflow["prediction"];
+          else
+            value = _Prediction;
           return _Prediction?.Any() == true;
         case "mitigation":
-          value = _MitigationElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MitigationElement))
+            value = Overflow["mitigation"];
+          else
+            value = _MitigationElement;
           return _MitigationElement is not null;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

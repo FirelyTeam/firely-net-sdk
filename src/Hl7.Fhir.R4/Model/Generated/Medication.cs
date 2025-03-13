@@ -241,13 +241,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "item":
-            value = _Item;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item is not null;
           case "isActive":
-            value = _IsActiveElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_IsActiveElement))
+              value = Overflow["isActive"];
+            else
+              value = _IsActiveElement;
             return _IsActiveElement is not null;
           case "strength":
-            value = _Strength;
+            if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Strength))
+              value = Overflow["strength"];
+            else
+              value = _Strength;
             return _Strength is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -433,10 +442,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "lotNumber":
-            value = _LotNumberElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LotNumberElement))
+              value = Overflow["lotNumber"];
+            else
+              value = _LotNumberElement;
             return _LotNumberElement is not null;
           case "expirationDate":
-            value = _ExpirationDateElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ExpirationDateElement))
+              value = Overflow["expirationDate"];
+            else
+              value = _ExpirationDateElement;
             return _ExpirationDateElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -763,28 +778,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Medication.MedicationStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "manufacturer":
-          value = _Manufacturer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Manufacturer))
+            value = Overflow["manufacturer"];
+          else
+            value = _Manufacturer;
           return _Manufacturer is not null;
         case "form":
-          value = _Form;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Form))
+            value = Overflow["form"];
+          else
+            value = _Form;
           return _Form is not null;
         case "amount":
-          value = _Amount;
+          if (OverflowNull<Hl7.Fhir.Model.Ratio>.InOverflow(_Amount))
+            value = Overflow["amount"];
+          else
+            value = _Amount;
           return _Amount is not null;
         case "ingredient":
-          value = _Ingredient;
+          if (OverflowNull<List<Hl7.Fhir.Model.Medication.IngredientComponent>>.InOverflow(_Ingredient))
+            value = Overflow["ingredient"];
+          else
+            value = _Ingredient;
           return _Ingredient?.Any() == true;
         case "batch":
-          value = _Batch;
+          if (OverflowNull<Hl7.Fhir.Model.Medication.BatchComponent>.InOverflow(_Batch))
+            value = Overflow["batch"];
+          else
+            value = _Batch;
           return _Batch is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -149,10 +149,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "concept":
-          value = _Concept;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Concept))
+            value = Overflow["concept"];
+          else
+            value = _Concept;
           return _Concept is not null;
         case "reference":
-          value = _Reference;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reference))
+            value = Overflow["reference"];
+          else
+            value = _Reference;
           return _Reference is not null;
         default:
           return base.TryGetValue(key, out value);

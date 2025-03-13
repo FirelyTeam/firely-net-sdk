@@ -218,10 +218,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "language":
-            value = _Language;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Language))
+              value = Overflow["language"];
+            else
+              value = _Language;
             return _Language is not null;
           case "preferred":
-            value = _PreferredElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_PreferredElement))
+              value = Overflow["preferred"];
+            else
+              value = _PreferredElement;
             return _PreferredElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -385,10 +391,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "target":
-            value = _Target;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Target))
+              value = Overflow["target"];
+            else
+              value = _Target;
             return _Target is not null;
           case "assurance":
-            value = _AssuranceElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel>>.InOverflow(_AssuranceElement))
+              value = Overflow["assurance"];
+            else
+              value = _AssuranceElement;
             return _AssuranceElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -888,43 +900,82 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "active":
-          value = _ActiveElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+            value = Overflow["active"];
+          else
+            value = _ActiveElement;
           return _ActiveElement is not null;
         case "name":
-          value = _Name;
+          if (OverflowNull<List<Hl7.Fhir.Model.HumanName>>.InOverflow(_Name))
+            value = Overflow["name"];
+          else
+            value = _Name;
           return _Name?.Any() == true;
         case "telecom":
-          value = _Telecom;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Telecom))
+            value = Overflow["telecom"];
+          else
+            value = _Telecom;
           return _Telecom?.Any() == true;
         case "gender":
-          value = _GenderElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.AdministrativeGender>>.InOverflow(_GenderElement))
+            value = Overflow["gender"];
+          else
+            value = _GenderElement;
           return _GenderElement is not null;
         case "birthDate":
-          value = _BirthDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_BirthDateElement))
+            value = Overflow["birthDate"];
+          else
+            value = _BirthDateElement;
           return _BirthDateElement is not null;
         case "deceased":
-          value = _Deceased;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Deceased))
+            value = Overflow["deceased"];
+          else
+            value = _Deceased;
           return _Deceased is not null;
         case "address":
-          value = _Address;
+          if (OverflowNull<List<Hl7.Fhir.Model.Address>>.InOverflow(_Address))
+            value = Overflow["address"];
+          else
+            value = _Address;
           return _Address?.Any() == true;
         case "maritalStatus":
-          value = _MaritalStatus;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_MaritalStatus))
+            value = Overflow["maritalStatus"];
+          else
+            value = _MaritalStatus;
           return _MaritalStatus is not null;
         case "photo":
-          value = _Photo;
+          if (OverflowNull<List<Hl7.Fhir.Model.Attachment>>.InOverflow(_Photo))
+            value = Overflow["photo"];
+          else
+            value = _Photo;
           return _Photo?.Any() == true;
         case "communication":
-          value = _Communication;
+          if (OverflowNull<List<Hl7.Fhir.Model.Person.CommunicationComponent>>.InOverflow(_Communication))
+            value = Overflow["communication"];
+          else
+            value = _Communication;
           return _Communication?.Any() == true;
         case "managingOrganization":
-          value = _ManagingOrganization;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ManagingOrganization))
+            value = Overflow["managingOrganization"];
+          else
+            value = _ManagingOrganization;
           return _ManagingOrganization is not null;
         case "link":
-          value = _Link;
+          if (OverflowNull<List<Hl7.Fhir.Model.Person.LinkComponent>>.InOverflow(_Link))
+            value = Overflow["link"];
+          else
+            value = _Link;
           return _Link?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

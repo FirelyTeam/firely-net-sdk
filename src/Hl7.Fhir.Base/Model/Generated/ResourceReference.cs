@@ -254,16 +254,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "reference":
-          value = _ReferenceElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ReferenceElement))
+            value = Overflow["reference"];
+          else
+            value = _ReferenceElement;
           return _ReferenceElement is not null;
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier is not null;
         case "display":
-          value = _DisplayElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DisplayElement))
+            value = Overflow["display"];
+          else
+            value = _DisplayElement;
           return _DisplayElement is not null;
         default:
           return base.TryGetValue(key, out value);

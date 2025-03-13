@@ -356,28 +356,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "active":
-          value = _ActiveElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+            value = Overflow["active"];
+          else
+            value = _ActiveElement;
           return _ActiveElement is not null;
         case "serviceCategory":
-          value = _ServiceCategory;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ServiceCategory))
+            value = Overflow["serviceCategory"];
+          else
+            value = _ServiceCategory;
           return _ServiceCategory?.Any() == true;
         case "serviceType":
-          value = _ServiceType;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ServiceType))
+            value = Overflow["serviceType"];
+          else
+            value = _ServiceType;
           return _ServiceType?.Any() == true;
         case "specialty":
-          value = _Specialty;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Specialty))
+            value = Overflow["specialty"];
+          else
+            value = _Specialty;
           return _Specialty?.Any() == true;
         case "actor":
-          value = _Actor;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Actor))
+            value = Overflow["actor"];
+          else
+            value = _Actor;
           return _Actor?.Any() == true;
         case "planningHorizon":
-          value = _PlanningHorizon;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_PlanningHorizon))
+            value = Overflow["planningHorizon"];
+          else
+            value = _PlanningHorizon;
           return _PlanningHorizon is not null;
         case "comment":
-          value = _CommentElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CommentElement))
+            value = Overflow["comment"];
+          else
+            value = _CommentElement;
           return _CommentElement is not null;
         default:
           return base.TryGetValue(key, out value);

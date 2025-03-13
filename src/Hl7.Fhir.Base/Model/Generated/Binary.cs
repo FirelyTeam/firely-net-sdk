@@ -265,16 +265,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "contentType":
-          value = _ContentTypeElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+            value = Overflow["contentType"];
+          else
+            value = _ContentTypeElement;
           return _ContentTypeElement is not null;
         case "securityContext":
-          value = _SecurityContext;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_SecurityContext))
+            value = Overflow["securityContext"];
+          else
+            value = _SecurityContext;
           return _SecurityContext is not null;
         case "content":
-          value = _ContentElement;
+          if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_ContentElement))
+            value = Overflow["content"];
+          else
+            value = _ContentElement;
           return _ContentElement is not null;
         case "data":
-          value = _DataElement;
+          if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+            value = Overflow["data"];
+          else
+            value = _DataElement;
           return _DataElement is not null;
         default:
           return base.TryGetValue(key, out value);

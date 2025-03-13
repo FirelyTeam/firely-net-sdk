@@ -223,16 +223,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "purpose":
-            value = _Purpose;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Purpose))
+              value = Overflow["purpose"];
+            else
+              value = _Purpose;
             return _Purpose is not null;
           case "name":
-            value = _Name;
+            if (OverflowNull<Hl7.Fhir.Model.HumanName>.InOverflow(_Name))
+              value = Overflow["name"];
+            else
+              value = _Name;
             return _Name is not null;
           case "telecom":
-            value = _Telecom;
+            if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Telecom))
+              value = Overflow["telecom"];
+            else
+              value = _Telecom;
             return _Telecom?.Any() == true;
           case "address":
-            value = _Address;
+            if (OverflowNull<Hl7.Fhir.Model.Address>.InOverflow(_Address))
+              value = Overflow["address"];
+            else
+              value = _Address;
             return _Address is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -667,34 +679,64 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "active":
-          value = _ActiveElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_ActiveElement))
+            value = Overflow["active"];
+          else
+            value = _ActiveElement;
           return _ActiveElement is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type?.Any() == true;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "alias":
-          value = _AliasElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_AliasElement))
+            value = Overflow["alias"];
+          else
+            value = _AliasElement;
           return _AliasElement?.Any() == true;
         case "telecom":
-          value = _Telecom;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Telecom))
+            value = Overflow["telecom"];
+          else
+            value = _Telecom;
           return _Telecom?.Any() == true;
         case "address":
-          value = _Address;
+          if (OverflowNull<List<Hl7.Fhir.Model.Address>>.InOverflow(_Address))
+            value = Overflow["address"];
+          else
+            value = _Address;
           return _Address?.Any() == true;
         case "partOf":
-          value = _PartOf;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_PartOf))
+            value = Overflow["partOf"];
+          else
+            value = _PartOf;
           return _PartOf is not null;
         case "contact":
-          value = _Contact;
+          if (OverflowNull<List<Hl7.Fhir.Model.Organization.ContactComponent>>.InOverflow(_Contact))
+            value = Overflow["contact"];
+          else
+            value = _Contact;
           return _Contact?.Any() == true;
         case "endpoint":
-          value = _Endpoint;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Endpoint))
+            value = Overflow["endpoint"];
+          else
+            value = _Endpoint;
           return _Endpoint?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

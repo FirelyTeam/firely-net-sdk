@@ -195,10 +195,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "item":
-            value = _Item;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item is not null;
           case "amount":
-            value = _Amount;
+            if (OverflowNull<List<Hl7.Fhir.Model.Ratio>>.InOverflow(_Amount))
+              value = Overflow["amount"];
+            else
+              value = _Amount;
             return _Amount?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -344,10 +350,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "item":
-            value = _Item;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item is not null;
           case "amount":
-            value = _Amount;
+            if (OverflowNull<List<Hl7.Fhir.Model.Ratio>>.InOverflow(_Amount))
+              value = Overflow["amount"];
+            else
+              value = _Amount;
             return _Amount?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -496,10 +508,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "value":
-            value = _Value;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -776,19 +794,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier?.Any() == true;
           case "lotNumber":
-            value = _LotNumberElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LotNumberElement))
+              value = Overflow["lotNumber"];
+            else
+              value = _LotNumberElement;
             return _LotNumberElement is not null;
           case "expiry":
-            value = _ExpiryElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ExpiryElement))
+              value = Overflow["expiry"];
+            else
+              value = _ExpiryElement;
             return _ExpiryElement is not null;
           case "useBy":
-            value = _UseByElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_UseByElement))
+              value = Overflow["useBy"];
+            else
+              value = _UseByElement;
             return _UseByElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1200,34 +1233,64 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.NutritionProduct.NutritionProductStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "category":
-          value = _Category;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Category))
+            value = Overflow["category"];
+          else
+            value = _Category;
           return _Category?.Any() == true;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "manufacturer":
-          value = _Manufacturer;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
+            value = Overflow["manufacturer"];
+          else
+            value = _Manufacturer;
           return _Manufacturer?.Any() == true;
         case "nutrient":
-          value = _Nutrient;
+          if (OverflowNull<List<Hl7.Fhir.Model.NutritionProduct.NutrientComponent>>.InOverflow(_Nutrient))
+            value = Overflow["nutrient"];
+          else
+            value = _Nutrient;
           return _Nutrient?.Any() == true;
         case "ingredient":
-          value = _Ingredient;
+          if (OverflowNull<List<Hl7.Fhir.Model.NutritionProduct.IngredientComponent>>.InOverflow(_Ingredient))
+            value = Overflow["ingredient"];
+          else
+            value = _Ingredient;
           return _Ingredient?.Any() == true;
         case "knownAllergen":
-          value = _KnownAllergen;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_KnownAllergen))
+            value = Overflow["knownAllergen"];
+          else
+            value = _KnownAllergen;
           return _KnownAllergen?.Any() == true;
         case "productCharacteristic":
-          value = _ProductCharacteristic;
+          if (OverflowNull<List<Hl7.Fhir.Model.NutritionProduct.ProductCharacteristicComponent>>.InOverflow(_ProductCharacteristic))
+            value = Overflow["productCharacteristic"];
+          else
+            value = _ProductCharacteristic;
           return _ProductCharacteristic?.Any() == true;
         case "instance":
-          value = _Instance;
+          if (OverflowNull<Hl7.Fhir.Model.NutritionProduct.InstanceComponent>.InOverflow(_Instance))
+            value = Overflow["instance"];
+          else
+            value = _Instance;
           return _Instance is not null;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

@@ -150,10 +150,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "low":
-          value = _Low;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Low))
+            value = Overflow["low"];
+          else
+            value = _Low;
           return _Low is not null;
         case "high":
-          value = _High;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_High))
+            value = Overflow["high"];
+          else
+            value = _High;
           return _High is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -297,16 +297,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "eventNumber":
-            value = _EventNumberElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EventNumberElement))
+              value = Overflow["eventNumber"];
+            else
+              value = _EventNumberElement;
             return _EventNumberElement is not null;
           case "timestamp":
-            value = _TimestampElement;
+            if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_TimestampElement))
+              value = Overflow["timestamp"];
+            else
+              value = _TimestampElement;
             return _TimestampElement is not null;
           case "focus":
-            value = _Focus;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Focus))
+              value = Overflow["focus"];
+            else
+              value = _Focus;
             return _Focus is not null;
           case "additionalContext":
-            value = _AdditionalContext;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_AdditionalContext))
+              value = Overflow["additionalContext"];
+            else
+              value = _AdditionalContext;
             return _AdditionalContext?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -666,25 +678,46 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "eventsSinceSubscriptionStart":
-          value = _EventsSinceSubscriptionStartElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_EventsSinceSubscriptionStartElement))
+            value = Overflow["eventsSinceSubscriptionStart"];
+          else
+            value = _EventsSinceSubscriptionStartElement;
           return _EventsSinceSubscriptionStartElement is not null;
         case "notificationEvent":
-          value = _NotificationEvent;
+          if (OverflowNull<List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>>.InOverflow(_NotificationEvent))
+            value = Overflow["notificationEvent"];
+          else
+            value = _NotificationEvent;
           return _NotificationEvent?.Any() == true;
         case "subscription":
-          value = _Subscription;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subscription))
+            value = Overflow["subscription"];
+          else
+            value = _Subscription;
           return _Subscription is not null;
         case "topic":
-          value = _TopicElement;
+          if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_TopicElement))
+            value = Overflow["topic"];
+          else
+            value = _TopicElement;
           return _TopicElement is not null;
         case "error":
-          value = _Error;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Error))
+            value = Overflow["error"];
+          else
+            value = _Error;
           return _Error?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

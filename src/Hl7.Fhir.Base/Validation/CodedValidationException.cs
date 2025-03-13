@@ -181,8 +181,8 @@ public class CodedValidationException : ExtendedCodedException
     internal static CodedValidationException FromTypes(Type expected, object? actual) =>
         actual switch
         {
-            PrimitiveType when typeof(PrimitiveType).IsAssignableFrom(expected) => TYPE_MISMATCH(null, expected.Name, actual.GetType().Name),
             PrimitiveType when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_PRIMITIVE(null, actual),
+            PrimitiveType when typeof(PrimitiveType).IsAssignableFrom(expected) => TYPE_MISMATCH(null, expected.Name, actual.GetType().Name),
             PrimitiveType when typeof(Base).IsAssignableFrom(expected) => EXPECTED_OBJECT_NOT_PRIMITIVE(null, actual),
             Base when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_OBJECT(null, actual),
             Base when typeof(PrimitiveType).IsAssignableFrom(expected) => EXPECTED_PRIMITIVE_NOT_OBJECT(null, actual),

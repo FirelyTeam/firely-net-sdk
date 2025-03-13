@@ -295,25 +295,46 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "manufacturedDoseForm":
-          value = _ManufacturedDoseForm;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ManufacturedDoseForm))
+            value = Overflow["manufacturedDoseForm"];
+          else
+            value = _ManufacturedDoseForm;
           return _ManufacturedDoseForm is not null;
         case "unitOfPresentation":
-          value = _UnitOfPresentation;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_UnitOfPresentation))
+            value = Overflow["unitOfPresentation"];
+          else
+            value = _UnitOfPresentation;
           return _UnitOfPresentation is not null;
         case "quantity":
-          value = _Quantity;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+            value = Overflow["quantity"];
+          else
+            value = _Quantity;
           return _Quantity is not null;
         case "manufacturer":
-          value = _Manufacturer;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Manufacturer))
+            value = Overflow["manufacturer"];
+          else
+            value = _Manufacturer;
           return _Manufacturer?.Any() == true;
         case "ingredient":
-          value = _Ingredient;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Ingredient))
+            value = Overflow["ingredient"];
+          else
+            value = _Ingredient;
           return _Ingredient?.Any() == true;
         case "physicalCharacteristics":
-          value = _PhysicalCharacteristics;
+          if (OverflowNull<Hl7.Fhir.Model.ProdCharacteristic>.InOverflow(_PhysicalCharacteristics))
+            value = Overflow["physicalCharacteristics"];
+          else
+            value = _PhysicalCharacteristics;
           return _PhysicalCharacteristics is not null;
         case "otherCharacteristics":
-          value = _OtherCharacteristics;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_OtherCharacteristics))
+            value = Overflow["otherCharacteristics"];
+          else
+            value = _OtherCharacteristics;
           return _OtherCharacteristics?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

@@ -375,13 +375,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _TypeElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>>.InOverflow(_TypeElement))
+              value = Overflow["type"];
+            else
+              value = _TypeElement;
             return _TypeElement is not null;
           case "uri":
-            value = _UriElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_UriElement))
+              value = Overflow["uri"];
+            else
+              value = _UriElement;
             return _UriElement is not null;
           case "display":
-            value = _DisplayElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DisplayElement))
+              value = Overflow["display"];
+            else
+              value = _DisplayElement;
             return _DisplayElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -507,7 +516,10 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "action":
-            value = _Action;
+            if (OverflowNull<List<Hl7.Fhir.Model.TestReport.SetupActionComponent>>.InOverflow(_Action))
+              value = Overflow["action"];
+            else
+              value = _Action;
             return _Action?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -646,10 +658,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "operation":
-            value = _Operation;
+            if (OverflowNull<Hl7.Fhir.Model.TestReport.OperationComponent>.InOverflow(_Operation))
+              value = Overflow["operation"];
+            else
+              value = _Operation;
             return _Operation is not null;
           case "assert":
-            value = _Assert;
+            if (OverflowNull<Hl7.Fhir.Model.TestReport.AssertComponent>.InOverflow(_Assert))
+              value = Overflow["assert"];
+            else
+              value = _Assert;
             return _Assert is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -872,13 +890,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "result":
-            value = _ResultElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>>.InOverflow(_ResultElement))
+              value = Overflow["result"];
+            else
+              value = _ResultElement;
             return _ResultElement is not null;
           case "message":
-            value = _MessageElement;
+            if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_MessageElement))
+              value = Overflow["message"];
+            else
+              value = _MessageElement;
             return _MessageElement is not null;
           case "detail":
-            value = _DetailElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_DetailElement))
+              value = Overflow["detail"];
+            else
+              value = _DetailElement;
             return _DetailElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1139,16 +1166,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "result":
-            value = _ResultElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>>.InOverflow(_ResultElement))
+              value = Overflow["result"];
+            else
+              value = _ResultElement;
             return _ResultElement is not null;
           case "message":
-            value = _MessageElement;
+            if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_MessageElement))
+              value = Overflow["message"];
+            else
+              value = _MessageElement;
             return _MessageElement is not null;
           case "detail":
-            value = _DetailElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DetailElement))
+              value = Overflow["detail"];
+            else
+              value = _DetailElement;
             return _DetailElement is not null;
           case "requirement":
-            value = _Requirement;
+            if (OverflowNull<List<Hl7.Fhir.Model.TestReport.RequirementComponent>>.InOverflow(_Requirement))
+              value = Overflow["requirement"];
+            else
+              value = _Requirement;
             return _Requirement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1288,7 +1327,10 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "link":
-            value = _Link;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Link))
+              value = Overflow["link"];
+            else
+              value = _Link;
             return _Link is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1482,13 +1524,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "name":
-            value = _NameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+              value = Overflow["name"];
+            else
+              value = _NameElement;
             return _NameElement is not null;
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "action":
-            value = _Action;
+            if (OverflowNull<List<Hl7.Fhir.Model.TestReport.TestActionComponent>>.InOverflow(_Action))
+              value = Overflow["action"];
+            else
+              value = _Action;
             return _Action?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1645,10 +1696,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "operation":
-            value = _Operation;
+            if (OverflowNull<Hl7.Fhir.Model.TestReport.OperationComponent>.InOverflow(_Operation))
+              value = Overflow["operation"];
+            else
+              value = _Operation;
             return _Operation is not null;
           case "assert":
-            value = _Assert;
+            if (OverflowNull<Hl7.Fhir.Model.TestReport.AssertComponent>.InOverflow(_Assert))
+              value = Overflow["assert"];
+            else
+              value = _Assert;
             return _Assert is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1768,7 +1825,10 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "action":
-            value = _Action;
+            if (OverflowNull<List<Hl7.Fhir.Model.TestReport.TeardownActionComponent>>.InOverflow(_Action))
+              value = Overflow["action"];
+            else
+              value = _Action;
             return _Action?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1880,7 +1940,10 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "operation":
-            value = _Operation;
+            if (OverflowNull<Hl7.Fhir.Model.TestReport.OperationComponent>.InOverflow(_Operation))
+              value = Overflow["operation"];
+            else
+              value = _Operation;
             return _Operation is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -2398,40 +2461,76 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier is not null;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.TestReport.TestReportStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "testScript":
-          value = _TestScriptElement;
+          if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_TestScriptElement))
+            value = Overflow["testScript"];
+          else
+            value = _TestScriptElement;
           return _TestScriptElement is not null;
         case "result":
-          value = _ResultElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.TestReport.TestReportResult>>.InOverflow(_ResultElement))
+            value = Overflow["result"];
+          else
+            value = _ResultElement;
           return _ResultElement is not null;
         case "score":
-          value = _ScoreElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_ScoreElement))
+            value = Overflow["score"];
+          else
+            value = _ScoreElement;
           return _ScoreElement is not null;
         case "tester":
-          value = _TesterElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TesterElement))
+            value = Overflow["tester"];
+          else
+            value = _TesterElement;
           return _TesterElement is not null;
         case "issued":
-          value = _IssuedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_IssuedElement))
+            value = Overflow["issued"];
+          else
+            value = _IssuedElement;
           return _IssuedElement is not null;
         case "participant":
-          value = _Participant;
+          if (OverflowNull<List<Hl7.Fhir.Model.TestReport.ParticipantComponent>>.InOverflow(_Participant))
+            value = Overflow["participant"];
+          else
+            value = _Participant;
           return _Participant?.Any() == true;
         case "setup":
-          value = _Setup;
+          if (OverflowNull<Hl7.Fhir.Model.TestReport.SetupComponent>.InOverflow(_Setup))
+            value = Overflow["setup"];
+          else
+            value = _Setup;
           return _Setup is not null;
         case "test":
-          value = _Test;
+          if (OverflowNull<List<Hl7.Fhir.Model.TestReport.TestComponent>>.InOverflow(_Test))
+            value = Overflow["test"];
+          else
+            value = _Test;
           return _Test?.Any() == true;
         case "teardown":
-          value = _Teardown;
+          if (OverflowNull<Hl7.Fhir.Model.TestReport.TeardownComponent>.InOverflow(_Teardown))
+            value = Overflow["teardown"];
+          else
+            value = _Teardown;
           return _Teardown is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -239,16 +239,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "id":
-          value = _IdElement;
+          if (OverflowNull<Hl7.Fhir.Model.Id>.InOverflow(_IdElement))
+            value = Overflow["id"];
+          else
+            value = _IdElement;
           return _IdElement is not null;
         case "meta":
-          value = _Meta;
+          if (OverflowNull<Hl7.Fhir.Model.Meta>.InOverflow(_Meta))
+            value = Overflow["meta"];
+          else
+            value = _Meta;
           return _Meta is not null;
         case "implicitRules":
-          value = _ImplicitRulesElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_ImplicitRulesElement))
+            value = Overflow["implicitRules"];
+          else
+            value = _ImplicitRulesElement;
           return _ImplicitRulesElement is not null;
         case "language":
-          value = _LanguageElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_LanguageElement))
+            value = Overflow["language"];
+          else
+            value = _LanguageElement;
           return _LanguageElement is not null;
         default:
           return base.TryGetValue(key, out value);

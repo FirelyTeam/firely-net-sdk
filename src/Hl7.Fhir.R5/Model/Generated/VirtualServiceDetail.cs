@@ -282,19 +282,34 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "channelType":
-          value = _ChannelType;
+          if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_ChannelType))
+            value = Overflow["channelType"];
+          else
+            value = _ChannelType;
           return _ChannelType is not null;
         case "address":
-          value = _Address;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Address))
+            value = Overflow["address"];
+          else
+            value = _Address;
           return _Address is not null;
         case "additionalInfo":
-          value = _AdditionalInfoElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirUrl>>.InOverflow(_AdditionalInfoElement))
+            value = Overflow["additionalInfo"];
+          else
+            value = _AdditionalInfoElement;
           return _AdditionalInfoElement?.Any() == true;
         case "maxParticipants":
-          value = _MaxParticipantsElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_MaxParticipantsElement))
+            value = Overflow["maxParticipants"];
+          else
+            value = _MaxParticipantsElement;
           return _MaxParticipantsElement is not null;
         case "sessionKey":
-          value = _SessionKeyElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SessionKeyElement))
+            value = Overflow["sessionKey"];
+          else
+            value = _SessionKeyElement;
           return _SessionKeyElement is not null;
         default:
           return base.TryGetValue(key, out value);

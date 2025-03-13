@@ -208,10 +208,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "role":
-            value = _Role;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Role))
+              value = Overflow["role"];
+            else
+              value = _Role;
             return _Role is not null;
           case "actor":
-            value = _Actor;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Actor))
+              value = Overflow["actor"];
+            else
+              value = _Actor;
             return _Actor is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -406,13 +412,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "sequence":
-            value = _SequenceElement;
+            if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_SequenceElement))
+              value = Overflow["sequence"];
+            else
+              value = _SequenceElement;
             return _SequenceElement is not null;
           case "chargeItem":
-            value = _ChargeItem;
+            if (OverflowNull<DynamicDataType>.InOverflow(_ChargeItem))
+              value = Overflow["chargeItem"];
+            else
+              value = _ChargeItem;
             return _ChargeItem is not null;
           case "priceComponent":
-            value = _PriceComponent;
+            if (OverflowNull<List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>>.InOverflow(_PriceComponent))
+              value = Overflow["priceComponent"];
+            else
+              value = _PriceComponent;
             return _PriceComponent?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -657,16 +672,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _TypeElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.InvoicePriceComponentType>>.InOverflow(_TypeElement))
+              value = Overflow["type"];
+            else
+              value = _TypeElement;
             return _TypeElement is not null;
           case "code":
-            value = _Code;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+              value = Overflow["code"];
+            else
+              value = _Code;
             return _Code is not null;
           case "factor":
-            value = _FactorElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_FactorElement))
+              value = Overflow["factor"];
+            else
+              value = _FactorElement;
             return _FactorElement is not null;
           case "amount":
-            value = _Amount;
+            if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_Amount))
+              value = Overflow["amount"];
+            else
+              value = _Amount;
             return _Amount is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1285,52 +1312,100 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "cancelledReason":
-          value = _CancelledReasonElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CancelledReasonElement))
+            value = Overflow["cancelledReason"];
+          else
+            value = _CancelledReasonElement;
           return _CancelledReasonElement is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "recipient":
-          value = _Recipient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Recipient))
+            value = Overflow["recipient"];
+          else
+            value = _Recipient;
           return _Recipient is not null;
         case "date":
-          value = _DateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateElement))
+            value = Overflow["date"];
+          else
+            value = _DateElement;
           return _DateElement is not null;
         case "participant":
-          value = _Participant;
+          if (OverflowNull<List<Hl7.Fhir.Model.Invoice.ParticipantComponent>>.InOverflow(_Participant))
+            value = Overflow["participant"];
+          else
+            value = _Participant;
           return _Participant?.Any() == true;
         case "issuer":
-          value = _Issuer;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Issuer))
+            value = Overflow["issuer"];
+          else
+            value = _Issuer;
           return _Issuer is not null;
         case "account":
-          value = _Account;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Account))
+            value = Overflow["account"];
+          else
+            value = _Account;
           return _Account is not null;
         case "lineItem":
-          value = _LineItem;
+          if (OverflowNull<List<Hl7.Fhir.Model.Invoice.LineItemComponent>>.InOverflow(_LineItem))
+            value = Overflow["lineItem"];
+          else
+            value = _LineItem;
           return _LineItem?.Any() == true;
         case "totalPriceComponent":
-          value = _TotalPriceComponent;
+          if (OverflowNull<List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>>.InOverflow(_TotalPriceComponent))
+            value = Overflow["totalPriceComponent"];
+          else
+            value = _TotalPriceComponent;
           return _TotalPriceComponent?.Any() == true;
         case "totalNet":
-          value = _TotalNet;
+          if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_TotalNet))
+            value = Overflow["totalNet"];
+          else
+            value = _TotalNet;
           return _TotalNet is not null;
         case "totalGross":
-          value = _TotalGross;
+          if (OverflowNull<Hl7.Fhir.Model.Money>.InOverflow(_TotalGross))
+            value = Overflow["totalGross"];
+          else
+            value = _TotalGross;
           return _TotalGross is not null;
         case "paymentTerms":
-          value = _PaymentTermsElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_PaymentTermsElement))
+            value = Overflow["paymentTerms"];
+          else
+            value = _PaymentTermsElement;
           return _PaymentTermsElement is not null;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

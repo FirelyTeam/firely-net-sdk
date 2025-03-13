@@ -190,13 +190,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "geneSequenceOrigin":
-            value = _GeneSequenceOrigin;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_GeneSequenceOrigin))
+              value = Overflow["geneSequenceOrigin"];
+            else
+              value = _GeneSequenceOrigin;
             return _GeneSequenceOrigin is not null;
           case "gene":
-            value = _Gene;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Gene))
+              value = Overflow["gene"];
+            else
+              value = _Gene;
             return _Gene is not null;
           case "source":
-            value = _Source;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Source))
+              value = Overflow["source"];
+            else
+              value = _Source;
             return _Source?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -380,13 +389,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "element":
-            value = _Element;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Element))
+              value = Overflow["element"];
+            else
+              value = _Element;
             return _Element is not null;
           case "source":
-            value = _Source;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Source))
+              value = Overflow["source"];
+            else
+              value = _Source;
             return _Source?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -712,28 +730,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "target":
-            value = _Target;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Target))
+              value = Overflow["target"];
+            else
+              value = _Target;
             return _Target is not null;
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "interaction":
-            value = _Interaction;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Interaction))
+              value = Overflow["interaction"];
+            else
+              value = _Interaction;
             return _Interaction is not null;
           case "organism":
-            value = _Organism;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Organism))
+              value = Overflow["organism"];
+            else
+              value = _Organism;
             return _Organism is not null;
           case "organismType":
-            value = _OrganismType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_OrganismType))
+              value = Overflow["organismType"];
+            else
+              value = _OrganismType;
             return _OrganismType is not null;
           case "amount":
-            value = _Amount;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Amount))
+              value = Overflow["amount"];
+            else
+              value = _Amount;
             return _Amount is not null;
           case "amountType":
-            value = _AmountType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AmountType))
+              value = Overflow["amountType"];
+            else
+              value = _AmountType;
             return _AmountType is not null;
           case "source":
-            value = _Source;
+            if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Source))
+              value = Overflow["source"];
+            else
+              value = _Source;
             return _Source?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -992,16 +1034,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "comment":
-          value = _CommentElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_CommentElement))
+            value = Overflow["comment"];
+          else
+            value = _CommentElement;
           return _CommentElement is not null;
         case "gene":
-          value = _Gene;
+          if (OverflowNull<List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent>>.InOverflow(_Gene))
+            value = Overflow["gene"];
+          else
+            value = _Gene;
           return _Gene?.Any() == true;
         case "geneElement":
-          value = _GeneElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent>>.InOverflow(_GeneElement))
+            value = Overflow["geneElement"];
+          else
+            value = _GeneElement;
           return _GeneElement?.Any() == true;
         case "target":
-          value = _Target;
+          if (OverflowNull<List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent>>.InOverflow(_Target))
+            value = Overflow["target"];
+          else
+            value = _Target;
           return _Target?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

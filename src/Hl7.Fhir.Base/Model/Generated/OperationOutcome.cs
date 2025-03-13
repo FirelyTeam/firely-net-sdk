@@ -617,22 +617,40 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "severity":
-            value = _SeverityElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>>.InOverflow(_SeverityElement))
+              value = Overflow["severity"];
+            else
+              value = _SeverityElement;
             return _SeverityElement is not null;
           case "code":
-            value = _CodeElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.OperationOutcome.IssueType>>.InOverflow(_CodeElement))
+              value = Overflow["code"];
+            else
+              value = _CodeElement;
             return _CodeElement is not null;
           case "details":
-            value = _Details;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Details))
+              value = Overflow["details"];
+            else
+              value = _Details;
             return _Details is not null;
           case "diagnostics":
-            value = _DiagnosticsElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DiagnosticsElement))
+              value = Overflow["diagnostics"];
+            else
+              value = _DiagnosticsElement;
             return _DiagnosticsElement is not null;
           case "location":
-            value = _LocationElement;
+            if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_LocationElement))
+              value = Overflow["location"];
+            else
+              value = _LocationElement;
             return _LocationElement?.Any() == true;
           case "expression":
-            value = _ExpressionElement;
+            if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ExpressionElement))
+              value = Overflow["expression"];
+            else
+              value = _ExpressionElement;
             return _ExpressionElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -772,7 +790,10 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "issue":
-          value = _Issue;
+          if (OverflowNull<List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>>.InOverflow(_Issue))
+            value = Overflow["issue"];
+          else
+            value = _Issue;
           return _Issue?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

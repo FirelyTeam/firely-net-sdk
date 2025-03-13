@@ -174,10 +174,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "fraction":
-            value = _FractionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FractionElement))
+              value = Overflow["fraction"];
+            else
+              value = _FractionElement;
             return _FractionElement is not null;
           case "materialType":
-            value = _MaterialType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_MaterialType))
+              value = Overflow["materialType"];
+            else
+              value = _MaterialType;
             return _MaterialType is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -505,28 +511,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "family":
-            value = _Family;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Family))
+              value = Overflow["family"];
+            else
+              value = _Family;
             return _Family is not null;
           case "genus":
-            value = _Genus;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Genus))
+              value = Overflow["genus"];
+            else
+              value = _Genus;
             return _Genus is not null;
           case "species":
-            value = _Species;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Species))
+              value = Overflow["species"];
+            else
+              value = _Species;
             return _Species is not null;
           case "intraspecificType":
-            value = _IntraspecificType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_IntraspecificType))
+              value = Overflow["intraspecificType"];
+            else
+              value = _IntraspecificType;
             return _IntraspecificType is not null;
           case "intraspecificDescription":
-            value = _IntraspecificDescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IntraspecificDescriptionElement))
+              value = Overflow["intraspecificDescription"];
+            else
+              value = _IntraspecificDescriptionElement;
             return _IntraspecificDescriptionElement is not null;
           case "author":
-            value = _Author;
+            if (OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>>.InOverflow(_Author))
+              value = Overflow["author"];
+            else
+              value = _Author;
             return _Author?.Any() == true;
           case "hybrid":
-            value = _Hybrid;
+            if (OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent>.InOverflow(_Hybrid))
+              value = Overflow["hybrid"];
+            else
+              value = _Hybrid;
             return _Hybrid is not null;
           case "organismGeneral":
-            value = _OrganismGeneral;
+            if (OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent>.InOverflow(_OrganismGeneral))
+              value = Overflow["organismGeneral"];
+            else
+              value = _OrganismGeneral;
             return _OrganismGeneral is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -739,10 +769,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "authorType":
-            value = _AuthorType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_AuthorType))
+              value = Overflow["authorType"];
+            else
+              value = _AuthorType;
             return _AuthorType is not null;
           case "authorDescription":
-            value = _AuthorDescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AuthorDescriptionElement))
+              value = Overflow["authorDescription"];
+            else
+              value = _AuthorDescriptionElement;
             return _AuthorDescriptionElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1030,19 +1066,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "maternalOrganismId":
-            value = _MaternalOrganismIdElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MaternalOrganismIdElement))
+              value = Overflow["maternalOrganismId"];
+            else
+              value = _MaternalOrganismIdElement;
             return _MaternalOrganismIdElement is not null;
           case "maternalOrganismName":
-            value = _MaternalOrganismNameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_MaternalOrganismNameElement))
+              value = Overflow["maternalOrganismName"];
+            else
+              value = _MaternalOrganismNameElement;
             return _MaternalOrganismNameElement is not null;
           case "paternalOrganismId":
-            value = _PaternalOrganismIdElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PaternalOrganismIdElement))
+              value = Overflow["paternalOrganismId"];
+            else
+              value = _PaternalOrganismIdElement;
             return _PaternalOrganismIdElement is not null;
           case "paternalOrganismName":
-            value = _PaternalOrganismNameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PaternalOrganismNameElement))
+              value = Overflow["paternalOrganismName"];
+            else
+              value = _PaternalOrganismNameElement;
             return _PaternalOrganismNameElement is not null;
           case "hybridType":
-            value = _HybridType;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_HybridType))
+              value = Overflow["hybridType"];
+            else
+              value = _HybridType;
             return _HybridType is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1269,16 +1320,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "kingdom":
-            value = _Kingdom;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Kingdom))
+              value = Overflow["kingdom"];
+            else
+              value = _Kingdom;
             return _Kingdom is not null;
           case "phylum":
-            value = _Phylum;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Phylum))
+              value = Overflow["phylum"];
+            else
+              value = _Phylum;
             return _Phylum is not null;
           case "class":
-            value = _Class;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Class))
+              value = Overflow["class"];
+            else
+              value = _Class;
             return _Class is not null;
           case "order":
-            value = _Order;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Order))
+              value = Overflow["order"];
+            else
+              value = _Order;
             return _Order is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1440,10 +1503,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "part":
-            value = _Part;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Part))
+              value = Overflow["part"];
+            else
+              value = _Part;
             return _Part is not null;
           case "partLocation":
-            value = _PartLocation;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_PartLocation))
+              value = Overflow["partLocation"];
+            else
+              value = _PartLocation;
             return _PartLocation is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1939,43 +2008,82 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "sourceMaterialClass":
-          value = _SourceMaterialClass;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SourceMaterialClass))
+            value = Overflow["sourceMaterialClass"];
+          else
+            value = _SourceMaterialClass;
           return _SourceMaterialClass is not null;
         case "sourceMaterialType":
-          value = _SourceMaterialType;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SourceMaterialType))
+            value = Overflow["sourceMaterialType"];
+          else
+            value = _SourceMaterialType;
           return _SourceMaterialType is not null;
         case "sourceMaterialState":
-          value = _SourceMaterialState;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SourceMaterialState))
+            value = Overflow["sourceMaterialState"];
+          else
+            value = _SourceMaterialState;
           return _SourceMaterialState is not null;
         case "organismId":
-          value = _OrganismId;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_OrganismId))
+            value = Overflow["organismId"];
+          else
+            value = _OrganismId;
           return _OrganismId is not null;
         case "organismName":
-          value = _OrganismNameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_OrganismNameElement))
+            value = Overflow["organismName"];
+          else
+            value = _OrganismNameElement;
           return _OrganismNameElement is not null;
         case "parentSubstanceId":
-          value = _ParentSubstanceId;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_ParentSubstanceId))
+            value = Overflow["parentSubstanceId"];
+          else
+            value = _ParentSubstanceId;
           return _ParentSubstanceId?.Any() == true;
         case "parentSubstanceName":
-          value = _ParentSubstanceNameElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_ParentSubstanceNameElement))
+            value = Overflow["parentSubstanceName"];
+          else
+            value = _ParentSubstanceNameElement;
           return _ParentSubstanceNameElement?.Any() == true;
         case "countryOfOrigin":
-          value = _CountryOfOrigin;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_CountryOfOrigin))
+            value = Overflow["countryOfOrigin"];
+          else
+            value = _CountryOfOrigin;
           return _CountryOfOrigin?.Any() == true;
         case "geographicalLocation":
-          value = _GeographicalLocationElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_GeographicalLocationElement))
+            value = Overflow["geographicalLocation"];
+          else
+            value = _GeographicalLocationElement;
           return _GeographicalLocationElement?.Any() == true;
         case "developmentStage":
-          value = _DevelopmentStage;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_DevelopmentStage))
+            value = Overflow["developmentStage"];
+          else
+            value = _DevelopmentStage;
           return _DevelopmentStage is not null;
         case "fractionDescription":
-          value = _FractionDescription;
+          if (OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>>.InOverflow(_FractionDescription))
+            value = Overflow["fractionDescription"];
+          else
+            value = _FractionDescription;
           return _FractionDescription?.Any() == true;
         case "organism":
-          value = _Organism;
+          if (OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent>.InOverflow(_Organism))
+            value = Overflow["organism"];
+          else
+            value = _Organism;
           return _Organism is not null;
         case "partDescription":
-          value = _PartDescription;
+          if (OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>>.InOverflow(_PartDescription))
+            value = Overflow["partDescription"];
+          else
+            value = _PartDescription;
           return _PartDescription?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

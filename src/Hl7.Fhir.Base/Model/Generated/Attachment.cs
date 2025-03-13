@@ -720,43 +720,82 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "contentType":
-          value = _ContentTypeElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_ContentTypeElement))
+            value = Overflow["contentType"];
+          else
+            value = _ContentTypeElement;
           return _ContentTypeElement is not null;
         case "language":
-          value = _LanguageElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_LanguageElement))
+            value = Overflow["language"];
+          else
+            value = _LanguageElement;
           return _LanguageElement is not null;
         case "data":
-          value = _DataElement;
+          if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_DataElement))
+            value = Overflow["data"];
+          else
+            value = _DataElement;
           return _DataElement is not null;
         case "url":
-          value = _UrlElement;
+          if (OverflowNull<DynamicPrimitive>.InOverflow(_UrlElement))
+            value = Overflow["url"];
+          else
+            value = _UrlElement;
           return _UrlElement is not null;
         case "size":
-          value = _SizeElement;
+          if (OverflowNull<DynamicPrimitive>.InOverflow(_SizeElement))
+            value = Overflow["size"];
+          else
+            value = _SizeElement;
           return _SizeElement is not null;
         case "hash":
-          value = _HashElement;
+          if (OverflowNull<Hl7.Fhir.Model.Base64Binary>.InOverflow(_HashElement))
+            value = Overflow["hash"];
+          else
+            value = _HashElement;
           return _HashElement is not null;
         case "title":
-          value = _TitleElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TitleElement))
+            value = Overflow["title"];
+          else
+            value = _TitleElement;
           return _TitleElement is not null;
         case "creation":
-          value = _CreationElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CreationElement))
+            value = Overflow["creation"];
+          else
+            value = _CreationElement;
           return _CreationElement is not null;
         case "height":
-          value = _HeightElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_HeightElement))
+            value = Overflow["height"];
+          else
+            value = _HeightElement;
           return _HeightElement is not null;
         case "width":
-          value = _WidthElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_WidthElement))
+            value = Overflow["width"];
+          else
+            value = _WidthElement;
           return _WidthElement is not null;
         case "frames":
-          value = _FramesElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_FramesElement))
+            value = Overflow["frames"];
+          else
+            value = _FramesElement;
           return _FramesElement is not null;
         case "duration":
-          value = _DurationElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DurationElement))
+            value = Overflow["duration"];
+          else
+            value = _DurationElement;
           return _DurationElement is not null;
         case "pages":
-          value = _PagesElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_PagesElement))
+            value = Overflow["pages"];
+          else
+            value = _PagesElement;
           return _PagesElement is not null;
         default:
           return base.TryGetValue(key, out value);

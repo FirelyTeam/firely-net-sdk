@@ -446,25 +446,46 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "use":
-          value = _UseElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.HumanName.NameUse>>.InOverflow(_UseElement))
+            value = Overflow["use"];
+          else
+            value = _UseElement;
           return _UseElement is not null;
         case "text":
-          value = _TextElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+            value = Overflow["text"];
+          else
+            value = _TextElement;
           return _TextElement is not null;
         case "family":
-          value = _FamilyElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_FamilyElement))
+            value = Overflow["family"];
+          else
+            value = _FamilyElement;
           return _FamilyElement is not null;
         case "given":
-          value = _GivenElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_GivenElement))
+            value = Overflow["given"];
+          else
+            value = _GivenElement;
           return _GivenElement?.Any() == true;
         case "prefix":
-          value = _PrefixElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_PrefixElement))
+            value = Overflow["prefix"];
+          else
+            value = _PrefixElement;
           return _PrefixElement?.Any() == true;
         case "suffix":
-          value = _SuffixElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_SuffixElement))
+            value = Overflow["suffix"];
+          else
+            value = _SuffixElement;
           return _SuffixElement?.Any() == true;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -841,70 +841,136 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "basedOn":
-          value = _BasedOn;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_BasedOn))
+            value = Overflow["basedOn"];
+          else
+            value = _BasedOn;
           return _BasedOn?.Any() == true;
         case "partOf":
-          value = _PartOf;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_PartOf))
+            value = Overflow["partOf"];
+          else
+            value = _PartOf;
           return _PartOf?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.EventStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "modality":
-          value = _Modality;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Modality))
+            value = Overflow["modality"];
+          else
+            value = _Modality;
           return _Modality is not null;
         case "view":
-          value = _View;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_View))
+            value = Overflow["view"];
+          else
+            value = _View;
           return _View is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "created":
-          value = _Created;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Created))
+            value = Overflow["created"];
+          else
+            value = _Created;
           return _Created is not null;
         case "issued":
-          value = _IssuedElement;
+          if (OverflowNull<Hl7.Fhir.Model.Instant>.InOverflow(_IssuedElement))
+            value = Overflow["issued"];
+          else
+            value = _IssuedElement;
           return _IssuedElement is not null;
         case "operator":
-          value = _Operator;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Operator))
+            value = Overflow["operator"];
+          else
+            value = _Operator;
           return _Operator is not null;
         case "reasonCode":
-          value = _ReasonCode;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ReasonCode))
+            value = Overflow["reasonCode"];
+          else
+            value = _ReasonCode;
           return _ReasonCode?.Any() == true;
         case "bodySite":
-          value = _BodySite;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_BodySite))
+            value = Overflow["bodySite"];
+          else
+            value = _BodySite;
           return _BodySite is not null;
         case "deviceName":
-          value = _DeviceNameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DeviceNameElement))
+            value = Overflow["deviceName"];
+          else
+            value = _DeviceNameElement;
           return _DeviceNameElement is not null;
         case "device":
-          value = _Device;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Device))
+            value = Overflow["device"];
+          else
+            value = _Device;
           return _Device is not null;
         case "height":
-          value = _HeightElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_HeightElement))
+            value = Overflow["height"];
+          else
+            value = _HeightElement;
           return _HeightElement is not null;
         case "width":
-          value = _WidthElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_WidthElement))
+            value = Overflow["width"];
+          else
+            value = _WidthElement;
           return _WidthElement is not null;
         case "frames":
-          value = _FramesElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_FramesElement))
+            value = Overflow["frames"];
+          else
+            value = _FramesElement;
           return _FramesElement is not null;
         case "duration":
-          value = _DurationElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DurationElement))
+            value = Overflow["duration"];
+          else
+            value = _DurationElement;
           return _DurationElement is not null;
         case "content":
-          value = _Content;
+          if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_Content))
+            value = Overflow["content"];
+          else
+            value = _Content;
           return _Content is not null;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

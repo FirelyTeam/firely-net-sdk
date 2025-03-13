@@ -376,25 +376,46 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "who":
-            value = _Who;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Who))
+              value = Overflow["who"];
+            else
+              value = _Who;
             return _Who is not null;
           case "type":
-            value = _Type;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type?.Any() == true;
           case "communicationMethod":
-            value = _CommunicationMethod;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_CommunicationMethod))
+              value = Overflow["communicationMethod"];
+            else
+              value = _CommunicationMethod;
             return _CommunicationMethod?.Any() == true;
           case "validationStatus":
-            value = _ValidationStatus;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ValidationStatus))
+              value = Overflow["validationStatus"];
+            else
+              value = _ValidationStatus;
             return _ValidationStatus is not null;
           case "validationDate":
-            value = _ValidationDateElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ValidationDateElement))
+              value = Overflow["validationDate"];
+            else
+              value = _ValidationDateElement;
             return _ValidationDateElement is not null;
           case "canPushUpdates":
-            value = _CanPushUpdates;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_CanPushUpdates))
+              value = Overflow["canPushUpdates"];
+            else
+              value = _CanPushUpdates;
             return _CanPushUpdates is not null;
           case "pushTypeAvailable":
-            value = _PushTypeAvailable;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_PushTypeAvailable))
+              value = Overflow["pushTypeAvailable"];
+            else
+              value = _PushTypeAvailable;
             return _PushTypeAvailable?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -801,28 +822,52 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "who":
-            value = _Who;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Who))
+              value = Overflow["who"];
+            else
+              value = _Who;
             return _Who is not null;
           case "onBehalfOf":
-            value = _OnBehalfOf;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_OnBehalfOf))
+              value = Overflow["onBehalfOf"];
+            else
+              value = _OnBehalfOf;
             return _OnBehalfOf is not null;
           case "communicationMethod":
-            value = _CommunicationMethod;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_CommunicationMethod))
+              value = Overflow["communicationMethod"];
+            else
+              value = _CommunicationMethod;
             return _CommunicationMethod is not null;
           case "date":
-            value = _DateElement;
+            if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_DateElement))
+              value = Overflow["date"];
+            else
+              value = _DateElement;
             return _DateElement is not null;
           case "sourceIdentityCertificate":
-            value = _SourceIdentityCertificateElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_SourceIdentityCertificateElement))
+              value = Overflow["sourceIdentityCertificate"];
+            else
+              value = _SourceIdentityCertificateElement;
             return _SourceIdentityCertificateElement is not null;
           case "proxyIdentityCertificate":
-            value = _ProxyIdentityCertificateElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ProxyIdentityCertificateElement))
+              value = Overflow["proxyIdentityCertificate"];
+            else
+              value = _ProxyIdentityCertificateElement;
             return _ProxyIdentityCertificateElement is not null;
           case "proxySignature":
-            value = _ProxySignature;
+            if (OverflowNull<Hl7.Fhir.Model.Signature>.InOverflow(_ProxySignature))
+              value = Overflow["proxySignature"];
+            else
+              value = _ProxySignature;
             return _ProxySignature is not null;
           case "sourceSignature":
-            value = _SourceSignature;
+            if (OverflowNull<Hl7.Fhir.Model.Signature>.InOverflow(_SourceSignature))
+              value = Overflow["sourceSignature"];
+            else
+              value = _SourceSignature;
             return _SourceSignature is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1066,13 +1111,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "organization":
-            value = _Organization;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Organization))
+              value = Overflow["organization"];
+            else
+              value = _Organization;
             return _Organization is not null;
           case "identityCertificate":
-            value = _IdentityCertificateElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_IdentityCertificateElement))
+              value = Overflow["identityCertificate"];
+            else
+              value = _IdentityCertificateElement;
             return _IdentityCertificateElement is not null;
           case "attestationSignature":
-            value = _AttestationSignature;
+            if (OverflowNull<Hl7.Fhir.Model.Signature>.InOverflow(_AttestationSignature))
+              value = Overflow["attestationSignature"];
+            else
+              value = _AttestationSignature;
             return _AttestationSignature is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1640,46 +1694,88 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "target":
-          value = _Target;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Target))
+            value = Overflow["target"];
+          else
+            value = _Target;
           return _Target?.Any() == true;
         case "targetLocation":
-          value = _TargetLocationElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_TargetLocationElement))
+            value = Overflow["targetLocation"];
+          else
+            value = _TargetLocationElement;
           return _TargetLocationElement?.Any() == true;
         case "need":
-          value = _Need;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Need))
+            value = Overflow["need"];
+          else
+            value = _Need;
           return _Need is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.VerificationResult.StatusCode>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "statusDate":
-          value = _StatusDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StatusDateElement))
+            value = Overflow["statusDate"];
+          else
+            value = _StatusDateElement;
           return _StatusDateElement is not null;
         case "validationType":
-          value = _ValidationType;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ValidationType))
+            value = Overflow["validationType"];
+          else
+            value = _ValidationType;
           return _ValidationType is not null;
         case "validationProcess":
-          value = _ValidationProcess;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_ValidationProcess))
+            value = Overflow["validationProcess"];
+          else
+            value = _ValidationProcess;
           return _ValidationProcess?.Any() == true;
         case "frequency":
-          value = _Frequency;
+          if (OverflowNull<Hl7.Fhir.Model.Timing>.InOverflow(_Frequency))
+            value = Overflow["frequency"];
+          else
+            value = _Frequency;
           return _Frequency is not null;
         case "lastPerformed":
-          value = _LastPerformedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_LastPerformedElement))
+            value = Overflow["lastPerformed"];
+          else
+            value = _LastPerformedElement;
           return _LastPerformedElement is not null;
         case "nextScheduled":
-          value = _NextScheduledElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_NextScheduledElement))
+            value = Overflow["nextScheduled"];
+          else
+            value = _NextScheduledElement;
           return _NextScheduledElement is not null;
         case "failureAction":
-          value = _FailureAction;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_FailureAction))
+            value = Overflow["failureAction"];
+          else
+            value = _FailureAction;
           return _FailureAction is not null;
         case "primarySource":
-          value = _PrimarySource;
+          if (OverflowNull<List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>>.InOverflow(_PrimarySource))
+            value = Overflow["primarySource"];
+          else
+            value = _PrimarySource;
           return _PrimarySource?.Any() == true;
         case "attestation":
-          value = _Attestation;
+          if (OverflowNull<Hl7.Fhir.Model.VerificationResult.AttestationComponent>.InOverflow(_Attestation))
+            value = Overflow["attestation"];
+          else
+            value = _Attestation;
           return _Attestation is not null;
         case "validator":
-          value = _Validator;
+          if (OverflowNull<List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>>.InOverflow(_Validator))
+            value = Overflow["validator"];
+          else
+            value = _Validator;
           return _Validator?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

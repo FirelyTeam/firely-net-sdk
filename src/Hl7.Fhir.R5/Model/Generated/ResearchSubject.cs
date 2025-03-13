@@ -402,22 +402,40 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "subjectState":
-            value = _SubjectState;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_SubjectState))
+              value = Overflow["subjectState"];
+            else
+              value = _SubjectState;
             return _SubjectState is not null;
           case "milestone":
-            value = _Milestone;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Milestone))
+              value = Overflow["milestone"];
+            else
+              value = _Milestone;
             return _Milestone is not null;
           case "reason":
-            value = _Reason;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Reason))
+              value = Overflow["reason"];
+            else
+              value = _Reason;
             return _Reason is not null;
           case "startDate":
-            value = _StartDateElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StartDateElement))
+              value = Overflow["startDate"];
+            else
+              value = _StartDateElement;
             return _StartDateElement is not null;
           case "endDate":
-            value = _EndDateElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_EndDateElement))
+              value = Overflow["endDate"];
+            else
+              value = _EndDateElement;
             return _EndDateElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -841,31 +859,58 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "progress":
-          value = _Progress;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>>.InOverflow(_Progress))
+            value = Overflow["progress"];
+          else
+            value = _Progress;
           return _Progress?.Any() == true;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         case "study":
-          value = _Study;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Study))
+            value = Overflow["study"];
+          else
+            value = _Study;
           return _Study is not null;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject is not null;
         case "assignedComparisonGroup":
-          value = _AssignedComparisonGroupElement;
+          if (OverflowNull<Hl7.Fhir.Model.Id>.InOverflow(_AssignedComparisonGroupElement))
+            value = Overflow["assignedComparisonGroup"];
+          else
+            value = _AssignedComparisonGroupElement;
           return _AssignedComparisonGroupElement is not null;
         case "actualComparisonGroup":
-          value = _ActualComparisonGroupElement;
+          if (OverflowNull<Hl7.Fhir.Model.Id>.InOverflow(_ActualComparisonGroupElement))
+            value = Overflow["actualComparisonGroup"];
+          else
+            value = _ActualComparisonGroupElement;
           return _ActualComparisonGroupElement is not null;
         case "consent":
-          value = _Consent;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Consent))
+            value = Overflow["consent"];
+          else
+            value = _Consent;
           return _Consent?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

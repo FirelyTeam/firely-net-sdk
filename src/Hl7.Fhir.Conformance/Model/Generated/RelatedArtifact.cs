@@ -773,37 +773,70 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
-          value = _TypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>.InOverflow(_TypeElement))
+            value = Overflow["type"];
+          else
+            value = _TypeElement;
           return _TypeElement is not null;
         case "classifier":
-          value = _Classifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Classifier))
+            value = Overflow["classifier"];
+          else
+            value = _Classifier;
           return _Classifier?.Any() == true;
         case "label":
-          value = _LabelElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_LabelElement))
+            value = Overflow["label"];
+          else
+            value = _LabelElement;
           return _LabelElement is not null;
         case "display":
-          value = _DisplayElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DisplayElement))
+            value = Overflow["display"];
+          else
+            value = _DisplayElement;
           return _DisplayElement is not null;
         case "citation":
-          value = _CitationElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_CitationElement))
+            value = Overflow["citation"];
+          else
+            value = _CitationElement;
           return _CitationElement is not null;
         case "url":
-          value = _UrlElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUrl>.InOverflow(_UrlElement))
+            value = Overflow["url"];
+          else
+            value = _UrlElement;
           return _UrlElement is not null;
         case "document":
-          value = _Document;
+          if (OverflowNull<Hl7.Fhir.Model.Attachment>.InOverflow(_Document))
+            value = Overflow["document"];
+          else
+            value = _Document;
           return _Document is not null;
         case "resource":
-          value = _ResourceElement;
+          if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_ResourceElement))
+            value = Overflow["resource"];
+          else
+            value = _ResourceElement;
           return _ResourceElement is not null;
         case "resourceReference":
-          value = _ResourceReference;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ResourceReference))
+            value = Overflow["resourceReference"];
+          else
+            value = _ResourceReference;
           return _ResourceReference is not null;
         case "publicationStatus":
-          value = _PublicationStatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_PublicationStatusElement))
+            value = Overflow["publicationStatus"];
+          else
+            value = _PublicationStatusElement;
           return _PublicationStatusElement is not null;
         case "publicationDate":
-          value = _PublicationDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.Date>.InOverflow(_PublicationDateElement))
+            value = Overflow["publicationDate"];
+          else
+            value = _PublicationDateElement;
           return _PublicationDateElement is not null;
         default:
           return base.TryGetValue(key, out value);

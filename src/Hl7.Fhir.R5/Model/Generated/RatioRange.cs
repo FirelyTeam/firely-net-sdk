@@ -178,13 +178,22 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "lowNumerator":
-          value = _LowNumerator;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_LowNumerator))
+            value = Overflow["lowNumerator"];
+          else
+            value = _LowNumerator;
           return _LowNumerator is not null;
         case "highNumerator":
-          value = _HighNumerator;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_HighNumerator))
+            value = Overflow["highNumerator"];
+          else
+            value = _HighNumerator;
           return _HighNumerator is not null;
         case "denominator":
-          value = _Denominator;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Denominator))
+            value = Overflow["denominator"];
+          else
+            value = _Denominator;
           return _Denominator is not null;
         default:
           return base.TryGetValue(key, out value);

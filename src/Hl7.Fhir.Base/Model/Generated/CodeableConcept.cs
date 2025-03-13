@@ -166,10 +166,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "coding":
-          value = _Coding;
+          if (OverflowNull<List<Hl7.Fhir.Model.Coding>>.InOverflow(_Coding))
+            value = Overflow["coding"];
+          else
+            value = _Coding;
           return _Coding?.Any() == true;
         case "text":
-          value = _TextElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+            value = Overflow["text"];
+          else
+            value = _TextElement;
           return _TextElement is not null;
         default:
           return base.TryGetValue(key, out value);

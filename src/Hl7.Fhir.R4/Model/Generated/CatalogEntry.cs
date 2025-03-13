@@ -208,10 +208,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "relationtype":
-            value = _RelationtypeElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>>.InOverflow(_RelationtypeElement))
+              value = Overflow["relationtype"];
+            else
+              value = _RelationtypeElement;
             return _RelationtypeElement is not null;
           case "item":
-            value = _Item;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -724,43 +730,82 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "orderable":
-          value = _OrderableElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_OrderableElement))
+            value = Overflow["orderable"];
+          else
+            value = _OrderableElement;
           return _OrderableElement is not null;
         case "referencedItem":
-          value = _ReferencedItem;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ReferencedItem))
+            value = Overflow["referencedItem"];
+          else
+            value = _ReferencedItem;
           return _ReferencedItem is not null;
         case "additionalIdentifier":
-          value = _AdditionalIdentifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_AdditionalIdentifier))
+            value = Overflow["additionalIdentifier"];
+          else
+            value = _AdditionalIdentifier;
           return _AdditionalIdentifier?.Any() == true;
         case "classification":
-          value = _Classification;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Classification))
+            value = Overflow["classification"];
+          else
+            value = _Classification;
           return _Classification?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "validityPeriod":
-          value = _ValidityPeriod;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_ValidityPeriod))
+            value = Overflow["validityPeriod"];
+          else
+            value = _ValidityPeriod;
           return _ValidityPeriod is not null;
         case "validTo":
-          value = _ValidToElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ValidToElement))
+            value = Overflow["validTo"];
+          else
+            value = _ValidToElement;
           return _ValidToElement is not null;
         case "lastUpdated":
-          value = _LastUpdatedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_LastUpdatedElement))
+            value = Overflow["lastUpdated"];
+          else
+            value = _LastUpdatedElement;
           return _LastUpdatedElement is not null;
         case "additionalCharacteristic":
-          value = _AdditionalCharacteristic;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_AdditionalCharacteristic))
+            value = Overflow["additionalCharacteristic"];
+          else
+            value = _AdditionalCharacteristic;
           return _AdditionalCharacteristic?.Any() == true;
         case "additionalClassification":
-          value = _AdditionalClassification;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_AdditionalClassification))
+            value = Overflow["additionalClassification"];
+          else
+            value = _AdditionalClassification;
           return _AdditionalClassification?.Any() == true;
         case "relatedEntry":
-          value = _RelatedEntry;
+          if (OverflowNull<List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent>>.InOverflow(_RelatedEntry))
+            value = Overflow["relatedEntry"];
+          else
+            value = _RelatedEntry;
           return _RelatedEntry?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

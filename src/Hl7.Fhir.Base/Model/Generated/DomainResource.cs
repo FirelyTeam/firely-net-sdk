@@ -198,16 +198,28 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "text":
-          value = _Text;
+          if (OverflowNull<Hl7.Fhir.Model.Narrative>.InOverflow(_Text))
+            value = Overflow["text"];
+          else
+            value = _Text;
           return _Text is not null;
         case "contained":
-          value = _Contained;
+          if (OverflowNull<List<Hl7.Fhir.Model.Resource>>.InOverflow(_Contained))
+            value = Overflow["contained"];
+          else
+            value = _Contained;
           return _Contained?.Any() == true;
         case "extension":
-          value = _Extension;
+          if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_Extension))
+            value = Overflow["extension"];
+          else
+            value = _Extension;
           return _Extension?.Any() == true;
         case "modifierExtension":
-          value = _ModifierExtension;
+          if (OverflowNull<List<Hl7.Fhir.Model.Extension>>.InOverflow(_ModifierExtension))
+            value = Overflow["modifierExtension"];
+          else
+            value = _ModifierExtension;
           return _ModifierExtension?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

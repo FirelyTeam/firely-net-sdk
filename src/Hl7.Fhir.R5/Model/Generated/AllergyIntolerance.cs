@@ -328,10 +328,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "function":
-            value = _Function;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Function))
+              value = Overflow["function"];
+            else
+              value = _Function;
             return _Function is not null;
           case "actor":
-            value = _Actor;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Actor))
+              value = Overflow["actor"];
+            else
+              value = _Actor;
             return _Actor is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -670,25 +676,46 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "substance":
-            value = _Substance;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Substance))
+              value = Overflow["substance"];
+            else
+              value = _Substance;
             return _Substance is not null;
           case "manifestation":
-            value = _Manifestation;
+            if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_Manifestation))
+              value = Overflow["manifestation"];
+            else
+              value = _Manifestation;
             return _Manifestation?.Any() == true;
           case "description":
-            value = _DescriptionElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DescriptionElement))
+              value = Overflow["description"];
+            else
+              value = _DescriptionElement;
             return _DescriptionElement is not null;
           case "onset":
-            value = _OnsetElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_OnsetElement))
+              value = Overflow["onset"];
+            else
+              value = _OnsetElement;
             return _OnsetElement is not null;
           case "severity":
-            value = _SeverityElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>>.InOverflow(_SeverityElement))
+              value = Overflow["severity"];
+            else
+              value = _SeverityElement;
             return _SeverityElement is not null;
           case "exposureRoute":
-            value = _ExposureRoute;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ExposureRoute))
+              value = Overflow["exposureRoute"];
+            else
+              value = _ExposureRoute;
             return _ExposureRoute is not null;
           case "note":
-            value = _Note;
+            if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+              value = Overflow["note"];
+            else
+              value = _Note;
             return _Note?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1313,49 +1340,94 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "clinicalStatus":
-          value = _ClinicalStatus;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ClinicalStatus))
+            value = Overflow["clinicalStatus"];
+          else
+            value = _ClinicalStatus;
           return _ClinicalStatus is not null;
         case "verificationStatus":
-          value = _VerificationStatus;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_VerificationStatus))
+            value = Overflow["verificationStatus"];
+          else
+            value = _VerificationStatus;
           return _VerificationStatus is not null;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "category":
-          value = _CategoryElement;
+          if (OverflowNull<List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>>.InOverflow(_CategoryElement))
+            value = Overflow["category"];
+          else
+            value = _CategoryElement;
           return _CategoryElement?.Any() == true;
         case "criticality":
-          value = _CriticalityElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>>.InOverflow(_CriticalityElement))
+            value = Overflow["criticality"];
+          else
+            value = _CriticalityElement;
           return _CriticalityElement is not null;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "onset":
-          value = _Onset;
+          if (OverflowNull<DynamicDataType>.InOverflow(_Onset))
+            value = Overflow["onset"];
+          else
+            value = _Onset;
           return _Onset is not null;
         case "recordedDate":
-          value = _RecordedDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_RecordedDateElement))
+            value = Overflow["recordedDate"];
+          else
+            value = _RecordedDateElement;
           return _RecordedDateElement is not null;
         case "participant":
-          value = _Participant;
+          if (OverflowNull<List<Hl7.Fhir.Model.AllergyIntolerance.ParticipantComponent>>.InOverflow(_Participant))
+            value = Overflow["participant"];
+          else
+            value = _Participant;
           return _Participant?.Any() == true;
         case "lastOccurrence":
-          value = _LastOccurrenceElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_LastOccurrenceElement))
+            value = Overflow["lastOccurrence"];
+          else
+            value = _LastOccurrenceElement;
           return _LastOccurrenceElement is not null;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         case "reaction":
-          value = _Reaction;
+          if (OverflowNull<List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>>.InOverflow(_Reaction))
+            value = Overflow["reaction"];
+          else
+            value = _Reaction;
           return _Reaction?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

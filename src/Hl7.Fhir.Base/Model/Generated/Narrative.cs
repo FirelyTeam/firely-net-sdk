@@ -217,10 +217,16 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "div":
-          value = _DivElement;
+          if (OverflowNull<Hl7.Fhir.Model.XHtml>.InOverflow(_DivElement))
+            value = Overflow["div"];
+          else
+            value = _DivElement;
           return _DivElement is not null;
         default:
           return base.TryGetValue(key, out value);

@@ -422,28 +422,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier is not null;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         case "study":
-          value = _Study;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Study))
+            value = Overflow["study"];
+          else
+            value = _Study;
           return _Study is not null;
         case "individual":
-          value = _Individual;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Individual))
+            value = Overflow["individual"];
+          else
+            value = _Individual;
           return _Individual is not null;
         case "assignedArm":
-          value = _AssignedArmElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_AssignedArmElement))
+            value = Overflow["assignedArm"];
+          else
+            value = _AssignedArmElement;
           return _AssignedArmElement is not null;
         case "actualArm":
-          value = _ActualArmElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ActualArmElement))
+            value = Overflow["actualArm"];
+          else
+            value = _ActualArmElement;
           return _ActualArmElement is not null;
         case "consent":
-          value = _Consent;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Consent))
+            value = Overflow["consent"];
+          else
+            value = _Consent;
           return _Consent is not null;
         default:
           return base.TryGetValue(key, out value);

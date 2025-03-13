@@ -714,46 +714,88 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "product":
-            value = _Product;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Product))
+              value = Overflow["product"];
+            else
+              value = _Product;
             return _Product is not null;
           case "eye":
-            value = _EyeElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>>.InOverflow(_EyeElement))
+              value = Overflow["eye"];
+            else
+              value = _EyeElement;
             return _EyeElement is not null;
           case "sphere":
-            value = _SphereElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_SphereElement))
+              value = Overflow["sphere"];
+            else
+              value = _SphereElement;
             return _SphereElement is not null;
           case "cylinder":
-            value = _CylinderElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_CylinderElement))
+              value = Overflow["cylinder"];
+            else
+              value = _CylinderElement;
             return _CylinderElement is not null;
           case "axis":
-            value = _AxisElement;
+            if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_AxisElement))
+              value = Overflow["axis"];
+            else
+              value = _AxisElement;
             return _AxisElement is not null;
           case "prism":
-            value = _Prism;
+            if (OverflowNull<List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>>.InOverflow(_Prism))
+              value = Overflow["prism"];
+            else
+              value = _Prism;
             return _Prism?.Any() == true;
           case "add":
-            value = _AddElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_AddElement))
+              value = Overflow["add"];
+            else
+              value = _AddElement;
             return _AddElement is not null;
           case "power":
-            value = _PowerElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_PowerElement))
+              value = Overflow["power"];
+            else
+              value = _PowerElement;
             return _PowerElement is not null;
           case "backCurve":
-            value = _BackCurveElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_BackCurveElement))
+              value = Overflow["backCurve"];
+            else
+              value = _BackCurveElement;
             return _BackCurveElement is not null;
           case "diameter":
-            value = _DiameterElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DiameterElement))
+              value = Overflow["diameter"];
+            else
+              value = _DiameterElement;
             return _DiameterElement is not null;
           case "duration":
-            value = _Duration;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Duration))
+              value = Overflow["duration"];
+            else
+              value = _Duration;
             return _Duration is not null;
           case "color":
-            value = _ColorElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_ColorElement))
+              value = Overflow["color"];
+            else
+              value = _ColorElement;
             return _ColorElement is not null;
           case "brand":
-            value = _BrandElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_BrandElement))
+              value = Overflow["brand"];
+            else
+              value = _BrandElement;
             return _BrandElement is not null;
           case "note":
-            value = _Note;
+            if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+              value = Overflow["note"];
+            else
+              value = _Note;
             return _Note?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -1042,10 +1084,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "amount":
-            value = _AmountElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_AmountElement))
+              value = Overflow["amount"];
+            else
+              value = _AmountElement;
             return _AmountElement is not null;
           case "base":
-            value = _BaseElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>>.InOverflow(_BaseElement))
+              value = Overflow["base"];
+            else
+              value = _BaseElement;
             return _BaseElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1406,28 +1454,52 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "created":
-          value = _CreatedElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CreatedElement))
+            value = Overflow["created"];
+          else
+            value = _CreatedElement;
           return _CreatedElement is not null;
         case "patient":
-          value = _Patient;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Patient))
+            value = Overflow["patient"];
+          else
+            value = _Patient;
           return _Patient is not null;
         case "encounter":
-          value = _Encounter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Encounter))
+            value = Overflow["encounter"];
+          else
+            value = _Encounter;
           return _Encounter is not null;
         case "dateWritten":
-          value = _DateWrittenElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_DateWrittenElement))
+            value = Overflow["dateWritten"];
+          else
+            value = _DateWrittenElement;
           return _DateWrittenElement is not null;
         case "prescriber":
-          value = _Prescriber;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Prescriber))
+            value = Overflow["prescriber"];
+          else
+            value = _Prescriber;
           return _Prescriber is not null;
         case "lensSpecification":
-          value = _LensSpecification;
+          if (OverflowNull<List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>>.InOverflow(_LensSpecification))
+            value = Overflow["lensSpecification"];
+          else
+            value = _LensSpecification;
           return _LensSpecification?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

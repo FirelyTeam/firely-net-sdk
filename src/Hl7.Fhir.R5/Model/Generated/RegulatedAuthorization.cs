@@ -254,19 +254,34 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
-            value = _Identifier;
+            if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_Identifier))
+              value = Overflow["identifier"];
+            else
+              value = _Identifier;
             return _Identifier is not null;
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "status":
-            value = _Status;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Status))
+              value = Overflow["status"];
+            else
+              value = _Status;
             return _Status is not null;
           case "date":
-            value = _Date;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Date))
+              value = Overflow["date"];
+            else
+              value = _Date;
             return _Date is not null;
           case "application":
-            value = _Application;
+            if (OverflowNull<List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>>.InOverflow(_Application))
+              value = Overflow["application"];
+            else
+              value = _Application;
             return _Application?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -839,49 +854,94 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "subject":
-          value = _Subject;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Subject))
+            value = Overflow["subject"];
+          else
+            value = _Subject;
           return _Subject?.Any() == true;
         case "type":
-          value = _Type;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+            value = Overflow["type"];
+          else
+            value = _Type;
           return _Type is not null;
         case "description":
-          value = _DescriptionElement;
+          if (OverflowNull<Hl7.Fhir.Model.Markdown>.InOverflow(_DescriptionElement))
+            value = Overflow["description"];
+          else
+            value = _DescriptionElement;
           return _DescriptionElement is not null;
         case "region":
-          value = _Region;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Region))
+            value = Overflow["region"];
+          else
+            value = _Region;
           return _Region?.Any() == true;
         case "status":
-          value = _Status;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Status))
+            value = Overflow["status"];
+          else
+            value = _Status;
           return _Status is not null;
         case "statusDate":
-          value = _StatusDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_StatusDateElement))
+            value = Overflow["statusDate"];
+          else
+            value = _StatusDateElement;
           return _StatusDateElement is not null;
         case "validityPeriod":
-          value = _ValidityPeriod;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_ValidityPeriod))
+            value = Overflow["validityPeriod"];
+          else
+            value = _ValidityPeriod;
           return _ValidityPeriod is not null;
         case "indication":
-          value = _Indication;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.InOverflow(_Indication))
+            value = Overflow["indication"];
+          else
+            value = _Indication;
           return _Indication?.Any() == true;
         case "intendedUse":
-          value = _IntendedUse;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_IntendedUse))
+            value = Overflow["intendedUse"];
+          else
+            value = _IntendedUse;
           return _IntendedUse is not null;
         case "basis":
-          value = _Basis;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_Basis))
+            value = Overflow["basis"];
+          else
+            value = _Basis;
           return _Basis?.Any() == true;
         case "holder":
-          value = _Holder;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Holder))
+            value = Overflow["holder"];
+          else
+            value = _Holder;
           return _Holder is not null;
         case "regulator":
-          value = _Regulator;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Regulator))
+            value = Overflow["regulator"];
+          else
+            value = _Regulator;
           return _Regulator is not null;
         case "attachedDocument":
-          value = _AttachedDocument;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_AttachedDocument))
+            value = Overflow["attachedDocument"];
+          else
+            value = _AttachedDocument;
           return _AttachedDocument?.Any() == true;
         case "case":
-          value = _Case;
+          if (OverflowNull<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>.InOverflow(_Case))
+            value = Overflow["case"];
+          else
+            value = _Case;
           return _Case is not null;
         default:
           return base.TryGetValue(key, out value);

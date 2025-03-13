@@ -545,37 +545,70 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "connectionType":
-          value = _ConnectionType;
+          if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_ConnectionType))
+            value = Overflow["connectionType"];
+          else
+            value = _ConnectionType;
           return _ConnectionType is not null;
         case "name":
-          value = _NameElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+            value = Overflow["name"];
+          else
+            value = _NameElement;
           return _NameElement is not null;
         case "managingOrganization":
-          value = _ManagingOrganization;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_ManagingOrganization))
+            value = Overflow["managingOrganization"];
+          else
+            value = _ManagingOrganization;
           return _ManagingOrganization is not null;
         case "contact":
-          value = _Contact;
+          if (OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.InOverflow(_Contact))
+            value = Overflow["contact"];
+          else
+            value = _Contact;
           return _Contact?.Any() == true;
         case "period":
-          value = _Period;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_Period))
+            value = Overflow["period"];
+          else
+            value = _Period;
           return _Period is not null;
         case "payloadType":
-          value = _PayloadType;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_PayloadType))
+            value = Overflow["payloadType"];
+          else
+            value = _PayloadType;
           return _PayloadType?.Any() == true;
         case "payloadMimeType":
-          value = _PayloadMimeTypeElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.Code>>.InOverflow(_PayloadMimeTypeElement))
+            value = Overflow["payloadMimeType"];
+          else
+            value = _PayloadMimeTypeElement;
           return _PayloadMimeTypeElement?.Any() == true;
         case "address":
-          value = _AddressElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirUri>.InOverflow(_AddressElement))
+            value = Overflow["address"];
+          else
+            value = _AddressElement;
           return _AddressElement is not null;
         case "header":
-          value = _HeaderElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirString>>.InOverflow(_HeaderElement))
+            value = Overflow["header"];
+          else
+            value = _HeaderElement;
           return _HeaderElement?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

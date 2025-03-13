@@ -198,13 +198,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "collector":
-            value = _Collector;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Collector))
+              value = Overflow["collector"];
+            else
+              value = _Collector;
             return _Collector is not null;
           case "source":
-            value = _Source;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Source))
+              value = Overflow["source"];
+            else
+              value = _Source;
             return _Source is not null;
           case "collected":
-            value = _Collected;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Collected))
+              value = Overflow["collected"];
+            else
+              value = _Collected;
             return _Collected is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -365,10 +374,16 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "value":
-            value = _Value;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -853,43 +868,82 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "productCategory":
-          value = _ProductCategory;
+          if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_ProductCategory))
+            value = Overflow["productCategory"];
+          else
+            value = _ProductCategory;
           return _ProductCategory is not null;
         case "productCode":
-          value = _ProductCode;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ProductCode))
+            value = Overflow["productCode"];
+          else
+            value = _ProductCode;
           return _ProductCode is not null;
         case "parent":
-          value = _Parent;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Parent))
+            value = Overflow["parent"];
+          else
+            value = _Parent;
           return _Parent?.Any() == true;
         case "request":
-          value = _Request;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_Request))
+            value = Overflow["request"];
+          else
+            value = _Request;
           return _Request?.Any() == true;
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "biologicalSourceEvent":
-          value = _BiologicalSourceEvent;
+          if (OverflowNull<Hl7.Fhir.Model.Identifier>.InOverflow(_BiologicalSourceEvent))
+            value = Overflow["biologicalSourceEvent"];
+          else
+            value = _BiologicalSourceEvent;
           return _BiologicalSourceEvent is not null;
         case "processingFacility":
-          value = _ProcessingFacility;
+          if (OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.InOverflow(_ProcessingFacility))
+            value = Overflow["processingFacility"];
+          else
+            value = _ProcessingFacility;
           return _ProcessingFacility?.Any() == true;
         case "division":
-          value = _DivisionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DivisionElement))
+            value = Overflow["division"];
+          else
+            value = _DivisionElement;
           return _DivisionElement is not null;
         case "productStatus":
-          value = _ProductStatus;
+          if (OverflowNull<Hl7.Fhir.Model.Coding>.InOverflow(_ProductStatus))
+            value = Overflow["productStatus"];
+          else
+            value = _ProductStatus;
           return _ProductStatus is not null;
         case "expirationDate":
-          value = _ExpirationDateElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ExpirationDateElement))
+            value = Overflow["expirationDate"];
+          else
+            value = _ExpirationDateElement;
           return _ExpirationDateElement is not null;
         case "collection":
-          value = _Collection;
+          if (OverflowNull<Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent>.InOverflow(_Collection))
+            value = Overflow["collection"];
+          else
+            value = _Collection;
           return _Collection is not null;
         case "storageTempRequirements":
-          value = _StorageTempRequirements;
+          if (OverflowNull<Hl7.Fhir.Model.Range>.InOverflow(_StorageTempRequirements))
+            value = Overflow["storageTempRequirements"];
+          else
+            value = _StorageTempRequirements;
           return _StorageTempRequirements is not null;
         case "property":
-          value = _Property;
+          if (OverflowNull<List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent>>.InOverflow(_Property))
+            value = Overflow["property"];
+          else
+            value = _Property;
           return _Property?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

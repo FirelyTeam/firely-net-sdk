@@ -198,13 +198,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "type":
-            value = _Type;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Type))
+              value = Overflow["type"];
+            else
+              value = _Type;
             return _Type is not null;
           case "dose":
-            value = _Dose;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Dose))
+              value = Overflow["dose"];
+            else
+              value = _Dose;
             return _Dose is not null;
           case "rate":
-            value = _Rate;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Rate))
+              value = Overflow["rate"];
+            else
+              value = _Rate;
             return _Rate is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -749,46 +758,88 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "sequence":
-          value = _SequenceElement;
+          if (OverflowNull<Hl7.Fhir.Model.Integer>.InOverflow(_SequenceElement))
+            value = Overflow["sequence"];
+          else
+            value = _SequenceElement;
           return _SequenceElement is not null;
         case "text":
-          value = _TextElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_TextElement))
+            value = Overflow["text"];
+          else
+            value = _TextElement;
           return _TextElement is not null;
         case "additionalInstruction":
-          value = _AdditionalInstruction;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_AdditionalInstruction))
+            value = Overflow["additionalInstruction"];
+          else
+            value = _AdditionalInstruction;
           return _AdditionalInstruction?.Any() == true;
         case "patientInstruction":
-          value = _PatientInstructionElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_PatientInstructionElement))
+            value = Overflow["patientInstruction"];
+          else
+            value = _PatientInstructionElement;
           return _PatientInstructionElement is not null;
         case "timing":
-          value = _Timing;
+          if (OverflowNull<Hl7.Fhir.Model.Timing>.InOverflow(_Timing))
+            value = Overflow["timing"];
+          else
+            value = _Timing;
           return _Timing is not null;
         case "asNeeded":
-          value = _AsNeededElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirBoolean>.InOverflow(_AsNeededElement))
+            value = Overflow["asNeeded"];
+          else
+            value = _AsNeededElement;
           return _AsNeededElement is not null;
         case "asNeededFor":
-          value = _AsNeededFor;
+          if (OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.InOverflow(_AsNeededFor))
+            value = Overflow["asNeededFor"];
+          else
+            value = _AsNeededFor;
           return _AsNeededFor?.Any() == true;
         case "site":
-          value = _Site;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Site))
+            value = Overflow["site"];
+          else
+            value = _Site;
           return _Site is not null;
         case "route":
-          value = _Route;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Route))
+            value = Overflow["route"];
+          else
+            value = _Route;
           return _Route is not null;
         case "method":
-          value = _Method;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Method))
+            value = Overflow["method"];
+          else
+            value = _Method;
           return _Method is not null;
         case "doseAndRate":
-          value = _DoseAndRate;
+          if (OverflowNull<List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>>.InOverflow(_DoseAndRate))
+            value = Overflow["doseAndRate"];
+          else
+            value = _DoseAndRate;
           return _DoseAndRate?.Any() == true;
         case "maxDosePerPeriod":
-          value = _MaxDosePerPeriod;
+          if (OverflowNull<List<Hl7.Fhir.Model.Ratio>>.InOverflow(_MaxDosePerPeriod))
+            value = Overflow["maxDosePerPeriod"];
+          else
+            value = _MaxDosePerPeriod;
           return _MaxDosePerPeriod?.Any() == true;
         case "maxDosePerAdministration":
-          value = _MaxDosePerAdministration;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_MaxDosePerAdministration))
+            value = Overflow["maxDosePerAdministration"];
+          else
+            value = _MaxDosePerAdministration;
           return _MaxDosePerAdministration is not null;
         case "maxDosePerLifetime":
-          value = _MaxDosePerLifetime;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_MaxDosePerLifetime))
+            value = Overflow["maxDosePerLifetime"];
+          else
+            value = _MaxDosePerLifetime;
           return _MaxDosePerLifetime is not null;
         default:
           return base.TryGetValue(key, out value);

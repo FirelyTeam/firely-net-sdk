@@ -289,16 +289,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "location":
-            value = _Location;
+            if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Location))
+              value = Overflow["location"];
+            else
+              value = _Location;
             return _Location is not null;
           case "itemStatus":
-            value = _ItemStatus;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_ItemStatus))
+              value = Overflow["itemStatus"];
+            else
+              value = _ItemStatus;
             return _ItemStatus is not null;
           case "countingDateTime":
-            value = _CountingDateTimeElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_CountingDateTimeElement))
+              value = Overflow["countingDateTime"];
+            else
+              value = _CountingDateTimeElement;
             return _CountingDateTimeElement is not null;
           case "item":
-            value = _Item;
+            if (OverflowNull<List<Hl7.Fhir.Model.InventoryReport.ItemComponent>>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -490,13 +502,22 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "category":
-            value = _Category;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Category))
+              value = Overflow["category"];
+            else
+              value = _Category;
             return _Category is not null;
           case "quantity":
-            value = _Quantity;
+            if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Quantity))
+              value = Overflow["quantity"];
+            else
+              value = _Quantity;
             return _Quantity is not null;
           case "item":
-            value = _Item;
+            if (OverflowNull<Hl7.Fhir.Model.CodeableReference>.InOverflow(_Item))
+              value = Overflow["item"];
+            else
+              value = _Item;
             return _Item is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -919,34 +940,64 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
-          value = _Identifier;
+          if (OverflowNull<List<Hl7.Fhir.Model.Identifier>>.InOverflow(_Identifier))
+            value = Overflow["identifier"];
+          else
+            value = _Identifier;
           return _Identifier?.Any() == true;
         case "status":
-          value = _StatusElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>>.InOverflow(_StatusElement))
+            value = Overflow["status"];
+          else
+            value = _StatusElement;
           return _StatusElement is not null;
         case "countType":
-          value = _CountTypeElement;
+          if (OverflowNull<Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>>.InOverflow(_CountTypeElement))
+            value = Overflow["countType"];
+          else
+            value = _CountTypeElement;
           return _CountTypeElement is not null;
         case "operationType":
-          value = _OperationType;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_OperationType))
+            value = Overflow["operationType"];
+          else
+            value = _OperationType;
           return _OperationType is not null;
         case "operationTypeReason":
-          value = _OperationTypeReason;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_OperationTypeReason))
+            value = Overflow["operationTypeReason"];
+          else
+            value = _OperationTypeReason;
           return _OperationTypeReason is not null;
         case "reportedDateTime":
-          value = _ReportedDateTimeElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDateTime>.InOverflow(_ReportedDateTimeElement))
+            value = Overflow["reportedDateTime"];
+          else
+            value = _ReportedDateTimeElement;
           return _ReportedDateTimeElement is not null;
         case "reporter":
-          value = _Reporter;
+          if (OverflowNull<Hl7.Fhir.Model.ResourceReference>.InOverflow(_Reporter))
+            value = Overflow["reporter"];
+          else
+            value = _Reporter;
           return _Reporter is not null;
         case "reportingPeriod":
-          value = _ReportingPeriod;
+          if (OverflowNull<Hl7.Fhir.Model.Period>.InOverflow(_ReportingPeriod))
+            value = Overflow["reportingPeriod"];
+          else
+            value = _ReportingPeriod;
           return _ReportingPeriod is not null;
         case "inventoryListing":
-          value = _InventoryListing;
+          if (OverflowNull<List<Hl7.Fhir.Model.InventoryReport.InventoryListingComponent>>.InOverflow(_InventoryListing))
+            value = Overflow["inventoryListing"];
+          else
+            value = _InventoryListing;
           return _InventoryListing?.Any() == true;
         case "note":
-          value = _Note;
+          if (OverflowNull<List<Hl7.Fhir.Model.Annotation>>.InOverflow(_Note))
+            value = Overflow["note"];
+          else
+            value = _Note;
           return _Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

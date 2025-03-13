@@ -241,16 +241,28 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "name":
-            value = _NameElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_NameElement))
+              value = Overflow["name"];
+            else
+              value = _NameElement;
             return _NameElement is not null;
           case "value":
-            value = _Value;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Value))
+              value = Overflow["value"];
+            else
+              value = _Value;
             return _Value is not null;
           case "resource":
-            value = _Resource;
+            if (OverflowNull<DynamicResource>.InOverflow(_Resource))
+              value = Overflow["resource"];
+            else
+              value = _Resource;
             return _Resource is not null;
           case "part":
-            value = _Part;
+            if (OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.InOverflow(_Part))
+              value = Overflow["part"];
+            else
+              value = _Part;
             return _Part?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
@@ -372,7 +384,10 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "parameter":
-          value = _Parameter;
+          if (OverflowNull<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>.InOverflow(_Parameter))
+            value = Overflow["parameter"];
+          else
+            value = _Parameter;
           return _Parameter?.Any() == true;
         default:
           return base.TryGetValue(key, out value);

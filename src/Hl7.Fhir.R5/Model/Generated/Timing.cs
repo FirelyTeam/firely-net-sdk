@@ -987,49 +987,94 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "bounds":
-            value = _Bounds;
+            if (OverflowNull<DynamicDataType>.InOverflow(_Bounds))
+              value = Overflow["bounds"];
+            else
+              value = _Bounds;
             return _Bounds is not null;
           case "count":
-            value = _CountElement;
+            if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_CountElement))
+              value = Overflow["count"];
+            else
+              value = _CountElement;
             return _CountElement is not null;
           case "countMax":
-            value = _CountMaxElement;
+            if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_CountMaxElement))
+              value = Overflow["countMax"];
+            else
+              value = _CountMaxElement;
             return _CountMaxElement is not null;
           case "duration":
-            value = _DurationElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DurationElement))
+              value = Overflow["duration"];
+            else
+              value = _DurationElement;
             return _DurationElement is not null;
           case "durationMax":
-            value = _DurationMaxElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_DurationMaxElement))
+              value = Overflow["durationMax"];
+            else
+              value = _DurationMaxElement;
             return _DurationMaxElement is not null;
           case "durationUnit":
-            value = _DurationUnitElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.Timing.UnitsOfTime>>.InOverflow(_DurationUnitElement))
+              value = Overflow["durationUnit"];
+            else
+              value = _DurationUnitElement;
             return _DurationUnitElement is not null;
           case "frequency":
-            value = _FrequencyElement;
+            if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_FrequencyElement))
+              value = Overflow["frequency"];
+            else
+              value = _FrequencyElement;
             return _FrequencyElement is not null;
           case "frequencyMax":
-            value = _FrequencyMaxElement;
+            if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_FrequencyMaxElement))
+              value = Overflow["frequencyMax"];
+            else
+              value = _FrequencyMaxElement;
             return _FrequencyMaxElement is not null;
           case "period":
-            value = _PeriodElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_PeriodElement))
+              value = Overflow["period"];
+            else
+              value = _PeriodElement;
             return _PeriodElement is not null;
           case "periodMax":
-            value = _PeriodMaxElement;
+            if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_PeriodMaxElement))
+              value = Overflow["periodMax"];
+            else
+              value = _PeriodMaxElement;
             return _PeriodMaxElement is not null;
           case "periodUnit":
-            value = _PeriodUnitElement;
+            if (OverflowNull<Code<Hl7.Fhir.Model.Timing.UnitsOfTime>>.InOverflow(_PeriodUnitElement))
+              value = Overflow["periodUnit"];
+            else
+              value = _PeriodUnitElement;
             return _PeriodUnitElement is not null;
           case "dayOfWeek":
-            value = _DayOfWeekElement;
+            if (OverflowNull<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>.InOverflow(_DayOfWeekElement))
+              value = Overflow["dayOfWeek"];
+            else
+              value = _DayOfWeekElement;
             return _DayOfWeekElement?.Any() == true;
           case "timeOfDay":
-            value = _TimeOfDayElement;
+            if (OverflowNull<List<Hl7.Fhir.Model.Time>>.InOverflow(_TimeOfDayElement))
+              value = Overflow["timeOfDay"];
+            else
+              value = _TimeOfDayElement;
             return _TimeOfDayElement?.Any() == true;
           case "when":
-            value = _WhenElement;
+            if (OverflowNull<List<Code<Hl7.Fhir.Model.Timing.EventTiming>>>.InOverflow(_WhenElement))
+              value = Overflow["when"];
+            else
+              value = _WhenElement;
             return _WhenElement?.Any() == true;
           case "offset":
-            value = _OffsetElement;
+            if (OverflowNull<Hl7.Fhir.Model.UnsignedInt>.InOverflow(_OffsetElement))
+              value = Overflow["offset"];
+            else
+              value = _OffsetElement;
             return _OffsetElement is not null;
           default:
             return base.TryGetValue(key, out value);
@@ -1325,13 +1370,22 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "event":
-          value = _EventElement;
+          if (OverflowNull<List<Hl7.Fhir.Model.FhirDateTime>>.InOverflow(_EventElement))
+            value = Overflow["event"];
+          else
+            value = _EventElement;
           return _EventElement?.Any() == true;
         case "repeat":
-          value = _Repeat;
+          if (OverflowNull<Hl7.Fhir.Model.Timing.RepeatComponent>.InOverflow(_Repeat))
+            value = Overflow["repeat"];
+          else
+            value = _Repeat;
           return _Repeat is not null;
         case "code":
-          value = _Code;
+          if (OverflowNull<Hl7.Fhir.Model.CodeableConcept>.InOverflow(_Code))
+            value = Overflow["code"];
+          else
+            value = _Code;
           return _Code is not null;
         default:
           return base.TryGetValue(key, out value);

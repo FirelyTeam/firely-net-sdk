@@ -513,34 +513,64 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "origin":
-          value = _Origin;
+          if (OverflowNull<Hl7.Fhir.Model.Quantity>.InOverflow(_Origin))
+            value = Overflow["origin"];
+          else
+            value = _Origin;
           return _Origin is not null;
         case "interval":
-          value = _IntervalElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_IntervalElement))
+            value = Overflow["interval"];
+          else
+            value = _IntervalElement;
           return _IntervalElement is not null;
         case "intervalUnit":
-          value = _IntervalUnitElement;
+          if (OverflowNull<Hl7.Fhir.Model.Code>.InOverflow(_IntervalUnitElement))
+            value = Overflow["intervalUnit"];
+          else
+            value = _IntervalUnitElement;
           return _IntervalUnitElement is not null;
         case "factor":
-          value = _FactorElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_FactorElement))
+            value = Overflow["factor"];
+          else
+            value = _FactorElement;
           return _FactorElement is not null;
         case "lowerLimit":
-          value = _LowerLimitElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_LowerLimitElement))
+            value = Overflow["lowerLimit"];
+          else
+            value = _LowerLimitElement;
           return _LowerLimitElement is not null;
         case "upperLimit":
-          value = _UpperLimitElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirDecimal>.InOverflow(_UpperLimitElement))
+            value = Overflow["upperLimit"];
+          else
+            value = _UpperLimitElement;
           return _UpperLimitElement is not null;
         case "dimensions":
-          value = _DimensionsElement;
+          if (OverflowNull<Hl7.Fhir.Model.PositiveInt>.InOverflow(_DimensionsElement))
+            value = Overflow["dimensions"];
+          else
+            value = _DimensionsElement;
           return _DimensionsElement is not null;
         case "codeMap":
-          value = _CodeMapElement;
+          if (OverflowNull<Hl7.Fhir.Model.Canonical>.InOverflow(_CodeMapElement))
+            value = Overflow["codeMap"];
+          else
+            value = _CodeMapElement;
           return _CodeMapElement is not null;
         case "offsets":
-          value = _OffsetsElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_OffsetsElement))
+            value = Overflow["offsets"];
+          else
+            value = _OffsetsElement;
           return _OffsetsElement is not null;
         case "data":
-          value = _DataElement;
+          if (OverflowNull<Hl7.Fhir.Model.FhirString>.InOverflow(_DataElement))
+            value = Overflow["data"];
+          else
+            value = _DataElement;
           return _DataElement is not null;
         default:
           return base.TryGetValue(key, out value);
