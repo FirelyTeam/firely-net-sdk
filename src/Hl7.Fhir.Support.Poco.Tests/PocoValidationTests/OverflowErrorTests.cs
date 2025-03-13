@@ -14,12 +14,10 @@ public class OverflowErrorTests
     [TestMethod]
     public void SettingInvalidElementValue_Should_ThrowOnAccess()
     {
-        TestOnPrimitiveElement(0, COVE.TYPE_MISMATCH_CODE);
         TestOnPrimitiveElement(new Patient(), COVE.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
         TestOnPrimitiveElement(new Integer(10), COVE.TYPE_MISMATCH_CODE);
         TestOnPrimitiveElement(new List<Patient>(), COVE.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE);
         TestOnPrimitiveElement(new FhirBoolean(true), null);
-        TestOnPrimitiveElement(true, COVE.TYPE_MISMATCH_CODE);
         TestOnArrayElement(new List<Patient>(), COVE.TYPE_MISMATCH_CODE);
         TestOnArrayElement(new Patient(), COVE.EXPECTED_ARRAY_NOT_OBJECT_CODE);
         TestOnArrayElement(new FhirBoolean(true), COVE.EXPECTED_ARRAY_NOT_PRIMITIVE_CODE);

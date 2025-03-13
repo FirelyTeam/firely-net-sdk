@@ -45,13 +45,13 @@ public class PocoDictionaryTests
         var pat = new Patient();
 
         // setting an existing property to an incorrect type should fail.
-        Assert.ThrowsException<InvalidCastException>(() => pat["name"] = "John");
+        Assert.ThrowsException<ArgumentException>(() => pat["name"] = "John");
 
         // Setting it correctly should work
         pat["name"] = new List<HumanName> { new HumanName().WithGiven("John") };
 
         // Adding a non-existing property should work
-        Assert.ThrowsException<InvalidCastException>(() => pat["weight"] = 80.0m);
+        Assert.ThrowsException<ArgumentException>(() => pat["weight"] = 80.0m);
         pat["weight"] = new FhirDecimal(80.0m);
 
         pat["name"].Should().BeOfType<List<HumanName>>();
