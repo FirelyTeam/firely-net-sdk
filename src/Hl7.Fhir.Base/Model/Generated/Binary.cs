@@ -348,10 +348,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>() && _ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
-      if (!_SecurityContext.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _SecurityContext is not null) yield return new KeyValuePair<string,object>("securityContext",_SecurityContext);
-      if (!_ContentElement.InOverflow<Hl7.Fhir.Model.Base64Binary>() && _ContentElement is not null) yield return new KeyValuePair<string,object>("content",_ContentElement);
-      if (!_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>() && _DataElement is not null) yield return new KeyValuePair<string,object>("data",_DataElement);
+      if (_ContentTypeElement is not null && !_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
+      if (_SecurityContext is not null && !_SecurityContext.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("securityContext",_SecurityContext);
+      if (_ContentElement is not null && !_ContentElement.InOverflow<Hl7.Fhir.Model.Base64Binary>()) yield return new KeyValuePair<string,object>("content",_ContentElement);
+      if (_DataElement is not null && !_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>()) yield return new KeyValuePair<string,object>("data",_DataElement);
     }
 
   }

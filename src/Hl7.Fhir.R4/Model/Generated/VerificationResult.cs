@@ -501,13 +501,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Who.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Who is not null) yield return new KeyValuePair<string,object>("who",_Who);
-        if (!_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Type?.Any() is true) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_CommunicationMethod.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _CommunicationMethod?.Any() is true) yield return new KeyValuePair<string,object>("communicationMethod",_CommunicationMethod);
-        if (!_ValidationStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ValidationStatus is not null) yield return new KeyValuePair<string,object>("validationStatus",_ValidationStatus);
-        if (!_ValidationDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _ValidationDateElement is not null) yield return new KeyValuePair<string,object>("validationDate",_ValidationDateElement);
-        if (!_CanPushUpdates.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _CanPushUpdates is not null) yield return new KeyValuePair<string,object>("canPushUpdates",_CanPushUpdates);
-        if (!_PushTypeAvailable.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _PushTypeAvailable?.Any() is true) yield return new KeyValuePair<string,object>("pushTypeAvailable",_PushTypeAvailable);
+        if (_Who is not null && !_Who.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("who",_Who);
+        if (_Type?.Any() is true && !_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_CommunicationMethod?.Any() is true && !_CommunicationMethod.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("communicationMethod",_CommunicationMethod);
+        if (_ValidationStatus is not null && !_ValidationStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("validationStatus",_ValidationStatus);
+        if (_ValidationDateElement is not null && !_ValidationDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("validationDate",_ValidationDateElement);
+        if (_CanPushUpdates is not null && !_CanPushUpdates.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("canPushUpdates",_CanPushUpdates);
+        if (_PushTypeAvailable?.Any() is true && !_PushTypeAvailable.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("pushTypeAvailable",_PushTypeAvailable);
       }
 
     }
@@ -977,14 +977,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Who.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Who is not null) yield return new KeyValuePair<string,object>("who",_Who);
-        if (!_OnBehalfOf.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
-        if (!_CommunicationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _CommunicationMethod is not null) yield return new KeyValuePair<string,object>("communicationMethod",_CommunicationMethod);
-        if (!_DateElement.InOverflow<Hl7.Fhir.Model.Date>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-        if (!_SourceIdentityCertificateElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _SourceIdentityCertificateElement is not null) yield return new KeyValuePair<string,object>("sourceIdentityCertificate",_SourceIdentityCertificateElement);
-        if (!_ProxyIdentityCertificateElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ProxyIdentityCertificateElement is not null) yield return new KeyValuePair<string,object>("proxyIdentityCertificate",_ProxyIdentityCertificateElement);
-        if (!_ProxySignature.InOverflow<Hl7.Fhir.Model.Signature>() && _ProxySignature is not null) yield return new KeyValuePair<string,object>("proxySignature",_ProxySignature);
-        if (!_SourceSignature.InOverflow<Hl7.Fhir.Model.Signature>() && _SourceSignature is not null) yield return new KeyValuePair<string,object>("sourceSignature",_SourceSignature);
+        if (_Who is not null && !_Who.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("who",_Who);
+        if (_OnBehalfOf is not null && !_OnBehalfOf.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
+        if (_CommunicationMethod is not null && !_CommunicationMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("communicationMethod",_CommunicationMethod);
+        if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.Date>()) yield return new KeyValuePair<string,object>("date",_DateElement);
+        if (_SourceIdentityCertificateElement is not null && !_SourceIdentityCertificateElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("sourceIdentityCertificate",_SourceIdentityCertificateElement);
+        if (_ProxyIdentityCertificateElement is not null && !_ProxyIdentityCertificateElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("proxyIdentityCertificate",_ProxyIdentityCertificateElement);
+        if (_ProxySignature is not null && !_ProxySignature.InOverflow<Hl7.Fhir.Model.Signature>()) yield return new KeyValuePair<string,object>("proxySignature",_ProxySignature);
+        if (_SourceSignature is not null && !_SourceSignature.InOverflow<Hl7.Fhir.Model.Signature>()) yield return new KeyValuePair<string,object>("sourceSignature",_SourceSignature);
       }
 
     }
@@ -1202,9 +1202,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Organization.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Organization is not null) yield return new KeyValuePair<string,object>("organization",_Organization);
-        if (!_IdentityCertificateElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _IdentityCertificateElement is not null) yield return new KeyValuePair<string,object>("identityCertificate",_IdentityCertificateElement);
-        if (!_AttestationSignature.InOverflow<Hl7.Fhir.Model.Signature>() && _AttestationSignature is not null) yield return new KeyValuePair<string,object>("attestationSignature",_AttestationSignature);
+        if (_Organization is not null && !_Organization.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("organization",_Organization);
+        if (_IdentityCertificateElement is not null && !_IdentityCertificateElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("identityCertificate",_IdentityCertificateElement);
+        if (_AttestationSignature is not null && !_AttestationSignature.InOverflow<Hl7.Fhir.Model.Signature>()) yield return new KeyValuePair<string,object>("attestationSignature",_AttestationSignature);
       }
 
     }
@@ -1967,20 +1967,20 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Target.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Target?.Any() is true) yield return new KeyValuePair<string,object>("target",_Target);
-      if (!_TargetLocationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _TargetLocationElement?.Any() is true) yield return new KeyValuePair<string,object>("targetLocation",_TargetLocationElement);
-      if (!_Need.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Need is not null) yield return new KeyValuePair<string,object>("need",_Need);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.VerificationResult.StatusCode>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_StatusDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
-      if (!_ValidationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ValidationType is not null) yield return new KeyValuePair<string,object>("validationType",_ValidationType);
-      if (!_ValidationProcess.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ValidationProcess?.Any() is true) yield return new KeyValuePair<string,object>("validationProcess",_ValidationProcess);
-      if (!_Frequency.InOverflow<Hl7.Fhir.Model.Timing>() && _Frequency is not null) yield return new KeyValuePair<string,object>("frequency",_Frequency);
-      if (!_LastPerformedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _LastPerformedElement is not null) yield return new KeyValuePair<string,object>("lastPerformed",_LastPerformedElement);
-      if (!_NextScheduledElement.InOverflow<Hl7.Fhir.Model.Date>() && _NextScheduledElement is not null) yield return new KeyValuePair<string,object>("nextScheduled",_NextScheduledElement);
-      if (!_FailureAction.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _FailureAction is not null) yield return new KeyValuePair<string,object>("failureAction",_FailureAction);
-      if (!_PrimarySource.InOverflow<List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>>() && _PrimarySource?.Any() is true) yield return new KeyValuePair<string,object>("primarySource",_PrimarySource);
-      if (!_Attestation.InOverflow<Hl7.Fhir.Model.VerificationResult.AttestationComponent>() && _Attestation is not null) yield return new KeyValuePair<string,object>("attestation",_Attestation);
-      if (!_Validator.InOverflow<List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>>() && _Validator?.Any() is true) yield return new KeyValuePair<string,object>("validator",_Validator);
+      if (_Target?.Any() is true && !_Target.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("target",_Target);
+      if (_TargetLocationElement?.Any() is true && !_TargetLocationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("targetLocation",_TargetLocationElement);
+      if (_Need is not null && !_Need.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("need",_Need);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.VerificationResult.StatusCode>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_StatusDateElement is not null && !_StatusDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
+      if (_ValidationType is not null && !_ValidationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("validationType",_ValidationType);
+      if (_ValidationProcess?.Any() is true && !_ValidationProcess.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("validationProcess",_ValidationProcess);
+      if (_Frequency is not null && !_Frequency.InOverflow<Hl7.Fhir.Model.Timing>()) yield return new KeyValuePair<string,object>("frequency",_Frequency);
+      if (_LastPerformedElement is not null && !_LastPerformedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("lastPerformed",_LastPerformedElement);
+      if (_NextScheduledElement is not null && !_NextScheduledElement.InOverflow<Hl7.Fhir.Model.Date>()) yield return new KeyValuePair<string,object>("nextScheduled",_NextScheduledElement);
+      if (_FailureAction is not null && !_FailureAction.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("failureAction",_FailureAction);
+      if (_PrimarySource?.Any() is true && !_PrimarySource.InOverflow<List<Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent>>()) yield return new KeyValuePair<string,object>("primarySource",_PrimarySource);
+      if (_Attestation is not null && !_Attestation.InOverflow<Hl7.Fhir.Model.VerificationResult.AttestationComponent>()) yield return new KeyValuePair<string,object>("attestation",_Attestation);
+      if (_Validator?.Any() is true && !_Validator.InOverflow<List<Hl7.Fhir.Model.VerificationResult.ValidatorComponent>>()) yield return new KeyValuePair<string,object>("validator",_Validator);
     }
 
   }

@@ -434,12 +434,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_DiseaseSymptomProcedure.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",_DiseaseSymptomProcedure);
-        if (!_DiseaseStatus.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",_DiseaseStatus);
-        if (!_Comorbidity.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>() && _Comorbidity?.Any() is true) yield return new KeyValuePair<string,object>("comorbidity",_Comorbidity);
-        if (!_Indication.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Indication?.Any() is true) yield return new KeyValuePair<string,object>("indication",_Indication);
-        if (!_Applicability.InOverflow<Hl7.Fhir.Model.Expression>() && _Applicability is not null) yield return new KeyValuePair<string,object>("applicability",_Applicability);
-        if (!_OtherTherapy.InOverflow<List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>>() && _OtherTherapy?.Any() is true) yield return new KeyValuePair<string,object>("otherTherapy",_OtherTherapy);
+        if (_DiseaseSymptomProcedure is not null && !_DiseaseSymptomProcedure.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",_DiseaseSymptomProcedure);
+        if (_DiseaseStatus is not null && !_DiseaseStatus.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("diseaseStatus",_DiseaseStatus);
+        if (_Comorbidity?.Any() is true && !_Comorbidity.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("comorbidity",_Comorbidity);
+        if (_Indication?.Any() is true && !_Indication.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("indication",_Indication);
+        if (_Applicability is not null && !_Applicability.InOverflow<Hl7.Fhir.Model.Expression>()) yield return new KeyValuePair<string,object>("applicability",_Applicability);
+        if (_OtherTherapy?.Any() is true && !_OtherTherapy.InOverflow<List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>>()) yield return new KeyValuePair<string,object>("otherTherapy",_OtherTherapy);
       }
 
     }
@@ -602,8 +602,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _RelationshipType is not null) yield return new KeyValuePair<string,object>("relationshipType",_RelationshipType);
-        if (!_Treatment.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _Treatment is not null) yield return new KeyValuePair<string,object>("treatment",_Treatment);
+        if (_RelationshipType is not null && !_RelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("relationshipType",_RelationshipType);
+        if (_Treatment is not null && !_Treatment.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("treatment",_Treatment);
       }
 
     }
@@ -1034,14 +1034,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_DiseaseSymptomProcedure.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",_DiseaseSymptomProcedure);
-        if (!_DiseaseStatus.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",_DiseaseStatus);
-        if (!_Comorbidity.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>() && _Comorbidity?.Any() is true) yield return new KeyValuePair<string,object>("comorbidity",_Comorbidity);
-        if (!_IntendedEffect.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _IntendedEffect is not null) yield return new KeyValuePair<string,object>("intendedEffect",_IntendedEffect);
-        if (!_Duration.InOverflow<DynamicDataType>() && _Duration is not null) yield return new KeyValuePair<string,object>("duration",_Duration);
-        if (!_UndesirableEffect.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _UndesirableEffect?.Any() is true) yield return new KeyValuePair<string,object>("undesirableEffect",_UndesirableEffect);
-        if (!_Applicability.InOverflow<Hl7.Fhir.Model.Expression>() && _Applicability is not null) yield return new KeyValuePair<string,object>("applicability",_Applicability);
-        if (!_OtherTherapy.InOverflow<List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>>() && _OtherTherapy?.Any() is true) yield return new KeyValuePair<string,object>("otherTherapy",_OtherTherapy);
+        if (_DiseaseSymptomProcedure is not null && !_DiseaseSymptomProcedure.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",_DiseaseSymptomProcedure);
+        if (_DiseaseStatus is not null && !_DiseaseStatus.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("diseaseStatus",_DiseaseStatus);
+        if (_Comorbidity?.Any() is true && !_Comorbidity.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("comorbidity",_Comorbidity);
+        if (_IntendedEffect is not null && !_IntendedEffect.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("intendedEffect",_IntendedEffect);
+        if (_Duration is not null && !_Duration.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("duration",_Duration);
+        if (_UndesirableEffect?.Any() is true && !_UndesirableEffect.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("undesirableEffect",_UndesirableEffect);
+        if (_Applicability is not null && !_Applicability.InOverflow<Hl7.Fhir.Model.Expression>()) yield return new KeyValuePair<string,object>("applicability",_Applicability);
+        if (_OtherTherapy?.Any() is true && !_OtherTherapy.InOverflow<List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent>>()) yield return new KeyValuePair<string,object>("otherTherapy",_OtherTherapy);
       }
 
     }
@@ -1335,11 +1335,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Interactant.InOverflow<List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent>>() && _Interactant?.Any() is true) yield return new KeyValuePair<string,object>("interactant",_Interactant);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Effect.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _Effect is not null) yield return new KeyValuePair<string,object>("effect",_Effect);
-        if (!_Incidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Incidence is not null) yield return new KeyValuePair<string,object>("incidence",_Incidence);
-        if (!_Management.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Management?.Any() is true) yield return new KeyValuePair<string,object>("management",_Management);
+        if (_Interactant?.Any() is true && !_Interactant.InOverflow<List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent>>()) yield return new KeyValuePair<string,object>("interactant",_Interactant);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Effect is not null && !_Effect.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("effect",_Effect);
+        if (_Incidence is not null && !_Incidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("incidence",_Incidence);
+        if (_Management?.Any() is true && !_Management.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("management",_Management);
       }
 
     }
@@ -1459,7 +1459,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Item.InOverflow<DynamicDataType>() && _Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
+        if (_Item is not null && !_Item.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -1665,9 +1665,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _SymptomConditionEffect is not null) yield return new KeyValuePair<string,object>("symptomConditionEffect",_SymptomConditionEffect);
-        if (!_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Classification is not null) yield return new KeyValuePair<string,object>("classification",_Classification);
-        if (!_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _FrequencyOfOccurrence is not null) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",_FrequencyOfOccurrence);
+        if (_SymptomConditionEffect is not null && !_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("symptomConditionEffect",_SymptomConditionEffect);
+        if (_Classification is not null && !_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("classification",_Classification);
+        if (_FrequencyOfOccurrence is not null && !_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",_FrequencyOfOccurrence);
       }
 
     }
@@ -1842,8 +1842,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
       }
 
     }
@@ -2475,18 +2475,18 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (!_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Category?.Any() is true) yield return new KeyValuePair<string,object>("category",_Category);
-      if (!_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Subject?.Any() is true) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
-      if (!_Contraindication.InOverflow<Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent>() && _Contraindication is not null) yield return new KeyValuePair<string,object>("contraindication",_Contraindication);
-      if (!_Indication.InOverflow<Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent>() && _Indication is not null) yield return new KeyValuePair<string,object>("indication",_Indication);
-      if (!_Interaction.InOverflow<Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent>() && _Interaction is not null) yield return new KeyValuePair<string,object>("interaction",_Interaction);
-      if (!_Population.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Population?.Any() is true) yield return new KeyValuePair<string,object>("population",_Population);
-      if (!_LibraryElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>() && _LibraryElement?.Any() is true) yield return new KeyValuePair<string,object>("library",_LibraryElement);
-      if (!_UndesirableEffect.InOverflow<Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent>() && _UndesirableEffect is not null) yield return new KeyValuePair<string,object>("undesirableEffect",_UndesirableEffect);
-      if (!_Warning.InOverflow<Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent>() && _Warning is not null) yield return new KeyValuePair<string,object>("warning",_Warning);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_Category?.Any() is true && !_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Status is not null && !_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("status",_Status);
+      if (_Contraindication is not null && !_Contraindication.InOverflow<Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent>()) yield return new KeyValuePair<string,object>("contraindication",_Contraindication);
+      if (_Indication is not null && !_Indication.InOverflow<Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent>()) yield return new KeyValuePair<string,object>("indication",_Indication);
+      if (_Interaction is not null && !_Interaction.InOverflow<Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent>()) yield return new KeyValuePair<string,object>("interaction",_Interaction);
+      if (_Population?.Any() is true && !_Population.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("population",_Population);
+      if (_LibraryElement?.Any() is true && !_LibraryElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>()) yield return new KeyValuePair<string,object>("library",_LibraryElement);
+      if (_UndesirableEffect is not null && !_UndesirableEffect.InOverflow<Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent>()) yield return new KeyValuePair<string,object>("undesirableEffect",_UndesirableEffect);
+      if (_Warning is not null && !_Warning.InOverflow<Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent>()) yield return new KeyValuePair<string,object>("warning",_Warning);
     }
 
   }

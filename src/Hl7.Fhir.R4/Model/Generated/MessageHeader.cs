@@ -368,10 +368,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_Target.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Target is not null) yield return new KeyValuePair<string,object>("target",_Target);
-        if (!_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>() && _EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",_EndpointElement);
-        if (!_Receiver.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Receiver is not null) yield return new KeyValuePair<string,object>("receiver",_Receiver);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_Target is not null && !_Target.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("target",_Target);
+        if (_EndpointElement is not null && !_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>()) yield return new KeyValuePair<string,object>("endpoint",_EndpointElement);
+        if (_Receiver is not null && !_Receiver.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("receiver",_Receiver);
       }
 
     }
@@ -723,11 +723,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_SoftwareElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _SoftwareElement is not null) yield return new KeyValuePair<string,object>("software",_SoftwareElement);
-        if (!_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _VersionElement is not null) yield return new KeyValuePair<string,object>("version",_VersionElement);
-        if (!_Contact.InOverflow<Hl7.Fhir.Model.ContactPoint>() && _Contact is not null) yield return new KeyValuePair<string,object>("contact",_Contact);
-        if (!_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>() && _EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",_EndpointElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_SoftwareElement is not null && !_SoftwareElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("software",_SoftwareElement);
+        if (_VersionElement is not null && !_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("version",_VersionElement);
+        if (_Contact is not null && !_Contact.InOverflow<Hl7.Fhir.Model.ContactPoint>()) yield return new KeyValuePair<string,object>("contact",_Contact);
+        if (_EndpointElement is not null && !_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>()) yield return new KeyValuePair<string,object>("endpoint",_EndpointElement);
       }
 
     }
@@ -966,9 +966,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_IdentifierElement.InOverflow<Hl7.Fhir.Model.Id>() && _IdentifierElement is not null) yield return new KeyValuePair<string,object>("identifier",_IdentifierElement);
-        if (!_CodeElement.InOverflow<Code<Hl7.Fhir.Model.MessageHeader.ResponseType>>() && _CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
-        if (!_Details.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Details is not null) yield return new KeyValuePair<string,object>("details",_Details);
+        if (_IdentifierElement is not null && !_IdentifierElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("identifier",_IdentifierElement);
+        if (_CodeElement is not null && !_CodeElement.InOverflow<Code<Hl7.Fhir.Model.MessageHeader.ResponseType>>()) yield return new KeyValuePair<string,object>("code",_CodeElement);
+        if (_Details is not null && !_Details.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("details",_Details);
       }
 
     }
@@ -1540,17 +1540,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Event.InOverflow<DynamicDataType>() && _Event is not null) yield return new KeyValuePair<string,object>("event",_Event);
-      if (!_Destination.InOverflow<List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>>() && _Destination?.Any() is true) yield return new KeyValuePair<string,object>("destination",_Destination);
-      if (!_Sender.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Sender is not null) yield return new KeyValuePair<string,object>("sender",_Sender);
-      if (!_Enterer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Enterer is not null) yield return new KeyValuePair<string,object>("enterer",_Enterer);
-      if (!_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
-      if (!_Source.InOverflow<Hl7.Fhir.Model.MessageHeader.MessageSourceComponent>() && _Source is not null) yield return new KeyValuePair<string,object>("source",_Source);
-      if (!_Responsible.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Responsible is not null) yield return new KeyValuePair<string,object>("responsible",_Responsible);
-      if (!_Reason.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Reason is not null) yield return new KeyValuePair<string,object>("reason",_Reason);
-      if (!_Response.InOverflow<Hl7.Fhir.Model.MessageHeader.ResponseComponent>() && _Response is not null) yield return new KeyValuePair<string,object>("response",_Response);
-      if (!_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Focus?.Any() is true) yield return new KeyValuePair<string,object>("focus",_Focus);
-      if (!_DefinitionElement.InOverflow<Hl7.Fhir.Model.Canonical>() && _DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",_DefinitionElement);
+      if (_Event is not null && !_Event.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("event",_Event);
+      if (_Destination?.Any() is true && !_Destination.InOverflow<List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>>()) yield return new KeyValuePair<string,object>("destination",_Destination);
+      if (_Sender is not null && !_Sender.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("sender",_Sender);
+      if (_Enterer is not null && !_Enterer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("enterer",_Enterer);
+      if (_Author is not null && !_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("author",_Author);
+      if (_Source is not null && !_Source.InOverflow<Hl7.Fhir.Model.MessageHeader.MessageSourceComponent>()) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_Responsible is not null && !_Responsible.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("responsible",_Responsible);
+      if (_Reason is not null && !_Reason.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("reason",_Reason);
+      if (_Response is not null && !_Response.InOverflow<Hl7.Fhir.Model.MessageHeader.ResponseComponent>()) yield return new KeyValuePair<string,object>("response",_Response);
+      if (_Focus?.Any() is true && !_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("focus",_Focus);
+      if (_DefinitionElement is not null && !_DefinitionElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("definition",_DefinitionElement);
     }
 
   }

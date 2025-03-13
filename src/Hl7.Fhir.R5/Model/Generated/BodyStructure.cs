@@ -357,11 +357,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Structure.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Structure is not null) yield return new KeyValuePair<string,object>("structure",_Structure);
-        if (!_Laterality.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Laterality is not null) yield return new KeyValuePair<string,object>("laterality",_Laterality);
-        if (!_BodyLandmarkOrientation.InOverflow<List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>>() && _BodyLandmarkOrientation?.Any() is true) yield return new KeyValuePair<string,object>("bodyLandmarkOrientation",_BodyLandmarkOrientation);
-        if (!_SpatialReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _SpatialReference?.Any() is true) yield return new KeyValuePair<string,object>("spatialReference",_SpatialReference);
-        if (!_Qualifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Qualifier?.Any() is true) yield return new KeyValuePair<string,object>("qualifier",_Qualifier);
+        if (_Structure is not null && !_Structure.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("structure",_Structure);
+        if (_Laterality is not null && !_Laterality.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("laterality",_Laterality);
+        if (_BodyLandmarkOrientation?.Any() is true && !_BodyLandmarkOrientation.InOverflow<List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>>()) yield return new KeyValuePair<string,object>("bodyLandmarkOrientation",_BodyLandmarkOrientation);
+        if (_SpatialReference?.Any() is true && !_SpatialReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("spatialReference",_SpatialReference);
+        if (_Qualifier?.Any() is true && !_Qualifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("qualifier",_Qualifier);
       }
 
     }
@@ -615,10 +615,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_LandmarkDescription.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _LandmarkDescription?.Any() is true) yield return new KeyValuePair<string,object>("landmarkDescription",_LandmarkDescription);
-        if (!_ClockFacePosition.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ClockFacePosition?.Any() is true) yield return new KeyValuePair<string,object>("clockFacePosition",_ClockFacePosition);
-        if (!_DistanceFromLandmark.InOverflow<List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>>() && _DistanceFromLandmark?.Any() is true) yield return new KeyValuePair<string,object>("distanceFromLandmark",_DistanceFromLandmark);
-        if (!_SurfaceOrientation.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _SurfaceOrientation?.Any() is true) yield return new KeyValuePair<string,object>("surfaceOrientation",_SurfaceOrientation);
+        if (_LandmarkDescription?.Any() is true && !_LandmarkDescription.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("landmarkDescription",_LandmarkDescription);
+        if (_ClockFacePosition?.Any() is true && !_ClockFacePosition.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("clockFacePosition",_ClockFacePosition);
+        if (_DistanceFromLandmark?.Any() is true && !_DistanceFromLandmark.InOverflow<List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>>()) yield return new KeyValuePair<string,object>("distanceFromLandmark",_DistanceFromLandmark);
+        if (_SurfaceOrientation?.Any() is true && !_SurfaceOrientation.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("surfaceOrientation",_SurfaceOrientation);
       }
 
     }
@@ -780,8 +780,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Device.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>() && _Device?.Any() is true) yield return new KeyValuePair<string,object>("device",_Device);
-        if (!_Value.InOverflow<List<Hl7.Fhir.Model.Quantity>>() && _Value?.Any() is true) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_Device?.Any() is true && !_Device.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("device",_Device);
+        if (_Value?.Any() is true && !_Value.InOverflow<List<Hl7.Fhir.Model.Quantity>>()) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -1228,14 +1228,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
-      if (!_Morphology.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Morphology is not null) yield return new KeyValuePair<string,object>("morphology",_Morphology);
-      if (!_IncludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>() && _IncludedStructure?.Any() is true) yield return new KeyValuePair<string,object>("includedStructure",_IncludedStructure);
-      if (!_ExcludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>() && _ExcludedStructure?.Any() is true) yield return new KeyValuePair<string,object>("excludedStructure",_ExcludedStructure);
-      if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (!_Image.InOverflow<List<Hl7.Fhir.Model.Attachment>>() && _Image?.Any() is true) yield return new KeyValuePair<string,object>("image",_Image);
-      if (!_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ActiveElement is not null && !_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (_Morphology is not null && !_Morphology.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("morphology",_Morphology);
+      if (_IncludedStructure?.Any() is true && !_IncludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>()) yield return new KeyValuePair<string,object>("includedStructure",_IncludedStructure);
+      if (_ExcludedStructure?.Any() is true && !_ExcludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>()) yield return new KeyValuePair<string,object>("excludedStructure",_ExcludedStructure);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Image?.Any() is true && !_Image.InOverflow<List<Hl7.Fhir.Model.Attachment>>()) yield return new KeyValuePair<string,object>("image",_Image);
+      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
     }
 
   }

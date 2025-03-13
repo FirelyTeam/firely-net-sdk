@@ -1331,8 +1331,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
-      if (!_CurrencyElement.InOverflow<Code<Hl7.Fhir.Model.Money.Currencies>>() && _CurrencyElement is not null) yield return new KeyValuePair<string,object>("currency",_CurrencyElement);
+      if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (_CurrencyElement is not null && !_CurrencyElement.InOverflow<Code<Hl7.Fhir.Model.Money.Currencies>>()) yield return new KeyValuePair<string,object>("currency",_CurrencyElement);
     }
 
   }

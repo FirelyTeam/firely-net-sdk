@@ -441,10 +441,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_CustomaryUnit.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _CustomaryUnit is not null) yield return new KeyValuePair<string,object>("customaryUnit",_CustomaryUnit);
-        if (!_Unit.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Unit is not null) yield return new KeyValuePair<string,object>("unit",_Unit);
-        if (!_ConversionFactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _ConversionFactorElement is not null) yield return new KeyValuePair<string,object>("conversionFactor",_ConversionFactorElement);
-        if (!_DecimalPrecisionElement.InOverflow<Hl7.Fhir.Model.Integer>() && _DecimalPrecisionElement is not null) yield return new KeyValuePair<string,object>("decimalPrecision",_DecimalPrecisionElement);
+        if (_CustomaryUnit is not null && !_CustomaryUnit.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("customaryUnit",_CustomaryUnit);
+        if (_Unit is not null && !_Unit.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("unit",_Unit);
+        if (_ConversionFactorElement is not null && !_ConversionFactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("conversionFactor",_ConversionFactorElement);
+        if (_DecimalPrecisionElement is not null && !_DecimalPrecisionElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("decimalPrecision",_DecimalPrecisionElement);
       }
 
     }
@@ -919,14 +919,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>>() && _CategoryElement is not null) yield return new KeyValuePair<string,object>("category",_CategoryElement);
-        if (!_Range.InOverflow<Hl7.Fhir.Model.Range>() && _Range is not null) yield return new KeyValuePair<string,object>("range",_Range);
-        if (!_Context.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Context is not null) yield return new KeyValuePair<string,object>("context",_Context);
-        if (!_AppliesTo.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _AppliesTo?.Any() is true) yield return new KeyValuePair<string,object>("appliesTo",_AppliesTo);
-        if (!_GenderElement.InOverflow<Code<Hl7.Fhir.Model.AdministrativeGender>>() && _GenderElement is not null) yield return new KeyValuePair<string,object>("gender",_GenderElement);
-        if (!_Age.InOverflow<Hl7.Fhir.Model.Range>() && _Age is not null) yield return new KeyValuePair<string,object>("age",_Age);
-        if (!_GestationalAge.InOverflow<Hl7.Fhir.Model.Range>() && _GestationalAge is not null) yield return new KeyValuePair<string,object>("gestationalAge",_GestationalAge);
-        if (!_ConditionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ConditionElement is not null) yield return new KeyValuePair<string,object>("condition",_ConditionElement);
+        if (_CategoryElement is not null && !_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>>()) yield return new KeyValuePair<string,object>("category",_CategoryElement);
+        if (_Range is not null && !_Range.InOverflow<Hl7.Fhir.Model.Range>()) yield return new KeyValuePair<string,object>("range",_Range);
+        if (_Context is not null && !_Context.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("context",_Context);
+        if (_AppliesTo?.Any() is true && !_AppliesTo.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("appliesTo",_AppliesTo);
+        if (_GenderElement is not null && !_GenderElement.InOverflow<Code<Hl7.Fhir.Model.AdministrativeGender>>()) yield return new KeyValuePair<string,object>("gender",_GenderElement);
+        if (_Age is not null && !_Age.InOverflow<Hl7.Fhir.Model.Range>()) yield return new KeyValuePair<string,object>("age",_Age);
+        if (_GestationalAge is not null && !_GestationalAge.InOverflow<Hl7.Fhir.Model.Range>()) yield return new KeyValuePair<string,object>("gestationalAge",_GestationalAge);
+        if (_ConditionElement is not null && !_ConditionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("condition",_ConditionElement);
       }
 
     }
@@ -1621,19 +1621,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Category?.Any() is true) yield return new KeyValuePair<string,object>("category",_Category);
-      if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_PermittedDataTypeElement.InOverflow<List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>>() && _PermittedDataTypeElement?.Any() is true) yield return new KeyValuePair<string,object>("permittedDataType",_PermittedDataTypeElement);
-      if (!_MultipleResultsAllowedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _MultipleResultsAllowedElement is not null) yield return new KeyValuePair<string,object>("multipleResultsAllowed",_MultipleResultsAllowedElement);
-      if (!_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Method is not null) yield return new KeyValuePair<string,object>("method",_Method);
-      if (!_PreferredReportNameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PreferredReportNameElement is not null) yield return new KeyValuePair<string,object>("preferredReportName",_PreferredReportNameElement);
-      if (!_QuantitativeDetails.InOverflow<Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent>() && _QuantitativeDetails is not null) yield return new KeyValuePair<string,object>("quantitativeDetails",_QuantitativeDetails);
-      if (!_QualifiedInterval.InOverflow<List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent>>() && _QualifiedInterval?.Any() is true) yield return new KeyValuePair<string,object>("qualifiedInterval",_QualifiedInterval);
-      if (!_ValidCodedValueSet.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _ValidCodedValueSet is not null) yield return new KeyValuePair<string,object>("validCodedValueSet",_ValidCodedValueSet);
-      if (!_NormalCodedValueSet.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _NormalCodedValueSet is not null) yield return new KeyValuePair<string,object>("normalCodedValueSet",_NormalCodedValueSet);
-      if (!_AbnormalCodedValueSet.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _AbnormalCodedValueSet is not null) yield return new KeyValuePair<string,object>("abnormalCodedValueSet",_AbnormalCodedValueSet);
-      if (!_CriticalCodedValueSet.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _CriticalCodedValueSet is not null) yield return new KeyValuePair<string,object>("criticalCodedValueSet",_CriticalCodedValueSet);
+      if (_Category?.Any() is true && !_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_PermittedDataTypeElement?.Any() is true && !_PermittedDataTypeElement.InOverflow<List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>>>()) yield return new KeyValuePair<string,object>("permittedDataType",_PermittedDataTypeElement);
+      if (_MultipleResultsAllowedElement is not null && !_MultipleResultsAllowedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("multipleResultsAllowed",_MultipleResultsAllowedElement);
+      if (_Method is not null && !_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("method",_Method);
+      if (_PreferredReportNameElement is not null && !_PreferredReportNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("preferredReportName",_PreferredReportNameElement);
+      if (_QuantitativeDetails is not null && !_QuantitativeDetails.InOverflow<Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent>()) yield return new KeyValuePair<string,object>("quantitativeDetails",_QuantitativeDetails);
+      if (_QualifiedInterval?.Any() is true && !_QualifiedInterval.InOverflow<List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent>>()) yield return new KeyValuePair<string,object>("qualifiedInterval",_QualifiedInterval);
+      if (_ValidCodedValueSet is not null && !_ValidCodedValueSet.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("validCodedValueSet",_ValidCodedValueSet);
+      if (_NormalCodedValueSet is not null && !_NormalCodedValueSet.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("normalCodedValueSet",_NormalCodedValueSet);
+      if (_AbnormalCodedValueSet is not null && !_AbnormalCodedValueSet.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("abnormalCodedValueSet",_AbnormalCodedValueSet);
+      if (_CriticalCodedValueSet is not null && !_CriticalCodedValueSet.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("criticalCodedValueSet",_CriticalCodedValueSet);
     }
 
   }

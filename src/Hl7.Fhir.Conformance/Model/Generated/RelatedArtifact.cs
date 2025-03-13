@@ -968,17 +968,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (!_Classifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Classifier?.Any() is true) yield return new KeyValuePair<string,object>("classifier",_Classifier);
-      if (!_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _LabelElement is not null) yield return new KeyValuePair<string,object>("label",_LabelElement);
-      if (!_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DisplayElement is not null) yield return new KeyValuePair<string,object>("display",_DisplayElement);
-      if (!_CitationElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _CitationElement is not null) yield return new KeyValuePair<string,object>("citation",_CitationElement);
-      if (!_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUrl>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
-      if (!_Document.InOverflow<Hl7.Fhir.Model.Attachment>() && _Document is not null) yield return new KeyValuePair<string,object>("document",_Document);
-      if (!_ResourceElement.InOverflow<Hl7.Fhir.Model.Canonical>() && _ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",_ResourceElement);
-      if (!_ResourceReference.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _ResourceReference is not null) yield return new KeyValuePair<string,object>("resourceReference",_ResourceReference);
-      if (!_PublicationStatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>() && _PublicationStatusElement is not null) yield return new KeyValuePair<string,object>("publicationStatus",_PublicationStatusElement);
-      if (!_PublicationDateElement.InOverflow<Hl7.Fhir.Model.Date>() && _PublicationDateElement is not null) yield return new KeyValuePair<string,object>("publicationDate",_PublicationDateElement);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_Classifier?.Any() is true && !_Classifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("classifier",_Classifier);
+      if (_LabelElement is not null && !_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("label",_LabelElement);
+      if (_DisplayElement is not null && !_DisplayElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("display",_DisplayElement);
+      if (_CitationElement is not null && !_CitationElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("citation",_CitationElement);
+      if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUrl>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_Document is not null && !_Document.InOverflow<Hl7.Fhir.Model.Attachment>()) yield return new KeyValuePair<string,object>("document",_Document);
+      if (_ResourceElement is not null && !_ResourceElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("resource",_ResourceElement);
+      if (_ResourceReference is not null && !_ResourceReference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("resourceReference",_ResourceReference);
+      if (_PublicationStatusElement is not null && !_PublicationStatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>()) yield return new KeyValuePair<string,object>("publicationStatus",_PublicationStatusElement);
+      if (_PublicationDateElement is not null && !_PublicationDateElement.InOverflow<Hl7.Fhir.Model.Date>()) yield return new KeyValuePair<string,object>("publicationDate",_PublicationDateElement);
     }
 
   }

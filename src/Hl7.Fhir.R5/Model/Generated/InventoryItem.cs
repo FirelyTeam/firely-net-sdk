@@ -327,9 +327,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameType.InOverflow<Hl7.Fhir.Model.Coding>() && _NameType is not null) yield return new KeyValuePair<string,object>("nameType",_NameType);
-        if (!_LanguageElement.InOverflow<Code<Hl7.Fhir.Model.CommonLanguages>>() && _LanguageElement is not null) yield return new KeyValuePair<string,object>("language",_LanguageElement);
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_NameType is not null && !_NameType.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("nameType",_NameType);
+        if (_LanguageElement is not null && !_LanguageElement.InOverflow<Code<Hl7.Fhir.Model.CommonLanguages>>()) yield return new KeyValuePair<string,object>("language",_LanguageElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
       }
 
     }
@@ -489,8 +489,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
-        if (!_Organization.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Organization is not null) yield return new KeyValuePair<string,object>("organization",_Organization);
+        if (_Role is not null && !_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Organization is not null && !_Organization.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("organization",_Organization);
       }
 
     }
@@ -681,8 +681,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_LanguageElement.InOverflow<Code<Hl7.Fhir.Model.CommonLanguages>>() && _LanguageElement is not null) yield return new KeyValuePair<string,object>("language",_LanguageElement);
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_LanguageElement is not null && !_LanguageElement.InOverflow<Code<Hl7.Fhir.Model.CommonLanguages>>()) yield return new KeyValuePair<string,object>("language",_LanguageElement);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
       }
 
     }
@@ -887,9 +887,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_AssociationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _AssociationType is not null) yield return new KeyValuePair<string,object>("associationType",_AssociationType);
-        if (!_RelatedItem.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _RelatedItem is not null) yield return new KeyValuePair<string,object>("relatedItem",_RelatedItem);
-        if (!_Quantity.InOverflow<Hl7.Fhir.Model.Ratio>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_AssociationType is not null && !_AssociationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("associationType",_AssociationType);
+        if (_RelatedItem is not null && !_RelatedItem.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("relatedItem",_RelatedItem);
+        if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Ratio>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
       }
 
     }
@@ -1052,8 +1052,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_CharacteristicType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _CharacteristicType is not null) yield return new KeyValuePair<string,object>("characteristicType",_CharacteristicType);
-        if (!_Value.InOverflow<DynamicDataType>() && _Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_CharacteristicType is not null && !_CharacteristicType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("characteristicType",_CharacteristicType);
+        if (_Value is not null && !_Value.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -1376,11 +1376,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_LotNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",_LotNumberElement);
-        if (!_ExpiryElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _ExpiryElement is not null) yield return new KeyValuePair<string,object>("expiry",_ExpiryElement);
-        if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-        if (!_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
+        if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_LotNumberElement is not null && !_LotNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("lotNumber",_LotNumberElement);
+        if (_ExpiryElement is not null && !_ExpiryElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("expiry",_ExpiryElement);
+        if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+        if (_Location is not null && !_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("location",_Location);
       }
 
     }
@@ -2081,20 +2081,20 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Category?.Any() is true) yield return new KeyValuePair<string,object>("category",_Category);
-      if (!_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Code?.Any() is true) yield return new KeyValuePair<string,object>("code",_Code);
-      if (!_Name.InOverflow<List<Hl7.Fhir.Model.InventoryItem.NameComponent>>() && _Name?.Any() is true) yield return new KeyValuePair<string,object>("name",_Name);
-      if (!_ResponsibleOrganization.InOverflow<List<Hl7.Fhir.Model.InventoryItem.ResponsibleOrganizationComponent>>() && _ResponsibleOrganization?.Any() is true) yield return new KeyValuePair<string,object>("responsibleOrganization",_ResponsibleOrganization);
-      if (!_Description.InOverflow<Hl7.Fhir.Model.InventoryItem.DescriptionComponent>() && _Description is not null) yield return new KeyValuePair<string,object>("description",_Description);
-      if (!_InventoryStatus.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _InventoryStatus?.Any() is true) yield return new KeyValuePair<string,object>("inventoryStatus",_InventoryStatus);
-      if (!_BaseUnit.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _BaseUnit is not null) yield return new KeyValuePair<string,object>("baseUnit",_BaseUnit);
-      if (!_NetContent.InOverflow<Hl7.Fhir.Model.Quantity>() && _NetContent is not null) yield return new KeyValuePair<string,object>("netContent",_NetContent);
-      if (!_Association.InOverflow<List<Hl7.Fhir.Model.InventoryItem.AssociationComponent>>() && _Association?.Any() is true) yield return new KeyValuePair<string,object>("association",_Association);
-      if (!_Characteristic.InOverflow<List<Hl7.Fhir.Model.InventoryItem.CharacteristicComponent>>() && _Characteristic?.Any() is true) yield return new KeyValuePair<string,object>("characteristic",_Characteristic);
-      if (!_Instance.InOverflow<Hl7.Fhir.Model.InventoryItem.InstanceComponent>() && _Instance is not null) yield return new KeyValuePair<string,object>("instance",_Instance);
-      if (!_ProductReference.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _ProductReference is not null) yield return new KeyValuePair<string,object>("productReference",_ProductReference);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Category?.Any() is true && !_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Code?.Any() is true && !_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Name?.Any() is true && !_Name.InOverflow<List<Hl7.Fhir.Model.InventoryItem.NameComponent>>()) yield return new KeyValuePair<string,object>("name",_Name);
+      if (_ResponsibleOrganization?.Any() is true && !_ResponsibleOrganization.InOverflow<List<Hl7.Fhir.Model.InventoryItem.ResponsibleOrganizationComponent>>()) yield return new KeyValuePair<string,object>("responsibleOrganization",_ResponsibleOrganization);
+      if (_Description is not null && !_Description.InOverflow<Hl7.Fhir.Model.InventoryItem.DescriptionComponent>()) yield return new KeyValuePair<string,object>("description",_Description);
+      if (_InventoryStatus?.Any() is true && !_InventoryStatus.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("inventoryStatus",_InventoryStatus);
+      if (_BaseUnit is not null && !_BaseUnit.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("baseUnit",_BaseUnit);
+      if (_NetContent is not null && !_NetContent.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("netContent",_NetContent);
+      if (_Association?.Any() is true && !_Association.InOverflow<List<Hl7.Fhir.Model.InventoryItem.AssociationComponent>>()) yield return new KeyValuePair<string,object>("association",_Association);
+      if (_Characteristic?.Any() is true && !_Characteristic.InOverflow<List<Hl7.Fhir.Model.InventoryItem.CharacteristicComponent>>()) yield return new KeyValuePair<string,object>("characteristic",_Characteristic);
+      if (_Instance is not null && !_Instance.InOverflow<Hl7.Fhir.Model.InventoryItem.InstanceComponent>()) yield return new KeyValuePair<string,object>("instance",_Instance);
+      if (_ProductReference is not null && !_ProductReference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("productReference",_ProductReference);
     }
 
   }

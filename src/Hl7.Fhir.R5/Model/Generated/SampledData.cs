@@ -692,16 +692,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Origin.InOverflow<Hl7.Fhir.Model.Quantity>() && _Origin is not null) yield return new KeyValuePair<string,object>("origin",_Origin);
-      if (!_IntervalElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _IntervalElement is not null) yield return new KeyValuePair<string,object>("interval",_IntervalElement);
-      if (!_IntervalUnitElement.InOverflow<Hl7.Fhir.Model.Code>() && _IntervalUnitElement is not null) yield return new KeyValuePair<string,object>("intervalUnit",_IntervalUnitElement);
-      if (!_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _FactorElement is not null) yield return new KeyValuePair<string,object>("factor",_FactorElement);
-      if (!_LowerLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _LowerLimitElement is not null) yield return new KeyValuePair<string,object>("lowerLimit",_LowerLimitElement);
-      if (!_UpperLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _UpperLimitElement is not null) yield return new KeyValuePair<string,object>("upperLimit",_UpperLimitElement);
-      if (!_DimensionsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _DimensionsElement is not null) yield return new KeyValuePair<string,object>("dimensions",_DimensionsElement);
-      if (!_CodeMapElement.InOverflow<Hl7.Fhir.Model.Canonical>() && _CodeMapElement is not null) yield return new KeyValuePair<string,object>("codeMap",_CodeMapElement);
-      if (!_OffsetsElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _OffsetsElement is not null) yield return new KeyValuePair<string,object>("offsets",_OffsetsElement);
-      if (!_DataElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DataElement is not null) yield return new KeyValuePair<string,object>("data",_DataElement);
+      if (_Origin is not null && !_Origin.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("origin",_Origin);
+      if (_IntervalElement is not null && !_IntervalElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("interval",_IntervalElement);
+      if (_IntervalUnitElement is not null && !_IntervalUnitElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("intervalUnit",_IntervalUnitElement);
+      if (_FactorElement is not null && !_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("factor",_FactorElement);
+      if (_LowerLimitElement is not null && !_LowerLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("lowerLimit",_LowerLimitElement);
+      if (_UpperLimitElement is not null && !_UpperLimitElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("upperLimit",_UpperLimitElement);
+      if (_DimensionsElement is not null && !_DimensionsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("dimensions",_DimensionsElement);
+      if (_CodeMapElement is not null && !_CodeMapElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("codeMap",_CodeMapElement);
+      if (_OffsetsElement is not null && !_OffsetsElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("offsets",_OffsetsElement);
+      if (_DataElement is not null && !_DataElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("data",_DataElement);
     }
 
   }

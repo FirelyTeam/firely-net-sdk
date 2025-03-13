@@ -380,10 +380,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_EventNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _EventNumberElement is not null) yield return new KeyValuePair<string,object>("eventNumber",_EventNumberElement);
-        if (!_TimestampElement.InOverflow<Hl7.Fhir.Model.Instant>() && _TimestampElement is not null) yield return new KeyValuePair<string,object>("timestamp",_TimestampElement);
-        if (!_Focus.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Focus is not null) yield return new KeyValuePair<string,object>("focus",_Focus);
-        if (!_AdditionalContext.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _AdditionalContext?.Any() is true) yield return new KeyValuePair<string,object>("additionalContext",_AdditionalContext);
+        if (_EventNumberElement is not null && !_EventNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("eventNumber",_EventNumberElement);
+        if (_TimestampElement is not null && !_TimestampElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("timestamp",_TimestampElement);
+        if (_Focus is not null && !_Focus.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("focus",_Focus);
+        if (_AdditionalContext?.Any() is true && !_AdditionalContext.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("additionalContext",_AdditionalContext);
       }
 
     }
@@ -817,13 +817,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (!_EventsSinceSubscriptionStartElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _EventsSinceSubscriptionStartElement is not null) yield return new KeyValuePair<string,object>("eventsSinceSubscriptionStart",_EventsSinceSubscriptionStartElement);
-      if (!_NotificationEvent.InOverflow<List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>>() && _NotificationEvent?.Any() is true) yield return new KeyValuePair<string,object>("notificationEvent",_NotificationEvent);
-      if (!_Subscription.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subscription is not null) yield return new KeyValuePair<string,object>("subscription",_Subscription);
-      if (!_TopicElement.InOverflow<Hl7.Fhir.Model.Canonical>() && _TopicElement is not null) yield return new KeyValuePair<string,object>("topic",_TopicElement);
-      if (!_Error.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Error?.Any() is true) yield return new KeyValuePair<string,object>("error",_Error);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_EventsSinceSubscriptionStartElement is not null && !_EventsSinceSubscriptionStartElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("eventsSinceSubscriptionStart",_EventsSinceSubscriptionStartElement);
+      if (_NotificationEvent?.Any() is true && !_NotificationEvent.InOverflow<List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent>>()) yield return new KeyValuePair<string,object>("notificationEvent",_NotificationEvent);
+      if (_Subscription is not null && !_Subscription.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subscription",_Subscription);
+      if (_TopicElement is not null && !_TopicElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("topic",_TopicElement);
+      if (_Error?.Any() is true && !_Error.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("error",_Error);
     }
 
   }

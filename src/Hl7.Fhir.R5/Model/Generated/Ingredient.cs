@@ -261,8 +261,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RoleElement.InOverflow<Code<Hl7.Fhir.Model.Ingredient.IngredientManufacturerRole>>() && _RoleElement is not null) yield return new KeyValuePair<string,object>("role",_RoleElement);
-        if (!_Manufacturer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+        if (_RoleElement is not null && !_RoleElement.InOverflow<Code<Hl7.Fhir.Model.Ingredient.IngredientManufacturerRole>>()) yield return new KeyValuePair<string,object>("role",_RoleElement);
+        if (_Manufacturer is not null && !_Manufacturer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
       }
 
     }
@@ -421,8 +421,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-        if (!_Strength.InOverflow<List<Hl7.Fhir.Model.Ingredient.StrengthComponent>>() && _Strength?.Any() is true) yield return new KeyValuePair<string,object>("strength",_Strength);
+        if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Strength?.Any() is true && !_Strength.InOverflow<List<Hl7.Fhir.Model.Ingredient.StrengthComponent>>()) yield return new KeyValuePair<string,object>("strength",_Strength);
       }
 
     }
@@ -897,14 +897,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Presentation.InOverflow<DynamicDataType>() && _Presentation is not null) yield return new KeyValuePair<string,object>("presentation",_Presentation);
-        if (!_TextPresentationElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TextPresentationElement is not null) yield return new KeyValuePair<string,object>("textPresentation",_TextPresentationElement);
-        if (!_Concentration.InOverflow<DynamicDataType>() && _Concentration is not null) yield return new KeyValuePair<string,object>("concentration",_Concentration);
-        if (!_TextConcentrationElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TextConcentrationElement is not null) yield return new KeyValuePair<string,object>("textConcentration",_TextConcentrationElement);
-        if (!_Basis.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Basis is not null) yield return new KeyValuePair<string,object>("basis",_Basis);
-        if (!_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _MeasurementPointElement is not null) yield return new KeyValuePair<string,object>("measurementPoint",_MeasurementPointElement);
-        if (!_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Country?.Any() is true) yield return new KeyValuePair<string,object>("country",_Country);
-        if (!_ReferenceStrength.InOverflow<List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent>>() && _ReferenceStrength?.Any() is true) yield return new KeyValuePair<string,object>("referenceStrength",_ReferenceStrength);
+        if (_Presentation is not null && !_Presentation.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("presentation",_Presentation);
+        if (_TextPresentationElement is not null && !_TextPresentationElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("textPresentation",_TextPresentationElement);
+        if (_Concentration is not null && !_Concentration.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("concentration",_Concentration);
+        if (_TextConcentrationElement is not null && !_TextConcentrationElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("textConcentration",_TextConcentrationElement);
+        if (_Basis is not null && !_Basis.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("basis",_Basis);
+        if (_MeasurementPointElement is not null && !_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("measurementPoint",_MeasurementPointElement);
+        if (_Country?.Any() is true && !_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("country",_Country);
+        if (_ReferenceStrength?.Any() is true && !_ReferenceStrength.InOverflow<List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent>>()) yield return new KeyValuePair<string,object>("referenceStrength",_ReferenceStrength);
       }
 
     }
@@ -1173,10 +1173,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Substance.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _Substance is not null) yield return new KeyValuePair<string,object>("substance",_Substance);
-        if (!_Strength.InOverflow<DynamicDataType>() && _Strength is not null) yield return new KeyValuePair<string,object>("strength",_Strength);
-        if (!_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _MeasurementPointElement is not null) yield return new KeyValuePair<string,object>("measurementPoint",_MeasurementPointElement);
-        if (!_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Country?.Any() is true) yield return new KeyValuePair<string,object>("country",_Country);
+        if (_Substance is not null && !_Substance.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("substance",_Substance);
+        if (_Strength is not null && !_Strength.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("strength",_Strength);
+        if (_MeasurementPointElement is not null && !_MeasurementPointElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("measurementPoint",_MeasurementPointElement);
+        if (_Country?.Any() is true && !_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("country",_Country);
       }
 
     }
@@ -1730,16 +1730,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_For.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _For?.Any() is true) yield return new KeyValuePair<string,object>("for",_For);
-      if (!_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
-      if (!_Function.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Function?.Any() is true) yield return new KeyValuePair<string,object>("function",_Function);
-      if (!_Group.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Group is not null) yield return new KeyValuePair<string,object>("group",_Group);
-      if (!_AllergenicIndicatorElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _AllergenicIndicatorElement is not null) yield return new KeyValuePair<string,object>("allergenicIndicator",_AllergenicIndicatorElement);
-      if (!_CommentElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
-      if (!_Manufacturer.InOverflow<List<Hl7.Fhir.Model.Ingredient.ManufacturerComponent>>() && _Manufacturer?.Any() is true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
-      if (!_Substance.InOverflow<Hl7.Fhir.Model.Ingredient.SubstanceComponent>() && _Substance is not null) yield return new KeyValuePair<string,object>("substance",_Substance);
+      if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_For?.Any() is true && !_For.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("for",_For);
+      if (_Role is not null && !_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("role",_Role);
+      if (_Function?.Any() is true && !_Function.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("function",_Function);
+      if (_Group is not null && !_Group.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("group",_Group);
+      if (_AllergenicIndicatorElement is not null && !_AllergenicIndicatorElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("allergenicIndicator",_AllergenicIndicatorElement);
+      if (_CommentElement is not null && !_CommentElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+      if (_Manufacturer?.Any() is true && !_Manufacturer.InOverflow<List<Hl7.Fhir.Model.Ingredient.ManufacturerComponent>>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (_Substance is not null && !_Substance.InOverflow<Hl7.Fhir.Model.Ingredient.SubstanceComponent>()) yield return new KeyValuePair<string,object>("substance",_Substance);
     }
 
   }

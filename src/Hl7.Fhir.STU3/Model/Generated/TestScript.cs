@@ -495,8 +495,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_IndexElement.InOverflow<Hl7.Fhir.Model.Integer>() && _IndexElement is not null) yield return new KeyValuePair<string,object>("index",_IndexElement);
-        if (!_Profile.InOverflow<Hl7.Fhir.Model.Coding>() && _Profile is not null) yield return new KeyValuePair<string,object>("profile",_Profile);
+        if (_IndexElement is not null && !_IndexElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("index",_IndexElement);
+        if (_Profile is not null && !_Profile.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("profile",_Profile);
       }
 
     }
@@ -674,8 +674,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_IndexElement.InOverflow<Hl7.Fhir.Model.Integer>() && _IndexElement is not null) yield return new KeyValuePair<string,object>("index",_IndexElement);
-        if (!_Profile.InOverflow<Hl7.Fhir.Model.Coding>() && _Profile is not null) yield return new KeyValuePair<string,object>("profile",_Profile);
+        if (_IndexElement is not null && !_IndexElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("index",_IndexElement);
+        if (_Profile is not null && !_Profile.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("profile",_Profile);
       }
 
     }
@@ -836,8 +836,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Link.InOverflow<List<Hl7.Fhir.Model.TestScript.LinkComponent>>() && _Link?.Any() is true) yield return new KeyValuePair<string,object>("link",_Link);
-        if (!_Capability.InOverflow<List<Hl7.Fhir.Model.TestScript.CapabilityComponent>>() && _Capability?.Any() is true) yield return new KeyValuePair<string,object>("capability",_Capability);
+        if (_Link?.Any() is true && !_Link.InOverflow<List<Hl7.Fhir.Model.TestScript.LinkComponent>>()) yield return new KeyValuePair<string,object>("link",_Link);
+        if (_Capability?.Any() is true && !_Capability.InOverflow<List<Hl7.Fhir.Model.TestScript.CapabilityComponent>>()) yield return new KeyValuePair<string,object>("capability",_Capability);
       }
 
     }
@@ -1027,8 +1027,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
       }
 
     }
@@ -1509,13 +1509,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RequiredElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _RequiredElement is not null) yield return new KeyValuePair<string,object>("required",_RequiredElement);
-        if (!_ValidatedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _ValidatedElement is not null) yield return new KeyValuePair<string,object>("validated",_ValidatedElement);
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (!_OriginElement.InOverflow<List<Hl7.Fhir.Model.Integer>>() && _OriginElement?.Any() is true) yield return new KeyValuePair<string,object>("origin",_OriginElement);
-        if (!_DestinationElement.InOverflow<Hl7.Fhir.Model.Integer>() && _DestinationElement is not null) yield return new KeyValuePair<string,object>("destination",_DestinationElement);
-        if (!_LinkElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>() && _LinkElement?.Any() is true) yield return new KeyValuePair<string,object>("link",_LinkElement);
-        if (!_Capabilities.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Capabilities is not null) yield return new KeyValuePair<string,object>("capabilities",_Capabilities);
+        if (_RequiredElement is not null && !_RequiredElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("required",_RequiredElement);
+        if (_ValidatedElement is not null && !_ValidatedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("validated",_ValidatedElement);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_OriginElement?.Any() is true && !_OriginElement.InOverflow<List<Hl7.Fhir.Model.Integer>>()) yield return new KeyValuePair<string,object>("origin",_OriginElement);
+        if (_DestinationElement is not null && !_DestinationElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("destination",_DestinationElement);
+        if (_LinkElement?.Any() is true && !_LinkElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>()) yield return new KeyValuePair<string,object>("link",_LinkElement);
+        if (_Capabilities is not null && !_Capabilities.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("capabilities",_Capabilities);
       }
 
     }
@@ -1750,9 +1750,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_AutocreateElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _AutocreateElement is not null) yield return new KeyValuePair<string,object>("autocreate",_AutocreateElement);
-        if (!_AutodeleteElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _AutodeleteElement is not null) yield return new KeyValuePair<string,object>("autodelete",_AutodeleteElement);
-        if (!_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (_AutocreateElement is not null && !_AutocreateElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("autocreate",_AutocreateElement);
+        if (_AutodeleteElement is not null && !_AutodeleteElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("autodelete",_AutodeleteElement);
+        if (_Resource is not null && !_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("resource",_Resource);
       }
 
     }
@@ -2297,14 +2297,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_DefaultValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DefaultValueElement is not null) yield return new KeyValuePair<string,object>("defaultValue",_DefaultValueElement);
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (!_ExpressionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",_ExpressionElement);
-        if (!_HeaderFieldElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _HeaderFieldElement is not null) yield return new KeyValuePair<string,object>("headerField",_HeaderFieldElement);
-        if (!_HintElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _HintElement is not null) yield return new KeyValuePair<string,object>("hint",_HintElement);
-        if (!_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
-        if (!_SourceIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _SourceIdElement is not null) yield return new KeyValuePair<string,object>("sourceId",_SourceIdElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_DefaultValueElement is not null && !_DefaultValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("defaultValue",_DefaultValueElement);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_ExpressionElement is not null && !_ExpressionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("expression",_ExpressionElement);
+        if (_HeaderFieldElement is not null && !_HeaderFieldElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("headerField",_HeaderFieldElement);
+        if (_HintElement is not null && !_HintElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("hint",_HintElement);
+        if (_PathElement is not null && !_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_SourceIdElement is not null && !_SourceIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("sourceId",_SourceIdElement);
       }
 
     }
@@ -2468,8 +2468,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
-        if (!_Param.InOverflow<List<Hl7.Fhir.Model.TestScript.RuleParamComponent>>() && _Param?.Any() is true) yield return new KeyValuePair<string,object>("param",_Param);
+        if (_Resource is not null && !_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (_Param?.Any() is true && !_Param.InOverflow<List<Hl7.Fhir.Model.TestScript.RuleParamComponent>>()) yield return new KeyValuePair<string,object>("param",_Param);
       }
 
     }
@@ -2660,8 +2660,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -2825,8 +2825,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
-        if (!_Rule.InOverflow<List<Hl7.Fhir.Model.TestScript.RulesetRuleComponent>>() && _Rule?.Any() is true) yield return new KeyValuePair<string,object>("rule",_Rule);
+        if (_Resource is not null && !_Resource.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (_Rule?.Any() is true && !_Rule.InOverflow<List<Hl7.Fhir.Model.TestScript.RulesetRuleComponent>>()) yield return new KeyValuePair<string,object>("rule",_Rule);
       }
 
     }
@@ -3003,8 +3003,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RuleIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _RuleIdElement is not null) yield return new KeyValuePair<string,object>("ruleId",_RuleIdElement);
-        if (!_Param.InOverflow<List<Hl7.Fhir.Model.TestScript.RulesetRuleParamComponent>>() && _Param?.Any() is true) yield return new KeyValuePair<string,object>("param",_Param);
+        if (_RuleIdElement is not null && !_RuleIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("ruleId",_RuleIdElement);
+        if (_Param?.Any() is true && !_Param.InOverflow<List<Hl7.Fhir.Model.TestScript.RulesetRuleParamComponent>>()) yield return new KeyValuePair<string,object>("param",_Param);
       }
 
     }
@@ -3195,8 +3195,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -3309,7 +3309,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Action.InOverflow<List<Hl7.Fhir.Model.TestScript.SetupActionComponent>>() && _Action?.Any() is true) yield return new KeyValuePair<string,object>("action",_Action);
+        if (_Action?.Any() is true && !_Action.InOverflow<List<Hl7.Fhir.Model.TestScript.SetupActionComponent>>()) yield return new KeyValuePair<string,object>("action",_Action);
       }
 
     }
@@ -3469,8 +3469,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Operation.InOverflow<Hl7.Fhir.Model.TestScript.OperationComponent>() && _Operation is not null) yield return new KeyValuePair<string,object>("operation",_Operation);
-        if (!_Assert.InOverflow<Hl7.Fhir.Model.TestScript.AssertComponent>() && _Assert is not null) yield return new KeyValuePair<string,object>("assert",_Assert);
+        if (_Operation is not null && !_Operation.InOverflow<Hl7.Fhir.Model.TestScript.OperationComponent>()) yield return new KeyValuePair<string,object>("operation",_Operation);
+        if (_Assert is not null && !_Assert.InOverflow<Hl7.Fhir.Model.TestScript.AssertComponent>()) yield return new KeyValuePair<string,object>("assert",_Assert);
       }
 
     }
@@ -4463,22 +4463,22 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.Coding>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_ResourceElement.InOverflow<Code<Hl7.Fhir.Model.FHIRDefinedType>>() && _ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",_ResourceElement);
-        if (!_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _LabelElement is not null) yield return new KeyValuePair<string,object>("label",_LabelElement);
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (!_AcceptElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>>() && _AcceptElement is not null) yield return new KeyValuePair<string,object>("accept",_AcceptElement);
-        if (!_ContentTypeElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>>() && _ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
-        if (!_DestinationElement.InOverflow<Hl7.Fhir.Model.Integer>() && _DestinationElement is not null) yield return new KeyValuePair<string,object>("destination",_DestinationElement);
-        if (!_EncodeRequestUrlElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _EncodeRequestUrlElement is not null) yield return new KeyValuePair<string,object>("encodeRequestUrl",_EncodeRequestUrlElement);
-        if (!_OriginElement.InOverflow<Hl7.Fhir.Model.Integer>() && _OriginElement is not null) yield return new KeyValuePair<string,object>("origin",_OriginElement);
-        if (!_ParamsElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ParamsElement is not null) yield return new KeyValuePair<string,object>("params",_ParamsElement);
-        if (!_RequestHeader.InOverflow<List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent>>() && _RequestHeader?.Any() is true) yield return new KeyValuePair<string,object>("requestHeader",_RequestHeader);
-        if (!_RequestIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _RequestIdElement is not null) yield return new KeyValuePair<string,object>("requestId",_RequestIdElement);
-        if (!_ResponseIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _ResponseIdElement is not null) yield return new KeyValuePair<string,object>("responseId",_ResponseIdElement);
-        if (!_SourceIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _SourceIdElement is not null) yield return new KeyValuePair<string,object>("sourceId",_SourceIdElement);
-        if (!_TargetIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _TargetIdElement is not null) yield return new KeyValuePair<string,object>("targetId",_TargetIdElement);
-        if (!_UrlElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_ResourceElement is not null && !_ResourceElement.InOverflow<Code<Hl7.Fhir.Model.FHIRDefinedType>>()) yield return new KeyValuePair<string,object>("resource",_ResourceElement);
+        if (_LabelElement is not null && !_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("label",_LabelElement);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_AcceptElement is not null && !_AcceptElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>>()) yield return new KeyValuePair<string,object>("accept",_AcceptElement);
+        if (_ContentTypeElement is not null && !_ContentTypeElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>>()) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
+        if (_DestinationElement is not null && !_DestinationElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("destination",_DestinationElement);
+        if (_EncodeRequestUrlElement is not null && !_EncodeRequestUrlElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("encodeRequestUrl",_EncodeRequestUrlElement);
+        if (_OriginElement is not null && !_OriginElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("origin",_OriginElement);
+        if (_ParamsElement is not null && !_ParamsElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("params",_ParamsElement);
+        if (_RequestHeader?.Any() is true && !_RequestHeader.InOverflow<List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent>>()) yield return new KeyValuePair<string,object>("requestHeader",_RequestHeader);
+        if (_RequestIdElement is not null && !_RequestIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("requestId",_RequestIdElement);
+        if (_ResponseIdElement is not null && !_ResponseIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("responseId",_ResponseIdElement);
+        if (_SourceIdElement is not null && !_SourceIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("sourceId",_SourceIdElement);
+        if (_TargetIdElement is not null && !_TargetIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("targetId",_TargetIdElement);
+        if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
       }
 
     }
@@ -4670,8 +4670,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_FieldElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _FieldElement is not null) yield return new KeyValuePair<string,object>("field",_FieldElement);
-        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (_FieldElement is not null && !_FieldElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("field",_FieldElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -6141,30 +6141,30 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _LabelElement is not null) yield return new KeyValuePair<string,object>("label",_LabelElement);
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (!_DirectionElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.AssertionDirectionType>>() && _DirectionElement is not null) yield return new KeyValuePair<string,object>("direction",_DirectionElement);
-        if (!_CompareToSourceIdElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CompareToSourceIdElement is not null) yield return new KeyValuePair<string,object>("compareToSourceId",_CompareToSourceIdElement);
-        if (!_CompareToSourceExpressionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CompareToSourceExpressionElement is not null) yield return new KeyValuePair<string,object>("compareToSourceExpression",_CompareToSourceExpressionElement);
-        if (!_CompareToSourcePathElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CompareToSourcePathElement is not null) yield return new KeyValuePair<string,object>("compareToSourcePath",_CompareToSourcePathElement);
-        if (!_ContentTypeElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>>() && _ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
-        if (!_ExpressionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",_ExpressionElement);
-        if (!_HeaderFieldElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _HeaderFieldElement is not null) yield return new KeyValuePair<string,object>("headerField",_HeaderFieldElement);
-        if (!_MinimumIdElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _MinimumIdElement is not null) yield return new KeyValuePair<string,object>("minimumId",_MinimumIdElement);
-        if (!_NavigationLinksElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _NavigationLinksElement is not null) yield return new KeyValuePair<string,object>("navigationLinks",_NavigationLinksElement);
-        if (!_OperatorElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType>>() && _OperatorElement is not null) yield return new KeyValuePair<string,object>("operator",_OperatorElement);
-        if (!_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
-        if (!_RequestMethodElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode>>() && _RequestMethodElement is not null) yield return new KeyValuePair<string,object>("requestMethod",_RequestMethodElement);
-        if (!_RequestURLElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _RequestURLElement is not null) yield return new KeyValuePair<string,object>("requestURL",_RequestURLElement);
-        if (!_ResourceElement.InOverflow<Code<Hl7.Fhir.Model.FHIRDefinedType>>() && _ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",_ResourceElement);
-        if (!_ResponseElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes>>() && _ResponseElement is not null) yield return new KeyValuePair<string,object>("response",_ResponseElement);
-        if (!_ResponseCodeElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ResponseCodeElement is not null) yield return new KeyValuePair<string,object>("responseCode",_ResponseCodeElement);
-        if (!_Rule.InOverflow<Hl7.Fhir.Model.TestScript.ActionAssertRuleComponent>() && _Rule is not null) yield return new KeyValuePair<string,object>("rule",_Rule);
-        if (!_Ruleset.InOverflow<Hl7.Fhir.Model.TestScript.ActionAssertRulesetComponent>() && _Ruleset is not null) yield return new KeyValuePair<string,object>("ruleset",_Ruleset);
-        if (!_SourceIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _SourceIdElement is not null) yield return new KeyValuePair<string,object>("sourceId",_SourceIdElement);
-        if (!_ValidateProfileIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _ValidateProfileIdElement is not null) yield return new KeyValuePair<string,object>("validateProfileId",_ValidateProfileIdElement);
-        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
-        if (!_WarningOnlyElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _WarningOnlyElement is not null) yield return new KeyValuePair<string,object>("warningOnly",_WarningOnlyElement);
+        if (_LabelElement is not null && !_LabelElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("label",_LabelElement);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_DirectionElement is not null && !_DirectionElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.AssertionDirectionType>>()) yield return new KeyValuePair<string,object>("direction",_DirectionElement);
+        if (_CompareToSourceIdElement is not null && !_CompareToSourceIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("compareToSourceId",_CompareToSourceIdElement);
+        if (_CompareToSourceExpressionElement is not null && !_CompareToSourceExpressionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("compareToSourceExpression",_CompareToSourceExpressionElement);
+        if (_CompareToSourcePathElement is not null && !_CompareToSourcePathElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("compareToSourcePath",_CompareToSourcePathElement);
+        if (_ContentTypeElement is not null && !_ContentTypeElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>>()) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
+        if (_ExpressionElement is not null && !_ExpressionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("expression",_ExpressionElement);
+        if (_HeaderFieldElement is not null && !_HeaderFieldElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("headerField",_HeaderFieldElement);
+        if (_MinimumIdElement is not null && !_MinimumIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("minimumId",_MinimumIdElement);
+        if (_NavigationLinksElement is not null && !_NavigationLinksElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("navigationLinks",_NavigationLinksElement);
+        if (_OperatorElement is not null && !_OperatorElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType>>()) yield return new KeyValuePair<string,object>("operator",_OperatorElement);
+        if (_PathElement is not null && !_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_RequestMethodElement is not null && !_RequestMethodElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode>>()) yield return new KeyValuePair<string,object>("requestMethod",_RequestMethodElement);
+        if (_RequestURLElement is not null && !_RequestURLElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("requestURL",_RequestURLElement);
+        if (_ResourceElement is not null && !_ResourceElement.InOverflow<Code<Hl7.Fhir.Model.FHIRDefinedType>>()) yield return new KeyValuePair<string,object>("resource",_ResourceElement);
+        if (_ResponseElement is not null && !_ResponseElement.InOverflow<Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes>>()) yield return new KeyValuePair<string,object>("response",_ResponseElement);
+        if (_ResponseCodeElement is not null && !_ResponseCodeElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("responseCode",_ResponseCodeElement);
+        if (_Rule is not null && !_Rule.InOverflow<Hl7.Fhir.Model.TestScript.ActionAssertRuleComponent>()) yield return new KeyValuePair<string,object>("rule",_Rule);
+        if (_Ruleset is not null && !_Ruleset.InOverflow<Hl7.Fhir.Model.TestScript.ActionAssertRulesetComponent>()) yield return new KeyValuePair<string,object>("ruleset",_Ruleset);
+        if (_SourceIdElement is not null && !_SourceIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("sourceId",_SourceIdElement);
+        if (_ValidateProfileIdElement is not null && !_ValidateProfileIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("validateProfileId",_ValidateProfileIdElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (_WarningOnlyElement is not null && !_WarningOnlyElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("warningOnly",_WarningOnlyElement);
       }
 
     }
@@ -6341,8 +6341,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RuleIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _RuleIdElement is not null) yield return new KeyValuePair<string,object>("ruleId",_RuleIdElement);
-        if (!_Param.InOverflow<List<Hl7.Fhir.Model.TestScript.ActionAssertRuleParamComponent>>() && _Param?.Any() is true) yield return new KeyValuePair<string,object>("param",_Param);
+        if (_RuleIdElement is not null && !_RuleIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("ruleId",_RuleIdElement);
+        if (_Param?.Any() is true && !_Param.InOverflow<List<Hl7.Fhir.Model.TestScript.ActionAssertRuleParamComponent>>()) yield return new KeyValuePair<string,object>("param",_Param);
       }
 
     }
@@ -6534,8 +6534,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -6712,8 +6712,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RulesetIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _RulesetIdElement is not null) yield return new KeyValuePair<string,object>("rulesetId",_RulesetIdElement);
-        if (!_Rule.InOverflow<List<Hl7.Fhir.Model.TestScript.ActionAssertRulesetRuleComponent>>() && _Rule?.Any() is true) yield return new KeyValuePair<string,object>("rule",_Rule);
+        if (_RulesetIdElement is not null && !_RulesetIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("rulesetId",_RulesetIdElement);
+        if (_Rule?.Any() is true && !_Rule.InOverflow<List<Hl7.Fhir.Model.TestScript.ActionAssertRulesetRuleComponent>>()) yield return new KeyValuePair<string,object>("rule",_Rule);
       }
 
     }
@@ -6890,8 +6890,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RuleIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _RuleIdElement is not null) yield return new KeyValuePair<string,object>("ruleId",_RuleIdElement);
-        if (!_Param.InOverflow<List<Hl7.Fhir.Model.TestScript.ParamComponent>>() && _Param?.Any() is true) yield return new KeyValuePair<string,object>("param",_Param);
+        if (_RuleIdElement is not null && !_RuleIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("ruleId",_RuleIdElement);
+        if (_Param?.Any() is true && !_Param.InOverflow<List<Hl7.Fhir.Model.TestScript.ParamComponent>>()) yield return new KeyValuePair<string,object>("param",_Param);
       }
 
     }
@@ -7083,8 +7083,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -7315,9 +7315,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (!_Action.InOverflow<List<Hl7.Fhir.Model.TestScript.TestActionComponent>>() && _Action?.Any() is true) yield return new KeyValuePair<string,object>("action",_Action);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_Action?.Any() is true && !_Action.InOverflow<List<Hl7.Fhir.Model.TestScript.TestActionComponent>>()) yield return new KeyValuePair<string,object>("action",_Action);
       }
 
     }
@@ -7477,8 +7477,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Operation.InOverflow<Hl7.Fhir.Model.TestScript.OperationComponent>() && _Operation is not null) yield return new KeyValuePair<string,object>("operation",_Operation);
-        if (!_Assert.InOverflow<Hl7.Fhir.Model.TestScript.AssertComponent>() && _Assert is not null) yield return new KeyValuePair<string,object>("assert",_Assert);
+        if (_Operation is not null && !_Operation.InOverflow<Hl7.Fhir.Model.TestScript.OperationComponent>()) yield return new KeyValuePair<string,object>("operation",_Operation);
+        if (_Assert is not null && !_Assert.InOverflow<Hl7.Fhir.Model.TestScript.AssertComponent>()) yield return new KeyValuePair<string,object>("assert",_Assert);
       }
 
     }
@@ -7594,7 +7594,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Action.InOverflow<List<Hl7.Fhir.Model.TestScript.TeardownActionComponent>>() && _Action?.Any() is true) yield return new KeyValuePair<string,object>("action",_Action);
+        if (_Action?.Any() is true && !_Action.InOverflow<List<Hl7.Fhir.Model.TestScript.TeardownActionComponent>>()) yield return new KeyValuePair<string,object>("action",_Action);
       }
 
     }
@@ -7711,7 +7711,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Operation.InOverflow<Hl7.Fhir.Model.TestScript.OperationComponent>() && _Operation is not null) yield return new KeyValuePair<string,object>("operation",_Operation);
+        if (_Operation is not null && !_Operation.InOverflow<Hl7.Fhir.Model.TestScript.OperationComponent>()) yield return new KeyValuePair<string,object>("operation",_Operation);
       }
 
     }
@@ -9096,32 +9096,32 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
-      if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _VersionElement is not null) yield return new KeyValuePair<string,object>("version",_VersionElement);
-      if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-      if (!_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_ExperimentalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",_ExperimentalElement);
-      if (!_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-      if (!_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",_PublisherElement);
-      if (!_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>() && _Contact?.Any() is true) yield return new KeyValuePair<string,object>("contact",_Contact);
-      if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (!_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>() && _UseContext?.Any() is true) yield return new KeyValuePair<string,object>("useContext",_UseContext);
-      if (!_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Jurisdiction?.Any() is true) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
-      if (!_PurposeElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",_PurposeElement);
-      if (!_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",_CopyrightElement);
-      if (!_Origin.InOverflow<List<Hl7.Fhir.Model.TestScript.OriginComponent>>() && _Origin?.Any() is true) yield return new KeyValuePair<string,object>("origin",_Origin);
-      if (!_Destination.InOverflow<List<Hl7.Fhir.Model.TestScript.DestinationComponent>>() && _Destination?.Any() is true) yield return new KeyValuePair<string,object>("destination",_Destination);
-      if (!_Metadata.InOverflow<Hl7.Fhir.Model.TestScript.MetadataComponent>() && _Metadata is not null) yield return new KeyValuePair<string,object>("metadata",_Metadata);
-      if (!_Fixture.InOverflow<List<Hl7.Fhir.Model.TestScript.FixtureComponent>>() && _Fixture?.Any() is true) yield return new KeyValuePair<string,object>("fixture",_Fixture);
-      if (!_Profile.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Profile?.Any() is true) yield return new KeyValuePair<string,object>("profile",_Profile);
-      if (!_Variable.InOverflow<List<Hl7.Fhir.Model.TestScript.VariableComponent>>() && _Variable?.Any() is true) yield return new KeyValuePair<string,object>("variable",_Variable);
-      if (!_Rule.InOverflow<List<Hl7.Fhir.Model.TestScript.RuleComponent>>() && _Rule?.Any() is true) yield return new KeyValuePair<string,object>("rule",_Rule);
-      if (!_Ruleset.InOverflow<List<Hl7.Fhir.Model.TestScript.RulesetComponent>>() && _Ruleset?.Any() is true) yield return new KeyValuePair<string,object>("ruleset",_Ruleset);
-      if (!_Setup.InOverflow<Hl7.Fhir.Model.TestScript.SetupComponent>() && _Setup is not null) yield return new KeyValuePair<string,object>("setup",_Setup);
-      if (!_Test.InOverflow<List<Hl7.Fhir.Model.TestScript.TestComponent>>() && _Test?.Any() is true) yield return new KeyValuePair<string,object>("test",_Test);
-      if (!_Teardown.InOverflow<Hl7.Fhir.Model.TestScript.TeardownComponent>() && _Teardown is not null) yield return new KeyValuePair<string,object>("teardown",_Teardown);
+      if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_VersionElement is not null && !_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("version",_VersionElement);
+      if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_TitleElement is not null && !_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("title",_TitleElement);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_ExperimentalElement is not null && !_ExperimentalElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("experimental",_ExperimentalElement);
+      if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_PublisherElement is not null && !_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("publisher",_PublisherElement);
+      if (_Contact?.Any() is true && !_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>()) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_UseContext?.Any() is true && !_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>()) yield return new KeyValuePair<string,object>("useContext",_UseContext);
+      if (_Jurisdiction?.Any() is true && !_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
+      if (_PurposeElement is not null && !_PurposeElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("purpose",_PurposeElement);
+      if (_CopyrightElement is not null && !_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("copyright",_CopyrightElement);
+      if (_Origin?.Any() is true && !_Origin.InOverflow<List<Hl7.Fhir.Model.TestScript.OriginComponent>>()) yield return new KeyValuePair<string,object>("origin",_Origin);
+      if (_Destination?.Any() is true && !_Destination.InOverflow<List<Hl7.Fhir.Model.TestScript.DestinationComponent>>()) yield return new KeyValuePair<string,object>("destination",_Destination);
+      if (_Metadata is not null && !_Metadata.InOverflow<Hl7.Fhir.Model.TestScript.MetadataComponent>()) yield return new KeyValuePair<string,object>("metadata",_Metadata);
+      if (_Fixture?.Any() is true && !_Fixture.InOverflow<List<Hl7.Fhir.Model.TestScript.FixtureComponent>>()) yield return new KeyValuePair<string,object>("fixture",_Fixture);
+      if (_Profile?.Any() is true && !_Profile.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("profile",_Profile);
+      if (_Variable?.Any() is true && !_Variable.InOverflow<List<Hl7.Fhir.Model.TestScript.VariableComponent>>()) yield return new KeyValuePair<string,object>("variable",_Variable);
+      if (_Rule?.Any() is true && !_Rule.InOverflow<List<Hl7.Fhir.Model.TestScript.RuleComponent>>()) yield return new KeyValuePair<string,object>("rule",_Rule);
+      if (_Ruleset?.Any() is true && !_Ruleset.InOverflow<List<Hl7.Fhir.Model.TestScript.RulesetComponent>>()) yield return new KeyValuePair<string,object>("ruleset",_Ruleset);
+      if (_Setup is not null && !_Setup.InOverflow<Hl7.Fhir.Model.TestScript.SetupComponent>()) yield return new KeyValuePair<string,object>("setup",_Setup);
+      if (_Test?.Any() is true && !_Test.InOverflow<List<Hl7.Fhir.Model.TestScript.TestComponent>>()) yield return new KeyValuePair<string,object>("test",_Test);
+      if (_Teardown is not null && !_Teardown.InOverflow<Hl7.Fhir.Model.TestScript.TeardownComponent>()) yield return new KeyValuePair<string,object>("teardown",_Teardown);
     }
 
   }

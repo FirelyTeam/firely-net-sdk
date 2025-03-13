@@ -211,8 +211,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RatioType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _RatioType is not null) yield return new KeyValuePair<string,object>("ratioType",_RatioType);
-        if (!_StartingMaterial.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>>() && _StartingMaterial?.Any() is true) yield return new KeyValuePair<string,object>("startingMaterial",_StartingMaterial);
+        if (_RatioType is not null && !_RatioType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("ratioType",_RatioType);
+        if (_StartingMaterial?.Any() is true && !_StartingMaterial.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent>>()) yield return new KeyValuePair<string,object>("startingMaterial",_StartingMaterial);
       }
 
     }
@@ -471,10 +471,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Material.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Material is not null) yield return new KeyValuePair<string,object>("material",_Material);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_IsDefiningElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _IsDefiningElement is not null) yield return new KeyValuePair<string,object>("isDefining",_IsDefiningElement);
-        if (!_Amount.InOverflow<Hl7.Fhir.Model.SubstanceAmount>() && _Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
+        if (_Material is not null && !_Material.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("material",_Material);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_IsDefiningElement is not null && !_IsDefiningElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("isDefining",_IsDefiningElement);
+        if (_Amount is not null && !_Amount.InOverflow<Hl7.Fhir.Model.SubstanceAmount>()) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -749,10 +749,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NumberOfUnitsElement.InOverflow<Hl7.Fhir.Model.Integer>() && _NumberOfUnitsElement is not null) yield return new KeyValuePair<string,object>("numberOfUnits",_NumberOfUnitsElement);
-        if (!_AverageMolecularFormulaElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _AverageMolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("averageMolecularFormula",_AverageMolecularFormulaElement);
-        if (!_RepeatUnitAmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _RepeatUnitAmountType is not null) yield return new KeyValuePair<string,object>("repeatUnitAmountType",_RepeatUnitAmountType);
-        if (!_RepeatUnit.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>>() && _RepeatUnit?.Any() is true) yield return new KeyValuePair<string,object>("repeatUnit",_RepeatUnit);
+        if (_NumberOfUnitsElement is not null && !_NumberOfUnitsElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("numberOfUnits",_NumberOfUnitsElement);
+        if (_AverageMolecularFormulaElement is not null && !_AverageMolecularFormulaElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("averageMolecularFormula",_AverageMolecularFormulaElement);
+        if (_RepeatUnitAmountType is not null && !_RepeatUnitAmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("repeatUnitAmountType",_RepeatUnitAmountType);
+        if (_RepeatUnit?.Any() is true && !_RepeatUnit.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent>>()) yield return new KeyValuePair<string,object>("repeatUnit",_RepeatUnit);
       }
 
     }
@@ -1057,11 +1057,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_OrientationOfPolymerisation.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _OrientationOfPolymerisation is not null) yield return new KeyValuePair<string,object>("orientationOfPolymerisation",_OrientationOfPolymerisation);
-        if (!_RepeatUnitElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _RepeatUnitElement is not null) yield return new KeyValuePair<string,object>("repeatUnit",_RepeatUnitElement);
-        if (!_Amount.InOverflow<Hl7.Fhir.Model.SubstanceAmount>() && _Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
-        if (!_DegreeOfPolymerisation.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>>() && _DegreeOfPolymerisation?.Any() is true) yield return new KeyValuePair<string,object>("degreeOfPolymerisation",_DegreeOfPolymerisation);
-        if (!_StructuralRepresentation.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>>() && _StructuralRepresentation?.Any() is true) yield return new KeyValuePair<string,object>("structuralRepresentation",_StructuralRepresentation);
+        if (_OrientationOfPolymerisation is not null && !_OrientationOfPolymerisation.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("orientationOfPolymerisation",_OrientationOfPolymerisation);
+        if (_RepeatUnitElement is not null && !_RepeatUnitElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("repeatUnit",_RepeatUnitElement);
+        if (_Amount is not null && !_Amount.InOverflow<Hl7.Fhir.Model.SubstanceAmount>()) yield return new KeyValuePair<string,object>("amount",_Amount);
+        if (_DegreeOfPolymerisation?.Any() is true && !_DegreeOfPolymerisation.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>>()) yield return new KeyValuePair<string,object>("degreeOfPolymerisation",_DegreeOfPolymerisation);
+        if (_StructuralRepresentation?.Any() is true && !_StructuralRepresentation.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>>()) yield return new KeyValuePair<string,object>("structuralRepresentation",_StructuralRepresentation);
       }
 
     }
@@ -1217,8 +1217,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Degree.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Degree is not null) yield return new KeyValuePair<string,object>("degree",_Degree);
-        if (!_Amount.InOverflow<Hl7.Fhir.Model.SubstanceAmount>() && _Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
+        if (_Degree is not null && !_Degree.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("degree",_Degree);
+        if (_Amount is not null && !_Amount.InOverflow<Hl7.Fhir.Model.SubstanceAmount>()) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -1433,9 +1433,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_RepresentationElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _RepresentationElement is not null) yield return new KeyValuePair<string,object>("representation",_RepresentationElement);
-        if (!_Attachment.InOverflow<Hl7.Fhir.Model.Attachment>() && _Attachment is not null) yield return new KeyValuePair<string,object>("attachment",_Attachment);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_RepresentationElement is not null && !_RepresentationElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("representation",_RepresentationElement);
+        if (_Attachment is not null && !_Attachment.InOverflow<Hl7.Fhir.Model.Attachment>()) yield return new KeyValuePair<string,object>("attachment",_Attachment);
       }
 
     }
@@ -1776,12 +1776,12 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Class.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Class is not null) yield return new KeyValuePair<string,object>("class",_Class);
-      if (!_Geometry.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Geometry is not null) yield return new KeyValuePair<string,object>("geometry",_Geometry);
-      if (!_CopolymerConnectivity.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _CopolymerConnectivity?.Any() is true) yield return new KeyValuePair<string,object>("copolymerConnectivity",_CopolymerConnectivity);
-      if (!_ModificationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _ModificationElement?.Any() is true) yield return new KeyValuePair<string,object>("modification",_ModificationElement);
-      if (!_MonomerSet.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>>() && _MonomerSet?.Any() is true) yield return new KeyValuePair<string,object>("monomerSet",_MonomerSet);
-      if (!_Repeat.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>>() && _Repeat?.Any() is true) yield return new KeyValuePair<string,object>("repeat",_Repeat);
+      if (_Class is not null && !_Class.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("class",_Class);
+      if (_Geometry is not null && !_Geometry.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("geometry",_Geometry);
+      if (_CopolymerConnectivity?.Any() is true && !_CopolymerConnectivity.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("copolymerConnectivity",_CopolymerConnectivity);
+      if (_ModificationElement?.Any() is true && !_ModificationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("modification",_ModificationElement);
+      if (_MonomerSet?.Any() is true && !_MonomerSet.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>>()) yield return new KeyValuePair<string,object>("monomerSet",_MonomerSet);
+      if (_Repeat?.Any() is true && !_Repeat.InOverflow<List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>>()) yield return new KeyValuePair<string,object>("repeat",_Repeat);
     }
 
   }

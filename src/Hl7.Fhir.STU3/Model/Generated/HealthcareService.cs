@@ -368,10 +368,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_DaysOfWeekElement.InOverflow<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>() && _DaysOfWeekElement?.Any() is true) yield return new KeyValuePair<string,object>("daysOfWeek",_DaysOfWeekElement);
-        if (!_AllDayElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _AllDayElement is not null) yield return new KeyValuePair<string,object>("allDay",_AllDayElement);
-        if (!_AvailableStartTimeElement.InOverflow<Hl7.Fhir.Model.Time>() && _AvailableStartTimeElement is not null) yield return new KeyValuePair<string,object>("availableStartTime",_AvailableStartTimeElement);
-        if (!_AvailableEndTimeElement.InOverflow<Hl7.Fhir.Model.Time>() && _AvailableEndTimeElement is not null) yield return new KeyValuePair<string,object>("availableEndTime",_AvailableEndTimeElement);
+        if (_DaysOfWeekElement?.Any() is true && !_DaysOfWeekElement.InOverflow<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>()) yield return new KeyValuePair<string,object>("daysOfWeek",_DaysOfWeekElement);
+        if (_AllDayElement is not null && !_AllDayElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("allDay",_AllDayElement);
+        if (_AvailableStartTimeElement is not null && !_AvailableStartTimeElement.InOverflow<Hl7.Fhir.Model.Time>()) yield return new KeyValuePair<string,object>("availableStartTime",_AvailableStartTimeElement);
+        if (_AvailableEndTimeElement is not null && !_AvailableEndTimeElement.InOverflow<Hl7.Fhir.Model.Time>()) yield return new KeyValuePair<string,object>("availableEndTime",_AvailableEndTimeElement);
       }
 
     }
@@ -546,8 +546,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (!_During.InOverflow<Hl7.Fhir.Model.Period>() && _During is not null) yield return new KeyValuePair<string,object>("during",_During);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_During is not null && !_During.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("during",_During);
       }
 
     }
@@ -1811,30 +1811,30 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
-      if (!_ProvidedBy.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _ProvidedBy is not null) yield return new KeyValuePair<string,object>("providedBy",_ProvidedBy);
-      if (!_Category.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Category is not null) yield return new KeyValuePair<string,object>("category",_Category);
-      if (!_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Type?.Any() is true) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_Specialty.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Specialty?.Any() is true) yield return new KeyValuePair<string,object>("specialty",_Specialty);
-      if (!_Location.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Location?.Any() is true) yield return new KeyValuePair<string,object>("location",_Location);
-      if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-      if (!_CommentElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
-      if (!_ExtraDetailsElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ExtraDetailsElement is not null) yield return new KeyValuePair<string,object>("extraDetails",_ExtraDetailsElement);
-      if (!_Photo.InOverflow<Hl7.Fhir.Model.Attachment>() && _Photo is not null) yield return new KeyValuePair<string,object>("photo",_Photo);
-      if (!_Telecom.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>() && _Telecom?.Any() is true) yield return new KeyValuePair<string,object>("telecom",_Telecom);
-      if (!_CoverageArea.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _CoverageArea?.Any() is true) yield return new KeyValuePair<string,object>("coverageArea",_CoverageArea);
-      if (!_ServiceProvisionCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ServiceProvisionCode?.Any() is true) yield return new KeyValuePair<string,object>("serviceProvisionCode",_ServiceProvisionCode);
-      if (!_Eligibility.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Eligibility is not null) yield return new KeyValuePair<string,object>("eligibility",_Eligibility);
-      if (!_EligibilityNoteElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _EligibilityNoteElement is not null) yield return new KeyValuePair<string,object>("eligibilityNote",_EligibilityNoteElement);
-      if (!_ProgramNameElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _ProgramNameElement?.Any() is true) yield return new KeyValuePair<string,object>("programName",_ProgramNameElement);
-      if (!_Characteristic.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Characteristic?.Any() is true) yield return new KeyValuePair<string,object>("characteristic",_Characteristic);
-      if (!_ReferralMethod.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ReferralMethod?.Any() is true) yield return new KeyValuePair<string,object>("referralMethod",_ReferralMethod);
-      if (!_AppointmentRequiredElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _AppointmentRequiredElement is not null) yield return new KeyValuePair<string,object>("appointmentRequired",_AppointmentRequiredElement);
-      if (!_AvailableTime.InOverflow<List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>>() && _AvailableTime?.Any() is true) yield return new KeyValuePair<string,object>("availableTime",_AvailableTime);
-      if (!_NotAvailable.InOverflow<List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>>() && _NotAvailable?.Any() is true) yield return new KeyValuePair<string,object>("notAvailable",_NotAvailable);
-      if (!_AvailabilityExceptionsElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _AvailabilityExceptionsElement is not null) yield return new KeyValuePair<string,object>("availabilityExceptions",_AvailabilityExceptionsElement);
-      if (!_Endpoint.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Endpoint?.Any() is true) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ActiveElement is not null && !_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (_ProvidedBy is not null && !_ProvidedBy.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("providedBy",_ProvidedBy);
+      if (_Category is not null && !_Category.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Type?.Any() is true && !_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Specialty?.Any() is true && !_Specialty.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("specialty",_Specialty);
+      if (_Location?.Any() is true && !_Location.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_CommentElement is not null && !_CommentElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+      if (_ExtraDetailsElement is not null && !_ExtraDetailsElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("extraDetails",_ExtraDetailsElement);
+      if (_Photo is not null && !_Photo.InOverflow<Hl7.Fhir.Model.Attachment>()) yield return new KeyValuePair<string,object>("photo",_Photo);
+      if (_Telecom?.Any() is true && !_Telecom.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>()) yield return new KeyValuePair<string,object>("telecom",_Telecom);
+      if (_CoverageArea?.Any() is true && !_CoverageArea.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("coverageArea",_CoverageArea);
+      if (_ServiceProvisionCode?.Any() is true && !_ServiceProvisionCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("serviceProvisionCode",_ServiceProvisionCode);
+      if (_Eligibility is not null && !_Eligibility.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("eligibility",_Eligibility);
+      if (_EligibilityNoteElement is not null && !_EligibilityNoteElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("eligibilityNote",_EligibilityNoteElement);
+      if (_ProgramNameElement?.Any() is true && !_ProgramNameElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("programName",_ProgramNameElement);
+      if (_Characteristic?.Any() is true && !_Characteristic.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("characteristic",_Characteristic);
+      if (_ReferralMethod?.Any() is true && !_ReferralMethod.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("referralMethod",_ReferralMethod);
+      if (_AppointmentRequiredElement is not null && !_AppointmentRequiredElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("appointmentRequired",_AppointmentRequiredElement);
+      if (_AvailableTime?.Any() is true && !_AvailableTime.InOverflow<List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>>()) yield return new KeyValuePair<string,object>("availableTime",_AvailableTime);
+      if (_NotAvailable?.Any() is true && !_NotAvailable.InOverflow<List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>>()) yield return new KeyValuePair<string,object>("notAvailable",_NotAvailable);
+      if (_AvailabilityExceptionsElement is not null && !_AvailabilityExceptionsElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("availabilityExceptions",_AvailabilityExceptionsElement);
+      if (_Endpoint?.Any() is true && !_Endpoint.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
     }
 
   }

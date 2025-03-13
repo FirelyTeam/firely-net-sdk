@@ -458,11 +458,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_ResourceTypeElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _ResourceTypeElement is not null) yield return new KeyValuePair<string,object>("resourceType",_ResourceTypeElement);
-        if (!_FilterParameterElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _FilterParameterElement is not null) yield return new KeyValuePair<string,object>("filterParameter",_FilterParameterElement);
-        if (!_ComparatorElement.InOverflow<Code<Hl7.Fhir.Model.SearchComparator>>() && _ComparatorElement is not null) yield return new KeyValuePair<string,object>("comparator",_ComparatorElement);
-        if (!_ModifierElement.InOverflow<Code<Hl7.Fhir.Model.SearchModifierCode>>() && _ModifierElement is not null) yield return new KeyValuePair<string,object>("modifier",_ModifierElement);
-        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (_ResourceTypeElement is not null && !_ResourceTypeElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("resourceType",_ResourceTypeElement);
+        if (_FilterParameterElement is not null && !_FilterParameterElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("filterParameter",_FilterParameterElement);
+        if (_ComparatorElement is not null && !_ComparatorElement.InOverflow<Code<Hl7.Fhir.Model.SearchComparator>>()) yield return new KeyValuePair<string,object>("comparator",_ComparatorElement);
+        if (_ModifierElement is not null && !_ModifierElement.InOverflow<Code<Hl7.Fhir.Model.SearchModifierCode>>()) yield return new KeyValuePair<string,object>("modifier",_ModifierElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -654,8 +654,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -1640,23 +1640,23 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_TopicElement.InOverflow<Hl7.Fhir.Model.Canonical>() && _TopicElement is not null) yield return new KeyValuePair<string,object>("topic",_TopicElement);
-      if (!_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>() && _Contact?.Any() is true) yield return new KeyValuePair<string,object>("contact",_Contact);
-      if (!_EndElement.InOverflow<Hl7.Fhir.Model.Instant>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
-      if (!_ManagingEntity.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _ManagingEntity is not null) yield return new KeyValuePair<string,object>("managingEntity",_ManagingEntity);
-      if (!_ReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ReasonElement is not null) yield return new KeyValuePair<string,object>("reason",_ReasonElement);
-      if (!_FilterBy.InOverflow<List<Hl7.Fhir.Model.Subscription.FilterByComponent>>() && _FilterBy?.Any() is true) yield return new KeyValuePair<string,object>("filterBy",_FilterBy);
-      if (!_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>() && _ChannelType is not null) yield return new KeyValuePair<string,object>("channelType",_ChannelType);
-      if (!_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>() && _EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",_EndpointElement);
-      if (!_Parameter.InOverflow<List<Hl7.Fhir.Model.Subscription.ParameterComponent>>() && _Parameter?.Any() is true) yield return new KeyValuePair<string,object>("parameter",_Parameter);
-      if (!_HeartbeatPeriodElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>() && _HeartbeatPeriodElement is not null) yield return new KeyValuePair<string,object>("heartbeatPeriod",_HeartbeatPeriodElement);
-      if (!_TimeoutElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>() && _TimeoutElement is not null) yield return new KeyValuePair<string,object>("timeout",_TimeoutElement);
-      if (!_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>() && _ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
-      if (!_ContentElement.InOverflow<Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>>() && _ContentElement is not null) yield return new KeyValuePair<string,object>("content",_ContentElement);
-      if (!_MaxCountElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _MaxCountElement is not null) yield return new KeyValuePair<string,object>("maxCount",_MaxCountElement);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_TopicElement is not null && !_TopicElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("topic",_TopicElement);
+      if (_Contact?.Any() is true && !_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>()) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("end",_EndElement);
+      if (_ManagingEntity is not null && !_ManagingEntity.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("managingEntity",_ManagingEntity);
+      if (_ReasonElement is not null && !_ReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("reason",_ReasonElement);
+      if (_FilterBy?.Any() is true && !_FilterBy.InOverflow<List<Hl7.Fhir.Model.Subscription.FilterByComponent>>()) yield return new KeyValuePair<string,object>("filterBy",_FilterBy);
+      if (_ChannelType is not null && !_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("channelType",_ChannelType);
+      if (_EndpointElement is not null && !_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>()) yield return new KeyValuePair<string,object>("endpoint",_EndpointElement);
+      if (_Parameter?.Any() is true && !_Parameter.InOverflow<List<Hl7.Fhir.Model.Subscription.ParameterComponent>>()) yield return new KeyValuePair<string,object>("parameter",_Parameter);
+      if (_HeartbeatPeriodElement is not null && !_HeartbeatPeriodElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("heartbeatPeriod",_HeartbeatPeriodElement);
+      if (_TimeoutElement is not null && !_TimeoutElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("timeout",_TimeoutElement);
+      if (_ContentTypeElement is not null && !_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
+      if (_ContentElement is not null && !_ContentElement.InOverflow<Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>>()) yield return new KeyValuePair<string,object>("content",_ContentElement);
+      if (_MaxCountElement is not null && !_MaxCountElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("maxCount",_MaxCountElement);
     }
 
   }

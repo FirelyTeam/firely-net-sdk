@@ -211,8 +211,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_OuterPackaging.InOverflow<Hl7.Fhir.Model.Identifier>() && _OuterPackaging is not null) yield return new KeyValuePair<string,object>("outerPackaging",_OuterPackaging);
-        if (!_ImmediatePackaging.InOverflow<Hl7.Fhir.Model.Identifier>() && _ImmediatePackaging is not null) yield return new KeyValuePair<string,object>("immediatePackaging",_ImmediatePackaging);
+        if (_OuterPackaging is not null && !_OuterPackaging.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("outerPackaging",_OuterPackaging);
+        if (_ImmediatePackaging is not null && !_ImmediatePackaging.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("immediatePackaging",_ImmediatePackaging);
       }
 
     }
@@ -825,18 +825,18 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
-        if (!_Material.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Material?.Any() is true) yield return new KeyValuePair<string,object>("material",_Material);
-        if (!_AlternateMaterial.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _AlternateMaterial?.Any() is true) yield return new KeyValuePair<string,object>("alternateMaterial",_AlternateMaterial);
-        if (!_Device.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Device?.Any() is true) yield return new KeyValuePair<string,object>("device",_Device);
-        if (!_ManufacturedItem.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _ManufacturedItem?.Any() is true) yield return new KeyValuePair<string,object>("manufacturedItem",_ManufacturedItem);
-        if (!_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>() && _PackageItem?.Any() is true) yield return new KeyValuePair<string,object>("packageItem",_PackageItem);
-        if (!_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>() && _PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",_PhysicalCharacteristics);
-        if (!_OtherCharacteristics.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _OtherCharacteristics?.Any() is true) yield return new KeyValuePair<string,object>("otherCharacteristics",_OtherCharacteristics);
-        if (!_ShelfLifeStorage.InOverflow<List<Hl7.Fhir.Model.ProductShelfLife>>() && _ShelfLifeStorage?.Any() is true) yield return new KeyValuePair<string,object>("shelfLifeStorage",_ShelfLifeStorage);
-        if (!_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Manufacturer?.Any() is true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+        if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Material?.Any() is true && !_Material.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("material",_Material);
+        if (_AlternateMaterial?.Any() is true && !_AlternateMaterial.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("alternateMaterial",_AlternateMaterial);
+        if (_Device?.Any() is true && !_Device.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("device",_Device);
+        if (_ManufacturedItem?.Any() is true && !_ManufacturedItem.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("manufacturedItem",_ManufacturedItem);
+        if (_PackageItem?.Any() is true && !_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>()) yield return new KeyValuePair<string,object>("packageItem",_PackageItem);
+        if (_PhysicalCharacteristics is not null && !_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>()) yield return new KeyValuePair<string,object>("physicalCharacteristics",_PhysicalCharacteristics);
+        if (_OtherCharacteristics?.Any() is true && !_OtherCharacteristics.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("otherCharacteristics",_OtherCharacteristics);
+        if (_ShelfLifeStorage?.Any() is true && !_ShelfLifeStorage.InOverflow<List<Hl7.Fhir.Model.ProductShelfLife>>()) yield return new KeyValuePair<string,object>("shelfLifeStorage",_ShelfLifeStorage);
+        if (_Manufacturer?.Any() is true && !_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
       }
 
     }
@@ -1316,15 +1316,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Subject?.Any() is true) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (!_LegalStatusOfSupply.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",_LegalStatusOfSupply);
-      if (!_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>() && _MarketingStatus?.Any() is true) yield return new KeyValuePair<string,object>("marketingStatus",_MarketingStatus);
-      if (!_MarketingAuthorization.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _MarketingAuthorization is not null) yield return new KeyValuePair<string,object>("marketingAuthorization",_MarketingAuthorization);
-      if (!_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Manufacturer?.Any() is true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
-      if (!_BatchIdentifier.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>>() && _BatchIdentifier?.Any() is true) yield return new KeyValuePair<string,object>("batchIdentifier",_BatchIdentifier);
-      if (!_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>() && _PackageItem?.Any() is true) yield return new KeyValuePair<string,object>("packageItem",_PackageItem);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_LegalStatusOfSupply is not null && !_LegalStatusOfSupply.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("legalStatusOfSupply",_LegalStatusOfSupply);
+      if (_MarketingStatus?.Any() is true && !_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>()) yield return new KeyValuePair<string,object>("marketingStatus",_MarketingStatus);
+      if (_MarketingAuthorization is not null && !_MarketingAuthorization.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("marketingAuthorization",_MarketingAuthorization);
+      if (_Manufacturer?.Any() is true && !_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (_BatchIdentifier?.Any() is true && !_BatchIdentifier.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>>()) yield return new KeyValuePair<string,object>("batchIdentifier",_BatchIdentifier);
+      if (_PackageItem?.Any() is true && !_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>()) yield return new KeyValuePair<string,object>("packageItem",_PackageItem);
     }
 
   }

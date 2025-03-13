@@ -248,8 +248,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Function is not null) yield return new KeyValuePair<string,object>("function",_Function);
-        if (!_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
+        if (_Function is not null && !_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("function",_Function);
+        if (_Actor is not null && !_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("actor",_Actor);
       }
 
     }
@@ -412,8 +412,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Program.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Program is not null) yield return new KeyValuePair<string,object>("program",_Program);
-        if (!_ProgramStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ProgramStatus is not null) yield return new KeyValuePair<string,object>("programStatus",_ProgramStatus);
+        if (_Program is not null && !_Program.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("program",_Program);
+        if (_ProgramStatus is not null && !_ProgramStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("programStatus",_ProgramStatus);
       }
 
     }
@@ -647,9 +647,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-        if (!_Manifestation.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _Manifestation is not null) yield return new KeyValuePair<string,object>("manifestation",_Manifestation);
-        if (!_ReportedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _ReportedElement is not null) yield return new KeyValuePair<string,object>("reported",_ReportedElement);
+        if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("date",_DateElement);
+        if (_Manifestation is not null && !_Manifestation.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("manifestation",_Manifestation);
+        if (_ReportedElement is not null && !_ReportedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("reported",_ReportedElement);
       }
 
     }
@@ -990,11 +990,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_SeriesElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _SeriesElement is not null) yield return new KeyValuePair<string,object>("series",_SeriesElement);
-        if (!_Authority.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Authority is not null) yield return new KeyValuePair<string,object>("authority",_Authority);
-        if (!_TargetDisease.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _TargetDisease?.Any() is true) yield return new KeyValuePair<string,object>("targetDisease",_TargetDisease);
-        if (!_DoseNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DoseNumberElement is not null) yield return new KeyValuePair<string,object>("doseNumber",_DoseNumberElement);
-        if (!_SeriesDosesElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _SeriesDosesElement is not null) yield return new KeyValuePair<string,object>("seriesDoses",_SeriesDosesElement);
+        if (_SeriesElement is not null && !_SeriesElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("series",_SeriesElement);
+        if (_Authority is not null && !_Authority.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("authority",_Authority);
+        if (_TargetDisease?.Any() is true && !_TargetDisease.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("targetDisease",_TargetDisease);
+        if (_DoseNumberElement is not null && !_DoseNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("doseNumber",_DoseNumberElement);
+        if (_SeriesDosesElement is not null && !_SeriesDosesElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("seriesDoses",_SeriesDosesElement);
       }
 
     }
@@ -2394,34 +2394,34 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _BasedOn?.Any() is true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_StatusReason.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",_StatusReason);
-      if (!_VaccineCode.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _VaccineCode is not null) yield return new KeyValuePair<string,object>("vaccineCode",_VaccineCode);
-      if (!_AdministeredProduct.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _AdministeredProduct is not null) yield return new KeyValuePair<string,object>("administeredProduct",_AdministeredProduct);
-      if (!_Manufacturer.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
-      if (!_LotNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",_LotNumberElement);
-      if (!_ExpirationDateElement.InOverflow<Hl7.Fhir.Model.Date>() && _ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",_ExpirationDateElement);
-      if (!_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
-      if (!_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
-      if (!_SupportingInformation.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _SupportingInformation?.Any() is true) yield return new KeyValuePair<string,object>("supportingInformation",_SupportingInformation);
-      if (!_Occurrence.InOverflow<DynamicDataType>() && _Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",_Occurrence);
-      if (!_PrimarySourceElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _PrimarySourceElement is not null) yield return new KeyValuePair<string,object>("primarySource",_PrimarySourceElement);
-      if (!_InformationSource.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _InformationSource is not null) yield return new KeyValuePair<string,object>("informationSource",_InformationSource);
-      if (!_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
-      if (!_Site.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Site is not null) yield return new KeyValuePair<string,object>("site",_Site);
-      if (!_Route.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Route is not null) yield return new KeyValuePair<string,object>("route",_Route);
-      if (!_DoseQuantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _DoseQuantity is not null) yield return new KeyValuePair<string,object>("doseQuantity",_DoseQuantity);
-      if (!_Performer.InOverflow<List<Hl7.Fhir.Model.Immunization.PerformerComponent>>() && _Performer?.Any() is true) yield return new KeyValuePair<string,object>("performer",_Performer);
-      if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
-      if (!_Reason.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>() && _Reason?.Any() is true) yield return new KeyValuePair<string,object>("reason",_Reason);
-      if (!_IsSubpotentElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _IsSubpotentElement is not null) yield return new KeyValuePair<string,object>("isSubpotent",_IsSubpotentElement);
-      if (!_SubpotentReason.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _SubpotentReason?.Any() is true) yield return new KeyValuePair<string,object>("subpotentReason",_SubpotentReason);
-      if (!_ProgramEligibility.InOverflow<List<Hl7.Fhir.Model.Immunization.ProgramEligibilityComponent>>() && _ProgramEligibility?.Any() is true) yield return new KeyValuePair<string,object>("programEligibility",_ProgramEligibility);
-      if (!_FundingSource.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _FundingSource is not null) yield return new KeyValuePair<string,object>("fundingSource",_FundingSource);
-      if (!_Reaction.InOverflow<List<Hl7.Fhir.Model.Immunization.ReactionComponent>>() && _Reaction?.Any() is true) yield return new KeyValuePair<string,object>("reaction",_Reaction);
-      if (!_ProtocolApplied.InOverflow<List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent>>() && _ProtocolApplied?.Any() is true) yield return new KeyValuePair<string,object>("protocolApplied",_ProtocolApplied);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_BasedOn?.Any() is true && !_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_StatusReason is not null && !_StatusReason.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("statusReason",_StatusReason);
+      if (_VaccineCode is not null && !_VaccineCode.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("vaccineCode",_VaccineCode);
+      if (_AdministeredProduct is not null && !_AdministeredProduct.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("administeredProduct",_AdministeredProduct);
+      if (_Manufacturer is not null && !_Manufacturer.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (_LotNumberElement is not null && !_LotNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("lotNumber",_LotNumberElement);
+      if (_ExpirationDateElement is not null && !_ExpirationDateElement.InOverflow<Hl7.Fhir.Model.Date>()) yield return new KeyValuePair<string,object>("expirationDate",_ExpirationDateElement);
+      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Encounter is not null && !_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_SupportingInformation?.Any() is true && !_SupportingInformation.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("supportingInformation",_SupportingInformation);
+      if (_Occurrence is not null && !_Occurrence.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("occurrence",_Occurrence);
+      if (_PrimarySourceElement is not null && !_PrimarySourceElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("primarySource",_PrimarySourceElement);
+      if (_InformationSource is not null && !_InformationSource.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("informationSource",_InformationSource);
+      if (_Location is not null && !_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_Site is not null && !_Site.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("site",_Site);
+      if (_Route is not null && !_Route.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("route",_Route);
+      if (_DoseQuantity is not null && !_DoseQuantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("doseQuantity",_DoseQuantity);
+      if (_Performer?.Any() is true && !_Performer.InOverflow<List<Hl7.Fhir.Model.Immunization.PerformerComponent>>()) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_Reason?.Any() is true && !_Reason.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("reason",_Reason);
+      if (_IsSubpotentElement is not null && !_IsSubpotentElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("isSubpotent",_IsSubpotentElement);
+      if (_SubpotentReason?.Any() is true && !_SubpotentReason.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("subpotentReason",_SubpotentReason);
+      if (_ProgramEligibility?.Any() is true && !_ProgramEligibility.InOverflow<List<Hl7.Fhir.Model.Immunization.ProgramEligibilityComponent>>()) yield return new KeyValuePair<string,object>("programEligibility",_ProgramEligibility);
+      if (_FundingSource is not null && !_FundingSource.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("fundingSource",_FundingSource);
+      if (_Reaction?.Any() is true && !_Reaction.InOverflow<List<Hl7.Fhir.Model.Immunization.ReactionComponent>>()) yield return new KeyValuePair<string,object>("reaction",_Reaction);
+      if (_ProtocolApplied?.Any() is true && !_ProtocolApplied.InOverflow<List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent>>()) yield return new KeyValuePair<string,object>("protocolApplied",_ProtocolApplied);
     }
 
   }

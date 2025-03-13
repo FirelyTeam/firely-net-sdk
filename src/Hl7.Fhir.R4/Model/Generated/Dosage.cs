@@ -265,9 +265,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Dose.InOverflow<DynamicDataType>() && _Dose is not null) yield return new KeyValuePair<string,object>("dose",_Dose);
-        if (!_Rate.InOverflow<DynamicDataType>() && _Rate is not null) yield return new KeyValuePair<string,object>("rate",_Rate);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Dose is not null && !_Dose.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("dose",_Dose);
+        if (_Rate is not null && !_Rate.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("rate",_Rate);
       }
 
     }
@@ -948,19 +948,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_SequenceElement.InOverflow<Hl7.Fhir.Model.Integer>() && _SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
-      if (!_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
-      if (!_AdditionalInstruction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _AdditionalInstruction?.Any() is true) yield return new KeyValuePair<string,object>("additionalInstruction",_AdditionalInstruction);
-      if (!_PatientInstructionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",_PatientInstructionElement);
-      if (!_Timing.InOverflow<Hl7.Fhir.Model.Timing>() && _Timing is not null) yield return new KeyValuePair<string,object>("timing",_Timing);
-      if (!_AsNeeded.InOverflow<DynamicDataType>() && _AsNeeded is not null) yield return new KeyValuePair<string,object>("asNeeded",_AsNeeded);
-      if (!_Site.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Site is not null) yield return new KeyValuePair<string,object>("site",_Site);
-      if (!_Route.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Route is not null) yield return new KeyValuePair<string,object>("route",_Route);
-      if (!_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Method is not null) yield return new KeyValuePair<string,object>("method",_Method);
-      if (!_DoseAndRate.InOverflow<List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>>() && _DoseAndRate?.Any() is true) yield return new KeyValuePair<string,object>("doseAndRate",_DoseAndRate);
-      if (!_MaxDosePerPeriod.InOverflow<Hl7.Fhir.Model.Ratio>() && _MaxDosePerPeriod is not null) yield return new KeyValuePair<string,object>("maxDosePerPeriod",_MaxDosePerPeriod);
-      if (!_MaxDosePerAdministration.InOverflow<Hl7.Fhir.Model.Quantity>() && _MaxDosePerAdministration is not null) yield return new KeyValuePair<string,object>("maxDosePerAdministration",_MaxDosePerAdministration);
-      if (!_MaxDosePerLifetime.InOverflow<Hl7.Fhir.Model.Quantity>() && _MaxDosePerLifetime is not null) yield return new KeyValuePair<string,object>("maxDosePerLifetime",_MaxDosePerLifetime);
+      if (_SequenceElement is not null && !_SequenceElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
+      if (_TextElement is not null && !_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (_AdditionalInstruction?.Any() is true && !_AdditionalInstruction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("additionalInstruction",_AdditionalInstruction);
+      if (_PatientInstructionElement is not null && !_PatientInstructionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("patientInstruction",_PatientInstructionElement);
+      if (_Timing is not null && !_Timing.InOverflow<Hl7.Fhir.Model.Timing>()) yield return new KeyValuePair<string,object>("timing",_Timing);
+      if (_AsNeeded is not null && !_AsNeeded.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("asNeeded",_AsNeeded);
+      if (_Site is not null && !_Site.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("site",_Site);
+      if (_Route is not null && !_Route.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("route",_Route);
+      if (_Method is not null && !_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("method",_Method);
+      if (_DoseAndRate?.Any() is true && !_DoseAndRate.InOverflow<List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent>>()) yield return new KeyValuePair<string,object>("doseAndRate",_DoseAndRate);
+      if (_MaxDosePerPeriod is not null && !_MaxDosePerPeriod.InOverflow<Hl7.Fhir.Model.Ratio>()) yield return new KeyValuePair<string,object>("maxDosePerPeriod",_MaxDosePerPeriod);
+      if (_MaxDosePerAdministration is not null && !_MaxDosePerAdministration.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("maxDosePerAdministration",_MaxDosePerAdministration);
+      if (_MaxDosePerLifetime is not null && !_MaxDosePerLifetime.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("maxDosePerLifetime",_MaxDosePerLifetime);
     }
 
   }

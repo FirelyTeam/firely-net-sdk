@@ -947,19 +947,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>() && _ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
-      if (!_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>() && _LanguageElement is not null) yield return new KeyValuePair<string,object>("language",_LanguageElement);
-      if (!_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>() && _DataElement is not null) yield return new KeyValuePair<string,object>("data",_DataElement);
-      if (!_UrlElement.InOverflow<DynamicPrimitive>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
-      if (!_SizeElement.InOverflow<DynamicPrimitive>() && _SizeElement is not null) yield return new KeyValuePair<string,object>("size",_SizeElement);
-      if (!_HashElement.InOverflow<Hl7.Fhir.Model.Base64Binary>() && _HashElement is not null) yield return new KeyValuePair<string,object>("hash",_HashElement);
-      if (!_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
-      if (!_CreationElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _CreationElement is not null) yield return new KeyValuePair<string,object>("creation",_CreationElement);
-      if (!_HeightElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _HeightElement is not null) yield return new KeyValuePair<string,object>("height",_HeightElement);
-      if (!_WidthElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _WidthElement is not null) yield return new KeyValuePair<string,object>("width",_WidthElement);
-      if (!_FramesElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _FramesElement is not null) yield return new KeyValuePair<string,object>("frames",_FramesElement);
-      if (!_DurationElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _DurationElement is not null) yield return new KeyValuePair<string,object>("duration",_DurationElement);
-      if (!_PagesElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _PagesElement is not null) yield return new KeyValuePair<string,object>("pages",_PagesElement);
+      if (_ContentTypeElement is not null && !_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
+      if (_LanguageElement is not null && !_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("language",_LanguageElement);
+      if (_DataElement is not null && !_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>()) yield return new KeyValuePair<string,object>("data",_DataElement);
+      if (_UrlElement is not null && !_UrlElement.InOverflow<DynamicPrimitive>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_SizeElement is not null && !_SizeElement.InOverflow<DynamicPrimitive>()) yield return new KeyValuePair<string,object>("size",_SizeElement);
+      if (_HashElement is not null && !_HashElement.InOverflow<Hl7.Fhir.Model.Base64Binary>()) yield return new KeyValuePair<string,object>("hash",_HashElement);
+      if (_TitleElement is not null && !_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("title",_TitleElement);
+      if (_CreationElement is not null && !_CreationElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("creation",_CreationElement);
+      if (_HeightElement is not null && !_HeightElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("height",_HeightElement);
+      if (_WidthElement is not null && !_WidthElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("width",_WidthElement);
+      if (_FramesElement is not null && !_FramesElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("frames",_FramesElement);
+      if (_DurationElement is not null && !_DurationElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("duration",_DurationElement);
+      if (_PagesElement is not null && !_PagesElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("pages",_PagesElement);
     }
 
   }

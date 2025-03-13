@@ -429,12 +429,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Outcome.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Outcome is not null) yield return new KeyValuePair<string,object>("outcome",_Outcome);
-        if (!_Probability.InOverflow<DynamicDataType>() && _Probability is not null) yield return new KeyValuePair<string,object>("probability",_Probability);
-        if (!_QualitativeRisk.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _QualitativeRisk is not null) yield return new KeyValuePair<string,object>("qualitativeRisk",_QualitativeRisk);
-        if (!_RelativeRiskElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _RelativeRiskElement is not null) yield return new KeyValuePair<string,object>("relativeRisk",_RelativeRiskElement);
-        if (!_When.InOverflow<DynamicDataType>() && _When is not null) yield return new KeyValuePair<string,object>("when",_When);
-        if (!_RationaleElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _RationaleElement is not null) yield return new KeyValuePair<string,object>("rationale",_RationaleElement);
+        if (_Outcome is not null && !_Outcome.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("outcome",_Outcome);
+        if (_Probability is not null && !_Probability.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("probability",_Probability);
+        if (_QualitativeRisk is not null && !_QualitativeRisk.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("qualitativeRisk",_QualitativeRisk);
+        if (_RelativeRiskElement is not null && !_RelativeRiskElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("relativeRisk",_RelativeRiskElement);
+        if (_When is not null && !_When.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("when",_When);
+        if (_RationaleElement is not null && !_RationaleElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("rationale",_RationaleElement);
       }
 
     }
@@ -1301,23 +1301,23 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_BasedOn.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
-      if (!_Parent.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Parent is not null) yield return new KeyValuePair<string,object>("parent",_Parent);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ObservationStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Method is not null) yield return new KeyValuePair<string,object>("method",_Method);
-      if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
-      if (!_Occurrence.InOverflow<DynamicDataType>() && _Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",_Occurrence);
-      if (!_Condition.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Condition is not null) yield return new KeyValuePair<string,object>("condition",_Condition);
-      if (!_Performer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Performer is not null) yield return new KeyValuePair<string,object>("performer",_Performer);
-      if (!_ReasonCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ReasonCode?.Any() is true) yield return new KeyValuePair<string,object>("reasonCode",_ReasonCode);
-      if (!_ReasonReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _ReasonReference?.Any() is true) yield return new KeyValuePair<string,object>("reasonReference",_ReasonReference);
-      if (!_Basis.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Basis?.Any() is true) yield return new KeyValuePair<string,object>("basis",_Basis);
-      if (!_Prediction.InOverflow<List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>>() && _Prediction?.Any() is true) yield return new KeyValuePair<string,object>("prediction",_Prediction);
-      if (!_MitigationElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _MitigationElement is not null) yield return new KeyValuePair<string,object>("mitigation",_MitigationElement);
-      if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_BasedOn is not null && !_BasedOn.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_Parent is not null && !_Parent.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("parent",_Parent);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ObservationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Method is not null && !_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("method",_Method);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Encounter is not null && !_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_Occurrence is not null && !_Occurrence.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("occurrence",_Occurrence);
+      if (_Condition is not null && !_Condition.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("condition",_Condition);
+      if (_Performer is not null && !_Performer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_ReasonCode?.Any() is true && !_ReasonCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("reasonCode",_ReasonCode);
+      if (_ReasonReference?.Any() is true && !_ReasonReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("reasonReference",_ReasonReference);
+      if (_Basis?.Any() is true && !_Basis.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("basis",_Basis);
+      if (_Prediction?.Any() is true && !_Prediction.InOverflow<List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>>()) yield return new KeyValuePair<string,object>("prediction",_Prediction);
+      if (_MitigationElement is not null && !_MitigationElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("mitigation",_MitigationElement);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

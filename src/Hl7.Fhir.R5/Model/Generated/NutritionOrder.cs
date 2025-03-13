@@ -414,12 +414,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Type?.Any() is true) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Schedule.InOverflow<Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent>() && _Schedule is not null) yield return new KeyValuePair<string,object>("schedule",_Schedule);
-        if (!_Nutrient.InOverflow<List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>>() && _Nutrient?.Any() is true) yield return new KeyValuePair<string,object>("nutrient",_Nutrient);
-        if (!_Texture.InOverflow<List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>>() && _Texture?.Any() is true) yield return new KeyValuePair<string,object>("texture",_Texture);
-        if (!_FluidConsistencyType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _FluidConsistencyType?.Any() is true) yield return new KeyValuePair<string,object>("fluidConsistencyType",_FluidConsistencyType);
-        if (!_InstructionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",_InstructionElement);
+        if (_Type?.Any() is true && !_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Schedule is not null && !_Schedule.InOverflow<Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent>()) yield return new KeyValuePair<string,object>("schedule",_Schedule);
+        if (_Nutrient?.Any() is true && !_Nutrient.InOverflow<List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>>()) yield return new KeyValuePair<string,object>("nutrient",_Nutrient);
+        if (_Texture?.Any() is true && !_Texture.InOverflow<List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>>()) yield return new KeyValuePair<string,object>("texture",_Texture);
+        if (_FluidConsistencyType?.Any() is true && !_FluidConsistencyType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("fluidConsistencyType",_FluidConsistencyType);
+        if (_InstructionElement is not null && !_InstructionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("instruction",_InstructionElement);
       }
 
     }
@@ -639,9 +639,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Timing.InOverflow<List<Hl7.Fhir.Model.Timing>>() && _Timing?.Any() is true) yield return new KeyValuePair<string,object>("timing",_Timing);
-        if (!_AsNeededElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",_AsNeededElement);
-        if (!_AsNeededFor.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _AsNeededFor is not null) yield return new KeyValuePair<string,object>("asNeededFor",_AsNeededFor);
+        if (_Timing?.Any() is true && !_Timing.InOverflow<List<Hl7.Fhir.Model.Timing>>()) yield return new KeyValuePair<string,object>("timing",_Timing);
+        if (_AsNeededElement is not null && !_AsNeededElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("asNeeded",_AsNeededElement);
+        if (_AsNeededFor is not null && !_AsNeededFor.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("asNeededFor",_AsNeededFor);
       }
 
     }
@@ -801,8 +801,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Modifier.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Modifier is not null) yield return new KeyValuePair<string,object>("modifier",_Modifier);
-        if (!_Amount.InOverflow<Hl7.Fhir.Model.Quantity>() && _Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
+        if (_Modifier is not null && !_Modifier.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("modifier",_Modifier);
+        if (_Amount is not null && !_Amount.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -963,8 +963,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Modifier.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Modifier is not null) yield return new KeyValuePair<string,object>("modifier",_Modifier);
-        if (!_FoodType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _FoodType is not null) yield return new KeyValuePair<string,object>("foodType",_FoodType);
+        if (_Modifier is not null && !_Modifier.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("modifier",_Modifier);
+        if (_FoodType is not null && !_FoodType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("foodType",_FoodType);
       }
 
     }
@@ -1286,11 +1286,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_ProductNameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",_ProductNameElement);
-        if (!_Schedule.InOverflow<Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent>() && _Schedule is not null) yield return new KeyValuePair<string,object>("schedule",_Schedule);
-        if (!_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
-        if (!_InstructionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",_InstructionElement);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_ProductNameElement is not null && !_ProductNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("productName",_ProductNameElement);
+        if (_Schedule is not null && !_Schedule.InOverflow<Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent>()) yield return new KeyValuePair<string,object>("schedule",_Schedule);
+        if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_InstructionElement is not null && !_InstructionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("instruction",_InstructionElement);
       }
 
     }
@@ -1510,9 +1510,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Timing.InOverflow<List<Hl7.Fhir.Model.Timing>>() && _Timing?.Any() is true) yield return new KeyValuePair<string,object>("timing",_Timing);
-        if (!_AsNeededElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",_AsNeededElement);
-        if (!_AsNeededFor.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _AsNeededFor is not null) yield return new KeyValuePair<string,object>("asNeededFor",_AsNeededFor);
+        if (_Timing?.Any() is true && !_Timing.InOverflow<List<Hl7.Fhir.Model.Timing>>()) yield return new KeyValuePair<string,object>("timing",_Timing);
+        if (_AsNeededElement is not null && !_AsNeededElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("asNeeded",_AsNeededElement);
+        if (_AsNeededFor is not null && !_AsNeededFor.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("asNeededFor",_AsNeededFor);
       }
 
     }
@@ -2014,15 +2014,15 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_BaseFormulaType.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _BaseFormulaType is not null) yield return new KeyValuePair<string,object>("baseFormulaType",_BaseFormulaType);
-        if (!_BaseFormulaProductNameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _BaseFormulaProductNameElement is not null) yield return new KeyValuePair<string,object>("baseFormulaProductName",_BaseFormulaProductNameElement);
-        if (!_DeliveryDevice.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>() && _DeliveryDevice?.Any() is true) yield return new KeyValuePair<string,object>("deliveryDevice",_DeliveryDevice);
-        if (!_Additive.InOverflow<List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent>>() && _Additive?.Any() is true) yield return new KeyValuePair<string,object>("additive",_Additive);
-        if (!_CaloricDensity.InOverflow<Hl7.Fhir.Model.Quantity>() && _CaloricDensity is not null) yield return new KeyValuePair<string,object>("caloricDensity",_CaloricDensity);
-        if (!_RouteOfAdministration.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _RouteOfAdministration is not null) yield return new KeyValuePair<string,object>("routeOfAdministration",_RouteOfAdministration);
-        if (!_Administration.InOverflow<List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>>() && _Administration?.Any() is true) yield return new KeyValuePair<string,object>("administration",_Administration);
-        if (!_MaxVolumeToDeliver.InOverflow<Hl7.Fhir.Model.Quantity>() && _MaxVolumeToDeliver is not null) yield return new KeyValuePair<string,object>("maxVolumeToDeliver",_MaxVolumeToDeliver);
-        if (!_AdministrationInstructionElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _AdministrationInstructionElement is not null) yield return new KeyValuePair<string,object>("administrationInstruction",_AdministrationInstructionElement);
+        if (_BaseFormulaType is not null && !_BaseFormulaType.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("baseFormulaType",_BaseFormulaType);
+        if (_BaseFormulaProductNameElement is not null && !_BaseFormulaProductNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("baseFormulaProductName",_BaseFormulaProductNameElement);
+        if (_DeliveryDevice?.Any() is true && !_DeliveryDevice.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("deliveryDevice",_DeliveryDevice);
+        if (_Additive?.Any() is true && !_Additive.InOverflow<List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent>>()) yield return new KeyValuePair<string,object>("additive",_Additive);
+        if (_CaloricDensity is not null && !_CaloricDensity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("caloricDensity",_CaloricDensity);
+        if (_RouteOfAdministration is not null && !_RouteOfAdministration.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("routeOfAdministration",_RouteOfAdministration);
+        if (_Administration?.Any() is true && !_Administration.InOverflow<List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>>()) yield return new KeyValuePair<string,object>("administration",_Administration);
+        if (_MaxVolumeToDeliver is not null && !_MaxVolumeToDeliver.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("maxVolumeToDeliver",_MaxVolumeToDeliver);
+        if (_AdministrationInstructionElement is not null && !_AdministrationInstructionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("administrationInstruction",_AdministrationInstructionElement);
       }
 
     }
@@ -2241,9 +2241,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_ProductNameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",_ProductNameElement);
-        if (!_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_ProductNameElement is not null && !_ProductNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("productName",_ProductNameElement);
+        if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
       }
 
     }
@@ -2449,9 +2449,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Schedule.InOverflow<Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent>() && _Schedule is not null) yield return new KeyValuePair<string,object>("schedule",_Schedule);
-        if (!_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
-        if (!_Rate.InOverflow<DynamicDataType>() && _Rate is not null) yield return new KeyValuePair<string,object>("rate",_Rate);
+        if (_Schedule is not null && !_Schedule.InOverflow<Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent>()) yield return new KeyValuePair<string,object>("schedule",_Schedule);
+        if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Rate is not null && !_Rate.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("rate",_Rate);
       }
 
     }
@@ -2671,9 +2671,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Timing.InOverflow<List<Hl7.Fhir.Model.Timing>>() && _Timing?.Any() is true) yield return new KeyValuePair<string,object>("timing",_Timing);
-        if (!_AsNeededElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _AsNeededElement is not null) yield return new KeyValuePair<string,object>("asNeeded",_AsNeededElement);
-        if (!_AsNeededFor.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _AsNeededFor is not null) yield return new KeyValuePair<string,object>("asNeededFor",_AsNeededFor);
+        if (_Timing?.Any() is true && !_Timing.InOverflow<List<Hl7.Fhir.Model.Timing>>()) yield return new KeyValuePair<string,object>("timing",_Timing);
+        if (_AsNeededElement is not null && !_AsNeededElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("asNeeded",_AsNeededElement);
+        if (_AsNeededFor is not null && !_AsNeededFor.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("asNeededFor",_AsNeededFor);
       }
 
     }
@@ -3907,29 +3907,29 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_InstantiatesCanonicalElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>() && _InstantiatesCanonicalElement?.Any() is true) yield return new KeyValuePair<string,object>("instantiatesCanonical",_InstantiatesCanonicalElement);
-      if (!_InstantiatesUriElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>() && _InstantiatesUriElement?.Any() is true) yield return new KeyValuePair<string,object>("instantiatesUri",_InstantiatesUriElement);
-      if (!_InstantiatesElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>() && _InstantiatesElement?.Any() is true) yield return new KeyValuePair<string,object>("instantiates",_InstantiatesElement);
-      if (!_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _BasedOn?.Any() is true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
-      if (!_GroupIdentifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",_GroupIdentifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.RequestStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_IntentElement.InOverflow<Code<Hl7.Fhir.Model.RequestIntent>>() && _IntentElement is not null) yield return new KeyValuePair<string,object>("intent",_IntentElement);
-      if (!_PriorityElement.InOverflow<Code<Hl7.Fhir.Model.RequestPriority>>() && _PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",_PriorityElement);
-      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
-      if (!_SupportingInformation.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _SupportingInformation?.Any() is true) yield return new KeyValuePair<string,object>("supportingInformation",_SupportingInformation);
-      if (!_DateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateTimeElement is not null) yield return new KeyValuePair<string,object>("dateTime",_DateTimeElement);
-      if (!_Orderer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Orderer is not null) yield return new KeyValuePair<string,object>("orderer",_Orderer);
-      if (!_Performer.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>() && _Performer?.Any() is true) yield return new KeyValuePair<string,object>("performer",_Performer);
-      if (!_AllergyIntolerance.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _AllergyIntolerance?.Any() is true) yield return new KeyValuePair<string,object>("allergyIntolerance",_AllergyIntolerance);
-      if (!_FoodPreferenceModifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _FoodPreferenceModifier?.Any() is true) yield return new KeyValuePair<string,object>("foodPreferenceModifier",_FoodPreferenceModifier);
-      if (!_ExcludeFoodModifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ExcludeFoodModifier?.Any() is true) yield return new KeyValuePair<string,object>("excludeFoodModifier",_ExcludeFoodModifier);
-      if (!_OutsideFoodAllowedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _OutsideFoodAllowedElement is not null) yield return new KeyValuePair<string,object>("outsideFoodAllowed",_OutsideFoodAllowedElement);
-      if (!_OralDiet.InOverflow<Hl7.Fhir.Model.NutritionOrder.OralDietComponent>() && _OralDiet is not null) yield return new KeyValuePair<string,object>("oralDiet",_OralDiet);
-      if (!_Supplement.InOverflow<List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>>() && _Supplement?.Any() is true) yield return new KeyValuePair<string,object>("supplement",_Supplement);
-      if (!_EnteralFormula.InOverflow<Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent>() && _EnteralFormula is not null) yield return new KeyValuePair<string,object>("enteralFormula",_EnteralFormula);
-      if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_InstantiatesCanonicalElement?.Any() is true && !_InstantiatesCanonicalElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>()) yield return new KeyValuePair<string,object>("instantiatesCanonical",_InstantiatesCanonicalElement);
+      if (_InstantiatesUriElement?.Any() is true && !_InstantiatesUriElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>()) yield return new KeyValuePair<string,object>("instantiatesUri",_InstantiatesUriElement);
+      if (_InstantiatesElement?.Any() is true && !_InstantiatesElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>()) yield return new KeyValuePair<string,object>("instantiates",_InstantiatesElement);
+      if (_BasedOn?.Any() is true && !_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_GroupIdentifier is not null && !_GroupIdentifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("groupIdentifier",_GroupIdentifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.RequestStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_IntentElement is not null && !_IntentElement.InOverflow<Code<Hl7.Fhir.Model.RequestIntent>>()) yield return new KeyValuePair<string,object>("intent",_IntentElement);
+      if (_PriorityElement is not null && !_PriorityElement.InOverflow<Code<Hl7.Fhir.Model.RequestPriority>>()) yield return new KeyValuePair<string,object>("priority",_PriorityElement);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Encounter is not null && !_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_SupportingInformation?.Any() is true && !_SupportingInformation.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("supportingInformation",_SupportingInformation);
+      if (_DateTimeElement is not null && !_DateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("dateTime",_DateTimeElement);
+      if (_Orderer is not null && !_Orderer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("orderer",_Orderer);
+      if (_Performer?.Any() is true && !_Performer.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_AllergyIntolerance?.Any() is true && !_AllergyIntolerance.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("allergyIntolerance",_AllergyIntolerance);
+      if (_FoodPreferenceModifier?.Any() is true && !_FoodPreferenceModifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("foodPreferenceModifier",_FoodPreferenceModifier);
+      if (_ExcludeFoodModifier?.Any() is true && !_ExcludeFoodModifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("excludeFoodModifier",_ExcludeFoodModifier);
+      if (_OutsideFoodAllowedElement is not null && !_OutsideFoodAllowedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("outsideFoodAllowed",_OutsideFoodAllowedElement);
+      if (_OralDiet is not null && !_OralDiet.InOverflow<Hl7.Fhir.Model.NutritionOrder.OralDietComponent>()) yield return new KeyValuePair<string,object>("oralDiet",_OralDiet);
+      if (_Supplement?.Any() is true && !_Supplement.InOverflow<List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>>()) yield return new KeyValuePair<string,object>("supplement",_Supplement);
+      if (_EnteralFormula is not null && !_EnteralFormula.InOverflow<Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent>()) yield return new KeyValuePair<string,object>("enteralFormula",_EnteralFormula);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

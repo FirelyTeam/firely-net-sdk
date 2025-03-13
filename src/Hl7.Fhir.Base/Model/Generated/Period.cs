@@ -232,8 +232,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
-      if (!_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
+      if (_StartElement is not null && !_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("start",_StartElement);
+      if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("end",_EndElement);
     }
 
   }

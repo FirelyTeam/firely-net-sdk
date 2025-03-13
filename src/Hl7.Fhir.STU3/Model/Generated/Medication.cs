@@ -308,9 +308,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Item.InOverflow<DynamicDataType>() && _Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
-        if (!_IsActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _IsActiveElement is not null) yield return new KeyValuePair<string,object>("isActive",_IsActiveElement);
-        if (!_Amount.InOverflow<Hl7.Fhir.Model.Ratio>() && _Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
+        if (_Item is not null && !_Item.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("item",_Item);
+        if (_IsActiveElement is not null && !_IsActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("isActive",_IsActiveElement);
+        if (_Amount is not null && !_Amount.InOverflow<Hl7.Fhir.Model.Ratio>()) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -516,9 +516,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Container.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Container is not null) yield return new KeyValuePair<string,object>("container",_Container);
-        if (!_Content.InOverflow<List<Hl7.Fhir.Model.Medication.ContentComponent>>() && _Content?.Any() is true) yield return new KeyValuePair<string,object>("content",_Content);
-        if (!_Batch.InOverflow<List<Hl7.Fhir.Model.Medication.BatchComponent>>() && _Batch?.Any() is true) yield return new KeyValuePair<string,object>("batch",_Batch);
+        if (_Container is not null && !_Container.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("container",_Container);
+        if (_Content?.Any() is true && !_Content.InOverflow<List<Hl7.Fhir.Model.Medication.ContentComponent>>()) yield return new KeyValuePair<string,object>("content",_Content);
+        if (_Batch?.Any() is true && !_Batch.InOverflow<List<Hl7.Fhir.Model.Medication.BatchComponent>>()) yield return new KeyValuePair<string,object>("batch",_Batch);
       }
 
     }
@@ -681,8 +681,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Item.InOverflow<DynamicDataType>() && _Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
-        if (!_Amount.InOverflow<Hl7.Fhir.Model.Quantity>() && _Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
+        if (_Item is not null && !_Item.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("item",_Item);
+        if (_Amount is not null && !_Amount.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -871,8 +871,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_LotNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",_LotNumberElement);
-        if (!_ExpirationDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",_ExpirationDateElement);
+        if (_LotNumberElement is not null && !_LotNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("lotNumber",_LotNumberElement);
+        if (_ExpirationDateElement is not null && !_ExpirationDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("expirationDate",_ExpirationDateElement);
       }
 
     }
@@ -1376,15 +1376,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Medication.MedicationStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_IsBrandElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _IsBrandElement is not null) yield return new KeyValuePair<string,object>("isBrand",_IsBrandElement);
-      if (!_IsOverTheCounterElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _IsOverTheCounterElement is not null) yield return new KeyValuePair<string,object>("isOverTheCounter",_IsOverTheCounterElement);
-      if (!_Manufacturer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
-      if (!_Form.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Form is not null) yield return new KeyValuePair<string,object>("form",_Form);
-      if (!_Ingredient.InOverflow<List<Hl7.Fhir.Model.Medication.IngredientComponent>>() && _Ingredient?.Any() is true) yield return new KeyValuePair<string,object>("ingredient",_Ingredient);
-      if (!_Package.InOverflow<Hl7.Fhir.Model.Medication.PackageComponent>() && _Package is not null) yield return new KeyValuePair<string,object>("package",_Package);
-      if (!_Image.InOverflow<List<Hl7.Fhir.Model.Attachment>>() && _Image?.Any() is true) yield return new KeyValuePair<string,object>("image",_Image);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Medication.MedicationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_IsBrandElement is not null && !_IsBrandElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("isBrand",_IsBrandElement);
+      if (_IsOverTheCounterElement is not null && !_IsOverTheCounterElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("isOverTheCounter",_IsOverTheCounterElement);
+      if (_Manufacturer is not null && !_Manufacturer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (_Form is not null && !_Form.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("form",_Form);
+      if (_Ingredient?.Any() is true && !_Ingredient.InOverflow<List<Hl7.Fhir.Model.Medication.IngredientComponent>>()) yield return new KeyValuePair<string,object>("ingredient",_Ingredient);
+      if (_Package is not null && !_Package.InOverflow<Hl7.Fhir.Model.Medication.PackageComponent>()) yield return new KeyValuePair<string,object>("package",_Package);
+      if (_Image?.Any() is true && !_Image.InOverflow<List<Hl7.Fhir.Model.Attachment>>()) yield return new KeyValuePair<string,object>("image",_Image);
     }
 
   }

@@ -225,8 +225,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_FractionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _FractionElement is not null) yield return new KeyValuePair<string,object>("fraction",_FractionElement);
-        if (!_MaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _MaterialType is not null) yield return new KeyValuePair<string,object>("materialType",_MaterialType);
+        if (_FractionElement is not null && !_FractionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("fraction",_FractionElement);
+        if (_MaterialType is not null && !_MaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("materialType",_MaterialType);
       }
 
     }
@@ -662,14 +662,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Family.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Family is not null) yield return new KeyValuePair<string,object>("family",_Family);
-        if (!_Genus.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Genus is not null) yield return new KeyValuePair<string,object>("genus",_Genus);
-        if (!_Species.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Species is not null) yield return new KeyValuePair<string,object>("species",_Species);
-        if (!_IntraspecificType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _IntraspecificType is not null) yield return new KeyValuePair<string,object>("intraspecificType",_IntraspecificType);
-        if (!_IntraspecificDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _IntraspecificDescriptionElement is not null) yield return new KeyValuePair<string,object>("intraspecificDescription",_IntraspecificDescriptionElement);
-        if (!_Author.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>>() && _Author?.Any() is true) yield return new KeyValuePair<string,object>("author",_Author);
-        if (!_Hybrid.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent>() && _Hybrid is not null) yield return new KeyValuePair<string,object>("hybrid",_Hybrid);
-        if (!_OrganismGeneral.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent>() && _OrganismGeneral is not null) yield return new KeyValuePair<string,object>("organismGeneral",_OrganismGeneral);
+        if (_Family is not null && !_Family.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("family",_Family);
+        if (_Genus is not null && !_Genus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("genus",_Genus);
+        if (_Species is not null && !_Species.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("species",_Species);
+        if (_IntraspecificType is not null && !_IntraspecificType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("intraspecificType",_IntraspecificType);
+        if (_IntraspecificDescriptionElement is not null && !_IntraspecificDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("intraspecificDescription",_IntraspecificDescriptionElement);
+        if (_Author?.Any() is true && !_Author.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>>()) yield return new KeyValuePair<string,object>("author",_Author);
+        if (_Hybrid is not null && !_Hybrid.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent>()) yield return new KeyValuePair<string,object>("hybrid",_Hybrid);
+        if (_OrganismGeneral is not null && !_OrganismGeneral.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent>()) yield return new KeyValuePair<string,object>("organismGeneral",_OrganismGeneral);
       }
 
     }
@@ -840,8 +840,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_AuthorType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _AuthorType is not null) yield return new KeyValuePair<string,object>("authorType",_AuthorType);
-        if (!_AuthorDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _AuthorDescriptionElement is not null) yield return new KeyValuePair<string,object>("authorDescription",_AuthorDescriptionElement);
+        if (_AuthorType is not null && !_AuthorType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("authorType",_AuthorType);
+        if (_AuthorDescriptionElement is not null && !_AuthorDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("authorDescription",_AuthorDescriptionElement);
       }
 
     }
@@ -1189,11 +1189,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_MaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _MaternalOrganismIdElement is not null) yield return new KeyValuePair<string,object>("maternalOrganismId",_MaternalOrganismIdElement);
-        if (!_MaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _MaternalOrganismNameElement is not null) yield return new KeyValuePair<string,object>("maternalOrganismName",_MaternalOrganismNameElement);
-        if (!_PaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PaternalOrganismIdElement is not null) yield return new KeyValuePair<string,object>("paternalOrganismId",_PaternalOrganismIdElement);
-        if (!_PaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PaternalOrganismNameElement is not null) yield return new KeyValuePair<string,object>("paternalOrganismName",_PaternalOrganismNameElement);
-        if (!_HybridType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _HybridType is not null) yield return new KeyValuePair<string,object>("hybridType",_HybridType);
+        if (_MaternalOrganismIdElement is not null && !_MaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("maternalOrganismId",_MaternalOrganismIdElement);
+        if (_MaternalOrganismNameElement is not null && !_MaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("maternalOrganismName",_MaternalOrganismNameElement);
+        if (_PaternalOrganismIdElement is not null && !_PaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("paternalOrganismId",_PaternalOrganismIdElement);
+        if (_PaternalOrganismNameElement is not null && !_PaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("paternalOrganismName",_PaternalOrganismNameElement);
+        if (_HybridType is not null && !_HybridType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("hybridType",_HybridType);
       }
 
     }
@@ -1437,10 +1437,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Kingdom.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Kingdom is not null) yield return new KeyValuePair<string,object>("kingdom",_Kingdom);
-        if (!_Phylum.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Phylum is not null) yield return new KeyValuePair<string,object>("phylum",_Phylum);
-        if (!_Class.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Class is not null) yield return new KeyValuePair<string,object>("class",_Class);
-        if (!_Order.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Order is not null) yield return new KeyValuePair<string,object>("order",_Order);
+        if (_Kingdom is not null && !_Kingdom.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("kingdom",_Kingdom);
+        if (_Phylum is not null && !_Phylum.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("phylum",_Phylum);
+        if (_Class is not null && !_Class.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("class",_Class);
+        if (_Order is not null && !_Order.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("order",_Order);
       }
 
     }
@@ -1596,8 +1596,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Part.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Part is not null) yield return new KeyValuePair<string,object>("part",_Part);
-        if (!_PartLocation.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _PartLocation is not null) yield return new KeyValuePair<string,object>("partLocation",_PartLocation);
+        if (_Part is not null && !_Part.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("part",_Part);
+        if (_PartLocation is not null && !_PartLocation.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("partLocation",_PartLocation);
       }
 
     }
@@ -2281,19 +2281,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_SourceMaterialClass.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SourceMaterialClass is not null) yield return new KeyValuePair<string,object>("sourceMaterialClass",_SourceMaterialClass);
-      if (!_SourceMaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SourceMaterialType is not null) yield return new KeyValuePair<string,object>("sourceMaterialType",_SourceMaterialType);
-      if (!_SourceMaterialState.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SourceMaterialState is not null) yield return new KeyValuePair<string,object>("sourceMaterialState",_SourceMaterialState);
-      if (!_OrganismId.InOverflow<Hl7.Fhir.Model.Identifier>() && _OrganismId is not null) yield return new KeyValuePair<string,object>("organismId",_OrganismId);
-      if (!_OrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _OrganismNameElement is not null) yield return new KeyValuePair<string,object>("organismName",_OrganismNameElement);
-      if (!_ParentSubstanceId.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _ParentSubstanceId?.Any() is true) yield return new KeyValuePair<string,object>("parentSubstanceId",_ParentSubstanceId);
-      if (!_ParentSubstanceNameElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _ParentSubstanceNameElement?.Any() is true) yield return new KeyValuePair<string,object>("parentSubstanceName",_ParentSubstanceNameElement);
-      if (!_CountryOfOrigin.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _CountryOfOrigin?.Any() is true) yield return new KeyValuePair<string,object>("countryOfOrigin",_CountryOfOrigin);
-      if (!_GeographicalLocationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _GeographicalLocationElement?.Any() is true) yield return new KeyValuePair<string,object>("geographicalLocation",_GeographicalLocationElement);
-      if (!_DevelopmentStage.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _DevelopmentStage is not null) yield return new KeyValuePair<string,object>("developmentStage",_DevelopmentStage);
-      if (!_FractionDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>>() && _FractionDescription?.Any() is true) yield return new KeyValuePair<string,object>("fractionDescription",_FractionDescription);
-      if (!_Organism.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent>() && _Organism is not null) yield return new KeyValuePair<string,object>("organism",_Organism);
-      if (!_PartDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>>() && _PartDescription?.Any() is true) yield return new KeyValuePair<string,object>("partDescription",_PartDescription);
+      if (_SourceMaterialClass is not null && !_SourceMaterialClass.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("sourceMaterialClass",_SourceMaterialClass);
+      if (_SourceMaterialType is not null && !_SourceMaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("sourceMaterialType",_SourceMaterialType);
+      if (_SourceMaterialState is not null && !_SourceMaterialState.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("sourceMaterialState",_SourceMaterialState);
+      if (_OrganismId is not null && !_OrganismId.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("organismId",_OrganismId);
+      if (_OrganismNameElement is not null && !_OrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("organismName",_OrganismNameElement);
+      if (_ParentSubstanceId?.Any() is true && !_ParentSubstanceId.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("parentSubstanceId",_ParentSubstanceId);
+      if (_ParentSubstanceNameElement?.Any() is true && !_ParentSubstanceNameElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("parentSubstanceName",_ParentSubstanceNameElement);
+      if (_CountryOfOrigin?.Any() is true && !_CountryOfOrigin.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("countryOfOrigin",_CountryOfOrigin);
+      if (_GeographicalLocationElement?.Any() is true && !_GeographicalLocationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("geographicalLocation",_GeographicalLocationElement);
+      if (_DevelopmentStage is not null && !_DevelopmentStage.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("developmentStage",_DevelopmentStage);
+      if (_FractionDescription?.Any() is true && !_FractionDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>>()) yield return new KeyValuePair<string,object>("fractionDescription",_FractionDescription);
+      if (_Organism is not null && !_Organism.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent>()) yield return new KeyValuePair<string,object>("organism",_Organism);
+      if (_PartDescription?.Any() is true && !_PartDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>>()) yield return new KeyValuePair<string,object>("partDescription",_PartDescription);
     }
 
   }

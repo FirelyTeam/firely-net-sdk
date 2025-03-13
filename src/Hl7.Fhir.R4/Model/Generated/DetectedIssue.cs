@@ -249,8 +249,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Code?.Any() is true) yield return new KeyValuePair<string,object>("code",_Code);
-        if (!_Detail.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Detail?.Any() is true) yield return new KeyValuePair<string,object>("detail",_Detail);
+        if (_Code?.Any() is true && !_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Detail?.Any() is true && !_Detail.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("detail",_Detail);
       }
 
     }
@@ -472,9 +472,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Action.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Action is not null) yield return new KeyValuePair<string,object>("action",_Action);
-        if (!_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-        if (!_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
+        if (_Action is not null && !_Action.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("action",_Action);
+        if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("date",_DateElement);
+        if (_Author is not null && !_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("author",_Author);
       }
 
     }
@@ -1140,18 +1140,18 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ObservationStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (!_SeverityElement.InOverflow<Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>>() && _SeverityElement is not null) yield return new KeyValuePair<string,object>("severity",_SeverityElement);
-      if (!_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
-      if (!_Identified.InOverflow<DynamicDataType>() && _Identified is not null) yield return new KeyValuePair<string,object>("identified",_Identified);
-      if (!_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
-      if (!_Implicated.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Implicated?.Any() is true) yield return new KeyValuePair<string,object>("implicated",_Implicated);
-      if (!_Evidence.InOverflow<List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent>>() && _Evidence?.Any() is true) yield return new KeyValuePair<string,object>("evidence",_Evidence);
-      if (!_DetailElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DetailElement is not null) yield return new KeyValuePair<string,object>("detail",_DetailElement);
-      if (!_ReferenceElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",_ReferenceElement);
-      if (!_Mitigation.InOverflow<List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>>() && _Mitigation?.Any() is true) yield return new KeyValuePair<string,object>("mitigation",_Mitigation);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ObservationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_SeverityElement is not null && !_SeverityElement.InOverflow<Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>>()) yield return new KeyValuePair<string,object>("severity",_SeverityElement);
+      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Identified is not null && !_Identified.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("identified",_Identified);
+      if (_Author is not null && !_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("author",_Author);
+      if (_Implicated?.Any() is true && !_Implicated.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("implicated",_Implicated);
+      if (_Evidence?.Any() is true && !_Evidence.InOverflow<List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent>>()) yield return new KeyValuePair<string,object>("evidence",_Evidence);
+      if (_DetailElement is not null && !_DetailElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("detail",_DetailElement);
+      if (_ReferenceElement is not null && !_ReferenceElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("reference",_ReferenceElement);
+      if (_Mitigation?.Any() is true && !_Mitigation.InOverflow<List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>>()) yield return new KeyValuePair<string,object>("mitigation",_Mitigation);
     }
 
   }

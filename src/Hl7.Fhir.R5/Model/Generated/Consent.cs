@@ -280,8 +280,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Reference is not null) yield return new KeyValuePair<string,object>("reference",_Reference);
-        if (!_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUrl>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+        if (_Reference is not null && !_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("reference",_Reference);
+        if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUrl>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
       }
 
     }
@@ -612,11 +612,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_VerifiedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _VerifiedElement is not null) yield return new KeyValuePair<string,object>("verified",_VerifiedElement);
-        if (!_VerificationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _VerificationType is not null) yield return new KeyValuePair<string,object>("verificationType",_VerificationType);
-        if (!_VerifiedBy.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _VerifiedBy is not null) yield return new KeyValuePair<string,object>("verifiedBy",_VerifiedBy);
-        if (!_VerifiedWith.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _VerifiedWith is not null) yield return new KeyValuePair<string,object>("verifiedWith",_VerifiedWith);
-        if (!_VerificationDateElement.InOverflow<List<Hl7.Fhir.Model.FhirDateTime>>() && _VerificationDateElement?.Any() is true) yield return new KeyValuePair<string,object>("verificationDate",_VerificationDateElement);
+        if (_VerifiedElement is not null && !_VerifiedElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("verified",_VerifiedElement);
+        if (_VerificationType is not null && !_VerificationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("verificationType",_VerificationType);
+        if (_VerifiedBy is not null && !_VerifiedBy.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("verifiedBy",_VerifiedBy);
+        if (_VerifiedWith is not null && !_VerifiedWith.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("verifiedWith",_VerifiedWith);
+        if (_VerificationDateElement?.Any() is true && !_VerificationDateElement.InOverflow<List<Hl7.Fhir.Model.FhirDateTime>>()) yield return new KeyValuePair<string,object>("verificationDate",_VerificationDateElement);
       }
 
     }
@@ -1230,18 +1230,18 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Period.InOverflow<Hl7.Fhir.Model.Period>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
-        if (!_Actor.InOverflow<List<Hl7.Fhir.Model.Consent.provisionActorComponent>>() && _Actor?.Any() is true) yield return new KeyValuePair<string,object>("actor",_Actor);
-        if (!_Action.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Action?.Any() is true) yield return new KeyValuePair<string,object>("action",_Action);
-        if (!_SecurityLabel.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _SecurityLabel?.Any() is true) yield return new KeyValuePair<string,object>("securityLabel",_SecurityLabel);
-        if (!_Purpose.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _Purpose?.Any() is true) yield return new KeyValuePair<string,object>("purpose",_Purpose);
-        if (!_DocumentType.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _DocumentType?.Any() is true) yield return new KeyValuePair<string,object>("documentType",_DocumentType);
-        if (!_ResourceType.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _ResourceType?.Any() is true) yield return new KeyValuePair<string,object>("resourceType",_ResourceType);
-        if (!_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Code?.Any() is true) yield return new KeyValuePair<string,object>("code",_Code);
-        if (!_DataPeriod.InOverflow<Hl7.Fhir.Model.Period>() && _DataPeriod is not null) yield return new KeyValuePair<string,object>("dataPeriod",_DataPeriod);
-        if (!_Data.InOverflow<List<Hl7.Fhir.Model.Consent.provisionDataComponent>>() && _Data?.Any() is true) yield return new KeyValuePair<string,object>("data",_Data);
-        if (!_Expression.InOverflow<Hl7.Fhir.Model.Expression>() && _Expression is not null) yield return new KeyValuePair<string,object>("expression",_Expression);
-        if (!_Provision.InOverflow<List<Hl7.Fhir.Model.Consent.provisionComponent>>() && _Provision?.Any() is true) yield return new KeyValuePair<string,object>("provision",_Provision);
+        if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
+        if (_Actor?.Any() is true && !_Actor.InOverflow<List<Hl7.Fhir.Model.Consent.provisionActorComponent>>()) yield return new KeyValuePair<string,object>("actor",_Actor);
+        if (_Action?.Any() is true && !_Action.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("action",_Action);
+        if (_SecurityLabel?.Any() is true && !_SecurityLabel.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("securityLabel",_SecurityLabel);
+        if (_Purpose?.Any() is true && !_Purpose.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("purpose",_Purpose);
+        if (_DocumentType?.Any() is true && !_DocumentType.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("documentType",_DocumentType);
+        if (_ResourceType?.Any() is true && !_ResourceType.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("resourceType",_ResourceType);
+        if (_Code?.Any() is true && !_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_DataPeriod is not null && !_DataPeriod.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("dataPeriod",_DataPeriod);
+        if (_Data?.Any() is true && !_Data.InOverflow<List<Hl7.Fhir.Model.Consent.provisionDataComponent>>()) yield return new KeyValuePair<string,object>("data",_Data);
+        if (_Expression is not null && !_Expression.InOverflow<Hl7.Fhir.Model.Expression>()) yield return new KeyValuePair<string,object>("expression",_Expression);
+        if (_Provision?.Any() is true && !_Provision.InOverflow<List<Hl7.Fhir.Model.Consent.provisionComponent>>()) yield return new KeyValuePair<string,object>("provision",_Provision);
       }
 
     }
@@ -1403,8 +1403,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
-        if (!_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Reference is not null) yield return new KeyValuePair<string,object>("reference",_Reference);
+        if (_Role is not null && !_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Reference is not null && !_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("reference",_Reference);
       }
 
     }
@@ -1584,8 +1584,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_MeaningElement.InOverflow<Code<Hl7.Fhir.Model.ConsentDataMeaning>>() && _MeaningElement is not null) yield return new KeyValuePair<string,object>("meaning",_MeaningElement);
-        if (!_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Reference is not null) yield return new KeyValuePair<string,object>("reference",_Reference);
+        if (_MeaningElement is not null && !_MeaningElement.InOverflow<Code<Hl7.Fhir.Model.ConsentDataMeaning>>()) yield return new KeyValuePair<string,object>("meaning",_MeaningElement);
+        if (_Reference is not null && !_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("reference",_Reference);
       }
 
     }
@@ -2512,24 +2512,24 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Consent.ConsentState>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Category?.Any() is true) yield return new KeyValuePair<string,object>("category",_Category);
-      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_DateElement.InOverflow<Hl7.Fhir.Model.Date>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-      if (!_Period.InOverflow<Hl7.Fhir.Model.Period>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
-      if (!_Grantor.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Grantor?.Any() is true) yield return new KeyValuePair<string,object>("grantor",_Grantor);
-      if (!_Grantee.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Grantee?.Any() is true) yield return new KeyValuePair<string,object>("grantee",_Grantee);
-      if (!_Manager.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Manager?.Any() is true) yield return new KeyValuePair<string,object>("manager",_Manager);
-      if (!_Controller.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Controller?.Any() is true) yield return new KeyValuePair<string,object>("controller",_Controller);
-      if (!_SourceAttachment.InOverflow<List<Hl7.Fhir.Model.Attachment>>() && _SourceAttachment?.Any() is true) yield return new KeyValuePair<string,object>("sourceAttachment",_SourceAttachment);
-      if (!_SourceReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _SourceReference?.Any() is true) yield return new KeyValuePair<string,object>("sourceReference",_SourceReference);
-      if (!_RegulatoryBasis.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _RegulatoryBasis?.Any() is true) yield return new KeyValuePair<string,object>("regulatoryBasis",_RegulatoryBasis);
-      if (!_PolicyBasis.InOverflow<Hl7.Fhir.Model.Consent.PolicyBasisComponent>() && _PolicyBasis is not null) yield return new KeyValuePair<string,object>("policyBasis",_PolicyBasis);
-      if (!_PolicyText.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _PolicyText?.Any() is true) yield return new KeyValuePair<string,object>("policyText",_PolicyText);
-      if (!_Verification.InOverflow<List<Hl7.Fhir.Model.Consent.VerificationComponent>>() && _Verification?.Any() is true) yield return new KeyValuePair<string,object>("verification",_Verification);
-      if (!_DecisionElement.InOverflow<Code<Hl7.Fhir.Model.ConsentProvisionType>>() && _DecisionElement is not null) yield return new KeyValuePair<string,object>("decision",_DecisionElement);
-      if (!_Provision.InOverflow<List<Hl7.Fhir.Model.Consent.provisionComponent>>() && _Provision?.Any() is true) yield return new KeyValuePair<string,object>("provision",_Provision);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Consent.ConsentState>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Category?.Any() is true && !_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.Date>()) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Grantor?.Any() is true && !_Grantor.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("grantor",_Grantor);
+      if (_Grantee?.Any() is true && !_Grantee.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("grantee",_Grantee);
+      if (_Manager?.Any() is true && !_Manager.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("manager",_Manager);
+      if (_Controller?.Any() is true && !_Controller.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("controller",_Controller);
+      if (_SourceAttachment?.Any() is true && !_SourceAttachment.InOverflow<List<Hl7.Fhir.Model.Attachment>>()) yield return new KeyValuePair<string,object>("sourceAttachment",_SourceAttachment);
+      if (_SourceReference?.Any() is true && !_SourceReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("sourceReference",_SourceReference);
+      if (_RegulatoryBasis?.Any() is true && !_RegulatoryBasis.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("regulatoryBasis",_RegulatoryBasis);
+      if (_PolicyBasis is not null && !_PolicyBasis.InOverflow<Hl7.Fhir.Model.Consent.PolicyBasisComponent>()) yield return new KeyValuePair<string,object>("policyBasis",_PolicyBasis);
+      if (_PolicyText?.Any() is true && !_PolicyText.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("policyText",_PolicyText);
+      if (_Verification?.Any() is true && !_Verification.InOverflow<List<Hl7.Fhir.Model.Consent.VerificationComponent>>()) yield return new KeyValuePair<string,object>("verification",_Verification);
+      if (_DecisionElement is not null && !_DecisionElement.InOverflow<Code<Hl7.Fhir.Model.ConsentProvisionType>>()) yield return new KeyValuePair<string,object>("decision",_DecisionElement);
+      if (_Provision?.Any() is true && !_Provision.InOverflow<List<Hl7.Fhir.Model.Consent.provisionComponent>>()) yield return new KeyValuePair<string,object>("provision",_Provision);
     }
 
   }

@@ -1151,8 +1151,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RelationElement.InOverflow<DynamicPrimitive>() && _RelationElement is not null) yield return new KeyValuePair<string,object>("relation",_RelationElement);
-        if (!_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
+        if (_RelationElement is not null && !_RelationElement.InOverflow<DynamicPrimitive>()) yield return new KeyValuePair<string,object>("relation",_RelationElement);
+        if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
       }
 
     }
@@ -1505,12 +1505,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Link.InOverflow<List<Hl7.Fhir.Model.Bundle.LinkComponent>>() && _Link?.Any() is true) yield return new KeyValuePair<string,object>("link",_Link);
-        if (!_FullUrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _FullUrlElement is not null) yield return new KeyValuePair<string,object>("fullUrl",_FullUrlElement);
-        if (!_Resource.InOverflow<DynamicResource>() && _Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
-        if (!_Search.InOverflow<Hl7.Fhir.Model.Bundle.SearchComponent>() && _Search is not null) yield return new KeyValuePair<string,object>("search",_Search);
-        if (!_Request.InOverflow<Hl7.Fhir.Model.Bundle.RequestComponent>() && _Request is not null) yield return new KeyValuePair<string,object>("request",_Request);
-        if (!_Response.InOverflow<Hl7.Fhir.Model.Bundle.ResponseComponent>() && _Response is not null) yield return new KeyValuePair<string,object>("response",_Response);
+        if (_Link?.Any() is true && !_Link.InOverflow<List<Hl7.Fhir.Model.Bundle.LinkComponent>>()) yield return new KeyValuePair<string,object>("link",_Link);
+        if (_FullUrlElement is not null && !_FullUrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("fullUrl",_FullUrlElement);
+        if (_Resource is not null && !_Resource.InOverflow<DynamicResource>()) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (_Search is not null && !_Search.InOverflow<Hl7.Fhir.Model.Bundle.SearchComponent>()) yield return new KeyValuePair<string,object>("search",_Search);
+        if (_Request is not null && !_Request.InOverflow<Hl7.Fhir.Model.Bundle.RequestComponent>()) yield return new KeyValuePair<string,object>("request",_Request);
+        if (_Response is not null && !_Response.InOverflow<Hl7.Fhir.Model.Bundle.ResponseComponent>()) yield return new KeyValuePair<string,object>("response",_Response);
       }
 
     }
@@ -1701,8 +1701,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_ModeElement.InOverflow<Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>>() && _ModeElement is not null) yield return new KeyValuePair<string,object>("mode",_ModeElement);
-        if (!_ScoreElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _ScoreElement is not null) yield return new KeyValuePair<string,object>("score",_ScoreElement);
+        if (_ModeElement is not null && !_ModeElement.InOverflow<Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>>()) yield return new KeyValuePair<string,object>("mode",_ModeElement);
+        if (_ScoreElement is not null && !_ScoreElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("score",_ScoreElement);
       }
 
     }
@@ -2131,12 +2131,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_MethodElement.InOverflow<Code<Hl7.Fhir.Model.Bundle.HTTPVerb>>() && _MethodElement is not null) yield return new KeyValuePair<string,object>("method",_MethodElement);
-        if (!_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
-        if (!_IfNoneMatchElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _IfNoneMatchElement is not null) yield return new KeyValuePair<string,object>("ifNoneMatch",_IfNoneMatchElement);
-        if (!_IfModifiedSinceElement.InOverflow<Hl7.Fhir.Model.Instant>() && _IfModifiedSinceElement is not null) yield return new KeyValuePair<string,object>("ifModifiedSince",_IfModifiedSinceElement);
-        if (!_IfMatchElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _IfMatchElement is not null) yield return new KeyValuePair<string,object>("ifMatch",_IfMatchElement);
-        if (!_IfNoneExistElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _IfNoneExistElement is not null) yield return new KeyValuePair<string,object>("ifNoneExist",_IfNoneExistElement);
+        if (_MethodElement is not null && !_MethodElement.InOverflow<Code<Hl7.Fhir.Model.Bundle.HTTPVerb>>()) yield return new KeyValuePair<string,object>("method",_MethodElement);
+        if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
+        if (_IfNoneMatchElement is not null && !_IfNoneMatchElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("ifNoneMatch",_IfNoneMatchElement);
+        if (_IfModifiedSinceElement is not null && !_IfModifiedSinceElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("ifModifiedSince",_IfModifiedSinceElement);
+        if (_IfMatchElement is not null && !_IfMatchElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("ifMatch",_IfMatchElement);
+        if (_IfNoneExistElement is not null && !_IfNoneExistElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("ifNoneExist",_IfNoneExistElement);
       }
 
     }
@@ -2490,11 +2490,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_StatusElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-        if (!_LocationElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _LocationElement is not null) yield return new KeyValuePair<string,object>("location",_LocationElement);
-        if (!_EtagElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _EtagElement is not null) yield return new KeyValuePair<string,object>("etag",_EtagElement);
-        if (!_LastModifiedElement.InOverflow<Hl7.Fhir.Model.Instant>() && _LastModifiedElement is not null) yield return new KeyValuePair<string,object>("lastModified",_LastModifiedElement);
-        if (!_Outcome.InOverflow<DynamicResource>() && _Outcome is not null) yield return new KeyValuePair<string,object>("outcome",_Outcome);
+        if (_StatusElement is not null && !_StatusElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+        if (_LocationElement is not null && !_LocationElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("location",_LocationElement);
+        if (_EtagElement is not null && !_EtagElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("etag",_EtagElement);
+        if (_LastModifiedElement is not null && !_LastModifiedElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("lastModified",_LastModifiedElement);
+        if (_Outcome is not null && !_Outcome.InOverflow<DynamicResource>()) yield return new KeyValuePair<string,object>("outcome",_Outcome);
       }
 
     }
@@ -2961,14 +2961,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Bundle.BundleType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (!_TimestampElement.InOverflow<Hl7.Fhir.Model.Instant>() && _TimestampElement is not null) yield return new KeyValuePair<string,object>("timestamp",_TimestampElement);
-      if (!_TotalElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>() && _TotalElement is not null) yield return new KeyValuePair<string,object>("total",_TotalElement);
-      if (!_Link.InOverflow<List<Hl7.Fhir.Model.Bundle.LinkComponent>>() && _Link?.Any() is true) yield return new KeyValuePair<string,object>("link",_Link);
-      if (!_Entry.InOverflow<List<Hl7.Fhir.Model.Bundle.EntryComponent>>() && _Entry?.Any() is true) yield return new KeyValuePair<string,object>("entry",_Entry);
-      if (!_Signature.InOverflow<Hl7.Fhir.Model.Signature>() && _Signature is not null) yield return new KeyValuePair<string,object>("signature",_Signature);
-      if (!_Issues.InOverflow<DynamicResource>() && _Issues is not null) yield return new KeyValuePair<string,object>("issues",_Issues);
+      if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Bundle.BundleType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_TimestampElement is not null && !_TimestampElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("timestamp",_TimestampElement);
+      if (_TotalElement is not null && !_TotalElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("total",_TotalElement);
+      if (_Link?.Any() is true && !_Link.InOverflow<List<Hl7.Fhir.Model.Bundle.LinkComponent>>()) yield return new KeyValuePair<string,object>("link",_Link);
+      if (_Entry?.Any() is true && !_Entry.InOverflow<List<Hl7.Fhir.Model.Bundle.EntryComponent>>()) yield return new KeyValuePair<string,object>("entry",_Entry);
+      if (_Signature is not null && !_Signature.InOverflow<Hl7.Fhir.Model.Signature>()) yield return new KeyValuePair<string,object>("signature",_Signature);
+      if (_Issues is not null && !_Issues.InOverflow<DynamicResource>()) yield return new KeyValuePair<string,object>("issues",_Issues);
     }
 
   }

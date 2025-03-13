@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Item.InOverflow<DynamicDataType>() && _Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
+        if (_Item is not null && !_Item.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -555,13 +555,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Subject?.Any() is true) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (!_Interactant.InOverflow<List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>>() && _Interactant?.Any() is true) yield return new KeyValuePair<string,object>("interactant",_Interactant);
-      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_Effect.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Effect is not null) yield return new KeyValuePair<string,object>("effect",_Effect);
-      if (!_Incidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Incidence is not null) yield return new KeyValuePair<string,object>("incidence",_Incidence);
-      if (!_Management.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Management is not null) yield return new KeyValuePair<string,object>("management",_Management);
+      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Interactant?.Any() is true && !_Interactant.InOverflow<List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent>>()) yield return new KeyValuePair<string,object>("interactant",_Interactant);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Effect is not null && !_Effect.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("effect",_Effect);
+      if (_Incidence is not null && !_Incidence.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("incidence",_Incidence);
+      if (_Management is not null && !_Management.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("management",_Management);
     }
 
   }

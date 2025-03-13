@@ -353,11 +353,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
-        if (!_Date.InOverflow<DynamicDataType>() && _Date is not null) yield return new KeyValuePair<string,object>("date",_Date);
-        if (!_Application.InOverflow<List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>>() && _Application?.Any() is true) yield return new KeyValuePair<string,object>("application",_Application);
+        if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Status is not null && !_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("status",_Status);
+        if (_Date is not null && !_Date.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("date",_Date);
+        if (_Application?.Any() is true && !_Application.InOverflow<List<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>>()) yield return new KeyValuePair<string,object>("application",_Application);
       }
 
     }
@@ -1075,20 +1075,20 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Subject?.Any() is true) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (!_Region.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Region?.Any() is true) yield return new KeyValuePair<string,object>("region",_Region);
-      if (!_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
-      if (!_StatusDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
-      if (!_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>() && _ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
-      if (!_Indication.InOverflow<Hl7.Fhir.Model.CodeableReference>() && _Indication is not null) yield return new KeyValuePair<string,object>("indication",_Indication);
-      if (!_IntendedUse.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _IntendedUse is not null) yield return new KeyValuePair<string,object>("intendedUse",_IntendedUse);
-      if (!_Basis.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Basis?.Any() is true) yield return new KeyValuePair<string,object>("basis",_Basis);
-      if (!_Holder.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Holder is not null) yield return new KeyValuePair<string,object>("holder",_Holder);
-      if (!_Regulator.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Regulator is not null) yield return new KeyValuePair<string,object>("regulator",_Regulator);
-      if (!_Case.InOverflow<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>() && _Case is not null) yield return new KeyValuePair<string,object>("case",_Case);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Region?.Any() is true && !_Region.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("region",_Region);
+      if (_Status is not null && !_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("status",_Status);
+      if (_StatusDateElement is not null && !_StatusDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
+      if (_ValidityPeriod is not null && !_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
+      if (_Indication is not null && !_Indication.InOverflow<Hl7.Fhir.Model.CodeableReference>()) yield return new KeyValuePair<string,object>("indication",_Indication);
+      if (_IntendedUse is not null && !_IntendedUse.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("intendedUse",_IntendedUse);
+      if (_Basis?.Any() is true && !_Basis.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("basis",_Basis);
+      if (_Holder is not null && !_Holder.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("holder",_Holder);
+      if (_Regulator is not null && !_Regulator.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("regulator",_Regulator);
+      if (_Case is not null && !_Case.InOverflow<Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent>()) yield return new KeyValuePair<string,object>("case",_Case);
     }
 
   }

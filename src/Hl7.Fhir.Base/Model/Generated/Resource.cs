@@ -322,10 +322,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_IdElement.InOverflow<Hl7.Fhir.Model.Id>() && _IdElement is not null) yield return new KeyValuePair<string,object>("id",_IdElement);
-      if (!_Meta.InOverflow<Hl7.Fhir.Model.Meta>() && _Meta is not null) yield return new KeyValuePair<string,object>("meta",_Meta);
-      if (!_ImplicitRulesElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _ImplicitRulesElement is not null) yield return new KeyValuePair<string,object>("implicitRules",_ImplicitRulesElement);
-      if (!_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>() && _LanguageElement is not null) yield return new KeyValuePair<string,object>("language",_LanguageElement);
+      if (_IdElement is not null && !_IdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("id",_IdElement);
+      if (_Meta is not null && !_Meta.InOverflow<Hl7.Fhir.Model.Meta>()) yield return new KeyValuePair<string,object>("meta",_Meta);
+      if (_ImplicitRulesElement is not null && !_ImplicitRulesElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("implicitRules",_ImplicitRulesElement);
+      if (_LanguageElement is not null && !_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("language",_LanguageElement);
     }
 
   }

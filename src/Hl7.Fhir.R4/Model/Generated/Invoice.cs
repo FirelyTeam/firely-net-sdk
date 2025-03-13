@@ -259,8 +259,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
-        if (!_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
+        if (_Role is not null && !_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Actor is not null && !_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("actor",_Actor);
       }
 
     }
@@ -483,9 +483,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_SequenceElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
-        if (!_ChargeItem.InOverflow<DynamicDataType>() && _ChargeItem is not null) yield return new KeyValuePair<string,object>("chargeItem",_ChargeItem);
-        if (!_PriceComponent.InOverflow<List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>>() && _PriceComponent?.Any() is true) yield return new KeyValuePair<string,object>("priceComponent",_PriceComponent);
+        if (_SequenceElement is not null && !_SequenceElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
+        if (_ChargeItem is not null && !_ChargeItem.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("chargeItem",_ChargeItem);
+        if (_PriceComponent?.Any() is true && !_PriceComponent.InOverflow<List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>>()) yield return new KeyValuePair<string,object>("priceComponent",_PriceComponent);
       }
 
     }
@@ -765,10 +765,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.InvoicePriceComponentType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-        if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-        if (!_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _FactorElement is not null) yield return new KeyValuePair<string,object>("factor",_FactorElement);
-        if (!_Amount.InOverflow<Hl7.Fhir.Model.Money>() && _Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
+        if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.InvoicePriceComponentType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_FactorElement is not null && !_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("factor",_FactorElement);
+        if (_Amount is not null && !_Amount.InOverflow<Hl7.Fhir.Model.Money>()) yield return new KeyValuePair<string,object>("amount",_Amount);
       }
 
     }
@@ -1605,22 +1605,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_CancelledReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CancelledReasonElement is not null) yield return new KeyValuePair<string,object>("cancelledReason",_CancelledReasonElement);
-      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_Recipient.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Recipient is not null) yield return new KeyValuePair<string,object>("recipient",_Recipient);
-      if (!_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-      if (!_Participant.InOverflow<List<Hl7.Fhir.Model.Invoice.ParticipantComponent>>() && _Participant?.Any() is true) yield return new KeyValuePair<string,object>("participant",_Participant);
-      if (!_Issuer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Issuer is not null) yield return new KeyValuePair<string,object>("issuer",_Issuer);
-      if (!_Account.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Account is not null) yield return new KeyValuePair<string,object>("account",_Account);
-      if (!_LineItem.InOverflow<List<Hl7.Fhir.Model.Invoice.LineItemComponent>>() && _LineItem?.Any() is true) yield return new KeyValuePair<string,object>("lineItem",_LineItem);
-      if (!_TotalPriceComponent.InOverflow<List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>>() && _TotalPriceComponent?.Any() is true) yield return new KeyValuePair<string,object>("totalPriceComponent",_TotalPriceComponent);
-      if (!_TotalNet.InOverflow<Hl7.Fhir.Model.Money>() && _TotalNet is not null) yield return new KeyValuePair<string,object>("totalNet",_TotalNet);
-      if (!_TotalGross.InOverflow<Hl7.Fhir.Model.Money>() && _TotalGross is not null) yield return new KeyValuePair<string,object>("totalGross",_TotalGross);
-      if (!_PaymentTermsElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _PaymentTermsElement is not null) yield return new KeyValuePair<string,object>("paymentTerms",_PaymentTermsElement);
-      if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_CancelledReasonElement is not null && !_CancelledReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("cancelledReason",_CancelledReasonElement);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Recipient is not null && !_Recipient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("recipient",_Recipient);
+      if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_Participant?.Any() is true && !_Participant.InOverflow<List<Hl7.Fhir.Model.Invoice.ParticipantComponent>>()) yield return new KeyValuePair<string,object>("participant",_Participant);
+      if (_Issuer is not null && !_Issuer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("issuer",_Issuer);
+      if (_Account is not null && !_Account.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("account",_Account);
+      if (_LineItem?.Any() is true && !_LineItem.InOverflow<List<Hl7.Fhir.Model.Invoice.LineItemComponent>>()) yield return new KeyValuePair<string,object>("lineItem",_LineItem);
+      if (_TotalPriceComponent?.Any() is true && !_TotalPriceComponent.InOverflow<List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>>()) yield return new KeyValuePair<string,object>("totalPriceComponent",_TotalPriceComponent);
+      if (_TotalNet is not null && !_TotalNet.InOverflow<Hl7.Fhir.Model.Money>()) yield return new KeyValuePair<string,object>("totalNet",_TotalNet);
+      if (_TotalGross is not null && !_TotalGross.InOverflow<Hl7.Fhir.Model.Money>()) yield return new KeyValuePair<string,object>("totalGross",_TotalGross);
+      if (_PaymentTermsElement is not null && !_PaymentTermsElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("paymentTerms",_PaymentTermsElement);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

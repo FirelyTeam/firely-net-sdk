@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>() && _ModifierExtension?.Any() is true) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
+      if (_ModifierExtension?.Any() is true && !_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
     }
 
   }

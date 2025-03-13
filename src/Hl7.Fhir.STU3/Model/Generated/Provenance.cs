@@ -356,10 +356,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Role.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Role?.Any() is true) yield return new KeyValuePair<string,object>("role",_Role);
-        if (!_Who.InOverflow<DynamicDataType>() && _Who is not null) yield return new KeyValuePair<string,object>("who",_Who);
-        if (!_OnBehalfOf.InOverflow<DynamicDataType>() && _OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
-        if (!_RelatedAgentType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _RelatedAgentType is not null) yield return new KeyValuePair<string,object>("relatedAgentType",_RelatedAgentType);
+        if (_Role?.Any() is true && !_Role.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Who is not null && !_Who.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("who",_Who);
+        if (_OnBehalfOf is not null && !_OnBehalfOf.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
+        if (_RelatedAgentType is not null && !_RelatedAgentType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("relatedAgentType",_RelatedAgentType);
       }
 
     }
@@ -585,9 +585,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RoleElement.InOverflow<Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>>() && _RoleElement is not null) yield return new KeyValuePair<string,object>("role",_RoleElement);
-        if (!_What.InOverflow<DynamicDataType>() && _What is not null) yield return new KeyValuePair<string,object>("what",_What);
-        if (!_Agent.InOverflow<List<Hl7.Fhir.Model.Provenance.AgentComponent>>() && _Agent?.Any() is true) yield return new KeyValuePair<string,object>("agent",_Agent);
+        if (_RoleElement is not null && !_RoleElement.InOverflow<Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>>()) yield return new KeyValuePair<string,object>("role",_RoleElement);
+        if (_What is not null && !_What.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("what",_What);
+        if (_Agent?.Any() is true && !_Agent.InOverflow<List<Hl7.Fhir.Model.Provenance.AgentComponent>>()) yield return new KeyValuePair<string,object>("agent",_Agent);
       }
 
     }
@@ -1128,16 +1128,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Target.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Target?.Any() is true) yield return new KeyValuePair<string,object>("target",_Target);
-      if (!_Period.InOverflow<Hl7.Fhir.Model.Period>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
-      if (!_RecordedElement.InOverflow<Hl7.Fhir.Model.Instant>() && _RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",_RecordedElement);
-      if (!_PolicyElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>() && _PolicyElement?.Any() is true) yield return new KeyValuePair<string,object>("policy",_PolicyElement);
-      if (!_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
-      if (!_Reason.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _Reason?.Any() is true) yield return new KeyValuePair<string,object>("reason",_Reason);
-      if (!_Activity.InOverflow<Hl7.Fhir.Model.Coding>() && _Activity is not null) yield return new KeyValuePair<string,object>("activity",_Activity);
-      if (!_Agent.InOverflow<List<Hl7.Fhir.Model.Provenance.AgentComponent>>() && _Agent?.Any() is true) yield return new KeyValuePair<string,object>("agent",_Agent);
-      if (!_Entity.InOverflow<List<Hl7.Fhir.Model.Provenance.EntityComponent>>() && _Entity?.Any() is true) yield return new KeyValuePair<string,object>("entity",_Entity);
-      if (!_Signature.InOverflow<List<Hl7.Fhir.Model.Signature>>() && _Signature?.Any() is true) yield return new KeyValuePair<string,object>("signature",_Signature);
+      if (_Target?.Any() is true && !_Target.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("target",_Target);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_RecordedElement is not null && !_RecordedElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("recorded",_RecordedElement);
+      if (_PolicyElement?.Any() is true && !_PolicyElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>()) yield return new KeyValuePair<string,object>("policy",_PolicyElement);
+      if (_Location is not null && !_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_Reason?.Any() is true && !_Reason.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("reason",_Reason);
+      if (_Activity is not null && !_Activity.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("activity",_Activity);
+      if (_Agent?.Any() is true && !_Agent.InOverflow<List<Hl7.Fhir.Model.Provenance.AgentComponent>>()) yield return new KeyValuePair<string,object>("agent",_Agent);
+      if (_Entity?.Any() is true && !_Entity.InOverflow<List<Hl7.Fhir.Model.Provenance.EntityComponent>>()) yield return new KeyValuePair<string,object>("entity",_Entity);
+      if (_Signature?.Any() is true && !_Signature.InOverflow<List<Hl7.Fhir.Model.Signature>>()) yield return new KeyValuePair<string,object>("signature",_Signature);
     }
 
   }

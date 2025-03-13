@@ -765,16 +765,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_UseElement.InOverflow<Code<Hl7.Fhir.Model.Address.AddressUse>>() && _UseElement is not null) yield return new KeyValuePair<string,object>("use",_UseElement);
-      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Address.AddressType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (!_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
-      if (!_LineElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _LineElement?.Any() is true) yield return new KeyValuePair<string,object>("line",_LineElement);
-      if (!_CityElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CityElement is not null) yield return new KeyValuePair<string,object>("city",_CityElement);
-      if (!_DistrictElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DistrictElement is not null) yield return new KeyValuePair<string,object>("district",_DistrictElement);
-      if (!_StateElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _StateElement is not null) yield return new KeyValuePair<string,object>("state",_StateElement);
-      if (!_PostalCodeElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PostalCodeElement is not null) yield return new KeyValuePair<string,object>("postalCode",_PostalCodeElement);
-      if (!_CountryElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CountryElement is not null) yield return new KeyValuePair<string,object>("country",_CountryElement);
-      if (!_Period.InOverflow<Hl7.Fhir.Model.Period>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_UseElement is not null && !_UseElement.InOverflow<Code<Hl7.Fhir.Model.Address.AddressUse>>()) yield return new KeyValuePair<string,object>("use",_UseElement);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Address.AddressType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_TextElement is not null && !_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (_LineElement?.Any() is true && !_LineElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("line",_LineElement);
+      if (_CityElement is not null && !_CityElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("city",_CityElement);
+      if (_DistrictElement is not null && !_DistrictElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("district",_DistrictElement);
+      if (_StateElement is not null && !_StateElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("state",_StateElement);
+      if (_PostalCodeElement is not null && !_PostalCodeElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("postalCode",_PostalCodeElement);
+      if (_CountryElement is not null && !_CountryElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("country",_CountryElement);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
     }
 
   }

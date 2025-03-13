@@ -324,10 +324,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_Value.InOverflow<DynamicDataType>() && _Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
-        if (!_Resource.InOverflow<DynamicResource>() && _Resource is not null) yield return new KeyValuePair<string,object>("resource",_Resource);
-        if (!_Part.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>() && _Part?.Any() is true) yield return new KeyValuePair<string,object>("part",_Part);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_Value is not null && !_Value.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_Resource is not null && !_Resource.InOverflow<DynamicResource>()) yield return new KeyValuePair<string,object>("resource",_Resource);
+        if (_Part?.Any() is true && !_Part.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>()) yield return new KeyValuePair<string,object>("part",_Part);
       }
 
     }
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Parameter.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>() && _Parameter?.Any() is true) yield return new KeyValuePair<string,object>("parameter",_Parameter);
+      if (_Parameter?.Any() is true && !_Parameter.InOverflow<List<Hl7.Fhir.Model.Parameters.ParameterComponent>>()) yield return new KeyValuePair<string,object>("parameter",_Parameter);
     }
 
   }

@@ -521,14 +521,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>() && _SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",_SubunitElement);
-        if (!_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
-        if (!_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>() && _LengthElement is not null) yield return new KeyValuePair<string,object>("length",_LengthElement);
-        if (!_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>() && _SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",_SequenceAttachment);
-        if (!_FivePrime.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _FivePrime is not null) yield return new KeyValuePair<string,object>("fivePrime",_FivePrime);
-        if (!_ThreePrime.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ThreePrime is not null) yield return new KeyValuePair<string,object>("threePrime",_ThreePrime);
-        if (!_Linkage.InOverflow<List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>>() && _Linkage?.Any() is true) yield return new KeyValuePair<string,object>("linkage",_Linkage);
-        if (!_Sugar.InOverflow<List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>>() && _Sugar?.Any() is true) yield return new KeyValuePair<string,object>("sugar",_Sugar);
+        if (_SubunitElement is not null && !_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("subunit",_SubunitElement);
+        if (_SequenceElement is not null && !_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
+        if (_LengthElement is not null && !_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("length",_LengthElement);
+        if (_SequenceAttachment is not null && !_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>()) yield return new KeyValuePair<string,object>("sequenceAttachment",_SequenceAttachment);
+        if (_FivePrime is not null && !_FivePrime.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("fivePrime",_FivePrime);
+        if (_ThreePrime is not null && !_ThreePrime.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("threePrime",_ThreePrime);
+        if (_Linkage?.Any() is true && !_Linkage.InOverflow<List<Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent>>()) yield return new KeyValuePair<string,object>("linkage",_Linkage);
+        if (_Sugar?.Any() is true && !_Sugar.InOverflow<List<Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent>>()) yield return new KeyValuePair<string,object>("sugar",_Sugar);
       }
 
     }
@@ -817,10 +817,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_ConnectivityElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ConnectivityElement is not null) yield return new KeyValuePair<string,object>("connectivity",_ConnectivityElement);
-        if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_ResidueSiteElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ResidueSiteElement is not null) yield return new KeyValuePair<string,object>("residueSite",_ResidueSiteElement);
+        if (_ConnectivityElement is not null && !_ConnectivityElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("connectivity",_ConnectivityElement);
+        if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_ResidueSiteElement is not null && !_ResidueSiteElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("residueSite",_ResidueSiteElement);
       }
 
     }
@@ -1050,9 +1050,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_ResidueSiteElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ResidueSiteElement is not null) yield return new KeyValuePair<string,object>("residueSite",_ResidueSiteElement);
+        if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_ResidueSiteElement is not null && !_ResidueSiteElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("residueSite",_ResidueSiteElement);
       }
 
     }
@@ -1358,11 +1358,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",_SequenceType);
-      if (!_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>() && _NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",_NumberOfSubunitsElement);
-      if (!_AreaOfHybridisationElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _AreaOfHybridisationElement is not null) yield return new KeyValuePair<string,object>("areaOfHybridisation",_AreaOfHybridisationElement);
-      if (!_OligoNucleotideType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _OligoNucleotideType is not null) yield return new KeyValuePair<string,object>("oligoNucleotideType",_OligoNucleotideType);
-      if (!_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>>() && _Subunit?.Any() is true) yield return new KeyValuePair<string,object>("subunit",_Subunit);
+      if (_SequenceType is not null && !_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("sequenceType",_SequenceType);
+      if (_NumberOfSubunitsElement is not null && !_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("numberOfSubunits",_NumberOfSubunitsElement);
+      if (_AreaOfHybridisationElement is not null && !_AreaOfHybridisationElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("areaOfHybridisation",_AreaOfHybridisationElement);
+      if (_OligoNucleotideType is not null && !_OligoNucleotideType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("oligoNucleotideType",_OligoNucleotideType);
+      if (_Subunit?.Any() is true && !_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent>>()) yield return new KeyValuePair<string,object>("subunit",_Subunit);
     }
 
   }

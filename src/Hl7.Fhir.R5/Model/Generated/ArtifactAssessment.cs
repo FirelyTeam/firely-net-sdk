@@ -797,16 +797,16 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_InformationTypeElement.InOverflow<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>>() && _InformationTypeElement is not null) yield return new KeyValuePair<string,object>("informationType",_InformationTypeElement);
-        if (!_SummaryElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _SummaryElement is not null) yield return new KeyValuePair<string,object>("summary",_SummaryElement);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Classifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Classifier?.Any() is true) yield return new KeyValuePair<string,object>("classifier",_Classifier);
-        if (!_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
-        if (!_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
-        if (!_PathElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>() && _PathElement?.Any() is true) yield return new KeyValuePair<string,object>("path",_PathElement);
-        if (!_RelatedArtifact.InOverflow<List<Hl7.Fhir.Model.RelatedArtifact>>() && _RelatedArtifact?.Any() is true) yield return new KeyValuePair<string,object>("relatedArtifact",_RelatedArtifact);
-        if (!_FreeToShareElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _FreeToShareElement is not null) yield return new KeyValuePair<string,object>("freeToShare",_FreeToShareElement);
-        if (!_Component.InOverflow<List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>>() && _Component?.Any() is true) yield return new KeyValuePair<string,object>("component",_Component);
+        if (_InformationTypeElement is not null && !_InformationTypeElement.InOverflow<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>>()) yield return new KeyValuePair<string,object>("informationType",_InformationTypeElement);
+        if (_SummaryElement is not null && !_SummaryElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("summary",_SummaryElement);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Classifier?.Any() is true && !_Classifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("classifier",_Classifier);
+        if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Author is not null && !_Author.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("author",_Author);
+        if (_PathElement?.Any() is true && !_PathElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>()) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_RelatedArtifact?.Any() is true && !_RelatedArtifact.InOverflow<List<Hl7.Fhir.Model.RelatedArtifact>>()) yield return new KeyValuePair<string,object>("relatedArtifact",_RelatedArtifact);
+        if (_FreeToShareElement is not null && !_FreeToShareElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("freeToShare",_FreeToShareElement);
+        if (_Component?.Any() is true && !_Component.InOverflow<List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>>()) yield return new KeyValuePair<string,object>("component",_Component);
       }
 
     }
@@ -1465,17 +1465,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
-      if (!_CiteAs.InOverflow<DynamicDataType>() && _CiteAs is not null) yield return new KeyValuePair<string,object>("citeAs",_CiteAs);
-      if (!_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-      if (!_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",_CopyrightElement);
-      if (!_ApprovalDateElement.InOverflow<Hl7.Fhir.Model.Date>() && _ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",_ApprovalDateElement);
-      if (!_LastReviewDateElement.InOverflow<Hl7.Fhir.Model.Date>() && _LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",_LastReviewDateElement);
-      if (!_Artifact.InOverflow<DynamicDataType>() && _Artifact is not null) yield return new KeyValuePair<string,object>("artifact",_Artifact);
-      if (!_Content.InOverflow<List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>>() && _Content?.Any() is true) yield return new KeyValuePair<string,object>("content",_Content);
-      if (!_WorkflowStatusElement.InOverflow<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>>() && _WorkflowStatusElement is not null) yield return new KeyValuePair<string,object>("workflowStatus",_WorkflowStatusElement);
-      if (!_DispositionElement.InOverflow<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>>() && _DispositionElement is not null) yield return new KeyValuePair<string,object>("disposition",_DispositionElement);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_TitleElement is not null && !_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("title",_TitleElement);
+      if (_CiteAs is not null && !_CiteAs.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("citeAs",_CiteAs);
+      if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_CopyrightElement is not null && !_CopyrightElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("copyright",_CopyrightElement);
+      if (_ApprovalDateElement is not null && !_ApprovalDateElement.InOverflow<Hl7.Fhir.Model.Date>()) yield return new KeyValuePair<string,object>("approvalDate",_ApprovalDateElement);
+      if (_LastReviewDateElement is not null && !_LastReviewDateElement.InOverflow<Hl7.Fhir.Model.Date>()) yield return new KeyValuePair<string,object>("lastReviewDate",_LastReviewDateElement);
+      if (_Artifact is not null && !_Artifact.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("artifact",_Artifact);
+      if (_Content?.Any() is true && !_Content.InOverflow<List<Hl7.Fhir.Model.ArtifactAssessment.ContentComponent>>()) yield return new KeyValuePair<string,object>("content",_Content);
+      if (_WorkflowStatusElement is not null && !_WorkflowStatusElement.InOverflow<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>>()) yield return new KeyValuePair<string,object>("workflowStatus",_WorkflowStatusElement);
+      if (_DispositionElement is not null && !_DispositionElement.InOverflow<Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>>()) yield return new KeyValuePair<string,object>("disposition",_DispositionElement);
     }
 
   }

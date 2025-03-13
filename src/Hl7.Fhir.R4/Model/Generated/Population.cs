@@ -290,10 +290,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Age.InOverflow<DynamicDataType>() && _Age is not null) yield return new KeyValuePair<string,object>("age",_Age);
-      if (!_Gender.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Gender is not null) yield return new KeyValuePair<string,object>("gender",_Gender);
-      if (!_Race.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Race is not null) yield return new KeyValuePair<string,object>("race",_Race);
-      if (!_PhysiologicalCondition.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _PhysiologicalCondition is not null) yield return new KeyValuePair<string,object>("physiologicalCondition",_PhysiologicalCondition);
+      if (_Age is not null && !_Age.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("age",_Age);
+      if (_Gender is not null && !_Gender.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("gender",_Gender);
+      if (_Race is not null && !_Race.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("race",_Race);
+      if (_PhysiologicalCondition is not null && !_PhysiologicalCondition.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("physiologicalCondition",_PhysiologicalCondition);
     }
 
   }

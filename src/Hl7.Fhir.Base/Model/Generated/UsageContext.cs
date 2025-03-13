@@ -207,8 +207,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Code.InOverflow<Hl7.Fhir.Model.Coding>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (!_Value.InOverflow<DynamicDataType>() && _Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Value is not null && !_Value.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("value",_Value);
     }
 
   }

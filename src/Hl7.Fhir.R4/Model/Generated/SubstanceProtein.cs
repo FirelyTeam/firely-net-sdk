@@ -549,14 +549,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>() && _SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",_SubunitElement);
-        if (!_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
-        if (!_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>() && _LengthElement is not null) yield return new KeyValuePair<string,object>("length",_LengthElement);
-        if (!_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>() && _SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",_SequenceAttachment);
-        if (!_NTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>() && _NTerminalModificationId is not null) yield return new KeyValuePair<string,object>("nTerminalModificationId",_NTerminalModificationId);
-        if (!_NTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("nTerminalModification",_NTerminalModificationElement);
-        if (!_CTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>() && _CTerminalModificationId is not null) yield return new KeyValuePair<string,object>("cTerminalModificationId",_CTerminalModificationId);
-        if (!_CTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("cTerminalModification",_CTerminalModificationElement);
+        if (_SubunitElement is not null && !_SubunitElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("subunit",_SubunitElement);
+        if (_SequenceElement is not null && !_SequenceElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
+        if (_LengthElement is not null && !_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("length",_LengthElement);
+        if (_SequenceAttachment is not null && !_SequenceAttachment.InOverflow<Hl7.Fhir.Model.Attachment>()) yield return new KeyValuePair<string,object>("sequenceAttachment",_SequenceAttachment);
+        if (_NTerminalModificationId is not null && !_NTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("nTerminalModificationId",_NTerminalModificationId);
+        if (_NTerminalModificationElement is not null && !_NTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("nTerminalModification",_NTerminalModificationElement);
+        if (_CTerminalModificationId is not null && !_CTerminalModificationId.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("cTerminalModificationId",_CTerminalModificationId);
+        if (_CTerminalModificationElement is not null && !_CTerminalModificationElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("cTerminalModification",_CTerminalModificationElement);
       }
 
     }
@@ -822,10 +822,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",_SequenceType);
-      if (!_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>() && _NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",_NumberOfSubunitsElement);
-      if (!_DisulfideLinkageElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _DisulfideLinkageElement?.Any() is true) yield return new KeyValuePair<string,object>("disulfideLinkage",_DisulfideLinkageElement);
-      if (!_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>() && _Subunit?.Any() is true) yield return new KeyValuePair<string,object>("subunit",_Subunit);
+      if (_SequenceType is not null && !_SequenceType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("sequenceType",_SequenceType);
+      if (_NumberOfSubunitsElement is not null && !_NumberOfSubunitsElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("numberOfSubunits",_NumberOfSubunitsElement);
+      if (_DisulfideLinkageElement?.Any() is true && !_DisulfideLinkageElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("disulfideLinkage",_DisulfideLinkageElement);
+      if (_Subunit?.Any() is true && !_Subunit.InOverflow<List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent>>()) yield return new KeyValuePair<string,object>("subunit",_Subunit);
     }
 
   }

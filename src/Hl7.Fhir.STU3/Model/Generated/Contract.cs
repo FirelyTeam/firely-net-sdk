@@ -323,8 +323,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
-        if (!_Role.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Role?.Any() is true) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Actor is not null && !_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("actor",_Actor);
+        if (_Role?.Any() is true && !_Role.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("role",_Role);
       }
 
     }
@@ -535,9 +535,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.Coding>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Party.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Party is not null) yield return new KeyValuePair<string,object>("party",_Party);
-        if (!_Signature.InOverflow<List<Hl7.Fhir.Model.Signature>>() && _Signature?.Any() is true) yield return new KeyValuePair<string,object>("signature",_Signature);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Party is not null && !_Party.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("party",_Party);
+        if (_Signature?.Any() is true && !_Signature.InOverflow<List<Hl7.Fhir.Model.Signature>>()) yield return new KeyValuePair<string,object>("signature",_Signature);
       }
 
     }
@@ -1005,14 +1005,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Entity.InOverflow<DynamicDataType>() && _Entity is not null) yield return new KeyValuePair<string,object>("entity",_Entity);
-        if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_EffectiveTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _EffectiveTimeElement is not null) yield return new KeyValuePair<string,object>("effectiveTime",_EffectiveTimeElement);
-        if (!_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
-        if (!_UnitPrice.InOverflow<Hl7.Fhir.Model.Money>() && _UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",_UnitPrice);
-        if (!_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _FactorElement is not null) yield return new KeyValuePair<string,object>("factor",_FactorElement);
-        if (!_PointsElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _PointsElement is not null) yield return new KeyValuePair<string,object>("points",_PointsElement);
-        if (!_Net.InOverflow<Hl7.Fhir.Model.Money>() && _Net is not null) yield return new KeyValuePair<string,object>("net",_Net);
+        if (_Entity is not null && !_Entity.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("entity",_Entity);
+        if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_EffectiveTimeElement is not null && !_EffectiveTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("effectiveTime",_EffectiveTimeElement);
+        if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_UnitPrice is not null && !_UnitPrice.InOverflow<Hl7.Fhir.Model.Money>()) yield return new KeyValuePair<string,object>("unitPrice",_UnitPrice);
+        if (_FactorElement is not null && !_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("factor",_FactorElement);
+        if (_PointsElement is not null && !_PointsElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("points",_PointsElement);
+        if (_Net is not null && !_Net.InOverflow<Hl7.Fhir.Model.Money>()) yield return new KeyValuePair<string,object>("net",_Net);
       }
 
     }
@@ -1699,19 +1699,19 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_IssuedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",_IssuedElement);
-        if (!_Applies.InOverflow<Hl7.Fhir.Model.Period>() && _Applies is not null) yield return new KeyValuePair<string,object>("applies",_Applies);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_SubType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SubType is not null) yield return new KeyValuePair<string,object>("subType",_SubType);
-        if (!_Topic.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Topic?.Any() is true) yield return new KeyValuePair<string,object>("topic",_Topic);
-        if (!_Action.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Action?.Any() is true) yield return new KeyValuePair<string,object>("action",_Action);
-        if (!_ActionReason.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ActionReason?.Any() is true) yield return new KeyValuePair<string,object>("actionReason",_ActionReason);
-        if (!_SecurityLabel.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _SecurityLabel?.Any() is true) yield return new KeyValuePair<string,object>("securityLabel",_SecurityLabel);
-        if (!_Agent.InOverflow<List<Hl7.Fhir.Model.Contract.TermAgentComponent>>() && _Agent?.Any() is true) yield return new KeyValuePair<string,object>("agent",_Agent);
-        if (!_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
-        if (!_ValuedItem.InOverflow<List<Hl7.Fhir.Model.Contract.TermValuedItemComponent>>() && _ValuedItem?.Any() is true) yield return new KeyValuePair<string,object>("valuedItem",_ValuedItem);
-        if (!_Group.InOverflow<List<Hl7.Fhir.Model.Contract.TermComponent>>() && _Group?.Any() is true) yield return new KeyValuePair<string,object>("group",_Group);
+        if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_IssuedElement is not null && !_IssuedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("issued",_IssuedElement);
+        if (_Applies is not null && !_Applies.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("applies",_Applies);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_SubType is not null && !_SubType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("subType",_SubType);
+        if (_Topic?.Any() is true && !_Topic.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("topic",_Topic);
+        if (_Action?.Any() is true && !_Action.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("action",_Action);
+        if (_ActionReason?.Any() is true && !_ActionReason.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("actionReason",_ActionReason);
+        if (_SecurityLabel?.Any() is true && !_SecurityLabel.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("securityLabel",_SecurityLabel);
+        if (_Agent?.Any() is true && !_Agent.InOverflow<List<Hl7.Fhir.Model.Contract.TermAgentComponent>>()) yield return new KeyValuePair<string,object>("agent",_Agent);
+        if (_TextElement is not null && !_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("text",_TextElement);
+        if (_ValuedItem?.Any() is true && !_ValuedItem.InOverflow<List<Hl7.Fhir.Model.Contract.TermValuedItemComponent>>()) yield return new KeyValuePair<string,object>("valuedItem",_ValuedItem);
+        if (_Group?.Any() is true && !_Group.InOverflow<List<Hl7.Fhir.Model.Contract.TermComponent>>()) yield return new KeyValuePair<string,object>("group",_Group);
       }
 
     }
@@ -1877,8 +1877,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
-        if (!_Role.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Role?.Any() is true) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Actor is not null && !_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("actor",_Actor);
+        if (_Role?.Any() is true && !_Role.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("role",_Role);
       }
 
     }
@@ -2349,14 +2349,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Entity.InOverflow<DynamicDataType>() && _Entity is not null) yield return new KeyValuePair<string,object>("entity",_Entity);
-        if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_EffectiveTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _EffectiveTimeElement is not null) yield return new KeyValuePair<string,object>("effectiveTime",_EffectiveTimeElement);
-        if (!_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
-        if (!_UnitPrice.InOverflow<Hl7.Fhir.Model.Money>() && _UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",_UnitPrice);
-        if (!_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _FactorElement is not null) yield return new KeyValuePair<string,object>("factor",_FactorElement);
-        if (!_PointsElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _PointsElement is not null) yield return new KeyValuePair<string,object>("points",_PointsElement);
-        if (!_Net.InOverflow<Hl7.Fhir.Model.Money>() && _Net is not null) yield return new KeyValuePair<string,object>("net",_Net);
+        if (_Entity is not null && !_Entity.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("entity",_Entity);
+        if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_EffectiveTimeElement is not null && !_EffectiveTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("effectiveTime",_EffectiveTimeElement);
+        if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_UnitPrice is not null && !_UnitPrice.InOverflow<Hl7.Fhir.Model.Money>()) yield return new KeyValuePair<string,object>("unitPrice",_UnitPrice);
+        if (_FactorElement is not null && !_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("factor",_FactorElement);
+        if (_PointsElement is not null && !_PointsElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("points",_PointsElement);
+        if (_Net is not null && !_Net.InOverflow<Hl7.Fhir.Model.Money>()) yield return new KeyValuePair<string,object>("net",_Net);
       }
 
     }
@@ -2475,7 +2475,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Content.InOverflow<DynamicDataType>() && _Content is not null) yield return new KeyValuePair<string,object>("content",_Content);
+        if (_Content is not null && !_Content.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("content",_Content);
       }
 
     }
@@ -2594,7 +2594,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Content.InOverflow<DynamicDataType>() && _Content is not null) yield return new KeyValuePair<string,object>("content",_Content);
+        if (_Content is not null && !_Content.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("content",_Content);
       }
 
     }
@@ -2713,7 +2713,7 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Content.InOverflow<DynamicDataType>() && _Content is not null) yield return new KeyValuePair<string,object>("content",_Content);
+        if (_Content is not null && !_Content.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("content",_Content);
       }
 
     }
@@ -3847,29 +3847,29 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_IssuedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",_IssuedElement);
-      if (!_Applies.InOverflow<Hl7.Fhir.Model.Period>() && _Applies is not null) yield return new KeyValuePair<string,object>("applies",_Applies);
-      if (!_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Subject?.Any() is true) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_Topic.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Topic?.Any() is true) yield return new KeyValuePair<string,object>("topic",_Topic);
-      if (!_Authority.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Authority?.Any() is true) yield return new KeyValuePair<string,object>("authority",_Authority);
-      if (!_Domain.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Domain?.Any() is true) yield return new KeyValuePair<string,object>("domain",_Domain);
-      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_SubType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _SubType?.Any() is true) yield return new KeyValuePair<string,object>("subType",_SubType);
-      if (!_Action.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Action?.Any() is true) yield return new KeyValuePair<string,object>("action",_Action);
-      if (!_ActionReason.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ActionReason?.Any() is true) yield return new KeyValuePair<string,object>("actionReason",_ActionReason);
-      if (!_DecisionType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _DecisionType is not null) yield return new KeyValuePair<string,object>("decisionType",_DecisionType);
-      if (!_ContentDerivative.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ContentDerivative is not null) yield return new KeyValuePair<string,object>("contentDerivative",_ContentDerivative);
-      if (!_SecurityLabel.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _SecurityLabel?.Any() is true) yield return new KeyValuePair<string,object>("securityLabel",_SecurityLabel);
-      if (!_Agent.InOverflow<List<Hl7.Fhir.Model.Contract.AgentComponent>>() && _Agent?.Any() is true) yield return new KeyValuePair<string,object>("agent",_Agent);
-      if (!_Signer.InOverflow<List<Hl7.Fhir.Model.Contract.SignatoryComponent>>() && _Signer?.Any() is true) yield return new KeyValuePair<string,object>("signer",_Signer);
-      if (!_ValuedItem.InOverflow<List<Hl7.Fhir.Model.Contract.ValuedItemComponent>>() && _ValuedItem?.Any() is true) yield return new KeyValuePair<string,object>("valuedItem",_ValuedItem);
-      if (!_Term.InOverflow<List<Hl7.Fhir.Model.Contract.TermComponent>>() && _Term?.Any() is true) yield return new KeyValuePair<string,object>("term",_Term);
-      if (!_Binding.InOverflow<DynamicDataType>() && _Binding is not null) yield return new KeyValuePair<string,object>("binding",_Binding);
-      if (!_Friendly.InOverflow<List<Hl7.Fhir.Model.Contract.FriendlyLanguageComponent>>() && _Friendly?.Any() is true) yield return new KeyValuePair<string,object>("friendly",_Friendly);
-      if (!_Legal.InOverflow<List<Hl7.Fhir.Model.Contract.LegalLanguageComponent>>() && _Legal?.Any() is true) yield return new KeyValuePair<string,object>("legal",_Legal);
-      if (!_Rule.InOverflow<List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent>>() && _Rule?.Any() is true) yield return new KeyValuePair<string,object>("rule",_Rule);
+      if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_IssuedElement is not null && !_IssuedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("issued",_IssuedElement);
+      if (_Applies is not null && !_Applies.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("applies",_Applies);
+      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Topic?.Any() is true && !_Topic.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("topic",_Topic);
+      if (_Authority?.Any() is true && !_Authority.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("authority",_Authority);
+      if (_Domain?.Any() is true && !_Domain.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("domain",_Domain);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_SubType?.Any() is true && !_SubType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("subType",_SubType);
+      if (_Action?.Any() is true && !_Action.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("action",_Action);
+      if (_ActionReason?.Any() is true && !_ActionReason.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("actionReason",_ActionReason);
+      if (_DecisionType is not null && !_DecisionType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("decisionType",_DecisionType);
+      if (_ContentDerivative is not null && !_ContentDerivative.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("contentDerivative",_ContentDerivative);
+      if (_SecurityLabel?.Any() is true && !_SecurityLabel.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("securityLabel",_SecurityLabel);
+      if (_Agent?.Any() is true && !_Agent.InOverflow<List<Hl7.Fhir.Model.Contract.AgentComponent>>()) yield return new KeyValuePair<string,object>("agent",_Agent);
+      if (_Signer?.Any() is true && !_Signer.InOverflow<List<Hl7.Fhir.Model.Contract.SignatoryComponent>>()) yield return new KeyValuePair<string,object>("signer",_Signer);
+      if (_ValuedItem?.Any() is true && !_ValuedItem.InOverflow<List<Hl7.Fhir.Model.Contract.ValuedItemComponent>>()) yield return new KeyValuePair<string,object>("valuedItem",_ValuedItem);
+      if (_Term?.Any() is true && !_Term.InOverflow<List<Hl7.Fhir.Model.Contract.TermComponent>>()) yield return new KeyValuePair<string,object>("term",_Term);
+      if (_Binding is not null && !_Binding.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("binding",_Binding);
+      if (_Friendly?.Any() is true && !_Friendly.InOverflow<List<Hl7.Fhir.Model.Contract.FriendlyLanguageComponent>>()) yield return new KeyValuePair<string,object>("friendly",_Friendly);
+      if (_Legal?.Any() is true && !_Legal.InOverflow<List<Hl7.Fhir.Model.Contract.LegalLanguageComponent>>()) yield return new KeyValuePair<string,object>("legal",_Legal);
+      if (_Rule?.Any() is true && !_Rule.InOverflow<List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent>>()) yield return new KeyValuePair<string,object>("rule",_Rule);
     }
 
   }

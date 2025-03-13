@@ -388,11 +388,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
-        if (!_ValueSet.InOverflow<DynamicDataType>() && _ValueSet is not null) yield return new KeyValuePair<string,object>("valueSet",_ValueSet);
-        if (!_ValueCodeElement.InOverflow<List<Hl7.Fhir.Model.Code>>() && _ValueCodeElement?.Any() is true) yield return new KeyValuePair<string,object>("valueCode",_ValueCodeElement);
-        if (!_ValueCoding.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _ValueCoding?.Any() is true) yield return new KeyValuePair<string,object>("valueCoding",_ValueCoding);
-        if (!_ValueCodeableConcept.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ValueCodeableConcept?.Any() is true) yield return new KeyValuePair<string,object>("valueCodeableConcept",_ValueCodeableConcept);
+        if (_PathElement is not null && !_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_ValueSet is not null && !_ValueSet.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("valueSet",_ValueSet);
+        if (_ValueCodeElement?.Any() is true && !_ValueCodeElement.InOverflow<List<Hl7.Fhir.Model.Code>>()) yield return new KeyValuePair<string,object>("valueCode",_ValueCodeElement);
+        if (_ValueCoding?.Any() is true && !_ValueCoding.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("valueCoding",_ValueCoding);
+        if (_ValueCodeableConcept?.Any() is true && !_ValueCodeableConcept.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("valueCodeableConcept",_ValueCodeableConcept);
       }
 
     }
@@ -569,8 +569,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
-        if (!_Value.InOverflow<DynamicDataType>() && _Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_PathElement is not null && !_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_Value is not null && !_Value.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -903,11 +903,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.FHIRAllTypes>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (!_ProfileElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>() && _ProfileElement?.Any() is true) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
-      if (!_MustSupportElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _MustSupportElement?.Any() is true) yield return new KeyValuePair<string,object>("mustSupport",_MustSupportElement);
-      if (!_CodeFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>>() && _CodeFilter?.Any() is true) yield return new KeyValuePair<string,object>("codeFilter",_CodeFilter);
-      if (!_DateFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>>() && _DateFilter?.Any() is true) yield return new KeyValuePair<string,object>("dateFilter",_DateFilter);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.FHIRAllTypes>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_ProfileElement?.Any() is true && !_ProfileElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>()) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
+      if (_MustSupportElement?.Any() is true && !_MustSupportElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("mustSupport",_MustSupportElement);
+      if (_CodeFilter?.Any() is true && !_CodeFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>>()) yield return new KeyValuePair<string,object>("codeFilter",_CodeFilter);
+      if (_DateFilter?.Any() is true && !_DateFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>>()) yield return new KeyValuePair<string,object>("dateFilter",_DateFilter);
     }
 
   }

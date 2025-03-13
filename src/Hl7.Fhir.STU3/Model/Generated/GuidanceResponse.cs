@@ -845,20 +845,20 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_RequestIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _RequestIdElement is not null) yield return new KeyValuePair<string,object>("requestId",_RequestIdElement);
-      if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_Module.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Module is not null) yield return new KeyValuePair<string,object>("module",_Module);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_Context.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Context is not null) yield return new KeyValuePair<string,object>("context",_Context);
-      if (!_OccurrenceDateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _OccurrenceDateTimeElement is not null) yield return new KeyValuePair<string,object>("occurrenceDateTime",_OccurrenceDateTimeElement);
-      if (!_Performer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Performer is not null) yield return new KeyValuePair<string,object>("performer",_Performer);
-      if (!_Reason.InOverflow<DynamicDataType>() && _Reason is not null) yield return new KeyValuePair<string,object>("reason",_Reason);
-      if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
-      if (!_EvaluationMessage.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _EvaluationMessage?.Any() is true) yield return new KeyValuePair<string,object>("evaluationMessage",_EvaluationMessage);
-      if (!_OutputParameters.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _OutputParameters is not null) yield return new KeyValuePair<string,object>("outputParameters",_OutputParameters);
-      if (!_Result.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Result is not null) yield return new KeyValuePair<string,object>("result",_Result);
-      if (!_DataRequirement.InOverflow<List<Hl7.Fhir.Model.DataRequirement>>() && _DataRequirement?.Any() is true) yield return new KeyValuePair<string,object>("dataRequirement",_DataRequirement);
+      if (_RequestIdElement is not null && !_RequestIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("requestId",_RequestIdElement);
+      if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Module is not null && !_Module.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("module",_Module);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Context is not null && !_Context.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("context",_Context);
+      if (_OccurrenceDateTimeElement is not null && !_OccurrenceDateTimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("occurrenceDateTime",_OccurrenceDateTimeElement);
+      if (_Performer is not null && !_Performer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_Reason is not null && !_Reason.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("reason",_Reason);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_EvaluationMessage?.Any() is true && !_EvaluationMessage.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("evaluationMessage",_EvaluationMessage);
+      if (_OutputParameters is not null && !_OutputParameters.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("outputParameters",_OutputParameters);
+      if (_Result is not null && !_Result.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("result",_Result);
+      if (_DataRequirement?.Any() is true && !_DataRequirement.InOverflow<List<Hl7.Fhir.Model.DataRequirement>>()) yield return new KeyValuePair<string,object>("dataRequirement",_DataRequirement);
     }
 
   }

@@ -794,18 +794,18 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_UidElement.InOverflow<Hl7.Fhir.Model.Oid>() && _UidElement is not null) yield return new KeyValuePair<string,object>("uid",_UidElement);
-        if (!_NumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>() && _NumberElement is not null) yield return new KeyValuePair<string,object>("number",_NumberElement);
-        if (!_Modality.InOverflow<Hl7.Fhir.Model.Coding>() && _Modality is not null) yield return new KeyValuePair<string,object>("modality",_Modality);
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (!_NumberOfInstancesElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>() && _NumberOfInstancesElement is not null) yield return new KeyValuePair<string,object>("numberOfInstances",_NumberOfInstancesElement);
-        if (!_AvailabilityElement.InOverflow<Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>>() && _AvailabilityElement is not null) yield return new KeyValuePair<string,object>("availability",_AvailabilityElement);
-        if (!_Endpoint.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Endpoint?.Any() is true) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
-        if (!_BodySite.InOverflow<Hl7.Fhir.Model.Coding>() && _BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
-        if (!_Laterality.InOverflow<Hl7.Fhir.Model.Coding>() && _Laterality is not null) yield return new KeyValuePair<string,object>("laterality",_Laterality);
-        if (!_StartedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _StartedElement is not null) yield return new KeyValuePair<string,object>("started",_StartedElement);
-        if (!_Performer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Performer?.Any() is true) yield return new KeyValuePair<string,object>("performer",_Performer);
-        if (!_Instance.InOverflow<List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent>>() && _Instance?.Any() is true) yield return new KeyValuePair<string,object>("instance",_Instance);
+        if (_UidElement is not null && !_UidElement.InOverflow<Hl7.Fhir.Model.Oid>()) yield return new KeyValuePair<string,object>("uid",_UidElement);
+        if (_NumberElement is not null && !_NumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("number",_NumberElement);
+        if (_Modality is not null && !_Modality.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("modality",_Modality);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_NumberOfInstancesElement is not null && !_NumberOfInstancesElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("numberOfInstances",_NumberOfInstancesElement);
+        if (_AvailabilityElement is not null && !_AvailabilityElement.InOverflow<Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>>()) yield return new KeyValuePair<string,object>("availability",_AvailabilityElement);
+        if (_Endpoint?.Any() is true && !_Endpoint.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
+        if (_BodySite is not null && !_BodySite.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
+        if (_Laterality is not null && !_Laterality.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("laterality",_Laterality);
+        if (_StartedElement is not null && !_StartedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("started",_StartedElement);
+        if (_Performer?.Any() is true && !_Performer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("performer",_Performer);
+        if (_Instance?.Any() is true && !_Instance.InOverflow<List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent>>()) yield return new KeyValuePair<string,object>("instance",_Instance);
       }
 
     }
@@ -1114,10 +1114,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_UidElement.InOverflow<Hl7.Fhir.Model.Oid>() && _UidElement is not null) yield return new KeyValuePair<string,object>("uid",_UidElement);
-        if (!_NumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>() && _NumberElement is not null) yield return new KeyValuePair<string,object>("number",_NumberElement);
-        if (!_SopClassElement.InOverflow<Hl7.Fhir.Model.Oid>() && _SopClassElement is not null) yield return new KeyValuePair<string,object>("sopClass",_SopClassElement);
-        if (!_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
+        if (_UidElement is not null && !_UidElement.InOverflow<Hl7.Fhir.Model.Oid>()) yield return new KeyValuePair<string,object>("uid",_UidElement);
+        if (_NumberElement is not null && !_NumberElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("number",_NumberElement);
+        if (_SopClassElement is not null && !_SopClassElement.InOverflow<Hl7.Fhir.Model.Oid>()) yield return new KeyValuePair<string,object>("sopClass",_SopClassElement);
+        if (_TitleElement is not null && !_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("title",_TitleElement);
       }
 
     }
@@ -2129,25 +2129,25 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_UidElement.InOverflow<Hl7.Fhir.Model.Oid>() && _UidElement is not null) yield return new KeyValuePair<string,object>("uid",_UidElement);
-      if (!_Accession.InOverflow<Hl7.Fhir.Model.Identifier>() && _Accession is not null) yield return new KeyValuePair<string,object>("accession",_Accession);
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_AvailabilityElement.InOverflow<Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>>() && _AvailabilityElement is not null) yield return new KeyValuePair<string,object>("availability",_AvailabilityElement);
-      if (!_ModalityList.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _ModalityList?.Any() is true) yield return new KeyValuePair<string,object>("modalityList",_ModalityList);
-      if (!_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
-      if (!_Context.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Context is not null) yield return new KeyValuePair<string,object>("context",_Context);
-      if (!_StartedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _StartedElement is not null) yield return new KeyValuePair<string,object>("started",_StartedElement);
-      if (!_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _BasedOn?.Any() is true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
-      if (!_Referrer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Referrer is not null) yield return new KeyValuePair<string,object>("referrer",_Referrer);
-      if (!_Interpreter.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Interpreter?.Any() is true) yield return new KeyValuePair<string,object>("interpreter",_Interpreter);
-      if (!_Endpoint.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Endpoint?.Any() is true) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
-      if (!_NumberOfSeriesElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>() && _NumberOfSeriesElement is not null) yield return new KeyValuePair<string,object>("numberOfSeries",_NumberOfSeriesElement);
-      if (!_NumberOfInstancesElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>() && _NumberOfInstancesElement is not null) yield return new KeyValuePair<string,object>("numberOfInstances",_NumberOfInstancesElement);
-      if (!_ProcedureReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _ProcedureReference?.Any() is true) yield return new KeyValuePair<string,object>("procedureReference",_ProcedureReference);
-      if (!_ProcedureCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ProcedureCode?.Any() is true) yield return new KeyValuePair<string,object>("procedureCode",_ProcedureCode);
-      if (!_Reason.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Reason is not null) yield return new KeyValuePair<string,object>("reason",_Reason);
-      if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (!_Series.InOverflow<List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent>>() && _Series?.Any() is true) yield return new KeyValuePair<string,object>("series",_Series);
+      if (_UidElement is not null && !_UidElement.InOverflow<Hl7.Fhir.Model.Oid>()) yield return new KeyValuePair<string,object>("uid",_UidElement);
+      if (_Accession is not null && !_Accession.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("accession",_Accession);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_AvailabilityElement is not null && !_AvailabilityElement.InOverflow<Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>>()) yield return new KeyValuePair<string,object>("availability",_AvailabilityElement);
+      if (_ModalityList?.Any() is true && !_ModalityList.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("modalityList",_ModalityList);
+      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Context is not null && !_Context.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("context",_Context);
+      if (_StartedElement is not null && !_StartedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("started",_StartedElement);
+      if (_BasedOn?.Any() is true && !_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_Referrer is not null && !_Referrer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("referrer",_Referrer);
+      if (_Interpreter?.Any() is true && !_Interpreter.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("interpreter",_Interpreter);
+      if (_Endpoint?.Any() is true && !_Endpoint.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("endpoint",_Endpoint);
+      if (_NumberOfSeriesElement is not null && !_NumberOfSeriesElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("numberOfSeries",_NumberOfSeriesElement);
+      if (_NumberOfInstancesElement is not null && !_NumberOfInstancesElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("numberOfInstances",_NumberOfInstancesElement);
+      if (_ProcedureReference?.Any() is true && !_ProcedureReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("procedureReference",_ProcedureReference);
+      if (_ProcedureCode?.Any() is true && !_ProcedureCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("procedureCode",_ProcedureCode);
+      if (_Reason is not null && !_Reason.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("reason",_Reason);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Series?.Any() is true && !_Series.InOverflow<List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent>>()) yield return new KeyValuePair<string,object>("series",_Series);
     }
 
   }

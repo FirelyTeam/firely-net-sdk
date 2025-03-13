@@ -428,11 +428,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-      if (!_Timing.InOverflow<DynamicDataType>() && _Timing is not null) yield return new KeyValuePair<string,object>("timing",_Timing);
-      if (!_Data.InOverflow<List<Hl7.Fhir.Model.DataRequirement>>() && _Data?.Any() is true) yield return new KeyValuePair<string,object>("data",_Data);
-      if (!_Condition.InOverflow<Hl7.Fhir.Model.Expression>() && _Condition is not null) yield return new KeyValuePair<string,object>("condition",_Condition);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_Timing is not null && !_Timing.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("timing",_Timing);
+      if (_Data?.Any() is true && !_Data.InOverflow<List<Hl7.Fhir.Model.DataRequirement>>()) yield return new KeyValuePair<string,object>("data",_Data);
+      if (_Condition is not null && !_Condition.InOverflow<Hl7.Fhir.Model.Expression>()) yield return new KeyValuePair<string,object>("condition",_Condition);
     }
 
   }

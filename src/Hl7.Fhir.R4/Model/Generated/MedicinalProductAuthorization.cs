@@ -344,11 +344,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_Country.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Country is not null) yield return new KeyValuePair<string,object>("country",_Country);
-        if (!_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Jurisdiction?.Any() is true) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
-        if (!_LegalStatusOfSupply.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",_LegalStatusOfSupply);
-        if (!_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>() && _ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
+        if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Country is not null && !_Country.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("country",_Country);
+        if (_Jurisdiction?.Any() is true && !_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
+        if (_LegalStatusOfSupply is not null && !_LegalStatusOfSupply.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("legalStatusOfSupply",_LegalStatusOfSupply);
+        if (_ValidityPeriod is not null && !_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
       }
 
     }
@@ -596,10 +596,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Date.InOverflow<DynamicDataType>() && _Date is not null) yield return new KeyValuePair<string,object>("date",_Date);
-        if (!_Application.InOverflow<List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>>() && _Application?.Any() is true) yield return new KeyValuePair<string,object>("application",_Application);
+        if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Date is not null && !_Date.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("date",_Date);
+        if (_Application?.Any() is true && !_Application.InOverflow<List<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>>()) yield return new KeyValuePair<string,object>("application",_Application);
       }
 
     }
@@ -1430,22 +1430,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Country?.Any() is true) yield return new KeyValuePair<string,object>("country",_Country);
-      if (!_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Jurisdiction?.Any() is true) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
-      if (!_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
-      if (!_StatusDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
-      if (!_RestoreDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _RestoreDateElement is not null) yield return new KeyValuePair<string,object>("restoreDate",_RestoreDateElement);
-      if (!_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>() && _ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
-      if (!_DataExclusivityPeriod.InOverflow<Hl7.Fhir.Model.Period>() && _DataExclusivityPeriod is not null) yield return new KeyValuePair<string,object>("dataExclusivityPeriod",_DataExclusivityPeriod);
-      if (!_DateOfFirstAuthorizationElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateOfFirstAuthorizationElement is not null) yield return new KeyValuePair<string,object>("dateOfFirstAuthorization",_DateOfFirstAuthorizationElement);
-      if (!_InternationalBirthDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _InternationalBirthDateElement is not null) yield return new KeyValuePair<string,object>("internationalBirthDate",_InternationalBirthDateElement);
-      if (!_LegalBasis.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _LegalBasis is not null) yield return new KeyValuePair<string,object>("legalBasis",_LegalBasis);
-      if (!_JurisdictionalAuthorization.InOverflow<List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent>>() && _JurisdictionalAuthorization?.Any() is true) yield return new KeyValuePair<string,object>("jurisdictionalAuthorization",_JurisdictionalAuthorization);
-      if (!_Holder.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Holder is not null) yield return new KeyValuePair<string,object>("holder",_Holder);
-      if (!_Regulator.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Regulator is not null) yield return new KeyValuePair<string,object>("regulator",_Regulator);
-      if (!_Procedure.InOverflow<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>() && _Procedure is not null) yield return new KeyValuePair<string,object>("procedure",_Procedure);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Country?.Any() is true && !_Country.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("country",_Country);
+      if (_Jurisdiction?.Any() is true && !_Jurisdiction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
+      if (_Status is not null && !_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("status",_Status);
+      if (_StatusDateElement is not null && !_StatusDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("statusDate",_StatusDateElement);
+      if (_RestoreDateElement is not null && !_RestoreDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("restoreDate",_RestoreDateElement);
+      if (_ValidityPeriod is not null && !_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
+      if (_DataExclusivityPeriod is not null && !_DataExclusivityPeriod.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("dataExclusivityPeriod",_DataExclusivityPeriod);
+      if (_DateOfFirstAuthorizationElement is not null && !_DateOfFirstAuthorizationElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("dateOfFirstAuthorization",_DateOfFirstAuthorizationElement);
+      if (_InternationalBirthDateElement is not null && !_InternationalBirthDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("internationalBirthDate",_InternationalBirthDateElement);
+      if (_LegalBasis is not null && !_LegalBasis.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("legalBasis",_LegalBasis);
+      if (_JurisdictionalAuthorization?.Any() is true && !_JurisdictionalAuthorization.InOverflow<List<Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent>>()) yield return new KeyValuePair<string,object>("jurisdictionalAuthorization",_JurisdictionalAuthorization);
+      if (_Holder is not null && !_Holder.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("holder",_Holder);
+      if (_Regulator is not null && !_Regulator.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("regulator",_Regulator);
+      if (_Procedure is not null && !_Procedure.InOverflow<Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent>()) yield return new KeyValuePair<string,object>("procedure",_Procedure);
     }
 
   }

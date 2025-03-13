@@ -450,11 +450,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
-      if (!_ComparatorElement.InOverflow<Code<Hl7.Fhir.Model.Quantity.QuantityComparator>>() && _ComparatorElement is not null) yield return new KeyValuePair<string,object>("comparator",_ComparatorElement);
-      if (!_UnitElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _UnitElement is not null) yield return new KeyValuePair<string,object>("unit",_UnitElement);
-      if (!_SystemElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _SystemElement is not null) yield return new KeyValuePair<string,object>("system",_SystemElement);
-      if (!_CodeElement.InOverflow<Hl7.Fhir.Model.Code>() && _CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
+      if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (_ComparatorElement is not null && !_ComparatorElement.InOverflow<Code<Hl7.Fhir.Model.Quantity.QuantityComparator>>()) yield return new KeyValuePair<string,object>("comparator",_ComparatorElement);
+      if (_UnitElement is not null && !_UnitElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("unit",_UnitElement);
+      if (_SystemElement is not null && !_SystemElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("system",_SystemElement);
+      if (_CodeElement is not null && !_CodeElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("code",_CodeElement);
     }
 
   }

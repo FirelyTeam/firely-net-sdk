@@ -612,14 +612,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_Period.InOverflow<Hl7.Fhir.Model.Period>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
-      if (!_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Study is not null) yield return new KeyValuePair<string,object>("study",_Study);
-      if (!_Individual.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Individual is not null) yield return new KeyValuePair<string,object>("individual",_Individual);
-      if (!_AssignedArmElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _AssignedArmElement is not null) yield return new KeyValuePair<string,object>("assignedArm",_AssignedArmElement);
-      if (!_ActualArmElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ActualArmElement is not null) yield return new KeyValuePair<string,object>("actualArm",_ActualArmElement);
-      if (!_Consent.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Consent is not null) yield return new KeyValuePair<string,object>("consent",_Consent);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Study is not null && !_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("study",_Study);
+      if (_Individual is not null && !_Individual.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("individual",_Individual);
+      if (_AssignedArmElement is not null && !_AssignedArmElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("assignedArm",_AssignedArmElement);
+      if (_ActualArmElement is not null && !_ActualArmElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("actualArm",_ActualArmElement);
+      if (_Consent is not null && !_Consent.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("consent",_Consent);
     }
 
   }

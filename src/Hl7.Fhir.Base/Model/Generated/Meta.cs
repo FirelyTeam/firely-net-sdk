@@ -475,12 +475,12 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_VersionIdElement.InOverflow<Hl7.Fhir.Model.Id>() && _VersionIdElement is not null) yield return new KeyValuePair<string,object>("versionId",_VersionIdElement);
-      if (!_LastUpdatedElement.InOverflow<Hl7.Fhir.Model.Instant>() && _LastUpdatedElement is not null) yield return new KeyValuePair<string,object>("lastUpdated",_LastUpdatedElement);
-      if (!_SourceElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _SourceElement is not null) yield return new KeyValuePair<string,object>("source",_SourceElement);
-      if (!_ProfileElement.InOverflow<List<Hl7.Fhir.Model.PrimitiveType>>() && _ProfileElement?.Any() is true) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
-      if (!_Security.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _Security?.Any() is true) yield return new KeyValuePair<string,object>("security",_Security);
-      if (!_Tag.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _Tag?.Any() is true) yield return new KeyValuePair<string,object>("tag",_Tag);
+      if (_VersionIdElement is not null && !_VersionIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("versionId",_VersionIdElement);
+      if (_LastUpdatedElement is not null && !_LastUpdatedElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("lastUpdated",_LastUpdatedElement);
+      if (_SourceElement is not null && !_SourceElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("source",_SourceElement);
+      if (_ProfileElement?.Any() is true && !_ProfileElement.InOverflow<List<Hl7.Fhir.Model.PrimitiveType>>()) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
+      if (_Security?.Any() is true && !_Security.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("security",_Security);
+      if (_Tag?.Any() is true && !_Tag.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("tag",_Tag);
     }
 
   }

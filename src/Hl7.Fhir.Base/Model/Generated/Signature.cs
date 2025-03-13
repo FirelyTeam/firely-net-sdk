@@ -646,15 +646,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Type.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _Type?.Any() is true) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_WhenElement.InOverflow<Hl7.Fhir.Model.Instant>() && _WhenElement is not null) yield return new KeyValuePair<string,object>("when",_WhenElement);
-      if (!_Who.InOverflow<DynamicDataType>() && _Who is not null) yield return new KeyValuePair<string,object>("who",_Who);
-      if (!_OnBehalfOf.InOverflow<DynamicDataType>() && _OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
-      if (!_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>() && _ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
-      if (!_TargetFormatElement.InOverflow<Hl7.Fhir.Model.Code>() && _TargetFormatElement is not null) yield return new KeyValuePair<string,object>("targetFormat",_TargetFormatElement);
-      if (!_SigFormatElement.InOverflow<Hl7.Fhir.Model.Code>() && _SigFormatElement is not null) yield return new KeyValuePair<string,object>("sigFormat",_SigFormatElement);
-      if (!_BlobElement.InOverflow<Hl7.Fhir.Model.Base64Binary>() && _BlobElement is not null) yield return new KeyValuePair<string,object>("blob",_BlobElement);
-      if (!_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>() && _DataElement is not null) yield return new KeyValuePair<string,object>("data",_DataElement);
+      if (_Type?.Any() is true && !_Type.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_WhenElement is not null && !_WhenElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("when",_WhenElement);
+      if (_Who is not null && !_Who.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("who",_Who);
+      if (_OnBehalfOf is not null && !_OnBehalfOf.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("onBehalfOf",_OnBehalfOf);
+      if (_ContentTypeElement is not null && !_ContentTypeElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("contentType",_ContentTypeElement);
+      if (_TargetFormatElement is not null && !_TargetFormatElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("targetFormat",_TargetFormatElement);
+      if (_SigFormatElement is not null && !_SigFormatElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("sigFormat",_SigFormatElement);
+      if (_BlobElement is not null && !_BlobElement.InOverflow<Hl7.Fhir.Model.Base64Binary>()) yield return new KeyValuePair<string,object>("blob",_BlobElement);
+      if (_DataElement is not null && !_DataElement.InOverflow<Hl7.Fhir.Model.Base64Binary>()) yield return new KeyValuePair<string,object>("data",_DataElement);
     }
 
   }

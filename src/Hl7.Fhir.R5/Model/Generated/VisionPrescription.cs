@@ -957,20 +957,20 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Product.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Product is not null) yield return new KeyValuePair<string,object>("product",_Product);
-        if (!_EyeElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>>() && _EyeElement is not null) yield return new KeyValuePair<string,object>("eye",_EyeElement);
-        if (!_SphereElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _SphereElement is not null) yield return new KeyValuePair<string,object>("sphere",_SphereElement);
-        if (!_CylinderElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _CylinderElement is not null) yield return new KeyValuePair<string,object>("cylinder",_CylinderElement);
-        if (!_AxisElement.InOverflow<Hl7.Fhir.Model.Integer>() && _AxisElement is not null) yield return new KeyValuePair<string,object>("axis",_AxisElement);
-        if (!_Prism.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>>() && _Prism?.Any() is true) yield return new KeyValuePair<string,object>("prism",_Prism);
-        if (!_AddElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _AddElement is not null) yield return new KeyValuePair<string,object>("add",_AddElement);
-        if (!_PowerElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _PowerElement is not null) yield return new KeyValuePair<string,object>("power",_PowerElement);
-        if (!_BackCurveElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _BackCurveElement is not null) yield return new KeyValuePair<string,object>("backCurve",_BackCurveElement);
-        if (!_DiameterElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _DiameterElement is not null) yield return new KeyValuePair<string,object>("diameter",_DiameterElement);
-        if (!_Duration.InOverflow<Hl7.Fhir.Model.Quantity>() && _Duration is not null) yield return new KeyValuePair<string,object>("duration",_Duration);
-        if (!_ColorElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ColorElement is not null) yield return new KeyValuePair<string,object>("color",_ColorElement);
-        if (!_BrandElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _BrandElement is not null) yield return new KeyValuePair<string,object>("brand",_BrandElement);
-        if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
+        if (_Product is not null && !_Product.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("product",_Product);
+        if (_EyeElement is not null && !_EyeElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>>()) yield return new KeyValuePair<string,object>("eye",_EyeElement);
+        if (_SphereElement is not null && !_SphereElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("sphere",_SphereElement);
+        if (_CylinderElement is not null && !_CylinderElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("cylinder",_CylinderElement);
+        if (_AxisElement is not null && !_AxisElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("axis",_AxisElement);
+        if (_Prism?.Any() is true && !_Prism.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>>()) yield return new KeyValuePair<string,object>("prism",_Prism);
+        if (_AddElement is not null && !_AddElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("add",_AddElement);
+        if (_PowerElement is not null && !_PowerElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("power",_PowerElement);
+        if (_BackCurveElement is not null && !_BackCurveElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("backCurve",_BackCurveElement);
+        if (_DiameterElement is not null && !_DiameterElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("diameter",_DiameterElement);
+        if (_Duration is not null && !_Duration.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("duration",_Duration);
+        if (_ColorElement is not null && !_ColorElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("color",_ColorElement);
+        if (_BrandElement is not null && !_BrandElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("brand",_BrandElement);
+        if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
       }
 
     }
@@ -1163,8 +1163,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_AmountElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _AmountElement is not null) yield return new KeyValuePair<string,object>("amount",_AmountElement);
-        if (!_BaseElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>>() && _BaseElement is not null) yield return new KeyValuePair<string,object>("base",_BaseElement);
+        if (_AmountElement is not null && !_AmountElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("amount",_AmountElement);
+        if (_BaseElement is not null && !_BaseElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>>()) yield return new KeyValuePair<string,object>("base",_BaseElement);
       }
 
     }
@@ -1633,14 +1633,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _CreatedElement is not null) yield return new KeyValuePair<string,object>("created",_CreatedElement);
-      if (!_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
-      if (!_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
-      if (!_DateWrittenElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateWrittenElement is not null) yield return new KeyValuePair<string,object>("dateWritten",_DateWrittenElement);
-      if (!_Prescriber.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Prescriber is not null) yield return new KeyValuePair<string,object>("prescriber",_Prescriber);
-      if (!_LensSpecification.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>>() && _LensSpecification?.Any() is true) yield return new KeyValuePair<string,object>("lensSpecification",_LensSpecification);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_CreatedElement is not null && !_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("created",_CreatedElement);
+      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Encounter is not null && !_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_DateWrittenElement is not null && !_DateWrittenElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("dateWritten",_DateWrittenElement);
+      if (_Prescriber is not null && !_Prescriber.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("prescriber",_Prescriber);
+      if (_LensSpecification?.Any() is true && !_LensSpecification.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>>()) yield return new KeyValuePair<string,object>("lensSpecification",_LensSpecification);
     }
 
   }

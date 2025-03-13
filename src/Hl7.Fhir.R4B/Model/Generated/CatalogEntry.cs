@@ -259,8 +259,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_RelationtypeElement.InOverflow<Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>>() && _RelationtypeElement is not null) yield return new KeyValuePair<string,object>("relationtype",_RelationtypeElement);
-        if (!_Item.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Item is not null) yield return new KeyValuePair<string,object>("item",_Item);
+        if (_RelationtypeElement is not null && !_RelationtypeElement.InOverflow<Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>>()) yield return new KeyValuePair<string,object>("relationtype",_RelationtypeElement);
+        if (_Item is not null && !_Item.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("item",_Item);
       }
 
     }
@@ -961,19 +961,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_OrderableElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _OrderableElement is not null) yield return new KeyValuePair<string,object>("orderable",_OrderableElement);
-      if (!_ReferencedItem.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _ReferencedItem is not null) yield return new KeyValuePair<string,object>("referencedItem",_ReferencedItem);
-      if (!_AdditionalIdentifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _AdditionalIdentifier?.Any() is true) yield return new KeyValuePair<string,object>("additionalIdentifier",_AdditionalIdentifier);
-      if (!_Classification.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Classification?.Any() is true) yield return new KeyValuePair<string,object>("classification",_Classification);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>() && _ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
-      if (!_ValidToElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _ValidToElement is not null) yield return new KeyValuePair<string,object>("validTo",_ValidToElement);
-      if (!_LastUpdatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _LastUpdatedElement is not null) yield return new KeyValuePair<string,object>("lastUpdated",_LastUpdatedElement);
-      if (!_AdditionalCharacteristic.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _AdditionalCharacteristic?.Any() is true) yield return new KeyValuePair<string,object>("additionalCharacteristic",_AdditionalCharacteristic);
-      if (!_AdditionalClassification.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _AdditionalClassification?.Any() is true) yield return new KeyValuePair<string,object>("additionalClassification",_AdditionalClassification);
-      if (!_RelatedEntry.InOverflow<List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent>>() && _RelatedEntry?.Any() is true) yield return new KeyValuePair<string,object>("relatedEntry",_RelatedEntry);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_OrderableElement is not null && !_OrderableElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("orderable",_OrderableElement);
+      if (_ReferencedItem is not null && !_ReferencedItem.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("referencedItem",_ReferencedItem);
+      if (_AdditionalIdentifier?.Any() is true && !_AdditionalIdentifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("additionalIdentifier",_AdditionalIdentifier);
+      if (_Classification?.Any() is true && !_Classification.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("classification",_Classification);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_ValidityPeriod is not null && !_ValidityPeriod.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("validityPeriod",_ValidityPeriod);
+      if (_ValidToElement is not null && !_ValidToElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("validTo",_ValidToElement);
+      if (_LastUpdatedElement is not null && !_LastUpdatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("lastUpdated",_LastUpdatedElement);
+      if (_AdditionalCharacteristic?.Any() is true && !_AdditionalCharacteristic.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("additionalCharacteristic",_AdditionalCharacteristic);
+      if (_AdditionalClassification?.Any() is true && !_AdditionalClassification.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("additionalClassification",_AdditionalClassification);
+      if (_RelatedEntry?.Any() is true && !_RelatedEntry.InOverflow<List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent>>()) yield return new KeyValuePair<string,object>("relatedEntry",_RelatedEntry);
     }
 
   }

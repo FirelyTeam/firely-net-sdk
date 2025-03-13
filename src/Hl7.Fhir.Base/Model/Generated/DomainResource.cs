@@ -281,10 +281,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Text.InOverflow<Hl7.Fhir.Model.Narrative>() && _Text is not null) yield return new KeyValuePair<string,object>("text",_Text);
-      if (!_Contained.InOverflow<List<Hl7.Fhir.Model.Resource>>() && _Contained?.Any() is true) yield return new KeyValuePair<string,object>("contained",_Contained);
-      if (!_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>() && _Extension?.Any() is true) yield return new KeyValuePair<string,object>("extension",_Extension);
-      if (!_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>() && _ModifierExtension?.Any() is true) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
+      if (_Text is not null && !_Text.InOverflow<Hl7.Fhir.Model.Narrative>()) yield return new KeyValuePair<string,object>("text",_Text);
+      if (_Contained?.Any() is true && !_Contained.InOverflow<List<Hl7.Fhir.Model.Resource>>()) yield return new KeyValuePair<string,object>("contained",_Contained);
+      if (_Extension?.Any() is true && !_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("extension",_Extension);
+      if (_ModifierExtension?.Any() is true && !_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
     }
 
   }

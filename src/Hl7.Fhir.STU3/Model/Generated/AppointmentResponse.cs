@@ -534,14 +534,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_Appointment.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Appointment is not null) yield return new KeyValuePair<string,object>("appointment",_Appointment);
-      if (!_StartElement.InOverflow<Hl7.Fhir.Model.Instant>() && _StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
-      if (!_EndElement.InOverflow<Hl7.Fhir.Model.Instant>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
-      if (!_ParticipantType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ParticipantType?.Any() is true) yield return new KeyValuePair<string,object>("participantType",_ParticipantType);
-      if (!_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
-      if (!_ParticipantStatusElement.InOverflow<Code<Hl7.Fhir.Model.ParticipationStatus>>() && _ParticipantStatusElement is not null) yield return new KeyValuePair<string,object>("participantStatus",_ParticipantStatusElement);
-      if (!_CommentElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Appointment is not null && !_Appointment.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("appointment",_Appointment);
+      if (_StartElement is not null && !_StartElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("start",_StartElement);
+      if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("end",_EndElement);
+      if (_ParticipantType?.Any() is true && !_ParticipantType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("participantType",_ParticipantType);
+      if (_Actor is not null && !_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("actor",_Actor);
+      if (_ParticipantStatusElement is not null && !_ParticipantStatusElement.InOverflow<Code<Hl7.Fhir.Model.ParticipationStatus>>()) yield return new KeyValuePair<string,object>("participantStatus",_ParticipantStatusElement);
+      if (_CommentElement is not null && !_CommentElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("comment",_CommentElement);
     }
 
   }

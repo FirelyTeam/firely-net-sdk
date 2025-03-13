@@ -353,9 +353,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_SpecType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SpecType is not null) yield return new KeyValuePair<string,object>("specType",_SpecType);
-        if (!_ComponentId.InOverflow<Hl7.Fhir.Model.Identifier>() && _ComponentId is not null) yield return new KeyValuePair<string,object>("componentId",_ComponentId);
-        if (!_ProductionSpecElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ProductionSpecElement is not null) yield return new KeyValuePair<string,object>("productionSpec",_ProductionSpecElement);
+        if (_SpecType is not null && !_SpecType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("specType",_SpecType);
+        if (_ComponentId is not null && !_ComponentId.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("componentId",_ComponentId);
+        if (_ProductionSpecElement is not null && !_ProductionSpecElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("productionSpec",_ProductionSpecElement);
       }
 
     }
@@ -896,16 +896,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_LastSystemChangeElement.InOverflow<Hl7.Fhir.Model.Instant>() && _LastSystemChangeElement is not null) yield return new KeyValuePair<string,object>("lastSystemChange",_LastSystemChangeElement);
-      if (!_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Source is not null) yield return new KeyValuePair<string,object>("source",_Source);
-      if (!_Parent.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Parent is not null) yield return new KeyValuePair<string,object>("parent",_Parent);
-      if (!_OperationalStatus.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _OperationalStatus?.Any() is true) yield return new KeyValuePair<string,object>("operationalStatus",_OperationalStatus);
-      if (!_ParameterGroup.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ParameterGroup is not null) yield return new KeyValuePair<string,object>("parameterGroup",_ParameterGroup);
-      if (!_MeasurementPrincipleElement.InOverflow<Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>>() && _MeasurementPrincipleElement is not null) yield return new KeyValuePair<string,object>("measurementPrinciple",_MeasurementPrincipleElement);
-      if (!_ProductionSpecification.InOverflow<List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>>() && _ProductionSpecification?.Any() is true) yield return new KeyValuePair<string,object>("productionSpecification",_ProductionSpecification);
-      if (!_LanguageCode.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _LanguageCode is not null) yield return new KeyValuePair<string,object>("languageCode",_LanguageCode);
+      if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_LastSystemChangeElement is not null && !_LastSystemChangeElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("lastSystemChange",_LastSystemChangeElement);
+      if (_Source is not null && !_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_Parent is not null && !_Parent.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("parent",_Parent);
+      if (_OperationalStatus?.Any() is true && !_OperationalStatus.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("operationalStatus",_OperationalStatus);
+      if (_ParameterGroup is not null && !_ParameterGroup.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("parameterGroup",_ParameterGroup);
+      if (_MeasurementPrincipleElement is not null && !_MeasurementPrincipleElement.InOverflow<Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>>()) yield return new KeyValuePair<string,object>("measurementPrinciple",_MeasurementPrincipleElement);
+      if (_ProductionSpecification?.Any() is true && !_ProductionSpecification.InOverflow<List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>>()) yield return new KeyValuePair<string,object>("productionSpecification",_ProductionSpecification);
+      if (_LanguageCode is not null && !_LanguageCode.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("languageCode",_LanguageCode);
     }
 
   }

@@ -279,9 +279,9 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Author.InOverflow<DynamicDataType>() && _Author is not null) yield return new KeyValuePair<string,object>("author",_Author);
-      if (!_TimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _TimeElement is not null) yield return new KeyValuePair<string,object>("time",_TimeElement);
-      if (!_TextElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (_Author is not null && !_Author.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("author",_Author);
+      if (_TimeElement is not null && !_TimeElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("time",_TimeElement);
+      if (_TextElement is not null && !_TextElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("text",_TextElement);
     }
 
   }

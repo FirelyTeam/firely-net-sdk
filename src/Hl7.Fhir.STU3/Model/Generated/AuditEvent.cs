@@ -803,17 +803,17 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Role.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Role?.Any() is true) yield return new KeyValuePair<string,object>("role",_Role);
-        if (!_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Reference is not null) yield return new KeyValuePair<string,object>("reference",_Reference);
-        if (!_UserId.InOverflow<Hl7.Fhir.Model.Identifier>() && _UserId is not null) yield return new KeyValuePair<string,object>("userId",_UserId);
-        if (!_AltIdElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _AltIdElement is not null) yield return new KeyValuePair<string,object>("altId",_AltIdElement);
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_RequestorElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _RequestorElement is not null) yield return new KeyValuePair<string,object>("requestor",_RequestorElement);
-        if (!_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
-        if (!_PolicyElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>() && _PolicyElement?.Any() is true) yield return new KeyValuePair<string,object>("policy",_PolicyElement);
-        if (!_Media.InOverflow<Hl7.Fhir.Model.Coding>() && _Media is not null) yield return new KeyValuePair<string,object>("media",_Media);
-        if (!_Network.InOverflow<Hl7.Fhir.Model.AuditEvent.NetworkComponent>() && _Network is not null) yield return new KeyValuePair<string,object>("network",_Network);
-        if (!_PurposeOfUse.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _PurposeOfUse?.Any() is true) yield return new KeyValuePair<string,object>("purposeOfUse",_PurposeOfUse);
+        if (_Role?.Any() is true && !_Role.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Reference is not null && !_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("reference",_Reference);
+        if (_UserId is not null && !_UserId.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("userId",_UserId);
+        if (_AltIdElement is not null && !_AltIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("altId",_AltIdElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_RequestorElement is not null && !_RequestorElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("requestor",_RequestorElement);
+        if (_Location is not null && !_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("location",_Location);
+        if (_PolicyElement?.Any() is true && !_PolicyElement.InOverflow<List<Hl7.Fhir.Model.FhirUri>>()) yield return new KeyValuePair<string,object>("policy",_PolicyElement);
+        if (_Media is not null && !_Media.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("media",_Media);
+        if (_Network is not null && !_Network.InOverflow<Hl7.Fhir.Model.AuditEvent.NetworkComponent>()) yield return new KeyValuePair<string,object>("network",_Network);
+        if (_PurposeOfUse?.Any() is true && !_PurposeOfUse.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("purposeOfUse",_PurposeOfUse);
       }
 
     }
@@ -1004,8 +1004,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_AddressElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _AddressElement is not null) yield return new KeyValuePair<string,object>("address",_AddressElement);
-        if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_AddressElement is not null && !_AddressElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("address",_AddressElement);
+        if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
       }
 
     }
@@ -1227,9 +1227,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_SiteElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _SiteElement is not null) yield return new KeyValuePair<string,object>("site",_SiteElement);
-        if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_Type.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _Type?.Any() is true) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_SiteElement is not null && !_SiteElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("site",_SiteElement);
+        if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Type?.Any() is true && !_Type.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("type",_Type);
       }
 
     }
@@ -1794,16 +1794,16 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Reference is not null) yield return new KeyValuePair<string,object>("reference",_Reference);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.Coding>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Role.InOverflow<Hl7.Fhir.Model.Coding>() && _Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
-        if (!_Lifecycle.InOverflow<Hl7.Fhir.Model.Coding>() && _Lifecycle is not null) yield return new KeyValuePair<string,object>("lifecycle",_Lifecycle);
-        if (!_SecurityLabel.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _SecurityLabel?.Any() is true) yield return new KeyValuePair<string,object>("securityLabel",_SecurityLabel);
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (!_QueryElement.InOverflow<Hl7.Fhir.Model.Base64Binary>() && _QueryElement is not null) yield return new KeyValuePair<string,object>("query",_QueryElement);
-        if (!_Detail.InOverflow<List<Hl7.Fhir.Model.AuditEvent.DetailComponent>>() && _Detail?.Any() is true) yield return new KeyValuePair<string,object>("detail",_Detail);
+        if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Reference is not null && !_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("reference",_Reference);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Role is not null && !_Role.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Lifecycle is not null && !_Lifecycle.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("lifecycle",_Lifecycle);
+        if (_SecurityLabel?.Any() is true && !_SecurityLabel.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("securityLabel",_SecurityLabel);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_QueryElement is not null && !_QueryElement.InOverflow<Hl7.Fhir.Model.Base64Binary>()) yield return new KeyValuePair<string,object>("query",_QueryElement);
+        if (_Detail?.Any() is true && !_Detail.InOverflow<List<Hl7.Fhir.Model.AuditEvent.DetailComponent>>()) yield return new KeyValuePair<string,object>("detail",_Detail);
       }
 
     }
@@ -1994,8 +1994,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_TypeElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-        if (!_ValueElement.InOverflow<Hl7.Fhir.Model.Base64Binary>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
+        if (_TypeElement is not null && !_TypeElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.Base64Binary>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
       }
 
     }
@@ -2564,16 +2564,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Type.InOverflow<Hl7.Fhir.Model.Coding>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_Subtype.InOverflow<List<Hl7.Fhir.Model.Coding>>() && _Subtype?.Any() is true) yield return new KeyValuePair<string,object>("subtype",_Subtype);
-      if (!_ActionElement.InOverflow<Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>>() && _ActionElement is not null) yield return new KeyValuePair<string,object>("action",_ActionElement);
-      if (!_RecordedElement.InOverflow<Hl7.Fhir.Model.Instant>() && _RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",_RecordedElement);
-      if (!_OutcomeElement.InOverflow<Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>>() && _OutcomeElement is not null) yield return new KeyValuePair<string,object>("outcome",_OutcomeElement);
-      if (!_OutcomeDescElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _OutcomeDescElement is not null) yield return new KeyValuePair<string,object>("outcomeDesc",_OutcomeDescElement);
-      if (!_PurposeOfEvent.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _PurposeOfEvent?.Any() is true) yield return new KeyValuePair<string,object>("purposeOfEvent",_PurposeOfEvent);
-      if (!_Agent.InOverflow<List<Hl7.Fhir.Model.AuditEvent.AgentComponent>>() && _Agent?.Any() is true) yield return new KeyValuePair<string,object>("agent",_Agent);
-      if (!_Source.InOverflow<Hl7.Fhir.Model.AuditEvent.SourceComponent>() && _Source is not null) yield return new KeyValuePair<string,object>("source",_Source);
-      if (!_Entity.InOverflow<List<Hl7.Fhir.Model.AuditEvent.EntityComponent>>() && _Entity?.Any() is true) yield return new KeyValuePair<string,object>("entity",_Entity);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Subtype?.Any() is true && !_Subtype.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("subtype",_Subtype);
+      if (_ActionElement is not null && !_ActionElement.InOverflow<Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>>()) yield return new KeyValuePair<string,object>("action",_ActionElement);
+      if (_RecordedElement is not null && !_RecordedElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("recorded",_RecordedElement);
+      if (_OutcomeElement is not null && !_OutcomeElement.InOverflow<Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>>()) yield return new KeyValuePair<string,object>("outcome",_OutcomeElement);
+      if (_OutcomeDescElement is not null && !_OutcomeDescElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("outcomeDesc",_OutcomeDescElement);
+      if (_PurposeOfEvent?.Any() is true && !_PurposeOfEvent.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("purposeOfEvent",_PurposeOfEvent);
+      if (_Agent?.Any() is true && !_Agent.InOverflow<List<Hl7.Fhir.Model.AuditEvent.AgentComponent>>()) yield return new KeyValuePair<string,object>("agent",_Agent);
+      if (_Source is not null && !_Source.InOverflow<Hl7.Fhir.Model.AuditEvent.SourceComponent>()) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_Entity?.Any() is true && !_Entity.InOverflow<List<Hl7.Fhir.Model.AuditEvent.EntityComponent>>()) yield return new KeyValuePair<string,object>("entity",_Entity);
     }
 
   }

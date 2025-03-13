@@ -210,8 +210,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_LowLimit.InOverflow<Hl7.Fhir.Model.Quantity>() && _LowLimit is not null) yield return new KeyValuePair<string,object>("lowLimit",_LowLimit);
-        if (!_HighLimit.InOverflow<Hl7.Fhir.Model.Quantity>() && _HighLimit is not null) yield return new KeyValuePair<string,object>("highLimit",_HighLimit);
+        if (_LowLimit is not null && !_LowLimit.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("lowLimit",_LowLimit);
+        if (_HighLimit is not null && !_HighLimit.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("highLimit",_HighLimit);
       }
 
     }
@@ -459,10 +459,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Amount.InOverflow<DynamicDataType>() && _Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
-      if (!_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _AmountType is not null) yield return new KeyValuePair<string,object>("amountType",_AmountType);
-      if (!_AmountTextElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _AmountTextElement is not null) yield return new KeyValuePair<string,object>("amountText",_AmountTextElement);
-      if (!_ReferenceRange.InOverflow<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>() && _ReferenceRange is not null) yield return new KeyValuePair<string,object>("referenceRange",_ReferenceRange);
+      if (_Amount is not null && !_Amount.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("amount",_Amount);
+      if (_AmountType is not null && !_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("amountType",_AmountType);
+      if (_AmountTextElement is not null && !_AmountTextElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("amountText",_AmountTextElement);
+      if (_ReferenceRange is not null && !_ReferenceRange.InOverflow<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>()) yield return new KeyValuePair<string,object>("referenceRange",_ReferenceRange);
     }
 
   }

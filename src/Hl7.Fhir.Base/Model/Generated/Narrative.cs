@@ -268,8 +268,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>() && _DivElement is not null) yield return new KeyValuePair<string,object>("div",_DivElement);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_DivElement is not null && !_DivElement.InOverflow<Hl7.Fhir.Model.XHtml>()) yield return new KeyValuePair<string,object>("div",_DivElement);
     }
 
   }

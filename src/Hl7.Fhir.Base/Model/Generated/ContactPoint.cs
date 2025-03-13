@@ -488,11 +488,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_SystemElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>>() && _SystemElement is not null) yield return new KeyValuePair<string,object>("system",_SystemElement);
-      if (!_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
-      if (!_UseElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>>() && _UseElement is not null) yield return new KeyValuePair<string,object>("use",_UseElement);
-      if (!_RankElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _RankElement is not null) yield return new KeyValuePair<string,object>("rank",_RankElement);
-      if (!_Period.InOverflow<Hl7.Fhir.Model.Period>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_SystemElement is not null && !_SystemElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>>()) yield return new KeyValuePair<string,object>("system",_SystemElement);
+      if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (_UseElement is not null && !_UseElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>>()) yield return new KeyValuePair<string,object>("use",_UseElement);
+      if (_RankElement is not null && !_RankElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("rank",_RankElement);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
     }
 
   }

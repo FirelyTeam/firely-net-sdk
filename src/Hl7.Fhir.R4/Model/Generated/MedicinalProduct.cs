@@ -272,9 +272,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_ProductNameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",_ProductNameElement);
-        if (!_NamePart.InOverflow<List<Hl7.Fhir.Model.MedicinalProduct.NamePartComponent>>() && _NamePart?.Any() is true) yield return new KeyValuePair<string,object>("namePart",_NamePart);
-        if (!_CountryLanguage.InOverflow<List<Hl7.Fhir.Model.MedicinalProduct.CountryLanguageComponent>>() && _CountryLanguage?.Any() is true) yield return new KeyValuePair<string,object>("countryLanguage",_CountryLanguage);
+        if (_ProductNameElement is not null && !_ProductNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("productName",_ProductNameElement);
+        if (_NamePart?.Any() is true && !_NamePart.InOverflow<List<Hl7.Fhir.Model.MedicinalProduct.NamePartComponent>>()) yield return new KeyValuePair<string,object>("namePart",_NamePart);
+        if (_CountryLanguage?.Any() is true && !_CountryLanguage.InOverflow<List<Hl7.Fhir.Model.MedicinalProduct.CountryLanguageComponent>>()) yield return new KeyValuePair<string,object>("countryLanguage",_CountryLanguage);
       }
 
     }
@@ -447,8 +447,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_PartElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _PartElement is not null) yield return new KeyValuePair<string,object>("part",_PartElement);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.Coding>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_PartElement is not null && !_PartElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("part",_PartElement);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("type",_Type);
       }
 
     }
@@ -650,9 +650,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Country.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Country is not null) yield return new KeyValuePair<string,object>("country",_Country);
-        if (!_Jurisdiction.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
-        if (!_Language.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Language is not null) yield return new KeyValuePair<string,object>("language",_Language);
+        if (_Country is not null && !_Country.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("country",_Country);
+        if (_Jurisdiction is not null && !_Jurisdiction.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("jurisdiction",_Jurisdiction);
+        if (_Language is not null && !_Language.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("language",_Language);
       }
 
     }
@@ -1004,12 +1004,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_OperationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _OperationType is not null) yield return new KeyValuePair<string,object>("operationType",_OperationType);
-        if (!_AuthorisationReferenceNumber.InOverflow<Hl7.Fhir.Model.Identifier>() && _AuthorisationReferenceNumber is not null) yield return new KeyValuePair<string,object>("authorisationReferenceNumber",_AuthorisationReferenceNumber);
-        if (!_EffectiveDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _EffectiveDateElement is not null) yield return new KeyValuePair<string,object>("effectiveDate",_EffectiveDateElement);
-        if (!_ConfidentialityIndicator.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ConfidentialityIndicator is not null) yield return new KeyValuePair<string,object>("confidentialityIndicator",_ConfidentialityIndicator);
-        if (!_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Manufacturer?.Any() is true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
-        if (!_Regulator.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Regulator is not null) yield return new KeyValuePair<string,object>("regulator",_Regulator);
+        if (_OperationType is not null && !_OperationType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("operationType",_OperationType);
+        if (_AuthorisationReferenceNumber is not null && !_AuthorisationReferenceNumber.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("authorisationReferenceNumber",_AuthorisationReferenceNumber);
+        if (_EffectiveDateElement is not null && !_EffectiveDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("effectiveDate",_EffectiveDateElement);
+        if (_ConfidentialityIndicator is not null && !_ConfidentialityIndicator.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("confidentialityIndicator",_ConfidentialityIndicator);
+        if (_Manufacturer?.Any() is true && !_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+        if (_Regulator is not null && !_Regulator.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("regulator",_Regulator);
       }
 
     }
@@ -1404,13 +1404,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_IntendedUse.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _IntendedUse is not null) yield return new KeyValuePair<string,object>("intendedUse",_IntendedUse);
-        if (!_Indication.InOverflow<DynamicDataType>() && _Indication is not null) yield return new KeyValuePair<string,object>("indication",_Indication);
-        if (!_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Status is not null) yield return new KeyValuePair<string,object>("status",_Status);
-        if (!_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-        if (!_Species.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Species is not null) yield return new KeyValuePair<string,object>("species",_Species);
+        if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_IntendedUse is not null && !_IntendedUse.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("intendedUse",_IntendedUse);
+        if (_Indication is not null && !_Indication.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("indication",_Indication);
+        if (_Status is not null && !_Status.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("status",_Status);
+        if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("date",_DateElement);
+        if (_Species is not null && !_Species.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("species",_Species);
       }
 
     }
@@ -2391,26 +2391,26 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_Domain.InOverflow<Hl7.Fhir.Model.Coding>() && _Domain is not null) yield return new KeyValuePair<string,object>("domain",_Domain);
-      if (!_CombinedPharmaceuticalDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _CombinedPharmaceuticalDoseForm is not null) yield return new KeyValuePair<string,object>("combinedPharmaceuticalDoseForm",_CombinedPharmaceuticalDoseForm);
-      if (!_LegalStatusOfSupply.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",_LegalStatusOfSupply);
-      if (!_AdditionalMonitoringIndicator.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _AdditionalMonitoringIndicator is not null) yield return new KeyValuePair<string,object>("additionalMonitoringIndicator",_AdditionalMonitoringIndicator);
-      if (!_SpecialMeasuresElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _SpecialMeasuresElement?.Any() is true) yield return new KeyValuePair<string,object>("specialMeasures",_SpecialMeasuresElement);
-      if (!_PaediatricUseIndicator.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _PaediatricUseIndicator is not null) yield return new KeyValuePair<string,object>("paediatricUseIndicator",_PaediatricUseIndicator);
-      if (!_ProductClassification.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ProductClassification?.Any() is true) yield return new KeyValuePair<string,object>("productClassification",_ProductClassification);
-      if (!_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>() && _MarketingStatus?.Any() is true) yield return new KeyValuePair<string,object>("marketingStatus",_MarketingStatus);
-      if (!_PharmaceuticalProduct.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _PharmaceuticalProduct?.Any() is true) yield return new KeyValuePair<string,object>("pharmaceuticalProduct",_PharmaceuticalProduct);
-      if (!_PackagedMedicinalProduct.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _PackagedMedicinalProduct?.Any() is true) yield return new KeyValuePair<string,object>("packagedMedicinalProduct",_PackagedMedicinalProduct);
-      if (!_AttachedDocument.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _AttachedDocument?.Any() is true) yield return new KeyValuePair<string,object>("attachedDocument",_AttachedDocument);
-      if (!_MasterFile.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _MasterFile?.Any() is true) yield return new KeyValuePair<string,object>("masterFile",_MasterFile);
-      if (!_Contact.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Contact?.Any() is true) yield return new KeyValuePair<string,object>("contact",_Contact);
-      if (!_ClinicalTrial.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _ClinicalTrial?.Any() is true) yield return new KeyValuePair<string,object>("clinicalTrial",_ClinicalTrial);
-      if (!_Name.InOverflow<List<Hl7.Fhir.Model.MedicinalProduct.NameComponent>>() && _Name?.Any() is true) yield return new KeyValuePair<string,object>("name",_Name);
-      if (!_CrossReference.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _CrossReference?.Any() is true) yield return new KeyValuePair<string,object>("crossReference",_CrossReference);
-      if (!_ManufacturingBusinessOperation.InOverflow<List<Hl7.Fhir.Model.MedicinalProduct.ManufacturingBusinessOperationComponent>>() && _ManufacturingBusinessOperation?.Any() is true) yield return new KeyValuePair<string,object>("manufacturingBusinessOperation",_ManufacturingBusinessOperation);
-      if (!_SpecialDesignation.InOverflow<List<Hl7.Fhir.Model.MedicinalProduct.SpecialDesignationComponent>>() && _SpecialDesignation?.Any() is true) yield return new KeyValuePair<string,object>("specialDesignation",_SpecialDesignation);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Domain is not null && !_Domain.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("domain",_Domain);
+      if (_CombinedPharmaceuticalDoseForm is not null && !_CombinedPharmaceuticalDoseForm.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("combinedPharmaceuticalDoseForm",_CombinedPharmaceuticalDoseForm);
+      if (_LegalStatusOfSupply is not null && !_LegalStatusOfSupply.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("legalStatusOfSupply",_LegalStatusOfSupply);
+      if (_AdditionalMonitoringIndicator is not null && !_AdditionalMonitoringIndicator.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("additionalMonitoringIndicator",_AdditionalMonitoringIndicator);
+      if (_SpecialMeasuresElement?.Any() is true && !_SpecialMeasuresElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("specialMeasures",_SpecialMeasuresElement);
+      if (_PaediatricUseIndicator is not null && !_PaediatricUseIndicator.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("paediatricUseIndicator",_PaediatricUseIndicator);
+      if (_ProductClassification?.Any() is true && !_ProductClassification.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("productClassification",_ProductClassification);
+      if (_MarketingStatus?.Any() is true && !_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>()) yield return new KeyValuePair<string,object>("marketingStatus",_MarketingStatus);
+      if (_PharmaceuticalProduct?.Any() is true && !_PharmaceuticalProduct.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("pharmaceuticalProduct",_PharmaceuticalProduct);
+      if (_PackagedMedicinalProduct?.Any() is true && !_PackagedMedicinalProduct.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("packagedMedicinalProduct",_PackagedMedicinalProduct);
+      if (_AttachedDocument?.Any() is true && !_AttachedDocument.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("attachedDocument",_AttachedDocument);
+      if (_MasterFile?.Any() is true && !_MasterFile.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("masterFile",_MasterFile);
+      if (_Contact?.Any() is true && !_Contact.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_ClinicalTrial?.Any() is true && !_ClinicalTrial.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("clinicalTrial",_ClinicalTrial);
+      if (_Name?.Any() is true && !_Name.InOverflow<List<Hl7.Fhir.Model.MedicinalProduct.NameComponent>>()) yield return new KeyValuePair<string,object>("name",_Name);
+      if (_CrossReference?.Any() is true && !_CrossReference.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("crossReference",_CrossReference);
+      if (_ManufacturingBusinessOperation?.Any() is true && !_ManufacturingBusinessOperation.InOverflow<List<Hl7.Fhir.Model.MedicinalProduct.ManufacturingBusinessOperationComponent>>()) yield return new KeyValuePair<string,object>("manufacturingBusinessOperation",_ManufacturingBusinessOperation);
+      if (_SpecialDesignation?.Any() is true && !_SpecialDesignation.InOverflow<List<Hl7.Fhir.Model.MedicinalProduct.SpecialDesignationComponent>>()) yield return new KeyValuePair<string,object>("specialDesignation",_SpecialDesignation);
     }
 
   }

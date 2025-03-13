@@ -381,11 +381,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>() && _ChannelType is not null) yield return new KeyValuePair<string,object>("channelType",_ChannelType);
-      if (!_Address.InOverflow<DynamicDataType>() && _Address is not null) yield return new KeyValuePair<string,object>("address",_Address);
-      if (!_AdditionalInfoElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>() && _AdditionalInfoElement?.Any() is true) yield return new KeyValuePair<string,object>("additionalInfo",_AdditionalInfoElement);
-      if (!_MaxParticipantsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _MaxParticipantsElement is not null) yield return new KeyValuePair<string,object>("maxParticipants",_MaxParticipantsElement);
-      if (!_SessionKeyElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _SessionKeyElement is not null) yield return new KeyValuePair<string,object>("sessionKey",_SessionKeyElement);
+      if (_ChannelType is not null && !_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("channelType",_ChannelType);
+      if (_Address is not null && !_Address.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("address",_Address);
+      if (_AdditionalInfoElement?.Any() is true && !_AdditionalInfoElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>()) yield return new KeyValuePair<string,object>("additionalInfo",_AdditionalInfoElement);
+      if (_MaxParticipantsElement is not null && !_MaxParticipantsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("maxParticipants",_MaxParticipantsElement);
+      if (_SessionKeyElement is not null && !_SessionKeyElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("sessionKey",_SessionKeyElement);
     }
 
   }

@@ -309,9 +309,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_DeviceIdentifierElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DeviceIdentifierElement is not null) yield return new KeyValuePair<string,object>("deviceIdentifier",_DeviceIdentifierElement);
-        if (!_IssuerElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _IssuerElement is not null) yield return new KeyValuePair<string,object>("issuer",_IssuerElement);
-        if (!_JurisdictionElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _JurisdictionElement is not null) yield return new KeyValuePair<string,object>("jurisdiction",_JurisdictionElement);
+        if (_DeviceIdentifierElement is not null && !_DeviceIdentifierElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("deviceIdentifier",_DeviceIdentifierElement);
+        if (_IssuerElement is not null && !_IssuerElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("issuer",_IssuerElement);
+        if (_JurisdictionElement is not null && !_JurisdictionElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("jurisdiction",_JurisdictionElement);
       }
 
     }
@@ -501,8 +501,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceNameType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceNameType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
       }
 
     }
@@ -689,8 +689,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_SystemTypeElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _SystemTypeElement is not null) yield return new KeyValuePair<string,object>("systemType",_SystemTypeElement);
-        if (!_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _VersionElement is not null) yield return new KeyValuePair<string,object>("version",_VersionElement);
+        if (_SystemTypeElement is not null && !_SystemTypeElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("systemType",_SystemTypeElement);
+        if (_VersionElement is not null && !_VersionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("version",_VersionElement);
       }
 
     }
@@ -848,8 +848,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Description.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Description?.Any() is true) yield return new KeyValuePair<string,object>("description",_Description);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Description?.Any() is true && !_Description.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("description",_Description);
       }
 
     }
@@ -1052,9 +1052,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_ValueQuantity.InOverflow<List<Hl7.Fhir.Model.Quantity>>() && _ValueQuantity?.Any() is true) yield return new KeyValuePair<string,object>("valueQuantity",_ValueQuantity);
-        if (!_ValueCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ValueCode?.Any() is true) yield return new KeyValuePair<string,object>("valueCode",_ValueCode);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_ValueQuantity?.Any() is true && !_ValueQuantity.InOverflow<List<Hl7.Fhir.Model.Quantity>>()) yield return new KeyValuePair<string,object>("valueQuantity",_ValueQuantity);
+        if (_ValueCode?.Any() is true && !_ValueCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("valueCode",_ValueCode);
       }
 
     }
@@ -1285,9 +1285,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Substance.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Substance is not null) yield return new KeyValuePair<string,object>("substance",_Substance);
-        if (!_AlternateElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _AlternateElement is not null) yield return new KeyValuePair<string,object>("alternate",_AlternateElement);
-        if (!_AllergenicIndicatorElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _AllergenicIndicatorElement is not null) yield return new KeyValuePair<string,object>("allergenicIndicator",_AllergenicIndicatorElement);
+        if (_Substance is not null && !_Substance.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("substance",_Substance);
+        if (_AlternateElement is not null && !_AlternateElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("alternate",_AlternateElement);
+        if (_AllergenicIndicatorElement is not null && !_AllergenicIndicatorElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("allergenicIndicator",_AllergenicIndicatorElement);
       }
 
     }
@@ -2397,28 +2397,28 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_UdiDeviceIdentifier.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>>() && _UdiDeviceIdentifier?.Any() is true) yield return new KeyValuePair<string,object>("udiDeviceIdentifier",_UdiDeviceIdentifier);
-      if (!_Manufacturer.InOverflow<DynamicDataType>() && _Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
-      if (!_DeviceName.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent>>() && _DeviceName?.Any() is true) yield return new KeyValuePair<string,object>("deviceName",_DeviceName);
-      if (!_ModelNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ModelNumberElement is not null) yield return new KeyValuePair<string,object>("modelNumber",_ModelNumberElement);
-      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_Specialization.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.SpecializationComponent>>() && _Specialization?.Any() is true) yield return new KeyValuePair<string,object>("specialization",_Specialization);
-      if (!_VersionElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _VersionElement?.Any() is true) yield return new KeyValuePair<string,object>("version",_VersionElement);
-      if (!_Safety.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Safety?.Any() is true) yield return new KeyValuePair<string,object>("safety",_Safety);
-      if (!_ShelfLifeStorage.InOverflow<List<Hl7.Fhir.Model.ProductShelfLife>>() && _ShelfLifeStorage?.Any() is true) yield return new KeyValuePair<string,object>("shelfLifeStorage",_ShelfLifeStorage);
-      if (!_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>() && _PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",_PhysicalCharacteristics);
-      if (!_LanguageCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _LanguageCode?.Any() is true) yield return new KeyValuePair<string,object>("languageCode",_LanguageCode);
-      if (!_Capability.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.CapabilityComponent>>() && _Capability?.Any() is true) yield return new KeyValuePair<string,object>("capability",_Capability);
-      if (!_Property.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent>>() && _Property?.Any() is true) yield return new KeyValuePair<string,object>("property",_Property);
-      if (!_Owner.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Owner is not null) yield return new KeyValuePair<string,object>("owner",_Owner);
-      if (!_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>() && _Contact?.Any() is true) yield return new KeyValuePair<string,object>("contact",_Contact);
-      if (!_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
-      if (!_OnlineInformationElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _OnlineInformationElement is not null) yield return new KeyValuePair<string,object>("onlineInformation",_OnlineInformationElement);
-      if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
-      if (!_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
-      if (!_ParentDevice.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _ParentDevice is not null) yield return new KeyValuePair<string,object>("parentDevice",_ParentDevice);
-      if (!_Material.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent>>() && _Material?.Any() is true) yield return new KeyValuePair<string,object>("material",_Material);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_UdiDeviceIdentifier?.Any() is true && !_UdiDeviceIdentifier.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>>()) yield return new KeyValuePair<string,object>("udiDeviceIdentifier",_UdiDeviceIdentifier);
+      if (_Manufacturer is not null && !_Manufacturer.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (_DeviceName?.Any() is true && !_DeviceName.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent>>()) yield return new KeyValuePair<string,object>("deviceName",_DeviceName);
+      if (_ModelNumberElement is not null && !_ModelNumberElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("modelNumber",_ModelNumberElement);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Specialization?.Any() is true && !_Specialization.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.SpecializationComponent>>()) yield return new KeyValuePair<string,object>("specialization",_Specialization);
+      if (_VersionElement?.Any() is true && !_VersionElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("version",_VersionElement);
+      if (_Safety?.Any() is true && !_Safety.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("safety",_Safety);
+      if (_ShelfLifeStorage?.Any() is true && !_ShelfLifeStorage.InOverflow<List<Hl7.Fhir.Model.ProductShelfLife>>()) yield return new KeyValuePair<string,object>("shelfLifeStorage",_ShelfLifeStorage);
+      if (_PhysicalCharacteristics is not null && !_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>()) yield return new KeyValuePair<string,object>("physicalCharacteristics",_PhysicalCharacteristics);
+      if (_LanguageCode?.Any() is true && !_LanguageCode.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("languageCode",_LanguageCode);
+      if (_Capability?.Any() is true && !_Capability.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.CapabilityComponent>>()) yield return new KeyValuePair<string,object>("capability",_Capability);
+      if (_Property?.Any() is true && !_Property.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent>>()) yield return new KeyValuePair<string,object>("property",_Property);
+      if (_Owner is not null && !_Owner.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("owner",_Owner);
+      if (_Contact?.Any() is true && !_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>()) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_OnlineInformationElement is not null && !_OnlineInformationElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("onlineInformation",_OnlineInformationElement);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+      if (_ParentDevice is not null && !_ParentDevice.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("parentDevice",_ParentDevice);
+      if (_Material?.Any() is true && !_Material.InOverflow<List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent>>()) yield return new KeyValuePair<string,object>("material",_Material);
     }
 
   }

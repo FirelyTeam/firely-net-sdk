@@ -517,12 +517,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_SubjectState.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SubjectState is not null) yield return new KeyValuePair<string,object>("subjectState",_SubjectState);
-        if (!_Milestone.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Milestone is not null) yield return new KeyValuePair<string,object>("milestone",_Milestone);
-        if (!_Reason.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Reason is not null) yield return new KeyValuePair<string,object>("reason",_Reason);
-        if (!_StartDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _StartDateElement is not null) yield return new KeyValuePair<string,object>("startDate",_StartDateElement);
-        if (!_EndDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _EndDateElement is not null) yield return new KeyValuePair<string,object>("endDate",_EndDateElement);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_SubjectState is not null && !_SubjectState.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("subjectState",_SubjectState);
+        if (_Milestone is not null && !_Milestone.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("milestone",_Milestone);
+        if (_Reason is not null && !_Reason.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("reason",_Reason);
+        if (_StartDateElement is not null && !_StartDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("startDate",_StartDateElement);
+        if (_EndDateElement is not null && !_EndDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("endDate",_EndDateElement);
       }
 
     }
@@ -1034,15 +1034,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_Progress.InOverflow<List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>>() && _Progress?.Any() is true) yield return new KeyValuePair<string,object>("progress",_Progress);
-      if (!_Period.InOverflow<Hl7.Fhir.Model.Period>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
-      if (!_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Study is not null) yield return new KeyValuePair<string,object>("study",_Study);
-      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_AssignedComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>() && _AssignedComparisonGroupElement is not null) yield return new KeyValuePair<string,object>("assignedComparisonGroup",_AssignedComparisonGroupElement);
-      if (!_ActualComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>() && _ActualComparisonGroupElement is not null) yield return new KeyValuePair<string,object>("actualComparisonGroup",_ActualComparisonGroupElement);
-      if (!_Consent.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Consent?.Any() is true) yield return new KeyValuePair<string,object>("consent",_Consent);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Progress?.Any() is true && !_Progress.InOverflow<List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent>>()) yield return new KeyValuePair<string,object>("progress",_Progress);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Study is not null && !_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("study",_Study);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_AssignedComparisonGroupElement is not null && !_AssignedComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("assignedComparisonGroup",_AssignedComparisonGroupElement);
+      if (_ActualComparisonGroupElement is not null && !_ActualComparisonGroupElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("actualComparisonGroup",_ActualComparisonGroupElement);
+      if (_Consent?.Any() is true && !_Consent.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("consent",_Consent);
     }
 
   }

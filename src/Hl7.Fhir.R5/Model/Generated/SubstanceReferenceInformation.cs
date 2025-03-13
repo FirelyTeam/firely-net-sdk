@@ -257,9 +257,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_GeneSequenceOrigin.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _GeneSequenceOrigin is not null) yield return new KeyValuePair<string,object>("geneSequenceOrigin",_GeneSequenceOrigin);
-        if (!_Gene.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Gene is not null) yield return new KeyValuePair<string,object>("gene",_Gene);
-        if (!_Source.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Source?.Any() is true) yield return new KeyValuePair<string,object>("source",_Source);
+        if (_GeneSequenceOrigin is not null && !_GeneSequenceOrigin.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("geneSequenceOrigin",_GeneSequenceOrigin);
+        if (_Gene is not null && !_Gene.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("gene",_Gene);
+        if (_Source?.Any() is true && !_Source.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("source",_Source);
       }
 
     }
@@ -462,9 +462,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Element.InOverflow<Hl7.Fhir.Model.Identifier>() && _Element is not null) yield return new KeyValuePair<string,object>("element",_Element);
-        if (!_Source.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Source?.Any() is true) yield return new KeyValuePair<string,object>("source",_Source);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Element is not null && !_Element.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("element",_Element);
+        if (_Source?.Any() is true && !_Source.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("source",_Source);
       }
 
     }
@@ -889,14 +889,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Target.InOverflow<Hl7.Fhir.Model.Identifier>() && _Target is not null) yield return new KeyValuePair<string,object>("target",_Target);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Interaction.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Interaction is not null) yield return new KeyValuePair<string,object>("interaction",_Interaction);
-        if (!_Organism.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Organism is not null) yield return new KeyValuePair<string,object>("organism",_Organism);
-        if (!_OrganismType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _OrganismType is not null) yield return new KeyValuePair<string,object>("organismType",_OrganismType);
-        if (!_Amount.InOverflow<DynamicDataType>() && _Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
-        if (!_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _AmountType is not null) yield return new KeyValuePair<string,object>("amountType",_AmountType);
-        if (!_Source.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Source?.Any() is true) yield return new KeyValuePair<string,object>("source",_Source);
+        if (_Target is not null && !_Target.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("target",_Target);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Interaction is not null && !_Interaction.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("interaction",_Interaction);
+        if (_Organism is not null && !_Organism.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("organism",_Organism);
+        if (_OrganismType is not null && !_OrganismType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("organismType",_OrganismType);
+        if (_Amount is not null && !_Amount.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("amount",_Amount);
+        if (_AmountType is not null && !_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("amountType",_AmountType);
+        if (_Source?.Any() is true && !_Source.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("source",_Source);
       }
 
     }
@@ -1145,10 +1145,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_CommentElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
-      if (!_Gene.InOverflow<List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent>>() && _Gene?.Any() is true) yield return new KeyValuePair<string,object>("gene",_Gene);
-      if (!_GeneElement.InOverflow<List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent>>() && _GeneElement?.Any() is true) yield return new KeyValuePair<string,object>("geneElement",_GeneElement);
-      if (!_Target.InOverflow<List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent>>() && _Target?.Any() is true) yield return new KeyValuePair<string,object>("target",_Target);
+      if (_CommentElement is not null && !_CommentElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+      if (_Gene?.Any() is true && !_Gene.InOverflow<List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent>>()) yield return new KeyValuePair<string,object>("gene",_Gene);
+      if (_GeneElement?.Any() is true && !_GeneElement.InOverflow<List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent>>()) yield return new KeyValuePair<string,object>("geneElement",_GeneElement);
+      if (_Target?.Any() is true && !_Target.InOverflow<List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent>>()) yield return new KeyValuePair<string,object>("target",_Target);
     }
 
   }

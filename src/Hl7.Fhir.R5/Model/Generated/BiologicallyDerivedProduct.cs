@@ -265,9 +265,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Collector.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Collector is not null) yield return new KeyValuePair<string,object>("collector",_Collector);
-        if (!_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Source is not null) yield return new KeyValuePair<string,object>("source",_Source);
-        if (!_Collected.InOverflow<DynamicDataType>() && _Collected is not null) yield return new KeyValuePair<string,object>("collected",_Collected);
+        if (_Collector is not null && !_Collector.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("collector",_Collector);
+        if (_Source is not null && !_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("source",_Source);
+        if (_Collected is not null && !_Collected.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("collected",_Collected);
       }
 
     }
@@ -431,8 +431,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_Value.InOverflow<DynamicDataType>() && _Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Value is not null && !_Value.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -1105,19 +1105,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_ProductCategory.InOverflow<Hl7.Fhir.Model.Coding>() && _ProductCategory is not null) yield return new KeyValuePair<string,object>("productCategory",_ProductCategory);
-      if (!_ProductCode.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ProductCode is not null) yield return new KeyValuePair<string,object>("productCode",_ProductCode);
-      if (!_Parent.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Parent?.Any() is true) yield return new KeyValuePair<string,object>("parent",_Parent);
-      if (!_Request.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Request?.Any() is true) yield return new KeyValuePair<string,object>("request",_Request);
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_BiologicalSourceEvent.InOverflow<Hl7.Fhir.Model.Identifier>() && _BiologicalSourceEvent is not null) yield return new KeyValuePair<string,object>("biologicalSourceEvent",_BiologicalSourceEvent);
-      if (!_ProcessingFacility.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _ProcessingFacility?.Any() is true) yield return new KeyValuePair<string,object>("processingFacility",_ProcessingFacility);
-      if (!_DivisionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DivisionElement is not null) yield return new KeyValuePair<string,object>("division",_DivisionElement);
-      if (!_ProductStatus.InOverflow<Hl7.Fhir.Model.Coding>() && _ProductStatus is not null) yield return new KeyValuePair<string,object>("productStatus",_ProductStatus);
-      if (!_ExpirationDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",_ExpirationDateElement);
-      if (!_Collection.InOverflow<Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent>() && _Collection is not null) yield return new KeyValuePair<string,object>("collection",_Collection);
-      if (!_StorageTempRequirements.InOverflow<Hl7.Fhir.Model.Range>() && _StorageTempRequirements is not null) yield return new KeyValuePair<string,object>("storageTempRequirements",_StorageTempRequirements);
-      if (!_Property.InOverflow<List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent>>() && _Property?.Any() is true) yield return new KeyValuePair<string,object>("property",_Property);
+      if (_ProductCategory is not null && !_ProductCategory.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("productCategory",_ProductCategory);
+      if (_ProductCode is not null && !_ProductCode.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("productCode",_ProductCode);
+      if (_Parent?.Any() is true && !_Parent.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("parent",_Parent);
+      if (_Request?.Any() is true && !_Request.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("request",_Request);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_BiologicalSourceEvent is not null && !_BiologicalSourceEvent.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("biologicalSourceEvent",_BiologicalSourceEvent);
+      if (_ProcessingFacility?.Any() is true && !_ProcessingFacility.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("processingFacility",_ProcessingFacility);
+      if (_DivisionElement is not null && !_DivisionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("division",_DivisionElement);
+      if (_ProductStatus is not null && !_ProductStatus.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("productStatus",_ProductStatus);
+      if (_ExpirationDateElement is not null && !_ExpirationDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("expirationDate",_ExpirationDateElement);
+      if (_Collection is not null && !_Collection.InOverflow<Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent>()) yield return new KeyValuePair<string,object>("collection",_Collection);
+      if (_StorageTempRequirements is not null && !_StorageTempRequirements.InOverflow<Hl7.Fhir.Model.Range>()) yield return new KeyValuePair<string,object>("storageTempRequirements",_StorageTempRequirements);
+      if (_Property?.Any() is true && !_Property.InOverflow<List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent>>()) yield return new KeyValuePair<string,object>("property",_Property);
     }
 
   }

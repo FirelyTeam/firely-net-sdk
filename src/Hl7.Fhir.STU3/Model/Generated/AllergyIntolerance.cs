@@ -663,13 +663,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Substance.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Substance is not null) yield return new KeyValuePair<string,object>("substance",_Substance);
-        if (!_Manifestation.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Manifestation?.Any() is true) yield return new KeyValuePair<string,object>("manifestation",_Manifestation);
-        if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-        if (!_OnsetElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _OnsetElement is not null) yield return new KeyValuePair<string,object>("onset",_OnsetElement);
-        if (!_SeverityElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>>() && _SeverityElement is not null) yield return new KeyValuePair<string,object>("severity",_SeverityElement);
-        if (!_ExposureRoute.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ExposureRoute is not null) yield return new KeyValuePair<string,object>("exposureRoute",_ExposureRoute);
-        if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
+        if (_Substance is not null && !_Substance.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("substance",_Substance);
+        if (_Manifestation?.Any() is true && !_Manifestation.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("manifestation",_Manifestation);
+        if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+        if (_OnsetElement is not null && !_OnsetElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("onset",_OnsetElement);
+        if (_SeverityElement is not null && !_SeverityElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>>()) yield return new KeyValuePair<string,object>("severity",_SeverityElement);
+        if (_ExposureRoute is not null && !_ExposureRoute.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("exposureRoute",_ExposureRoute);
+        if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
       }
 
     }
@@ -1519,21 +1519,21 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_ClinicalStatusElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus>>() && _ClinicalStatusElement is not null) yield return new KeyValuePair<string,object>("clinicalStatus",_ClinicalStatusElement);
-      if (!_VerificationStatusElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>>() && _VerificationStatusElement is not null) yield return new KeyValuePair<string,object>("verificationStatus",_VerificationStatusElement);
-      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (!_CategoryElement.InOverflow<List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>>() && _CategoryElement?.Any() is true) yield return new KeyValuePair<string,object>("category",_CategoryElement);
-      if (!_CriticalityElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>>() && _CriticalityElement is not null) yield return new KeyValuePair<string,object>("criticality",_CriticalityElement);
-      if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (!_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
-      if (!_Onset.InOverflow<DynamicDataType>() && _Onset is not null) yield return new KeyValuePair<string,object>("onset",_Onset);
-      if (!_AssertedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _AssertedDateElement is not null) yield return new KeyValuePair<string,object>("assertedDate",_AssertedDateElement);
-      if (!_Recorder.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Recorder is not null) yield return new KeyValuePair<string,object>("recorder",_Recorder);
-      if (!_Asserter.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Asserter is not null) yield return new KeyValuePair<string,object>("asserter",_Asserter);
-      if (!_LastOccurrenceElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _LastOccurrenceElement is not null) yield return new KeyValuePair<string,object>("lastOccurrence",_LastOccurrenceElement);
-      if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
-      if (!_Reaction.InOverflow<List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>>() && _Reaction?.Any() is true) yield return new KeyValuePair<string,object>("reaction",_Reaction);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ClinicalStatusElement is not null && !_ClinicalStatusElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus>>()) yield return new KeyValuePair<string,object>("clinicalStatus",_ClinicalStatusElement);
+      if (_VerificationStatusElement is not null && !_VerificationStatusElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>>()) yield return new KeyValuePair<string,object>("verificationStatus",_VerificationStatusElement);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_CategoryElement?.Any() is true && !_CategoryElement.InOverflow<List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>>>()) yield return new KeyValuePair<string,object>("category",_CategoryElement);
+      if (_CriticalityElement is not null && !_CriticalityElement.InOverflow<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>>()) yield return new KeyValuePair<string,object>("criticality",_CriticalityElement);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Onset is not null && !_Onset.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("onset",_Onset);
+      if (_AssertedDateElement is not null && !_AssertedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("assertedDate",_AssertedDateElement);
+      if (_Recorder is not null && !_Recorder.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("recorder",_Recorder);
+      if (_Asserter is not null && !_Asserter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("asserter",_Asserter);
+      if (_LastOccurrenceElement is not null && !_LastOccurrenceElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("lastOccurrence",_LastOccurrenceElement);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_Reaction?.Any() is true && !_Reaction.InOverflow<List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>>()) yield return new KeyValuePair<string,object>("reaction",_Reaction);
     }
 
   }

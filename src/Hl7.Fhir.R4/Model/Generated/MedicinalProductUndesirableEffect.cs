@@ -336,11 +336,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Subject?.Any() is true) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _SymptomConditionEffect is not null) yield return new KeyValuePair<string,object>("symptomConditionEffect",_SymptomConditionEffect);
-      if (!_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Classification is not null) yield return new KeyValuePair<string,object>("classification",_Classification);
-      if (!_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _FrequencyOfOccurrence is not null) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",_FrequencyOfOccurrence);
-      if (!_Population.InOverflow<List<Hl7.Fhir.Model.Population>>() && _Population?.Any() is true) yield return new KeyValuePair<string,object>("population",_Population);
+      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_SymptomConditionEffect is not null && !_SymptomConditionEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("symptomConditionEffect",_SymptomConditionEffect);
+      if (_Classification is not null && !_Classification.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("classification",_Classification);
+      if (_FrequencyOfOccurrence is not null && !_FrequencyOfOccurrence.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",_FrequencyOfOccurrence);
+      if (_Population?.Any() is true && !_Population.InOverflow<List<Hl7.Fhir.Model.Population>>()) yield return new KeyValuePair<string,object>("population",_Population);
     }
 
   }

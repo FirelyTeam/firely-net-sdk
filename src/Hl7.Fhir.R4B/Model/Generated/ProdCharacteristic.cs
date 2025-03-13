@@ -647,17 +647,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Height.InOverflow<Hl7.Fhir.Model.Quantity>() && _Height is not null) yield return new KeyValuePair<string,object>("height",_Height);
-      if (!_Width.InOverflow<Hl7.Fhir.Model.Quantity>() && _Width is not null) yield return new KeyValuePair<string,object>("width",_Width);
-      if (!_Depth.InOverflow<Hl7.Fhir.Model.Quantity>() && _Depth is not null) yield return new KeyValuePair<string,object>("depth",_Depth);
-      if (!_Weight.InOverflow<Hl7.Fhir.Model.Quantity>() && _Weight is not null) yield return new KeyValuePair<string,object>("weight",_Weight);
-      if (!_NominalVolume.InOverflow<Hl7.Fhir.Model.Quantity>() && _NominalVolume is not null) yield return new KeyValuePair<string,object>("nominalVolume",_NominalVolume);
-      if (!_ExternalDiameter.InOverflow<Hl7.Fhir.Model.Quantity>() && _ExternalDiameter is not null) yield return new KeyValuePair<string,object>("externalDiameter",_ExternalDiameter);
-      if (!_ShapeElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ShapeElement is not null) yield return new KeyValuePair<string,object>("shape",_ShapeElement);
-      if (!_ColorElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _ColorElement?.Any() is true) yield return new KeyValuePair<string,object>("color",_ColorElement);
-      if (!_ImprintElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _ImprintElement?.Any() is true) yield return new KeyValuePair<string,object>("imprint",_ImprintElement);
-      if (!_Image.InOverflow<List<Hl7.Fhir.Model.Attachment>>() && _Image?.Any() is true) yield return new KeyValuePair<string,object>("image",_Image);
-      if (!_Scoring.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Scoring is not null) yield return new KeyValuePair<string,object>("scoring",_Scoring);
+      if (_Height is not null && !_Height.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("height",_Height);
+      if (_Width is not null && !_Width.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("width",_Width);
+      if (_Depth is not null && !_Depth.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("depth",_Depth);
+      if (_Weight is not null && !_Weight.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("weight",_Weight);
+      if (_NominalVolume is not null && !_NominalVolume.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("nominalVolume",_NominalVolume);
+      if (_ExternalDiameter is not null && !_ExternalDiameter.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("externalDiameter",_ExternalDiameter);
+      if (_ShapeElement is not null && !_ShapeElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("shape",_ShapeElement);
+      if (_ColorElement?.Any() is true && !_ColorElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("color",_ColorElement);
+      if (_ImprintElement?.Any() is true && !_ImprintElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("imprint",_ImprintElement);
+      if (_Image?.Any() is true && !_Image.InOverflow<List<Hl7.Fhir.Model.Attachment>>()) yield return new KeyValuePair<string,object>("image",_Image);
+      if (_Scoring is not null && !_Scoring.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("scoring",_Scoring);
     }
 
   }

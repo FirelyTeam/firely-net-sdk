@@ -412,10 +412,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-        if (!_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>() && _EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",_EndpointElement);
-        if (!_PayloadElement.InOverflow<Hl7.Fhir.Model.Code>() && _PayloadElement is not null) yield return new KeyValuePair<string,object>("payload",_PayloadElement);
-        if (!_HeaderElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _HeaderElement?.Any() is true) yield return new KeyValuePair<string,object>("header",_HeaderElement);
+        if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_EndpointElement is not null && !_EndpointElement.InOverflow<Hl7.Fhir.Model.FhirUrl>()) yield return new KeyValuePair<string,object>("endpoint",_EndpointElement);
+        if (_PayloadElement is not null && !_PayloadElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("payload",_PayloadElement);
+        if (_HeaderElement?.Any() is true && !_HeaderElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("header",_HeaderElement);
       }
 
     }
@@ -860,13 +860,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>() && _Contact?.Any() is true) yield return new KeyValuePair<string,object>("contact",_Contact);
-      if (!_EndElement.InOverflow<Hl7.Fhir.Model.Instant>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
-      if (!_ReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ReasonElement is not null) yield return new KeyValuePair<string,object>("reason",_ReasonElement);
-      if (!_CriteriaElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CriteriaElement is not null) yield return new KeyValuePair<string,object>("criteria",_CriteriaElement);
-      if (!_ErrorElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ErrorElement is not null) yield return new KeyValuePair<string,object>("error",_ErrorElement);
-      if (!_Channel.InOverflow<Hl7.Fhir.Model.Subscription.ChannelComponent>() && _Channel is not null) yield return new KeyValuePair<string,object>("channel",_Channel);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.SubscriptionStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Contact?.Any() is true && !_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>()) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("end",_EndElement);
+      if (_ReasonElement is not null && !_ReasonElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("reason",_ReasonElement);
+      if (_CriteriaElement is not null && !_CriteriaElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("criteria",_CriteriaElement);
+      if (_ErrorElement is not null && !_ErrorElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("error",_ErrorElement);
+      if (_Channel is not null && !_Channel.InOverflow<Hl7.Fhir.Model.Subscription.ChannelComponent>()) yield return new KeyValuePair<string,object>("channel",_Channel);
     }
 
   }

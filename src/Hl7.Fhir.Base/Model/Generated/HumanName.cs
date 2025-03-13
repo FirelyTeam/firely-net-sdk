@@ -577,13 +577,13 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_UseElement.InOverflow<Code<Hl7.Fhir.Model.HumanName.NameUse>>() && _UseElement is not null) yield return new KeyValuePair<string,object>("use",_UseElement);
-      if (!_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
-      if (!_FamilyElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _FamilyElement is not null) yield return new KeyValuePair<string,object>("family",_FamilyElement);
-      if (!_GivenElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _GivenElement?.Any() is true) yield return new KeyValuePair<string,object>("given",_GivenElement);
-      if (!_PrefixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _PrefixElement?.Any() is true) yield return new KeyValuePair<string,object>("prefix",_PrefixElement);
-      if (!_SuffixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _SuffixElement?.Any() is true) yield return new KeyValuePair<string,object>("suffix",_SuffixElement);
-      if (!_Period.InOverflow<Hl7.Fhir.Model.Period>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_UseElement is not null && !_UseElement.InOverflow<Code<Hl7.Fhir.Model.HumanName.NameUse>>()) yield return new KeyValuePair<string,object>("use",_UseElement);
+      if (_TextElement is not null && !_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (_FamilyElement is not null && !_FamilyElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("family",_FamilyElement);
+      if (_GivenElement?.Any() is true && !_GivenElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("given",_GivenElement);
+      if (_PrefixElement?.Any() is true && !_PrefixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("prefix",_PrefixElement);
+      if (_SuffixElement?.Any() is true && !_SuffixElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("suffix",_SuffixElement);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
     }
 
   }

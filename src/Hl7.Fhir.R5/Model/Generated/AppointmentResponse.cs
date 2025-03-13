@@ -810,18 +810,18 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_Appointment.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Appointment is not null) yield return new KeyValuePair<string,object>("appointment",_Appointment);
-      if (!_ProposedNewTimeElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _ProposedNewTimeElement is not null) yield return new KeyValuePair<string,object>("proposedNewTime",_ProposedNewTimeElement);
-      if (!_StartElement.InOverflow<Hl7.Fhir.Model.Instant>() && _StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
-      if (!_EndElement.InOverflow<Hl7.Fhir.Model.Instant>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
-      if (!_ParticipantType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ParticipantType?.Any() is true) yield return new KeyValuePair<string,object>("participantType",_ParticipantType);
-      if (!_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
-      if (!_ParticipantStatusElement.InOverflow<Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>>() && _ParticipantStatusElement is not null) yield return new KeyValuePair<string,object>("participantStatus",_ParticipantStatusElement);
-      if (!_CommentElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _CommentElement is not null) yield return new KeyValuePair<string,object>("comment",_CommentElement);
-      if (!_RecurringElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _RecurringElement is not null) yield return new KeyValuePair<string,object>("recurring",_RecurringElement);
-      if (!_OccurrenceDateElement.InOverflow<Hl7.Fhir.Model.Date>() && _OccurrenceDateElement is not null) yield return new KeyValuePair<string,object>("occurrenceDate",_OccurrenceDateElement);
-      if (!_RecurrenceIdElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _RecurrenceIdElement is not null) yield return new KeyValuePair<string,object>("recurrenceId",_RecurrenceIdElement);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Appointment is not null && !_Appointment.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("appointment",_Appointment);
+      if (_ProposedNewTimeElement is not null && !_ProposedNewTimeElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("proposedNewTime",_ProposedNewTimeElement);
+      if (_StartElement is not null && !_StartElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("start",_StartElement);
+      if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("end",_EndElement);
+      if (_ParticipantType?.Any() is true && !_ParticipantType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("participantType",_ParticipantType);
+      if (_Actor is not null && !_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("actor",_Actor);
+      if (_ParticipantStatusElement is not null && !_ParticipantStatusElement.InOverflow<Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>>()) yield return new KeyValuePair<string,object>("participantStatus",_ParticipantStatusElement);
+      if (_CommentElement is not null && !_CommentElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("comment",_CommentElement);
+      if (_RecurringElement is not null && !_RecurringElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("recurring",_RecurringElement);
+      if (_OccurrenceDateElement is not null && !_OccurrenceDateElement.InOverflow<Hl7.Fhir.Model.Date>()) yield return new KeyValuePair<string,object>("occurrenceDate",_OccurrenceDateElement);
+      if (_RecurrenceIdElement is not null && !_RecurrenceIdElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("recurrenceId",_RecurrenceIdElement);
     }
 
   }

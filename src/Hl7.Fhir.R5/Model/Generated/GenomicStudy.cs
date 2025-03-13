@@ -1045,24 +1045,24 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (!_MethodType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _MethodType?.Any() is true) yield return new KeyValuePair<string,object>("methodType",_MethodType);
-        if (!_ChangeType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _ChangeType?.Any() is true) yield return new KeyValuePair<string,object>("changeType",_ChangeType);
-        if (!_GenomeBuild.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _GenomeBuild is not null) yield return new KeyValuePair<string,object>("genomeBuild",_GenomeBuild);
-        if (!_InstantiatesCanonicalElement.InOverflow<Hl7.Fhir.Model.Canonical>() && _InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",_InstantiatesCanonicalElement);
-        if (!_InstantiatesUriElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",_InstantiatesUriElement);
-        if (!_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
-        if (!_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Focus?.Any() is true) yield return new KeyValuePair<string,object>("focus",_Focus);
-        if (!_Specimen.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Specimen?.Any() is true) yield return new KeyValuePair<string,object>("specimen",_Specimen);
-        if (!_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-        if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
-        if (!_ProtocolPerformed.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _ProtocolPerformed is not null) yield return new KeyValuePair<string,object>("protocolPerformed",_ProtocolPerformed);
-        if (!_RegionsStudied.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _RegionsStudied?.Any() is true) yield return new KeyValuePair<string,object>("regionsStudied",_RegionsStudied);
-        if (!_RegionsCalled.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _RegionsCalled?.Any() is true) yield return new KeyValuePair<string,object>("regionsCalled",_RegionsCalled);
-        if (!_Input.InOverflow<List<Hl7.Fhir.Model.GenomicStudy.InputComponent>>() && _Input?.Any() is true) yield return new KeyValuePair<string,object>("input",_Input);
-        if (!_Output.InOverflow<List<Hl7.Fhir.Model.GenomicStudy.OutputComponent>>() && _Output?.Any() is true) yield return new KeyValuePair<string,object>("output",_Output);
-        if (!_Performer.InOverflow<List<Hl7.Fhir.Model.GenomicStudy.PerformerComponent>>() && _Performer?.Any() is true) yield return new KeyValuePair<string,object>("performer",_Performer);
-        if (!_Device.InOverflow<List<Hl7.Fhir.Model.GenomicStudy.DeviceComponent>>() && _Device?.Any() is true) yield return new KeyValuePair<string,object>("device",_Device);
+        if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_MethodType?.Any() is true && !_MethodType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("methodType",_MethodType);
+        if (_ChangeType?.Any() is true && !_ChangeType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("changeType",_ChangeType);
+        if (_GenomeBuild is not null && !_GenomeBuild.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("genomeBuild",_GenomeBuild);
+        if (_InstantiatesCanonicalElement is not null && !_InstantiatesCanonicalElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("instantiatesCanonical",_InstantiatesCanonicalElement);
+        if (_InstantiatesUriElement is not null && !_InstantiatesUriElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("instantiatesUri",_InstantiatesUriElement);
+        if (_TitleElement is not null && !_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("title",_TitleElement);
+        if (_Focus?.Any() is true && !_Focus.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("focus",_Focus);
+        if (_Specimen?.Any() is true && !_Specimen.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("specimen",_Specimen);
+        if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("date",_DateElement);
+        if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
+        if (_ProtocolPerformed is not null && !_ProtocolPerformed.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("protocolPerformed",_ProtocolPerformed);
+        if (_RegionsStudied?.Any() is true && !_RegionsStudied.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("regionsStudied",_RegionsStudied);
+        if (_RegionsCalled?.Any() is true && !_RegionsCalled.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("regionsCalled",_RegionsCalled);
+        if (_Input?.Any() is true && !_Input.InOverflow<List<Hl7.Fhir.Model.GenomicStudy.InputComponent>>()) yield return new KeyValuePair<string,object>("input",_Input);
+        if (_Output?.Any() is true && !_Output.InOverflow<List<Hl7.Fhir.Model.GenomicStudy.OutputComponent>>()) yield return new KeyValuePair<string,object>("output",_Output);
+        if (_Performer?.Any() is true && !_Performer.InOverflow<List<Hl7.Fhir.Model.GenomicStudy.PerformerComponent>>()) yield return new KeyValuePair<string,object>("performer",_Performer);
+        if (_Device?.Any() is true && !_Device.InOverflow<List<Hl7.Fhir.Model.GenomicStudy.DeviceComponent>>()) yield return new KeyValuePair<string,object>("device",_Device);
       }
 
     }
@@ -1268,9 +1268,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_File.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _File is not null) yield return new KeyValuePair<string,object>("file",_File);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (!_GeneratedBy.InOverflow<DynamicDataType>() && _GeneratedBy is not null) yield return new KeyValuePair<string,object>("generatedBy",_GeneratedBy);
+        if (_File is not null && !_File.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("file",_File);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_GeneratedBy is not null && !_GeneratedBy.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("generatedBy",_GeneratedBy);
       }
 
     }
@@ -1429,8 +1429,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_File.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _File is not null) yield return new KeyValuePair<string,object>("file",_File);
-        if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_File is not null && !_File.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("file",_File);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
       }
 
     }
@@ -1588,8 +1588,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
-        if (!_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Role is not null) yield return new KeyValuePair<string,object>("role",_Role);
+        if (_Actor is not null && !_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("actor",_Actor);
+        if (_Role is not null && !_Role.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("role",_Role);
       }
 
     }
@@ -1747,8 +1747,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
-        if (!_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Function is not null) yield return new KeyValuePair<string,object>("function",_Function);
+        if (_Device is not null && !_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("device",_Device);
+        if (_Function is not null && !_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("function",_Function);
       }
 
     }
@@ -2562,21 +2562,21 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Type?.Any() is true) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
-      if (!_StartDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _StartDateElement is not null) yield return new KeyValuePair<string,object>("startDate",_StartDateElement);
-      if (!_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _BasedOn?.Any() is true) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
-      if (!_Referrer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Referrer is not null) yield return new KeyValuePair<string,object>("referrer",_Referrer);
-      if (!_Interpreter.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Interpreter?.Any() is true) yield return new KeyValuePair<string,object>("interpreter",_Interpreter);
-      if (!_Reason.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>() && _Reason?.Any() is true) yield return new KeyValuePair<string,object>("reason",_Reason);
-      if (!_InstantiatesCanonicalElement.InOverflow<Hl7.Fhir.Model.Canonical>() && _InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",_InstantiatesCanonicalElement);
-      if (!_InstantiatesUriElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",_InstantiatesUriElement);
-      if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
-      if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (!_Analysis.InOverflow<List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent>>() && _Analysis?.Any() is true) yield return new KeyValuePair<string,object>("analysis",_Analysis);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Type?.Any() is true && !_Type.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Encounter is not null && !_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_StartDateElement is not null && !_StartDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("startDate",_StartDateElement);
+      if (_BasedOn?.Any() is true && !_BasedOn.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("basedOn",_BasedOn);
+      if (_Referrer is not null && !_Referrer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("referrer",_Referrer);
+      if (_Interpreter?.Any() is true && !_Interpreter.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("interpreter",_Interpreter);
+      if (_Reason?.Any() is true && !_Reason.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("reason",_Reason);
+      if (_InstantiatesCanonicalElement is not null && !_InstantiatesCanonicalElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("instantiatesCanonical",_InstantiatesCanonicalElement);
+      if (_InstantiatesUriElement is not null && !_InstantiatesUriElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("instantiatesUri",_InstantiatesUriElement);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Analysis?.Any() is true && !_Analysis.InOverflow<List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent>>()) yield return new KeyValuePair<string,object>("analysis",_Analysis);
     }
 
   }

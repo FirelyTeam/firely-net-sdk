@@ -732,12 +732,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_SeverityElement.InOverflow<Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>>() && _SeverityElement is not null) yield return new KeyValuePair<string,object>("severity",_SeverityElement);
-        if (!_CodeElement.InOverflow<Code<Hl7.Fhir.Model.OperationOutcome.IssueType>>() && _CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
-        if (!_Details.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Details is not null) yield return new KeyValuePair<string,object>("details",_Details);
-        if (!_DiagnosticsElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DiagnosticsElement is not null) yield return new KeyValuePair<string,object>("diagnostics",_DiagnosticsElement);
-        if (!_LocationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _LocationElement?.Any() is true) yield return new KeyValuePair<string,object>("location",_LocationElement);
-        if (!_ExpressionElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _ExpressionElement?.Any() is true) yield return new KeyValuePair<string,object>("expression",_ExpressionElement);
+        if (_SeverityElement is not null && !_SeverityElement.InOverflow<Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>>()) yield return new KeyValuePair<string,object>("severity",_SeverityElement);
+        if (_CodeElement is not null && !_CodeElement.InOverflow<Code<Hl7.Fhir.Model.OperationOutcome.IssueType>>()) yield return new KeyValuePair<string,object>("code",_CodeElement);
+        if (_Details is not null && !_Details.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("details",_Details);
+        if (_DiagnosticsElement is not null && !_DiagnosticsElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("diagnostics",_DiagnosticsElement);
+        if (_LocationElement?.Any() is true && !_LocationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("location",_LocationElement);
+        if (_ExpressionElement?.Any() is true && !_ExpressionElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("expression",_ExpressionElement);
       }
 
     }
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Issue.InOverflow<List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>>() && _Issue?.Any() is true) yield return new KeyValuePair<string,object>("issue",_Issue);
+      if (_Issue?.Any() is true && !_Issue.InOverflow<List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>>()) yield return new KeyValuePair<string,object>("issue",_Issue);
     }
 
   }

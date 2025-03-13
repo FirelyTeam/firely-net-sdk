@@ -218,8 +218,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_TherapyRelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _TherapyRelationshipType is not null) yield return new KeyValuePair<string,object>("therapyRelationshipType",_TherapyRelationshipType);
-        if (!_Medication.InOverflow<DynamicDataType>() && _Medication is not null) yield return new KeyValuePair<string,object>("medication",_Medication);
+        if (_TherapyRelationshipType is not null && !_TherapyRelationshipType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("therapyRelationshipType",_TherapyRelationshipType);
+        if (_Medication is not null && !_Medication.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("medication",_Medication);
       }
 
     }
@@ -679,15 +679,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Subject?.Any() is true) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_DiseaseSymptomProcedure.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",_DiseaseSymptomProcedure);
-      if (!_DiseaseStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",_DiseaseStatus);
-      if (!_Comorbidity.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Comorbidity?.Any() is true) yield return new KeyValuePair<string,object>("comorbidity",_Comorbidity);
-      if (!_IntendedEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _IntendedEffect is not null) yield return new KeyValuePair<string,object>("intendedEffect",_IntendedEffect);
-      if (!_Duration.InOverflow<Hl7.Fhir.Model.Quantity>() && _Duration is not null) yield return new KeyValuePair<string,object>("duration",_Duration);
-      if (!_OtherTherapy.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>>() && _OtherTherapy?.Any() is true) yield return new KeyValuePair<string,object>("otherTherapy",_OtherTherapy);
-      if (!_UndesirableEffect.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _UndesirableEffect?.Any() is true) yield return new KeyValuePair<string,object>("undesirableEffect",_UndesirableEffect);
-      if (!_Population.InOverflow<List<Hl7.Fhir.Model.Population>>() && _Population?.Any() is true) yield return new KeyValuePair<string,object>("population",_Population);
+      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_DiseaseSymptomProcedure is not null && !_DiseaseSymptomProcedure.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",_DiseaseSymptomProcedure);
+      if (_DiseaseStatus is not null && !_DiseaseStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("diseaseStatus",_DiseaseStatus);
+      if (_Comorbidity?.Any() is true && !_Comorbidity.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("comorbidity",_Comorbidity);
+      if (_IntendedEffect is not null && !_IntendedEffect.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("intendedEffect",_IntendedEffect);
+      if (_Duration is not null && !_Duration.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("duration",_Duration);
+      if (_OtherTherapy?.Any() is true && !_OtherTherapy.InOverflow<List<Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent>>()) yield return new KeyValuePair<string,object>("otherTherapy",_OtherTherapy);
+      if (_UndesirableEffect?.Any() is true && !_UndesirableEffect.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("undesirableEffect",_UndesirableEffect);
+      if (_Population?.Any() is true && !_Population.InOverflow<List<Hl7.Fhir.Model.Population>>()) yield return new KeyValuePair<string,object>("population",_Population);
     }
 
   }

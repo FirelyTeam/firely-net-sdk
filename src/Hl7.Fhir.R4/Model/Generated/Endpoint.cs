@@ -740,17 +740,17 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>>() && _StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (!_ConnectionType.InOverflow<Hl7.Fhir.Model.Coding>() && _ConnectionType is not null) yield return new KeyValuePair<string,object>("connectionType",_ConnectionType);
-      if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-      if (!_ManagingOrganization.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",_ManagingOrganization);
-      if (!_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>() && _Contact?.Any() is true) yield return new KeyValuePair<string,object>("contact",_Contact);
-      if (!_Period.InOverflow<Hl7.Fhir.Model.Period>() && _Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
-      if (!_PayloadType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _PayloadType?.Any() is true) yield return new KeyValuePair<string,object>("payloadType",_PayloadType);
-      if (!_PayloadMimeTypeElement.InOverflow<List<Hl7.Fhir.Model.Code>>() && _PayloadMimeTypeElement?.Any() is true) yield return new KeyValuePair<string,object>("payloadMimeType",_PayloadMimeTypeElement);
-      if (!_AddressElement.InOverflow<Hl7.Fhir.Model.FhirUrl>() && _AddressElement is not null) yield return new KeyValuePair<string,object>("address",_AddressElement);
-      if (!_HeaderElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>() && _HeaderElement?.Any() is true) yield return new KeyValuePair<string,object>("header",_HeaderElement);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_ConnectionType is not null && !_ConnectionType.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("connectionType",_ConnectionType);
+      if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_ManagingOrganization is not null && !_ManagingOrganization.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("managingOrganization",_ManagingOrganization);
+      if (_Contact?.Any() is true && !_Contact.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>()) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_PayloadType?.Any() is true && !_PayloadType.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("payloadType",_PayloadType);
+      if (_PayloadMimeTypeElement?.Any() is true && !_PayloadMimeTypeElement.InOverflow<List<Hl7.Fhir.Model.Code>>()) yield return new KeyValuePair<string,object>("payloadMimeType",_PayloadMimeTypeElement);
+      if (_AddressElement is not null && !_AddressElement.InOverflow<Hl7.Fhir.Model.FhirUrl>()) yield return new KeyValuePair<string,object>("address",_AddressElement);
+      if (_HeaderElement?.Any() is true && !_HeaderElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("header",_HeaderElement);
     }
 
   }

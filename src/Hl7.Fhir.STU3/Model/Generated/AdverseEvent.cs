@@ -566,13 +566,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Instance.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Instance is not null) yield return new KeyValuePair<string,object>("instance",_Instance);
-        if (!_CausalityElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality>>() && _CausalityElement is not null) yield return new KeyValuePair<string,object>("causality",_CausalityElement);
-        if (!_CausalityAssessment.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _CausalityAssessment is not null) yield return new KeyValuePair<string,object>("causalityAssessment",_CausalityAssessment);
-        if (!_CausalityProductRelatednessElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CausalityProductRelatednessElement is not null) yield return new KeyValuePair<string,object>("causalityProductRelatedness",_CausalityProductRelatednessElement);
-        if (!_CausalityMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _CausalityMethod is not null) yield return new KeyValuePair<string,object>("causalityMethod",_CausalityMethod);
-        if (!_CausalityAuthor.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _CausalityAuthor is not null) yield return new KeyValuePair<string,object>("causalityAuthor",_CausalityAuthor);
-        if (!_CausalityResult.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _CausalityResult is not null) yield return new KeyValuePair<string,object>("causalityResult",_CausalityResult);
+        if (_Instance is not null && !_Instance.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("instance",_Instance);
+        if (_CausalityElement is not null && !_CausalityElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality>>()) yield return new KeyValuePair<string,object>("causality",_CausalityElement);
+        if (_CausalityAssessment is not null && !_CausalityAssessment.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("causalityAssessment",_CausalityAssessment);
+        if (_CausalityProductRelatednessElement is not null && !_CausalityProductRelatednessElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("causalityProductRelatedness",_CausalityProductRelatednessElement);
+        if (_CausalityMethod is not null && !_CausalityMethod.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("causalityMethod",_CausalityMethod);
+        if (_CausalityAuthor is not null && !_CausalityAuthor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("causalityAuthor",_CausalityAuthor);
+        if (_CausalityResult is not null && !_CausalityResult.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("causalityResult",_CausalityResult);
       }
 
     }
@@ -1406,22 +1406,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory>>() && _CategoryElement is not null) yield return new KeyValuePair<string,object>("category",_CategoryElement);
-      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _DateElement is not null) yield return new KeyValuePair<string,object>("date",_DateElement);
-      if (!_Reaction.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Reaction?.Any() is true) yield return new KeyValuePair<string,object>("reaction",_Reaction);
-      if (!_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Location is not null) yield return new KeyValuePair<string,object>("location",_Location);
-      if (!_Seriousness.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Seriousness is not null) yield return new KeyValuePair<string,object>("seriousness",_Seriousness);
-      if (!_Outcome.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Outcome is not null) yield return new KeyValuePair<string,object>("outcome",_Outcome);
-      if (!_Recorder.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Recorder is not null) yield return new KeyValuePair<string,object>("recorder",_Recorder);
-      if (!_EventParticipant.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _EventParticipant is not null) yield return new KeyValuePair<string,object>("eventParticipant",_EventParticipant);
-      if (!_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (!_SuspectEntity.InOverflow<List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>>() && _SuspectEntity?.Any() is true) yield return new KeyValuePair<string,object>("suspectEntity",_SuspectEntity);
-      if (!_SubjectMedicalHistory.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _SubjectMedicalHistory?.Any() is true) yield return new KeyValuePair<string,object>("subjectMedicalHistory",_SubjectMedicalHistory);
-      if (!_ReferenceDocument.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _ReferenceDocument?.Any() is true) yield return new KeyValuePair<string,object>("referenceDocument",_ReferenceDocument);
-      if (!_Study.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Study?.Any() is true) yield return new KeyValuePair<string,object>("study",_Study);
+      if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_CategoryElement is not null && !_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory>>()) yield return new KeyValuePair<string,object>("category",_CategoryElement);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_DateElement is not null && !_DateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("date",_DateElement);
+      if (_Reaction?.Any() is true && !_Reaction.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("reaction",_Reaction);
+      if (_Location is not null && !_Location.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("location",_Location);
+      if (_Seriousness is not null && !_Seriousness.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("seriousness",_Seriousness);
+      if (_Outcome is not null && !_Outcome.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("outcome",_Outcome);
+      if (_Recorder is not null && !_Recorder.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("recorder",_Recorder);
+      if (_EventParticipant is not null && !_EventParticipant.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("eventParticipant",_EventParticipant);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_SuspectEntity?.Any() is true && !_SuspectEntity.InOverflow<List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent>>()) yield return new KeyValuePair<string,object>("suspectEntity",_SuspectEntity);
+      if (_SubjectMedicalHistory?.Any() is true && !_SubjectMedicalHistory.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subjectMedicalHistory",_SubjectMedicalHistory);
+      if (_ReferenceDocument?.Any() is true && !_ReferenceDocument.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("referenceDocument",_ReferenceDocument);
+      if (_Study?.Any() is true && !_Study.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("study",_Study);
     }
 
   }

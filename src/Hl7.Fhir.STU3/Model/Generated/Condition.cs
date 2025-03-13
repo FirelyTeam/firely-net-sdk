@@ -306,8 +306,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Summary.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Summary is not null) yield return new KeyValuePair<string,object>("summary",_Summary);
-        if (!_Assessment.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Assessment?.Any() is true) yield return new KeyValuePair<string,object>("assessment",_Assessment);
+        if (_Summary is not null && !_Summary.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("summary",_Summary);
+        if (_Assessment?.Any() is true && !_Assessment.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("assessment",_Assessment);
       }
 
     }
@@ -472,8 +472,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Code?.Any() is true) yield return new KeyValuePair<string,object>("code",_Code);
-        if (!_Detail.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Detail?.Any() is true) yield return new KeyValuePair<string,object>("detail",_Detail);
+        if (_Code?.Any() is true && !_Code.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Detail?.Any() is true && !_Detail.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("detail",_Detail);
       }
 
     }
@@ -1303,22 +1303,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_ClinicalStatusElement.InOverflow<Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes>>() && _ClinicalStatusElement is not null) yield return new KeyValuePair<string,object>("clinicalStatus",_ClinicalStatusElement);
-      if (!_VerificationStatusElement.InOverflow<Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus>>() && _VerificationStatusElement is not null) yield return new KeyValuePair<string,object>("verificationStatus",_VerificationStatusElement);
-      if (!_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _Category?.Any() is true) yield return new KeyValuePair<string,object>("category",_Category);
-      if (!_Severity.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Severity is not null) yield return new KeyValuePair<string,object>("severity",_Severity);
-      if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (!_BodySite.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>() && _BodySite?.Any() is true) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
-      if (!_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (!_Context.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Context is not null) yield return new KeyValuePair<string,object>("context",_Context);
-      if (!_Onset.InOverflow<DynamicDataType>() && _Onset is not null) yield return new KeyValuePair<string,object>("onset",_Onset);
-      if (!_Abatement.InOverflow<DynamicDataType>() && _Abatement is not null) yield return new KeyValuePair<string,object>("abatement",_Abatement);
-      if (!_AssertedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>() && _AssertedDateElement is not null) yield return new KeyValuePair<string,object>("assertedDate",_AssertedDateElement);
-      if (!_Asserter.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Asserter is not null) yield return new KeyValuePair<string,object>("asserter",_Asserter);
-      if (!_Stage.InOverflow<Hl7.Fhir.Model.Condition.StageComponent>() && _Stage is not null) yield return new KeyValuePair<string,object>("stage",_Stage);
-      if (!_Evidence.InOverflow<List<Hl7.Fhir.Model.Condition.EvidenceComponent>>() && _Evidence?.Any() is true) yield return new KeyValuePair<string,object>("evidence",_Evidence);
-      if (!_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>() && _Note?.Any() is true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ClinicalStatusElement is not null && !_ClinicalStatusElement.InOverflow<Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes>>()) yield return new KeyValuePair<string,object>("clinicalStatus",_ClinicalStatusElement);
+      if (_VerificationStatusElement is not null && !_VerificationStatusElement.InOverflow<Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus>>()) yield return new KeyValuePair<string,object>("verificationStatus",_VerificationStatusElement);
+      if (_Category?.Any() is true && !_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Severity is not null && !_Severity.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("severity",_Severity);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_BodySite?.Any() is true && !_BodySite.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Context is not null && !_Context.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("context",_Context);
+      if (_Onset is not null && !_Onset.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("onset",_Onset);
+      if (_Abatement is not null && !_Abatement.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("abatement",_Abatement);
+      if (_AssertedDateElement is not null && !_AssertedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("assertedDate",_AssertedDateElement);
+      if (_Asserter is not null && !_Asserter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("asserter",_Asserter);
+      if (_Stage is not null && !_Stage.InOverflow<Hl7.Fhir.Model.Condition.StageComponent>()) yield return new KeyValuePair<string,object>("stage",_Stage);
+      if (_Evidence?.Any() is true && !_Evidence.InOverflow<List<Hl7.Fhir.Model.Condition.EvidenceComponent>>()) yield return new KeyValuePair<string,object>("evidence",_Evidence);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

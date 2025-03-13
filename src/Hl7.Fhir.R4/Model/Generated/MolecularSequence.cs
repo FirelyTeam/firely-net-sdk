@@ -762,15 +762,15 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Chromosome.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Chromosome is not null) yield return new KeyValuePair<string,object>("chromosome",_Chromosome);
-        if (!_GenomeBuildElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _GenomeBuildElement is not null) yield return new KeyValuePair<string,object>("genomeBuild",_GenomeBuildElement);
-        if (!_OrientationElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>>() && _OrientationElement is not null) yield return new KeyValuePair<string,object>("orientation",_OrientationElement);
-        if (!_ReferenceSeqId.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _ReferenceSeqId is not null) yield return new KeyValuePair<string,object>("referenceSeqId",_ReferenceSeqId);
-        if (!_ReferenceSeqPointer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _ReferenceSeqPointer is not null) yield return new KeyValuePair<string,object>("referenceSeqPointer",_ReferenceSeqPointer);
-        if (!_ReferenceSeqStringElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ReferenceSeqStringElement is not null) yield return new KeyValuePair<string,object>("referenceSeqString",_ReferenceSeqStringElement);
-        if (!_StrandElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.StrandType>>() && _StrandElement is not null) yield return new KeyValuePair<string,object>("strand",_StrandElement);
-        if (!_WindowStartElement.InOverflow<Hl7.Fhir.Model.Integer>() && _WindowStartElement is not null) yield return new KeyValuePair<string,object>("windowStart",_WindowStartElement);
-        if (!_WindowEndElement.InOverflow<Hl7.Fhir.Model.Integer>() && _WindowEndElement is not null) yield return new KeyValuePair<string,object>("windowEnd",_WindowEndElement);
+        if (_Chromosome is not null && !_Chromosome.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("chromosome",_Chromosome);
+        if (_GenomeBuildElement is not null && !_GenomeBuildElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("genomeBuild",_GenomeBuildElement);
+        if (_OrientationElement is not null && !_OrientationElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>>()) yield return new KeyValuePair<string,object>("orientation",_OrientationElement);
+        if (_ReferenceSeqId is not null && !_ReferenceSeqId.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("referenceSeqId",_ReferenceSeqId);
+        if (_ReferenceSeqPointer is not null && !_ReferenceSeqPointer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("referenceSeqPointer",_ReferenceSeqPointer);
+        if (_ReferenceSeqStringElement is not null && !_ReferenceSeqStringElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("referenceSeqString",_ReferenceSeqStringElement);
+        if (_StrandElement is not null && !_StrandElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.StrandType>>()) yield return new KeyValuePair<string,object>("strand",_StrandElement);
+        if (_WindowStartElement is not null && !_WindowStartElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("windowStart",_WindowStartElement);
+        if (_WindowEndElement is not null && !_WindowEndElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("windowEnd",_WindowEndElement);
       }
 
     }
@@ -1182,12 +1182,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_StartElement.InOverflow<Hl7.Fhir.Model.Integer>() && _StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
-        if (!_EndElement.InOverflow<Hl7.Fhir.Model.Integer>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
-        if (!_ObservedAlleleElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ObservedAlleleElement is not null) yield return new KeyValuePair<string,object>("observedAllele",_ObservedAlleleElement);
-        if (!_ReferenceAlleleElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ReferenceAlleleElement is not null) yield return new KeyValuePair<string,object>("referenceAllele",_ReferenceAlleleElement);
-        if (!_CigarElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _CigarElement is not null) yield return new KeyValuePair<string,object>("cigar",_CigarElement);
-        if (!_VariantPointer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _VariantPointer is not null) yield return new KeyValuePair<string,object>("variantPointer",_VariantPointer);
+        if (_StartElement is not null && !_StartElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("start",_StartElement);
+        if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("end",_EndElement);
+        if (_ObservedAlleleElement is not null && !_ObservedAlleleElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("observedAllele",_ObservedAlleleElement);
+        if (_ReferenceAlleleElement is not null && !_ReferenceAlleleElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("referenceAllele",_ReferenceAlleleElement);
+        if (_CigarElement is not null && !_CigarElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("cigar",_CigarElement);
+        if (_VariantPointer is not null && !_VariantPointer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("variantPointer",_VariantPointer);
       }
 
     }
@@ -2088,21 +2088,21 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.QualityType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-        if (!_StandardSequence.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _StandardSequence is not null) yield return new KeyValuePair<string,object>("standardSequence",_StandardSequence);
-        if (!_StartElement.InOverflow<Hl7.Fhir.Model.Integer>() && _StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
-        if (!_EndElement.InOverflow<Hl7.Fhir.Model.Integer>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
-        if (!_Score.InOverflow<Hl7.Fhir.Model.Quantity>() && _Score is not null) yield return new KeyValuePair<string,object>("score",_Score);
-        if (!_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Method is not null) yield return new KeyValuePair<string,object>("method",_Method);
-        if (!_TruthTPElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _TruthTPElement is not null) yield return new KeyValuePair<string,object>("truthTP",_TruthTPElement);
-        if (!_QueryTPElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _QueryTPElement is not null) yield return new KeyValuePair<string,object>("queryTP",_QueryTPElement);
-        if (!_TruthFNElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _TruthFNElement is not null) yield return new KeyValuePair<string,object>("truthFN",_TruthFNElement);
-        if (!_QueryFPElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _QueryFPElement is not null) yield return new KeyValuePair<string,object>("queryFP",_QueryFPElement);
-        if (!_GtFPElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _GtFPElement is not null) yield return new KeyValuePair<string,object>("gtFP",_GtFPElement);
-        if (!_PrecisionElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _PrecisionElement is not null) yield return new KeyValuePair<string,object>("precision",_PrecisionElement);
-        if (!_RecallElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _RecallElement is not null) yield return new KeyValuePair<string,object>("recall",_RecallElement);
-        if (!_FScoreElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _FScoreElement is not null) yield return new KeyValuePair<string,object>("fScore",_FScoreElement);
-        if (!_Roc.InOverflow<Hl7.Fhir.Model.MolecularSequence.RocComponent>() && _Roc is not null) yield return new KeyValuePair<string,object>("roc",_Roc);
+        if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.QualityType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_StandardSequence is not null && !_StandardSequence.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("standardSequence",_StandardSequence);
+        if (_StartElement is not null && !_StartElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("start",_StartElement);
+        if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("end",_EndElement);
+        if (_Score is not null && !_Score.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("score",_Score);
+        if (_Method is not null && !_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("method",_Method);
+        if (_TruthTPElement is not null && !_TruthTPElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("truthTP",_TruthTPElement);
+        if (_QueryTPElement is not null && !_QueryTPElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("queryTP",_QueryTPElement);
+        if (_TruthFNElement is not null && !_TruthFNElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("truthFN",_TruthFNElement);
+        if (_QueryFPElement is not null && !_QueryFPElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("queryFP",_QueryFPElement);
+        if (_GtFPElement is not null && !_GtFPElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("gtFP",_GtFPElement);
+        if (_PrecisionElement is not null && !_PrecisionElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("precision",_PrecisionElement);
+        if (_RecallElement is not null && !_RecallElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("recall",_RecallElement);
+        if (_FScoreElement is not null && !_FScoreElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("fScore",_FScoreElement);
+        if (_Roc is not null && !_Roc.InOverflow<Hl7.Fhir.Model.MolecularSequence.RocComponent>()) yield return new KeyValuePair<string,object>("roc",_Roc);
       }
 
     }
@@ -2614,13 +2614,13 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_ScoreElement.InOverflow<List<Hl7.Fhir.Model.Integer>>() && _ScoreElement?.Any() is true) yield return new KeyValuePair<string,object>("score",_ScoreElement);
-        if (!_NumTPElement.InOverflow<List<Hl7.Fhir.Model.Integer>>() && _NumTPElement?.Any() is true) yield return new KeyValuePair<string,object>("numTP",_NumTPElement);
-        if (!_NumFPElement.InOverflow<List<Hl7.Fhir.Model.Integer>>() && _NumFPElement?.Any() is true) yield return new KeyValuePair<string,object>("numFP",_NumFPElement);
-        if (!_NumFNElement.InOverflow<List<Hl7.Fhir.Model.Integer>>() && _NumFNElement?.Any() is true) yield return new KeyValuePair<string,object>("numFN",_NumFNElement);
-        if (!_PrecisionElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>() && _PrecisionElement?.Any() is true) yield return new KeyValuePair<string,object>("precision",_PrecisionElement);
-        if (!_SensitivityElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>() && _SensitivityElement?.Any() is true) yield return new KeyValuePair<string,object>("sensitivity",_SensitivityElement);
-        if (!_FMeasureElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>() && _FMeasureElement?.Any() is true) yield return new KeyValuePair<string,object>("fMeasure",_FMeasureElement);
+        if (_ScoreElement?.Any() is true && !_ScoreElement.InOverflow<List<Hl7.Fhir.Model.Integer>>()) yield return new KeyValuePair<string,object>("score",_ScoreElement);
+        if (_NumTPElement?.Any() is true && !_NumTPElement.InOverflow<List<Hl7.Fhir.Model.Integer>>()) yield return new KeyValuePair<string,object>("numTP",_NumTPElement);
+        if (_NumFPElement?.Any() is true && !_NumFPElement.InOverflow<List<Hl7.Fhir.Model.Integer>>()) yield return new KeyValuePair<string,object>("numFP",_NumFPElement);
+        if (_NumFNElement?.Any() is true && !_NumFNElement.InOverflow<List<Hl7.Fhir.Model.Integer>>()) yield return new KeyValuePair<string,object>("numFN",_NumFNElement);
+        if (_PrecisionElement?.Any() is true && !_PrecisionElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>()) yield return new KeyValuePair<string,object>("precision",_PrecisionElement);
+        if (_SensitivityElement?.Any() is true && !_SensitivityElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>()) yield return new KeyValuePair<string,object>("sensitivity",_SensitivityElement);
+        if (_FMeasureElement?.Any() is true && !_FMeasureElement.InOverflow<List<Hl7.Fhir.Model.FhirDecimal>>()) yield return new KeyValuePair<string,object>("fMeasure",_FMeasureElement);
       }
 
     }
@@ -3048,12 +3048,12 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-        if (!_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>() && _UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
-        if (!_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-        if (!_DatasetIdElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _DatasetIdElement is not null) yield return new KeyValuePair<string,object>("datasetId",_DatasetIdElement);
-        if (!_VariantsetIdElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _VariantsetIdElement is not null) yield return new KeyValuePair<string,object>("variantsetId",_VariantsetIdElement);
-        if (!_ReadsetIdElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ReadsetIdElement is not null) yield return new KeyValuePair<string,object>("readsetId",_ReadsetIdElement);
+        if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
+        if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+        if (_DatasetIdElement is not null && !_DatasetIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("datasetId",_DatasetIdElement);
+        if (_VariantsetIdElement is not null && !_VariantsetIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("variantsetId",_VariantsetIdElement);
+        if (_ReadsetIdElement is not null && !_ReadsetIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("readsetId",_ReadsetIdElement);
       }
 
     }
@@ -3375,11 +3375,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_VariantType.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _VariantType is not null) yield return new KeyValuePair<string,object>("variantType",_VariantType);
-        if (!_ExactElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>() && _ExactElement is not null) yield return new KeyValuePair<string,object>("exact",_ExactElement);
-        if (!_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>() && _LengthElement is not null) yield return new KeyValuePair<string,object>("length",_LengthElement);
-        if (!_Outer.InOverflow<Hl7.Fhir.Model.MolecularSequence.OuterComponent>() && _Outer is not null) yield return new KeyValuePair<string,object>("outer",_Outer);
-        if (!_Inner.InOverflow<Hl7.Fhir.Model.MolecularSequence.InnerComponent>() && _Inner is not null) yield return new KeyValuePair<string,object>("inner",_Inner);
+        if (_VariantType is not null && !_VariantType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("variantType",_VariantType);
+        if (_ExactElement is not null && !_ExactElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("exact",_ExactElement);
+        if (_LengthElement is not null && !_LengthElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("length",_LengthElement);
+        if (_Outer is not null && !_Outer.InOverflow<Hl7.Fhir.Model.MolecularSequence.OuterComponent>()) yield return new KeyValuePair<string,object>("outer",_Outer);
+        if (_Inner is not null && !_Inner.InOverflow<Hl7.Fhir.Model.MolecularSequence.InnerComponent>()) yield return new KeyValuePair<string,object>("inner",_Inner);
       }
 
     }
@@ -3565,8 +3565,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_StartElement.InOverflow<Hl7.Fhir.Model.Integer>() && _StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
-        if (!_EndElement.InOverflow<Hl7.Fhir.Model.Integer>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
+        if (_StartElement is not null && !_StartElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("start",_StartElement);
+        if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("end",_EndElement);
       }
 
     }
@@ -3752,8 +3752,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_StartElement.InOverflow<Hl7.Fhir.Model.Integer>() && _StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
-        if (!_EndElement.InOverflow<Hl7.Fhir.Model.Integer>() && _EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
+        if (_StartElement is not null && !_StartElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("start",_StartElement);
+        if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("end",_EndElement);
       }
 
     }
@@ -4593,22 +4593,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>() && _Identifier?.Any() is true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (!_CoordinateSystemElement.InOverflow<Hl7.Fhir.Model.Integer>() && _CoordinateSystemElement is not null) yield return new KeyValuePair<string,object>("coordinateSystem",_CoordinateSystemElement);
-      if (!_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
-      if (!_Specimen.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Specimen is not null) yield return new KeyValuePair<string,object>("specimen",_Specimen);
-      if (!_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Device is not null) yield return new KeyValuePair<string,object>("device",_Device);
-      if (!_Performer.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Performer is not null) yield return new KeyValuePair<string,object>("performer",_Performer);
-      if (!_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>() && _Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
-      if (!_ReferenceSeq.InOverflow<Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent>() && _ReferenceSeq is not null) yield return new KeyValuePair<string,object>("referenceSeq",_ReferenceSeq);
-      if (!_Variant.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>>() && _Variant?.Any() is true) yield return new KeyValuePair<string,object>("variant",_Variant);
-      if (!_ObservedSeqElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ObservedSeqElement is not null) yield return new KeyValuePair<string,object>("observedSeq",_ObservedSeqElement);
-      if (!_Quality.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>>() && _Quality?.Any() is true) yield return new KeyValuePair<string,object>("quality",_Quality);
-      if (!_ReadCoverageElement.InOverflow<Hl7.Fhir.Model.Integer>() && _ReadCoverageElement is not null) yield return new KeyValuePair<string,object>("readCoverage",_ReadCoverageElement);
-      if (!_Repository.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>>() && _Repository?.Any() is true) yield return new KeyValuePair<string,object>("repository",_Repository);
-      if (!_Pointer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>() && _Pointer?.Any() is true) yield return new KeyValuePair<string,object>("pointer",_Pointer);
-      if (!_StructureVariant.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>>() && _StructureVariant?.Any() is true) yield return new KeyValuePair<string,object>("structureVariant",_StructureVariant);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_CoordinateSystemElement is not null && !_CoordinateSystemElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("coordinateSystem",_CoordinateSystemElement);
+      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Specimen is not null && !_Specimen.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("specimen",_Specimen);
+      if (_Device is not null && !_Device.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("device",_Device);
+      if (_Performer is not null && !_Performer.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("performer",_Performer);
+      if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+      if (_ReferenceSeq is not null && !_ReferenceSeq.InOverflow<Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent>()) yield return new KeyValuePair<string,object>("referenceSeq",_ReferenceSeq);
+      if (_Variant?.Any() is true && !_Variant.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.VariantComponent>>()) yield return new KeyValuePair<string,object>("variant",_Variant);
+      if (_ObservedSeqElement is not null && !_ObservedSeqElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("observedSeq",_ObservedSeqElement);
+      if (_Quality?.Any() is true && !_Quality.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.QualityComponent>>()) yield return new KeyValuePair<string,object>("quality",_Quality);
+      if (_ReadCoverageElement is not null && !_ReadCoverageElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("readCoverage",_ReadCoverageElement);
+      if (_Repository?.Any() is true && !_Repository.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.RepositoryComponent>>()) yield return new KeyValuePair<string,object>("repository",_Repository);
+      if (_Pointer?.Any() is true && !_Pointer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("pointer",_Pointer);
+      if (_StructureVariant?.Any() is true && !_StructureVariant.InOverflow<List<Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent>>()) yield return new KeyValuePair<string,object>("structureVariant",_StructureVariant);
     }
 
   }

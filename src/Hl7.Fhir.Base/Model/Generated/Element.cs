@@ -204,8 +204,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>() && _ElementIdElement is not null) yield return new KeyValuePair<string,object>("id",_ElementIdElement);
-      if (!_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>() && _Extension?.Any() is true) yield return new KeyValuePair<string,object>("extension",_Extension);
+      if (_ElementIdElement is not null && !_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("id",_ElementIdElement);
+      if (_Extension?.Any() is true && !_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("extension",_Extension);
     }
 
   }

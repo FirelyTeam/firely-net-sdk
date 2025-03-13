@@ -245,9 +245,9 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_LowNumerator.InOverflow<Hl7.Fhir.Model.Quantity>() && _LowNumerator is not null) yield return new KeyValuePair<string,object>("lowNumerator",_LowNumerator);
-      if (!_HighNumerator.InOverflow<Hl7.Fhir.Model.Quantity>() && _HighNumerator is not null) yield return new KeyValuePair<string,object>("highNumerator",_HighNumerator);
-      if (!_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>() && _Denominator is not null) yield return new KeyValuePair<string,object>("denominator",_Denominator);
+      if (_LowNumerator is not null && !_LowNumerator.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("lowNumerator",_LowNumerator);
+      if (_HighNumerator is not null && !_HighNumerator.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("highNumerator",_HighNumerator);
+      if (_Denominator is not null && !_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("denominator",_Denominator);
     }
 
   }

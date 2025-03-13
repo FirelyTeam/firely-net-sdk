@@ -501,9 +501,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>() && _TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-        if (!_StateElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>() && _StateElement is not null) yield return new KeyValuePair<string,object>("state",_StateElement);
-        if (!_TimeElement.InOverflow<Hl7.Fhir.Model.Instant>() && _TimeElement is not null) yield return new KeyValuePair<string,object>("time",_TimeElement);
+        if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+        if (_StateElement is not null && !_StateElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>>()) yield return new KeyValuePair<string,object>("state",_StateElement);
+        if (_TimeElement is not null && !_TimeElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("time",_TimeElement);
       }
 
     }
@@ -1061,16 +1061,16 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>() && _Identifier is not null) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (!_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (!_Unit.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Unit is not null) yield return new KeyValuePair<string,object>("unit",_Unit);
-      if (!_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Source is not null) yield return new KeyValuePair<string,object>("source",_Source);
-      if (!_Parent.InOverflow<Hl7.Fhir.Model.ResourceReference>() && _Parent is not null) yield return new KeyValuePair<string,object>("parent",_Parent);
-      if (!_OperationalStatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>() && _OperationalStatusElement is not null) yield return new KeyValuePair<string,object>("operationalStatus",_OperationalStatusElement);
-      if (!_ColorElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>>() && _ColorElement is not null) yield return new KeyValuePair<string,object>("color",_ColorElement);
-      if (!_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>() && _CategoryElement is not null) yield return new KeyValuePair<string,object>("category",_CategoryElement);
-      if (!_MeasurementPeriod.InOverflow<Hl7.Fhir.Model.Timing>() && _MeasurementPeriod is not null) yield return new KeyValuePair<string,object>("measurementPeriod",_MeasurementPeriod);
-      if (!_Calibration.InOverflow<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>() && _Calibration?.Any() is true) yield return new KeyValuePair<string,object>("calibration",_Calibration);
+      if (_Identifier is not null && !_Identifier.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Unit is not null && !_Unit.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("unit",_Unit);
+      if (_Source is not null && !_Source.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("source",_Source);
+      if (_Parent is not null && !_Parent.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("parent",_Parent);
+      if (_OperationalStatusElement is not null && !_OperationalStatusElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>>()) yield return new KeyValuePair<string,object>("operationalStatus",_OperationalStatusElement);
+      if (_ColorElement is not null && !_ColorElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>>()) yield return new KeyValuePair<string,object>("color",_ColorElement);
+      if (_CategoryElement is not null && !_CategoryElement.InOverflow<Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>>()) yield return new KeyValuePair<string,object>("category",_CategoryElement);
+      if (_MeasurementPeriod is not null && !_MeasurementPeriod.InOverflow<Hl7.Fhir.Model.Timing>()) yield return new KeyValuePair<string,object>("measurementPeriod",_MeasurementPeriod);
+      if (_Calibration?.Any() is true && !_Calibration.InOverflow<List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>>()) yield return new KeyValuePair<string,object>("calibration",_Calibration);
     }
 
   }

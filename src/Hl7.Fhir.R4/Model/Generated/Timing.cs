@@ -1244,21 +1244,21 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (!_Bounds.InOverflow<DynamicDataType>() && _Bounds is not null) yield return new KeyValuePair<string,object>("bounds",_Bounds);
-        if (!_CountElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _CountElement is not null) yield return new KeyValuePair<string,object>("count",_CountElement);
-        if (!_CountMaxElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _CountMaxElement is not null) yield return new KeyValuePair<string,object>("countMax",_CountMaxElement);
-        if (!_DurationElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _DurationElement is not null) yield return new KeyValuePair<string,object>("duration",_DurationElement);
-        if (!_DurationMaxElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _DurationMaxElement is not null) yield return new KeyValuePair<string,object>("durationMax",_DurationMaxElement);
-        if (!_DurationUnitElement.InOverflow<Code<Hl7.Fhir.Model.Timing.UnitsOfTime>>() && _DurationUnitElement is not null) yield return new KeyValuePair<string,object>("durationUnit",_DurationUnitElement);
-        if (!_FrequencyElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _FrequencyElement is not null) yield return new KeyValuePair<string,object>("frequency",_FrequencyElement);
-        if (!_FrequencyMaxElement.InOverflow<Hl7.Fhir.Model.PositiveInt>() && _FrequencyMaxElement is not null) yield return new KeyValuePair<string,object>("frequencyMax",_FrequencyMaxElement);
-        if (!_PeriodElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _PeriodElement is not null) yield return new KeyValuePair<string,object>("period",_PeriodElement);
-        if (!_PeriodMaxElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>() && _PeriodMaxElement is not null) yield return new KeyValuePair<string,object>("periodMax",_PeriodMaxElement);
-        if (!_PeriodUnitElement.InOverflow<Code<Hl7.Fhir.Model.Timing.UnitsOfTime>>() && _PeriodUnitElement is not null) yield return new KeyValuePair<string,object>("periodUnit",_PeriodUnitElement);
-        if (!_DayOfWeekElement.InOverflow<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>() && _DayOfWeekElement?.Any() is true) yield return new KeyValuePair<string,object>("dayOfWeek",_DayOfWeekElement);
-        if (!_TimeOfDayElement.InOverflow<List<Hl7.Fhir.Model.Time>>() && _TimeOfDayElement?.Any() is true) yield return new KeyValuePair<string,object>("timeOfDay",_TimeOfDayElement);
-        if (!_WhenElement.InOverflow<List<Code<Hl7.Fhir.Model.Timing.EventTiming>>>() && _WhenElement?.Any() is true) yield return new KeyValuePair<string,object>("when",_WhenElement);
-        if (!_OffsetElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>() && _OffsetElement is not null) yield return new KeyValuePair<string,object>("offset",_OffsetElement);
+        if (_Bounds is not null && !_Bounds.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("bounds",_Bounds);
+        if (_CountElement is not null && !_CountElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("count",_CountElement);
+        if (_CountMaxElement is not null && !_CountMaxElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("countMax",_CountMaxElement);
+        if (_DurationElement is not null && !_DurationElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("duration",_DurationElement);
+        if (_DurationMaxElement is not null && !_DurationMaxElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("durationMax",_DurationMaxElement);
+        if (_DurationUnitElement is not null && !_DurationUnitElement.InOverflow<Code<Hl7.Fhir.Model.Timing.UnitsOfTime>>()) yield return new KeyValuePair<string,object>("durationUnit",_DurationUnitElement);
+        if (_FrequencyElement is not null && !_FrequencyElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("frequency",_FrequencyElement);
+        if (_FrequencyMaxElement is not null && !_FrequencyMaxElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("frequencyMax",_FrequencyMaxElement);
+        if (_PeriodElement is not null && !_PeriodElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("period",_PeriodElement);
+        if (_PeriodMaxElement is not null && !_PeriodMaxElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("periodMax",_PeriodMaxElement);
+        if (_PeriodUnitElement is not null && !_PeriodUnitElement.InOverflow<Code<Hl7.Fhir.Model.Timing.UnitsOfTime>>()) yield return new KeyValuePair<string,object>("periodUnit",_PeriodUnitElement);
+        if (_DayOfWeekElement?.Any() is true && !_DayOfWeekElement.InOverflow<List<Code<Hl7.Fhir.Model.DaysOfWeek>>>()) yield return new KeyValuePair<string,object>("dayOfWeek",_DayOfWeekElement);
+        if (_TimeOfDayElement?.Any() is true && !_TimeOfDayElement.InOverflow<List<Hl7.Fhir.Model.Time>>()) yield return new KeyValuePair<string,object>("timeOfDay",_TimeOfDayElement);
+        if (_WhenElement?.Any() is true && !_WhenElement.InOverflow<List<Code<Hl7.Fhir.Model.Timing.EventTiming>>>()) yield return new KeyValuePair<string,object>("when",_WhenElement);
+        if (_OffsetElement is not null && !_OffsetElement.InOverflow<Hl7.Fhir.Model.UnsignedInt>()) yield return new KeyValuePair<string,object>("offset",_OffsetElement);
       }
 
     }
@@ -1465,9 +1465,9 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (!_EventElement.InOverflow<List<Hl7.Fhir.Model.FhirDateTime>>() && _EventElement?.Any() is true) yield return new KeyValuePair<string,object>("event",_EventElement);
-      if (!_Repeat.InOverflow<Hl7.Fhir.Model.Timing.RepeatComponent>() && _Repeat is not null) yield return new KeyValuePair<string,object>("repeat",_Repeat);
-      if (!_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>() && _Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_EventElement?.Any() is true && !_EventElement.InOverflow<List<Hl7.Fhir.Model.FhirDateTime>>()) yield return new KeyValuePair<string,object>("event",_EventElement);
+      if (_Repeat is not null && !_Repeat.InOverflow<Hl7.Fhir.Model.Timing.RepeatComponent>()) yield return new KeyValuePair<string,object>("repeat",_Repeat);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
     }
 
   }
