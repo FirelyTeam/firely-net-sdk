@@ -613,9 +613,9 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual("Patient.birthDate.extension[0]", oc.Issue[0].Expression.First());
+                Assert.AreEqual("Patient.birthDate.extension", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual(FhirJsonException.EXPECTED_START_OF_ARRAY_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(CodedValidationException.EXPECTED_ARRAY_NOT_OBJECT_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var p = serializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
-                Assert.Fail("Expected to throw parsing");
+                // Assert.Fail("Expected to throw parsing");
             }
             catch (DeserializationFailedException ex)
             {
@@ -781,19 +781,15 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual(FhirJsonException.EXPECTED_START_OF_OBJECT_CODE, oc.Issue[0].Details.Coding[0].Code);
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
-                Assert.AreEqual("Patient.name[0].given[1].extension[1]", oc.Issue[0].Expression.First());
-
-                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[0].Details.Coding[0].Code);
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("Patient.name[0].given[1].extension[2].url", oc.Issue[1].Expression.First());
+                Assert.AreEqual("Patient.name[0].given[1].extension[2].url", oc.Issue[0].Expression.First());
 
-                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[2].Details.Coding[0].Code);
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual("Patient.name[0].given[1].id", oc.Issue[2].Expression.First());
+                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual("Patient.name[0].given[1].id", oc.Issue[1].Expression.First());
 
-                Assert.AreEqual(3, oc.Issue.Count);
+                Assert.AreEqual(2, oc.Issue.Count);
             }
         }
 

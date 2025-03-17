@@ -109,11 +109,11 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
                 Assert.AreEqual("XML121", oc.Issue[0].Details.Coding[0].Code);
 
-                Assert.AreEqual("Patient.contact[0].gender", oc.Issue[1].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("PVAL116", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual("Patient.contact[0].gender", oc.Issue[2].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
+                Assert.AreEqual("PVAL116", oc.Issue[2].Details.Coding[0].Code);
 
-                Assert.AreEqual(2, oc.Issue.Count);
+                Assert.AreEqual(3, oc.Issue.Count);
             }
         }
 
@@ -250,6 +250,50 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(2, oc.Issue.Count);
             }
         }
+        
+        [TestMethod]
+        public void XMLInvalidRepeatingOnNonRepeating()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                             <Patient xmlns="http://hl7.org/fhir">
+                                 <id value="pat1"/>
+                                 <active value="true"/>
+                                 <active value="false"/>
+                                 <name>
+                                     <family value="Doe"/>
+                                 </name>
+                                 <birthDate value="1 Jan 1970"/>
+                             </Patient>
+                             """;
+            try
+            {
+                var p = SerializeResource<Patient>(rawData);
+                DebugDump.OutputXml(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputXml(ex.PartialResult);
+
+                Assert.AreEqual("Patient.active", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual("XML121", oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.active", oc.Issue[1].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual(COVE.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, oc.Issue[1].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.birthDate", oc.Issue[2].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
+                Assert.AreEqual(COVE.LITERAL_INVALID_CODE, oc.Issue[2].Details.Coding[0].Code);
+
+                Assert.AreEqual(3, oc.Issue.Count);
+            }
+        }
 
         [TestMethod]
         public void XMLInvalidDateValueWithTime()
@@ -328,7 +372,7 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void XMLInvalidPropertyDetected()
+        public void XMLInvalidPropertySupportedWithOverflow()
         {
             string rawData = """
                 <Patient xmlns="http://hl7.org/fhir">
@@ -370,11 +414,15 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[1].Severity);
                 Assert.AreEqual("XML104", oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual("Patient", oc.Issue[2].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[2].Severity);
-                Assert.AreEqual("XML104", oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual("Patient.name[1]", oc.Issue[2].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
+                Assert.AreEqual("XML120", oc.Issue[2].Details.Coding[0].Code);
 
-                Assert.AreEqual(3, oc.Issue.Count);
+                Assert.AreEqual("Patient", oc.Issue[3].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[3].Severity);
+                Assert.AreEqual("XML104", oc.Issue[3].Details.Coding[0].Code);
+
+                Assert.AreEqual(4, oc.Issue.Count);
             }
         }
 
@@ -507,6 +555,8 @@ namespace Hl7.Fhir.Serialization.Tests
                 OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputXml(ex.PartialResult);
+
+                Assert.AreEqual(8, oc.Issue.Count);
             }
         }
 

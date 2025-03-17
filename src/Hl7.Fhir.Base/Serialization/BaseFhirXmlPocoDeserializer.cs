@@ -3,6 +3,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -233,7 +234,7 @@ public class BaseFhirXmlPocoDeserializer
             throw new InvalidOperationException($"Xml node of type '{reader.NodeType}' is unexpected at this point");
 
         if (reader.HasAttributes)
-            readAttributes(target, mapping, reader, state);
+            readAttributes(_inspector, target, mapping, reader, state);
 
         //Empty elements have no children e.g. <foo value="bar/>)
         if (!reader.IsEmptyElement)
@@ -253,7 +254,22 @@ public class BaseFhirXmlPocoDeserializer
             while (reader.NodeType != XmlNodeType.EndElement)
             {
                 var (propMapping, propValueMapping, error) = tryGetMappedElementMetadata(_inspector, mapping, reader, state.Path, reader.LocalName);
-                state.Errors.Add(error);
+
+                if (error is not null)
+                {
+                    // report the error anyway
+                    state.Errors.Add(error);
+                    
+                    // we don't know this property: Try to parse anyway and throw it into dynamic and overflow
+                    deserializeUnknownPropertyValue(target, reader, state);
+                    
+                    // don't process further
+                    while (reader.ShouldSkipNodeType(state))
+                    {
+                        reader.Skip();
+                    }
+                    continue;
+                }
 
                 bool validNamespace = true;
                 if (propMapping is not null)
@@ -307,6 +323,53 @@ public class BaseFhirXmlPocoDeserializer
         reader.ReadToContent(state);
     }
 
+    private void deserializeUnknownPropertyValue(Base target, XmlReader reader, FhirXmlPocoDeserializerState state)
+    {
+        var (lineNumber, position) = reader.GenerateLineInfo();
+        
+        var (propertyName, choiceType) = tryDetectChoiceTypeFromName(reader.LocalName);
+
+        var mapping = choiceType ?? _inspector.FindClassMapping(nameof(DynamicDataType));
+
+        var primitive = (mapping!.Factory() as Base)!;
+
+        DeserializeElementInto(primitive, mapping, reader, state);
+        
+        setPropertyWithRepeating(target, propertyName, mapping, primitive);
+        
+        
+        (string name, ClassMapping? choiceType) tryDetectChoiceTypeFromName(string propertyName)
+        {
+            var span = propertyName.AsSpan();
+            for(int i = 0; i < span.Length; i++)
+            {
+                if (!char.IsUpper(span[i])) 
+                    continue;
+
+                var subSpan = span.Slice(i);
+                if (subSpan.IsEmpty)
+                    break;
+                
+                var choiceMapping = _inspector.FindClassMapping(subSpan.ToString());
+                if (choiceMapping is not null)
+                    return (span[..i].ToString(), choiceMapping);
+            }
+            return (propertyName, null);
+        }
+    }
+
+    private static void parseUnknownAttributeValue(ModelInspector inspector, XmlReader reader, FhirXmlPocoDeserializerState state, Base target)
+    {
+        var attrName = reader.LocalName;
+        var type = reader.ValueType;
+        var trimmedVal = reader.Value.Trim();
+        var val = parsePrimitiveValue(trimmedVal, type, state.Path);
+
+        var baseVal = new DynamicPrimitive() { ObjectValue = val };
+                
+        setPropertyWithRepeating(target, attrName, inspector.FindClassMapping(typeof(DynamicPrimitive))!, baseVal);
+    }
+
     private static (int highestOrder, bool incorrectOrder) checkOrder(XmlReader reader, FhirXmlPocoDeserializerState state, int highestOrder, PropertyMapping propMapping)
     {
         var incorrectOrder = false;
@@ -350,7 +413,33 @@ public class BaseFhirXmlPocoDeserializer
             PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator, context, state.Errors);
         }
 
-        propMapping.SetValue(target, result);
+        setPropertyWithRepeating(target, propMapping.Name, propValueMapping!, result);        
+        try
+        {
+            _ = propMapping.GetValue(target);
+        }
+        catch (CodedValidationException ex)
+        {
+            state.Errors.Add(new CodedValidationException(ex.ErrorCode, ex.Message, state.Path.GetInstancePath(), lineNumber, position, ex.IssueSeverity, ex.IssueType));
+        }
+    }
+
+    private static void setPropertyWithRepeating(Base target, string name, ClassMapping propValueMapping, object? result)
+    {
+        if(target.TryGetValue(name, out var prop))
+        {
+            // single into repeating, otherwise prop is already == result
+            if (prop is not IList)
+            {
+                var list = propValueMapping.ListFactory();
+                    
+                list.Add(prop);
+                list.Add(result);
+    
+                result = list;
+            }
+        }
+        target.SetValue(name, result);
     }
 
 
@@ -366,7 +455,7 @@ public class BaseFhirXmlPocoDeserializer
         // We know our POCOs will generate the correct, non-null list.
         var currentList = (IList)propMapping.GetValue(target)!;
 
-        readIntoList(currentList,propValueMapping, propMapping, reader, state);
+        readIntoList(currentList, propValueMapping, propMapping, reader, state);
         return currentList;
     }
 
@@ -436,7 +525,7 @@ public class BaseFhirXmlPocoDeserializer
         return result;
     }
 
-    private static void readAttributes(Base target, ClassMapping propValueMapping, XmlReader reader, FhirXmlPocoDeserializerState state)
+    private static void readAttributes(ModelInspector inspector, Base target, ClassMapping propValueMapping, XmlReader reader, FhirXmlPocoDeserializerState state)
     {
         var elementName = reader.LocalName;
         //move into first attribute
@@ -470,8 +559,18 @@ public class BaseFhirXmlPocoDeserializer
                             }
                         }
                         else
-                        {
-                            state.Errors.Add(ERR.UNKNOWN_ATTRIBUTE(reader, state.Path.GetInstancePath(), reader.LocalName));
+                        {   
+                            state.Path.EnterElement(elementName, 0, true);
+                            try
+                            {
+                                // handle unknown property
+                                parseUnknownAttributeValue(inspector, reader, state, target);
+                            }
+                            finally
+                            {
+                                state.Path.ExitElement();
+                            }
+                            // state.Errors.Add(ERR.UNKNOWN_ATTRIBUTE(reader, state.Path.GetInstancePath(), reader.LocalName));
                         }
                     }
 
@@ -547,6 +646,8 @@ public class BaseFhirXmlPocoDeserializer
     {
         var resourceMapping = inspector.FindClassMapping(reader.LocalName);
 
+        resourceMapping ??= inspector.FindClassMapping(nameof(DynamicResource));
+
         return resourceMapping is not null ?
             (new(resourceMapping, null)) :
             (new(null, ERR.UNKNOWN_RESOURCE_TYPE(reader, path.GetInstancePath(), reader.LocalName)));
@@ -566,7 +667,6 @@ public class BaseFhirXmlPocoDeserializer
         PathStack path,
         string propertyName)
     {
-
         var propertyMapping = parentMapping.FindMappedElementByName(propertyName)
                               ?? parentMapping.FindMappedElementByChoiceName(propertyName);
 
@@ -578,7 +678,7 @@ public class BaseFhirXmlPocoDeserializer
         (ClassMapping? propertyValueMapping, FhirXmlException? error) = propertyMapping.Choice switch
         {
             ChoiceType.None or ChoiceType.ResourceChoice =>
-                inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) is ClassMapping m
+                inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) is { } m
                     ? (m, null)
                     : throw new InvalidOperationException($"Encountered property type {propertyMapping.ImplementingType} for which no mapping was found in the model assemblies. " + reader.GenerateLocationMessage()),
             ChoiceType.DatatypeChoice => getChoiceClassMapping(reader),
@@ -589,13 +689,18 @@ public class BaseFhirXmlPocoDeserializer
 
         (ClassMapping?, FhirXmlException?) getChoiceClassMapping(XmlReader r)
         {
+            ClassMapping? choiceMapping = null;
             string typeSuffix = propertyName[propertyMapping.Name.Length..];
+            
+            if(!string.IsNullOrEmpty(typeSuffix))
+                choiceMapping = inspector.FindClassMapping(typeSuffix);
 
-            return string.IsNullOrEmpty(typeSuffix)
-                ? (null, ERR.CHOICE_ELEMENT_HAS_NO_TYPE(r, path.GetInstancePath(), propertyMapping.Name))
-                : inspector.FindClassMapping(typeSuffix) is { } cm
-                    ? (cm, null)
-                    : (null, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
+            choiceMapping ??= inspector.FindClassMapping(nameof(DynamicDataType));
+            
+            if(choiceMapping is not null)
+                return (choiceMapping, null);
+            
+            return (null, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
         }
     }
 }
