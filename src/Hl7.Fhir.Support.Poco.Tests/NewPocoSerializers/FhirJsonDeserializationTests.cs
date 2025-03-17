@@ -622,26 +622,10 @@ public class FhirJsonDeserializationTests
     }
     
     [TestMethod]
-    public void JsonDeserializerHandleUnexpectedChoiceType()
+    public void JsonDeserializerHandleUnexpectedObject()
     {
         var parser = new BaseFhirJsonPocoDeserializer(ModelInspector.ForType<Patient>());
 
-        var dt = DateTimeOffset.UtcNow;
-        
-        // var test = new
-        // {
-        //     resourceType = "Observation",
-        //     id = "obs-001",
-        //     valueQuantity = new
-        //     {
-        //         value = 98.6,
-        //         unit = "°F",
-        //         system = "http://unitsofmeasure.org",
-        //         code = "degF"
-        //     },
-        //     valueString = "Normal" 
-        // };
-        
         var test = new
         {
             resourceType = "Observation",
@@ -657,36 +641,18 @@ public class FhirJsonDeserializationTests
             }
         };
 
-
         Utf8JsonReader reader = constructReader(test);
 
         parser.TryDeserializeResource(ref reader, out var obj, out var errors);
         
         obj.Should().NotBeNull();
         obj!.TypeName.Should().Be("Observation");
-        // errors.Should().ContainSingle(x => x.Message.Contains("Duplicate"));
     }
     
     [TestMethod]
     public void JsonDeserializerHandleContainedStuff()
     {
         var parser = new BaseFhirJsonPocoDeserializer(ModelInspector.ForType<Patient>());
-
-        var dt = DateTimeOffset.UtcNow;
-        
-        // var test = new
-        // {
-        //     resourceType = "Observation",
-        //     id = "obs-001",
-        //     valueQuantity = new
-        //     {
-        //         value = 98.6,
-        //         unit = "°F",
-        //         system = "http://unitsofmeasure.org",
-        //         code = "degF"
-        //     },
-        //     valueString = "Normal" 
-        // };
 
         var test = new
         {
@@ -706,7 +672,6 @@ public class FhirJsonDeserializationTests
         obj.Should().NotBeNull();
         obj!.TypeName.Should().Be("Patient");
         (obj as Patient)!.Contained.Should().HaveCount(1).And.Subject.Should().Satisfy(x => x.TypeName == "Medication");
-        // errors.Should().ContainSingle(x => x.Message.Contains("Duplicate"));
     }
 
 
