@@ -23,11 +23,16 @@ namespace Hl7.Fhir.ElementModel
         {
             if (expected.Name != actual.Name)
                 return TreeComparisonResult.Fail(actual.Location, $"name: was '{actual.Name}', expected '{expected.Name}'");
-            if (!Object.Equals(expected.Value, actual.Value))
-                return TreeComparisonResult.Fail(actual.Location, $"value: was '{actual.Value}', expected '{expected.Value}'");
+
+            var cleanedValueL = expected.Value is string el ? el.Replace("\r", "") : expected.Value;
+            var cleanedValueR = actual.Value is string er ? er.Replace("\r", "") : actual.Value;
+
+            if (!Equals(cleanedValueL, cleanedValueR))
+                return TreeComparisonResult.Fail(actual.Location, $"value: was '{cleanedValueL}', expected '{cleanedValueR}'");
             if (expected.InstanceType != actual.InstanceType && actual.InstanceType != null) 
                 return TreeComparisonResult.Fail(actual.Location, $"type: was '{actual.InstanceType}', expected '{expected.InstanceType}'");
-            if (expected.Location != actual.Location) TreeComparisonResult.Fail(actual.Location, $"Path: was '{actual.Location}', expected '{expected.Location}'");
+            if (expected.Location != actual.Location)
+                TreeComparisonResult.Fail(actual.Location, $"Path: was '{actual.Location}', expected '{expected.Location}'");
 
             // Ignore ordering (only relevant to xml)
             var childrenExp = expected.Children().OrderBy(e => e.Name);

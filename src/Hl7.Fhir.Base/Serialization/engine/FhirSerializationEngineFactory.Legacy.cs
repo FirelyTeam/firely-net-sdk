@@ -63,9 +63,31 @@ public static partial class FhirSerializationEngineFactory
         /// </summary>
         public static IFhirSerializationEngine FromParserSettings(ModelInspector inspector, ParserSettings settings) =>
             new ElementModelSerializationEngine(inspector,
-                BaseFhirParser.BuildXmlParsingSettings(settings),
-                BaseFhirParser.BuildJsonParserSettings(settings),
-                BaseFhirParser.BuildPocoBuilderSettings(settings));
+                buildXmlParsingSettings(settings),
+                buildJsonParserSettings(settings),
+                buildPocoBuilderSettings(settings));
+
+
+        private static PocoBuilderSettings buildPocoBuilderSettings(ParserSettings ps) =>
+            new()
+            {
+                AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
+                IgnoreUnknownMembers = ps.AcceptUnknownMembers,
+            };
+
+        private static FhirXmlParsingSettings buildXmlParsingSettings(ParserSettings settings) =>
+            new()
+            {
+                DisallowSchemaLocation = settings.DisallowXsiAttributesOnRoot,
+#pragma warning disable CS0618 // Type or member is obsolete
+                PermissiveParsing = settings.PermissiveParsing,
+#pragma warning restore CS0618 // Type or member is obsolete
+            };
+
+        private static FhirJsonParsingSettings buildJsonParserSettings(ParserSettings settings) =>
+#pragma warning disable CS0618 // Type or member is obsolete
+            new() { AllowJsonComments = false, PermissiveParsing = settings.PermissiveParsing };
+#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the legacy parser and serializer

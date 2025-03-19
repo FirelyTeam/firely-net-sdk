@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using var client = new FhirClient(TestEndpoint);
 
-            client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+            client.Settings.ParserSettings = client.Settings.ParserSettings with {AllowUnrecognizedEnums = true };
             var entry = await client.CapabilityStatementAsync();
 
             Assert.IsNotNull(entry);
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             static async Tasks.Task check(HttpClientEventHandler handler, FhirClient client)
             {
-                client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+                client.Settings.ParserSettings = client.Settings.ParserSettings with { AllowUnrecognizedEnums = true };
 
                 bool calledBefore = false;
                 HttpStatusCode? status = null;
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 using (FhirClient client = new FhirClient(TestEndpoint, httpClient: httpClient))
                 {
-                    client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+                    client.Settings.ParserSettings = client.Settings.ParserSettings with { AllowUnrecognizedEnums = true };
 
                     bool calledBefore = false;
                     HttpStatusCode? status = null;
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Tests.Rest
                 // And use another on the same handler to ensure that it wasn't disposed :O
                 using (FhirClient client = new FhirClient(TestEndpoint, httpClient: httpClient))
                 {
-                    client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+                    client.Settings.ParserSettings = client.Settings.ParserSettings with { AllowUnrecognizedEnums = true };
 
                     bool calledBefore = false;
                     HttpStatusCode? status = null;

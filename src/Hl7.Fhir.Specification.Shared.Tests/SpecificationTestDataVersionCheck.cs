@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Hl7.Fhir.Specification.Tests
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
             var path = Path.GetDirectoryName(location) + "/TestData";
             Console.WriteLine(path);
-            List<string> issues = new List<string>();
+            List<string> issues = [];
             await ValidateFolder(path, path, issues);
             Assert.AreEqual(0, issues.Count);
         }
@@ -31,26 +32,26 @@ namespace Hl7.Fhir.Specification.Tests
         {
             if (skipFiles(path)) return;
 
-            var xmlParser = new Hl7.Fhir.Serialization.FhirXmlParser();
-            var jsonParser = new Serialization.FhirJsonParser();
+            var xmlParser = FhirXmlParser.OSTRICH;
+            var jsonParser = FhirJsonParser.OSTRICH;
             Console.WriteLine($"Validating test files in {path.Replace(basePath, "")}");
             foreach (var item in Directory.EnumerateFiles(path))
             {
                 if (skipFiles(item)) continue;
 
                 string content = File.ReadAllText(item);
-                Resource resource = null;
+
                 try
                 {
                     if (new FileInfo(item).Extension == ".xml")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        resource = await xmlParser.ParseAsync<Resource>(content);
+                        xmlParser.Parse<Resource>(content);
                     }
                     else if (new FileInfo(item).Extension == ".json")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        resource = await jsonParser.ParseAsync<Resource>(content);
+                        jsonParser.Parse<Resource>(content);
                     }
                     else
                     {
@@ -132,7 +133,7 @@ namespace Hl7.Fhir.Specification.Tests
                         try
                         {
                             // and parse this
-                            resource = xmlParser.Parse<Resource>(xmlDoc.OuterXml);
+                            xmlParser.Parse<Resource>(xmlDoc.OuterXml);
                             Console.WriteLine($"        conversion to {ModelInfo.Version} success {new FileInfo(item).Name}");
 
                             // Save this back to the filesystem since it works!
