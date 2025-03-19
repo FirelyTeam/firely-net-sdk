@@ -6,98 +6,160 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
 
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
+using Hl7.FhirPath.Sprache;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Hl7.Fhir.Serialization
+namespace Hl7.Fhir.Serialization;
+
+public record ParserSettings
 {
-    /// <summary>Common parser configuration settings for BaseFhirParser and subclasses.</summary>
-    public class ParserSettings
+    /// <summary>
+    /// If set, this validator is invoked before the value is set in the object under construction to validate
+    /// and possibly alter the value. Setting this property to <c>null</c> will disable validation completely.
+    /// </summary>
+    public IDeserializationValidator? Validator { get; init; } = DataAnnotationDeserialzationValidator.Default;
+
+    /// <summary>
+    /// Specifies a filter that can be used to filter out exceptions that are not considered fatal. The filter
+    /// returns <c>true</c> for exceptions that should be ignored, and <c>false</c> otherwise.
+    /// </summary>
+    /// <remarks>Setting <see cref="AllowUnrecognizedEnums"/>,  <see cref="AcceptUnknownMembers"/> or
+    /// <inheritdoc cref="set_PermissiveParsing"/> will augment this filter to reflect these settings.</remarks>
+    public Predicate<CodedException>? ExceptionFilter
     {
-        /// <summary>
-        /// Raise an error when an xsi:schemaLocation is encountered.
-        /// </summary>
-        public bool DisallowXsiAttributesOnRoot { get; set; }
-
-        /// <summary>
-        /// Do not throw when encountering values not parseable as a member of an enumeration in a Poco.
-        /// </summary>
-        public bool AllowUnrecognizedEnums { get; set; }
-
-        /// <summary>
-        /// Do not throw when the data has an element that does not map to a property in the Poco.
-        /// </summary>
-        public bool AcceptUnknownMembers { get; set; }
-
-        /// <summary>
-        /// Do not raise exceptions for recoverable errors.
-        /// </summary>
-        public bool PermissiveParsing { get; set; } = true;
-
-        /// <summary>
-        /// Allow to parse a FHIR dateTime values into an element of type date.
-        /// </summary>
-        /// <remarks>
-        /// Needed for backward compatibility with old parser for resources which were saved and considered valid in the past.
-        /// </remarks>>
-        [Obsolete("Needed for backward compatibility with old parser for resources which were saved and considered valid in the past. " +
-            "Should not be used in new code.")]
-        public bool TruncateDateTimeToDate { get; set; } = false;
-
-        /// <summary>
-        /// A Handler to permit intercepting Exceptions during parsing
-        /// </summary>
-        public ExceptionNotificationHandler ExceptionHandler { get; set; }
-
-        /// <summary>Default constructor. Creates a new <see cref="ParserSettings"/> instance with default property values.</summary>
-        public ParserSettings() { }
-
-        /// <summary>Clone constructor. Generates a new <see cref="ParserSettings"/> instance initialized from the state of the specified instance.</summary>
-        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
-        public ParserSettings(ParserSettings other)
-        {
-            if (other == null) throw Error.ArgumentNull(nameof(other));
-            other.CopyTo(this);
-        }
-
-        /// <summary>Copy all configuration settings to another instance.</summary>
-        /// <param name="other">Another <see cref="ParserSettings"/> instance.</param>
-        /// <exception cref="ArgumentNullException">The specified argument is <c>null</c>.</exception>
-        public void CopyTo(ParserSettings other)
-        {
-            if (other == null) throw Error.ArgumentNull(nameof(other));
-
-            other.DisallowXsiAttributesOnRoot = DisallowXsiAttributesOnRoot;
-            other.AllowUnrecognizedEnums = AllowUnrecognizedEnums;
-            other.AcceptUnknownMembers = AcceptUnknownMembers;
-            other.PermissiveParsing = PermissiveParsing;
-#pragma warning disable CS0618 // Type or member is obsolete
-            other.TruncateDateTimeToDate = TruncateDateTimeToDate;
-#pragma warning restore CS0618 // Type or member is obsolete
-            other.ExceptionHandler = ExceptionHandler;
-        }
-
-        /// <summary>
-        /// Copy the necessary settings to PocoBuilderSettings
-        /// </summary>
-        /// <param name="settings">The instance where the settings are copied to.</param>
-        public void CopyTo(PocoBuilderSettings settings)
-        {
-            if (settings == null) throw Error.ArgumentNull(nameof(settings));
-
-            settings.AllowUnrecognizedEnums = AllowUnrecognizedEnums;
-            settings.IgnoreUnknownMembers = AcceptUnknownMembers;
-#pragma warning disable CS0618 // Type or member is obsolete
-            settings.TruncateDateTimeToDate = TruncateDateTimeToDate;
-#pragma warning restore CS0618 // Type or member is obsolete
-            settings.ExceptionHandler = ExceptionHandler;
-        }
-
-        /// <summary>Creates a new <see cref="ParserSettings"/> object that is a copy of the current instance.</summary>
-        public ParserSettings Clone() => new(this);
-
-        /// <summary>Creates a new <see cref="ParserSettings"/> instance with default property values.</summary>
-        public static ParserSettings CreateDefault() => new ParserSettings();
+        get => augmentFilter();
+        init => _exceptionFilter = value;
     }
+
+    private readonly Predicate<CodedException>? _exceptionFilter;
+
+    /// <summary>
+    /// Perform the parse time validation on the deserialized object even if parsing issues occurred.
+    /// </summary>
+    /// <remarks>
+    /// This is useful for "strict mode" single-pass validators and may result in spurious error messages
+    /// from validating incomplete content.
+    /// </remarks>
+    public bool ValidateOnFailedParse { get; init; } = false;
+
+    /// <summary>
+    /// During parsing any contained resources (such as those in a bundle) that encounter some form of parse/validation exception
+    /// will have a <c>List&lt;CodedException&gt;</c> of these exceptions added as an annotation to the child resource.
+    /// </summary>
+    /// <remarks>
+    /// This is primarily added to ease the processing of bundles during a batch submission.
+    /// (without requiring processing fhirpath expressions in the issues in the parsing operation outcome to determine if a
+    /// resource was clean and possibly ok to process).
+    /// </remarks>
+    public bool AnnotateResourceParseExceptions { get; init; } = false;
+
+    /// <summary>
+    /// For performance reasons, validation of Xhtml again the rules specified in the FHIR
+    /// specification for Narrative (http://hl7.org/fhir/narrative.html#2.4.0) is turned off by
+    /// default. Set this property to any other value than <see cref="None{T}"/>
+    /// to perform validation.
+    /// </summary>
+    public NarrativeValidationKind NarrativeValidation { get; init; } = NarrativeValidationKind.None;
+
+    private Predicate<CodedException>? augmentFilter()
+    {
+        var ignored = new List<string>();
+
+        // Simulate the old behaviour by selectively enforcing errors.
+        if(AllowUnrecognizedEnums) ignored.Add(CodedValidationException.INVALID_CODED_VALUE_CODE);
+        if(AcceptUnknownMembers) ignored.AddRange(
+            [FhirXmlException.UNKNOWN_ELEMENT_CODE, FhirXmlException.UNKNOWN_ATTRIBUTE_CODE]);
+
+        var augmentedFilter = _exceptionFilter;
+#pragma warning disable CS0618 // Type or member is obsolete
+        if (PermissiveParsing) augmentedFilter = augmentedFilter.Or(CodedExceptionFilters.IsRecoverableIssue);
+#pragma warning restore CS0618 // Type or member is obsolete
+        if(ignored.Any()) augmentedFilter = augmentedFilter.Ignore(ignored);
+        return augmentedFilter;
+    }
+
+    /// <summary>
+    /// Raise an error when an xsi:schemaLocation is encountered.
+    /// </summary>
+    public bool DisallowXsiAttributesOnRoot { get; init; }
+
+    /// <summary>
+    /// Do not throw when encountering values not parseable as a member of an enumeration in a Poco.
+    /// </summary>
+    /// <remarks>
+    /// This is the same as calling <see cref="Ignoring"/> with
+    /// <c>CodedValidationException.INVALID_CODED_VALUE_CODE</c> as the argument.
+    /// </remarks>
+    public bool AllowUnrecognizedEnums { get; init; }
+
+    /// <summary>
+    /// Do not throw when the data has an element that does not map to a property in the Poco.
+    /// </summary>
+    /// <remarks>
+    /// This is the same as calling <see cref="Ignoring"/> with
+    /// <c>FhirXmlException.UNKNOWN_ELEMENT_CODE</c> and <c>FhirXmlException.UNKNOWN_ATTRIBUTE_CODE</c>
+    /// as the arguments.
+    /// </remarks>
+    public bool AcceptUnknownMembers { get; init; }
+
+    /// <summary>
+    /// Do not raise exceptions for recoverable errors.
+    /// </summary>
+    /// <remarks>This is the same as adding <see cref="CodedExceptionFilters.IsRecoverableIssue"/> to the exception filter.</remarks>
+    [Obsolete("Use WithMode(DeserializationMode.Recoverable) instead.")]
+    public bool PermissiveParsing { get; init; }
+
+    /// <summary>
+    /// Enables all validation rules that are available.
+    /// </summary>
+    /// <param name="mode">The selected mode to use, see <see cref="DeserializationMode"/>.</param>
+    /// <param name="nvk">How strict to validate the XHtml in FHIR Narrative. Only relevant in mode <see cref="DeserializationMode.Strict"/></param>
+    public ParserSettings UsingMode(DeserializationMode mode,
+        NarrativeValidationKind nvk = NarrativeValidationKind.FhirXhtml) =>
+        mode switch
+        {
+            DeserializationMode.Strict => this with
+            {
+                ExceptionFilter = null, // No exceptions are ignored
+                NarrativeValidation = nvk
+            },
+            DeserializationMode.BackwardsCompatible => this with
+            {
+                ExceptionFilter = CodedExceptionFilters.IsBackwardsCompatibilityIssue,
+                NarrativeValidation = NarrativeValidationKind.None
+            },
+            DeserializationMode.Recoverable => this with
+            {
+                ExceptionFilter = CodedExceptionFilters.IsRecoverableIssue,
+                NarrativeValidation = NarrativeValidationKind.None
+            },
+            DeserializationMode.Ostrich => this with
+            {
+                Validator = null,   // Disable all validations, we don't care.
+                ExceptionFilter = _ => true,   // If there are still errors, ignore.
+                NarrativeValidation = NarrativeValidationKind.None   // We don't care about the narrative.
+            },
+            _ => throw Error.NotSupported("Unknown deserialization mode.")
+        };
+
+    /// <summary>
+    /// Alters the options to enforce specific parsing exceptions.
+    /// </summary>
+    public ParserSettings Enforcing(IEnumerable<string> toEnforce) =>
+        this with { ExceptionFilter = this.ExceptionFilter.Enforce(toEnforce) };
+
+    /// <summary>
+    /// Alters the options to ignore specific parsing exceptions.
+    /// </summary>
+    public ParserSettings Ignoring(IEnumerable<string> toIgnore) =>
+        this with { ExceptionFilter = this.ExceptionFilter.Ignore(toIgnore) };
 }
+
+[Obsolete("All parsing settings are unified under ParserSettings. Use that class instead.")]
+public record FhirXmlPocoDeserializerSettings : ParserSettings;

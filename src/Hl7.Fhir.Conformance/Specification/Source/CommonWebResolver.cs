@@ -38,12 +38,6 @@ namespace Hl7.Fhir.Specification.Source
             _clientFactory = fhirClientFactory ?? throw Error.ArgumentNull(nameof(fhirClientFactory));
         }
 
-        /// <summary>Gets or sets configuration settings that control parsing behavior.</summary>
-        public ParserSettings? ParserSettings { get; set; }
-
-        /// <summary>Gets or sets the request timeout of the internal <see cref="BaseFhirClient"/> instance.</summary>
-        public int TimeOut { get; set; } = DefaultTimeOut;
-
         /// <summary>
         /// Gets the runtime <see cref="Exception"/> from the last call to the
         /// <see cref="ResolveByUri(string)"/> method, if any, or <c>null</c> otherwise.
@@ -69,12 +63,11 @@ namespace Hl7.Fhir.Specification.Source
             
             var id = new ResourceIdentity(uri);
             var client = _clientFactory(id.BaseUri);
-            client.Settings.Timeout = this.TimeOut;
-            client.Settings.ParserSettings = this.ParserSettings;
 
             try
             {
-                var resultResource = TaskHelper.Await(() => client.ReadAsync<Resource>(id));
+                var resultResource = TaskHelper.Await(() => client.ReadAsync<Resource>(id))
+                                     ?? throw new InvalidOperationException("FhirClient.ReadAsync returned null, which was unexpected.");
                 resultResource.SetOrigin(uri);
                 LastError = null;
                 return resultResource;

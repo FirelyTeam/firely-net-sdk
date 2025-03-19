@@ -62,7 +62,7 @@ public class RoundTripAttachments
     [TestMethod]
     public void RoundTripAttachmentWithSizeOldParser()
     {
-        var parser = new FhirJsonParser(new ParserSettings() { PermissiveParsing = false });
+        var parser = new FhirJsonParser();
         var attachment = parser.Parse<Attachment>(_attachmentJson);
 #if R5
         attachment.Size.Should().Be(12L);

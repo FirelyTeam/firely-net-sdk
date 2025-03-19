@@ -2,6 +2,8 @@ using Hl7.Fhir.Model;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
+#nullable enable
+
 namespace Hl7.Fhir.Specification.Source;
 
 /// <summary>
@@ -20,7 +22,7 @@ public readonly record struct ResolverResult
 #if NET8_0_OR_GREATER
     [MemberNotNullWhen(true, nameof(Success))]
 #endif
-    public Resource Value { get; private init; }
+    public Resource? Value { get; }
     
     /// <summary>
     /// Error encountered while attempting retrieval of resource
@@ -28,7 +30,7 @@ public readonly record struct ResolverResult
 #if NET8_0_OR_GREATER
     [MemberNotNullWhen(false, nameof(Success))]
 #endif
-    public ResolverException Error { get; private init; }
+    public ResolverException? Error { get; private init; }
 
     /// <summary>
     /// Constructor for successfully resolved resource

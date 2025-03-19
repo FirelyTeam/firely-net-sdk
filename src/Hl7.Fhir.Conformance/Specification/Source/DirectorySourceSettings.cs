@@ -29,9 +29,9 @@ namespace Hl7.Fhir.Specification.Source
         public static DirectorySourceSettings CreateDefault() => new DirectorySourceSettings();
 
         // Instance fields
-        ParserSettings _parserSettings = ParserSettings.CreateDefault();
-        FhirXmlParsingSettings _xmlParserSettings = FhirXmlParsingSettings.CreateDefault();
-        FhirJsonParsingSettings _jsonParserSettings = FhirJsonParsingSettings.CreateDefault();
+        private ParserSettings _parserSettings = new();
+        private FhirXmlParsingSettings _xmlParserSettings = FhirXmlParsingSettings.CreateDefault();
+        private FhirJsonParsingSettings _jsonParserSettings = FhirJsonParsingSettings.CreateDefault();
 
         /// <summary>Default constructor. Creates a new <see cref="DirectorySourceSettings"/> instance with default property values.</summary>
         public DirectorySourceSettings()
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Specification.Source
             other.MultiThreaded = this.MultiThreaded;
             other.SummaryDetailsHarvesters = (ArtifactSummaryHarvester[])this.SummaryDetailsHarvesters?.Clone();
             other.ExcludeSummariesForUnknownArtifacts = this.ExcludeSummariesForUnknownArtifacts;
-            other.ParserSettings = new ParserSettings(this.ParserSettings);
+            other.ParserSettings = this.ParserSettings with { };
             other.XmlParserSettings = new FhirXmlParsingSettings(this.XmlParserSettings);
             other.JsonParserSettings = new FhirJsonParsingSettings(this.JsonParserSettings);
         }
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Specification.Source
         public ParserSettings ParserSettings
         {
             get => _parserSettings;
-            set => _parserSettings = value ?? ParserSettings.CreateDefault();
+            set => _parserSettings = value ?? new ParserSettings().UsingMode(DeserializationMode.Recoverable);
         }
 
         /// <summary>

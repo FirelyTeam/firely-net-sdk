@@ -21,9 +21,10 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestExampleScenarioJsonSerialization()
         {
-            var es = new ExampleScenario();
+            var es = new ExampleScenario() { Name = "test", Status = PublicationStatus.Active };
             es.Instance.Add(new ExampleScenario.InstanceComponent()
             {
+                ResourceId = "brian",
                 ResourceType = ResourceType.ExampleScenario,
                 Name = "brian"
             });

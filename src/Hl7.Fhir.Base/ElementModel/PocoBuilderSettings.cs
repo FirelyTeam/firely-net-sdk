@@ -67,6 +67,17 @@ public class PocoBuilderSettings
         other.ExceptionHandler = ExceptionHandler;
     }
 
+    /// <summary>
+    /// Initializes the current instance from the specified <see cref="PocoBuilderSettings"/> instance.
+    /// </summary>
+    public void CopyFrom(ParserSettings settings)
+    {
+        if (settings == null) throw Error.ArgumentNull(nameof(settings));
+
+        AllowUnrecognizedEnums = settings.AllowUnrecognizedEnums;
+        IgnoreUnknownMembers = settings.AcceptUnknownMembers;
+    }
+
     /// <summary>Creates a new <see cref="PocoBuilderSettings"/> object that is a copy of the current instance.</summary>
     public PocoBuilderSettings Clone() => new(this);
 
