@@ -23,7 +23,10 @@ namespace Hl7.Fhir.Rest
         public static BaseFhirClient WithLegacySerializer(this BaseFhirClient client)
         {
             client.Settings.SerializationEngine =
-                FhirSerializationEngineFactory.Legacy.FromParserSettings(client.Inspector, client.Settings.ParserSettings ?? new());
+                FhirSerializationEngineFactory.Legacy.FromParserSettings(client.Inspector,
+#pragma warning disable CS0618 // Type or member is obsolete
+                    client.Settings.ParserSettings);
+#pragma warning restore CS0618 // Type or member is obsolete
             return client;
         }
 
@@ -96,8 +99,8 @@ namespace Hl7.Fhir.Rest
 
         public static BaseFhirClient WithCustomIgnoreListSerializer(this BaseFhirClient client, string[] ignoreList)
         {
-            var xmlSettings = new FhirXmlPocoDeserializerSettings().Ignoring(ignoreList);
-            var jsonSettings = new FhirJsonConverterOptions().Ignoring(ignoreList);
+            var xmlSettings = new ParserSettings().Ignoring(ignoreList);
+            var jsonSettings = (FhirJsonConverterOptions)new FhirJsonConverterOptions().Ignoring(ignoreList);
 
             client.Settings.SerializationEngine = FhirSerializationEngineFactory.Custom(client.Inspector, jsonSettings, xmlSettings);
 

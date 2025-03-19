@@ -260,20 +260,61 @@ namespace Hl7.Fhir.Model
         /// Returns the profile on the given <see cref="ElementDefinition.TypeRefComponent"/> if specified, 
         /// or otherwise the core profile url for the specified type code.
         /// </summary>
-        public static string? GetTypeProfile(this ElementDefinition.TypeRefComponent elemType) =>
-            elemType.Profile.SafeSingleOrDefault() ?? (elemType?.Code is not null ? Canonical.ForCoreType(elemType.Code).Value : null);
+        public static string? GetTypeProfile(this ElementDefinition.TypeRefComponent? elemType) =>
+            elemType?.GetTypeProfiles().SafeSingleOrDefault();
 
         /// <summary>
-        /// Returns the profiles on the given <see cref="ElementDefinition.TypeRefComponent"/> if specified, 
+        /// Returns the profiles on the given <see cref="ElementDefinition.TypeRefComponent"/> if specified,
         /// or otherwise the core profile url for the specified type code.
         /// </summary>
-        public static IEnumerable<string?>? GetTypeProfiles(this ElementDefinition.TypeRefComponent elemType) =>
-            elemType switch
+        public static IEnumerable<string> GetTypeProfiles(this ElementDefinition.TypeRefComponent elemType)
+        {
+            if (elemType.Profile.Any()) return elemType.Profile.OfType<string>();
+
+            return getCodeFromTypeRef(elemType) is {} reference ? [reference] : [];
+        }
+
+        private const string SYSTEMTYPEURI = "http://hl7.org/fhirpath/System.";
+        private const string SDXMLTYPEEXTENSION = "http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type";
+
+        // TODO: This would probably be useful for the SDK too
+        private static string? getCodeFromTypeRef(this ElementDefinition.TypeRefComponent typeRef)
+        {
+            // Note, in R3, this can be empty for system primitives (so the .value element of datatypes),
+            // and there are some R4 profiles in the wild that still use this old schema too.
+            if (!string.IsNullOrEmpty(typeRef.Code)) return Canonical.ForCoreType(typeRef.Code).Value;
+
+            var r3TypeIndicator = typeRef.CodeElement?.GetStringExtension(SDXMLTYPEEXTENSION);
+            return r3TypeIndicator is not null ? deriveSystemTypeFromXsdType(r3TypeIndicator) : null;
+
+            static string deriveSystemTypeFromXsdType(string xsdTypeName)
             {
-                { ProfileElement.Count: > 0 } => elemType.Profile,
-                { Code: not null } => [Canonical.ForCoreType(elemType.Code).Value],
-                _ => null
-            };
+                // This R3-specific mapping is derived from the possible xsd types from the primitive datatype table
+                // at http://www.hl7.org/fhir/stu3/datatypes.html, and the mapping of these types to
+                // FhirPath from http://hl7.org/fhir/fhirpath.html#types
+                var systemType = xsdTypeName switch
+                {
+                    "xsd:boolean" => "Boolean",
+                    "xsd:int" => "Integer",
+                    "xsd:string" => "String",
+                    "xsd:decimal" => "Decimal",
+                    "xsd:anyURI" => "String",
+                    "xsd:anyUri" => "String",
+                    "xsd:base64Binary" => "String",
+                    "xsd:dateTime" => "DateTime",
+                    "xsd:gYear OR xsd:gYearMonth OR xsd:date" => "DateTime",
+                    "xsd:gYear OR xsd:gYearMonth OR xsd:date OR xsd:dateTime" => "DateTime",
+                    "xsd:time" => "Time",
+                    "xsd:token" => "String",
+                    "xsd:nonNegativeInteger" => "Integer",
+                    "xsd:positiveInteger" => "Integer",
+                    "xhtml:div" => "String", // used in R3 xhtml
+                    _ => throw new NotSupportedException($"The xsd type {xsdTypeName} is not supported as a primitive type in R3.")
+                };
+
+                return SYSTEMTYPEURI + systemType;
+            }
+        }
 
         /// <summary>
         /// Determines if the specified element definition represents a <see cref="ResourceReference"/>.
@@ -393,7 +434,7 @@ namespace Hl7.Fhir.Model
         /// <param name="ed"></param>
         /// <returns></returns>
         public static bool IsResourcePlaceholder(this ElementDefinition ed) =>
-            ed.Type is not null && ed.Type.Any(t => t.Code == "Resource" || t.Code == "DomainResource");
+            ed.Type is not null && ed.Type.Any(t => t.Code is "Resource" or "DomainResource");
 
         /*
          * From TypeRefExtension.cs

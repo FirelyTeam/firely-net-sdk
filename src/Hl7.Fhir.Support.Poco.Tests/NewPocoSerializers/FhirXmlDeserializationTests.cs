@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.MoveToContent();
             //reader.MoveToFirstAttribute();
 
-            var deserializer = getTestDeserializer(new FhirXmlPocoDeserializerSettings());
+            var deserializer = getTestDeserializer(new ParserSettings());
             var classMapping = ModelInfo.ModelInspector.ImportType(fhirTargetType)!;
             var target = (PrimitiveType)classMapping.Factory()!;
             var state = new FhirXmlPocoDeserializerState();
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(content);
             reader.Read();
 
-            var deserializer = getTestDeserializer(new());
+            var deserializer = getTestDeserializer(new ParserSettings { DisallowXsiAttributesOnRoot = true });
             var state = new FhirXmlPocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(xml);
             reader.Read();
 
-            var serializer = getTestDeserializer(new FhirXmlPocoDeserializerSettings { Validator = validator });
+            var serializer = getTestDeserializer(new ParserSettings { Validator = validator });
             serializer.TryDeserializeResource(reader, out _, out var issues);
 
             var errors = issues.ToList();
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var actual = FhirXmlSerializer.Default.SerializeToString(patient);
 
             // now parse this back out with the new parser
-            BaseFhirXmlPocoDeserializer ds = getTestDeserializer(new FhirXmlPocoDeserializerSettings());
+            BaseFhirXmlPocoDeserializer ds = getTestDeserializer(new ParserSettings());
 
             var np = ds.DeserializeResource(actual).Should().BeOfType<Patient>().Subject;
             Assert.AreEqual(patient.Text.Div, np.Text.Div, "New narrative should be the same");
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             return reader;
         }
 
-        private static BaseFhirXmlPocoDeserializer getTestDeserializer(FhirXmlPocoDeserializerSettings settings) =>
+        private static BaseFhirXmlPocoDeserializer getTestDeserializer(ParserSettings settings) =>
                 new(typeof(Patient).Assembly, settings);
         
         [TestMethod]

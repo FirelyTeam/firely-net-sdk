@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             var json = TestDataHelper.ReadTestData("TestPatient.json");
             var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var poco = await (new FhirJsonParser()).ParseAsync<Patient>(json);
+            var poco = (new FhirJsonParser()).Parse<Patient>(json);
             var pocoP = poco.ToTypedElement();
             var jsonP = (await FhirJsonNode.ParseAsync(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true }))
                 .ToTypedElement(new PocoStructureDefinitionSummaryProvider());
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         public void PocoTypedElementPerformance()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-            var cs = (new FhirXmlParser()).Parse<Patient>(xml);
+            var cs = FhirXmlParser.RECOVERABLE.Parse<Patient>(xml);
             var nav = cs.ToTypedElement();
 
             TypedElementPerformance(nav);
@@ -178,10 +178,10 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         }
 
         [TestMethod]
-        public async Tasks.Task ValidateFiveWs()
+        public void ValidateFiveWs()
         {
             var json = TestDataHelper.ReadTestData("test-observation.json");
-            var poco = await (new FhirJsonParser()).ParseAsync<Observation>(json);
+            var poco = (new FhirJsonParser()).Parse<Observation>(json);
 
             var inspector = ModelInfo.ModelInspector;
             var aResourceMapping = inspector.FindClassMapping(typeof(Observation));

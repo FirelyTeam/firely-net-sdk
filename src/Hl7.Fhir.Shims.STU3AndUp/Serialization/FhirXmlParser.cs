@@ -8,56 +8,36 @@
 
 #nullable enable
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
-using System;
-using System.Xml;
-using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization;
 
-public class FhirXmlParser(ParserSettings? settings = null) : BaseFhirParser
+public class FhirXmlParser(ParserSettings? settings = null)
+    : BaseFhirXmlParser(ModelInfo.ModelInspector, settings)
 {
-    public ParserSettings Settings { get; set; } = settings ?? new ParserSettings();
+    /// <summary>
+    /// A parser with default settings: strict validation, only XML is not validated.
+    /// </summary>
+    public static readonly FhirXmlParser DEFAULT = new();
 
-    /// <inheritdoc cref="ParseAsync{T}(XmlReader)" />
-    public T Parse<T>(XmlReader reader) where T : Base => (T)Parse(reader, typeof(T));
+    /// <summary>
+    /// A parser with the most strict settings, will detect all issues we know about.
+    /// </summary>
+    public static readonly FhirXmlParser STRICT = new(new ParserSettings().UsingMode(DeserializationMode.Strict));
 
-    public async Tasks.Task<T?> ParseAsync<T>(XmlReader reader) where T : Base
-        => await ParseAsync(reader, typeof(T)).ConfigureAwait(false) as T;
+    /// <summary>
+    /// A parser that allows all errors that will not lead to dataloss when roundtripping.
+    /// </summary>
+    public static readonly FhirXmlParser RECOVERABLE = new(new ParserSettings().UsingMode(DeserializationMode.Recoverable));
 
-    /// <inheritdoc cref="ParseAsync{T}(string)" />
-    public T Parse<T>(string xml) where T : Base => (T)Parse(xml, typeof(T));
+    /// <summary>
+    /// A parser that allows all errors that result from reading data from other FHIR versions: it allows
+    /// unknown elements and coded values. This will be roundtrippable.
+    /// </summary>
+    public static readonly FhirXmlParser BACKWARDSCOMPATIBLE = new(new ParserSettings().UsingMode(DeserializationMode.BackwardsCompatible));
 
-    public async Tasks.Task<T?> ParseAsync<T>(string xml) where T : Base
-        => await ParseAsync(xml, typeof(T)).ConfigureAwait(false) as T;
-
-    /// <inheritdoc cref="ParseAsync(string, Type)" />
-    public Base Parse(string xml, Type? dataType = null)
-    {
-        var xmlReader = FhirXmlNode.Parse(xml, BuildXmlParsingSettings(Settings));
-        return parse(xmlReader, dataType);
-    }
-
-    public async Tasks.Task<Base> ParseAsync(string xml, Type? dataType = null)
-    {
-        var xmlReader = await FhirXmlNode.ParseAsync(xml, BuildXmlParsingSettings(Settings)).ConfigureAwait(false);
-        return parse(xmlReader, dataType);
-    }
-
-    /// <inheritdoc cref="ParseAsync(XmlReader, Type)" />
-    public Base Parse(XmlReader reader, Type? dataType = null)
-    {
-        var xmlReader = FhirXmlNode.Read(reader, BuildXmlParsingSettings(Settings));
-        return parse(xmlReader, dataType);
-    }
-
-    public async Tasks.Task<Base> ParseAsync(XmlReader reader, Type? dataType = null)
-    {
-        var xmlReader = await FhirXmlNode.ReadAsync(reader, BuildXmlParsingSettings(Settings)).ConfigureAwait(false);
-        return parse(xmlReader, dataType);
-    }
-
-    private Base parse(ISourceNode node, Type? type = null) =>
-        node.ToPoco(ModelInfo.ModelInspector, type, BuildPocoBuilderSettings(Settings));
+    /// <summary>
+    /// A parser that continues to parse, ignoring all errors. May result in data loss.
+    /// </summary>
+    public static readonly FhirXmlParser OSTRICH = new(new ParserSettings().UsingMode(DeserializationMode.Ostrich));
 }

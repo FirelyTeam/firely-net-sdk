@@ -1,14 +1,10 @@
 ﻿using Hl7.Fhir.Model;
-using Hl7.Fhir.Tests;
-using Hl7.Fhir.Utility;
+using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests
 {
@@ -20,21 +16,22 @@ namespace Hl7.Fhir.Tests
     public class TestDataVersionCheck
     {
         [TestMethod]   // not everything parses correctly
-        public async Tasks.Task VerifyAllTestData()
+        public void VerifyAllTestData()
         {
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
             var path = Path.GetDirectoryName(location) + "/TestData";
             Console.WriteLine(path);
             StringBuilder issues = new StringBuilder();
-            await ValidateFolder(path, path, issues);
+            validateFolder(path, path, issues);
             Console.Write(issues.ToString());
             Assert.AreEqual("", issues.ToString());
         }
 
-        private async Tasks.Task ValidateFolder(string basePath, string path, StringBuilder issues)
+        private static void validateFolder(string basePath, string path, StringBuilder issues)
         {
-            var xmlParser = new Fhir.Serialization.FhirXmlParser();
-            var jsonParser = new Fhir.Serialization.FhirJsonParser();
+            var xmlParser = FhirXmlParser.OSTRICH;
+            var jsonParser = FhirJsonParser.OSTRICH;
+
             Console.WriteLine($"Validating test files in {path.Replace(basePath, "")}");
             foreach (var item in Directory.EnumerateFiles(path))
             {
@@ -50,12 +47,12 @@ namespace Hl7.Fhir.Tests
                     if (new FileInfo(item).Extension == ".xml")
                     {
                         Console.WriteLine($"    {item.Replace(path+"/", "")}");
-                        await xmlParser.ParseAsync<Resource>(content);
+                        xmlParser.Parse<Resource>(content);
                     }
                     else if (new FileInfo(item).Extension == ".json")
                     {
                         Console.WriteLine($"    {item.Replace(path + "/", "")}");
-                        await jsonParser.ParseAsync<Resource>(content);
+                        jsonParser.Parse<Resource>(content);
                     }
                     else
                     {
@@ -71,7 +68,7 @@ namespace Hl7.Fhir.Tests
             }
             foreach (var item in Directory.EnumerateDirectories(path))
             {
-                await ValidateFolder(basePath, item, issues);
+                validateFolder(basePath, item, issues);
             }
         }
     }

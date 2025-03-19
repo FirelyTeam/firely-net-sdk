@@ -181,7 +181,7 @@ namespace Hl7.FhirPath.R4.Tests
 
                 if (!_cache.ContainsKey(inputfile))
                 {
-                    _cache.Add(inputfile, new FhirXmlParser().Parse<Model.DomainResource>(
+                    _cache.Add(inputfile, FhirXmlParser.OSTRICH.Parse<Model.DomainResource>(
                         File.ReadAllText(Path.Combine(basepath, inputfile))));
                 }
                 // Now perform this unit test

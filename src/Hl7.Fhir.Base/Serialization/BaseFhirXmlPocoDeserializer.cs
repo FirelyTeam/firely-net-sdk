@@ -1,4 +1,12 @@
-﻿#nullable enable
+﻿/*
+ * Copyright (c) 2021, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ *
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
+ */
+
+#nullable enable
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
@@ -15,22 +23,13 @@ using ERR = Hl7.Fhir.Serialization.FhirXmlException;
 
 namespace Hl7.Fhir.Serialization;
 
-public class BaseFhirXmlPocoDeserializer
+public class BaseFhirXmlPocoDeserializer : BaseFhirXmlParser
 {
     /// <summary>
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new FhirXmlPocoDeserializerSettings())
-    {
-        // nothing
-    }
-
-    /// <summary>
-    /// Initializes an instance of the deserializer.
-    /// </summary>
-    /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-    public BaseFhirXmlPocoDeserializer(ModelInspector inspector) : this(inspector, new())
+    public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new ParserSettings())
     {
         // nothing
     }
@@ -40,27 +39,65 @@ public class BaseFhirXmlPocoDeserializer
     /// </summary>
     /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
     /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirXmlPocoDeserializer(Assembly assembly, FhirXmlPocoDeserializerSettings settings)
+    public BaseFhirXmlPocoDeserializer(Assembly assembly, ParserSettings settings)
+        : this(ModelInspector.ForAssembly(assembly), settings)
     {
-        Settings = settings;
-        _inspector = ModelInspector.ForAssembly(assembly ?? throw new ArgumentNullException(nameof(assembly)));
+        // Nothing
     }
+
+
+    /// <summary>
+    /// Initializes an instance of the deserializer.
+    /// </summary>
+    /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
+    public BaseFhirXmlPocoDeserializer(ModelInspector inspector) : this(inspector, new ParserSettings())
+    {
+        // nothing
+    }
+
 
     /// <summary>
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
     /// <param name="settings">A settings object to be used by this instance.</param>
-    public BaseFhirXmlPocoDeserializer(ModelInspector inspector, FhirXmlPocoDeserializerSettings settings)
+    public BaseFhirXmlPocoDeserializer(ModelInspector inspector, ParserSettings settings) : base(inspector, settings)
     {
-        Settings = settings;
+        // Nothing
+    }
+}
+
+/// <summary>
+/// Deserializes XML into FHIR POCO objects.
+/// </summary>
+/// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/xml.html. </remarks>
+public class BaseFhirXmlParser
+{
+    /// <summary>
+    /// Initializes an instance of the deserializer.
+    /// </summary>
+    /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
+    public BaseFhirXmlParser(ModelInspector inspector) : this(inspector, new ParserSettings())
+    {
+        // nothing
+    }
+
+
+    /// <summary>
+    /// Initializes an instance of the deserializer.
+    /// </summary>
+    /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
+    /// <param name="settings">A settings object to be used by this instance.</param>
+    public BaseFhirXmlParser(ModelInspector inspector, ParserSettings? settings)
+    {
+        Settings = settings ?? new ParserSettings();
         _inspector = inspector;
     }
 
     /// <summary>
     /// The settings that were passed to the constructor.
     /// </summary>
-    public FhirXmlPocoDeserializerSettings Settings { get; }
+    public ParserSettings Settings { get; set; }
 
     private readonly ModelInspector _inspector;
 
@@ -71,7 +108,7 @@ public class BaseFhirXmlPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
-    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
+    /// <remarks>The <see cref="ParserSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeResource(XmlReader reader, [NotNullWhen(true)] out Resource? instance, out IEnumerable<CodedException> issues)
     {
         FhirXmlPocoDeserializerState state = new();
@@ -101,7 +138,7 @@ public class BaseFhirXmlPocoDeserializer
     /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
     /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
     /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
-    /// <remarks>The <see cref="FhirXmlPocoDeserializerSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
+    /// <remarks>The <see cref="ParserSettings.ExceptionFilter"/> influences which issues are returned.</remarks>
     public bool TryDeserializeElement(Type targetType, XmlReader reader, [NotNullWhen(true)] out Base? instance, out IEnumerable<CodedException> issues)
     {
         FhirXmlPocoDeserializerState state = new();
@@ -177,7 +214,7 @@ public class BaseFhirXmlPocoDeserializer
             //if we are still not at an opening element, throw user-error.
             state.Errors.Add(ERR.EXPECTED_OPENING_ELEMENT(reader, state.Path.GetInstancePath(), reader.NodeType.GetLiteral()));
             //try to recover
-            while (reader.NodeType != XmlNodeType.Element || !reader.EOF)
+            while (reader.NodeType != XmlNodeType.Element && !reader.EOF)
             {
                 reader.ReadToContent(state);
             }
@@ -278,12 +315,12 @@ public class BaseFhirXmlPocoDeserializer
                 if (error is null && propMapping is not null && validNamespace)
                 {
                     state.Path.EnterElement(propMapping.Name, !propMapping.IsCollection ? null : 0, propMapping.IsPrimitive);
-                    var (order, incorrectOrder) = checkOrder(reader, state, highestOrder, propMapping);
+                    var (order, _) = checkOrder(reader, state, highestOrder, propMapping);
                     highestOrder = order;
 
                     try
                     {
-                        deserializePropertyValue(target, reader, state, oldErrors, incorrectOrder, propMapping, propValueMapping);
+                        deserializePropertyValue(target, reader, state, oldErrors, propMapping, propValueMapping);
                     }
                     finally
                     {
@@ -363,7 +400,7 @@ public class BaseFhirXmlPocoDeserializer
         var attrName = reader.LocalName;
         var type = reader.ValueType;
         var trimmedVal = reader.Value.Trim();
-        var val = parsePrimitiveValue(trimmedVal, type, state.Path);
+        var val = parsePrimitiveValue(trimmedVal, type);
 
         var baseVal = new DynamicPrimitive() { ObjectValue = val };
                 
@@ -373,6 +410,7 @@ public class BaseFhirXmlPocoDeserializer
     private static (int highestOrder, bool incorrectOrder) checkOrder(XmlReader reader, FhirXmlPocoDeserializerState state, int highestOrder, PropertyMapping propMapping)
     {
         var incorrectOrder = false;
+
         //check if element is in the correct order.
         if (propMapping.Order >= highestOrder)
         {
@@ -383,10 +421,11 @@ public class BaseFhirXmlPocoDeserializer
             state.Errors.Add(ERR.ELEMENT_OUT_OF_ORDER(reader, state.Path.GetInstancePath(), reader.LocalName));
             incorrectOrder = true;
         }
+
         return (highestOrder, incorrectOrder);
     }
 
-    private void deserializePropertyValue(Base target, XmlReader reader, FhirXmlPocoDeserializerState state, int oldErrors, bool incorrectOrder, PropertyMapping propMapping, ClassMapping? propValueMapping)
+    private void deserializePropertyValue(Base target, XmlReader reader, FhirXmlPocoDeserializerState state, int oldErrors, PropertyMapping propMapping, ClassMapping? propValueMapping)
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
         var name = reader.LocalName;
@@ -446,6 +485,7 @@ public class BaseFhirXmlPocoDeserializer
     private static XHtml readXhtml(XmlReader reader)
     {
         var xhtml = reader.ReadOuterXml();
+        reader.MoveToContent();
         return new XHtml(xhtml);
     }
 
@@ -507,16 +547,27 @@ public class BaseFhirXmlPocoDeserializer
         }
         // let's move to the actual resource
         reader.ReadToContent(state);
-        var result = DeserializeResourceInternal(reader, state);
-        // now we should be at the closing element of the resource container (e.g. </contained>). We should check that and maybe fix that.)
-        if (reader.Depth != depth && reader.NodeType != XmlNodeType.EndElement)
-        {
-            state.Errors.Add(ERR.UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath(), reader.LocalName));
+        object? result;
 
-            // skip until we're back at the closing of the </contained>
-            while (!(reader.Depth == depth && reader.NodeType == XmlNodeType.EndElement))
+        if (reader.NodeType == XmlNodeType.EndElement)
+        {
+            state.Errors.Add(ERR.EMPTY_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath()));
+            result = null;
+        }
+        else
+        {
+            result = DeserializeResourceInternal(reader, state);
+            // now we should be at the closing element of the resource container (e.g. </contained>). We should check that and maybe fix that.)
+            if (reader.Depth != depth && reader.NodeType != XmlNodeType.EndElement)
             {
-                reader.Read();
+                state.Errors.Add(ERR.UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath(),
+                    reader.LocalName));
+
+                // skip until we're back at the closing of the </contained>
+                while (!(reader.Depth == depth && reader.NodeType == XmlNodeType.EndElement))
+                {
+                    reader.Read();
+                }
             }
         }
 
@@ -525,7 +576,7 @@ public class BaseFhirXmlPocoDeserializer
         return result;
     }
 
-    private static void readAttributes(ModelInspector inspector, Base target, ClassMapping propValueMapping, XmlReader reader, FhirXmlPocoDeserializerState state)
+    private void readAttributes(ModelInspector inspector, Base target, ClassMapping propValueMapping, XmlReader reader, FhirXmlPocoDeserializerState state)
     {
         var elementName = reader.LocalName;
         //move into first attribute
@@ -541,7 +592,8 @@ public class BaseFhirXmlPocoDeserializer
                     }
                     else if (reader is { LocalName: "schemaLocation", NamespaceURI: "http://www.w3.org/2001/XMLSchema-instance" })
                     {
-                        state.Errors.Add(ERR.SCHEMALOCATION_DISALLOWED(reader, state.Path.GetInstancePath()));
+                        if(Settings.DisallowXsiAttributesOnRoot)
+                            state.Errors.Add(ERR.SCHEMALOCATION_DISALLOWED(reader, state.Path.GetInstancePath()));
                     }
                     else
                     {
@@ -551,7 +603,7 @@ public class BaseFhirXmlPocoDeserializer
                             state.Path.EnterElement(propMapping.Name, !propMapping.IsCollection ? null : 0, propMapping.IsPrimitive);
                             try
                             {
-                                readAttribute(target, propMapping!, elementName, reader, state);
+                                readAttribute(target, propMapping, elementName, reader, state);
                             }
                             finally
                             {
@@ -598,7 +650,7 @@ public class BaseFhirXmlPocoDeserializer
         if (string.IsNullOrEmpty(trimmedValue))
             state.Errors.Add(ERR.ATTRIBUTE_HAS_EMPTY_VALUE(reader, state.Path.GetInstancePath()));
 
-        var parsedValue = parsePrimitiveValue(trimmedValue, propMapping.ImplementingType, state.Path);
+        var parsedValue = parsePrimitiveValue(trimmedValue, propMapping.ImplementingType);
 
         if (target is PrimitiveType primitive && propMapping.Name == "value")
         {
@@ -611,7 +663,7 @@ public class BaseFhirXmlPocoDeserializer
         }
     }
 
-    private static object parsePrimitiveValue(string trimmedValue, Type implementingType, PathStack pathStack)
+    private static object parsePrimitiveValue(string trimmedValue, Type implementingType)
     {
         if (implementingType == typeof(FhirString))
             return new FhirString(trimmedValue);

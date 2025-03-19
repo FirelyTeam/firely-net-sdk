@@ -22,18 +22,19 @@ internal interface IRoundTripper
     string RoundTripJson(string original);
 }
 
-internal class FhirSerializationEngineRoundtripper(IFhirSerializationEngine engine) : IRoundTripper
+internal class FhirXmlJsonParserRoundtripper() : IRoundTripper
 {
-    public string RoundTripXml(string original) => 
-        engine.SerializeToXml(
-            engine.DeserializeFromJson(
-                engine.SerializeToJson(
-                    (engine.DeserializeFromXml(original))!))!);
-    public string RoundTripJson(string original) => 
-        engine.SerializeToJson(
-            (engine.DeserializeFromXml(
-                engine.SerializeToXml(
-                    engine.DeserializeFromJson(original)!)))!);
+    public string RoundTripXml(string original) =>
+        FhirXmlSerializer.Default.SerializeToString(
+            FhirJsonParser.RECOVERABLE.Parse(
+                FhirJsonSerializer.Default.SerializeToString(
+                    FhirXmlParser.RECOVERABLE.Parse(original))));
+
+    public string RoundTripJson(string original) =>
+        FhirJsonSerializer.Default.SerializeToString(
+            FhirXmlParser.RECOVERABLE.Parse(
+                FhirXmlSerializer.Default.SerializeToString(
+                    FhirJsonParser.RECOVERABLE.Parse(original))));
 }
     
 internal class TypedElementBasedRoundtripper(IStructureDefinitionSummaryProvider provider) : IRoundTripper
@@ -62,15 +63,8 @@ internal class TypedElementBasedRoundtripper(IStructureDefinitionSummaryProvider
 [TestClass]
 public class RoundtripAllSerializers
 {
-    private static readonly IFhirSerializationEngine NEW_POCO_ENGINE =
-        FhirSerializationEngineFactory.Ostrich(ModelInfo.ModelInspector);
-
     private static readonly IRoundTripper NEW_POCO_ROUNDTRIPPER =
-        new FhirSerializationEngineRoundtripper(NEW_POCO_ENGINE);
-
-    private static readonly IRoundTripper OLD_POCO_ROUNDTRIPPER =
-        new FhirSerializationEngineRoundtripper(
-            FhirSerializationEngineFactory.Legacy.Ostrich(ModelInfo.ModelInspector));
+        new FhirXmlJsonParserRoundtripper();
 
     private static readonly IRoundTripper TYPEDELEM_POCOSDPROV =
         new TypedElementBasedRoundtripper(new PocoStructureDefinitionSummaryProvider());
@@ -92,15 +86,6 @@ public class RoundtripAllSerializers
         doRoundTrip(entry, NEW_POCO_ROUNDTRIPPER);
     }
 
-    [DynamicData(nameof(prepareExampleZipFiles), DynamicDataSourceType.Method,
-        DynamicDataDisplayName = nameof(GetTestDisplayNames))]
-    [DataTestMethod]
-    [TestCategory("LongRunner")]
-    public void FullRoundtripOfAllExamplesOldPocoSerializer(ZipArchiveEntry entry)
-    {
-        doRoundTrip(entry, OLD_POCO_ROUNDTRIPPER);
-    }
-        
     [DynamicData(nameof(prepareExampleZipFiles), DynamicDataSourceType.Method,
         DynamicDataDisplayName = nameof(GetTestDisplayNames))]
     [DataTestMethod]
@@ -246,8 +231,8 @@ public class RoundtripAllSerializers
         var name = entry.Name;
 
         var resource = name.EndsWith(".xml")
-            ? NEW_POCO_ENGINE.DeserializeFromXml(input)
-            : NEW_POCO_ENGINE.DeserializeFromJson(input);
+            ? FhirXmlParser.RECOVERABLE.Parse(input)
+            : FhirJsonParser.RECOVERABLE.Parse(input);
 
         var r2 = resource!.DeepCopy();
         Assert.IsTrue(resource.Matches(r2),

@@ -74,10 +74,10 @@ namespace Hl7.Fhir.Specification.Source
 
 
         [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
-        public Resource ResolveByUri(string uri) => TryResolveByUri(uri).Value;
+        public Resource? ResolveByUri(string uri) => TryResolveByUri(uri).Value;
 
         [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByCanonicalUriAsync() instead.")]
-        public Resource ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
+        public Resource? ResolveByCanonicalUri(string uri) => TryResolveByCanonicalUri(uri).Value;
         
         ///<inheritdoc/>
         [Obsolete("MultiResolver now works best with asynchronous resolvers. Use TryResolveByUriAsync() instead.")]
@@ -113,8 +113,8 @@ namespace Hl7.Fhir.Specification.Source
 
                     if (result.Success) 
                         return result;
-                    
-                    innerErrors.Add(result.Error);
+                    else
+                        innerErrors.Add(result.Error!);
                 }
                 catch(NotImplementedException ex)
                 {
@@ -141,8 +141,8 @@ namespace Hl7.Fhir.Specification.Source
 
                     if (result.Success)
                         return result;
-                    
-                    innerErrors.Add(result.Error);
+                    else
+                        innerErrors.Add(result.Error!);
                 }
                 catch (NotImplementedException ex)
                 {
