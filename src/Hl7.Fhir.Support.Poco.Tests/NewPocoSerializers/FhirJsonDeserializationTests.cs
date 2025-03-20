@@ -589,7 +589,7 @@ public class FhirJsonDeserializationTests
         // }
 
         public override void ValidateInstance(Base instance, in InstanceDeserializationContext context,
-            out COVE[]? reportedErrors)
+            out IReadOnlyCollection<COVE> reportedErrors)
         {
             if (instance is FhirDateTime fdt)
             {
@@ -601,7 +601,7 @@ public class FhirJsonDeserializationTests
         }
 
         public override void ValidateProperty(object? propertyValue, in PropertyDeserializationContext context,
-            out COVE[]? reportedErrors)
+            out IReadOnlyCollection<COVE> reportedErrors)
         {
             base.ValidateProperty(propertyValue, context, out reportedErrors);
 
