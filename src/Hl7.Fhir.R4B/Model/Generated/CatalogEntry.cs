@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType? Relationtype
       {
-        get => _RelationtypeElement?.Value;
+        get => RelationtypeElement?.Value;
         set
         {
           RelationtypeElement = value is null ? null : new Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType>(value);
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Orderable
     {
-      get => _OrderableElement?.Value;
+      get => OrderableElement?.Value;
       set
       {
         OrderableElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ValidTo
     {
-      get => _ValidToElement?.Value;
+      get => ValidToElement?.Value;
       set
       {
         ValidToElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? LastUpdated
     {
-      get => _LastUpdatedElement?.Value;
+      get => LastUpdatedElement?.Value;
       set
       {
         LastUpdatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

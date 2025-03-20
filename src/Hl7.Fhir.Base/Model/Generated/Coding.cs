@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? System
     {
-      get => _SystemElement?.Value;
+      get => SystemElement?.Value;
       set
       {
         SystemElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Version
     {
-      get => _VersionElement?.Value;
+      get => VersionElement?.Value;
       set
       {
         VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Code
     {
-      get => _CodeElement?.Value;
+      get => CodeElement?.Value;
       set
       {
         CodeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Display
     {
-      get => _DisplayElement?.Value;
+      get => DisplayElement?.Value;
       set
       {
         DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? UserSelected
     {
-      get => _UserSelectedElement?.Value;
+      get => UserSelectedElement?.Value;
       set
       {
         UserSelectedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

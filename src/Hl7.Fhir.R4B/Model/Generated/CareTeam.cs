@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.CareTeam.CareTeamStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.CareTeam.CareTeamStatus>(value);
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Quantity
       {
-        get => _QuantityElement?.Value;
+        get => QuantityElement?.Value;
         set
         {
           QuantityElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1350,7 +1350,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1474,7 +1474,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StatusDate
     {
-      get => _StatusDateElement?.Value;
+      get => StatusDateElement?.Value;
       set
       {
         StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1542,7 +1542,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -1665,7 +1665,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? CopackagedIndicator
     {
-      get => _CopackagedIndicatorElement?.Value;
+      get => CopackagedIndicatorElement?.Value;
       set
       {
         CopackagedIndicatorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

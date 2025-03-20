@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Onset
       {
-        get => _OnsetElement?.Value;
+        get => OnsetElement?.Value;
         set
         {
           OnsetElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity? Severity
       {
-        get => _SeverityElement?.Value;
+        get => SeverityElement?.Value;
         set
         {
           SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>(value);
@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus? ClinicalStatus
     {
-      get => _ClinicalStatusElement?.Value;
+      get => ClinicalStatusElement?.Value;
       set
       {
         ClinicalStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus>(value);
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus? VerificationStatus
     {
-      get => _VerificationStatusElement?.Value;
+      get => VerificationStatusElement?.Value;
       set
       {
         VerificationStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceVerificationStatus>(value);
@@ -823,7 +823,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>(value);
@@ -913,7 +913,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality? Criticality
     {
-      get => _CriticalityElement?.Value;
+      get => CriticalityElement?.Value;
       set
       {
         CriticalityElement = value is null ? null : new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>(value);
@@ -1038,7 +1038,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AssertedDate
     {
-      get => _AssertedDateElement?.Value;
+      get => AssertedDateElement?.Value;
       set
       {
         AssertedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1135,7 +1135,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? LastOccurrence
     {
-      get => _LastOccurrenceElement?.Value;
+      get => LastOccurrenceElement?.Value;
       set
       {
         LastOccurrenceElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

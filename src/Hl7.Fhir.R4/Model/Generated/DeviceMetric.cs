@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>(value);
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState? State
       {
-        get => _StateElement?.Value;
+        get => StateElement?.Value;
         set
         {
           StateElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>(value);
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public DateTimeOffset? Time
       {
-        get => _TimeElement?.Value;
+        get => TimeElement?.Value;
         set
         {
           TimeElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus? OperationalStatus
     {
-      get => _OperationalStatusElement?.Value;
+      get => OperationalStatusElement?.Value;
       set
       {
         OperationalStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>(value);
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor? Color
     {
-      get => _ColorElement?.Value;
+      get => ColorElement?.Value;
       set
       {
         ColorElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>(value);
@@ -768,7 +768,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory? Category
     {
-      get => _CategoryElement?.Value;
+      get => CategoryElement?.Value;
       set
       {
         CategoryElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>(value);

@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TriggerDefinition.TriggerType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>(value);
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

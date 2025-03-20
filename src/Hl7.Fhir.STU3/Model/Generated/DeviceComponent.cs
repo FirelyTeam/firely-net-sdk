@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ProductionSpec
       {
-        get => _ProductionSpecElement?.Value;
+        get => ProductionSpecElement?.Value;
         set
         {
           ProductionSpecElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? LastSystemChange
     {
-      get => _LastSystemChangeElement?.Value;
+      get => LastSystemChangeElement?.Value;
       set
       {
         LastSystemChangeElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple? MeasurementPrinciple
     {
-      get => _MeasurementPrincipleElement?.Value;
+      get => MeasurementPrincipleElement?.Value;
       set
       {
         MeasurementPrincipleElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple>(value);

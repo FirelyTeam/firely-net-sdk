@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.OperationOutcome.IssueSeverity? Severity
       {
-        get => _SeverityElement?.Value;
+        get => SeverityElement?.Value;
         set
         {
           SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.OperationOutcome.IssueType? Code
       {
-        get => _CodeElement?.Value;
+        get => CodeElement?.Value;
         set
         {
           CodeElement = value is null ? null : new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
@@ -476,7 +476,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Diagnostics
       {
-        get => _DiagnosticsElement?.Value;
+        get => DiagnosticsElement?.Value;
         set
         {
           DiagnosticsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

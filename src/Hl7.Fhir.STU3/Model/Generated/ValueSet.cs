@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? LockedDate
       {
-        get => _LockedDateElement?.Value;
+        get => LockedDateElement?.Value;
         set
         {
           LockedDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Inactive
       {
-        get => _InactiveElement?.Value;
+        get => InactiveElement?.Value;
         set
         {
           InactiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? System
       {
-        get => _SystemElement?.Value;
+        get => SystemElement?.Value;
         set
         {
           SystemElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Version
       {
-        get => _VersionElement?.Value;
+        get => VersionElement?.Value;
         set
         {
           VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -741,7 +741,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Code
       {
-        get => _CodeElement?.Value;
+        get => CodeElement?.Value;
         set
         {
           CodeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Display
       {
-        get => _DisplayElement?.Value;
+        get => DisplayElement?.Value;
         set
         {
           DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -978,7 +978,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Language
       {
-        get => _LanguageElement?.Value;
+        get => LanguageElement?.Value;
         set
         {
           LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -1047,7 +1047,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Value
       {
-        get => _ValueElement?.Value;
+        get => ValueElement?.Value;
         set
         {
           ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1217,7 +1217,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Property
       {
-        get => _PropertyElement?.Value;
+        get => PropertyElement?.Value;
         set
         {
           PropertyElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -1261,7 +1261,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.FilterOperator? Op
       {
-        get => _OpElement?.Value;
+        get => OpElement?.Value;
         set
         {
           OpElement = value is null ? null : new Code<Hl7.Fhir.Model.FilterOperator>(value);
@@ -1303,7 +1303,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Value
       {
-        get => _ValueElement?.Value;
+        get => ValueElement?.Value;
         set
         {
           ValueElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -1473,7 +1473,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Identifier
       {
-        get => _IdentifierElement?.Value;
+        get => IdentifierElement?.Value;
         set
         {
           IdentifierElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -1515,7 +1515,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Timestamp
       {
-        get => _TimestampElement?.Value;
+        get => TimestampElement?.Value;
         set
         {
           TimestampElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1556,7 +1556,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Total
       {
-        get => _TotalElement?.Value;
+        get => TotalElement?.Value;
         set
         {
           TotalElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1597,7 +1597,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Offset
       {
-        get => _OffsetElement?.Value;
+        get => OffsetElement?.Value;
         set
         {
           OffsetElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1878,7 +1878,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2055,7 +2055,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? System
       {
-        get => _SystemElement?.Value;
+        get => SystemElement?.Value;
         set
         {
           SystemElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -2096,7 +2096,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Abstract
       {
-        get => _AbstractElement?.Value;
+        get => AbstractElement?.Value;
         set
         {
           AbstractElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -2137,7 +2137,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Inactive
       {
-        get => _InactiveElement?.Value;
+        get => InactiveElement?.Value;
         set
         {
           InactiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -2178,7 +2178,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Version
       {
-        get => _VersionElement?.Value;
+        get => VersionElement?.Value;
         set
         {
           VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2219,7 +2219,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Code
       {
-        get => _CodeElement?.Value;
+        get => CodeElement?.Value;
         set
         {
           CodeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -2260,7 +2260,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Display
       {
-        get => _DisplayElement?.Value;
+        get => DisplayElement?.Value;
         set
         {
           DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2561,7 +2561,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Url
     {
-      get => _UrlElement?.Value;
+      get => UrlElement?.Value;
       set
       {
         UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -2629,7 +2629,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Version
     {
-      get => _VersionElement?.Value;
+      get => VersionElement?.Value;
       set
       {
         VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2670,7 +2670,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2711,7 +2711,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Title
     {
-      get => _TitleElement?.Value;
+      get => TitleElement?.Value;
       set
       {
         TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2755,7 +2755,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
@@ -2796,7 +2796,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Experimental
     {
-      get => _ExperimentalElement?.Value;
+      get => ExperimentalElement?.Value;
       set
       {
         ExperimentalElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -2837,7 +2837,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -2878,7 +2878,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Publisher
     {
-      get => _PublisherElement?.Value;
+      get => PublisherElement?.Value;
       set
       {
         PublisherElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2946,7 +2946,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -3042,7 +3042,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Immutable
     {
-      get => _ImmutableElement?.Value;
+      get => ImmutableElement?.Value;
       set
       {
         ImmutableElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -3083,7 +3083,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Purpose
     {
-      get => _PurposeElement?.Value;
+      get => PurposeElement?.Value;
       set
       {
         PurposeElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -3124,7 +3124,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Copyright
     {
-      get => _CopyrightElement?.Value;
+      get => CopyrightElement?.Value;
       set
       {
         CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -3165,7 +3165,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Extensible
     {
-      get => _ExtensibleElement?.Value;
+      get => ExtensibleElement?.Value;
       set
       {
         ExtensibleElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

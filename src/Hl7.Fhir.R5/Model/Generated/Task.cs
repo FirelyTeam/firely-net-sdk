@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Repetitions
       {
-        get => _RepetitionsElement?.Value;
+        get => RepetitionsElement?.Value;
         set
         {
           RepetitionsElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -983,7 +983,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? InstantiatesCanonical
     {
-      get => _InstantiatesCanonicalElement?.Value;
+      get => InstantiatesCanonicalElement?.Value;
       set
       {
         InstantiatesCanonicalElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
@@ -1024,7 +1024,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? InstantiatesUri
     {
-      get => _InstantiatesUriElement?.Value;
+      get => InstantiatesUriElement?.Value;
       set
       {
         InstantiatesUriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -1152,7 +1152,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Task.TaskStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Task.TaskStatus>(value);
@@ -1250,7 +1250,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Task.TaskIntent? Intent
     {
-      get => _IntentElement?.Value;
+      get => IntentElement?.Value;
       set
       {
         IntentElement = value is null ? null : new Code<Hl7.Fhir.Model.Task.TaskIntent>(value);
@@ -1293,7 +1293,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestPriority? Priority
     {
-      get => _PriorityElement?.Value;
+      get => PriorityElement?.Value;
       set
       {
         PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
@@ -1334,7 +1334,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? DoNotPerform
     {
-      get => _DoNotPerformElement?.Value;
+      get => DoNotPerformElement?.Value;
       set
       {
         DoNotPerformElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1402,7 +1402,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1579,7 +1579,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AuthoredOn
     {
-      get => _AuthoredOnElement?.Value;
+      get => AuthoredOnElement?.Value;
       set
       {
         AuthoredOnElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1620,7 +1620,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? LastModified
     {
-      get => _LastModifiedElement?.Value;
+      get => LastModifiedElement?.Value;
       set
       {
         LastModifiedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

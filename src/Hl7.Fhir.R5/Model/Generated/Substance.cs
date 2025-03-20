@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Instance
     {
-      get => _InstanceElement?.Value;
+      get => InstanceElement?.Value;
       set
       {
         InstanceElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Substance.FHIRSubstanceStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Substance.FHIRSubstanceStatus>(value);
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Expiry
     {
-      get => _ExpiryElement?.Value;
+      get => ExpiryElement?.Value;
       set
       {
         ExpiryElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

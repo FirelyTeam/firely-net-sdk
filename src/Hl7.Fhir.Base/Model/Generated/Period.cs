@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Start
     {
-      get => _StartElement?.Value;
+      get => StartElement?.Value;
       set
       {
         StartElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? End
     {
-      get => _EndElement?.Value;
+      get => EndElement?.Value;
       set
       {
         EndElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Start
     {
-      get => _StartElement?.Value;
+      get => StartElement?.Value;
       set
       {
         StartElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get => _EndElement?.Value;
+      get => EndElement?.Value;
       set
       {
         EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ParticipationStatus? ParticipantStatus
     {
-      get => _ParticipantStatusElement?.Value;
+      get => ParticipantStatusElement?.Value;
       set
       {
         ParticipantStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Comment
     {
-      get => _CommentElement?.Value;
+      get => CommentElement?.Value;
       set
       {
         CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

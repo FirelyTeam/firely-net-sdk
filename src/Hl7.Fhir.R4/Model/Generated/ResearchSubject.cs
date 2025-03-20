@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>(value);
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AssignedArm
     {
-      get => _AssignedArmElement?.Value;
+      get => AssignedArmElement?.Value;
       set
       {
         AssignedArmElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ActualArm
     {
-      get => _ActualArmElement?.Value;
+      get => ActualArmElement?.Value;
       set
       {
         ActualArmElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AllDay
       {
-        get => _AllDayElement?.Value;
+        get => AllDayElement?.Value;
         set
         {
           AllDayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AvailableStartTime
       {
-        get => _AvailableStartTimeElement?.Value;
+        get => AvailableStartTimeElement?.Value;
         set
         {
           AvailableStartTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AvailableEndTime
       {
-        get => _AvailableEndTimeElement?.Value;
+        get => AvailableEndTimeElement?.Value;
         set
         {
           AvailableEndTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get => _ActiveElement?.Value;
+      get => ActiveElement?.Value;
       set
       {
         ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -834,7 +834,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Comment
     {
-      get => _CommentElement?.Value;
+      get => CommentElement?.Value;
       set
       {
         CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -875,7 +875,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ExtraDetails
     {
-      get => _ExtraDetailsElement?.Value;
+      get => ExtraDetailsElement?.Value;
       set
       {
         ExtraDetailsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1053,7 +1053,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? EligibilityNote
     {
-      get => _EligibilityNoteElement?.Value;
+      get => EligibilityNoteElement?.Value;
       set
       {
         EligibilityNoteElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1195,7 +1195,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? AppointmentRequired
     {
-      get => _AppointmentRequiredElement?.Value;
+      get => AppointmentRequiredElement?.Value;
       set
       {
         AppointmentRequiredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1290,7 +1290,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AvailabilityExceptions
     {
-      get => _AvailabilityExceptionsElement?.Value;
+      get => AvailabilityExceptionsElement?.Value;
       set
       {
         AvailabilityExceptionsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.RelatedArtifact.RelatedArtifactType>(value);
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Label
     {
-      get => _LabelElement?.Value;
+      get => LabelElement?.Value;
       set
       {
         LabelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Display
     {
-      get => _DisplayElement?.Value;
+      get => DisplayElement?.Value;
       set
       {
         DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Citation
     {
-      get => _CitationElement?.Value;
+      get => CitationElement?.Value;
       set
       {
         CitationElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Url
     {
-      get => _UrlElement?.Value;
+      get => UrlElement?.Value;
       set
       {
         UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Resource
     {
-      get => _ResourceElement?.Value;
+      get => ResourceElement?.Value;
       set
       {
         ResourceElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? PublicationStatus
     {
-      get => _PublicationStatusElement?.Value;
+      get => PublicationStatusElement?.Value;
       set
       {
         PublicationStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PublicationDate
     {
-      get => _PublicationDateElement?.Value;
+      get => PublicationDateElement?.Value;
       set
       {
         PublicationDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);

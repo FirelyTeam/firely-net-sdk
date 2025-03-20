@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.OperationParameterUse? Use
     {
-      get => _UseElement?.Value;
+      get => UseElement?.Value;
       set
       {
         UseElement = value is null ? null : new Code<Hl7.Fhir.Model.OperationParameterUse>(value);
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Min
     {
-      get => _MinElement?.Value;
+      get => MinElement?.Value;
       set
       {
         MinElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Max
     {
-      get => _MaxElement?.Value;
+      get => MaxElement?.Value;
       set
       {
         MaxElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Documentation
     {
-      get => _DocumentationElement?.Value;
+      get => DocumentationElement?.Value;
       set
       {
         DocumentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FHIRAllTypes? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);

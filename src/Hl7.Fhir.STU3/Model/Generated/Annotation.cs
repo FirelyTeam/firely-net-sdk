@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Time
     {
-      get => _TimeElement?.Value;
+      get => TimeElement?.Value;
       set
       {
         TimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Text
     {
-      get => _TextElement?.Value;
+      get => TextElement?.Value;
       set
       {
         TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

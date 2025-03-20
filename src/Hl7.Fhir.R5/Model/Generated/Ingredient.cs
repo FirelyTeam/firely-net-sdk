@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Ingredient.IngredientManufacturerRole? Role
       {
-        get => _RoleElement?.Value;
+        get => RoleElement?.Value;
         set
         {
           RoleElement = value is null ? null : new Code<Hl7.Fhir.Model.Ingredient.IngredientManufacturerRole>(value);
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? TextPresentation
       {
-        get => _TextPresentationElement?.Value;
+        get => TextPresentationElement?.Value;
         set
         {
           TextPresentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? TextConcentration
       {
-        get => _TextConcentrationElement?.Value;
+        get => TextConcentrationElement?.Value;
         set
         {
           TextConcentrationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -640,7 +640,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MeasurementPoint
       {
-        get => _MeasurementPointElement?.Value;
+        get => MeasurementPointElement?.Value;
         set
         {
           MeasurementPointElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1015,7 +1015,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MeasurementPoint
       {
-        get => _MeasurementPointElement?.Value;
+        get => MeasurementPointElement?.Value;
         set
         {
           MeasurementPointElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1243,7 +1243,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
@@ -1395,7 +1395,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? AllergenicIndicator
     {
-      get => _AllergenicIndicatorElement?.Value;
+      get => AllergenicIndicatorElement?.Value;
       set
       {
         AllergenicIndicatorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1436,7 +1436,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Comment
     {
-      get => _CommentElement?.Value;
+      get => CommentElement?.Value;
       set
       {
         CommentElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);

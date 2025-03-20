@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Value
     {
-      get => _ValueElement?.Value;
+      get => ValueElement?.Value;
       set
       {
         ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Currencies? Currency
     {
-      get => _CurrencyElement?.Value;
+      get => CurrencyElement?.Value;
       set
       {
         CurrencyElement = value is null ? null : new Code<Hl7.Fhir.Model.Currencies>(value);

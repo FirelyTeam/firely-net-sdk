@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Exclude
       {
-        get => _ExcludeElement?.Value;
+        get => ExcludeElement?.Value;
         set
         {
           ExcludeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType? Code
       {
-        get => _CodeElement?.Value;
+        get => CodeElement?.Value;
         set
         {
           CodeElement = value is null ? null : new Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>(value);
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Title
       {
-        get => _TitleElement?.Value;
+        get => TitleElement?.Value;
         set
         {
           TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -936,7 +936,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ListMode? Mode
       {
-        get => _ModeElement?.Value;
+        get => ModeElement?.Value;
         set
         {
           ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.ListMode>(value);
@@ -1424,7 +1424,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Url
     {
-      get => _UrlElement?.Value;
+      get => UrlElement?.Value;
       set
       {
         UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -1468,7 +1468,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
@@ -1727,7 +1727,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Publisher
     {
-      get => _PublisherElement?.Value;
+      get => PublisherElement?.Value;
       set
       {
         PublisherElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

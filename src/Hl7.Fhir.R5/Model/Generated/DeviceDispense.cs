@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceDispense.DeviceDispenseStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceDispense.DeviceDispenseStatusCodes>(value);
@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PreparedDate
     {
-      get => _PreparedDateElement?.Value;
+      get => PreparedDateElement?.Value;
       set
       {
         PreparedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? WhenHandedOver
     {
-      get => _WhenHandedOverElement?.Value;
+      get => WhenHandedOverElement?.Value;
       set
       {
         WhenHandedOverElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -890,7 +890,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? UsageInstruction
     {
-      get => _UsageInstructionElement?.Value;
+      get => UsageInstructionElement?.Value;
       set
       {
         UsageInstructionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);

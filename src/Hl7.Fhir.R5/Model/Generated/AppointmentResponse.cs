@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? ProposedNewTime
     {
-      get => _ProposedNewTimeElement?.Value;
+      get => ProposedNewTimeElement?.Value;
       set
       {
         ProposedNewTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Start
     {
-      get => _StartElement?.Value;
+      get => StartElement?.Value;
       set
       {
         StartElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get => _EndElement?.Value;
+      get => EndElement?.Value;
       set
       {
         EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus? ParticipantStatus
     {
-      get => _ParticipantStatusElement?.Value;
+      get => ParticipantStatusElement?.Value;
       set
       {
         ParticipantStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.AppointmentResponse.AppointmentResponseStatus>(value);
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Comment
     {
-      get => _CommentElement?.Value;
+      get => CommentElement?.Value;
       set
       {
         CommentElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Recurring
     {
-      get => _RecurringElement?.Value;
+      get => RecurringElement?.Value;
       set
       {
         RecurringElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? OccurrenceDate
     {
-      get => _OccurrenceDateElement?.Value;
+      get => OccurrenceDateElement?.Value;
       set
       {
         OccurrenceDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? RecurrenceId
     {
-      get => _RecurrenceIdElement?.Value;
+      get => RecurrenceIdElement?.Value;
       set
       {
         RecurrenceIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);

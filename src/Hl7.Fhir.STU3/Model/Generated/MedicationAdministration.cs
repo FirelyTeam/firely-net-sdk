@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Text
       {
-        get => _TextElement?.Value;
+        get => TextElement?.Value;
         set
         {
           TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatus>(value);
@@ -996,7 +996,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? NotGiven
     {
-      get => _NotGivenElement?.Value;
+      get => NotGivenElement?.Value;
       set
       {
         NotGivenElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

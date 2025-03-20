@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? LinkId
       {
-        get => _LinkIdElement?.Value;
+        get => LinkIdElement?.Value;
         set
         {
           LinkIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? LinkId
       {
-        get => _LinkIdElement?.Value;
+        get => LinkIdElement?.Value;
         set
         {
           LinkIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Count
       {
-        get => _CountElement?.Value;
+        get => CountElement?.Value;
         set
         {
           CountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -935,7 +935,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? LinkId
       {
-        get => _LinkIdElement?.Value;
+        get => LinkIdElement?.Value;
         set
         {
           LinkIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1414,7 +1414,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? LinkId
       {
-        get => _LinkIdElement?.Value;
+        get => LinkIdElement?.Value;
         set
         {
           LinkIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1640,7 +1640,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? LinkId
       {
-        get => _LinkIdElement?.Value;
+        get => LinkIdElement?.Value;
         set
         {
           LinkIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1708,7 +1708,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Count
       {
-        get => _CountElement?.Value;
+        get => CountElement?.Value;
         set
         {
           CountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -2032,7 +2032,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MeasureReport.MeasureReportStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>(value);
@@ -2076,7 +2076,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MeasureReport.MeasureReportType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>(value);
@@ -2119,7 +2119,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MeasureReport.SubmitDataUpdateType? DataUpdateType
     {
-      get => _DataUpdateTypeElement?.Value;
+      get => DataUpdateTypeElement?.Value;
       set
       {
         DataUpdateTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MeasureReport.SubmitDataUpdateType>(value);
@@ -2160,7 +2160,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Measure
     {
-      get => _MeasureElement?.Value;
+      get => MeasureElement?.Value;
       set
       {
         MeasureElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
@@ -2229,7 +2229,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

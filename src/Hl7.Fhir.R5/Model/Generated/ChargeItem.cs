@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ChargeItem.ChargeItemStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ChargeItem.ChargeItemStatus>(value);
@@ -886,7 +886,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? EnteredDate
     {
-      get => _EnteredDateElement?.Value;
+      get => EnteredDateElement?.Value;
       set
       {
         EnteredDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

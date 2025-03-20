@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ContentType
     {
-      get => _ContentTypeElement?.Value;
+      get => ContentTypeElement?.Value;
       set
       {
         ContentTypeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Language
     {
-      get => _LanguageElement?.Value;
+      get => LanguageElement?.Value;
       set
       {
         LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public byte[]? Data
     {
-      get => _DataElement?.Value;
+      get => DataElement?.Value;
       set
       {
         DataElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? UrlUri
     {
-      get => ((IValue<string>?)_UrlElement)?.Value;
+      get => ((IValue<string>?)UrlElement)?.Value;
       set
       {
         UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Url
     {
-      get => ((IValue<string>?)_UrlElement)?.Value;
+      get => ((IValue<string>?)UrlElement)?.Value;
       set
       {
         UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? SizeUnsignedInt
     {
-      get => ((Hl7.Fhir.Model.UnsignedInt?)_SizeElement)?.Value;
+      get => ((Hl7.Fhir.Model.UnsignedInt?)SizeElement)?.Value;
       set
       {
         SizeElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public long? Size
     {
-      get => ((Hl7.Fhir.Model.Integer64?)_SizeElement)?.Value;
+      get => ((Hl7.Fhir.Model.Integer64?)SizeElement)?.Value;
       set
       {
         SizeElement = value is null ? null : new Hl7.Fhir.Model.Integer64(value);
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public byte[]? Hash
     {
-      get => _HashElement?.Value;
+      get => HashElement?.Value;
       set
       {
         HashElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Title
     {
-      get => _TitleElement?.Value;
+      get => TitleElement?.Value;
       set
       {
         TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -435,7 +435,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Creation
     {
-      get => _CreationElement?.Value;
+      get => CreationElement?.Value;
       set
       {
         CreationElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Height
     {
-      get => _HeightElement?.Value;
+      get => HeightElement?.Value;
       set
       {
         HeightElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Width
     {
-      get => _WidthElement?.Value;
+      get => WidthElement?.Value;
       set
       {
         WidthElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Frames
     {
-      get => _FramesElement?.Value;
+      get => FramesElement?.Value;
       set
       {
         FramesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Duration
     {
-      get => _DurationElement?.Value;
+      get => DurationElement?.Value;
       set
       {
         DurationElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Pages
     {
-      get => _PagesElement?.Value;
+      get => PagesElement?.Value;
       set
       {
         PagesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);

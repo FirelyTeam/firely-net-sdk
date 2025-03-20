@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -896,7 +896,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Temperature
       {
-        get => _TemperatureElement?.Value;
+        get => TemperatureElement?.Value;
         set
         {
           TemperatureElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -939,7 +939,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale? Scale
       {
-        get => _ScaleElement?.Value;
+        get => ScaleElement?.Value;
         set
         {
           ScaleElement = value is null ? null : new Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale>(value);
@@ -1165,7 +1165,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory? ProductCategory
     {
-      get => _ProductCategoryElement?.Value;
+      get => ProductCategoryElement?.Value;
       set
       {
         ProductCategoryElement = value is null ? null : new Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory>(value);
@@ -1235,7 +1235,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus>(value);
@@ -1305,7 +1305,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Quantity
     {
-      get => _QuantityElement?.Value;
+      get => QuantityElement?.Value;
       set
       {
         QuantityElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);

@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Address.AddressUse? Use
     {
-      get => _UseElement?.Value;
+      get => UseElement?.Value;
       set
       {
         UseElement = value is null ? null : new Code<Hl7.Fhir.Model.Address.AddressUse>(value);
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Address.AddressType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Address.AddressType>(value);
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Text
     {
-      get => _TextElement?.Value;
+      get => TextElement?.Value;
       set
       {
         TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? City
     {
-      get => _CityElement?.Value;
+      get => CityElement?.Value;
       set
       {
         CityElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? District
     {
-      get => _DistrictElement?.Value;
+      get => DistrictElement?.Value;
       set
       {
         DistrictElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? State
     {
-      get => _StateElement?.Value;
+      get => StateElement?.Value;
       set
       {
         StateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PostalCode
     {
-      get => _PostalCodeElement?.Value;
+      get => PostalCodeElement?.Value;
       set
       {
         PostalCodeElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Country
     {
-      get => _CountryElement?.Value;
+      get => CountryElement?.Value;
       set
       {
         CountryElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Media.DigitalMediaType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Media.DigitalMediaType>(value);
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Height
     {
-      get => _HeightElement?.Value;
+      get => HeightElement?.Value;
       set
       {
         HeightElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Width
     {
-      get => _WidthElement?.Value;
+      get => WidthElement?.Value;
       set
       {
         WidthElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Frames
     {
-      get => _FramesElement?.Value;
+      get => FramesElement?.Value;
       set
       {
         FramesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Duration
     {
-      get => _DurationElement?.Value;
+      get => DurationElement?.Value;
       set
       {
         DurationElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);

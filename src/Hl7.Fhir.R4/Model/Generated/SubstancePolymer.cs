@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? IsDefining
       {
-        get => _IsDefiningElement?.Value;
+        get => IsDefiningElement?.Value;
         set
         {
           IsDefiningElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? NumberOfUnits
       {
-        get => _NumberOfUnitsElement?.Value;
+        get => NumberOfUnitsElement?.Value;
         set
         {
           NumberOfUnitsElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AverageMolecularFormula
       {
-        get => _AverageMolecularFormulaElement?.Value;
+        get => AverageMolecularFormulaElement?.Value;
         set
         {
           AverageMolecularFormulaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? RepeatUnit
       {
-        get => _RepeatUnitElement?.Value;
+        get => RepeatUnitElement?.Value;
         set
         {
           RepeatUnitElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1295,7 +1295,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Representation
       {
-        get => _RepresentationElement?.Value;
+        get => RepresentationElement?.Value;
         set
         {
           RepresentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

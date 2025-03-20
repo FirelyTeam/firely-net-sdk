@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Period
     {
-      get => _PeriodElement?.Value;
+      get => PeriodElement?.Value;
       set
       {
         PeriodElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Factor
     {
-      get => _FactorElement?.Value;
+      get => FactorElement?.Value;
       set
       {
         FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? LowerLimit
     {
-      get => _LowerLimitElement?.Value;
+      get => LowerLimitElement?.Value;
       set
       {
         LowerLimitElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? UpperLimit
     {
-      get => _UpperLimitElement?.Value;
+      get => UpperLimitElement?.Value;
       set
       {
         UpperLimitElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Dimensions
     {
-      get => _DimensionsElement?.Value;
+      get => DimensionsElement?.Value;
       set
       {
         DimensionsElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Data
     {
-      get => _DataElement?.Value;
+      get => DataElement?.Value;
       set
       {
         DataElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

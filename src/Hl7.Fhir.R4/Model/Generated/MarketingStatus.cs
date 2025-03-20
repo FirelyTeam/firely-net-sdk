@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? RestoreDate
     {
-      get => _RestoreDateElement?.Value;
+      get => RestoreDateElement?.Value;
       set
       {
         RestoreDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

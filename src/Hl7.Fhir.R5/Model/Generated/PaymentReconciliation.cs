@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Date
       {
-        get => _DateElement?.Value;
+        get => DateElement?.Value;
         set
         {
           DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -834,7 +834,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.NoteType? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.NoteType>(value);
@@ -875,7 +875,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Text
       {
-        get => _TextElement?.Value;
+        get => TextElement?.Value;
         set
         {
           TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1066,7 +1066,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
@@ -1161,7 +1161,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Created
     {
-      get => _CreatedElement?.Value;
+      get => CreatedElement?.Value;
       set
       {
         CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1343,7 +1343,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PaymentReconciliation.PaymentOutcome? Outcome
     {
-      get => _OutcomeElement?.Value;
+      get => OutcomeElement?.Value;
       set
       {
         OutcomeElement = value is null ? null : new Code<Hl7.Fhir.Model.PaymentReconciliation.PaymentOutcome>(value);
@@ -1384,7 +1384,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Disposition
     {
-      get => _DispositionElement?.Value;
+      get => DispositionElement?.Value;
       set
       {
         DispositionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1426,7 +1426,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -1522,7 +1522,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? CardBrand
     {
-      get => _CardBrandElement?.Value;
+      get => CardBrandElement?.Value;
       set
       {
         CardBrandElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1563,7 +1563,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AccountNumber
     {
-      get => _AccountNumberElement?.Value;
+      get => AccountNumberElement?.Value;
       set
       {
         AccountNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1604,7 +1604,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ExpirationDate
     {
-      get => _ExpirationDateElement?.Value;
+      get => ExpirationDateElement?.Value;
       set
       {
         ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -1645,7 +1645,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Processor
     {
-      get => _ProcessorElement?.Value;
+      get => ProcessorElement?.Value;
       set
       {
         ProcessorElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1686,7 +1686,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ReferenceNumber
     {
-      get => _ReferenceNumberElement?.Value;
+      get => ReferenceNumberElement?.Value;
       set
       {
         ReferenceNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1727,7 +1727,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Authorization
     {
-      get => _AuthorizationElement?.Value;
+      get => AuthorizationElement?.Value;
       set
       {
         AuthorizationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

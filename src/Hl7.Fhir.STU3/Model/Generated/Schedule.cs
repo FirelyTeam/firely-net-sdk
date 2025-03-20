@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get => _ActiveElement?.Value;
+      get => ActiveElement?.Value;
       set
       {
         ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Comment
     {
-      get => _CommentElement?.Value;
+      get => CommentElement?.Value;
       set
       {
         CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? GenomeBuild
       {
-        get => _GenomeBuildElement?.Value;
+        get => GenomeBuildElement?.Value;
         set
         {
           GenomeBuildElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ReferenceSeqString
       {
-        get => _ReferenceSeqStringElement?.Value;
+        get => ReferenceSeqStringElement?.Value;
         set
         {
           ReferenceSeqStringElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Strand
       {
-        get => _StrandElement?.Value;
+        get => StrandElement?.Value;
         set
         {
           StrandElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? WindowStart
       {
-        get => _WindowStartElement?.Value;
+        get => WindowStartElement?.Value;
         set
         {
           WindowStartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? WindowEnd
       {
-        get => _WindowEndElement?.Value;
+        get => WindowEndElement?.Value;
         set
         {
           WindowEndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -690,7 +690,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Start
       {
-        get => _StartElement?.Value;
+        get => StartElement?.Value;
         set
         {
           StartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -731,7 +731,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? End
       {
-        get => _EndElement?.Value;
+        get => EndElement?.Value;
         set
         {
           EndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -772,7 +772,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ObservedAllele
       {
-        get => _ObservedAlleleElement?.Value;
+        get => ObservedAlleleElement?.Value;
         set
         {
           ObservedAlleleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ReferenceAllele
       {
-        get => _ReferenceAlleleElement?.Value;
+        get => ReferenceAlleleElement?.Value;
         set
         {
           ReferenceAlleleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -854,7 +854,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Cigar
       {
-        get => _CigarElement?.Value;
+        get => CigarElement?.Value;
         set
         {
           CigarElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1110,7 +1110,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Sequence.QualityType? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Sequence.QualityType>(value);
@@ -1178,7 +1178,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Start
       {
-        get => _StartElement?.Value;
+        get => StartElement?.Value;
         set
         {
           StartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? End
       {
-        get => _EndElement?.Value;
+        get => EndElement?.Value;
         set
         {
           EndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1313,7 +1313,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? TruthTP
       {
-        get => _TruthTPElement?.Value;
+        get => TruthTPElement?.Value;
         set
         {
           TruthTPElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1354,7 +1354,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? QueryTP
       {
-        get => _QueryTPElement?.Value;
+        get => QueryTPElement?.Value;
         set
         {
           QueryTPElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1395,7 +1395,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? TruthFN
       {
-        get => _TruthFNElement?.Value;
+        get => TruthFNElement?.Value;
         set
         {
           TruthFNElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1436,7 +1436,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? QueryFP
       {
-        get => _QueryFPElement?.Value;
+        get => QueryFPElement?.Value;
         set
         {
           QueryFPElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1477,7 +1477,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? GtFP
       {
-        get => _GtFPElement?.Value;
+        get => GtFPElement?.Value;
         set
         {
           GtFPElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1518,7 +1518,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Precision
       {
-        get => _PrecisionElement?.Value;
+        get => PrecisionElement?.Value;
         set
         {
           PrecisionElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1559,7 +1559,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Recall
       {
-        get => _RecallElement?.Value;
+        get => RecallElement?.Value;
         set
         {
           RecallElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1600,7 +1600,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? FScore
       {
-        get => _FScoreElement?.Value;
+        get => FScoreElement?.Value;
         set
         {
           FScoreElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1980,7 +1980,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Sequence.RepositoryType? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Sequence.RepositoryType>(value);
@@ -2021,7 +2021,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Url
       {
-        get => _UrlElement?.Value;
+        get => UrlElement?.Value;
         set
         {
           UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -2062,7 +2062,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2103,7 +2103,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? DatasetId
       {
-        get => _DatasetIdElement?.Value;
+        get => DatasetIdElement?.Value;
         set
         {
           DatasetIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2144,7 +2144,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? VariantsetId
       {
-        get => _VariantsetIdElement?.Value;
+        get => VariantsetIdElement?.Value;
         set
         {
           VariantsetIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2185,7 +2185,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ReadsetId
       {
-        get => _ReadsetIdElement?.Value;
+        get => ReadsetIdElement?.Value;
         set
         {
           ReadsetIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2422,7 +2422,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -2464,7 +2464,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? CoordinateSystem
     {
-      get => _CoordinateSystemElement?.Value;
+      get => CoordinateSystemElement?.Value;
       set
       {
         CoordinateSystemElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -2696,7 +2696,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ObservedSeq
     {
-      get => _ObservedSeqElement?.Value;
+      get => ObservedSeqElement?.Value;
       set
       {
         ObservedSeqElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2764,7 +2764,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? ReadCoverage
     {
-      get => _ReadCoverageElement?.Value;
+      get => ReadCoverageElement?.Value;
       set
       {
         ReadCoverageElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);

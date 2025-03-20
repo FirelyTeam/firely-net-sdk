@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.HumanName.NameUse? Use
     {
-      get => _UseElement?.Value;
+      get => UseElement?.Value;
       set
       {
         UseElement = value is null ? null : new Code<Hl7.Fhir.Model.HumanName.NameUse>(value);
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Text
     {
-      get => _TextElement?.Value;
+      get => TextElement?.Value;
       set
       {
         TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Family
     {
-      get => _FamilyElement?.Value;
+      get => FamilyElement?.Value;
       set
       {
         FamilyElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StatusDate
     {
-      get => _StatusDateElement?.Value;
+      get => StatusDateElement?.Value;
       set
       {
         StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

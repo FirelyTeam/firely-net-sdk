@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DocumentReferenceStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DocumentReferenceStatus>(value);
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Created
     {
-      get => _CreatedElement?.Value;
+      get => CreatedElement?.Value;
       set
       {
         CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Source
     {
-      get => _SourceElement?.Value;
+      get => SourceElement?.Value;
       set
       {
         SourceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

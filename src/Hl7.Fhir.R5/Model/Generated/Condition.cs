@@ -872,7 +872,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? RecordedDate
     {
-      get => _RecordedDateElement?.Value;
+      get => RecordedDateElement?.Value;
       set
       {
         RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

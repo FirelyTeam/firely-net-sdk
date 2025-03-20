@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? ContributedToDeath
       {
-        get => _ContributedToDeathElement?.Value;
+        get => ContributedToDeathElement?.Value;
         set
         {
           ContributedToDeathElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? ContributedToDeath
       {
-        get => _ContributedToDeathElement?.Value;
+        get => ContributedToDeathElement?.Value;
         set
         {
           ContributedToDeathElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1045,7 +1045,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus>(value);
@@ -1142,7 +1142,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1210,7 +1210,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1362,7 +1362,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? EstimatedAge
     {
-      get => _EstimatedAgeElement?.Value;
+      get => EstimatedAgeElement?.Value;
       set
       {
         EstimatedAgeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

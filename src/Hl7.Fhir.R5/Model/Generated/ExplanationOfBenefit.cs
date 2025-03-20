@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Responsible
       {
-        get => _ResponsibleElement?.Value;
+        get => ResponsibleElement?.Value;
         set
         {
           ResponsibleElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1016,7 +1016,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -1381,7 +1381,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -1655,7 +1655,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -1724,7 +1724,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Date
       {
-        get => _DateElement?.Value;
+        get => DateElement?.Value;
         set
         {
           DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1992,7 +1992,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Focal
       {
-        get => _FocalElement?.Value;
+        get => FocalElement?.Value;
         set
         {
           FocalElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -2234,7 +2234,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Date
       {
-        get => _DateElement?.Value;
+        get => DateElement?.Value;
         set
         {
           DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -2459,7 +2459,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -3036,7 +3036,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Factor
       {
-        get => _FactorElement?.Value;
+        get => FactorElement?.Value;
         set
         {
           FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -4160,7 +4160,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? PreAuthRef
       {
-        get => _PreAuthRefElement?.Value;
+        get => PreAuthRefElement?.Value;
         set
         {
           PreAuthRefElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -4627,7 +4627,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -4937,7 +4937,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Factor
       {
-        get => _FactorElement?.Value;
+        get => FactorElement?.Value;
         set
         {
           FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -5616,7 +5616,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -5926,7 +5926,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Factor
       {
-        get => _FactorElement?.Value;
+        get => FactorElement?.Value;
         set
         {
           FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -7051,7 +7051,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Factor
       {
-        get => _FactorElement?.Value;
+        get => FactorElement?.Value;
         set
         {
           FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -8200,7 +8200,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Factor
       {
-        get => _FactorElement?.Value;
+        get => FactorElement?.Value;
         set
         {
           FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -8987,7 +8987,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Factor
       {
-        get => _FactorElement?.Value;
+        get => FactorElement?.Value;
         set
         {
           FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -9758,7 +9758,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Date
       {
-        get => _DateElement?.Value;
+        get => DateElement?.Value;
         set
         {
           DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -10035,7 +10035,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Number
       {
-        get => _NumberElement?.Value;
+        get => NumberElement?.Value;
         set
         {
           NumberElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -10103,7 +10103,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Text
       {
-        get => _TextElement?.Value;
+        get => TextElement?.Value;
         set
         {
           TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -10342,7 +10342,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Excluded
       {
-        get => _ExcludedElement?.Value;
+        get => ExcludedElement?.Value;
         set
         {
           ExcludedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -10383,7 +10383,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -10424,7 +10424,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -11047,7 +11047,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ExplanationOfBenefit.ExplanationOfBenefitStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ExplanationOfBenefit.ExplanationOfBenefitStatus>(value);
@@ -11146,7 +11146,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ClaimUseCode? Use
     {
-      get => _UseElement?.Value;
+      get => UseElement?.Value;
       set
       {
         UseElement = value is null ? null : new Code<Hl7.Fhir.Model.ClaimUseCode>(value);
@@ -11243,7 +11243,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Created
     {
-      get => _CreatedElement?.Value;
+      get => CreatedElement?.Value;
       set
       {
         CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -11729,7 +11729,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ClaimProcessingCodes? Outcome
     {
-      get => _OutcomeElement?.Value;
+      get => OutcomeElement?.Value;
       set
       {
         OutcomeElement = value is null ? null : new Code<Hl7.Fhir.Model.ClaimProcessingCodes>(value);
@@ -11797,7 +11797,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Disposition
     {
-      get => _DispositionElement?.Value;
+      get => DispositionElement?.Value;
       set
       {
         DispositionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -12045,7 +12045,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Precedence
     {
-      get => _PrecedenceElement?.Value;
+      get => PrecedenceElement?.Value;
       set
       {
         PrecedenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);

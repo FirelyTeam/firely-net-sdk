@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Value
     {
-      get => _ValueElement?.Value;
+      get => ValueElement?.Value;
       set
       {
         ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Quantity.QuantityComparator? Comparator
     {
-      get => _ComparatorElement?.Value;
+      get => ComparatorElement?.Value;
       set
       {
         ComparatorElement = value is null ? null : new Code<Hl7.Fhir.Model.Quantity.QuantityComparator>(value);
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Unit
     {
-      get => _UnitElement?.Value;
+      get => UnitElement?.Value;
       set
       {
         UnitElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? System
     {
-      get => _SystemElement?.Value;
+      get => SystemElement?.Value;
       set
       {
         SystemElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Code
     {
-      get => _CodeElement?.Value;
+      get => CodeElement?.Value;
       set
       {
         CodeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);

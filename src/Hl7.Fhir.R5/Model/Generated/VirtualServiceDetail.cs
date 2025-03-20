@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? MaxParticipants
     {
-      get => _MaxParticipantsElement?.Value;
+      get => MaxParticipantsElement?.Value;
       set
       {
         MaxParticipantsElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? SessionKey
     {
-      get => _SessionKeyElement?.Value;
+      get => SessionKeyElement?.Value;
       set
       {
         SessionKeyElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

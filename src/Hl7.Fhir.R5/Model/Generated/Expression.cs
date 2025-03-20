@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Language
     {
-      get => _LanguageElement?.Value;
+      get => LanguageElement?.Value;
       set
       {
         LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Expression_
     {
-      get => _ExpressionElement?.Value;
+      get => ExpressionElement?.Value;
       set
       {
         ExpressionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Reference
     {
-      get => _ReferenceElement?.Value;
+      get => ReferenceElement?.Value;
       set
       {
         ReferenceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);

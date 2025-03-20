@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus>(value);
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? RecordedOn
     {
-      get => _RecordedOnElement?.Value;
+      get => RecordedOnElement?.Value;
       set
       {
         RecordedOnElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

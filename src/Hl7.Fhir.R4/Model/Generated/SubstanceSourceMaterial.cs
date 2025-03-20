@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Fraction
       {
-        get => _FractionElement?.Value;
+        get => FractionElement?.Value;
         set
         {
           FractionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? IntraspecificDescription
       {
-        get => _IntraspecificDescriptionElement?.Value;
+        get => IntraspecificDescriptionElement?.Value;
         set
         {
           IntraspecificDescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -746,7 +746,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AuthorDescription
       {
-        get => _AuthorDescriptionElement?.Value;
+        get => AuthorDescriptionElement?.Value;
         set
         {
           AuthorDescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -892,7 +892,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MaternalOrganismId
       {
-        get => _MaternalOrganismIdElement?.Value;
+        get => MaternalOrganismIdElement?.Value;
         set
         {
           MaternalOrganismIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -933,7 +933,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MaternalOrganismName
       {
-        get => _MaternalOrganismNameElement?.Value;
+        get => MaternalOrganismNameElement?.Value;
         set
         {
           MaternalOrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -974,7 +974,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? PaternalOrganismId
       {
-        get => _PaternalOrganismIdElement?.Value;
+        get => PaternalOrganismIdElement?.Value;
         set
         {
           PaternalOrganismIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1015,7 +1015,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? PaternalOrganismName
       {
-        get => _PaternalOrganismNameElement?.Value;
+        get => PaternalOrganismNameElement?.Value;
         set
         {
           PaternalOrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1739,7 +1739,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? OrganismName
     {
-      get => _OrganismNameElement?.Value;
+      get => OrganismNameElement?.Value;
       set
       {
         OrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

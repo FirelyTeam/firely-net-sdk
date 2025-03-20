@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? LinkId
       {
-        get => _LinkIdElement?.Value;
+        get => LinkIdElement?.Value;
         set
         {
           LinkIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Definition
       {
-        get => _DefinitionElement?.Value;
+        get => DefinitionElement?.Value;
         set
         {
           DefinitionElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Text
       {
-        get => _TextElement?.Value;
+        get => TextElement?.Value;
         set
         {
           TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Questionnaire
     {
-      get => _QuestionnaireElement?.Value;
+      get => QuestionnaireElement?.Value;
       set
       {
         QuestionnaireElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
@@ -774,7 +774,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>(value);
@@ -871,7 +871,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Authored
     {
-      get => _AuthoredElement?.Value;
+      get => AuthoredElement?.Value;
       set
       {
         AuthoredElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

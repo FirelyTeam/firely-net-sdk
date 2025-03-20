@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Uid
       {
-        get => _UidElement?.Value;
+        get => UidElement?.Value;
         set
         {
           UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Uid
       {
-        get => _UidElement?.Value;
+        get => UidElement?.Value;
         set
         {
           UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SopClass
       {
-        get => _SopClassElement?.Value;
+        get => SopClassElement?.Value;
         set
         {
           SopClassElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Uid
       {
-        get => _UidElement?.Value;
+        get => UidElement?.Value;
         set
         {
           UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AuthoringTime
     {
-      get => _AuthoringTimeElement?.Value;
+      get => AuthoringTimeElement?.Value;
       set
       {
         AuthoringTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -911,7 +911,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

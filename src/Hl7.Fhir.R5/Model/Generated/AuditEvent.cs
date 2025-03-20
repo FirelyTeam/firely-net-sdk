@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Requestor
       {
-        get => _RequestorElement?.Value;
+        get => RequestorElement?.Value;
         set
         {
           RequestorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1152,7 +1152,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public byte[]? Query
       {
-        get => _QueryElement?.Value;
+        get => QueryElement?.Value;
         set
         {
           QueryElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
@@ -1638,7 +1638,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AuditEvent.AuditEventAction? Action
     {
-      get => _ActionElement?.Value;
+      get => ActionElement?.Value;
       set
       {
         ActionElement = value is null ? null : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>(value);
@@ -1681,7 +1681,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AuditEvent.AuditEventSeverity? Severity
     {
-      get => _SeverityElement?.Value;
+      get => SeverityElement?.Value;
       set
       {
         SeverityElement = value is null ? null : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>(value);
@@ -1751,7 +1751,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Recorded
     {
-      get => _RecordedElement?.Value;
+      get => RecordedElement?.Value;
       set
       {
         RecordedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);

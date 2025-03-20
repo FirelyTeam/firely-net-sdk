@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Interval
     {
-      get => _IntervalElement?.Value;
+      get => IntervalElement?.Value;
       set
       {
         IntervalElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? IntervalUnit
     {
-      get => _IntervalUnitElement?.Value;
+      get => IntervalUnitElement?.Value;
       set
       {
         IntervalUnitElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Factor
     {
-      get => _FactorElement?.Value;
+      get => FactorElement?.Value;
       set
       {
         FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? LowerLimit
     {
-      get => _LowerLimitElement?.Value;
+      get => LowerLimitElement?.Value;
       set
       {
         LowerLimitElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? UpperLimit
     {
-      get => _UpperLimitElement?.Value;
+      get => UpperLimitElement?.Value;
       set
       {
         UpperLimitElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Dimensions
     {
-      get => _DimensionsElement?.Value;
+      get => DimensionsElement?.Value;
       set
       {
         DimensionsElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? CodeMap
     {
-      get => _CodeMapElement?.Value;
+      get => CodeMapElement?.Value;
       set
       {
         CodeMapElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Offsets
     {
-      get => _OffsetsElement?.Value;
+      get => OffsetsElement?.Value;
       set
       {
         OffsetsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Data
     {
-      get => _DataElement?.Value;
+      get => DataElement?.Value;
       set
       {
         DataElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

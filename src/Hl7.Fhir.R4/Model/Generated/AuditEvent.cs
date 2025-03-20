@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AltId
       {
-        get => _AltIdElement?.Value;
+        get => AltIdElement?.Value;
         set
         {
           AltIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Requestor
       {
-        get => _RequestorElement?.Value;
+        get => RequestorElement?.Value;
         set
         {
           RequestorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Address
       {
-        get => _AddressElement?.Value;
+        get => AddressElement?.Value;
         set
         {
           AddressElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -911,7 +911,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType>(value);
@@ -1061,7 +1061,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Site
       {
-        get => _SiteElement?.Value;
+        get => SiteElement?.Value;
         set
         {
           SiteElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1424,7 +1424,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1465,7 +1465,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1506,7 +1506,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public byte[]? Query
       {
-        get => _QueryElement?.Value;
+        get => QueryElement?.Value;
         set
         {
           QueryElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
@@ -1816,7 +1816,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2036,7 +2036,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AuditEvent.AuditEventAction? Action
     {
-      get => _ActionElement?.Value;
+      get => ActionElement?.Value;
       set
       {
         ActionElement = value is null ? null : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>(value);
@@ -2104,7 +2104,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Recorded
     {
-      get => _RecordedElement?.Value;
+      get => RecordedElement?.Value;
       set
       {
         RecordedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -2147,7 +2147,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AuditEvent.AuditEventOutcome? Outcome
     {
-      get => _OutcomeElement?.Value;
+      get => OutcomeElement?.Value;
       set
       {
         OutcomeElement = value is null ? null : new Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>(value);
@@ -2188,7 +2188,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? OutcomeDesc
     {
-      get => _OutcomeDescElement?.Value;
+      get => OutcomeDescElement?.Value;
       set
       {
         OutcomeDescElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Composition.CompositionAttestationMode? Mode
       {
-        get => _ModeElement?.Value;
+        get => ModeElement?.Value;
         set
         {
           ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(value);
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Time
       {
-        get => _TimeElement?.Value;
+        get => TimeElement?.Value;
         set
         {
           TimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DocumentRelationshipType? Code
       {
-        get => _CodeElement?.Value;
+        get => CodeElement?.Value;
         set
         {
           CodeElement = value is null ? null : new Code<Hl7.Fhir.Model.DocumentRelationshipType>(value);
@@ -844,7 +844,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Title
       {
-        get => _TitleElement?.Value;
+        get => TitleElement?.Value;
         set
         {
           TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -997,7 +997,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ListMode? Mode
       {
-        get => _ModeElement?.Value;
+        get => ModeElement?.Value;
         set
         {
           ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.ListMode>(value);
@@ -1421,7 +1421,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.CompositionStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.CompositionStatus>(value);
@@ -1575,7 +1575,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1646,7 +1646,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Title
     {
-      get => _TitleElement?.Value;
+      get => TitleElement?.Value;
       set
       {
         TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1689,7 +1689,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Composition.V3ConfidentialityClassification? Confidentiality
     {
-      get => _ConfidentialityElement?.Value;
+      get => ConfidentialityElement?.Value;
       set
       {
         ConfidentialityElement = value is null ? null : new Code<Hl7.Fhir.Model.Composition.V3ConfidentialityClassification>(value);

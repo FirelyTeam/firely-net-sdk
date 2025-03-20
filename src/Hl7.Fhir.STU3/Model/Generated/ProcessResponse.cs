@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Text
       {
-        get => _TextElement?.Value;
+        get => TextElement?.Value;
         set
         {
           TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Created
     {
-      get => _CreatedElement?.Value;
+      get => CreatedElement?.Value;
       set
       {
         CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Disposition
     {
-      get => _DispositionElement?.Value;
+      get => DispositionElement?.Value;
       set
       {
         DispositionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MeasurementPoint
       {
-        get => _MeasurementPointElement?.Value;
+        get => MeasurementPointElement?.Value;
         set
         {
           MeasurementPointElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -834,7 +834,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MeasurementPoint
       {
-        get => _MeasurementPointElement?.Value;
+        get => MeasurementPointElement?.Value;
         set
         {
           MeasurementPointElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1263,7 +1263,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? AllergenicIndicator
     {
-      get => _AllergenicIndicatorElement?.Value;
+      get => AllergenicIndicatorElement?.Value;
       set
       {
         AllergenicIndicatorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

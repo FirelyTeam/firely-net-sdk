@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Responsibility
       {
-        get => _ResponsibilityElement?.Value;
+        get => ResponsibilityElement?.Value;
         set
         {
           ResponsibilityElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1112,7 +1112,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
@@ -1156,7 +1156,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Coverage.CoverageKindCode? Kind
     {
-      get => _KindElement?.Value;
+      get => KindElement?.Value;
       set
       {
         KindElement = value is null ? null : new Code<Hl7.Fhir.Model.Coverage.CoverageKindCode>(value);
@@ -1363,7 +1363,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Dependent
     {
-      get => _DependentElement?.Value;
+      get => DependentElement?.Value;
       set
       {
         DependentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1512,7 +1512,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Order
     {
-      get => _OrderElement?.Value;
+      get => OrderElement?.Value;
       set
       {
         OrderElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -1553,7 +1553,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Network
     {
-      get => _NetworkElement?.Value;
+      get => NetworkElement?.Value;
       set
       {
         NetworkElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1621,7 +1621,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Subrogation
     {
-      get => _SubrogationElement?.Value;
+      get => SubrogationElement?.Value;
       set
       {
         SubrogationElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

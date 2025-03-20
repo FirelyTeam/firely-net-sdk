@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.CommonLanguages? Language
       {
-        get => _LanguageElement?.Value;
+        get => LanguageElement?.Value;
         set
         {
           LanguageElement = value is null ? null : new Code<Hl7.Fhir.Model.CommonLanguages>(value);
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.CommonLanguages? Language
       {
-        get => _LanguageElement?.Value;
+        get => LanguageElement?.Value;
         set
         {
           LanguageElement = value is null ? null : new Code<Hl7.Fhir.Model.CommonLanguages>(value);
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1131,7 +1131,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? LotNumber
       {
-        get => _LotNumberElement?.Value;
+        get => LotNumberElement?.Value;
         set
         {
           LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1172,7 +1172,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Expiry
       {
-        get => _ExpiryElement?.Value;
+        get => ExpiryElement?.Value;
         set
         {
           ExpiryElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1448,7 +1448,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes>(value);

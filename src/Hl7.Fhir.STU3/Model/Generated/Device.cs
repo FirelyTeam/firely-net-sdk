@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? DeviceIdentifier
       {
-        get => _DeviceIdentifierElement?.Value;
+        get => DeviceIdentifierElement?.Value;
         set
         {
           DeviceIdentifierElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Jurisdiction
       {
-        get => _JurisdictionElement?.Value;
+        get => JurisdictionElement?.Value;
         set
         {
           JurisdictionElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? CarrierHRF
       {
-        get => _CarrierHRFElement?.Value;
+        get => CarrierHRFElement?.Value;
         set
         {
           CarrierHRFElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public byte[]? CarrierAIDC
       {
-        get => _CarrierAIDCElement?.Value;
+        get => CarrierAIDCElement?.Value;
         set
         {
           CarrierAIDCElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Issuer
       {
-        get => _IssuerElement?.Value;
+        get => IssuerElement?.Value;
         set
         {
           IssuerElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Device.UDIEntryType? EntryType
       {
-        get => _EntryTypeElement?.Value;
+        get => EntryTypeElement?.Value;
         set
         {
           EntryTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Device.UDIEntryType>(value);
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Device.FHIRDeviceStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>(value);
@@ -791,7 +791,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? LotNumber
     {
-      get => _LotNumberElement?.Value;
+      get => LotNumberElement?.Value;
       set
       {
         LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Manufacturer
     {
-      get => _ManufacturerElement?.Value;
+      get => ManufacturerElement?.Value;
       set
       {
         ManufacturerElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -873,7 +873,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ManufactureDate
     {
-      get => _ManufactureDateElement?.Value;
+      get => ManufactureDateElement?.Value;
       set
       {
         ManufactureDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -914,7 +914,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ExpirationDate
     {
-      get => _ExpirationDateElement?.Value;
+      get => ExpirationDateElement?.Value;
       set
       {
         ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -955,7 +955,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Model
     {
-      get => _ModelElement?.Value;
+      get => ModelElement?.Value;
       set
       {
         ModelElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -996,7 +996,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Version
     {
-      get => _VersionElement?.Value;
+      get => VersionElement?.Value;
       set
       {
         VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1148,7 +1148,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Url
     {
-      get => _UrlElement?.Value;
+      get => UrlElement?.Value;
       set
       {
         UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);

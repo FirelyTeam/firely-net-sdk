@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? DeviceIdentifier
       {
-        get => _DeviceIdentifierElement?.Value;
+        get => DeviceIdentifierElement?.Value;
         set
         {
           DeviceIdentifierElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Issuer
       {
-        get => _IssuerElement?.Value;
+        get => IssuerElement?.Value;
         set
         {
           IssuerElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Jurisdiction
       {
-        get => _JurisdictionElement?.Value;
+        get => JurisdictionElement?.Value;
         set
         {
           JurisdictionElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SubJurisdiction
       {
-        get => _SubJurisdictionElement?.Value;
+        get => SubJurisdictionElement?.Value;
         set
         {
           SubJurisdictionElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DeviceDefinition.DeviceDefinitionRegulatoryIdentifierType? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceDefinition.DeviceDefinitionRegulatoryIdentifierType>(value);
@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? DeviceIdentifier
       {
-        get => _DeviceIdentifierElement?.Value;
+        get => DeviceIdentifierElement?.Value;
         set
         {
           DeviceIdentifierElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -778,7 +778,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Issuer
       {
-        get => _IssuerElement?.Value;
+        get => IssuerElement?.Value;
         set
         {
           IssuerElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -820,7 +820,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Jurisdiction
       {
-        get => _JurisdictionElement?.Value;
+        get => JurisdictionElement?.Value;
         set
         {
           JurisdictionElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -1005,7 +1005,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1049,7 +1049,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DeviceNameType? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceNameType>(value);
@@ -1663,7 +1663,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Count
       {
-        get => _CountElement?.Value;
+        get => CountElement?.Value;
         set
         {
           CountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1861,7 +1861,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Count
       {
-        get => _CountElement?.Value;
+        get => CountElement?.Value;
         set
         {
           CountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -2164,7 +2164,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2392,7 +2392,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Value
       {
-        get => _ValueElement?.Value;
+        get => ValueElement?.Value;
         set
         {
           ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2910,7 +2910,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Alternate
       {
-        get => _AlternateElement?.Value;
+        get => AlternateElement?.Value;
         set
         {
           AlternateElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -2951,7 +2951,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AllergenicIndicator
       {
-        get => _AllergenicIndicatorElement?.Value;
+        get => AllergenicIndicatorElement?.Value;
         set
         {
           AllergenicIndicatorElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -3146,7 +3146,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? UsageInstruction
       {
-        get => _UsageInstructionElement?.Value;
+        get => UsageInstructionElement?.Value;
         set
         {
           UsageInstructionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -3295,7 +3295,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? IntendedUse
       {
-        get => _IntendedUseElement?.Value;
+        get => IntendedUseElement?.Value;
         set
         {
           IntendedUseElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -3537,7 +3537,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Recall
       {
-        get => _RecallElement?.Value;
+        get => RecallElement?.Value;
         set
         {
           RecallElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -3580,7 +3580,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DeviceDefinition.DeviceCorrectiveActionScope? Scope
       {
-        get => _ScopeElement?.Value;
+        get => ScopeElement?.Value;
         set
         {
           ScopeElement = value is null ? null : new Code<Hl7.Fhir.Model.DeviceDefinition.DeviceCorrectiveActionScope>(value);
@@ -4009,7 +4009,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -4131,7 +4131,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PartNumber
     {
-      get => _PartNumberElement?.Value;
+      get => PartNumberElement?.Value;
       set
       {
         PartNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -4227,7 +4227,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ModelNumber
     {
-      get => _ModelNumberElement?.Value;
+      get => ModelNumberElement?.Value;
       set
       {
         ModelNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

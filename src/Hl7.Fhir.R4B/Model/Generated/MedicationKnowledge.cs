@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? IsActive
       {
-        get => _IsActiveElement?.Value;
+        get => IsActiveElement?.Value;
         set
         {
           IsActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Source
       {
-        get => _SourceElement?.Value;
+        get => SourceElement?.Value;
         set
         {
           SourceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -934,7 +934,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2394,7 +2394,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Allowed
       {
-        get => _AllowedElement?.Value;
+        get => AllowedElement?.Value;
         set
         {
           AllowedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -3031,7 +3031,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes>(value);
@@ -3335,7 +3335,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PreparationInstruction
     {
-      get => _PreparationInstructionElement?.Value;
+      get => PreparationInstructionElement?.Value;
       set
       {
         PreparationInstructionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);

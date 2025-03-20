@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ChargeItem.ChargeItemStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ChargeItem.ChargeItemStatus>(value);
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? FactorOverride
     {
-      get => _FactorOverrideElement?.Value;
+      get => FactorOverrideElement?.Value;
       set
       {
         FactorOverrideElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -772,7 +772,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? OverrideReason
     {
-      get => _OverrideReasonElement?.Value;
+      get => OverrideReasonElement?.Value;
       set
       {
         OverrideReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? EnteredDate
     {
-      get => _EnteredDateElement?.Value;
+      get => EnteredDateElement?.Value;
       set
       {
         EnteredDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

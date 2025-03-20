@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Time
       {
-        get => _TimeElement?.Value;
+        get => TimeElement?.Value;
         set
         {
           TimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Version
     {
-      get => _VersionElement?.Value;
+      get => VersionElement?.Value;
       set
       {
         VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -899,7 +899,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus>(value);
@@ -942,7 +942,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.CompositionStatus? DocStatus
     {
-      get => _DocStatusElement?.Value;
+      get => DocStatusElement?.Value;
       set
       {
         DocStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.CompositionStatus>(value);
@@ -1259,7 +1259,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -1411,7 +1411,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);

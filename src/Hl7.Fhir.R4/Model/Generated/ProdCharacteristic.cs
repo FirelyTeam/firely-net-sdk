@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Shape
     {
-      get => _ShapeElement?.Value;
+      get => ShapeElement?.Value;
       set
       {
         ShapeElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? RelativeRisk
       {
-        get => _RelativeRiskElement?.Value;
+        get => RelativeRiskElement?.Value;
         set
         {
           RelativeRiskElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Rationale
       {
-        get => _RationaleElement?.Value;
+        get => RationaleElement?.Value;
         set
         {
           RationaleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ObservationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ObservationStatus>(value);
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Mitigation
     {
-      get => _MitigationElement?.Value;
+      get => MitigationElement?.Value;
       set
       {
         MitigationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -918,7 +918,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Comment
     {
-      get => _CommentElement?.Value;
+      get => CommentElement?.Value;
       set
       {
         CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Group
       {
-        get => _GroupElement?.Value;
+        get => GroupElement?.Value;
         set
         {
           GroupElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? GroupDisplay
       {
-        get => _GroupDisplayElement?.Value;
+        get => GroupDisplayElement?.Value;
         set
         {
           GroupDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SubGroup
       {
-        get => _SubGroupElement?.Value;
+        get => SubGroupElement?.Value;
         set
         {
           SubGroupElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SubGroupDisplay
       {
-        get => _SubGroupDisplayElement?.Value;
+        get => SubGroupDisplayElement?.Value;
         set
         {
           SubGroupDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Plan
       {
-        get => _PlanElement?.Value;
+        get => PlanElement?.Value;
         set
         {
           PlanElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? PlanDisplay
       {
-        get => _PlanDisplayElement?.Value;
+        get => PlanDisplayElement?.Value;
         set
         {
           PlanDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SubPlan
       {
-        get => _SubPlanElement?.Value;
+        get => SubPlanElement?.Value;
         set
         {
           SubPlanElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SubPlanDisplay
       {
-        get => _SubPlanDisplayElement?.Value;
+        get => SubPlanDisplayElement?.Value;
         set
         {
           SubPlanDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Class
       {
-        get => _ClassElement?.Value;
+        get => ClassElement?.Value;
         set
         {
           ClassElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ClassDisplay
       {
-        get => _ClassDisplayElement?.Value;
+        get => ClassDisplayElement?.Value;
         set
         {
           ClassDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SubClass
       {
-        get => _SubClassElement?.Value;
+        get => SubClassElement?.Value;
         set
         {
           SubClassElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SubClassDisplay
       {
-        get => _SubClassDisplayElement?.Value;
+        get => SubClassDisplayElement?.Value;
         set
         {
           SubClassDisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -914,7 +914,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
@@ -1038,7 +1038,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? SubscriberId
     {
-      get => _SubscriberIdElement?.Value;
+      get => SubscriberIdElement?.Value;
       set
       {
         SubscriberIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1215,7 +1215,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Dependent
     {
-      get => _DependentElement?.Value;
+      get => DependentElement?.Value;
       set
       {
         DependentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1256,7 +1256,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Sequence
     {
-      get => _SequenceElement?.Value;
+      get => SequenceElement?.Value;
       set
       {
         SequenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1297,7 +1297,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Order
     {
-      get => _OrderElement?.Value;
+      get => OrderElement?.Value;
       set
       {
         OrderElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -1338,7 +1338,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Network
     {
-      get => _NetworkElement?.Value;
+      get => NetworkElement?.Value;
       set
       {
         NetworkElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

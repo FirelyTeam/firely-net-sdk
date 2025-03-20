@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Invoice.InvoiceStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Invoice.InvoiceStatus>(value);
@@ -641,7 +641,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? CancelledReason
     {
-      get => _CancelledReasonElement?.Value;
+      get => CancelledReasonElement?.Value;
       set
       {
         CancelledReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -805,7 +805,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Creation
     {
-      get => _CreationElement?.Value;
+      get => CreationElement?.Value;
       set
       {
         CreationElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PaymentTerms
     {
-      get => _PaymentTermsElement?.Value;
+      get => PaymentTermsElement?.Value;
       set
       {
         PaymentTermsElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);

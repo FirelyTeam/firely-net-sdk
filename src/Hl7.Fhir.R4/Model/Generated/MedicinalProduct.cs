@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ProductName
       {
-        get => _ProductNameElement?.Value;
+        get => ProductNameElement?.Value;
         set
         {
           ProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Part
       {
-        get => _PartElement?.Value;
+        get => PartElement?.Value;
         set
         {
           PartElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? EffectiveDate
       {
-        get => _EffectiveDateElement?.Value;
+        get => EffectiveDateElement?.Value;
         set
         {
           EffectiveDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1194,7 +1194,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Date
       {
-        get => _DateElement?.Value;
+        get => DateElement?.Value;
         set
         {
           DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MolecularFormula
       {
-        get => _MolecularFormulaElement?.Value;
+        get => MolecularFormulaElement?.Value;
         set
         {
           MolecularFormulaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Parameters
       {
-        get => _ParametersElement?.Value;
+        get => ParametersElement?.Value;
         set
         {
           ParametersElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MolecularFormula
       {
-        get => _MolecularFormulaElement?.Value;
+        get => MolecularFormulaElement?.Value;
         set
         {
           MolecularFormulaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MolecularFormulaByMoiety
       {
-        get => _MolecularFormulaByMoietyElement?.Value;
+        get => MolecularFormulaByMoietyElement?.Value;
         set
         {
           MolecularFormulaByMoietyElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1813,7 +1813,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Representation
       {
-        get => _RepresentationElement?.Value;
+        get => RepresentationElement?.Value;
         set
         {
           RepresentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2056,7 +2056,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? StatusDate
       {
-        get => _StatusDateElement?.Value;
+        get => StatusDateElement?.Value;
         set
         {
           StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -2097,7 +2097,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Comment
       {
-        get => _CommentElement?.Value;
+        get => CommentElement?.Value;
         set
         {
           CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2330,7 +2330,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2423,7 +2423,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Preferred
       {
-        get => _PreferredElement?.Value;
+        get => PreferredElement?.Value;
         set
         {
           PreferredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -2983,7 +2983,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Date
       {
-        get => _DateElement?.Value;
+        get => DateElement?.Value;
         set
         {
           DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -3203,7 +3203,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? IsDefining
       {
-        get => _IsDefiningElement?.Value;
+        get => IsDefiningElement?.Value;
         set
         {
           IsDefiningElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -3644,7 +3644,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -3714,7 +3714,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Comment
     {
-      get => _CommentElement?.Value;
+      get => CommentElement?.Value;
       set
       {
         CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

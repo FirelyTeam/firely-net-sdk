@@ -1189,7 +1189,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus>(value);
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality? Actuality
     {
-      get => _ActualityElement?.Value;
+      get => ActualityElement?.Value;
       set
       {
         ActualityElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
@@ -1414,7 +1414,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Detected
     {
-      get => _DetectedElement?.Value;
+      get => DetectedElement?.Value;
       set
       {
         DetectedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1455,7 +1455,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? RecordedDate
     {
-      get => _RecordedDateElement?.Value;
+      get => RecordedDateElement?.Value;
       set
       {
         RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1692,7 +1692,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? ExpectedInResearchStudy
     {
-      get => _ExpectedInResearchStudyElement?.Value;
+      get => ExpectedInResearchStudyElement?.Value;
       set
       {
         ExpectedInResearchStudyElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

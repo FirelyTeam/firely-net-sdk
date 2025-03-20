@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? When
     {
-      get => _WhenElement?.Value;
+      get => WhenElement?.Value;
       set
       {
         WhenElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ContentType
     {
-      get => _ContentTypeElement?.Value;
+      get => ContentTypeElement?.Value;
       set
       {
         ContentTypeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? TargetFormat
     {
-      get => _TargetFormatElement?.Value;
+      get => TargetFormatElement?.Value;
       set
       {
         TargetFormatElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? SigFormat
     {
-      get => _SigFormatElement?.Value;
+      get => SigFormatElement?.Value;
       set
       {
         SigFormatElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public byte[]? Blob
     {
-      get => _BlobElement?.Value;
+      get => BlobElement?.Value;
       set
       {
         BlobElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public byte[]? Data
     {
-      get => _DataElement?.Value;
+      get => DataElement?.Value;
       set
       {
         DataElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);

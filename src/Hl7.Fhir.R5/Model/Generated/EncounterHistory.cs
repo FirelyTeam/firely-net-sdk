@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EncounterStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EncounterStatus>(value);
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PlannedStartDate
     {
-      get => _PlannedStartDateElement?.Value;
+      get => PlannedStartDateElement?.Value;
       set
       {
         PlannedStartDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PlannedEndDate
     {
-      get => _PlannedEndDateElement?.Value;
+      get => PlannedEndDateElement?.Value;
       set
       {
         PlannedEndDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

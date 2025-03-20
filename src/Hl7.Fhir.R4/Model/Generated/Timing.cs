@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Count
       {
-        get => _CountElement?.Value;
+        get => CountElement?.Value;
         set
         {
           CountElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? CountMax
       {
-        get => _CountMaxElement?.Value;
+        get => CountMaxElement?.Value;
         set
         {
           CountMaxElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Duration
       {
-        get => _DurationElement?.Value;
+        get => DurationElement?.Value;
         set
         {
           DurationElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? DurationMax
       {
-        get => _DurationMaxElement?.Value;
+        get => DurationMaxElement?.Value;
         set
         {
           DurationMaxElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Timing.UnitsOfTime? DurationUnit
       {
-        get => _DurationUnitElement?.Value;
+        get => DurationUnitElement?.Value;
         set
         {
           DurationUnitElement = value is null ? null : new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Frequency
       {
-        get => _FrequencyElement?.Value;
+        get => FrequencyElement?.Value;
         set
         {
           FrequencyElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? FrequencyMax
       {
-        get => _FrequencyMaxElement?.Value;
+        get => FrequencyMaxElement?.Value;
         set
         {
           FrequencyMaxElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Period
       {
-        get => _PeriodElement?.Value;
+        get => PeriodElement?.Value;
         set
         {
           PeriodElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? PeriodMax
       {
-        get => _PeriodMaxElement?.Value;
+        get => PeriodMaxElement?.Value;
         set
         {
           PeriodMaxElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Timing.UnitsOfTime? PeriodUnit
       {
-        get => _PeriodUnitElement?.Value;
+        get => PeriodUnitElement?.Value;
         set
         {
           PeriodUnitElement = value is null ? null : new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
@@ -916,7 +916,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Offset
       {
-        get => _OffsetElement?.Value;
+        get => OffsetElement?.Value;
         set
         {
           OffsetElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);

@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Uid
       {
-        get => _UidElement?.Value;
+        get => UidElement?.Value;
         set
         {
           UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Number
       {
-        get => _NumberElement?.Value;
+        get => NumberElement?.Value;
         set
         {
           NumberElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? NumberOfInstances
       {
-        get => _NumberOfInstancesElement?.Value;
+        get => NumberOfInstancesElement?.Value;
         set
         {
           NumberOfInstancesElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ImagingStudy.InstanceAvailability? Availability
       {
-        get => _AvailabilityElement?.Value;
+        get => AvailabilityElement?.Value;
         set
         {
           AvailabilityElement = value is null ? null : new Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>(value);
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Started
       {
-        get => _StartedElement?.Value;
+        get => StartedElement?.Value;
         set
         {
           StartedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Uid
       {
-        get => _UidElement?.Value;
+        get => UidElement?.Value;
         set
         {
           UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
@@ -901,7 +901,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Number
       {
-        get => _NumberElement?.Value;
+        get => NumberElement?.Value;
         set
         {
           NumberElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -943,7 +943,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SopClass
       {
-        get => _SopClassElement?.Value;
+        get => SopClassElement?.Value;
         set
         {
           SopClassElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
@@ -984,7 +984,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Title
       {
-        get => _TitleElement?.Value;
+        get => TitleElement?.Value;
         set
         {
           TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1156,7 +1156,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Uid
     {
-      get => _UidElement?.Value;
+      get => UidElement?.Value;
       set
       {
         UidElement = value is null ? null : new Hl7.Fhir.Model.Oid(value);
@@ -1252,7 +1252,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ImagingStudy.InstanceAvailability? Availability
     {
-      get => _AvailabilityElement?.Value;
+      get => AvailabilityElement?.Value;
       set
       {
         AvailabilityElement = value is null ? null : new Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>(value);
@@ -1378,7 +1378,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Started
     {
-      get => _StartedElement?.Value;
+      get => StartedElement?.Value;
       set
       {
         StartedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1534,7 +1534,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? NumberOfSeries
     {
-      get => _NumberOfSeriesElement?.Value;
+      get => NumberOfSeriesElement?.Value;
       set
       {
         NumberOfSeriesElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -1575,7 +1575,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? NumberOfInstances
     {
-      get => _NumberOfInstancesElement?.Value;
+      get => NumberOfInstancesElement?.Value;
       set
       {
         NumberOfInstancesElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -1700,7 +1700,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
