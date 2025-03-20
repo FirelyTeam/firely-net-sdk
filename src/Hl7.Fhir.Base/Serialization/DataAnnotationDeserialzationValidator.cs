@@ -43,7 +43,7 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
 
     /// <inheritdoc />
     public virtual void ValidateInstance(Base instance, in InstanceDeserializationContext context,
-        out CodedValidationException[]? reportedErrors)
+        out IReadOnlyCollection<CodedValidationException> reportedErrors)
     {
         var validationContext = new ValidationContext(instance)
             .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
@@ -51,7 +51,7 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
             .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
             .SetLocationProducer(context.PathStack.GetInstancePath);
 
-        IEnumerable<CodedValidationException>? errors = null;
+        IEnumerable<CodedValidationException> errors = [];
 
         // Make sure we detect missing values - go over all members that have cardinality constraints
         // and invoke those if there is no value (if there was a value, ValidateProperty will have been
@@ -71,13 +71,13 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
                     // even if it does not really contain any values.
                     var nestedContext = validationContext.IntoEmptyProperty(propMapping.Name);
 
-                    errors = add(errors, runAttributeValidation(propValue, [cardinality], nestedContext));
+                    errors = errors.Concat(runAttributeValidation(propValue, [cardinality], nestedContext));
                 }
             }
         }
 
         // Validate the attributes on this instance itself
-        errors = add(errors, runAttributeValidation(instance, context.InstanceMapping.ValidationAttributes, validationContext));
+        errors = errors.Concat(runAttributeValidation(instance, context.InstanceMapping.ValidationAttributes, validationContext));
 
         // Now, just like Validator.Validate, run the IValidatableObject if applicable
         if (instance is IValidatableObject ivo)
@@ -89,11 +89,11 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
                 if (codedErrors.Count != extraErrors.Count)
                     throw new InvalidOperationException($"IValidatableObject.Validates should return one or more {nameof(CodedValidationResult)}.");
 
-                errors = add(errors, codedErrors);
+                errors = errors.Concat(codedErrors);
             }
         }
 
-        reportedErrors = errors?.ToArray();
+        reportedErrors = errors.ToArray();
     }
 
     private static IEnumerable<CodedValidationException>? add(IEnumerable<CodedValidationException>? errors, IEnumerable<CodedValidationException>? moreErrors)
