@@ -50,6 +50,8 @@ public class CodedValidationException : ExtendedCodedException
     public const string EXPECTED_ARRAY_NOT_PRIMITIVE_CODE = "PVAL131";
     public const string EXPECTED_ARRAY_NOT_OBJECT_CODE = "PVAL132";
     public const string TYPE_MISMATCH_CODE = "PVAL133";
+    public const string UNKNOWN_ELEMENT_CODE = "PVAL135";
+    
 
     // A list of all issues mentioned above, to we can filter on them.
     internal static readonly HashSet<string> POCO_VALIDATION_ISSUES =
@@ -75,7 +77,8 @@ public class CodedValidationException : ExtendedCodedException
         EXPECTED_PRIMITIVE_NOT_ARRAY_CODE,
         EXPECTED_ARRAY_NOT_PRIMITIVE_CODE,
         EXPECTED_ARRAY_NOT_OBJECT_CODE,
-        TYPE_MISMATCH_CODE
+        TYPE_MISMATCH_CODE,
+        UNKNOWN_ELEMENT_CODE
     ];
 
     internal static COVE CHOICE_TYPE_NOT_ALLOWED(ValidationContext context, string typeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{typeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Structure);
@@ -118,6 +121,9 @@ public class CodedValidationException : ExtendedCodedException
     
     internal static COVE TYPE_MISMATCH(ValidationContext? context, string expected, string actual) =>
         Initialize(context, TYPE_MISMATCH_CODE, $"Expected type '{expected}', but found '{actual}'.", OO_Sev.Error, OO_Typ.Structure);
+    
+    internal static COVE UNKNOWN_ELEMENT(ValidationContext? context, string elementName) =>
+        Initialize(context, UNKNOWN_ELEMENT_CODE, $"Found Unknown element '{elementName}'.", OO_Sev.Error, OO_Typ.Unknown);
 
 
     private static string niceValue(object? v)

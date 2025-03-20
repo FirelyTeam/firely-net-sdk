@@ -71,7 +71,7 @@ public readonly struct PropertyDeserializationContext
     /// <summary>
     /// The metadata for the element that is currently being deserialized.
     /// </summary>
-    public PropertyMapping ElementMapping { get; }
+    public PropertyMapping? ElementMapping { get; }
 
     /// <summary>
     /// For performance reasons, validation of Xhtml again the rules specified in the FHIR
