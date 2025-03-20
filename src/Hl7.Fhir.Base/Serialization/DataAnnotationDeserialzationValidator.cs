@@ -30,7 +30,7 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
     public static readonly DataAnnotationDeserialzationValidator Default = new();
 
     /// <inheritdoc />
-    public virtual void ValidateProperty(object? propertyValue, in PropertyDeserializationContext context, out CodedValidationException[]? reportedErrors)
+    public virtual void ValidateProperty(object? propertyValue, in PropertyDeserializationContext context, out IReadOnlyCollection<CodedValidationException> reportedErrors)
     {
         var validationContext = new ValidationContext(context.ObjectInstance)
             .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
@@ -103,24 +103,11 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
             : errors is not null ? errors.Concat(moreErrors) : moreErrors;
     }
 
-    private static CodedValidationException[]? runAttributeValidation(
+    private static IReadOnlyCollection<CodedValidationException> runAttributeValidation(
         object? candidateValue,
         ValidatingFhirModelAttribute[] attributes,
         ValidationContext validationContext)
     {
-
-        // Avoid allocation of a list for every validation until we really have something to report.
-        IEnumerable<CodedValidationException>? errors = null;
-
-        foreach (var va in attributes)
-        {
-            if (va.Validate(candidateValue, validationContext) is not {} vr) continue;
-            if (vr is CodedValidationResult cvr)
-                errors = add(errors, [cvr.ValidationException]);
-            else
-                throw new InvalidOperationException($"Validation attributes should return a {nameof(CodedValidationResult)}.");
-        }
-
-        return errors?.ToArray();
+        return attributes.SelectMany(vfma => vfma.Validate(candidateValue, validationContext)).ToArray();
     }
 }

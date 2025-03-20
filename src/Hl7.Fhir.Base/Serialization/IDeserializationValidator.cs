@@ -11,6 +11,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Validation;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Serialization;
 
@@ -31,7 +32,7 @@ public interface IDeserializationValidator
     void ValidateProperty(
         object? propertyValue,
         in PropertyDeserializationContext context,
-        out CodedValidationException[]? reportedErrors);
+        out IReadOnlyCollection<CodedValidationException> reportedErrors);
 
     /// <summary>
     /// Implements validation logic to be run on a deserialized instance.
@@ -42,5 +43,5 @@ public interface IDeserializationValidator
     void ValidateInstance(
         Base instance,
         in InstanceDeserializationContext context,
-        out CodedValidationException[]? reportedErrors);
+        out IReadOnlyCollection<CodedValidationException> reportedErrors);
 }
