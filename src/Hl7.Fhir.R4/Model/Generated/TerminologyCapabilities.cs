@@ -2415,7 +2415,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2788,7 +2788,7 @@ namespace Hl7.Fhir.Model
     /// instance | capability | requirements.
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=230)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("CapabilityStatementKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2978,7 +2978,7 @@ namespace Hl7.Fhir.Model
     /// explicit | all.
     /// </summary>
     [FhirElement("codeSearch", Order=290)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("CodeSearchSupport")]
     [DataMember]
     public Code<Hl7.Fhir.Model.TerminologyCapabilities.CodeSearchSupport>? CodeSearchElement

@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
@@ -16,14 +15,14 @@ using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 #nullable enable
 
-namespace Hl7.Fhir.Validation;
+namespace Hl7.Fhir.Introspection;
 
 /// <summary>
 /// Validates the type of a property against the allowed type choices.
 /// </summary>
 [CLSCompliant(false)]
 [AttributeUsage(AttributeTargets.Property)]
-public class AllowedTypesAttribute(params Type[] types) : VersionedValidationAttribute
+public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAttribute
 {
     /// <summary>
     /// The list of types that are allowed for the instance.

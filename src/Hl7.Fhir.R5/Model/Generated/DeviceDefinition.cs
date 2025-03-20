@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model
       /// basic | master | license.
       /// </summary>
       [FhirElement("type", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("DeviceRegulatoryIdentifierType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Model
       /// registered-name | user-friendly-name | patient-reported-name.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3549,7 +3549,7 @@ namespace Hl7.Fhir.Model
       /// model | lot-numbers | serial-numbers.
       /// </summary>
       [FhirElement("scope", Order=50)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("DeviceCorrectiveActionScope")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceDefinition.DeviceCorrectiveActionScope>? ScopeElement
@@ -4619,7 +4619,7 @@ namespace Hl7.Fhir.Model
     /// lot-number | manufactured-date | serial-number | expiration-date | biological-source | software-version.
     /// </summary>
     [FhirElement("productionIdentifierInUDI", Order=310)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("DeviceProductionIdentifierInUDI")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

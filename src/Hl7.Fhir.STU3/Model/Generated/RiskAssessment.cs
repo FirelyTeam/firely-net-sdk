@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
     /// registered | preliminary | final | amended +.
     /// </summary>
     [FhirElement("status", Order=120, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("RiskAssessmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

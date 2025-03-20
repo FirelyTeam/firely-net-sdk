@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
       /// udi-label-name | user-friendly-name | patient-reported-name | manufacturer-name | model-name | other.
       /// </summary>
       [FhirElement("type", Order=50, FiveWs="FiveWs.what[x]")]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

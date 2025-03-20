@@ -4799,7 +4799,7 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("ClaimStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
@@ -4897,7 +4897,7 @@ namespace Hl7.Fhir.Model
     /// complete | proposed | exploratory | other.
     /// </summary>
     [FhirElement("use", Order=130, FiveWs="class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("Use")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Claim.ClaimUseCode>? UseElement

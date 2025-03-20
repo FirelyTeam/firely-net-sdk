@@ -200,8 +200,8 @@ namespace Hl7.Fhir.Model
     // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
     // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
     // [AllowedTypes(typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
-    [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
-    [DeclaredType(Type = typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
+    [DeclaredType(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
+    [DeclaredType(typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.PrimitiveType> ProfileElement

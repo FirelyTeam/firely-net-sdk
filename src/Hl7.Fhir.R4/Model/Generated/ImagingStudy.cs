@@ -1294,7 +1294,7 @@ namespace Hl7.Fhir.Model
     /// registered | available | cancelled | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("ImagingStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

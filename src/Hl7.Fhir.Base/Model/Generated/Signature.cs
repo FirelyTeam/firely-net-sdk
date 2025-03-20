@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("who", InSummary=true, Order=50, Choice = ChoiceType.DatatypeChoice)]
     [FhirElement("who", InSummary=true, Order=50, Since=FhirRelease.R4)]
-    [DeclaredType(Type = typeof(ResourceReference), Since = FhirRelease.R4)]
+    [DeclaredType(typeof(ResourceReference), Since = FhirRelease.R4)]
     [CLSCompliant(false)]
     [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("onBehalfOf", InSummary=true, Order=60, Choice = ChoiceType.DatatypeChoice)]
     [FhirElement("onBehalfOf", InSummary=true, Order=60, Since=FhirRelease.R4)]
-    [DeclaredType(Type = typeof(ResourceReference), Since = FhirRelease.R4)]
+    [DeclaredType(typeof(ResourceReference), Since = FhirRelease.R4)]
     [CLSCompliant(false)]
     [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]

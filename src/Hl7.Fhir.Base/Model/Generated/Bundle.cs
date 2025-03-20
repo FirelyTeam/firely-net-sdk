@@ -968,8 +968,8 @@ namespace Hl7.Fhir.Model
       // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
       // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       // [AllowedTypes(typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
-      [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      [DeclaredType(Type = typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
+      [DeclaredType(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
+      [DeclaredType(typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.PrimitiveType? RelationElement
@@ -1535,7 +1535,7 @@ namespace Hl7.Fhir.Model
       /// match | include - why this is in the result set.
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("SearchEntryMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>? ModeElement
@@ -1727,7 +1727,7 @@ namespace Hl7.Fhir.Model
       /// GET | HEAD | POST | PUT | DELETE | PATCH.
       /// </summary>
       [FhirElement("method", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("HTTPVerb")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2529,7 +2529,7 @@ namespace Hl7.Fhir.Model
     /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=60, FiveWs="FiveWs.class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("BundleType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

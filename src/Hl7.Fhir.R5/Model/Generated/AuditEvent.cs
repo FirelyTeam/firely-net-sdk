@@ -1607,7 +1607,7 @@ namespace Hl7.Fhir.Model
     /// Type of action performed during the event.
     /// </summary>
     [FhirElement("action", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("AuditEventAction")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>? ActionElement
@@ -1650,7 +1650,7 @@ namespace Hl7.Fhir.Model
     /// emergency | alert | critical | error | warning | notice | informational | debug.
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=120)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("AuditEventSeverity")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>? SeverityElement

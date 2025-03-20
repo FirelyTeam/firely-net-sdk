@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
     /// male | female | other | unknown.
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=150)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement

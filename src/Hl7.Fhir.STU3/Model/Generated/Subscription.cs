@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
       /// rest-hook | websocket | email | sms | message.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("SubscriptionChannelType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
     /// requested | active | error | off.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=90, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("SubscriptionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

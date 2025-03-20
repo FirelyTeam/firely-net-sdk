@@ -28,29 +28,41 @@
 
 */
 
-using Hl7.Fhir.Specification;
 using System;
 
-namespace Hl7.Fhir.Introspection
+#nullable enable
+
+namespace Hl7.Fhir.Introspection;
+
+/// <summary>
+/// This attribute is applied to classes that represent FHIR datatypes and resources.
+/// </summary>
+[AttributeUsage(AttributeTargets.Class, Inherited = false)]
+public sealed class FhirTypeAttribute : FhirModelAttribute
 {
-    public interface IFhirVersionDependent
+    public FhirTypeAttribute(string name)
     {
-        /// <summary>
-        /// First version of FHIR for which this attribute applies, as a major FHIR release number
-        /// </summary>
-        FhirRelease Since { get; }
+        Name = name ?? throw new ArgumentNullException(nameof(name));
     }
 
-    public static class FhirVersionDependentExtensions
+    public FhirTypeAttribute(string name, string canonical)
     {
-        /// <summary>
-        /// Determines whether the given attribute applies to a given FHIR release.
-        /// </summary>
-        /// <remarks>An attribute is applicable to a given <see cref="FhirRelease"/> if
-        /// the attribute has a <see cref="IFhirVersionDependent.Since"/> value that
-        /// equivalent to or older than <paramref name="release"/> or has no <c>Since</c>
-        /// value at all.</remarks>
-        public static bool AppliesToRelease(this Attribute me, FhirRelease release) =>
-             me is not IFhirVersionDependent vd || vd.Since <= release;
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Canonical = canonical;
     }
+
+    /// <summary>
+    /// The name of the FHIR type this class represents.
+    /// </summary>
+    public string Name { get; private set; }
+
+    /// <summary>
+    /// The canonical of the StructureDefinition defining this type.
+    /// </summary>
+    public string? Canonical { get; set; }
+
+    /// <summary>
+    /// Indicates whether this class represents the nested complex type for a (backbone) element.
+    /// </summary>
+    public bool IsBackboneType { get; set; }
 }

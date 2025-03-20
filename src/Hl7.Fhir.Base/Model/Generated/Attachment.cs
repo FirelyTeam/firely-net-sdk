@@ -200,8 +200,8 @@ namespace Hl7.Fhir.Model
     // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
     // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
     // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
-    [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
-    [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
+    [DeclaredType(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
+    [DeclaredType(typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.PrimitiveType? UrlElement
     {
@@ -266,8 +266,8 @@ namespace Hl7.Fhir.Model
     // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
     // [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
     // [AllowedTypes(typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
-    [DeclaredType(Type = typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
-    [DeclaredType(Type = typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
+    [DeclaredType(typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
+    [DeclaredType(typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.PrimitiveType? SizeElement
     {

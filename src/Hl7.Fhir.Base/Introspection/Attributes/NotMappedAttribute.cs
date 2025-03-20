@@ -30,40 +30,13 @@
 
 using System;
 
-#nullable enable
+namespace Hl7.Fhir.Introspection;
 
-namespace Hl7.Fhir.Introspection
+[AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+public sealed class NotMappedAttribute : FhirModelAttribute
 {
-    /// <summary>
-    /// This attribute is applied to classes that represent FHIR datatypes and resources.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public sealed class FhirTypeAttribute : VersionedAttribute
+    public NotMappedAttribute()
     {
-        public FhirTypeAttribute(string name)
-        {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-        }
-
-        public FhirTypeAttribute(string name, string canonical)
-        {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Canonical = canonical;
-        }
-
-        /// <summary>
-        /// The name of the FHIR type this class represents.
-        /// </summary>
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// The canonical of the StructureDefinition defining this type.
-        /// </summary>
-        public string? Canonical { get; set; }
-
-        /// <summary>
-        /// Indicates whether this class represents the nested complex type for a (backbone) element.
-        /// </summary>
-        public bool IsBackboneType { get; set; }
+        // This attribute is just a marker, no functionality or data
     }
 }

@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
     /// proposed | accepted | planned | in-progress | on-target | ahead-of-target | behind-target | sustaining | achieved | on-hold | cancelled | entered-in-error | rejected.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("GoalStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -1786,7 +1786,7 @@ namespace Hl7.Fhir.Model
     /// indication | contraindication | interaction | undesirable-effect | warning.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("ClinicalUseDefinitionType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
       /// oid | uuid | uri | iri-stem | v2csmnemonic | other.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("NamingSystemIdentifierType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Model
     /// codesystem | identifier | root.
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=160, FiveWs="FiveWs.class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("NamingSystemType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

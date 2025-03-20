@@ -1350,7 +1350,7 @@ namespace Hl7.Fhir.Model
     /// complete | pending | error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("MeasureReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1394,7 +1394,7 @@ namespace Hl7.Fhir.Model
     /// individual | patient-list | summary.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("MeasureReportType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

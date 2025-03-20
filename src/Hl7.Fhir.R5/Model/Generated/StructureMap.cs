@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
       /// source | queried | target | produced.
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=50)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("StructureMapModelMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
       /// types | type-and-types.
       /// </summary>
       [FhirElement("typeMode", InSummary=true, Order=60)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("StructureMapGroupTypeMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapGroupTypeMode>? TypeModeElement
@@ -1337,7 +1337,7 @@ namespace Hl7.Fhir.Model
       /// source | target.
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=60)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("StructureMapInputMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2183,7 +2183,7 @@ namespace Hl7.Fhir.Model
       /// first | not_first | last | not_last | only_one.
       /// </summary>
       [FhirElement("listMode", InSummary=true, Order=100)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("StructureMapSourceListMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapSourceListMode>? ListModeElement
@@ -2789,7 +2789,7 @@ namespace Hl7.Fhir.Model
       /// first | share | last | single.
       /// </summary>
       [FhirElement("listMode", InSummary=true, Order=70)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("StructureMapTargetListMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2877,7 +2877,7 @@ namespace Hl7.Fhir.Model
       /// create | copy +.
       /// </summary>
       [FhirElement("transform", InSummary=true, Order=90)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("StructureMapTransform")]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapTransform>? TransformElement
@@ -3644,7 +3644,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

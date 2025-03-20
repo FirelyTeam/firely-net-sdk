@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
     /// person | animal | practitioner | device | careteam | healthcareservice | location | organization | relatedperson | specimen.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("GroupType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -767,7 +767,7 @@ namespace Hl7.Fhir.Model
     /// definitional | enumerated.
     /// </summary>
     [FhirElement("membership", InSummary=true, Order=120)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>? MembershipElement

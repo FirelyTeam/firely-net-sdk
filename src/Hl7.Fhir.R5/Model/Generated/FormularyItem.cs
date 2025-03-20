@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
     /// active | entered-in-error | inactive.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("FormularyItemStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FormularyItem.FormularyItemStatusCodes>? StatusElement

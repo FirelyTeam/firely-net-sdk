@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -44,7 +45,7 @@ public static class ValidationContextExtensions
 
     /// <summary>
     /// Alters the ValidationContext to indicate the kind of narrative validation the
-    /// <see cref="NarrativeXhtmlPatternAttribute"/> should perform.
+    /// <see cref="XHtml.ValidateXmlLiteral"/> should perform.
     /// </summary>
     public static ValidationContext SetNarrativeValidationKind(this ValidationContext ctx, NarrativeValidationKind kind)
     {
@@ -53,7 +54,7 @@ public static class ValidationContextExtensions
     }
 
     /// <summary>
-    /// Gets the kind of narrative validation the <see cref="NarrativeXhtmlPatternAttribute"/> should perform
+    /// Gets the kind of narrative validation the <see cref="XHtml.ValidateXmlLiteral"/> should perform
     /// from the ValidationContext.
     /// </summary>
     public static NarrativeValidationKind GetNarrativeValidationKind(this ValidationContext ctx) =>

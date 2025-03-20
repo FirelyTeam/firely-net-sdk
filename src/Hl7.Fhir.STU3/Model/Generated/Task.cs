@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Model
     /// draft | requested | received | accepted | +.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("TaskStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1101,7 +1101,7 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | order +.
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=170, FiveWs="class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("TaskIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1145,7 +1145,7 @@ namespace Hl7.Fhir.Model
     /// normal | urgent | asap | stat.
     /// </summary>
     [FhirElement("priority", Order=180, FiveWs="grade")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("TaskPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement

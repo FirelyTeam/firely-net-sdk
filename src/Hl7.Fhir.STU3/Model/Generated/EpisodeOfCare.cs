@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
       /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error.
       /// </summary>
       [FhirElement("status", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("EpisodeOfCareStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
     /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("EpisodeOfCareStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

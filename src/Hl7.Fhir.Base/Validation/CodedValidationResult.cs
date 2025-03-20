@@ -10,29 +10,25 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 #nullable enable
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Validation;
+
+public class CodedValidationResult : ValidationResult
 {
-    public class CodedValidationResult : ValidationResult
+    public CodedValidationException ValidationException { get; set; }
+
+    public CodedValidationResult(CodedValidationException validationException) : base(validationException.Message)
     {
-        public CodedValidationException ValidationException { get; set; }
-
-        public CodedValidationResult(CodedValidationException validationException) : base(validationException.Message)
-        {
-            ValidationException = validationException;
-        }
-
-        public CodedValidationResult(CodedValidationException validationException, IEnumerable<string>? memberNames)
-            : base(validationException.Message, memberNames)
-        {
-            ValidationException = validationException;
-        }
-
-        protected CodedValidationResult(CodedValidationResult validationResult) : base(validationResult)
-        {
-            ValidationException = validationResult.ValidationException;
-        }
+        ValidationException = validationException;
     }
 
-}
+    public CodedValidationResult(CodedValidationException validationException, IEnumerable<string>? memberNames)
+        : base(validationException.Message, memberNames)
+    {
+        ValidationException = validationException;
+    }
 
-#nullable restore
+    protected CodedValidationResult(CodedValidationResult validationResult) : base(validationResult)
+    {
+        ValidationException = validationResult.ValidationException;
+    }
+}

@@ -1224,7 +1224,7 @@ namespace Hl7.Fhir.Model
       /// all-of | any-of | at-least | at-most | statistical | net-effect | dataset.
       /// </summary>
       [FhirElement("code", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("CharacteristicCombination")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2192,7 +2192,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2915,7 +2915,7 @@ namespace Hl7.Fhir.Model
     /// continuous | dichotomous | ordinal | polychotomous.
     /// </summary>
     [FhirElement("handling", Order=370)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("EvidenceVariableHandling")]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariableHandling>? HandlingElement

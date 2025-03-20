@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
       /// routine | urgent | asap | stat.
       /// </summary>
       [FhirElement("priority", Order=90)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("RequestPriority")]
       [DataMember]
       public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Model
       /// visual-group | logical-group | sentence-group.
       /// </summary>
       [FhirElement("groupingBehavior", Order=210)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ActionGroupingBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionGroupingBehavior>? GroupingBehaviorElement
@@ -673,7 +673,7 @@ namespace Hl7.Fhir.Model
       /// any | all | all-or-none | exactly-one | at-most-one | one-or-more.
       /// </summary>
       [FhirElement("selectionBehavior", Order=220)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ActionSelectionBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionSelectionBehavior>? SelectionBehaviorElement
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
       /// must | could | must-unless-documented.
       /// </summary>
       [FhirElement("requiredBehavior", Order=230)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ActionRequiredBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRequiredBehavior>? RequiredBehaviorElement
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Model
       /// yes | no.
       /// </summary>
       [FhirElement("precheckBehavior", Order=240)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ActionPrecheckBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionPrecheckBehavior>? PrecheckBehaviorElement
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Model
       /// single | multiple.
       /// </summary>
       [FhirElement("cardinalityBehavior", Order=250)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ActionCardinalityBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionCardinalityBehavior>? CardinalityBehaviorElement
@@ -1580,7 +1580,7 @@ namespace Hl7.Fhir.Model
       /// applicability | start | stop.
       /// </summary>
       [FhirElement("kind", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ActionConditionKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2270,7 +2270,7 @@ namespace Hl7.Fhir.Model
       /// before | before-start | before-end | concurrent | concurrent-with-start | concurrent-with-end | after | after-start | after-end.
       /// </summary>
       [FhirElement("relationship", Order=50)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ActionRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2314,7 +2314,7 @@ namespace Hl7.Fhir.Model
       /// before | before-start | before-end | concurrent | concurrent-with-start | concurrent-with-end | after | after-start | after-end.
       /// </summary>
       [FhirElement("endRelationship", Order=60)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ActionRelationshipType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRelationshipType>? EndRelationshipElement
@@ -2532,7 +2532,7 @@ namespace Hl7.Fhir.Model
       /// careteam | device | group | healthcareservice | location | organization | patient | practitioner | practitionerrole | relatedperson.
       /// </summary>
       [FhirElement("type", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ActivityParticipantType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType>? TypeElement
@@ -3272,7 +3272,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("RequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3316,7 +3316,7 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option.
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("RequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3360,7 +3360,7 @@ namespace Hl7.Fhir.Model
     /// routine | urgent | asap | stat.
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=170, FiveWs="FiveWs.grade")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement

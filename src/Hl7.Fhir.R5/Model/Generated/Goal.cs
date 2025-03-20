@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
     /// proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected.
     /// </summary>
     [FhirElement("lifecycleStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("GoalLifecycleStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

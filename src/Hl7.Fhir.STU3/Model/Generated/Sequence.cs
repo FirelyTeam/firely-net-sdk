@@ -1078,7 +1078,7 @@ namespace Hl7.Fhir.Model
       /// indel | snp | unknown.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("qualityType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1948,7 +1948,7 @@ namespace Hl7.Fhir.Model
       /// directlink | openapi | login | oauth | other.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("repositoryType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

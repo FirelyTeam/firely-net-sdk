@@ -2748,7 +2748,7 @@ namespace Hl7.Fhir.Model
     /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("ContractStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes>? StatusElement

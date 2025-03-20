@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
     /// active | completed | entered-in-error | intended | stopped | on-hold.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("MedicationStatementStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
     /// y | n | unk | na.
     /// </summary>
     [FhirElement("taken", InSummary=true, IsModifier=true, Order=210)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("MedicationStatementTaken")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

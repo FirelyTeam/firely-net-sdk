@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
     /// requested | active | error | off | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("SubscriptionStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionStatusCodes>? StatusElement
@@ -435,7 +435,7 @@ namespace Hl7.Fhir.Model
     /// handshake | heartbeat | event-notification | query-status | query-event.
     /// </summary>
     [FhirElement("type", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("SubscriptionNotificationType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

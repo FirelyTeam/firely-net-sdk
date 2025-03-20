@@ -908,7 +908,7 @@ namespace Hl7.Fhir.Model
       /// farenheit | celsius | kelvin.
       /// </summary>
       [FhirElement("scale", Order=60)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("BiologicallyDerivedProductStorageScale")]
       [DataMember]
       public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale>? ScaleElement
@@ -1134,7 +1134,7 @@ namespace Hl7.Fhir.Model
     /// organ | tissue | fluid | cells | biologicalAgent.
     /// </summary>
     [FhirElement("productCategory", Order=100)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("BiologicallyDerivedProductCategory")]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory>? ProductCategoryElement
@@ -1204,7 +1204,7 @@ namespace Hl7.Fhir.Model
     /// available | unavailable.
     /// </summary>
     [FhirElement("status", Order=120)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("BiologicallyDerivedProductStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus>? StatusElement

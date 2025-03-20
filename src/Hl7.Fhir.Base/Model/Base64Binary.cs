@@ -45,7 +45,7 @@ public partial class Base64Binary
 {
     [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true,
         Order = 30)]
-    [DeclaredType(Type = typeof(P.String))]
+    [DeclaredType(typeof(P.String))]
     [DataMember]
     public byte[]? Value
     {

@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
       /// s | min | h | d | wk | mo | a - unit of time (UCUM).
       /// </summary>
       [FhirElement("durationUnit", InSummary=true, Order=80)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("UnitsOfTime")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime>? DurationUnitElement
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model
       /// s | min | h | d | wk | mo | a - unit of time (UCUM).
       /// </summary>
       [FhirElement("periodUnit", InSummary=true, Order=130)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("UnitsOfTime")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime>? PeriodUnitElement
@@ -744,7 +744,7 @@ namespace Hl7.Fhir.Model
       /// mon | tue | wed | thu | fri | sat | sun.
       /// </summary>
       [FhirElement("dayOfWeek", InSummary=true, Order=140)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("DayOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -836,7 +836,7 @@ namespace Hl7.Fhir.Model
       /// Code for time period of occurrence.
       /// </summary>
       [FhirElement("when", InSummary=true, Order=160)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("EventTiming")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]

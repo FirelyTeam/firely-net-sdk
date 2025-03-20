@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       /// level1 | level2 | level3 | level4.
       /// </summary>
       [FhirElement("assurance", Order=50)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("IdentityAssuranceLevel")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel>? AssuranceElement
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
     /// male | female | other | unknown.
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=120)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement

@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
       /// mon | tue | wed | thu | fri | sat | sun.
       /// </summary>
       [FhirElement("daysOfWeek", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
     /// active | suspended | inactive.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("LocationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationStatus>? StatusElement
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model
     /// instance | kind.
     /// </summary>
     [FhirElement("mode", InSummary=true, Order=150, FiveWs="FiveWs.class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("LocationMode")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationMode>? ModeElement

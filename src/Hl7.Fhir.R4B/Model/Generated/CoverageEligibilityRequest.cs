@@ -1276,7 +1276,7 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("EligibilityRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1347,7 +1347,7 @@ namespace Hl7.Fhir.Model
     /// auth-requirements | benefits | discovery | validation.
     /// </summary>
     [FhirElement("purpose", InSummary=true, Order=120, FiveWs="FiveWs.class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("EligibilityRequestPurpose")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]

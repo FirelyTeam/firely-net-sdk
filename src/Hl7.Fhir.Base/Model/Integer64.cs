@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model;
 public partial class Integer64
 {
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(P.Long))]
+    [DeclaredType(typeof(P.Long))]
     [DataMember]
     public long? Value
     {

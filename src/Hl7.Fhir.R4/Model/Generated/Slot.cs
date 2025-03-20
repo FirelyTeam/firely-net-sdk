@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
     /// busy | free | busy-unavailable | busy-tentative | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("SlotStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
       /// base | surcharge | deduction | discount | tax | informational.
       /// </summary>
       [FhirElement("type", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ChargeItemDefinitionPriceComponentType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1048,7 +1048,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

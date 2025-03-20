@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     /// home | work | temp | old | billing - purpose of this address.
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("AddressUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressUse>? UseElement
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
     /// postal | physical | both.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=40)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("AddressType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressType>? TypeElement

@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
       /// preferred | alternate.
       /// </summary>
       [FhirElement("preference", Order=60)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("SpecimenContainedPreference")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Introspection
             PropertyTypeMapping = propertyTypeMapping;
             DeclaringClass = declaringClass;
             FiveWs = string.Empty;
-            ValidationAttributes = Array.Empty<ValidationAttribute>();
+            ValidationAttributes = [];
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Introspection
         /// The collection of zero or more <see cref="ValidationAttribute"/> (or subclasses) declared
         /// on this property.
         /// </summary>
-        public ValidationAttribute[] ValidationAttributes { get; private set; } = Array.Empty<ValidationAttribute>();
+        public ValidationAttribute[] ValidationAttributes { get; private set; }
 
         /// <summary>
         /// The original <see cref="PropertyInfo"/> the metadata was obtained from.

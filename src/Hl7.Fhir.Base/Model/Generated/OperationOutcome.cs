@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("severity", InSummary=true, IsModifier=true, Order=40)]
       [FhirElement("severity", InSummary=true, Order=40, Since=FhirRelease.R4)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("IssueSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
       /// Error or warning code.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("IssueType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

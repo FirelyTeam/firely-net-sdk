@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
       /// barcode | rfid | manual +.
       /// </summary>
       [FhirElement("entryType", Order=90)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("UDIEntryType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Device.UDIEntryType>? EntryTypeElement
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
       /// udi-label-name | user-friendly-name | patient-reported-name | manufacturer-name | model-name | other.
       /// </summary>
       [FhirElement("type", Order=50, FiveWs="FiveWs.what[x]")]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1451,7 +1451,7 @@ namespace Hl7.Fhir.Model
     /// active | inactive | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("FHIRDeviceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>? StatusElement

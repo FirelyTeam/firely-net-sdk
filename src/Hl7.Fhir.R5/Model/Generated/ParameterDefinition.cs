@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
     /// in | out.
     /// </summary>
     [FhirElement("use", InSummary=true, Order=40)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("ParameterUse")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
     /// What type of value.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=80)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("FHIRTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

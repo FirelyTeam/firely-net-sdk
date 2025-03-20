@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model
     /// person | animal | practitioner | device | medication | substance.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("GroupType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

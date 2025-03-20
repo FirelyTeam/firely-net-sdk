@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
     /// base | surcharge | deduction | discount | tax | informational.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("PriceComponentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

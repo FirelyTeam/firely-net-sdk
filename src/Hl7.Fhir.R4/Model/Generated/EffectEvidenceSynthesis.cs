@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
       /// exposure | exposure-alternative.
       /// </summary>
       [FhirElement("exposureState", Order=50)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ExposureState")]
       [DataMember]
       public Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureStateCode>? ExposureStateElement
@@ -1903,7 +1903,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -28,17 +28,15 @@
 
 */
 
-using Hl7.Fhir.Utility;
+#nullable enable
+
 using System;
 
-namespace Hl7.Fhir.Introspection
+namespace Hl7.Fhir.Introspection;
+
+[CLSCompliant(false)]
+[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+public class ReferencesAttribute(params string[] resources) : FhirModelAttribute
 {
-    [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
-    public sealed class NotMappedAttribute : VersionedAttribute
-    {
-        public NotMappedAttribute()
-        {
-            // This attribute is just a marker, no functionality or data
-        }
-    }
+    public string[] Resources { get; set; } = resources;
 }

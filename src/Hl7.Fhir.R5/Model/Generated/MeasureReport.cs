@@ -2000,7 +2000,7 @@ namespace Hl7.Fhir.Model
     /// complete | pending | error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("MeasureReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2044,7 +2044,7 @@ namespace Hl7.Fhir.Model
     /// individual | subject-list | summary | data-exchange.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("MeasureReportType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2088,7 +2088,7 @@ namespace Hl7.Fhir.Model
     /// incremental | snapshot.
     /// </summary>
     [FhirElement("dataUpdateType", InSummary=true, IsModifier=true, Order=120)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("SubmitDataUpdateType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.SubmitDataUpdateType>? DataUpdateTypeElement

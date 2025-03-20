@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
     /// partial | completed | entered-in-error | health-unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("FamilyHistoryStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
     /// male | female | other | unknown.
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=180)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement

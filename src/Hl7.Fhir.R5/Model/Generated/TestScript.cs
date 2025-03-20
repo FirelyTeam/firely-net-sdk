@@ -3485,7 +3485,7 @@ namespace Hl7.Fhir.Model
       /// delete | get | options | patch | post | put | head.
       /// </summary>
       [FhirElement("method", Order=120)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("TestScriptRequestMethodCode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode>? MethodElement
@@ -4511,7 +4511,7 @@ namespace Hl7.Fhir.Model
       /// response | request.
       /// </summary>
       [FhirElement("direction", Order=60)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("AssertionDirectionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionDirectionType>? DirectionElement
@@ -4719,7 +4719,7 @@ namespace Hl7.Fhir.Model
       /// fail | pass | skip | stop.
       /// </summary>
       [FhirElement("defaultManualCompletion", Order=110)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("AssertionManualCompletionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionManualCompletionType>? DefaultManualCompletionElement
@@ -4926,7 +4926,7 @@ namespace Hl7.Fhir.Model
       /// equals | notEquals | in | notIn | greaterThan | lessThan | empty | notEmpty | contains | notContains | eval | manualEval.
       /// </summary>
       [FhirElement("operator", Order=160)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("AssertionOperatorType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType>? OperatorElement
@@ -5010,7 +5010,7 @@ namespace Hl7.Fhir.Model
       /// delete | get | options | patch | post | put | head.
       /// </summary>
       [FhirElement("requestMethod", Order=180)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("TestScriptRequestMethodCode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode>? RequestMethodElement
@@ -5136,7 +5136,7 @@ namespace Hl7.Fhir.Model
       /// continue | switchingProtocols | okay | created | accepted | nonAuthoritativeInformation | noContent | resetContent | partialContent | multipleChoices | movedPermanently | found | seeOther | notModified | useProxy | temporaryRedirect | permanentRedirect | badRequest | unauthorized | paymentRequired | forbidden | notFound | methodNotAllowed | notAcceptable | proxyAuthenticationRequired | requestTimeout | conflict | gone | lengthRequired | preconditionFailed | contentTooLarge | uriTooLong | unsupportedMediaType | rangeNotSatisfiable | expectationFailed | misdirectedRequest | unprocessableContent | upgradeRequired | internalServerError | notImplemented | badGateway | serviceUnavailable | gatewayTimeout | httpVersionNotSupported.
       /// </summary>
       [FhirElement("response", Order=210)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("AssertionResponseTypes")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes>? ResponseElement
@@ -6948,7 +6948,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
       /// revision | quotation | source | instantiates | removal.
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ProvenanceEntityRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

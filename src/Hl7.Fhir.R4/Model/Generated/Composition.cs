@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
       /// personal | professional | legal | official.
       /// </summary>
       [FhirElement("mode", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("CompositionAttestationMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
       /// replaces | transforms | signs | appends.
       /// </summary>
       [FhirElement("code", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("DocumentRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
       /// working | snapshot | changes.
       /// </summary>
       [FhirElement("mode", Order=90, FiveWs="FiveWs.class")]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("SectionMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ListMode>? ModeElement
@@ -1389,7 +1389,7 @@ namespace Hl7.Fhir.Model
     /// preliminary | final | amended | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("CompositionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1658,7 +1658,7 @@ namespace Hl7.Fhir.Model
     /// As defined by affinity domain.
     /// </summary>
     [FhirElement("confidentiality", InSummary=true, Order=180)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("DocumentConfidentiality")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Composition.V3ConfidentialityClassification>? ConfidentialityElement

@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median.
       /// </summary>
       [FhirElement("groupMeasure", Order=100)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode>? GroupMeasureElement
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1368,7 +1368,7 @@ namespace Hl7.Fhir.Model
     /// dichotomous | continuous | descriptive.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=340)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("EvidenceVariableType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.VariableTypeCode>? TypeElement

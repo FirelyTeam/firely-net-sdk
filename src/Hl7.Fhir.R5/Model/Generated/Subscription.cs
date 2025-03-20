@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
       /// eq | ne | gt | lt | ge | le | sa | eb | ap.
       /// </summary>
       [FhirElement("comparator", Order=60)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("SearchComparator")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchComparator>? ComparatorElement
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
       /// missing | exact | contains | not | text | in | not-in | below | above | type | identifier | of-type | code-text | text-advanced | iterate.
       /// </summary>
       [FhirElement("modifier", Order=70)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("SearchModifierCode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchModifierCode>? ModifierElement
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Model
     /// requested | active | error | off | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("SubscriptionStatusCodes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1202,7 +1202,7 @@ namespace Hl7.Fhir.Model
     /// empty | id-only | full-resource.
     /// </summary>
     [FhirElement("content", InSummary=true, Order=240)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("SubscriptionPayloadContent")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>? ContentElement

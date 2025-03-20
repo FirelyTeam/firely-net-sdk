@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
       /// replaces | amends | appends | transforms | replacedWith | amendedWith | appendedWith | transformedWith.
       /// </summary>
       [FhirElement("code", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ReportRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1184,7 +1184,7 @@ namespace Hl7.Fhir.Model
       /// working | snapshot | changes.
       /// </summary>
       [FhirElement("mode", Order=90)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("SectionMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ListMode>? ModeElement
@@ -1715,7 +1715,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

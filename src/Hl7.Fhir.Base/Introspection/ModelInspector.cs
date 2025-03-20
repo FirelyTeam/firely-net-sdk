@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Introspection
     /// A cache of FHIR type mappings found on .NET classes.
     /// </summary>
     /// <remarks>POCO's in the "base" assembly
-    /// can reflect the definition of multiple releases of FHIR using <see cref="IFhirVersionDependent"/>
+    /// can reflect the definition of multiple releases of FHIR using <see cref="FhirModelAttribute"/>
     /// attributes. A <see cref="ModelInspector"/> will always capture the metadata for one such
     /// <see cref="Specification.FhirRelease" /> which is passed to it in the constructor.
     /// </remarks>

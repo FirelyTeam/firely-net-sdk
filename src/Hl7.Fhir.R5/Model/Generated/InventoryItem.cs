@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
       /// The language used to express the item name.
       /// </summary>
       [FhirElement("language", InSummary=true, Order=50)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("NameLanguage")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
       /// The language that is used in the item description.
       /// </summary>
       [FhirElement("language", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(typeof(Code))]
       [Binding("ItemDescriptionLanguage")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CommonLanguages>? LanguageElement
@@ -1416,7 +1416,7 @@ namespace Hl7.Fhir.Model
     /// active | inactive | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("InventoryItemStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

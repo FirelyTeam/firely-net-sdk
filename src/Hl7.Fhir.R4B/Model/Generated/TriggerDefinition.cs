@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
     /// named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("TriggerType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

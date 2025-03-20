@@ -19,6 +19,8 @@ using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
 
 #nullable enable
 
+#nullable enable
+
 namespace Hl7.Fhir.Validation;
 
 /// <summary>

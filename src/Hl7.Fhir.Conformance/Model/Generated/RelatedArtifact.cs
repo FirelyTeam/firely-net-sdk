@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of | part-of | amends | amended-with | appends | appended-with | cites | cited-by | comments-on | comment-in | contains | contained-in | corrects | correction-in | replaces | replaced-with | retracts | retracted-by | signs | similar-to | supports | supported-with | transforms | transformed-into | transformed-with | documents | specification-of | created-with | cite-as.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("RelatedArtifactType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
     [FhirElement("publicationStatus", InSummary=true, Order=120, Since=FhirRelease.R5)]
-    [DeclaredType(Type = typeof(Code))]
+    [DeclaredType(typeof(Code))]
     [Binding("RelatedArtifactPublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus>? PublicationStatusElement

@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Introspection
         {
             return ReflectionHelper.GetAttributes<T>(t).Where(isRelevant);
 
-            bool isRelevant(Attribute a) => a is not IFhirVersionDependent vd || a.AppliesToRelease(version);
+            bool isRelevant(Attribute a) => a.AppliesToRelease(version);
         }
 
         #region IStructureDefinitionSummary members
