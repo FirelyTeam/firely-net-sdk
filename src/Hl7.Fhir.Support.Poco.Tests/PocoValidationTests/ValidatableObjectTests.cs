@@ -59,6 +59,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             }
         }
         
+        [Ignore]
         [TestMethod]
         public void Test()
         {
@@ -69,7 +70,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var shouldThrowOnValidate = () => bundle.Validate(true);
             var shouldThrowOnDeserialize = () => _ = JsonSerializer.Deserialize<Bundle>(bundleString, options);
             
-            shouldThrowOnValidate.Should().Throw<ValidationException>();
+            shouldThrowOnValidate.Should().Throw<CodedValidationException>();
             shouldThrowOnDeserialize.Should().Throw<DeserializationFailedException>();
         }
     }

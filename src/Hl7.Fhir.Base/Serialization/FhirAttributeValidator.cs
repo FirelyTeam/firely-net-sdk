@@ -25,9 +25,9 @@ namespace Hl7.Fhir.Serialization;
 /// but simulates Validator.ValidateObject(), to avoid using reflection and use the cached reflection
 /// information on <see cref="ClassMapping"/> and <see cref="PropertyMapping"/>.
 /// </summary>
-public class DataAnnotationDeserialzationValidator : IDeserializationValidator
+public class FhirAttributeValidator : IPocoValidator
 {
-    public static readonly DataAnnotationDeserialzationValidator Default = new();
+    public static readonly FhirAttributeValidator Default = new();
 
     /// <inheritdoc />
     public virtual void ValidateProperty(object? propertyValue, in PropertyDeserializationContext context, out IReadOnlyCollection<CodedValidationException> reportedErrors)
@@ -37,6 +37,9 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
             .SetNarrativeValidationKind(context.NarrativeValidation)
             .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
             .SetLocationProducer(context.PathStack.GetInstancePath);
+        
+        // TODO: validate expected vs actual type and call CVE.ForType()
+        // TODO: check whether this property is expected/allowed here ClassMapping/PropMapping
 
         reportedErrors = runAttributeValidation(propertyValue, context.ElementMapping.ValidationAttributes, validationContext);
     }

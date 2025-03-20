@@ -2131,21 +2131,21 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.DataAnnotationDeserialzationValidator.#ctor(Hl7.Fhir.Validation.NarrativeValidationKind)</Target>
+    <Target>M:Hl7.Fhir.Serialization.FhirAttributeValidator.#ctor(Hl7.Fhir.Validation.NarrativeValidationKind)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.DataAnnotationDeserialzationValidator.get_NarrativeValidation</Target>
+    <Target>M:Hl7.Fhir.Serialization.FhirAttributeValidator.get_NarrativeValidation</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.DataAnnotationDeserialzationValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Target>M:Hl7.Fhir.Serialization.FhirAttributeValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -2215,7 +2215,7 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.IDeserializationValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Target>M:Hl7.Fhir.Serialization.IPocoValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -4308,21 +4308,21 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.DataAnnotationDeserialzationValidator.#ctor(Hl7.Fhir.Validation.NarrativeValidationKind)</Target>
+    <Target>M:Hl7.Fhir.Serialization.FhirAttributeValidator.#ctor(Hl7.Fhir.Validation.NarrativeValidationKind)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.DataAnnotationDeserialzationValidator.get_NarrativeValidation</Target>
+    <Target>M:Hl7.Fhir.Serialization.FhirAttributeValidator.get_NarrativeValidation</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.DataAnnotationDeserialzationValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Target>M:Hl7.Fhir.Serialization.FhirAttributeValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -4392,7 +4392,7 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.IDeserializationValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Target>M:Hl7.Fhir.Serialization.IPocoValidator.ValidateInstance(System.Object,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -4966,7 +4966,7 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0006</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.IDeserializationValidator.ValidateInstance(Hl7.Fhir.Model.Base,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Target>M:Hl7.Fhir.Serialization.IPocoValidator.ValidateInstance(Hl7.Fhir.Model.Base,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -4980,7 +4980,7 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0006</DiagnosticId>
-    <Target>M:Hl7.Fhir.Serialization.IDeserializationValidator.ValidateInstance(Hl7.Fhir.Model.Base,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
+    <Target>M:Hl7.Fhir.Serialization.IPocoValidator.ValidateInstance(Hl7.Fhir.Model.Base,Hl7.Fhir.Serialization.InstanceDeserializationContext@,Hl7.Fhir.Validation.CodedValidationException[]@)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

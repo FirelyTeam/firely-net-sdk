@@ -571,7 +571,7 @@ public class FhirJsonDeserializationTests
         }
     }
 
-    internal class CustomComplexValidator : DataAnnotationDeserialzationValidator
+    internal class CustomComplexValidator : FhirAttributeValidator
     {
         //public object? DateTimeSeenByObjectValueValidator;
         public FhirDateTime? DateTimeSeenByInstanceValidator;

@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Serialization;
 /// <summary>
 /// A validator that will be run to validate values while deserializing a POCO.
 /// </summary>
-public interface IDeserializationValidator
+public interface IPocoValidator
 {
     /// <summary>
     /// Implements validation logic to be run on a property value just before that value is used
