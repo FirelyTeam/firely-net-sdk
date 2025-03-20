@@ -7,7 +7,9 @@
  */
 
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
@@ -33,26 +35,26 @@ public class CardinalityAttribute : ValidatingFhirModelAttribute
     public int Max { get; set; } = 1;
 
     /// <inheritdoc/>
-    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+    public override IReadOnlyCollection<CodedValidationException> Validate(object? value, ValidationContext validationContext)
     {
         if (value is null)
-            return (Min == 0) ? ValidationResult.Success :
-                COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL(validationContext, validationContext.MemberName, Min).AsResult(validationContext);
+            return (Min == 0) ? [] :
+                [COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL(validationContext, validationContext.MemberName, Min)];
 
         var count = 1;
 
         if (ReflectionHelper.IsRepeatingElement(value, out var list))
         {
             if (list.Cast<object>().Any(item => item is null))
-                return COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL(validationContext).AsResult(validationContext);
+                return [COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL(validationContext)];
             count = list.Count;
         }
 
         if (count < Min)
-            return COVE.INCORRECT_CARDINALITY_MIN(validationContext, count, Min).AsResult(validationContext);
+            return [COVE.INCORRECT_CARDINALITY_MIN(validationContext, count, Min)];
         if (Max != -1 && count > Max)
-            return COVE.INCORRECT_CARDINALITY_MAX(validationContext, count, Max).AsResult(validationContext);
+            return [COVE.INCORRECT_CARDINALITY_MAX(validationContext, count, Max)];
 
-        return ValidationResult.Success;
+        return [];
     }
 }

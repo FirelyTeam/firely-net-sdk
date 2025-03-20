@@ -105,7 +105,7 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
 
     private static CodedValidationException[]? runAttributeValidation(
         object? candidateValue,
-        ValidationAttribute[] attributes,
+        ValidatingFhirModelAttribute[] attributes,
         ValidationContext validationContext)
     {
 
@@ -114,7 +114,7 @@ public class DataAnnotationDeserialzationValidator : IDeserializationValidator
 
         foreach (var va in attributes)
         {
-            if (va.GetValidationResult(candidateValue, validationContext) is not object vr) continue;
+            if (va.Validate(candidateValue, validationContext) is not {} vr) continue;
             if (vr is CodedValidationResult cvr)
                 errors = add(errors, [cvr.ValidationException]);
             else

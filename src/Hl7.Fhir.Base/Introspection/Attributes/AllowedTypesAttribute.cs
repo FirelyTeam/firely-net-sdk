@@ -7,8 +7,10 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
@@ -30,18 +32,18 @@ public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAtt
     public Type[] Types { get; set; } = types;
 
     /// <inheritdoc />
-    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+    public override IReadOnlyCollection<CodedValidationException> Validate(object? value, ValidationContext validationContext)
     {
-        if (value is null) return ValidationResult.Success;
+        if (value is null) return [];
 
-        var result = ValidationResult.Success;
+        IReadOnlyCollection<CodedValidationException> result = [];
 
         if (value is IReadOnlyCollection<Base> list)
         {
             foreach (var item in list)
             {
                 result = validateValue(item, validationContext);
-                if (result != ValidationResult.Success) break;
+                if (result.Any()) break;
             }
         }
         else
@@ -52,11 +54,10 @@ public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAtt
         return result;
     }
 
-    private ValidationResult? validateValue(object? item, ValidationContext context) =>
+    private IReadOnlyCollection<CodedValidationException> validateValue(object? item, ValidationContext context) =>
         item is null || IsAllowedType(item.GetType())
-            ? ValidationResult.Success
-            : COVE.CHOICE_TYPE_NOT_ALLOWED(context, ModelInspector.GetClassMappingForType(item.GetType())?.Name ?? item.GetType().Name)
-                .AsResult(context);
+            ? []
+            : [COVE.CHOICE_TYPE_NOT_ALLOWED(context, ModelInspector.GetClassMappingForType(item.GetType())?.Name ?? item.GetType().Name)];
 
     /// <summary>
     /// Determine whether the given type is allowed according to this attribute.

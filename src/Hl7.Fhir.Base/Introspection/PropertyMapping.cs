@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Introspection
         /// The collection of zero or more <see cref="ValidationAttribute"/> (or subclasses) declared
         /// on this property.
         /// </summary>
-        public ValidationAttribute[] ValidationAttributes { get; private set; }
+        public ValidatingFhirModelAttribute[] ValidationAttributes { get; private set; }
 
         /// <summary>
         /// The original <see cref="PropertyInfo"/> the metadata was obtained from.
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Introspection
                 IsMandatoryElement = cardinalityAttr?.Min > 0,
                 IsPrimitive = isPrimitive,
                 RepresentsValueElement = isPrimitive && isPrimitiveValueElement(elementAttr, prop),
-                ValidationAttributes = ClassMapping.GetAttributes<ValidationAttribute>(prop, release).ToArray(),
+                ValidationAttributes = ClassMapping.GetAttributes<ValidatingFhirModelAttribute>(prop, release).ToArray(),
                 FiveWs = elementAttr.FiveWs,
                 BindingName = ClassMapping.GetAttribute<BindingAttribute>(prop, release)?.Name
             };

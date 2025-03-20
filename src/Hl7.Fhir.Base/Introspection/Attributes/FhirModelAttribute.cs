@@ -9,7 +9,9 @@
 #nullable enable
 
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Validation;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Hl7.Fhir.Introspection;
@@ -30,6 +32,6 @@ public abstract class FhirModelAttribute : Attribute
 
 public abstract class ValidatingFhirModelAttribute : FhirModelAttribute
 {
-    protected abstract ValidationResult? IsValid(object? value, ValidationContext validationContext);
+    public abstract IReadOnlyCollection<CodedValidationException> Validate(object? value, ValidationContext validationContext);
 
 }
