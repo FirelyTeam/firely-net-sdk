@@ -26,7 +26,7 @@ public static partial class FhirSerializationEngineFactory
     /// </summary>
     public static IFhirSerializationEngine Strict(ModelInspector inspector,
         FhirJsonConverterOptions? converterOptions = null,
-        ParserSettings? xmlSettings = null) =>
+        DeserializerSettings? xmlSettings = null) =>
         createEngine(inspector, converterOptions, xmlSettings, DeserializationMode.Strict);
 
     /// <summary>
@@ -35,7 +35,7 @@ public static partial class FhirSerializationEngineFactory
     /// </summary>
     public static IFhirSerializationEngine Recoverable(ModelInspector inspector,
         FhirJsonConverterOptions? converterOptions = null,
-        ParserSettings? xmlSettings = null) =>
+        DeserializerSettings? xmlSettings = null) =>
         createEngine(inspector, converterOptions, xmlSettings, DeserializationMode.Recoverable);
 
     /// <summary>
@@ -46,7 +46,7 @@ public static partial class FhirSerializationEngineFactory
     /// </summary>
     public static IFhirSerializationEngine BackwardsCompatible(ModelInspector inspector,
         FhirJsonConverterOptions? converterOptions = null,
-        ParserSettings? xmlSettings = null) =>
+        DeserializerSettings? xmlSettings = null) =>
         createEngine(inspector, converterOptions, xmlSettings, DeserializationMode.BackwardsCompatible);
 
     /// <summary>
@@ -55,7 +55,7 @@ public static partial class FhirSerializationEngineFactory
     /// </summary>
     public static IFhirSerializationEngine Ostrich(ModelInspector inspector,
         FhirJsonConverterOptions? converterOptions = null,
-        ParserSettings? xmlSettings = null) =>
+        DeserializerSettings? xmlSettings = null) =>
         createEngine(inspector, converterOptions, xmlSettings, DeserializationMode.Ostrich);
 
     /// <summary>
@@ -68,10 +68,10 @@ public static partial class FhirSerializationEngineFactory
     /// <returns></returns>
     public static IFhirSerializationEngine Custom(ModelInspector inspector,
         FhirJsonConverterOptions converterOptions,
-        ParserSettings xmlSerializerSettings)
+        DeserializerSettings xmlSerializerSettings)
     {
-        var jsonDeserializer = new BaseFhirJsonPocoDeserializer(inspector, converterOptions);
-        var xmlDeserializer = new BaseFhirXmlPocoDeserializer(inspector, xmlSerializerSettings);
+        var jsonDeserializer = new BaseFhirJsonDeserializer(inspector, converterOptions);
+        var xmlDeserializer = new BaseFhirXmlDeserializer(inspector, xmlSerializerSettings);
 
         return new PocoSerializationEngine(jsonDeserializer,
             new BaseFhirJsonSerializer(inspector),
@@ -80,10 +80,10 @@ public static partial class FhirSerializationEngineFactory
     }
 
     private static IFhirSerializationEngine createEngine(ModelInspector inspector,
-        FhirJsonConverterOptions? converterOptions, ParserSettings? xmlSettings, DeserializationMode mode)
+        FhirJsonConverterOptions? converterOptions, DeserializerSettings? xmlSettings, DeserializationMode mode)
     {
         var jsonOptions = (FhirJsonConverterOptions)(converterOptions ?? new FhirJsonConverterOptions()).UsingMode(mode);
-        var xmlOptions = (xmlSettings ?? new ParserSettings()).UsingMode(mode);
+        var xmlOptions = (xmlSettings ?? new DeserializerSettings()).UsingMode(mode);
 
         return Custom(inspector, jsonOptions, xmlOptions);
     }

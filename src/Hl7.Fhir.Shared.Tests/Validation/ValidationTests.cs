@@ -26,8 +26,8 @@ namespace Hl7.Fhir.Tests.Validation
         {
             Id id = new("az23");
 
-            DotNetAttributeValidation.Validate(id);
-            DotNetAttributeValidation.Validate(id, true);        // recursive checking shouldnt matter
+            id.Validate();
+            id.Validate(true);        // recursive checking shouldnt matter
 
             id = new Id("!notgood!");
             validateErrorOrFail(id);
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Tests.Validation
             HumanName hn = HumanName.ForFamily("Kramer");
             hn.ElementId = "This/may:contain.all$kinds%of@characters_now";
 
-            DotNetAttributeValidation.Validate(hn);
+            hn.Validate();
         }
 
         [TestMethod]
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Tests.Validation
 
             p.Meta.Tag.Add(new Coding("http://system", "  illegal    _  code "));
 
-            Assert.IsFalse(DotNetAttributeValidation.TryValidate(p, recurse: true));
+            Assert.IsFalse(p.TryValidate(recurse: true));
         }
 
         private static void validateErrorOrFail(Base instance, bool recurse = false, string membername = null)
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Tests.Validation
             try
             {
                 // should throw error
-                DotNetAttributeValidation.Validate(instance, recurse);
+                instance.Validate(recurse);
                 Assert.Fail();
             }
             catch (ValidationException ve)
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Tests.Validation
             {
                 Deceased = new FhirBoolean(true)
             };
-            DotNetAttributeValidation.Validate(p);
+            p.Validate();
 
             // Deceased can either be boolean or dateTime, not FhirUri
             p.Deceased = new FhirUri();
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Tests.Validation
 
             issue.Code = OperationOutcome.IssueType.Forbidden;
 
-            DotNetAttributeValidation.Validate(oo, true);
+            oo.Validate(true);
         }
 
         [TestMethod]
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Tests.Validation
             };
 
             validateErrorOrFail(pr, true);
-            DotNetAttributeValidation.Validate(pr);
+            pr.Validate();
         }
 
         [TestMethod]
@@ -198,8 +198,8 @@ namespace Hl7.Fhir.Tests.Validation
             obs.Code = new CodeableConcept("http://snomed.info/sct", "27113001", "Body weight");
 
             // Now, it should work
-            DotNetAttributeValidation.Validate(obs);
-            DotNetAttributeValidation.Validate(obs, true);  // recursive checking shouldnt matter
+            obs.Validate();
+            obs.Validate(true);  // recursive checking shouldnt matter
 
             // Hide an incorrect datetime deep into the Observation
             FhirDateTime dt = new()
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Tests.Validation
             obs.Effective = new Period() { StartElement = dt };
 
             // When we do not validate recursively, we should still be ok
-            DotNetAttributeValidation.Validate(obs);
+            obs.Validate();
 
             // When we recurse, this should fail
             validateErrorOrFail(obs, true, membername: "Value");
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Tests.Validation
             {
                 Text = new Narrative() { Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should be valid</p></div>", Status = Narrative.NarrativeStatus.Generated }
             };
-            DotNetAttributeValidation.Validate(p, true);
+            p.Validate(true);
 
             p.Text.Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should not be valid<p></div>";
             validateErrorOrFail(p, true);
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Tests.Validation
                 Data = [0, 1, 2, 3]
             };
 
-            var validation = () => DotNetAttributeValidation.Validate(bin);
+            var validation = () => bin.Validate();
             validation.Should().NotThrow<ValidationException>();
 
 
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Tests.Validation
                 Data = [0, 1, 2, 3]
             };
 
-            validation = () => DotNetAttributeValidation.Validate(bin);
+            validation = () => bin.Validate();
             validation.Should().NotThrow<ValidationException>();
 
             bin = new Binary
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Tests.Validation
                 Data = [0, 1, 2, 3]
             };
 
-            validation = () => DotNetAttributeValidation.Validate(bin);
+            validation = () => bin.Validate();
             validation.Should().Throw<ValidationException>();
         }
     }

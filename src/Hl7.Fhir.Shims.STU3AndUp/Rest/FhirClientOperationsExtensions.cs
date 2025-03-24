@@ -21,8 +21,7 @@ namespace Hl7.Fhir.Rest
         //[base]/Resource/$meta
         public static async Task<Meta> MetaAsync(this BaseFhirClient client, ResourceType type, CancellationToken? ct = null)
         {
-            return FhirClientOperations.ExtractMeta(FhirClientOperations.OperationResult<Parameters>(
-                await client.TypeOperationAsync(RestOperation.META, type.GetLiteral(), useGet: true, ct:ct).ConfigureAwait(false)));
+            return FhirClientOperations.ExtractMeta((await client.TypeOperationAsync(RestOperation.META, type.GetLiteral(), useGet: true, ct:ct).ConfigureAwait(false)).OperationResult<Parameters>());
         }
         #endregion
 

@@ -31,6 +31,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Source.CommonDirectorySource.get_ParserSettings</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Specification.Source.CommonWebResolver.get_ParserSettings</Target>
     <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
@@ -53,6 +60,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Specification.Source.CommonWebResolver.set_TimeOut(System.Int32)</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Source.DirectorySourceSettings.get_ParserSettings</Target>
     <Left>lib/net8.0/Hl7.Fhir.Conformance.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Conformance.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -101,6 +115,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Source.CommonDirectorySource.get_ParserSettings</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Specification.Source.CommonWebResolver.get_ParserSettings</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Right>
@@ -123,6 +144,13 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Specification.Source.CommonWebResolver.set_TimeOut(System.Int32)</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Hl7.Fhir.Specification.Source.DirectorySourceSettings.get_ParserSettings</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Conformance.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

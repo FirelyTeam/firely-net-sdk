@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Serialization;
 /// </summary>
 public class FhirJsonConverterFactory(ModelInspector inspector, FhirJsonConverterOptions converterOptions) : JsonConverterFactory
 {
-    private BaseFhirJsonPocoDeserializer _deserializer = new(inspector, converterOptions);
+    private BaseFhirJsonDeserializer _deserializer = new(inspector, converterOptions);
     private readonly BaseFhirJsonSerializer _serializer = new(inspector);
     private SerializationFilter? _serializationFilter = converterOptions.SummaryFilter;
 
@@ -30,7 +30,7 @@ public class FhirJsonConverterFactory(ModelInspector inspector, FhirJsonConverte
 
     public void Reconfigure(FhirJsonConverterOptions newOptions)
     {
-        _deserializer = new BaseFhirJsonPocoDeserializer(inspector, newOptions);
+        _deserializer = new BaseFhirJsonDeserializer(inspector, newOptions);
         _serializationFilter = newOptions.SummaryFilter;
         CurrentOptions = newOptions;
     }
@@ -47,7 +47,7 @@ public class FhirJsonConverterFactory(ModelInspector inspector, FhirJsonConverte
 /// <summary>
 /// FHIR Resource and datatype converter for FHIR deserialization.
 /// </summary>
-internal class FhirJsonConverter<TF>(BaseFhirJsonPocoDeserializer deserializer, BaseFhirJsonSerializer serializer,  SerializationFilter? summaryFilter = null) : JsonConverter<TF>
+internal class FhirJsonConverter<TF>(BaseFhirJsonDeserializer deserializer, BaseFhirJsonSerializer serializer,  SerializationFilter? summaryFilter = null) : JsonConverter<TF>
     where TF : Base
 {
     /// <summary>

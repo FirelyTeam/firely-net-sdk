@@ -61,8 +61,8 @@ namespace Hl7.Fhir.Specification.Tests
             PermissiveParsing = true
         };
 
-        private static readonly ParserSettings _parserSettings =
-            new ParserSettings().UsingMode(DeserializationMode.Ostrich);
+        private static readonly DeserializerSettings _parserSettings =
+            new DeserializerSettings().UsingMode(DeserializationMode.Ostrich);
 
         static readonly DirectorySourceSettings _dirSourceSettings = new DirectorySourceSettings()
         {
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Exclude expected output, to prevent canonical url conflicts
             // Also include duplicate input file "t24a", conflicts with "t24a-input"
             Excludes = ["manifest.xml", "*-expected*", "*-output*", "t24a.xml"],
-            FormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml,
+            FormatPreference = CommonDirectorySource.DuplicateFilenameResolution.PreferXml,
             XmlParserSettings = _fhirXmlParserSettings
         };
 
@@ -80,8 +80,8 @@ namespace Hl7.Fhir.Specification.Tests
             GenerateSnapshotForExternalProfiles = true
         };
 
-        private static readonly FhirXmlParser FHIR_XML_PARSER = new(_parserSettings);
-        private static readonly FhirJsonParser FHIR_JSON_PARSER = new(_parserSettings);
+        private static readonly FhirXmlDeserializer FHIR_XML_DESERIALIZER = new(_parserSettings);
+        private static readonly FhirJsonDeserializer FHIR_JSON_DESERIALIZER = new(_parserSettings);
         private static readonly FhirXmlSerializer FHIR_XML_SERIALIZER = new();
 
         string _testPath;
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 #if SERIALIZE_OUTPUT
             // Serialize the generated output to disk, for debugging purposes
-            SaveOutput(test.Id, output);
+            saveOutput(test.Id, output);
 #endif
 #if LOG_OUTPUT
             // Log the generated and expected output to the console, for debugging purposes
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Specification.Tests
                 using (var stream = File.OpenRead(filePath))
                 using (var reader = new XmlTextReader(stream))
                 {
-                    return FHIR_XML_PARSER.Parse<StructureDefinition>(reader);
+                    return FHIR_XML_DESERIALIZER.Deserialize<StructureDefinition>(reader);
                 }
             }
 
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (File.Exists(filePath))
             {
                 var text = File.ReadAllText(filePath);
-                return FHIR_JSON_PARSER.Parse<StructureDefinition>(text);
+                return FHIR_JSON_DESERIALIZER.Deserialize<StructureDefinition>(text);
             }
 
             Assert.Fail($"File not found: '{filePath}'");
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Conditional("SERIALIZE_OUTPUT")]
-        static void SaveOutput(string id, StructureDefinition output)
+        private static void saveOutput(string id, StructureDefinition output)
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), ManifestPath);
             var outputFilePath = Path.Combine(path, string.Format(outputFileNameFormat, id));
