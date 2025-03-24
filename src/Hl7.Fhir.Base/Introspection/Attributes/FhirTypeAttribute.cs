@@ -29,6 +29,7 @@
 */
 
 using System;
+using System.ComponentModel.DataAnnotations;
 
 #nullable enable
 
@@ -38,7 +39,9 @@ namespace Hl7.Fhir.Introspection;
 /// This attribute is applied to classes that represent FHIR datatypes and resources.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-public sealed class FhirTypeAttribute : FhirModelAttribute
+// Note that this attribute is a ValidationAttribute so that it can be used in the .NET validation mechanism.
+// The only thing this attribute does, is delegate the validation to the FhirAttributeValidator.
+public sealed class FhirTypeAttribute : ValidationAttribute
 {
     public FhirTypeAttribute(string name)
     {
@@ -65,4 +68,12 @@ public sealed class FhirTypeAttribute : FhirModelAttribute
     /// Indicates whether this class represents the nested complex type for a (backbone) element.
     /// </summary>
     public bool IsBackboneType { get; set; }
+
+    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+    {
+        if (value is null) return ValidationResult.Success;
+
+        //     // If we should not validate 'value's elements, return immediately
+        //     if (!validationContext.ValidateRecursively()) return ValidationResult.Success;
+    }
 }

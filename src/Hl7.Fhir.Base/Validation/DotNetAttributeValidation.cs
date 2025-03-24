@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,14 +25,16 @@ public static class DotNetAttributeValidation
     /// Will throw when a validation error is encountered.
     /// </summary>
     /// <param name="poco">The POCO to validate</param>
+    /// <param name="inspector">The model metadata to use for validation.</param>
     /// <param name="recurse">Whether to validate the object recursively, by also validating the contents of each property of the object.</param>
     /// <param name="narrativeValidation">The kind of narrative validation to perform when validating <see cref="XHtml"/>.</param>
     public static void Validate(
         this Base poco,
+        ModelInspector inspector,
         bool recurse = false,
         NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml)
     {
-        var validationContext = buildContext(poco, recurse, narrativeValidation);
+        var validationContext = buildContext(poco, inspector, recurse, narrativeValidation);
         Validator.ValidateObject(poco, validationContext, true);
     }
 
@@ -39,13 +42,19 @@ public static class DotNetAttributeValidation
     /// Validate an object and its members against any <see cref="ValidationAttribute" />s present.
     /// </summary>
     /// <param name="poco">The POCO to validate</param>
+    /// <param name="inspector">The model metadata to use for validation.</param>
     /// <param name="recurse">Whether to validate the object recursively, by also validating the contents of each property of the object.</param>
     /// <param name="narrativeValidation">The kind of narrative validation to perform when validating <see cref="XHtml"/>.</param>
     /// <param name="validationResults">A collection to which any validation errors will be added.</param>
     /// <remarks>If <paramref name="validationResults"/> is <c>null</c>, no errors will be returned.</remarks>
-    public static bool TryValidate(this Base poco, ICollection<ValidationResult>? validationResults = null, bool recurse = false, NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml)
+    public static bool TryValidate(
+        this Base poco,
+        ModelInspector inspector,
+        ICollection<ValidationResult>? validationResults = null,
+        bool recurse = false,
+        NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml)
     {
-        var validationContext = buildContext(poco, recurse, narrativeValidation);
+        var validationContext = buildContext(poco, inspector, recurse, narrativeValidation);
 
         // Validate the object, also calling the validators on each child property.
         var results = validationResults ?? [];
@@ -77,21 +86,17 @@ public static class DotNetAttributeValidation
     /// <param name="ctx"></param>
     /// <param name="elementName"></param>
     /// <returns></returns>
-    internal static ValidationContext IntoEmptyProperty(this ValidationContext ctx, string elementName)
-    {
-        return new ValidationContext(ctx.ObjectInstance, ctx.Items)
-        {
-            MemberName = elementName
-        };
-    }
+    internal static ValidationContext IntoEmptyProperty(this ValidationContext ctx, string elementName) =>
+        new(ctx.ObjectInstance, ctx.Items) { MemberName = elementName };
 
-    private static ValidationContext buildContext(Base instance, bool recurse, NarrativeValidationKind kind)
+    private static ValidationContext buildContext(Base instance, ModelInspector inspector, bool recurse, NarrativeValidationKind kind)
     {
         var newContext = new ValidationContext(instance);
 
+        newContext.SetModelInspector(inspector);
         newContext.SetValidateRecursively(recurse);
         newContext.SetNarrativeValidationKind(kind);
         newContext.SetLocationProducer(() => instance.GetType().Name);
         return newContext;
     }
-}
+} 
