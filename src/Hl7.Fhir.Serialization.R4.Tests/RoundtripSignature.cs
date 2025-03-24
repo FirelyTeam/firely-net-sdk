@@ -71,12 +71,12 @@ namespace Hl7.Fhir.Serialization.Tests
             var sig = new Bundle() { Type = Bundle.BundleType.Document, Signature = new Signature() { Who = new ResourceReference("http://nu.nl") } };
             var json = FhirJsonSerializer.Default.SerializeToString(sig);
             json.Should().Contain("\"who\"");
-            var sig2 = new FhirJsonPocoDeserializer().DeserializeResource(json);
+            var sig2 = new FhirJsonDeserializer().DeserializeResource(json);
             sig.IsExactly(sig2).Should().BeTrue();
 
             var xml = FhirXmlSerializer.Default.SerializeToString(sig);
             xml.Should().Contain("<who>");
-            var sig3 = new FhirXmlPocoDeserializer().DeserializeResource(xml);
+            var sig3 = new FhirXmlDeserializer().DeserializeResource(xml);
             sig.IsExactly(sig3).Should().BeTrue();
         }
     }
