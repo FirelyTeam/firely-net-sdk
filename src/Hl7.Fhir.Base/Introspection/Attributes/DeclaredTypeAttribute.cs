@@ -26,6 +26,14 @@ namespace Hl7.Fhir.Introspection;
 public class DeclaredTypeAttribute(Type t) : ValidatingFhirModelAttribute
 {
     public Type Type { get; set; } = t;
-    public override IReadOnlyCollection<CodedValidationException> Validate(object? value, ValidationContext validationContext) 
-        => value is null || Type.IsInstanceOfType(value) || (ReflectionHelper.IsRepeatingElement(value) && ReflectionHelper.GetCollectionItemType(value.GetType()) == Type) ? [] : [CodedValidationException.FromTypes(Type, value, validationContext)];
+
+    public override IReadOnlyCollection<CodedValidationException> Validate(object? value, ValidationContext validationContext)
+    {
+        if (value.IsValidValueForDeclaredType(Type))
+        {
+            return [];
+        }
+
+        return [CodedValidationException.FromTypes(Type, value, validationContext)];
+    }
 }
