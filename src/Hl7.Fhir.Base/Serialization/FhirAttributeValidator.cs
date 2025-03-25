@@ -44,7 +44,7 @@ public class FhirAttributeValidator : IPocoValidator
             return;
         }
 
-        if (!propertyValue.IsValidValueForType(propMapping.NativeProperty.PropertyType)) // TODO add declared type validation
+        if (propMapping.Choice == ChoiceType.None && !propertyValue.IsValidValueForType(propMapping.FhirType.Single(), propMapping.IsCollection))
         {
             reportedErrors = runAttributeValidation(propertyValue, propMapping.ValidationAttributes, validationContext)
                 .Append(CodedValidationException.FromTypes(propMapping.NativeProperty.PropertyType, propertyValue, validationContext))

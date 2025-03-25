@@ -43,14 +43,8 @@ public class CodedValidationException : ExtendedCodedException
     public const string LITERAL_INVALID_CODE = "PVAL124";
     public const string POSITIVE_INT_MUST_BE_POSITIVE_CODE = "PVAL125";
     public const string UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE = "PVAL126";
-    public const string EXPECTED_OBJECT_NOT_PRIMITIVE_CODE = "PVAL127";
-    public const string EXPECTED_OBJECT_NOT_ARRAY_CODE = "PVAL128";
-    public const string EXPECTED_PRIMITIVE_NOT_OBJECT_CODE = "PVAL129";
-    public const string EXPECTED_PRIMITIVE_NOT_ARRAY_CODE = "PVAL130";
-    public const string EXPECTED_ARRAY_NOT_PRIMITIVE_CODE = "PVAL131";
-    public const string EXPECTED_ARRAY_NOT_OBJECT_CODE = "PVAL132";
-    public const string PROPERTY_TYPE_MISMATCH_CODE = "PVAL133";
-    public const string UNKNOWN_ELEMENT_CODE = "PVAL135";
+    public const string PROPERTY_TYPE_MISMATCH_CODE = "PVAL127";
+    public const string UNKNOWN_ELEMENT_CODE = "PVAL128";
     
 
     // A list of all issues mentioned above, to we can filter on them.
@@ -71,12 +65,6 @@ public class CodedValidationException : ExtendedCodedException
         LITERAL_INVALID_CODE,
         POSITIVE_INT_MUST_BE_POSITIVE_CODE,
         UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE,
-        EXPECTED_OBJECT_NOT_PRIMITIVE_CODE,
-        EXPECTED_OBJECT_NOT_ARRAY_CODE,
-        EXPECTED_PRIMITIVE_NOT_OBJECT_CODE,
-        EXPECTED_PRIMITIVE_NOT_ARRAY_CODE,
-        EXPECTED_ARRAY_NOT_PRIMITIVE_CODE,
-        EXPECTED_ARRAY_NOT_OBJECT_CODE,
         PROPERTY_TYPE_MISMATCH_CODE,
         UNKNOWN_ELEMENT_CODE
     ];
