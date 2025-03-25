@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -70,8 +71,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Numerator
     {
-      get { return _Numerator; }
-      set { _Numerator = value; OnPropertyChanged("Numerator"); }
+      get
+      {
+        if(_Numerator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["numerator"]);
+        return _Numerator;
+      }
+
+      set
+      {
+        if (_Numerator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          Overflow.Remove("numerator");
+        _Numerator = value;
+        OnPropertyChanged("Numerator");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _Numerator;
@@ -83,8 +97,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Denominator
     {
-      get { return _Denominator; }
-      set { _Denominator = value; OnPropertyChanged("Denominator"); }
+      get
+      {
+        if(_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["denominator"]);
+        return _Denominator;
+      }
+
+      set
+      {
+        if (_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          Overflow.Remove("denominator");
+        _Denominator = value;
+        OnPropertyChanged("Denominator");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _Denominator;
@@ -124,11 +151,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "numerator":
+          if (_Numerator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
+            value = Overflow["numerator"];
+            return true;
+          }
           value = _Numerator;
-          return _Numerator is not null;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "denominator":
+          if (_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
+            value = Overflow["denominator"];
+            return true;
+          }
           value = _Denominator;
-          return _Denominator is not null;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -137,13 +174,24 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "numerator":
-          Numerator = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Numerator = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["numerator"] = value;
+          }
+          else Numerator = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "denominator":
-          Denominator = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Denominator = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["denominator"] = value;
+          }
+          else Denominator = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -154,8 +202,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Numerator is not null) yield return new KeyValuePair<string,object>("numerator",_Numerator);
-      if (_Denominator is not null) yield return new KeyValuePair<string,object>("denominator",_Denominator);
+      if (_Numerator is not null && !_Numerator.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("numerator",_Numerator);
+      if (_Denominator is not null && !_Denominator.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("denominator",_Denominator);
     }
 
   }

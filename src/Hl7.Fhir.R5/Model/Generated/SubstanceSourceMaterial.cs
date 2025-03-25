@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -79,8 +80,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? FractionElement
       {
-        get { return _FractionElement; }
-        set { _FractionElement = value; OnPropertyChanged("FractionElement"); }
+        get
+        {
+          if(_FractionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["fraction"]);
+          return _FractionElement;
+        }
+
+        set
+        {
+          if (_FractionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("fraction");
+          _FractionElement = value;
+          OnPropertyChanged("FractionElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _FractionElement;
@@ -92,7 +106,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Fraction
       {
-        get => _FractionElement?.Value;
+        get => FractionElement?.Value;
         set
         {
           FractionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -107,8 +121,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? MaterialType
       {
-        get { return _MaterialType; }
-        set { _MaterialType = value; OnPropertyChanged("MaterialType"); }
+        get
+        {
+          if(_MaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["materialType"]);
+          return _MaterialType;
+        }
+
+        set
+        {
+          if (_MaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("materialType");
+          _MaterialType = value;
+          OnPropertyChanged("MaterialType");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _MaterialType;
@@ -148,11 +175,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "fraction":
+            if (_FractionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["fraction"];
+              return true;
+            }
             value = _FractionElement;
-            return _FractionElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "materialType":
+            if (_MaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["materialType"];
+              return true;
+            }
             value = _MaterialType;
-            return _MaterialType is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -161,13 +198,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "fraction":
-            FractionElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              FractionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["fraction"] = value;
+            }
+            else FractionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "materialType":
-            MaterialType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              MaterialType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["materialType"] = value;
+            }
+            else MaterialType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -178,8 +226,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_FractionElement is not null) yield return new KeyValuePair<string,object>("fraction",_FractionElement);
-        if (_MaterialType is not null) yield return new KeyValuePair<string,object>("materialType",_MaterialType);
+        if (_FractionElement is not null && !_FractionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("fraction",_FractionElement);
+        if (_MaterialType is not null && !_MaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("materialType",_MaterialType);
       }
 
     }
@@ -204,8 +252,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Family
       {
-        get { return _Family; }
-        set { _Family = value; OnPropertyChanged("Family"); }
+        get
+        {
+          if(_Family.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["family"]);
+          return _Family;
+        }
+
+        set
+        {
+          if (_Family.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("family");
+          _Family = value;
+          OnPropertyChanged("Family");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Family;
@@ -217,8 +278,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Genus
       {
-        get { return _Genus; }
-        set { _Genus = value; OnPropertyChanged("Genus"); }
+        get
+        {
+          if(_Genus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["genus"]);
+          return _Genus;
+        }
+
+        set
+        {
+          if (_Genus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("genus");
+          _Genus = value;
+          OnPropertyChanged("Genus");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Genus;
@@ -230,8 +304,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Species
       {
-        get { return _Species; }
-        set { _Species = value; OnPropertyChanged("Species"); }
+        get
+        {
+          if(_Species.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["species"]);
+          return _Species;
+        }
+
+        set
+        {
+          if (_Species.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("species");
+          _Species = value;
+          OnPropertyChanged("Species");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Species;
@@ -243,8 +330,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? IntraspecificType
       {
-        get { return _IntraspecificType; }
-        set { _IntraspecificType = value; OnPropertyChanged("IntraspecificType"); }
+        get
+        {
+          if(_IntraspecificType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["intraspecificType"]);
+          return _IntraspecificType;
+        }
+
+        set
+        {
+          if (_IntraspecificType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("intraspecificType");
+          _IntraspecificType = value;
+          OnPropertyChanged("IntraspecificType");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _IntraspecificType;
@@ -256,8 +356,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? IntraspecificDescriptionElement
       {
-        get { return _IntraspecificDescriptionElement; }
-        set { _IntraspecificDescriptionElement = value; OnPropertyChanged("IntraspecificDescriptionElement"); }
+        get
+        {
+          if(_IntraspecificDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["intraspecificDescription"]);
+          return _IntraspecificDescriptionElement;
+        }
+
+        set
+        {
+          if (_IntraspecificDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("intraspecificDescription");
+          _IntraspecificDescriptionElement = value;
+          OnPropertyChanged("IntraspecificDescriptionElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _IntraspecificDescriptionElement;
@@ -269,7 +382,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? IntraspecificDescription
       {
-        get => _IntraspecificDescriptionElement?.Value;
+        get => IntraspecificDescriptionElement?.Value;
         set
         {
           IntraspecificDescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -285,8 +398,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent> Author
       {
-        get => _Author ??= [];
-        set { _Author = value; OnPropertyChanged("Author"); }
+        get
+        {
+          if(_Author.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>), Overflow["author"]);
+          return _Author ??= [];
+        }
+
+        set
+        {
+          if (_Author.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>>())
+            Overflow.Remove("author");
+          _Author = value;
+          OnPropertyChanged("Author");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>? _Author;
@@ -298,8 +424,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent? Hybrid
       {
-        get { return _Hybrid; }
-        set { _Hybrid = value; OnPropertyChanged("Hybrid"); }
+        get
+        {
+          if(_Hybrid.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent), Overflow["hybrid"]);
+          return _Hybrid;
+        }
+
+        set
+        {
+          if (_Hybrid.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent>())
+            Overflow.Remove("hybrid");
+          _Hybrid = value;
+          OnPropertyChanged("Hybrid");
+        }
+
       }
 
       private Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent? _Hybrid;
@@ -311,8 +450,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent? OrganismGeneral
       {
-        get { return _OrganismGeneral; }
-        set { _OrganismGeneral = value; OnPropertyChanged("OrganismGeneral"); }
+        get
+        {
+          if(_OrganismGeneral.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent), Overflow["organismGeneral"]);
+          return _OrganismGeneral;
+        }
+
+        set
+        {
+          if (_OrganismGeneral.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent>())
+            Overflow.Remove("organismGeneral");
+          _OrganismGeneral = value;
+          OnPropertyChanged("OrganismGeneral");
+        }
+
       }
 
       private Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent? _OrganismGeneral;
@@ -364,29 +516,69 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "family":
+            if (_Family.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["family"];
+              return true;
+            }
             value = _Family;
-            return _Family is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "genus":
+            if (_Genus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["genus"];
+              return true;
+            }
             value = _Genus;
-            return _Genus is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "species":
+            if (_Species.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["species"];
+              return true;
+            }
             value = _Species;
-            return _Species is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "intraspecificType":
+            if (_IntraspecificType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["intraspecificType"];
+              return true;
+            }
             value = _IntraspecificType;
-            return _IntraspecificType is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "intraspecificDescription":
+            if (_IntraspecificDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["intraspecificDescription"];
+              return true;
+            }
             value = _IntraspecificDescriptionElement;
-            return _IntraspecificDescriptionElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "author":
+            if (_Author.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>>())
+            {
+              value = Overflow["author"];
+              return true;
+            }
             value = _Author;
-            return _Author?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>)?.Any() is true;
           case "hybrid":
+            if (_Hybrid.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent>())
+            {
+              value = Overflow["hybrid"];
+              return true;
+            }
             value = _Hybrid;
-            return _Hybrid is not null;
+            return (value as Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent) is not null;
           case "organismGeneral":
+            if (_OrganismGeneral.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent>())
+            {
+              value = Overflow["organismGeneral"];
+              return true;
+            }
             value = _OrganismGeneral;
-            return _OrganismGeneral is not null;
+            return (value as Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -395,31 +587,72 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "family":
-            Family = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Family = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["family"] = value;
+            }
+            else Family = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "genus":
-            Genus = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Genus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["genus"] = value;
+            }
+            else Genus = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "species":
-            Species = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Species = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["species"] = value;
+            }
+            else Species = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "intraspecificType":
-            IntraspecificType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              IntraspecificType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["intraspecificType"] = value;
+            }
+            else IntraspecificType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "intraspecificDescription":
-            IntraspecificDescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              IntraspecificDescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["intraspecificDescription"] = value;
+            }
+            else IntraspecificDescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "author":
-            Author = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent> or null))
+            {
+              Author = OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>>.INSTANCE;
+              Overflow["author"] = value;
+            }
+            else Author = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>?)value!;
             return this;
           case "hybrid":
-            Hybrid = (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent?)value;
+            if (value is not (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent or null))
+            {
+              Hybrid = OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent>.INSTANCE;
+              Overflow["hybrid"] = value;
+            }
+            else Hybrid = (Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent?)value;
             return this;
           case "organismGeneral":
-            OrganismGeneral = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent?)value;
+            if (value is not (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent or null))
+            {
+              OrganismGeneral = OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent>.INSTANCE;
+              Overflow["organismGeneral"] = value;
+            }
+            else OrganismGeneral = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -430,14 +663,14 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Family is not null) yield return new KeyValuePair<string,object>("family",_Family);
-        if (_Genus is not null) yield return new KeyValuePair<string,object>("genus",_Genus);
-        if (_Species is not null) yield return new KeyValuePair<string,object>("species",_Species);
-        if (_IntraspecificType is not null) yield return new KeyValuePair<string,object>("intraspecificType",_IntraspecificType);
-        if (_IntraspecificDescriptionElement is not null) yield return new KeyValuePair<string,object>("intraspecificDescription",_IntraspecificDescriptionElement);
-        if (_Author?.Any() == true) yield return new KeyValuePair<string,object>("author",_Author);
-        if (_Hybrid is not null) yield return new KeyValuePair<string,object>("hybrid",_Hybrid);
-        if (_OrganismGeneral is not null) yield return new KeyValuePair<string,object>("organismGeneral",_OrganismGeneral);
+        if (_Family is not null && !_Family.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("family",_Family);
+        if (_Genus is not null && !_Genus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("genus",_Genus);
+        if (_Species is not null && !_Species.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("species",_Species);
+        if (_IntraspecificType is not null && !_IntraspecificType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("intraspecificType",_IntraspecificType);
+        if (_IntraspecificDescriptionElement is not null && !_IntraspecificDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("intraspecificDescription",_IntraspecificDescriptionElement);
+        if (_Author?.Any() is true && !_Author.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent>>()) yield return new KeyValuePair<string,object>("author",_Author);
+        if (_Hybrid is not null && !_Hybrid.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent>()) yield return new KeyValuePair<string,object>("hybrid",_Hybrid);
+        if (_OrganismGeneral is not null && !_OrganismGeneral.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent>()) yield return new KeyValuePair<string,object>("organismGeneral",_OrganismGeneral);
       }
 
     }
@@ -462,8 +695,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? AuthorType
       {
-        get { return _AuthorType; }
-        set { _AuthorType = value; OnPropertyChanged("AuthorType"); }
+        get
+        {
+          if(_AuthorType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["authorType"]);
+          return _AuthorType;
+        }
+
+        set
+        {
+          if (_AuthorType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("authorType");
+          _AuthorType = value;
+          OnPropertyChanged("AuthorType");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _AuthorType;
@@ -475,8 +721,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? AuthorDescriptionElement
       {
-        get { return _AuthorDescriptionElement; }
-        set { _AuthorDescriptionElement = value; OnPropertyChanged("AuthorDescriptionElement"); }
+        get
+        {
+          if(_AuthorDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["authorDescription"]);
+          return _AuthorDescriptionElement;
+        }
+
+        set
+        {
+          if (_AuthorDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("authorDescription");
+          _AuthorDescriptionElement = value;
+          OnPropertyChanged("AuthorDescriptionElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _AuthorDescriptionElement;
@@ -488,7 +747,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AuthorDescription
       {
-        get => _AuthorDescriptionElement?.Value;
+        get => AuthorDescriptionElement?.Value;
         set
         {
           AuthorDescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -531,11 +790,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "authorType":
+            if (_AuthorType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["authorType"];
+              return true;
+            }
             value = _AuthorType;
-            return _AuthorType is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "authorDescription":
+            if (_AuthorDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["authorDescription"];
+              return true;
+            }
             value = _AuthorDescriptionElement;
-            return _AuthorDescriptionElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -544,13 +813,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "authorType":
-            AuthorType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              AuthorType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["authorType"] = value;
+            }
+            else AuthorType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "authorDescription":
-            AuthorDescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              AuthorDescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["authorDescription"] = value;
+            }
+            else AuthorDescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -561,8 +841,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_AuthorType is not null) yield return new KeyValuePair<string,object>("authorType",_AuthorType);
-        if (_AuthorDescriptionElement is not null) yield return new KeyValuePair<string,object>("authorDescription",_AuthorDescriptionElement);
+        if (_AuthorType is not null && !_AuthorType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("authorType",_AuthorType);
+        if (_AuthorDescriptionElement is not null && !_AuthorDescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("authorDescription",_AuthorDescriptionElement);
       }
 
     }
@@ -587,8 +867,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MaternalOrganismIdElement
       {
-        get { return _MaternalOrganismIdElement; }
-        set { _MaternalOrganismIdElement = value; OnPropertyChanged("MaternalOrganismIdElement"); }
+        get
+        {
+          if(_MaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["maternalOrganismId"]);
+          return _MaternalOrganismIdElement;
+        }
+
+        set
+        {
+          if (_MaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("maternalOrganismId");
+          _MaternalOrganismIdElement = value;
+          OnPropertyChanged("MaternalOrganismIdElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _MaternalOrganismIdElement;
@@ -600,7 +893,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MaternalOrganismId
       {
-        get => _MaternalOrganismIdElement?.Value;
+        get => MaternalOrganismIdElement?.Value;
         set
         {
           MaternalOrganismIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -615,8 +908,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MaternalOrganismNameElement
       {
-        get { return _MaternalOrganismNameElement; }
-        set { _MaternalOrganismNameElement = value; OnPropertyChanged("MaternalOrganismNameElement"); }
+        get
+        {
+          if(_MaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["maternalOrganismName"]);
+          return _MaternalOrganismNameElement;
+        }
+
+        set
+        {
+          if (_MaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("maternalOrganismName");
+          _MaternalOrganismNameElement = value;
+          OnPropertyChanged("MaternalOrganismNameElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _MaternalOrganismNameElement;
@@ -628,7 +934,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? MaternalOrganismName
       {
-        get => _MaternalOrganismNameElement?.Value;
+        get => MaternalOrganismNameElement?.Value;
         set
         {
           MaternalOrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -643,8 +949,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PaternalOrganismIdElement
       {
-        get { return _PaternalOrganismIdElement; }
-        set { _PaternalOrganismIdElement = value; OnPropertyChanged("PaternalOrganismIdElement"); }
+        get
+        {
+          if(_PaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["paternalOrganismId"]);
+          return _PaternalOrganismIdElement;
+        }
+
+        set
+        {
+          if (_PaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("paternalOrganismId");
+          _PaternalOrganismIdElement = value;
+          OnPropertyChanged("PaternalOrganismIdElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _PaternalOrganismIdElement;
@@ -656,7 +975,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? PaternalOrganismId
       {
-        get => _PaternalOrganismIdElement?.Value;
+        get => PaternalOrganismIdElement?.Value;
         set
         {
           PaternalOrganismIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -671,8 +990,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PaternalOrganismNameElement
       {
-        get { return _PaternalOrganismNameElement; }
-        set { _PaternalOrganismNameElement = value; OnPropertyChanged("PaternalOrganismNameElement"); }
+        get
+        {
+          if(_PaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["paternalOrganismName"]);
+          return _PaternalOrganismNameElement;
+        }
+
+        set
+        {
+          if (_PaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("paternalOrganismName");
+          _PaternalOrganismNameElement = value;
+          OnPropertyChanged("PaternalOrganismNameElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _PaternalOrganismNameElement;
@@ -684,7 +1016,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? PaternalOrganismName
       {
-        get => _PaternalOrganismNameElement?.Value;
+        get => PaternalOrganismNameElement?.Value;
         set
         {
           PaternalOrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -699,8 +1031,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? HybridType
       {
-        get { return _HybridType; }
-        set { _HybridType = value; OnPropertyChanged("HybridType"); }
+        get
+        {
+          if(_HybridType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["hybridType"]);
+          return _HybridType;
+        }
+
+        set
+        {
+          if (_HybridType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("hybridType");
+          _HybridType = value;
+          OnPropertyChanged("HybridType");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _HybridType;
@@ -746,20 +1091,45 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "maternalOrganismId":
+            if (_MaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["maternalOrganismId"];
+              return true;
+            }
             value = _MaternalOrganismIdElement;
-            return _MaternalOrganismIdElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "maternalOrganismName":
+            if (_MaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["maternalOrganismName"];
+              return true;
+            }
             value = _MaternalOrganismNameElement;
-            return _MaternalOrganismNameElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "paternalOrganismId":
+            if (_PaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["paternalOrganismId"];
+              return true;
+            }
             value = _PaternalOrganismIdElement;
-            return _PaternalOrganismIdElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "paternalOrganismName":
+            if (_PaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["paternalOrganismName"];
+              return true;
+            }
             value = _PaternalOrganismNameElement;
-            return _PaternalOrganismNameElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "hybridType":
+            if (_HybridType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["hybridType"];
+              return true;
+            }
             value = _HybridType;
-            return _HybridType is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -768,22 +1138,48 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "maternalOrganismId":
-            MaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              MaternalOrganismIdElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["maternalOrganismId"] = value;
+            }
+            else MaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "maternalOrganismName":
-            MaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              MaternalOrganismNameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["maternalOrganismName"] = value;
+            }
+            else MaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "paternalOrganismId":
-            PaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              PaternalOrganismIdElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["paternalOrganismId"] = value;
+            }
+            else PaternalOrganismIdElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "paternalOrganismName":
-            PaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              PaternalOrganismNameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["paternalOrganismName"] = value;
+            }
+            else PaternalOrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "hybridType":
-            HybridType = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              HybridType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["hybridType"] = value;
+            }
+            else HybridType = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -794,11 +1190,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_MaternalOrganismIdElement is not null) yield return new KeyValuePair<string,object>("maternalOrganismId",_MaternalOrganismIdElement);
-        if (_MaternalOrganismNameElement is not null) yield return new KeyValuePair<string,object>("maternalOrganismName",_MaternalOrganismNameElement);
-        if (_PaternalOrganismIdElement is not null) yield return new KeyValuePair<string,object>("paternalOrganismId",_PaternalOrganismIdElement);
-        if (_PaternalOrganismNameElement is not null) yield return new KeyValuePair<string,object>("paternalOrganismName",_PaternalOrganismNameElement);
-        if (_HybridType is not null) yield return new KeyValuePair<string,object>("hybridType",_HybridType);
+        if (_MaternalOrganismIdElement is not null && !_MaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("maternalOrganismId",_MaternalOrganismIdElement);
+        if (_MaternalOrganismNameElement is not null && !_MaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("maternalOrganismName",_MaternalOrganismNameElement);
+        if (_PaternalOrganismIdElement is not null && !_PaternalOrganismIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("paternalOrganismId",_PaternalOrganismIdElement);
+        if (_PaternalOrganismNameElement is not null && !_PaternalOrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("paternalOrganismName",_PaternalOrganismNameElement);
+        if (_HybridType is not null && !_HybridType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("hybridType",_HybridType);
       }
 
     }
@@ -823,8 +1219,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Kingdom
       {
-        get { return _Kingdom; }
-        set { _Kingdom = value; OnPropertyChanged("Kingdom"); }
+        get
+        {
+          if(_Kingdom.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["kingdom"]);
+          return _Kingdom;
+        }
+
+        set
+        {
+          if (_Kingdom.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("kingdom");
+          _Kingdom = value;
+          OnPropertyChanged("Kingdom");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Kingdom;
@@ -836,8 +1245,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Phylum
       {
-        get { return _Phylum; }
-        set { _Phylum = value; OnPropertyChanged("Phylum"); }
+        get
+        {
+          if(_Phylum.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["phylum"]);
+          return _Phylum;
+        }
+
+        set
+        {
+          if (_Phylum.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("phylum");
+          _Phylum = value;
+          OnPropertyChanged("Phylum");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Phylum;
@@ -849,8 +1271,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Class
       {
-        get { return _Class; }
-        set { _Class = value; OnPropertyChanged("Class"); }
+        get
+        {
+          if(_Class.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["class"]);
+          return _Class;
+        }
+
+        set
+        {
+          if (_Class.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("class");
+          _Class = value;
+          OnPropertyChanged("Class");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Class;
@@ -862,8 +1297,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Order
       {
-        get { return _Order; }
-        set { _Order = value; OnPropertyChanged("Order"); }
+        get
+        {
+          if(_Order.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["order"]);
+          return _Order;
+        }
+
+        set
+        {
+          if (_Order.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("order");
+          _Order = value;
+          OnPropertyChanged("Order");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Order;
@@ -907,17 +1355,37 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "kingdom":
+            if (_Kingdom.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["kingdom"];
+              return true;
+            }
             value = _Kingdom;
-            return _Kingdom is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "phylum":
+            if (_Phylum.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["phylum"];
+              return true;
+            }
             value = _Phylum;
-            return _Phylum is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "class":
+            if (_Class.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["class"];
+              return true;
+            }
             value = _Class;
-            return _Class is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "order":
+            if (_Order.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["order"];
+              return true;
+            }
             value = _Order;
-            return _Order is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -926,19 +1394,40 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "kingdom":
-            Kingdom = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Kingdom = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["kingdom"] = value;
+            }
+            else Kingdom = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "phylum":
-            Phylum = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Phylum = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["phylum"] = value;
+            }
+            else Phylum = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "class":
-            Class = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Class = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["class"] = value;
+            }
+            else Class = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "order":
-            Order = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Order = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["order"] = value;
+            }
+            else Order = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -949,10 +1438,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Kingdom is not null) yield return new KeyValuePair<string,object>("kingdom",_Kingdom);
-        if (_Phylum is not null) yield return new KeyValuePair<string,object>("phylum",_Phylum);
-        if (_Class is not null) yield return new KeyValuePair<string,object>("class",_Class);
-        if (_Order is not null) yield return new KeyValuePair<string,object>("order",_Order);
+        if (_Kingdom is not null && !_Kingdom.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("kingdom",_Kingdom);
+        if (_Phylum is not null && !_Phylum.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("phylum",_Phylum);
+        if (_Class is not null && !_Class.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("class",_Class);
+        if (_Order is not null && !_Order.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("order",_Order);
       }
 
     }
@@ -977,8 +1466,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Part
       {
-        get { return _Part; }
-        set { _Part = value; OnPropertyChanged("Part"); }
+        get
+        {
+          if(_Part.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["part"]);
+          return _Part;
+        }
+
+        set
+        {
+          if (_Part.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("part");
+          _Part = value;
+          OnPropertyChanged("Part");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Part;
@@ -990,8 +1492,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? PartLocation
       {
-        get { return _PartLocation; }
-        set { _PartLocation = value; OnPropertyChanged("PartLocation"); }
+        get
+        {
+          if(_PartLocation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["partLocation"]);
+          return _PartLocation;
+        }
+
+        set
+        {
+          if (_PartLocation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("partLocation");
+          _PartLocation = value;
+          OnPropertyChanged("PartLocation");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _PartLocation;
@@ -1031,11 +1546,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "part":
+            if (_Part.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["part"];
+              return true;
+            }
             value = _Part;
-            return _Part is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "partLocation":
+            if (_PartLocation.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["partLocation"];
+              return true;
+            }
             value = _PartLocation;
-            return _PartLocation is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -1044,13 +1569,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "part":
-            Part = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Part = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["part"] = value;
+            }
+            else Part = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "partLocation":
-            PartLocation = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              PartLocation = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["partLocation"] = value;
+            }
+            else PartLocation = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -1061,8 +1597,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Part is not null) yield return new KeyValuePair<string,object>("part",_Part);
-        if (_PartLocation is not null) yield return new KeyValuePair<string,object>("partLocation",_PartLocation);
+        if (_Part is not null && !_Part.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("part",_Part);
+        if (_PartLocation is not null && !_PartLocation.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("partLocation",_PartLocation);
       }
 
     }
@@ -1074,8 +1610,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? SourceMaterialClass
     {
-      get { return _SourceMaterialClass; }
-      set { _SourceMaterialClass = value; OnPropertyChanged("SourceMaterialClass"); }
+      get
+      {
+        if(_SourceMaterialClass.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["sourceMaterialClass"]);
+        return _SourceMaterialClass;
+      }
+
+      set
+      {
+        if (_SourceMaterialClass.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("sourceMaterialClass");
+        _SourceMaterialClass = value;
+        OnPropertyChanged("SourceMaterialClass");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _SourceMaterialClass;
@@ -1087,8 +1636,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? SourceMaterialType
     {
-      get { return _SourceMaterialType; }
-      set { _SourceMaterialType = value; OnPropertyChanged("SourceMaterialType"); }
+      get
+      {
+        if(_SourceMaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["sourceMaterialType"]);
+        return _SourceMaterialType;
+      }
+
+      set
+      {
+        if (_SourceMaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("sourceMaterialType");
+        _SourceMaterialType = value;
+        OnPropertyChanged("SourceMaterialType");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _SourceMaterialType;
@@ -1100,8 +1662,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? SourceMaterialState
     {
-      get { return _SourceMaterialState; }
-      set { _SourceMaterialState = value; OnPropertyChanged("SourceMaterialState"); }
+      get
+      {
+        if(_SourceMaterialState.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["sourceMaterialState"]);
+        return _SourceMaterialState;
+      }
+
+      set
+      {
+        if (_SourceMaterialState.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("sourceMaterialState");
+        _SourceMaterialState = value;
+        OnPropertyChanged("SourceMaterialState");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _SourceMaterialState;
@@ -1113,8 +1688,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Identifier? OrganismId
     {
-      get { return _OrganismId; }
-      set { _OrganismId = value; OnPropertyChanged("OrganismId"); }
+      get
+      {
+        if(_OrganismId.InOverflow<Hl7.Fhir.Model.Identifier>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["organismId"]);
+        return _OrganismId;
+      }
+
+      set
+      {
+        if (_OrganismId.InOverflow<Hl7.Fhir.Model.Identifier>())
+          Overflow.Remove("organismId");
+        _OrganismId = value;
+        OnPropertyChanged("OrganismId");
+      }
+
     }
 
     private Hl7.Fhir.Model.Identifier? _OrganismId;
@@ -1126,8 +1714,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? OrganismNameElement
     {
-      get { return _OrganismNameElement; }
-      set { _OrganismNameElement = value; OnPropertyChanged("OrganismNameElement"); }
+      get
+      {
+        if(_OrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["organismName"]);
+        return _OrganismNameElement;
+      }
+
+      set
+      {
+        if (_OrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("organismName");
+        _OrganismNameElement = value;
+        OnPropertyChanged("OrganismNameElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _OrganismNameElement;
@@ -1139,7 +1740,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? OrganismName
     {
-      get => _OrganismNameElement?.Value;
+      get => OrganismNameElement?.Value;
       set
       {
         OrganismNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1155,8 +1756,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> ParentSubstanceId
     {
-      get => _ParentSubstanceId ??= [];
-      set { _ParentSubstanceId = value; OnPropertyChanged("ParentSubstanceId"); }
+      get
+      {
+        if(_ParentSubstanceId.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["parentSubstanceId"]);
+        return _ParentSubstanceId ??= [];
+      }
+
+      set
+      {
+        if (_ParentSubstanceId.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("parentSubstanceId");
+        _ParentSubstanceId = value;
+        OnPropertyChanged("ParentSubstanceId");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Identifier>? _ParentSubstanceId;
@@ -1169,8 +1783,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ParentSubstanceNameElement
     {
-      get => _ParentSubstanceNameElement ??= [];
-      set { _ParentSubstanceNameElement = value; OnPropertyChanged("ParentSubstanceNameElement"); }
+      get
+      {
+        if(_ParentSubstanceNameElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["parentSubstanceName"]);
+        return _ParentSubstanceNameElement ??= [];
+      }
+
+      set
+      {
+        if (_ParentSubstanceNameElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          Overflow.Remove("parentSubstanceName");
+        _ParentSubstanceNameElement = value;
+        OnPropertyChanged("ParentSubstanceNameElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _ParentSubstanceNameElement;
@@ -1201,8 +1828,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CountryOfOrigin
     {
-      get => _CountryOfOrigin ??= [];
-      set { _CountryOfOrigin = value; OnPropertyChanged("CountryOfOrigin"); }
+      get
+      {
+        if(_CountryOfOrigin.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["countryOfOrigin"]);
+        return _CountryOfOrigin ??= [];
+      }
+
+      set
+      {
+        if (_CountryOfOrigin.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("countryOfOrigin");
+        _CountryOfOrigin = value;
+        OnPropertyChanged("CountryOfOrigin");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept>? _CountryOfOrigin;
@@ -1215,8 +1855,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> GeographicalLocationElement
     {
-      get => _GeographicalLocationElement ??= [];
-      set { _GeographicalLocationElement = value; OnPropertyChanged("GeographicalLocationElement"); }
+      get
+      {
+        if(_GeographicalLocationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["geographicalLocation"]);
+        return _GeographicalLocationElement ??= [];
+      }
+
+      set
+      {
+        if (_GeographicalLocationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          Overflow.Remove("geographicalLocation");
+        _GeographicalLocationElement = value;
+        OnPropertyChanged("GeographicalLocationElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _GeographicalLocationElement;
@@ -1246,8 +1899,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? DevelopmentStage
     {
-      get { return _DevelopmentStage; }
-      set { _DevelopmentStage = value; OnPropertyChanged("DevelopmentStage"); }
+      get
+      {
+        if(_DevelopmentStage.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["developmentStage"]);
+        return _DevelopmentStage;
+      }
+
+      set
+      {
+        if (_DevelopmentStage.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("developmentStage");
+        _DevelopmentStage = value;
+        OnPropertyChanged("DevelopmentStage");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _DevelopmentStage;
@@ -1260,8 +1926,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent> FractionDescription
     {
-      get => _FractionDescription ??= [];
-      set { _FractionDescription = value; OnPropertyChanged("FractionDescription"); }
+      get
+      {
+        if(_FractionDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>), Overflow["fractionDescription"]);
+        return _FractionDescription ??= [];
+      }
+
+      set
+      {
+        if (_FractionDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>>())
+          Overflow.Remove("fractionDescription");
+        _FractionDescription = value;
+        OnPropertyChanged("FractionDescription");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>? _FractionDescription;
@@ -1273,8 +1952,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent? Organism
     {
-      get { return _Organism; }
-      set { _Organism = value; OnPropertyChanged("Organism"); }
+      get
+      {
+        if(_Organism.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent), Overflow["organism"]);
+        return _Organism;
+      }
+
+      set
+      {
+        if (_Organism.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent>())
+          Overflow.Remove("organism");
+        _Organism = value;
+        OnPropertyChanged("Organism");
+      }
+
     }
 
     private Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent? _Organism;
@@ -1287,8 +1979,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent> PartDescription
     {
-      get => _PartDescription ??= [];
-      set { _PartDescription = value; OnPropertyChanged("PartDescription"); }
+      get
+      {
+        if(_PartDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>), Overflow["partDescription"]);
+        return _PartDescription ??= [];
+      }
+
+      set
+      {
+        if (_PartDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>>())
+          Overflow.Remove("partDescription");
+        _PartDescription = value;
+        OnPropertyChanged("PartDescription");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>? _PartDescription;
@@ -1350,44 +2055,109 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "sourceMaterialClass":
+          if (_SourceMaterialClass.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["sourceMaterialClass"];
+            return true;
+          }
           value = _SourceMaterialClass;
-          return _SourceMaterialClass is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "sourceMaterialType":
+          if (_SourceMaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["sourceMaterialType"];
+            return true;
+          }
           value = _SourceMaterialType;
-          return _SourceMaterialType is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "sourceMaterialState":
+          if (_SourceMaterialState.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["sourceMaterialState"];
+            return true;
+          }
           value = _SourceMaterialState;
-          return _SourceMaterialState is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "organismId":
+          if (_OrganismId.InOverflow<Hl7.Fhir.Model.Identifier>())
+          {
+            value = Overflow["organismId"];
+            return true;
+          }
           value = _OrganismId;
-          return _OrganismId is not null;
+          return (value as Hl7.Fhir.Model.Identifier) is not null;
         case "organismName":
+          if (_OrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["organismName"];
+            return true;
+          }
           value = _OrganismNameElement;
-          return _OrganismNameElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "parentSubstanceId":
+          if (_ParentSubstanceId.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["parentSubstanceId"];
+            return true;
+          }
           value = _ParentSubstanceId;
-          return _ParentSubstanceId?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "parentSubstanceName":
+          if (_ParentSubstanceNameElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          {
+            value = Overflow["parentSubstanceName"];
+            return true;
+          }
           value = _ParentSubstanceNameElement;
-          return _ParentSubstanceNameElement?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.FhirString>)?.Any() is true;
         case "countryOfOrigin":
+          if (_CountryOfOrigin.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["countryOfOrigin"];
+            return true;
+          }
           value = _CountryOfOrigin;
-          return _CountryOfOrigin?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "geographicalLocation":
+          if (_GeographicalLocationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          {
+            value = Overflow["geographicalLocation"];
+            return true;
+          }
           value = _GeographicalLocationElement;
-          return _GeographicalLocationElement?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.FhirString>)?.Any() is true;
         case "developmentStage":
+          if (_DevelopmentStage.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["developmentStage"];
+            return true;
+          }
           value = _DevelopmentStage;
-          return _DevelopmentStage is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "fractionDescription":
+          if (_FractionDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>>())
+          {
+            value = Overflow["fractionDescription"];
+            return true;
+          }
           value = _FractionDescription;
-          return _FractionDescription?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>)?.Any() is true;
         case "organism":
+          if (_Organism.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent>())
+          {
+            value = Overflow["organism"];
+            return true;
+          }
           value = _Organism;
-          return _Organism is not null;
+          return (value as Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent) is not null;
         case "partDescription":
+          if (_PartDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>>())
+          {
+            value = Overflow["partDescription"];
+            return true;
+          }
           value = _PartDescription;
-          return _PartDescription?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -1396,46 +2166,112 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "sourceMaterialClass":
-          SourceMaterialClass = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            SourceMaterialClass = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["sourceMaterialClass"] = value;
+          }
+          else SourceMaterialClass = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "sourceMaterialType":
-          SourceMaterialType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            SourceMaterialType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["sourceMaterialType"] = value;
+          }
+          else SourceMaterialType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "sourceMaterialState":
-          SourceMaterialState = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            SourceMaterialState = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["sourceMaterialState"] = value;
+          }
+          else SourceMaterialState = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "organismId":
-          OrganismId = (Hl7.Fhir.Model.Identifier?)value;
+          if (value is not (Hl7.Fhir.Model.Identifier or null))
+          {
+            OrganismId = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+            Overflow["organismId"] = value;
+          }
+          else OrganismId = (Hl7.Fhir.Model.Identifier?)value;
           return this;
         case "organismName":
-          OrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            OrganismNameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["organismName"] = value;
+          }
+          else OrganismNameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "parentSubstanceId":
-          ParentSubstanceId = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            ParentSubstanceId = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["parentSubstanceId"] = value;
+          }
+          else ParentSubstanceId = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "parentSubstanceName":
-          ParentSubstanceNameElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            ParentSubstanceNameElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["parentSubstanceName"] = value;
+          }
+          else ParentSubstanceNameElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "countryOfOrigin":
-          CountryOfOrigin = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            CountryOfOrigin = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["countryOfOrigin"] = value;
+          }
+          else CountryOfOrigin = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "geographicalLocation":
-          GeographicalLocationElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            GeographicalLocationElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["geographicalLocation"] = value;
+          }
+          else GeographicalLocationElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "developmentStage":
-          DevelopmentStage = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            DevelopmentStage = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["developmentStage"] = value;
+          }
+          else DevelopmentStage = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "fractionDescription":
-          FractionDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent> or null))
+          {
+            FractionDescription = OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>>.INSTANCE;
+            Overflow["fractionDescription"] = value;
+          }
+          else FractionDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>?)value!;
           return this;
         case "organism":
-          Organism = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent?)value;
+          if (value is not (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent or null))
+          {
+            Organism = OverflowNull<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent>.INSTANCE;
+            Overflow["organism"] = value;
+          }
+          else Organism = (Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent?)value;
           return this;
         case "partDescription":
-          PartDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent> or null))
+          {
+            PartDescription = OverflowNull<List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>>.INSTANCE;
+            Overflow["partDescription"] = value;
+          }
+          else PartDescription = (List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1446,19 +2282,19 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_SourceMaterialClass is not null) yield return new KeyValuePair<string,object>("sourceMaterialClass",_SourceMaterialClass);
-      if (_SourceMaterialType is not null) yield return new KeyValuePair<string,object>("sourceMaterialType",_SourceMaterialType);
-      if (_SourceMaterialState is not null) yield return new KeyValuePair<string,object>("sourceMaterialState",_SourceMaterialState);
-      if (_OrganismId is not null) yield return new KeyValuePair<string,object>("organismId",_OrganismId);
-      if (_OrganismNameElement is not null) yield return new KeyValuePair<string,object>("organismName",_OrganismNameElement);
-      if (_ParentSubstanceId?.Any() == true) yield return new KeyValuePair<string,object>("parentSubstanceId",_ParentSubstanceId);
-      if (_ParentSubstanceNameElement?.Any() == true) yield return new KeyValuePair<string,object>("parentSubstanceName",_ParentSubstanceNameElement);
-      if (_CountryOfOrigin?.Any() == true) yield return new KeyValuePair<string,object>("countryOfOrigin",_CountryOfOrigin);
-      if (_GeographicalLocationElement?.Any() == true) yield return new KeyValuePair<string,object>("geographicalLocation",_GeographicalLocationElement);
-      if (_DevelopmentStage is not null) yield return new KeyValuePair<string,object>("developmentStage",_DevelopmentStage);
-      if (_FractionDescription?.Any() == true) yield return new KeyValuePair<string,object>("fractionDescription",_FractionDescription);
-      if (_Organism is not null) yield return new KeyValuePair<string,object>("organism",_Organism);
-      if (_PartDescription?.Any() == true) yield return new KeyValuePair<string,object>("partDescription",_PartDescription);
+      if (_SourceMaterialClass is not null && !_SourceMaterialClass.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("sourceMaterialClass",_SourceMaterialClass);
+      if (_SourceMaterialType is not null && !_SourceMaterialType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("sourceMaterialType",_SourceMaterialType);
+      if (_SourceMaterialState is not null && !_SourceMaterialState.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("sourceMaterialState",_SourceMaterialState);
+      if (_OrganismId is not null && !_OrganismId.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("organismId",_OrganismId);
+      if (_OrganismNameElement is not null && !_OrganismNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("organismName",_OrganismNameElement);
+      if (_ParentSubstanceId?.Any() is true && !_ParentSubstanceId.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("parentSubstanceId",_ParentSubstanceId);
+      if (_ParentSubstanceNameElement?.Any() is true && !_ParentSubstanceNameElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("parentSubstanceName",_ParentSubstanceNameElement);
+      if (_CountryOfOrigin?.Any() is true && !_CountryOfOrigin.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("countryOfOrigin",_CountryOfOrigin);
+      if (_GeographicalLocationElement?.Any() is true && !_GeographicalLocationElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("geographicalLocation",_GeographicalLocationElement);
+      if (_DevelopmentStage is not null && !_DevelopmentStage.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("developmentStage",_DevelopmentStage);
+      if (_FractionDescription?.Any() is true && !_FractionDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent>>()) yield return new KeyValuePair<string,object>("fractionDescription",_FractionDescription);
+      if (_Organism is not null && !_Organism.InOverflow<Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent>()) yield return new KeyValuePair<string,object>("organism",_Organism);
+      if (_PartDescription?.Any() is true && !_PartDescription.InOverflow<List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent>>()) yield return new KeyValuePair<string,object>("partDescription",_PartDescription);
     }
 
   }

@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -69,8 +70,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
     {
-      get { return _NameElement; }
-      set { _NameElement = value; OnPropertyChanged("NameElement"); }
+      get
+      {
+        if(_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["name"]);
+        return _NameElement;
+      }
+
+      set
+      {
+        if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("name");
+        _NameElement = value;
+        OnPropertyChanged("NameElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _NameElement;
@@ -82,7 +96,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -98,8 +112,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
-      get => _Telecom ??= [];
-      set { _Telecom = value; OnPropertyChanged("Telecom"); }
+      get
+      {
+        if(_Telecom.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ContactPoint>), Overflow["telecom"]);
+        return _Telecom ??= [];
+      }
+
+      set
+      {
+        if (_Telecom.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>())
+          Overflow.Remove("telecom");
+        _Telecom = value;
+        OnPropertyChanged("Telecom");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.ContactPoint>? _Telecom;
@@ -139,11 +166,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "name":
+          if (_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["name"];
+            return true;
+          }
           value = _NameElement;
-          return _NameElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "telecom":
+          if (_Telecom.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>())
+          {
+            value = Overflow["telecom"];
+            return true;
+          }
           value = _Telecom;
-          return _Telecom?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.ContactPoint>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -152,13 +189,24 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "name":
-          NameElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            NameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["name"] = value;
+          }
+          else NameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "telecom":
-          Telecom = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ContactPoint> or null))
+          {
+            Telecom = OverflowNull<List<Hl7.Fhir.Model.ContactPoint>>.INSTANCE;
+            Overflow["telecom"] = value;
+          }
+          else Telecom = (List<Hl7.Fhir.Model.ContactPoint>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -169,8 +217,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_NameElement is not null) yield return new KeyValuePair<string,object>("name",_NameElement);
-      if (_Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",_Telecom);
+      if (_NameElement is not null && !_NameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("name",_NameElement);
+      if (_Telecom?.Any() is true && !_Telecom.InOverflow<List<Hl7.Fhir.Model.ContactPoint>>()) yield return new KeyValuePair<string,object>("telecom",_Telecom);
     }
 
   }

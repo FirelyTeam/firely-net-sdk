@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r4b.expansions@4.3.0, hl7.fhir.r4b.core@4.3.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -145,8 +146,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent> Characteristic
       {
-        get => _Characteristic ??= [];
-        set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
+        get
+        {
+          if(_Characteristic.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>), Overflow["characteristic"]);
+          return _Characteristic ??= [];
+        }
+
+        set
+        {
+          if (_Characteristic.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>>())
+            Overflow.Remove("characteristic");
+          _Characteristic = value;
+          OnPropertyChanged("Characteristic");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>? _Characteristic;
@@ -159,8 +173,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
-        get => _Note ??= [];
-        set { _Note = value; OnPropertyChanged("Note"); }
+        get
+        {
+          if(_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Annotation>), Overflow["note"]);
+          return _Note ??= [];
+        }
+
+        set
+        {
+          if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+            Overflow.Remove("note");
+          _Note = value;
+          OnPropertyChanged("Note");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.Annotation>? _Note;
@@ -200,11 +227,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "characteristic":
+            if (_Characteristic.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>>())
+            {
+              value = Overflow["characteristic"];
+              return true;
+            }
             value = _Characteristic;
-            return _Characteristic?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>)?.Any() is true;
           case "note":
+            if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+            {
+              value = Overflow["note"];
+              return true;
+            }
             value = _Note;
-            return _Note?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.Annotation>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -213,13 +250,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "characteristic":
-            Characteristic = (List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent> or null))
+            {
+              Characteristic = OverflowNull<List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>>.INSTANCE;
+              Overflow["characteristic"] = value;
+            }
+            else Characteristic = (List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>?)value!;
             return this;
           case "note":
-            Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
+            {
+              Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
+              Overflow["note"] = value;
+            }
+            else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -230,8 +278,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",_Characteristic);
-        if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
+        if (_Characteristic?.Any() is true && !_Characteristic.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.CharacteristicComponent>>()) yield return new KeyValuePair<string,object>("characteristic",_Characteristic);
+        if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
       }
 
     }
@@ -258,8 +306,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Code
       {
-        get { return _Code; }
-        set { _Code = value; OnPropertyChanged("Code"); }
+        get
+        {
+          if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
+          return _Code;
+        }
+
+        set
+        {
+          if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("code");
+          _Code = value;
+          OnPropertyChanged("Code");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Code;
@@ -275,8 +336,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
       {
-        get { return _Value; }
-        set { _Value = value; OnPropertyChanged("Value"); }
+        get
+        {
+          if(_Value.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
+          return _Value;
+        }
+
+        set
+        {
+          if (_Value.InOverflow<DynamicDataType>())
+            Overflow.Remove("value");
+          _Value = value;
+          OnPropertyChanged("Value");
+        }
+
       }
 
       private Hl7.Fhir.Model.DataType? _Value;
@@ -288,8 +362,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ExcludeElement
       {
-        get { return _ExcludeElement; }
-        set { _ExcludeElement = value; OnPropertyChanged("ExcludeElement"); }
+        get
+        {
+          if(_ExcludeElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["exclude"]);
+          return _ExcludeElement;
+        }
+
+        set
+        {
+          if (_ExcludeElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+            Overflow.Remove("exclude");
+          _ExcludeElement = value;
+          OnPropertyChanged("ExcludeElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirBoolean? _ExcludeElement;
@@ -301,7 +388,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Exclude
       {
-        get => _ExcludeElement?.Value;
+        get => ExcludeElement?.Value;
         set
         {
           ExcludeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -316,8 +403,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
       {
-        get { return _Period; }
-        set { _Period = value; OnPropertyChanged("Period"); }
+        get
+        {
+          if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
+          return _Period;
+        }
+
+        set
+        {
+          if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+            Overflow.Remove("period");
+          _Period = value;
+          OnPropertyChanged("Period");
+        }
+
       }
 
       private Hl7.Fhir.Model.Period? _Period;
@@ -361,17 +461,37 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
+            if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["code"];
+              return true;
+            }
             value = _Code;
-            return _Code is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "value":
+            if (_Value.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["value"];
+              return true;
+            }
             value = _Value;
-            return _Value is not null;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           case "exclude":
+            if (_ExcludeElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+            {
+              value = Overflow["exclude"];
+              return true;
+            }
             value = _ExcludeElement;
-            return _ExcludeElement is not null;
+            return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
           case "period":
+            if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+            {
+              value = Overflow["period"];
+              return true;
+            }
             value = _Period;
-            return _Period is not null;
+            return (value as Hl7.Fhir.Model.Period) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -380,19 +500,40 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "code":
-            Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["code"] = value;
+            }
+            else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType?)value;
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Value = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           case "exclude":
-            ExcludeElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+            if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+            {
+              ExcludeElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+              Overflow["exclude"] = value;
+            }
+            else ExcludeElement = (Hl7.Fhir.Model.FhirBoolean?)value;
             return this;
           case "period":
-            Period = (Hl7.Fhir.Model.Period?)value;
+            if (value is not (Hl7.Fhir.Model.Period or null))
+            {
+              Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+              Overflow["period"] = value;
+            }
+            else Period = (Hl7.Fhir.Model.Period?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -403,10 +544,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
-        if (_ExcludeElement is not null) yield return new KeyValuePair<string,object>("exclude",_ExcludeElement);
-        if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+        if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_Value is not null && !_Value.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_ExcludeElement is not null && !_ExcludeElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("exclude",_ExcludeElement);
+        if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
       }
 
     }
@@ -438,8 +579,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>? CodeElement
       {
-        get { return _CodeElement; }
-        set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+        get
+        {
+          if(_CodeElement.InOverflow<Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>>())
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>), Overflow["code"]);
+          return _CodeElement;
+        }
+
+        set
+        {
+          if (_CodeElement.InOverflow<Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>>())
+            Overflow.Remove("code");
+          _CodeElement = value;
+          OnPropertyChanged("CodeElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>? _CodeElement;
@@ -451,7 +605,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType? Code
       {
-        get => _CodeElement?.Value;
+        get => CodeElement?.Value;
         set
         {
           CodeElement = value is null ? null : new Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>(value);
@@ -470,8 +624,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.DataType? Target
       {
-        get { return _Target; }
-        set { _Target = value; OnPropertyChanged("Target"); }
+        get
+        {
+          if(_Target.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["target"]);
+          return _Target;
+        }
+
+        set
+        {
+          if (_Target.InOverflow<DynamicDataType>())
+            Overflow.Remove("target");
+          _Target = value;
+          OnPropertyChanged("Target");
+        }
+
       }
 
       private Hl7.Fhir.Model.DataType? _Target;
@@ -511,11 +678,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "code":
+            if (_CodeElement.InOverflow<Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>>())
+            {
+              value = Overflow["code"];
+              return true;
+            }
             value = _CodeElement;
-            return _CodeElement is not null;
+            return (value as Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>) is not null;
           case "target":
+            if (_Target.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["target"];
+              return true;
+            }
             value = _Target;
-            return _Target is not null;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -524,13 +701,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "code":
-            CodeElement = (Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType> or null))
+            {
+              CodeElement = OverflowNull<Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>>.INSTANCE;
+              Overflow["code"] = value;
+            }
+            else CodeElement = (Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>?)value;
             return this;
           case "target":
-            Target = (Hl7.Fhir.Model.DataType?)value;
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Target = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["target"] = value;
+            }
+            else Target = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -541,8 +729,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_CodeElement is not null) yield return new KeyValuePair<string,object>("code",_CodeElement);
-        if (_Target is not null) yield return new KeyValuePair<string,object>("target",_Target);
+        if (_CodeElement is not null && !_CodeElement.InOverflow<Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType>>()) yield return new KeyValuePair<string,object>("code",_CodeElement);
+        if (_Target is not null && !_Target.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("target",_Target);
       }
 
     }
@@ -570,8 +758,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TitleElement
       {
-        get { return _TitleElement; }
-        set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
+        get
+        {
+          if(_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["title"]);
+          return _TitleElement;
+        }
+
+        set
+        {
+          if (_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("title");
+          _TitleElement = value;
+          OnPropertyChanged("TitleElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _TitleElement;
@@ -583,7 +784,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Title
       {
-        get => _TitleElement?.Value;
+        get => TitleElement?.Value;
         set
         {
           TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -599,8 +800,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Focus
       {
-        get { return _Focus; }
-        set { _Focus = value; OnPropertyChanged("Focus"); }
+        get
+        {
+          if(_Focus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["focus"]);
+          return _Focus;
+        }
+
+        set
+        {
+          if (_Focus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("focus");
+          _Focus = value;
+          OnPropertyChanged("Focus");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Focus;
@@ -614,8 +828,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? FocusReference
       {
-        get { return _FocusReference; }
-        set { _FocusReference = value; OnPropertyChanged("FocusReference"); }
+        get
+        {
+          if(_FocusReference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["focusReference"]);
+          return _FocusReference;
+        }
+
+        set
+        {
+          if (_FocusReference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("focusReference");
+          _FocusReference = value;
+          OnPropertyChanged("FocusReference");
+        }
+
       }
 
       private Hl7.Fhir.Model.ResourceReference? _FocusReference;
@@ -630,8 +857,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Author
       {
-        get => _Author ??= [];
-        set { _Author = value; OnPropertyChanged("Author"); }
+        get
+        {
+          if(_Author.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["author"]);
+          return _Author ??= [];
+        }
+
+        set
+        {
+          if (_Author.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            Overflow.Remove("author");
+          _Author = value;
+          OnPropertyChanged("Author");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.ResourceReference>? _Author;
@@ -643,8 +883,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Narrative? Text
       {
-        get { return _Text; }
-        set { _Text = value; OnPropertyChanged("Text"); }
+        get
+        {
+          if(_Text.InOverflow<Hl7.Fhir.Model.Narrative>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Narrative), Overflow["text"]);
+          return _Text;
+        }
+
+        set
+        {
+          if (_Text.InOverflow<Hl7.Fhir.Model.Narrative>())
+            Overflow.Remove("text");
+          _Text = value;
+          OnPropertyChanged("Text");
+        }
+
       }
 
       private Hl7.Fhir.Model.Narrative? _Text;
@@ -658,8 +911,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.ListMode>? ModeElement
       {
-        get { return _ModeElement; }
-        set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
+        get
+        {
+          if(_ModeElement.InOverflow<Code<Hl7.Fhir.Model.ListMode>>())
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ListMode>), Overflow["mode"]);
+          return _ModeElement;
+        }
+
+        set
+        {
+          if (_ModeElement.InOverflow<Code<Hl7.Fhir.Model.ListMode>>())
+            Overflow.Remove("mode");
+          _ModeElement = value;
+          OnPropertyChanged("ModeElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.ListMode>? _ModeElement;
@@ -671,7 +937,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ListMode? Mode
       {
-        get => _ModeElement?.Value;
+        get => ModeElement?.Value;
         set
         {
           ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.ListMode>(value);
@@ -687,8 +953,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? OrderedBy
       {
-        get { return _OrderedBy; }
-        set { _OrderedBy = value; OnPropertyChanged("OrderedBy"); }
+        get
+        {
+          if(_OrderedBy.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["orderedBy"]);
+          return _OrderedBy;
+        }
+
+        set
+        {
+          if (_OrderedBy.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("orderedBy");
+          _OrderedBy = value;
+          OnPropertyChanged("OrderedBy");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _OrderedBy;
@@ -702,8 +981,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> EntryClassifier
       {
-        get => _EntryClassifier ??= [];
-        set { _EntryClassifier = value; OnPropertyChanged("EntryClassifier"); }
+        get
+        {
+          if(_EntryClassifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["entryClassifier"]);
+          return _EntryClassifier ??= [];
+        }
+
+        set
+        {
+          if (_EntryClassifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            Overflow.Remove("entryClassifier");
+          _EntryClassifier = value;
+          OnPropertyChanged("EntryClassifier");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableConcept>? _EntryClassifier;
@@ -718,8 +1010,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> EntryReference
       {
-        get => _EntryReference ??= [];
-        set { _EntryReference = value; OnPropertyChanged("EntryReference"); }
+        get
+        {
+          if(_EntryReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["entryReference"]);
+          return _EntryReference ??= [];
+        }
+
+        set
+        {
+          if (_EntryReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            Overflow.Remove("entryReference");
+          _EntryReference = value;
+          OnPropertyChanged("EntryReference");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.ResourceReference>? _EntryReference;
@@ -732,8 +1037,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Quantity> EntryQuantity
       {
-        get => _EntryQuantity ??= [];
-        set { _EntryQuantity = value; OnPropertyChanged("EntryQuantity"); }
+        get
+        {
+          if(_EntryQuantity.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Quantity>), Overflow["entryQuantity"]);
+          return _EntryQuantity ??= [];
+        }
+
+        set
+        {
+          if (_EntryQuantity.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
+            Overflow.Remove("entryQuantity");
+          _EntryQuantity = value;
+          OnPropertyChanged("EntryQuantity");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.Quantity>? _EntryQuantity;
@@ -746,8 +1064,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? EmptyReason
       {
-        get { return _EmptyReason; }
-        set { _EmptyReason = value; OnPropertyChanged("EmptyReason"); }
+        get
+        {
+          if(_EmptyReason.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["emptyReason"]);
+          return _EmptyReason;
+        }
+
+        set
+        {
+          if (_EmptyReason.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("emptyReason");
+          _EmptyReason = value;
+          OnPropertyChanged("EmptyReason");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _EmptyReason;
@@ -760,8 +1091,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.EvidenceReport.SectionComponent> Section
       {
-        get => _Section ??= [];
-        set { _Section = value; OnPropertyChanged("Section"); }
+        get
+        {
+          if(_Section.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>), Overflow["section"]);
+          return _Section ??= [];
+        }
+
+        set
+        {
+          if (_Section.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>>())
+            Overflow.Remove("section");
+          _Section = value;
+          OnPropertyChanged("Section");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>? _Section;
@@ -821,41 +1165,101 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "title":
+            if (_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["title"];
+              return true;
+            }
             value = _TitleElement;
-            return _TitleElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "focus":
+            if (_Focus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["focus"];
+              return true;
+            }
             value = _Focus;
-            return _Focus is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "focusReference":
+            if (_FocusReference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["focusReference"];
+              return true;
+            }
             value = _FocusReference;
-            return _FocusReference is not null;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           case "author":
+            if (_Author.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            {
+              value = Overflow["author"];
+              return true;
+            }
             value = _Author;
-            return _Author?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
           case "text":
+            if (_Text.InOverflow<Hl7.Fhir.Model.Narrative>())
+            {
+              value = Overflow["text"];
+              return true;
+            }
             value = _Text;
-            return _Text is not null;
+            return (value as Hl7.Fhir.Model.Narrative) is not null;
           case "mode":
+            if (_ModeElement.InOverflow<Code<Hl7.Fhir.Model.ListMode>>())
+            {
+              value = Overflow["mode"];
+              return true;
+            }
             value = _ModeElement;
-            return _ModeElement is not null;
+            return (value as Code<Hl7.Fhir.Model.ListMode>) is not null;
           case "orderedBy":
+            if (_OrderedBy.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["orderedBy"];
+              return true;
+            }
             value = _OrderedBy;
-            return _OrderedBy is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "entryClassifier":
+            if (_EntryClassifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            {
+              value = Overflow["entryClassifier"];
+              return true;
+            }
             value = _EntryClassifier;
-            return _EntryClassifier?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
           case "entryReference":
+            if (_EntryReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            {
+              value = Overflow["entryReference"];
+              return true;
+            }
             value = _EntryReference;
-            return _EntryReference?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
           case "entryQuantity":
+            if (_EntryQuantity.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
+            {
+              value = Overflow["entryQuantity"];
+              return true;
+            }
             value = _EntryQuantity;
-            return _EntryQuantity?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.Quantity>)?.Any() is true;
           case "emptyReason":
+            if (_EmptyReason.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["emptyReason"];
+              return true;
+            }
             value = _EmptyReason;
-            return _EmptyReason is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "section":
+            if (_Section.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>>())
+            {
+              value = Overflow["section"];
+              return true;
+            }
             value = _Section;
-            return _Section?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -864,43 +1268,104 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "title":
-            TitleElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              TitleElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["title"] = value;
+            }
+            else TitleElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "focus":
-            Focus = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Focus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["focus"] = value;
+            }
+            else Focus = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "focusReference":
-            FocusReference = (Hl7.Fhir.Model.ResourceReference?)value;
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              FocusReference = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["focusReference"] = value;
+            }
+            else FocusReference = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           case "author":
-            Author = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+            {
+              Author = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+              Overflow["author"] = value;
+            }
+            else Author = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "text":
-            Text = (Hl7.Fhir.Model.Narrative?)value;
+            if (value is not (Hl7.Fhir.Model.Narrative or null))
+            {
+              Text = OverflowNull<Hl7.Fhir.Model.Narrative>.INSTANCE;
+              Overflow["text"] = value;
+            }
+            else Text = (Hl7.Fhir.Model.Narrative?)value;
             return this;
           case "mode":
-            ModeElement = (Code<Hl7.Fhir.Model.ListMode>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.ListMode> or null))
+            {
+              ModeElement = OverflowNull<Code<Hl7.Fhir.Model.ListMode>>.INSTANCE;
+              Overflow["mode"] = value;
+            }
+            else ModeElement = (Code<Hl7.Fhir.Model.ListMode>?)value;
             return this;
           case "orderedBy":
-            OrderedBy = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              OrderedBy = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["orderedBy"] = value;
+            }
+            else OrderedBy = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "entryClassifier":
-            EntryClassifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              EntryClassifier = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["entryClassifier"] = value;
+            }
+            else EntryClassifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "entryReference":
-            EntryReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+            {
+              EntryReference = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+              Overflow["entryReference"] = value;
+            }
+            else EntryReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "entryQuantity":
-            EntryQuantity = (List<Hl7.Fhir.Model.Quantity>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.Quantity> or null))
+            {
+              EntryQuantity = OverflowNull<List<Hl7.Fhir.Model.Quantity>>.INSTANCE;
+              Overflow["entryQuantity"] = value;
+            }
+            else EntryQuantity = (List<Hl7.Fhir.Model.Quantity>?)value!;
             return this;
           case "emptyReason":
-            EmptyReason = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              EmptyReason = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["emptyReason"] = value;
+            }
+            else EmptyReason = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "section":
-            Section = (List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.EvidenceReport.SectionComponent> or null))
+            {
+              Section = OverflowNull<List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>>.INSTANCE;
+              Overflow["section"] = value;
+            }
+            else Section = (List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -911,18 +1376,18 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_TitleElement is not null) yield return new KeyValuePair<string,object>("title",_TitleElement);
-        if (_Focus is not null) yield return new KeyValuePair<string,object>("focus",_Focus);
-        if (_FocusReference is not null) yield return new KeyValuePair<string,object>("focusReference",_FocusReference);
-        if (_Author?.Any() == true) yield return new KeyValuePair<string,object>("author",_Author);
-        if (_Text is not null) yield return new KeyValuePair<string,object>("text",_Text);
-        if (_ModeElement is not null) yield return new KeyValuePair<string,object>("mode",_ModeElement);
-        if (_OrderedBy is not null) yield return new KeyValuePair<string,object>("orderedBy",_OrderedBy);
-        if (_EntryClassifier?.Any() == true) yield return new KeyValuePair<string,object>("entryClassifier",_EntryClassifier);
-        if (_EntryReference?.Any() == true) yield return new KeyValuePair<string,object>("entryReference",_EntryReference);
-        if (_EntryQuantity?.Any() == true) yield return new KeyValuePair<string,object>("entryQuantity",_EntryQuantity);
-        if (_EmptyReason is not null) yield return new KeyValuePair<string,object>("emptyReason",_EmptyReason);
-        if (_Section?.Any() == true) yield return new KeyValuePair<string,object>("section",_Section);
+        if (_TitleElement is not null && !_TitleElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("title",_TitleElement);
+        if (_Focus is not null && !_Focus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("focus",_Focus);
+        if (_FocusReference is not null && !_FocusReference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("focusReference",_FocusReference);
+        if (_Author?.Any() is true && !_Author.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("author",_Author);
+        if (_Text is not null && !_Text.InOverflow<Hl7.Fhir.Model.Narrative>()) yield return new KeyValuePair<string,object>("text",_Text);
+        if (_ModeElement is not null && !_ModeElement.InOverflow<Code<Hl7.Fhir.Model.ListMode>>()) yield return new KeyValuePair<string,object>("mode",_ModeElement);
+        if (_OrderedBy is not null && !_OrderedBy.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("orderedBy",_OrderedBy);
+        if (_EntryClassifier?.Any() is true && !_EntryClassifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("entryClassifier",_EntryClassifier);
+        if (_EntryReference?.Any() is true && !_EntryReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("entryReference",_EntryReference);
+        if (_EntryQuantity?.Any() is true && !_EntryQuantity.InOverflow<List<Hl7.Fhir.Model.Quantity>>()) yield return new KeyValuePair<string,object>("entryQuantity",_EntryQuantity);
+        if (_EmptyReason is not null && !_EmptyReason.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("emptyReason",_EmptyReason);
+        if (_Section?.Any() is true && !_Section.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>>()) yield return new KeyValuePair<string,object>("section",_Section);
       }
 
     }
@@ -934,8 +1399,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
     {
-      get { return _UrlElement; }
-      set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+      get
+      {
+        if(_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["url"]);
+        return _UrlElement;
+      }
+
+      set
+      {
+        if (_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          Overflow.Remove("url");
+        _UrlElement = value;
+        OnPropertyChanged("UrlElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirUri? _UrlElement;
@@ -947,7 +1425,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Url
     {
-      get => _UrlElement?.Value;
+      get => UrlElement?.Value;
       set
       {
         UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -965,8 +1443,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.PublicationStatus>), Overflow["status"]);
+        return _StatusElement;
+      }
+
+      set
+      {
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
+          Overflow.Remove("status");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.PublicationStatus>? _StatusElement;
@@ -978,7 +1469,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
@@ -994,8 +1485,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
-      get => _UseContext ??= [];
-      set { _UseContext = value; OnPropertyChanged("UseContext"); }
+      get
+      {
+        if(_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.UsageContext>), Overflow["useContext"]);
+        return _UseContext ??= [];
+      }
+
+      set
+      {
+        if (_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>())
+          Overflow.Remove("useContext");
+        _UseContext = value;
+        OnPropertyChanged("UseContext");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.UsageContext>? _UseContext;
@@ -1008,8 +1512,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ??= [];
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Identifier>? _Identifier;
@@ -1022,8 +1539,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> RelatedIdentifier
     {
-      get => _RelatedIdentifier ??= [];
-      set { _RelatedIdentifier = value; OnPropertyChanged("RelatedIdentifier"); }
+      get
+      {
+        if(_RelatedIdentifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["relatedIdentifier"]);
+        return _RelatedIdentifier ??= [];
+      }
+
+      set
+      {
+        if (_RelatedIdentifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("relatedIdentifier");
+        _RelatedIdentifier = value;
+        OnPropertyChanged("RelatedIdentifier");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Identifier>? _RelatedIdentifier;
@@ -1038,8 +1568,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? CiteAs
     {
-      get { return _CiteAs; }
-      set { _CiteAs = value; OnPropertyChanged("CiteAs"); }
+      get
+      {
+        if(_CiteAs.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["citeAs"]);
+        return _CiteAs;
+      }
+
+      set
+      {
+        if (_CiteAs.InOverflow<DynamicDataType>())
+          Overflow.Remove("citeAs");
+        _CiteAs = value;
+        OnPropertyChanged("CiteAs");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _CiteAs;
@@ -1052,8 +1595,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Type
     {
-      get { return _Type; }
-      set { _Type = value; OnPropertyChanged("Type"); }
+      get
+      {
+        if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
+        return _Type;
+      }
+
+      set
+      {
+        if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("type");
+        _Type = value;
+        OnPropertyChanged("Type");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Type;
@@ -1066,8 +1622,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ??= [];
-      set { _Note = value; OnPropertyChanged("Note"); }
+      get
+      {
+        if(_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Annotation>), Overflow["note"]);
+        return _Note ??= [];
+      }
+
+      set
+      {
+        if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          Overflow.Remove("note");
+        _Note = value;
+        OnPropertyChanged("Note");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
@@ -1080,8 +1649,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
-      get => _RelatedArtifact ??= [];
-      set { _RelatedArtifact = value; OnPropertyChanged("RelatedArtifact"); }
+      get
+      {
+        if(_RelatedArtifact.InOverflow<List<Hl7.Fhir.Model.RelatedArtifact>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.RelatedArtifact>), Overflow["relatedArtifact"]);
+        return _RelatedArtifact ??= [];
+      }
+
+      set
+      {
+        if (_RelatedArtifact.InOverflow<List<Hl7.Fhir.Model.RelatedArtifact>>())
+          Overflow.Remove("relatedArtifact");
+        _RelatedArtifact = value;
+        OnPropertyChanged("RelatedArtifact");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.RelatedArtifact>? _RelatedArtifact;
@@ -1094,8 +1676,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.EvidenceReport.SubjectComponent? Subject
     {
-      get { return _Subject; }
-      set { _Subject = value; OnPropertyChanged("Subject"); }
+      get
+      {
+        if(_Subject.InOverflow<Hl7.Fhir.Model.EvidenceReport.SubjectComponent>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.EvidenceReport.SubjectComponent), Overflow["subject"]);
+        return _Subject;
+      }
+
+      set
+      {
+        if (_Subject.InOverflow<Hl7.Fhir.Model.EvidenceReport.SubjectComponent>())
+          Overflow.Remove("subject");
+        _Subject = value;
+        OnPropertyChanged("Subject");
+      }
+
     }
 
     private Hl7.Fhir.Model.EvidenceReport.SubjectComponent? _Subject;
@@ -1107,8 +1702,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
     {
-      get { return _PublisherElement; }
-      set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
+      get
+      {
+        if(_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["publisher"]);
+        return _PublisherElement;
+      }
+
+      set
+      {
+        if (_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("publisher");
+        _PublisherElement = value;
+        OnPropertyChanged("PublisherElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _PublisherElement;
@@ -1120,7 +1728,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Publisher
     {
-      get => _PublisherElement?.Value;
+      get => PublisherElement?.Value;
       set
       {
         PublisherElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1136,8 +1744,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
-      get => _Contact ??= [];
-      set { _Contact = value; OnPropertyChanged("Contact"); }
+      get
+      {
+        if(_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ContactDetail>), Overflow["contact"]);
+        return _Contact ??= [];
+      }
+
+      set
+      {
+        if (_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          Overflow.Remove("contact");
+        _Contact = value;
+        OnPropertyChanged("Contact");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.ContactDetail>? _Contact;
@@ -1150,8 +1771,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
-      get => _Author ??= [];
-      set { _Author = value; OnPropertyChanged("Author"); }
+      get
+      {
+        if(_Author.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ContactDetail>), Overflow["author"]);
+        return _Author ??= [];
+      }
+
+      set
+      {
+        if (_Author.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          Overflow.Remove("author");
+        _Author = value;
+        OnPropertyChanged("Author");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.ContactDetail>? _Author;
@@ -1164,8 +1798,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
-      get => _Editor ??= [];
-      set { _Editor = value; OnPropertyChanged("Editor"); }
+      get
+      {
+        if(_Editor.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ContactDetail>), Overflow["editor"]);
+        return _Editor ??= [];
+      }
+
+      set
+      {
+        if (_Editor.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          Overflow.Remove("editor");
+        _Editor = value;
+        OnPropertyChanged("Editor");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.ContactDetail>? _Editor;
@@ -1178,8 +1825,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
-      get => _Reviewer ??= [];
-      set { _Reviewer = value; OnPropertyChanged("Reviewer"); }
+      get
+      {
+        if(_Reviewer.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ContactDetail>), Overflow["reviewer"]);
+        return _Reviewer ??= [];
+      }
+
+      set
+      {
+        if (_Reviewer.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          Overflow.Remove("reviewer");
+        _Reviewer = value;
+        OnPropertyChanged("Reviewer");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.ContactDetail>? _Reviewer;
@@ -1192,8 +1852,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
-      get => _Endorser ??= [];
-      set { _Endorser = value; OnPropertyChanged("Endorser"); }
+      get
+      {
+        if(_Endorser.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ContactDetail>), Overflow["endorser"]);
+        return _Endorser ??= [];
+      }
+
+      set
+      {
+        if (_Endorser.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          Overflow.Remove("endorser");
+        _Endorser = value;
+        OnPropertyChanged("Endorser");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.ContactDetail>? _Endorser;
@@ -1206,8 +1879,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent> RelatesTo
     {
-      get => _RelatesTo ??= [];
-      set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
+      get
+      {
+        if(_RelatesTo.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>), Overflow["relatesTo"]);
+        return _RelatesTo ??= [];
+      }
+
+      set
+      {
+        if (_RelatesTo.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>>())
+          Overflow.Remove("relatesTo");
+        _RelatesTo = value;
+        OnPropertyChanged("RelatesTo");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>? _RelatesTo;
@@ -1220,8 +1906,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.EvidenceReport.SectionComponent> Section
     {
-      get => _Section ??= [];
-      set { _Section = value; OnPropertyChanged("Section"); }
+      get
+      {
+        if(_Section.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>), Overflow["section"]);
+        return _Section ??= [];
+      }
+
+      set
+      {
+        if (_Section.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>>())
+          Overflow.Remove("section");
+        _Section = value;
+        OnPropertyChanged("Section");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>? _Section;
@@ -1295,59 +1994,149 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "url":
+          if (_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          {
+            value = Overflow["url"];
+            return true;
+          }
           value = _UrlElement;
-          return _UrlElement is not null;
+          return (value as Hl7.Fhir.Model.FhirUri) is not null;
         case "status":
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>())
+          {
+            value = Overflow["status"];
+            return true;
+          }
           value = _StatusElement;
-          return _StatusElement is not null;
+          return (value as Code<Hl7.Fhir.Model.PublicationStatus>) is not null;
         case "useContext":
+          if (_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>())
+          {
+            value = Overflow["useContext"];
+            return true;
+          }
           value = _UseContext;
-          return _UseContext?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.UsageContext>)?.Any() is true;
         case "identifier":
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
           value = _Identifier;
-          return _Identifier?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "relatedIdentifier":
+          if (_RelatedIdentifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["relatedIdentifier"];
+            return true;
+          }
           value = _RelatedIdentifier;
-          return _RelatedIdentifier?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "citeAs":
+          if (_CiteAs.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["citeAs"];
+            return true;
+          }
           value = _CiteAs;
-          return _CiteAs is not null;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "type":
+          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["type"];
+            return true;
+          }
           value = _Type;
-          return _Type is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "note":
+          if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          {
+            value = Overflow["note"];
+            return true;
+          }
           value = _Note;
-          return _Note?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Annotation>)?.Any() is true;
         case "relatedArtifact":
+          if (_RelatedArtifact.InOverflow<List<Hl7.Fhir.Model.RelatedArtifact>>())
+          {
+            value = Overflow["relatedArtifact"];
+            return true;
+          }
           value = _RelatedArtifact;
-          return _RelatedArtifact?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.RelatedArtifact>)?.Any() is true;
         case "subject":
+          if (_Subject.InOverflow<Hl7.Fhir.Model.EvidenceReport.SubjectComponent>())
+          {
+            value = Overflow["subject"];
+            return true;
+          }
           value = _Subject;
-          return _Subject is not null;
+          return (value as Hl7.Fhir.Model.EvidenceReport.SubjectComponent) is not null;
         case "publisher":
+          if (_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["publisher"];
+            return true;
+          }
           value = _PublisherElement;
-          return _PublisherElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "contact":
+          if (_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          {
+            value = Overflow["contact"];
+            return true;
+          }
           value = _Contact;
-          return _Contact?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.ContactDetail>)?.Any() is true;
         case "author":
+          if (_Author.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          {
+            value = Overflow["author"];
+            return true;
+          }
           value = _Author;
-          return _Author?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.ContactDetail>)?.Any() is true;
         case "editor":
+          if (_Editor.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          {
+            value = Overflow["editor"];
+            return true;
+          }
           value = _Editor;
-          return _Editor?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.ContactDetail>)?.Any() is true;
         case "reviewer":
+          if (_Reviewer.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          {
+            value = Overflow["reviewer"];
+            return true;
+          }
           value = _Reviewer;
-          return _Reviewer?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.ContactDetail>)?.Any() is true;
         case "endorser":
+          if (_Endorser.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>())
+          {
+            value = Overflow["endorser"];
+            return true;
+          }
           value = _Endorser;
-          return _Endorser?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.ContactDetail>)?.Any() is true;
         case "relatesTo":
+          if (_RelatesTo.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>>())
+          {
+            value = Overflow["relatesTo"];
+            return true;
+          }
           value = _RelatesTo;
-          return _RelatesTo?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>)?.Any() is true;
         case "section":
+          if (_Section.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>>())
+          {
+            value = Overflow["section"];
+            return true;
+          }
           value = _Section;
-          return _Section?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -1356,61 +2145,152 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "url":
-          UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            UrlElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["url"] = value;
+          }
+          else UrlElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.PublicationStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.PublicationStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>?)value;
           return this;
         case "useContext":
-          UseContext = (List<Hl7.Fhir.Model.UsageContext>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.UsageContext> or null))
+          {
+            UseContext = OverflowNull<List<Hl7.Fhir.Model.UsageContext>>.INSTANCE;
+            Overflow["useContext"] = value;
+          }
+          else UseContext = (List<Hl7.Fhir.Model.UsageContext>?)value!;
           return this;
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "relatedIdentifier":
-          RelatedIdentifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            RelatedIdentifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["relatedIdentifier"] = value;
+          }
+          else RelatedIdentifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "citeAs":
-          CiteAs = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            CiteAs = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["citeAs"] = value;
+          }
+          else CiteAs = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "type":
-          Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
+          {
+            Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
+            Overflow["note"] = value;
+          }
+          else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         case "relatedArtifact":
-          RelatedArtifact = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.RelatedArtifact> or null))
+          {
+            RelatedArtifact = OverflowNull<List<Hl7.Fhir.Model.RelatedArtifact>>.INSTANCE;
+            Overflow["relatedArtifact"] = value;
+          }
+          else RelatedArtifact = (List<Hl7.Fhir.Model.RelatedArtifact>?)value!;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.EvidenceReport.SubjectComponent?)value;
+          if (value is not (Hl7.Fhir.Model.EvidenceReport.SubjectComponent or null))
+          {
+            Subject = OverflowNull<Hl7.Fhir.Model.EvidenceReport.SubjectComponent>.INSTANCE;
+            Overflow["subject"] = value;
+          }
+          else Subject = (Hl7.Fhir.Model.EvidenceReport.SubjectComponent?)value;
           return this;
         case "publisher":
-          PublisherElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            PublisherElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["publisher"] = value;
+          }
+          else PublisherElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "contact":
-          Contact = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ContactDetail> or null))
+          {
+            Contact = OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.INSTANCE;
+            Overflow["contact"] = value;
+          }
+          else Contact = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
           return this;
         case "author":
-          Author = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ContactDetail> or null))
+          {
+            Author = OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.INSTANCE;
+            Overflow["author"] = value;
+          }
+          else Author = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
           return this;
         case "editor":
-          Editor = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ContactDetail> or null))
+          {
+            Editor = OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.INSTANCE;
+            Overflow["editor"] = value;
+          }
+          else Editor = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
           return this;
         case "reviewer":
-          Reviewer = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ContactDetail> or null))
+          {
+            Reviewer = OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.INSTANCE;
+            Overflow["reviewer"] = value;
+          }
+          else Reviewer = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
           return this;
         case "endorser":
-          Endorser = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ContactDetail> or null))
+          {
+            Endorser = OverflowNull<List<Hl7.Fhir.Model.ContactDetail>>.INSTANCE;
+            Overflow["endorser"] = value;
+          }
+          else Endorser = (List<Hl7.Fhir.Model.ContactDetail>?)value!;
           return this;
         case "relatesTo":
-          RelatesTo = (List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent> or null))
+          {
+            RelatesTo = OverflowNull<List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>>.INSTANCE;
+            Overflow["relatesTo"] = value;
+          }
+          else RelatesTo = (List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>?)value!;
           return this;
         case "section":
-          Section = (List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.EvidenceReport.SectionComponent> or null))
+          {
+            Section = OverflowNull<List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>>.INSTANCE;
+            Overflow["section"] = value;
+          }
+          else Section = (List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1421,24 +2301,24 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_UrlElement is not null) yield return new KeyValuePair<string,object>("url",_UrlElement);
-      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (_UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",_UseContext);
-      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_RelatedIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("relatedIdentifier",_RelatedIdentifier);
-      if (_CiteAs is not null) yield return new KeyValuePair<string,object>("citeAs",_CiteAs);
-      if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
-      if (_RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",_RelatedArtifact);
-      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",_PublisherElement);
-      if (_Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",_Contact);
-      if (_Author?.Any() == true) yield return new KeyValuePair<string,object>("author",_Author);
-      if (_Editor?.Any() == true) yield return new KeyValuePair<string,object>("editor",_Editor);
-      if (_Reviewer?.Any() == true) yield return new KeyValuePair<string,object>("reviewer",_Reviewer);
-      if (_Endorser?.Any() == true) yield return new KeyValuePair<string,object>("endorser",_Endorser);
-      if (_RelatesTo?.Any() == true) yield return new KeyValuePair<string,object>("relatesTo",_RelatesTo);
-      if (_Section?.Any() == true) yield return new KeyValuePair<string,object>("section",_Section);
+      if (_UrlElement is not null && !_UrlElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("url",_UrlElement);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.PublicationStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_UseContext?.Any() is true && !_UseContext.InOverflow<List<Hl7.Fhir.Model.UsageContext>>()) yield return new KeyValuePair<string,object>("useContext",_UseContext);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_RelatedIdentifier?.Any() is true && !_RelatedIdentifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("relatedIdentifier",_RelatedIdentifier);
+      if (_CiteAs is not null && !_CiteAs.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("citeAs",_CiteAs);
+      if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_RelatedArtifact?.Any() is true && !_RelatedArtifact.InOverflow<List<Hl7.Fhir.Model.RelatedArtifact>>()) yield return new KeyValuePair<string,object>("relatedArtifact",_RelatedArtifact);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.EvidenceReport.SubjectComponent>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_PublisherElement is not null && !_PublisherElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("publisher",_PublisherElement);
+      if (_Contact?.Any() is true && !_Contact.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>()) yield return new KeyValuePair<string,object>("contact",_Contact);
+      if (_Author?.Any() is true && !_Author.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>()) yield return new KeyValuePair<string,object>("author",_Author);
+      if (_Editor?.Any() is true && !_Editor.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>()) yield return new KeyValuePair<string,object>("editor",_Editor);
+      if (_Reviewer?.Any() is true && !_Reviewer.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>()) yield return new KeyValuePair<string,object>("reviewer",_Reviewer);
+      if (_Endorser?.Any() is true && !_Endorser.InOverflow<List<Hl7.Fhir.Model.ContactDetail>>()) yield return new KeyValuePair<string,object>("endorser",_Endorser);
+      if (_RelatesTo?.Any() is true && !_RelatesTo.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.RelatesToComponent>>()) yield return new KeyValuePair<string,object>("relatesTo",_RelatesTo);
+      if (_Section?.Any() is true && !_Section.InOverflow<List<Hl7.Fhir.Model.EvidenceReport.SectionComponent>>()) yield return new KeyValuePair<string,object>("section",_Section);
     }
 
   }

@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -143,8 +144,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Product
       {
-        get { return _Product; }
-        set { _Product = value; OnPropertyChanged("Product"); }
+        get
+        {
+          if(_Product.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["product"]);
+          return _Product;
+        }
+
+        set
+        {
+          if (_Product.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("product");
+          _Product = value;
+          OnPropertyChanged("Product");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Product;
@@ -159,8 +173,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>? EyeElement
       {
-        get { return _EyeElement; }
-        set { _EyeElement = value; OnPropertyChanged("EyeElement"); }
+        get
+        {
+          if(_EyeElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>>())
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>), Overflow["eye"]);
+          return _EyeElement;
+        }
+
+        set
+        {
+          if (_EyeElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>>())
+            Overflow.Remove("eye");
+          _EyeElement = value;
+          OnPropertyChanged("EyeElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>? _EyeElement;
@@ -172,7 +199,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.VisionPrescription.VisionEyes? Eye
       {
-        get => _EyeElement?.Value;
+        get => EyeElement?.Value;
         set
         {
           EyeElement = value is null ? null : new Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>(value);
@@ -187,8 +214,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? SphereElement
       {
-        get { return _SphereElement; }
-        set { _SphereElement = value; OnPropertyChanged("SphereElement"); }
+        get
+        {
+          if(_SphereElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["sphere"]);
+          return _SphereElement;
+        }
+
+        set
+        {
+          if (_SphereElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            Overflow.Remove("sphere");
+          _SphereElement = value;
+          OnPropertyChanged("SphereElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _SphereElement;
@@ -200,7 +240,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Sphere
       {
-        get => _SphereElement?.Value;
+        get => SphereElement?.Value;
         set
         {
           SphereElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -215,8 +255,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? CylinderElement
       {
-        get { return _CylinderElement; }
-        set { _CylinderElement = value; OnPropertyChanged("CylinderElement"); }
+        get
+        {
+          if(_CylinderElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["cylinder"]);
+          return _CylinderElement;
+        }
+
+        set
+        {
+          if (_CylinderElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            Overflow.Remove("cylinder");
+          _CylinderElement = value;
+          OnPropertyChanged("CylinderElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _CylinderElement;
@@ -228,7 +281,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Cylinder
       {
-        get => _CylinderElement?.Value;
+        get => CylinderElement?.Value;
         set
         {
           CylinderElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -243,8 +296,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Integer? AxisElement
       {
-        get { return _AxisElement; }
-        set { _AxisElement = value; OnPropertyChanged("AxisElement"); }
+        get
+        {
+          if(_AxisElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["axis"]);
+          return _AxisElement;
+        }
+
+        set
+        {
+          if (_AxisElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            Overflow.Remove("axis");
+          _AxisElement = value;
+          OnPropertyChanged("AxisElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.Integer? _AxisElement;
@@ -256,7 +322,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Axis
       {
-        get => _AxisElement?.Value;
+        get => AxisElement?.Value;
         set
         {
           AxisElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -272,8 +338,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.VisionPrescription.PrismComponent> Prism
       {
-        get => _Prism ??= [];
-        set { _Prism = value; OnPropertyChanged("Prism"); }
+        get
+        {
+          if(_Prism.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>), Overflow["prism"]);
+          return _Prism ??= [];
+        }
+
+        set
+        {
+          if (_Prism.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>>())
+            Overflow.Remove("prism");
+          _Prism = value;
+          OnPropertyChanged("Prism");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>? _Prism;
@@ -285,8 +364,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? AddElement
       {
-        get { return _AddElement; }
-        set { _AddElement = value; OnPropertyChanged("AddElement"); }
+        get
+        {
+          if(_AddElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["add"]);
+          return _AddElement;
+        }
+
+        set
+        {
+          if (_AddElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            Overflow.Remove("add");
+          _AddElement = value;
+          OnPropertyChanged("AddElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _AddElement;
@@ -298,7 +390,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Add
       {
-        get => _AddElement?.Value;
+        get => AddElement?.Value;
         set
         {
           AddElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -313,8 +405,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? PowerElement
       {
-        get { return _PowerElement; }
-        set { _PowerElement = value; OnPropertyChanged("PowerElement"); }
+        get
+        {
+          if(_PowerElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["power"]);
+          return _PowerElement;
+        }
+
+        set
+        {
+          if (_PowerElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            Overflow.Remove("power");
+          _PowerElement = value;
+          OnPropertyChanged("PowerElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _PowerElement;
@@ -326,7 +431,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Power
       {
-        get => _PowerElement?.Value;
+        get => PowerElement?.Value;
         set
         {
           PowerElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -341,8 +446,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? BackCurveElement
       {
-        get { return _BackCurveElement; }
-        set { _BackCurveElement = value; OnPropertyChanged("BackCurveElement"); }
+        get
+        {
+          if(_BackCurveElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["backCurve"]);
+          return _BackCurveElement;
+        }
+
+        set
+        {
+          if (_BackCurveElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            Overflow.Remove("backCurve");
+          _BackCurveElement = value;
+          OnPropertyChanged("BackCurveElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _BackCurveElement;
@@ -354,7 +472,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? BackCurve
       {
-        get => _BackCurveElement?.Value;
+        get => BackCurveElement?.Value;
         set
         {
           BackCurveElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -369,8 +487,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? DiameterElement
       {
-        get { return _DiameterElement; }
-        set { _DiameterElement = value; OnPropertyChanged("DiameterElement"); }
+        get
+        {
+          if(_DiameterElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["diameter"]);
+          return _DiameterElement;
+        }
+
+        set
+        {
+          if (_DiameterElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            Overflow.Remove("diameter");
+          _DiameterElement = value;
+          OnPropertyChanged("DiameterElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _DiameterElement;
@@ -382,7 +513,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Diameter
       {
-        get => _DiameterElement?.Value;
+        get => DiameterElement?.Value;
         set
         {
           DiameterElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -397,8 +528,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Duration
       {
-        get { return _Duration; }
-        set { _Duration = value; OnPropertyChanged("Duration"); }
+        get
+        {
+          if(_Duration.InOverflow<Hl7.Fhir.Model.Quantity>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["duration"]);
+          return _Duration;
+        }
+
+        set
+        {
+          if (_Duration.InOverflow<Hl7.Fhir.Model.Quantity>())
+            Overflow.Remove("duration");
+          _Duration = value;
+          OnPropertyChanged("Duration");
+        }
+
       }
 
       private Hl7.Fhir.Model.Quantity? _Duration;
@@ -410,8 +554,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ColorElement
       {
-        get { return _ColorElement; }
-        set { _ColorElement = value; OnPropertyChanged("ColorElement"); }
+        get
+        {
+          if(_ColorElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["color"]);
+          return _ColorElement;
+        }
+
+        set
+        {
+          if (_ColorElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("color");
+          _ColorElement = value;
+          OnPropertyChanged("ColorElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _ColorElement;
@@ -423,7 +580,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Color
       {
-        get => _ColorElement?.Value;
+        get => ColorElement?.Value;
         set
         {
           ColorElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -438,8 +595,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? BrandElement
       {
-        get { return _BrandElement; }
-        set { _BrandElement = value; OnPropertyChanged("BrandElement"); }
+        get
+        {
+          if(_BrandElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["brand"]);
+          return _BrandElement;
+        }
+
+        set
+        {
+          if (_BrandElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("brand");
+          _BrandElement = value;
+          OnPropertyChanged("BrandElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _BrandElement;
@@ -451,7 +621,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Brand
       {
-        get => _BrandElement?.Value;
+        get => BrandElement?.Value;
         set
         {
           BrandElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -467,8 +637,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
-        get => _Note ??= [];
-        set { _Note = value; OnPropertyChanged("Note"); }
+        get
+        {
+          if(_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Annotation>), Overflow["note"]);
+          return _Note ??= [];
+        }
+
+        set
+        {
+          if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+            Overflow.Remove("note");
+          _Note = value;
+          OnPropertyChanged("Note");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.Annotation>? _Note;
@@ -532,47 +715,117 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "product":
+            if (_Product.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["product"];
+              return true;
+            }
             value = _Product;
-            return _Product is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "eye":
+            if (_EyeElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>>())
+            {
+              value = Overflow["eye"];
+              return true;
+            }
             value = _EyeElement;
-            return _EyeElement is not null;
+            return (value as Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>) is not null;
           case "sphere":
+            if (_SphereElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            {
+              value = Overflow["sphere"];
+              return true;
+            }
             value = _SphereElement;
-            return _SphereElement is not null;
+            return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
           case "cylinder":
+            if (_CylinderElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            {
+              value = Overflow["cylinder"];
+              return true;
+            }
             value = _CylinderElement;
-            return _CylinderElement is not null;
+            return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
           case "axis":
+            if (_AxisElement.InOverflow<Hl7.Fhir.Model.Integer>())
+            {
+              value = Overflow["axis"];
+              return true;
+            }
             value = _AxisElement;
-            return _AxisElement is not null;
+            return (value as Hl7.Fhir.Model.Integer) is not null;
           case "prism":
+            if (_Prism.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>>())
+            {
+              value = Overflow["prism"];
+              return true;
+            }
             value = _Prism;
-            return _Prism?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>)?.Any() is true;
           case "add":
+            if (_AddElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            {
+              value = Overflow["add"];
+              return true;
+            }
             value = _AddElement;
-            return _AddElement is not null;
+            return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
           case "power":
+            if (_PowerElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            {
+              value = Overflow["power"];
+              return true;
+            }
             value = _PowerElement;
-            return _PowerElement is not null;
+            return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
           case "backCurve":
+            if (_BackCurveElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            {
+              value = Overflow["backCurve"];
+              return true;
+            }
             value = _BackCurveElement;
-            return _BackCurveElement is not null;
+            return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
           case "diameter":
+            if (_DiameterElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            {
+              value = Overflow["diameter"];
+              return true;
+            }
             value = _DiameterElement;
-            return _DiameterElement is not null;
+            return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
           case "duration":
+            if (_Duration.InOverflow<Hl7.Fhir.Model.Quantity>())
+            {
+              value = Overflow["duration"];
+              return true;
+            }
             value = _Duration;
-            return _Duration is not null;
+            return (value as Hl7.Fhir.Model.Quantity) is not null;
           case "color":
+            if (_ColorElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["color"];
+              return true;
+            }
             value = _ColorElement;
-            return _ColorElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "brand":
+            if (_BrandElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["brand"];
+              return true;
+            }
             value = _BrandElement;
-            return _BrandElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "note":
+            if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+            {
+              value = Overflow["note"];
+              return true;
+            }
             value = _Note;
-            return _Note?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.Annotation>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -581,49 +834,120 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "product":
-            Product = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Product = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["product"] = value;
+            }
+            else Product = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "eye":
-            EyeElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> or null))
+            {
+              EyeElement = OverflowNull<Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>>.INSTANCE;
+              Overflow["eye"] = value;
+            }
+            else EyeElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>?)value;
             return this;
           case "sphere":
-            SphereElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+            {
+              SphereElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+              Overflow["sphere"] = value;
+            }
+            else SphereElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "cylinder":
-            CylinderElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+            {
+              CylinderElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+              Overflow["cylinder"] = value;
+            }
+            else CylinderElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "axis":
-            AxisElement = (Hl7.Fhir.Model.Integer?)value;
+            if (value is not (Hl7.Fhir.Model.Integer or null))
+            {
+              AxisElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
+              Overflow["axis"] = value;
+            }
+            else AxisElement = (Hl7.Fhir.Model.Integer?)value;
             return this;
           case "prism":
-            Prism = (List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.VisionPrescription.PrismComponent> or null))
+            {
+              Prism = OverflowNull<List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>>.INSTANCE;
+              Overflow["prism"] = value;
+            }
+            else Prism = (List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>?)value!;
             return this;
           case "add":
-            AddElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+            {
+              AddElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+              Overflow["add"] = value;
+            }
+            else AddElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "power":
-            PowerElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+            {
+              PowerElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+              Overflow["power"] = value;
+            }
+            else PowerElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "backCurve":
-            BackCurveElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+            {
+              BackCurveElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+              Overflow["backCurve"] = value;
+            }
+            else BackCurveElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "diameter":
-            DiameterElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+            {
+              DiameterElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+              Overflow["diameter"] = value;
+            }
+            else DiameterElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "duration":
-            Duration = (Hl7.Fhir.Model.Quantity?)value;
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              Duration = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["duration"] = value;
+            }
+            else Duration = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "color":
-            ColorElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              ColorElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["color"] = value;
+            }
+            else ColorElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "brand":
-            BrandElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              BrandElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["brand"] = value;
+            }
+            else BrandElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "note":
-            Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
+            {
+              Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
+              Overflow["note"] = value;
+            }
+            else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -634,20 +958,20 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Product is not null) yield return new KeyValuePair<string,object>("product",_Product);
-        if (_EyeElement is not null) yield return new KeyValuePair<string,object>("eye",_EyeElement);
-        if (_SphereElement is not null) yield return new KeyValuePair<string,object>("sphere",_SphereElement);
-        if (_CylinderElement is not null) yield return new KeyValuePair<string,object>("cylinder",_CylinderElement);
-        if (_AxisElement is not null) yield return new KeyValuePair<string,object>("axis",_AxisElement);
-        if (_Prism?.Any() == true) yield return new KeyValuePair<string,object>("prism",_Prism);
-        if (_AddElement is not null) yield return new KeyValuePair<string,object>("add",_AddElement);
-        if (_PowerElement is not null) yield return new KeyValuePair<string,object>("power",_PowerElement);
-        if (_BackCurveElement is not null) yield return new KeyValuePair<string,object>("backCurve",_BackCurveElement);
-        if (_DiameterElement is not null) yield return new KeyValuePair<string,object>("diameter",_DiameterElement);
-        if (_Duration is not null) yield return new KeyValuePair<string,object>("duration",_Duration);
-        if (_ColorElement is not null) yield return new KeyValuePair<string,object>("color",_ColorElement);
-        if (_BrandElement is not null) yield return new KeyValuePair<string,object>("brand",_BrandElement);
-        if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
+        if (_Product is not null && !_Product.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("product",_Product);
+        if (_EyeElement is not null && !_EyeElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>>()) yield return new KeyValuePair<string,object>("eye",_EyeElement);
+        if (_SphereElement is not null && !_SphereElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("sphere",_SphereElement);
+        if (_CylinderElement is not null && !_CylinderElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("cylinder",_CylinderElement);
+        if (_AxisElement is not null && !_AxisElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("axis",_AxisElement);
+        if (_Prism?.Any() is true && !_Prism.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.PrismComponent>>()) yield return new KeyValuePair<string,object>("prism",_Prism);
+        if (_AddElement is not null && !_AddElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("add",_AddElement);
+        if (_PowerElement is not null && !_PowerElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("power",_PowerElement);
+        if (_BackCurveElement is not null && !_BackCurveElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("backCurve",_BackCurveElement);
+        if (_DiameterElement is not null && !_DiameterElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("diameter",_DiameterElement);
+        if (_Duration is not null && !_Duration.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("duration",_Duration);
+        if (_ColorElement is not null && !_ColorElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("color",_ColorElement);
+        if (_BrandElement is not null && !_BrandElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("brand",_BrandElement);
+        if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
       }
 
     }
@@ -676,8 +1000,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? AmountElement
       {
-        get { return _AmountElement; }
-        set { _AmountElement = value; OnPropertyChanged("AmountElement"); }
+        get
+        {
+          if(_AmountElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["amount"]);
+          return _AmountElement;
+        }
+
+        set
+        {
+          if (_AmountElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            Overflow.Remove("amount");
+          _AmountElement = value;
+          OnPropertyChanged("AmountElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirDecimal? _AmountElement;
@@ -689,7 +1026,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Amount
       {
-        get => _AmountElement?.Value;
+        get => AmountElement?.Value;
         set
         {
           AmountElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -707,8 +1044,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>? BaseElement
       {
-        get { return _BaseElement; }
-        set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
+        get
+        {
+          if(_BaseElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>>())
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>), Overflow["base"]);
+          return _BaseElement;
+        }
+
+        set
+        {
+          if (_BaseElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>>())
+            Overflow.Remove("base");
+          _BaseElement = value;
+          OnPropertyChanged("BaseElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>? _BaseElement;
@@ -720,7 +1070,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.VisionPrescription.VisionBase? Base
       {
-        get => _BaseElement?.Value;
+        get => BaseElement?.Value;
         set
         {
           BaseElement = value is null ? null : new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
@@ -763,11 +1113,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "amount":
+            if (_AmountElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+            {
+              value = Overflow["amount"];
+              return true;
+            }
             value = _AmountElement;
-            return _AmountElement is not null;
+            return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
           case "base":
+            if (_BaseElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>>())
+            {
+              value = Overflow["base"];
+              return true;
+            }
             value = _BaseElement;
-            return _BaseElement is not null;
+            return (value as Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -776,13 +1136,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "amount":
-            AmountElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+            if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+            {
+              AmountElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+              Overflow["amount"] = value;
+            }
+            else AmountElement = (Hl7.Fhir.Model.FhirDecimal?)value;
             return this;
           case "base":
-            BaseElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> or null))
+            {
+              BaseElement = OverflowNull<Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>>.INSTANCE;
+              Overflow["base"] = value;
+            }
+            else BaseElement = (Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -793,8 +1164,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_AmountElement is not null) yield return new KeyValuePair<string,object>("amount",_AmountElement);
-        if (_BaseElement is not null) yield return new KeyValuePair<string,object>("base",_BaseElement);
+        if (_AmountElement is not null && !_AmountElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("amount",_AmountElement);
+        if (_BaseElement is not null && !_BaseElement.InOverflow<Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>>()) yield return new KeyValuePair<string,object>("base",_BaseElement);
       }
 
     }
@@ -807,8 +1178,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ??= [];
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Identifier>? _Identifier;
@@ -823,8 +1207,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>), Overflow["status"]);
+        return _StatusElement;
+      }
+
+      set
+      {
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>())
+          Overflow.Remove("status");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? _StatusElement;
@@ -836,7 +1233,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
@@ -852,8 +1249,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
     {
-      get { return _CreatedElement; }
-      set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
+      get
+      {
+        if(_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["created"]);
+        return _CreatedElement;
+      }
+
+      set
+      {
+        if (_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          Overflow.Remove("created");
+        _CreatedElement = value;
+        OnPropertyChanged("CreatedElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDateTime? _CreatedElement;
@@ -865,7 +1275,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Created
     {
-      get => _CreatedElement?.Value;
+      get => CreatedElement?.Value;
       set
       {
         CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -883,8 +1293,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Patient
     {
-      get { return _Patient; }
-      set { _Patient = value; OnPropertyChanged("Patient"); }
+      get
+      {
+        if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
+        return _Patient;
+      }
+
+      set
+      {
+        if (_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("patient");
+        _Patient = value;
+        OnPropertyChanged("Patient");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Patient;
@@ -898,8 +1321,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
     {
-      get { return _Encounter; }
-      set { _Encounter = value; OnPropertyChanged("Encounter"); }
+      get
+      {
+        if(_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["encounter"]);
+        return _Encounter;
+      }
+
+      set
+      {
+        if (_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("encounter");
+        _Encounter = value;
+        OnPropertyChanged("Encounter");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Encounter;
@@ -912,8 +1348,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateWrittenElement
     {
-      get { return _DateWrittenElement; }
-      set { _DateWrittenElement = value; OnPropertyChanged("DateWrittenElement"); }
+      get
+      {
+        if(_DateWrittenElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["dateWritten"]);
+        return _DateWrittenElement;
+      }
+
+      set
+      {
+        if (_DateWrittenElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          Overflow.Remove("dateWritten");
+        _DateWrittenElement = value;
+        OnPropertyChanged("DateWrittenElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDateTime? _DateWrittenElement;
@@ -925,7 +1374,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? DateWritten
     {
-      get => _DateWrittenElement?.Value;
+      get => DateWrittenElement?.Value;
       set
       {
         DateWrittenElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -943,8 +1392,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Prescriber
     {
-      get { return _Prescriber; }
-      set { _Prescriber = value; OnPropertyChanged("Prescriber"); }
+      get
+      {
+        if(_Prescriber.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["prescriber"]);
+        return _Prescriber;
+      }
+
+      set
+      {
+        if (_Prescriber.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("prescriber");
+        _Prescriber = value;
+        OnPropertyChanged("Prescriber");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Prescriber;
@@ -957,8 +1419,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent> LensSpecification
     {
-      get => _LensSpecification ??= [];
-      set { _LensSpecification = value; OnPropertyChanged("LensSpecification"); }
+      get
+      {
+        if(_LensSpecification.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>), Overflow["lensSpecification"]);
+        return _LensSpecification ??= [];
+      }
+
+      set
+      {
+        if (_LensSpecification.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>>())
+          Overflow.Remove("lensSpecification");
+        _LensSpecification = value;
+        OnPropertyChanged("LensSpecification");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>? _LensSpecification;
@@ -1012,29 +1487,69 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
           value = _Identifier;
-          return _Identifier?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "status":
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>())
+          {
+            value = Overflow["status"];
+            return true;
+          }
           value = _StatusElement;
-          return _StatusElement is not null;
+          return (value as Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>) is not null;
         case "created":
+          if (_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
+            value = Overflow["created"];
+            return true;
+          }
           value = _CreatedElement;
-          return _CreatedElement is not null;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         case "patient":
+          if (_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["patient"];
+            return true;
+          }
           value = _Patient;
-          return _Patient is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "encounter":
+          if (_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["encounter"];
+            return true;
+          }
           value = _Encounter;
-          return _Encounter is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "dateWritten":
+          if (_DateWrittenElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
+            value = Overflow["dateWritten"];
+            return true;
+          }
           value = _DateWrittenElement;
-          return _DateWrittenElement is not null;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         case "prescriber":
+          if (_Prescriber.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["prescriber"];
+            return true;
+          }
           value = _Prescriber;
-          return _Prescriber is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "lensSpecification":
+          if (_LensSpecification.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>>())
+          {
+            value = Overflow["lensSpecification"];
+            return true;
+          }
           value = _LensSpecification;
-          return _LensSpecification?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -1043,31 +1558,72 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>?)value;
           return this;
         case "created":
-          CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            CreatedElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["created"] = value;
+          }
+          else CreatedElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["patient"] = value;
+          }
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Encounter = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["encounter"] = value;
+          }
+          else Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "dateWritten":
-          DateWrittenElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            DateWrittenElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["dateWritten"] = value;
+          }
+          else DateWrittenElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "prescriber":
-          Prescriber = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Prescriber = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["prescriber"] = value;
+          }
+          else Prescriber = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "lensSpecification":
-          LensSpecification = (List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent> or null))
+          {
+            LensSpecification = OverflowNull<List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>>.INSTANCE;
+            Overflow["lensSpecification"] = value;
+          }
+          else LensSpecification = (List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -1078,14 +1634,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (_CreatedElement is not null) yield return new KeyValuePair<string,object>("created",_CreatedElement);
-      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
-      if (_Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
-      if (_DateWrittenElement is not null) yield return new KeyValuePair<string,object>("dateWritten",_DateWrittenElement);
-      if (_Prescriber is not null) yield return new KeyValuePair<string,object>("prescriber",_Prescriber);
-      if (_LensSpecification?.Any() == true) yield return new KeyValuePair<string,object>("lensSpecification",_LensSpecification);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_CreatedElement is not null && !_CreatedElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("created",_CreatedElement);
+      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Encounter is not null && !_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_DateWrittenElement is not null && !_DateWrittenElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("dateWritten",_DateWrittenElement);
+      if (_Prescriber is not null && !_Prescriber.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("prescriber",_Prescriber);
+      if (_LensSpecification?.Any() is true && !_LensSpecification.InOverflow<List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent>>()) yield return new KeyValuePair<string,object>("lensSpecification",_LensSpecification);
     }
 
   }

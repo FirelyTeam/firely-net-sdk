@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -71,8 +72,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? StartElement
     {
-      get { return _StartElement; }
-      set { _StartElement = value; OnPropertyChanged("StartElement"); }
+      get
+      {
+        if(_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["start"]);
+        return _StartElement;
+      }
+
+      set
+      {
+        if (_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          Overflow.Remove("start");
+        _StartElement = value;
+        OnPropertyChanged("StartElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDateTime? _StartElement;
@@ -84,7 +98,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Start
     {
-      get => _StartElement?.Value;
+      get => StartElement?.Value;
       set
       {
         StartElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -99,8 +113,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? EndElement
     {
-      get { return _EndElement; }
-      set { _EndElement = value; OnPropertyChanged("EndElement"); }
+      get
+      {
+        if(_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["end"]);
+        return _EndElement;
+      }
+
+      set
+      {
+        if (_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          Overflow.Remove("end");
+        _EndElement = value;
+        OnPropertyChanged("EndElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDateTime? _EndElement;
@@ -112,7 +139,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? End
     {
-      get => _EndElement?.Value;
+      get => EndElement?.Value;
       set
       {
         EndElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -155,11 +182,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "start":
+          if (_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
+            value = Overflow["start"];
+            return true;
+          }
           value = _StartElement;
-          return _StartElement is not null;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         case "end":
+          if (_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
+            value = Overflow["end"];
+            return true;
+          }
           value = _EndElement;
-          return _EndElement is not null;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -168,13 +205,24 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "start":
-          StartElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            StartElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["start"] = value;
+          }
+          else StartElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "end":
-          EndElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            EndElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["end"] = value;
+          }
+          else EndElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -185,8 +233,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_StartElement is not null) yield return new KeyValuePair<string,object>("start",_StartElement);
-      if (_EndElement is not null) yield return new KeyValuePair<string,object>("end",_EndElement);
+      if (_StartElement is not null && !_StartElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("start",_StartElement);
+      if (_EndElement is not null && !_EndElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("end",_EndElement);
     }
 
   }

@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -70,8 +71,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Low
     {
-      get { return _Low; }
-      set { _Low = value; OnPropertyChanged("Low"); }
+      get
+      {
+        if(_Low.InOverflow<Hl7.Fhir.Model.Quantity>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["low"]);
+        return _Low;
+      }
+
+      set
+      {
+        if (_Low.InOverflow<Hl7.Fhir.Model.Quantity>())
+          Overflow.Remove("low");
+        _Low = value;
+        OnPropertyChanged("Low");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _Low;
@@ -83,8 +97,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? High
     {
-      get { return _High; }
-      set { _High = value; OnPropertyChanged("High"); }
+      get
+      {
+        if(_High.InOverflow<Hl7.Fhir.Model.Quantity>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["high"]);
+        return _High;
+      }
+
+      set
+      {
+        if (_High.InOverflow<Hl7.Fhir.Model.Quantity>())
+          Overflow.Remove("high");
+        _High = value;
+        OnPropertyChanged("High");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _High;
@@ -124,11 +151,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "low":
+          if (_Low.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
+            value = Overflow["low"];
+            return true;
+          }
           value = _Low;
-          return _Low is not null;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "high":
+          if (_High.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
+            value = Overflow["high"];
+            return true;
+          }
           value = _High;
-          return _High is not null;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -137,13 +174,24 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "low":
-          Low = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            Low = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["low"] = value;
+          }
+          else Low = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "high":
-          High = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            High = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["high"] = value;
+          }
+          else High = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -154,8 +202,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Low is not null) yield return new KeyValuePair<string,object>("low",_Low);
-      if (_High is not null) yield return new KeyValuePair<string,object>("high",_High);
+      if (_Low is not null && !_Low.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("low",_Low);
+      if (_High is not null && !_High.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("high",_High);
     }
 
   }

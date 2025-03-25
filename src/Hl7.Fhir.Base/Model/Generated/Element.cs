@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -64,8 +65,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ElementIdElement
     {
-      get { return _ElementIdElement; }
-      set { _ElementIdElement = value; OnPropertyChanged("ElementIdElement"); }
+      get
+      {
+        if(_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["id"]);
+        return _ElementIdElement;
+      }
+
+      set
+      {
+        if (_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("id");
+        _ElementIdElement = value;
+        OnPropertyChanged("ElementIdElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _ElementIdElement;
@@ -77,7 +91,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ElementId
     {
-      get => _ElementIdElement?.Value;
+      get => ElementIdElement?.Value;
       set
       {
         ElementIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -93,8 +107,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
-      get => _Extension ??= [];
-      set { _Extension = value; OnPropertyChanged("Extension"); }
+      get
+      {
+        if(_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["extension"]);
+        return _Extension ??= [];
+      }
+
+      set
+      {
+        if (_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          Overflow.Remove("extension");
+        _Extension = value;
+        OnPropertyChanged("Extension");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Extension>? _Extension;
@@ -127,11 +154,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "id":
+          if (_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["id"];
+            return true;
+          }
           value = _ElementIdElement;
-          return _ElementIdElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "extension":
+          if (_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          {
+            value = Overflow["extension"];
+            return true;
+          }
           value = _Extension;
-          return _Extension?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Extension>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -140,13 +177,24 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "id":
-          ElementIdElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ElementIdElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["id"] = value;
+          }
+          else ElementIdElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "extension":
-          Extension = (List<Hl7.Fhir.Model.Extension>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Extension> or null))
+          {
+            Extension = OverflowNull<List<Hl7.Fhir.Model.Extension>>.INSTANCE;
+            Overflow["extension"] = value;
+          }
+          else Extension = (List<Hl7.Fhir.Model.Extension>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -157,8 +205,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_ElementIdElement is not null) yield return new KeyValuePair<string,object>("id",_ElementIdElement);
-      if (_Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",_Extension);
+      if (_ElementIdElement is not null && !_ElementIdElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("id",_ElementIdElement);
+      if (_Extension?.Any() is true && !_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("extension",_Extension);
     }
 
   }

@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -64,8 +65,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Id? IdElement
     {
-      get { return _IdElement; }
-      set { _IdElement = value; OnPropertyChanged("IdElement"); }
+      get
+      {
+        if(_IdElement.InOverflow<Hl7.Fhir.Model.Id>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["id"]);
+        return _IdElement;
+      }
+
+      set
+      {
+        if (_IdElement.InOverflow<Hl7.Fhir.Model.Id>())
+          Overflow.Remove("id");
+        _IdElement = value;
+        OnPropertyChanged("IdElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Id? _IdElement;
@@ -77,7 +91,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Id
     {
-      get => _IdElement?.Value;
+      get => IdElement?.Value;
       set
       {
         IdElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
@@ -92,8 +106,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Meta? Meta
     {
-      get { return _Meta; }
-      set { _Meta = value; OnPropertyChanged("Meta"); }
+      get
+      {
+        if(_Meta.InOverflow<Hl7.Fhir.Model.Meta>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Meta), Overflow["meta"]);
+        return _Meta;
+      }
+
+      set
+      {
+        if (_Meta.InOverflow<Hl7.Fhir.Model.Meta>())
+          Overflow.Remove("meta");
+        _Meta = value;
+        OnPropertyChanged("Meta");
+      }
+
     }
 
     private Hl7.Fhir.Model.Meta? _Meta;
@@ -105,8 +132,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? ImplicitRulesElement
     {
-      get { return _ImplicitRulesElement; }
-      set { _ImplicitRulesElement = value; OnPropertyChanged("ImplicitRulesElement"); }
+      get
+      {
+        if(_ImplicitRulesElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["implicitRules"]);
+        return _ImplicitRulesElement;
+      }
+
+      set
+      {
+        if (_ImplicitRulesElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          Overflow.Remove("implicitRules");
+        _ImplicitRulesElement = value;
+        OnPropertyChanged("ImplicitRulesElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirUri? _ImplicitRulesElement;
@@ -118,7 +158,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ImplicitRules
     {
-      get => _ImplicitRulesElement?.Value;
+      get => ImplicitRulesElement?.Value;
       set
       {
         ImplicitRulesElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -134,8 +174,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Code? LanguageElement
     {
-      get { return _LanguageElement; }
-      set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
+      get
+      {
+        if(_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Code), Overflow["language"]);
+        return _LanguageElement;
+      }
+
+      set
+      {
+        if (_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>())
+          Overflow.Remove("language");
+        _LanguageElement = value;
+        OnPropertyChanged("LanguageElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Code? _LanguageElement;
@@ -147,7 +200,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Language
     {
-      get => _LanguageElement?.Value;
+      get => LanguageElement?.Value;
       set
       {
         LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -187,17 +240,37 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "id":
+          if (_IdElement.InOverflow<Hl7.Fhir.Model.Id>())
+          {
+            value = Overflow["id"];
+            return true;
+          }
           value = _IdElement;
-          return _IdElement is not null;
+          return (value as Hl7.Fhir.Model.Id) is not null;
         case "meta":
+          if (_Meta.InOverflow<Hl7.Fhir.Model.Meta>())
+          {
+            value = Overflow["meta"];
+            return true;
+          }
           value = _Meta;
-          return _Meta is not null;
+          return (value as Hl7.Fhir.Model.Meta) is not null;
         case "implicitRules":
+          if (_ImplicitRulesElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          {
+            value = Overflow["implicitRules"];
+            return true;
+          }
           value = _ImplicitRulesElement;
-          return _ImplicitRulesElement is not null;
+          return (value as Hl7.Fhir.Model.FhirUri) is not null;
         case "language":
+          if (_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>())
+          {
+            value = Overflow["language"];
+            return true;
+          }
           value = _LanguageElement;
-          return _LanguageElement is not null;
+          return (value as Hl7.Fhir.Model.Code) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -206,19 +279,40 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "id":
-          IdElement = (Hl7.Fhir.Model.Id?)value;
+          if (value is not (Hl7.Fhir.Model.Id or null))
+          {
+            IdElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+            Overflow["id"] = value;
+          }
+          else IdElement = (Hl7.Fhir.Model.Id?)value;
           return this;
         case "meta":
-          Meta = (Hl7.Fhir.Model.Meta?)value;
+          if (value is not (Hl7.Fhir.Model.Meta or null))
+          {
+            Meta = OverflowNull<Hl7.Fhir.Model.Meta>.INSTANCE;
+            Overflow["meta"] = value;
+          }
+          else Meta = (Hl7.Fhir.Model.Meta?)value;
           return this;
         case "implicitRules":
-          ImplicitRulesElement = (Hl7.Fhir.Model.FhirUri?)value;
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            ImplicitRulesElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["implicitRules"] = value;
+          }
+          else ImplicitRulesElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "language":
-          LanguageElement = (Hl7.Fhir.Model.Code?)value;
+          if (value is not (Hl7.Fhir.Model.Code or null))
+          {
+            LanguageElement = OverflowNull<Hl7.Fhir.Model.Code>.INSTANCE;
+            Overflow["language"] = value;
+          }
+          else LanguageElement = (Hl7.Fhir.Model.Code?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -229,10 +323,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_IdElement is not null) yield return new KeyValuePair<string,object>("id",_IdElement);
-      if (_Meta is not null) yield return new KeyValuePair<string,object>("meta",_Meta);
-      if (_ImplicitRulesElement is not null) yield return new KeyValuePair<string,object>("implicitRules",_ImplicitRulesElement);
-      if (_LanguageElement is not null) yield return new KeyValuePair<string,object>("language",_LanguageElement);
+      if (_IdElement is not null && !_IdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("id",_IdElement);
+      if (_Meta is not null && !_Meta.InOverflow<Hl7.Fhir.Model.Meta>()) yield return new KeyValuePair<string,object>("meta",_Meta);
+      if (_ImplicitRulesElement is not null && !_ImplicitRulesElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("implicitRules",_ImplicitRulesElement);
+      if (_LanguageElement is not null && !_LanguageElement.InOverflow<Hl7.Fhir.Model.Code>()) yield return new KeyValuePair<string,object>("language",_LanguageElement);
     }
 
   }

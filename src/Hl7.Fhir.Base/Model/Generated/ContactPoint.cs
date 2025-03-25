@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -163,8 +164,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>? SystemElement
     {
-      get { return _SystemElement; }
-      set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+      get
+      {
+        if(_SystemElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>), Overflow["system"]);
+        return _SystemElement;
+      }
+
+      set
+      {
+        if (_SystemElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>>())
+          Overflow.Remove("system");
+        _SystemElement = value;
+        OnPropertyChanged("SystemElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>? _SystemElement;
@@ -176,7 +190,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ContactPoint.ContactPointSystem? System
     {
-      get => _SystemElement?.Value;
+      get => SystemElement?.Value;
       set
       {
         SystemElement = value is null ? null : new Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>(value);
@@ -191,8 +205,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ValueElement
     {
-      get { return _ValueElement; }
-      set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+      get
+      {
+        if(_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["value"]);
+        return _ValueElement;
+      }
+
+      set
+      {
+        if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("value");
+        _ValueElement = value;
+        OnPropertyChanged("ValueElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _ValueElement;
@@ -204,7 +231,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Value
     {
-      get => _ValueElement?.Value;
+      get => ValueElement?.Value;
       set
       {
         ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -221,8 +248,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>? UseElement
     {
-      get { return _UseElement; }
-      set { _UseElement = value; OnPropertyChanged("UseElement"); }
+      get
+      {
+        if(_UseElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>), Overflow["use"]);
+        return _UseElement;
+      }
+
+      set
+      {
+        if (_UseElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>>())
+          Overflow.Remove("use");
+        _UseElement = value;
+        OnPropertyChanged("UseElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>? _UseElement;
@@ -234,7 +274,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ContactPoint.ContactPointUse? Use
     {
-      get => _UseElement?.Value;
+      get => UseElement?.Value;
       set
       {
         UseElement = value is null ? null : new Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>(value);
@@ -249,8 +289,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? RankElement
     {
-      get { return _RankElement; }
-      set { _RankElement = value; OnPropertyChanged("RankElement"); }
+      get
+      {
+        if(_RankElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["rank"]);
+        return _RankElement;
+      }
+
+      set
+      {
+        if (_RankElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          Overflow.Remove("rank");
+        _RankElement = value;
+        OnPropertyChanged("RankElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.PositiveInt? _RankElement;
@@ -262,7 +315,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Rank
     {
-      get => _RankElement?.Value;
+      get => RankElement?.Value;
       set
       {
         RankElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -277,8 +330,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
     {
-      get { return _Period; }
-      set { _Period = value; OnPropertyChanged("Period"); }
+      get
+      {
+        if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
+        return _Period;
+      }
+
+      set
+      {
+        if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          Overflow.Remove("period");
+        _Period = value;
+        OnPropertyChanged("Period");
+      }
+
     }
 
     private Hl7.Fhir.Model.Period? _Period;
@@ -324,20 +390,45 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "system":
+          if (_SystemElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>>())
+          {
+            value = Overflow["system"];
+            return true;
+          }
           value = _SystemElement;
-          return _SystemElement is not null;
+          return (value as Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>) is not null;
         case "value":
+          if (_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["value"];
+            return true;
+          }
           value = _ValueElement;
-          return _ValueElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "use":
+          if (_UseElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>>())
+          {
+            value = Overflow["use"];
+            return true;
+          }
           value = _UseElement;
-          return _UseElement is not null;
+          return (value as Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>) is not null;
         case "rank":
+          if (_RankElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          {
+            value = Overflow["rank"];
+            return true;
+          }
           value = _RankElement;
-          return _RankElement is not null;
+          return (value as Hl7.Fhir.Model.PositiveInt) is not null;
         case "period":
+          if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          {
+            value = Overflow["period"];
+            return true;
+          }
           value = _Period;
-          return _Period is not null;
+          return (value as Hl7.Fhir.Model.Period) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -346,22 +437,48 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "system":
-          SystemElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem> or null))
+          {
+            SystemElement = OverflowNull<Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>>.INSTANCE;
+            Overflow["system"] = value;
+          }
+          else SystemElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>?)value;
           return this;
         case "value":
-          ValueElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ValueElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["value"] = value;
+          }
+          else ValueElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "use":
-          UseElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse> or null))
+          {
+            UseElement = OverflowNull<Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>>.INSTANCE;
+            Overflow["use"] = value;
+          }
+          else UseElement = (Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>?)value;
           return this;
         case "rank":
-          RankElement = (Hl7.Fhir.Model.PositiveInt?)value;
+          if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+          {
+            RankElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+            Overflow["rank"] = value;
+          }
+          else RankElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period?)value;
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -372,11 +489,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_SystemElement is not null) yield return new KeyValuePair<string,object>("system",_SystemElement);
-      if (_ValueElement is not null) yield return new KeyValuePair<string,object>("value",_ValueElement);
-      if (_UseElement is not null) yield return new KeyValuePair<string,object>("use",_UseElement);
-      if (_RankElement is not null) yield return new KeyValuePair<string,object>("rank",_RankElement);
-      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_SystemElement is not null && !_SystemElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>>()) yield return new KeyValuePair<string,object>("system",_SystemElement);
+      if (_ValueElement is not null && !_ValueElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("value",_ValueElement);
+      if (_UseElement is not null && !_UseElement.InOverflow<Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>>()) yield return new KeyValuePair<string,object>("use",_UseElement);
+      if (_RankElement is not null && !_RankElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("rank",_RankElement);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
     }
 
   }

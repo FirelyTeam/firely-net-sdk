@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -69,8 +70,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Integer? SequenceElement
     {
-      get { return _SequenceElement; }
-      set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
+      get
+      {
+        if(_SequenceElement.InOverflow<Hl7.Fhir.Model.Integer>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Integer), Overflow["sequence"]);
+        return _SequenceElement;
+      }
+
+      set
+      {
+        if (_SequenceElement.InOverflow<Hl7.Fhir.Model.Integer>())
+          Overflow.Remove("sequence");
+        _SequenceElement = value;
+        OnPropertyChanged("SequenceElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Integer? _SequenceElement;
@@ -82,7 +96,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Sequence
     {
-      get => _SequenceElement?.Value;
+      get => SequenceElement?.Value;
       set
       {
         SequenceElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -97,8 +111,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TextElement
     {
-      get { return _TextElement; }
-      set { _TextElement = value; OnPropertyChanged("TextElement"); }
+      get
+      {
+        if(_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["text"]);
+        return _TextElement;
+      }
+
+      set
+      {
+        if (_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("text");
+        _TextElement = value;
+        OnPropertyChanged("TextElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _TextElement;
@@ -110,7 +137,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Text
     {
-      get => _TextElement?.Value;
+      get => TextElement?.Value;
       set
       {
         TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -127,8 +154,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalInstruction
     {
-      get => _AdditionalInstruction ??= [];
-      set { _AdditionalInstruction = value; OnPropertyChanged("AdditionalInstruction"); }
+      get
+      {
+        if(_AdditionalInstruction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["additionalInstruction"]);
+        return _AdditionalInstruction ??= [];
+      }
+
+      set
+      {
+        if (_AdditionalInstruction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("additionalInstruction");
+        _AdditionalInstruction = value;
+        OnPropertyChanged("AdditionalInstruction");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept>? _AdditionalInstruction;
@@ -140,8 +180,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PatientInstructionElement
     {
-      get { return _PatientInstructionElement; }
-      set { _PatientInstructionElement = value; OnPropertyChanged("PatientInstructionElement"); }
+      get
+      {
+        if(_PatientInstructionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["patientInstruction"]);
+        return _PatientInstructionElement;
+      }
+
+      set
+      {
+        if (_PatientInstructionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("patientInstruction");
+        _PatientInstructionElement = value;
+        OnPropertyChanged("PatientInstructionElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _PatientInstructionElement;
@@ -153,7 +206,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PatientInstruction
     {
-      get => _PatientInstructionElement?.Value;
+      get => PatientInstructionElement?.Value;
       set
       {
         PatientInstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -168,8 +221,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Timing? Timing
     {
-      get { return _Timing; }
-      set { _Timing = value; OnPropertyChanged("Timing"); }
+      get
+      {
+        if(_Timing.InOverflow<Hl7.Fhir.Model.Timing>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Timing), Overflow["timing"]);
+        return _Timing;
+      }
+
+      set
+      {
+        if (_Timing.InOverflow<Hl7.Fhir.Model.Timing>())
+          Overflow.Remove("timing");
+        _Timing = value;
+        OnPropertyChanged("Timing");
+      }
+
     }
 
     private Hl7.Fhir.Model.Timing? _Timing;
@@ -184,8 +250,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? AsNeeded
     {
-      get { return _AsNeeded; }
-      set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
+      get
+      {
+        if(_AsNeeded.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["asNeeded"]);
+        return _AsNeeded;
+      }
+
+      set
+      {
+        if (_AsNeeded.InOverflow<DynamicDataType>())
+          Overflow.Remove("asNeeded");
+        _AsNeeded = value;
+        OnPropertyChanged("AsNeeded");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _AsNeeded;
@@ -198,8 +277,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Site
     {
-      get { return _Site; }
-      set { _Site = value; OnPropertyChanged("Site"); }
+      get
+      {
+        if(_Site.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["site"]);
+        return _Site;
+      }
+
+      set
+      {
+        if (_Site.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("site");
+        _Site = value;
+        OnPropertyChanged("Site");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Site;
@@ -212,8 +304,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Route
     {
-      get { return _Route; }
-      set { _Route = value; OnPropertyChanged("Route"); }
+      get
+      {
+        if(_Route.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["route"]);
+        return _Route;
+      }
+
+      set
+      {
+        if (_Route.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("route");
+        _Route = value;
+        OnPropertyChanged("Route");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Route;
@@ -226,8 +331,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Method
     {
-      get { return _Method; }
-      set { _Method = value; OnPropertyChanged("Method"); }
+      get
+      {
+        if(_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["method"]);
+        return _Method;
+      }
+
+      set
+      {
+        if (_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("method");
+        _Method = value;
+        OnPropertyChanged("Method");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Method;
@@ -241,8 +359,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Dose
     {
-      get { return _Dose; }
-      set { _Dose = value; OnPropertyChanged("Dose"); }
+      get
+      {
+        if(_Dose.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["dose"]);
+        return _Dose;
+      }
+
+      set
+      {
+        if (_Dose.InOverflow<DynamicDataType>())
+          Overflow.Remove("dose");
+        _Dose = value;
+        OnPropertyChanged("Dose");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Dose;
@@ -254,8 +385,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Ratio? MaxDosePerPeriod
     {
-      get { return _MaxDosePerPeriod; }
-      set { _MaxDosePerPeriod = value; OnPropertyChanged("MaxDosePerPeriod"); }
+      get
+      {
+        if(_MaxDosePerPeriod.InOverflow<Hl7.Fhir.Model.Ratio>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Ratio), Overflow["maxDosePerPeriod"]);
+        return _MaxDosePerPeriod;
+      }
+
+      set
+      {
+        if (_MaxDosePerPeriod.InOverflow<Hl7.Fhir.Model.Ratio>())
+          Overflow.Remove("maxDosePerPeriod");
+        _MaxDosePerPeriod = value;
+        OnPropertyChanged("MaxDosePerPeriod");
+      }
+
     }
 
     private Hl7.Fhir.Model.Ratio? _MaxDosePerPeriod;
@@ -267,8 +411,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? MaxDosePerAdministration
     {
-      get { return _MaxDosePerAdministration; }
-      set { _MaxDosePerAdministration = value; OnPropertyChanged("MaxDosePerAdministration"); }
+      get
+      {
+        if(_MaxDosePerAdministration.InOverflow<Hl7.Fhir.Model.Quantity>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["maxDosePerAdministration"]);
+        return _MaxDosePerAdministration;
+      }
+
+      set
+      {
+        if (_MaxDosePerAdministration.InOverflow<Hl7.Fhir.Model.Quantity>())
+          Overflow.Remove("maxDosePerAdministration");
+        _MaxDosePerAdministration = value;
+        OnPropertyChanged("MaxDosePerAdministration");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _MaxDosePerAdministration;
@@ -280,8 +437,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Quantity? MaxDosePerLifetime
     {
-      get { return _MaxDosePerLifetime; }
-      set { _MaxDosePerLifetime = value; OnPropertyChanged("MaxDosePerLifetime"); }
+      get
+      {
+        if(_MaxDosePerLifetime.InOverflow<Hl7.Fhir.Model.Quantity>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["maxDosePerLifetime"]);
+        return _MaxDosePerLifetime;
+      }
+
+      set
+      {
+        if (_MaxDosePerLifetime.InOverflow<Hl7.Fhir.Model.Quantity>())
+          Overflow.Remove("maxDosePerLifetime");
+        _MaxDosePerLifetime = value;
+        OnPropertyChanged("MaxDosePerLifetime");
+      }
+
     }
 
     private Hl7.Fhir.Model.Quantity? _MaxDosePerLifetime;
@@ -295,8 +465,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Rate
     {
-      get { return _Rate; }
-      set { _Rate = value; OnPropertyChanged("Rate"); }
+      get
+      {
+        if(_Rate.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["rate"]);
+        return _Rate;
+      }
+
+      set
+      {
+        if (_Rate.InOverflow<DynamicDataType>())
+          Overflow.Remove("rate");
+        _Rate = value;
+        OnPropertyChanged("Rate");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Rate;
@@ -360,47 +543,117 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "sequence":
+          if (_SequenceElement.InOverflow<Hl7.Fhir.Model.Integer>())
+          {
+            value = Overflow["sequence"];
+            return true;
+          }
           value = _SequenceElement;
-          return _SequenceElement is not null;
+          return (value as Hl7.Fhir.Model.Integer) is not null;
         case "text":
+          if (_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["text"];
+            return true;
+          }
           value = _TextElement;
-          return _TextElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "additionalInstruction":
+          if (_AdditionalInstruction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["additionalInstruction"];
+            return true;
+          }
           value = _AdditionalInstruction;
-          return _AdditionalInstruction?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "patientInstruction":
+          if (_PatientInstructionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["patientInstruction"];
+            return true;
+          }
           value = _PatientInstructionElement;
-          return _PatientInstructionElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "timing":
+          if (_Timing.InOverflow<Hl7.Fhir.Model.Timing>())
+          {
+            value = Overflow["timing"];
+            return true;
+          }
           value = _Timing;
-          return _Timing is not null;
+          return (value as Hl7.Fhir.Model.Timing) is not null;
         case "asNeeded":
+          if (_AsNeeded.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["asNeeded"];
+            return true;
+          }
           value = _AsNeeded;
-          return _AsNeeded is not null;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "site":
+          if (_Site.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["site"];
+            return true;
+          }
           value = _Site;
-          return _Site is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "route":
+          if (_Route.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["route"];
+            return true;
+          }
           value = _Route;
-          return _Route is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "method":
+          if (_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["method"];
+            return true;
+          }
           value = _Method;
-          return _Method is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "dose":
+          if (_Dose.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["dose"];
+            return true;
+          }
           value = _Dose;
-          return _Dose is not null;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "maxDosePerPeriod":
+          if (_MaxDosePerPeriod.InOverflow<Hl7.Fhir.Model.Ratio>())
+          {
+            value = Overflow["maxDosePerPeriod"];
+            return true;
+          }
           value = _MaxDosePerPeriod;
-          return _MaxDosePerPeriod is not null;
+          return (value as Hl7.Fhir.Model.Ratio) is not null;
         case "maxDosePerAdministration":
+          if (_MaxDosePerAdministration.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
+            value = Overflow["maxDosePerAdministration"];
+            return true;
+          }
           value = _MaxDosePerAdministration;
-          return _MaxDosePerAdministration is not null;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "maxDosePerLifetime":
+          if (_MaxDosePerLifetime.InOverflow<Hl7.Fhir.Model.Quantity>())
+          {
+            value = Overflow["maxDosePerLifetime"];
+            return true;
+          }
           value = _MaxDosePerLifetime;
-          return _MaxDosePerLifetime is not null;
+          return (value as Hl7.Fhir.Model.Quantity) is not null;
         case "rate":
+          if (_Rate.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["rate"];
+            return true;
+          }
           value = _Rate;
-          return _Rate is not null;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -409,49 +662,120 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "sequence":
-          SequenceElement = (Hl7.Fhir.Model.Integer?)value;
+          if (value is not (Hl7.Fhir.Model.Integer or null))
+          {
+            SequenceElement = OverflowNull<Hl7.Fhir.Model.Integer>.INSTANCE;
+            Overflow["sequence"] = value;
+          }
+          else SequenceElement = (Hl7.Fhir.Model.Integer?)value;
           return this;
         case "text":
-          TextElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            TextElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["text"] = value;
+          }
+          else TextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "additionalInstruction":
-          AdditionalInstruction = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            AdditionalInstruction = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["additionalInstruction"] = value;
+          }
+          else AdditionalInstruction = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "patientInstruction":
-          PatientInstructionElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            PatientInstructionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["patientInstruction"] = value;
+          }
+          else PatientInstructionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "timing":
-          Timing = (Hl7.Fhir.Model.Timing?)value;
+          if (value is not (Hl7.Fhir.Model.Timing or null))
+          {
+            Timing = OverflowNull<Hl7.Fhir.Model.Timing>.INSTANCE;
+            Overflow["timing"] = value;
+          }
+          else Timing = (Hl7.Fhir.Model.Timing?)value;
           return this;
         case "asNeeded":
-          AsNeeded = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            AsNeeded = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["asNeeded"] = value;
+          }
+          else AsNeeded = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "site":
-          Site = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Site = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["site"] = value;
+          }
+          else Site = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "route":
-          Route = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Route = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["route"] = value;
+          }
+          else Route = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "method":
-          Method = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Method = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["method"] = value;
+          }
+          else Method = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "dose":
-          Dose = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Dose = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["dose"] = value;
+          }
+          else Dose = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "maxDosePerPeriod":
-          MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio?)value;
+          if (value is not (Hl7.Fhir.Model.Ratio or null))
+          {
+            MaxDosePerPeriod = OverflowNull<Hl7.Fhir.Model.Ratio>.INSTANCE;
+            Overflow["maxDosePerPeriod"] = value;
+          }
+          else MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio?)value;
           return this;
         case "maxDosePerAdministration":
-          MaxDosePerAdministration = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            MaxDosePerAdministration = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["maxDosePerAdministration"] = value;
+          }
+          else MaxDosePerAdministration = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "maxDosePerLifetime":
-          MaxDosePerLifetime = (Hl7.Fhir.Model.Quantity?)value;
+          if (value is not (Hl7.Fhir.Model.Quantity or null))
+          {
+            MaxDosePerLifetime = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+            Overflow["maxDosePerLifetime"] = value;
+          }
+          else MaxDosePerLifetime = (Hl7.Fhir.Model.Quantity?)value;
           return this;
         case "rate":
-          Rate = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Rate = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["rate"] = value;
+          }
+          else Rate = (Hl7.Fhir.Model.DataType?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -462,20 +786,20 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
-      if (_TextElement is not null) yield return new KeyValuePair<string,object>("text",_TextElement);
-      if (_AdditionalInstruction?.Any() == true) yield return new KeyValuePair<string,object>("additionalInstruction",_AdditionalInstruction);
-      if (_PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",_PatientInstructionElement);
-      if (_Timing is not null) yield return new KeyValuePair<string,object>("timing",_Timing);
-      if (_AsNeeded is not null) yield return new KeyValuePair<string,object>("asNeeded",_AsNeeded);
-      if (_Site is not null) yield return new KeyValuePair<string,object>("site",_Site);
-      if (_Route is not null) yield return new KeyValuePair<string,object>("route",_Route);
-      if (_Method is not null) yield return new KeyValuePair<string,object>("method",_Method);
-      if (_Dose is not null) yield return new KeyValuePair<string,object>("dose",_Dose);
-      if (_MaxDosePerPeriod is not null) yield return new KeyValuePair<string,object>("maxDosePerPeriod",_MaxDosePerPeriod);
-      if (_MaxDosePerAdministration is not null) yield return new KeyValuePair<string,object>("maxDosePerAdministration",_MaxDosePerAdministration);
-      if (_MaxDosePerLifetime is not null) yield return new KeyValuePair<string,object>("maxDosePerLifetime",_MaxDosePerLifetime);
-      if (_Rate is not null) yield return new KeyValuePair<string,object>("rate",_Rate);
+      if (_SequenceElement is not null && !_SequenceElement.InOverflow<Hl7.Fhir.Model.Integer>()) yield return new KeyValuePair<string,object>("sequence",_SequenceElement);
+      if (_TextElement is not null && !_TextElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("text",_TextElement);
+      if (_AdditionalInstruction?.Any() is true && !_AdditionalInstruction.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("additionalInstruction",_AdditionalInstruction);
+      if (_PatientInstructionElement is not null && !_PatientInstructionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("patientInstruction",_PatientInstructionElement);
+      if (_Timing is not null && !_Timing.InOverflow<Hl7.Fhir.Model.Timing>()) yield return new KeyValuePair<string,object>("timing",_Timing);
+      if (_AsNeeded is not null && !_AsNeeded.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("asNeeded",_AsNeeded);
+      if (_Site is not null && !_Site.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("site",_Site);
+      if (_Route is not null && !_Route.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("route",_Route);
+      if (_Method is not null && !_Method.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("method",_Method);
+      if (_Dose is not null && !_Dose.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("dose",_Dose);
+      if (_MaxDosePerPeriod is not null && !_MaxDosePerPeriod.InOverflow<Hl7.Fhir.Model.Ratio>()) yield return new KeyValuePair<string,object>("maxDosePerPeriod",_MaxDosePerPeriod);
+      if (_MaxDosePerAdministration is not null && !_MaxDosePerAdministration.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("maxDosePerAdministration",_MaxDosePerAdministration);
+      if (_MaxDosePerLifetime is not null && !_MaxDosePerLifetime.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("maxDosePerLifetime",_MaxDosePerLifetime);
+      if (_Rate is not null && !_Rate.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("rate",_Rate);
     }
 
   }

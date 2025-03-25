@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -65,8 +66,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
-      get => _ModifierExtension ??= [];
-      set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
+      get
+      {
+        if(_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["modifierExtension"]);
+        return _ModifierExtension ??= [];
+      }
+
+      set
+      {
+        if (_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          Overflow.Remove("modifierExtension");
+        _ModifierExtension = value;
+        OnPropertyChanged("ModifierExtension");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Extension>? _ModifierExtension;
@@ -97,8 +111,13 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "modifierExtension":
+          if (_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          {
+            value = Overflow["modifierExtension"];
+            return true;
+          }
           value = _ModifierExtension;
-          return _ModifierExtension?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Extension>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -107,10 +126,16 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "modifierExtension":
-          ModifierExtension = (List<Hl7.Fhir.Model.Extension>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Extension> or null))
+          {
+            ModifierExtension = OverflowNull<List<Hl7.Fhir.Model.Extension>>.INSTANCE;
+            Overflow["modifierExtension"] = value;
+          }
+          else ModifierExtension = (List<Hl7.Fhir.Model.Extension>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -121,7 +146,7 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_ModifierExtension?.Any() == true) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
+      if (_ModifierExtension?.Any() is true && !_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
     }
 
   }

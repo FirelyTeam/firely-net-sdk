@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -67,8 +68,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Coding? ChannelType
     {
-      get { return _ChannelType; }
-      set { _ChannelType = value; OnPropertyChanged("ChannelType"); }
+      get
+      {
+        if(_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Coding), Overflow["channelType"]);
+        return _ChannelType;
+      }
+
+      set
+      {
+        if (_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>())
+          Overflow.Remove("channelType");
+        _ChannelType = value;
+        OnPropertyChanged("ChannelType");
+      }
+
     }
 
     private Hl7.Fhir.Model.Coding? _ChannelType;
@@ -82,8 +96,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Address
     {
-      get { return _Address; }
-      set { _Address = value; OnPropertyChanged("Address"); }
+      get
+      {
+        if(_Address.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["address"]);
+        return _Address;
+      }
+
+      set
+      {
+        if (_Address.InOverflow<DynamicDataType>())
+          Overflow.Remove("address");
+        _Address = value;
+        OnPropertyChanged("Address");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Address;
@@ -96,8 +123,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUrl> AdditionalInfoElement
     {
-      get => _AdditionalInfoElement ??= [];
-      set { _AdditionalInfoElement = value; OnPropertyChanged("AdditionalInfoElement"); }
+      get
+      {
+        if(_AdditionalInfoElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirUrl>), Overflow["additionalInfo"]);
+        return _AdditionalInfoElement ??= [];
+      }
+
+      set
+      {
+        if (_AdditionalInfoElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
+          Overflow.Remove("additionalInfo");
+        _AdditionalInfoElement = value;
+        OnPropertyChanged("AdditionalInfoElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirUrl>? _AdditionalInfoElement;
@@ -127,8 +167,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? MaxParticipantsElement
     {
-      get { return _MaxParticipantsElement; }
-      set { _MaxParticipantsElement = value; OnPropertyChanged("MaxParticipantsElement"); }
+      get
+      {
+        if(_MaxParticipantsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["maxParticipants"]);
+        return _MaxParticipantsElement;
+      }
+
+      set
+      {
+        if (_MaxParticipantsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          Overflow.Remove("maxParticipants");
+        _MaxParticipantsElement = value;
+        OnPropertyChanged("MaxParticipantsElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.PositiveInt? _MaxParticipantsElement;
@@ -140,7 +193,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? MaxParticipants
     {
-      get => _MaxParticipantsElement?.Value;
+      get => MaxParticipantsElement?.Value;
       set
       {
         MaxParticipantsElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -155,8 +208,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SessionKeyElement
     {
-      get { return _SessionKeyElement; }
-      set { _SessionKeyElement = value; OnPropertyChanged("SessionKeyElement"); }
+      get
+      {
+        if(_SessionKeyElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["sessionKey"]);
+        return _SessionKeyElement;
+      }
+
+      set
+      {
+        if (_SessionKeyElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("sessionKey");
+        _SessionKeyElement = value;
+        OnPropertyChanged("SessionKeyElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _SessionKeyElement;
@@ -168,7 +234,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? SessionKey
     {
-      get => _SessionKeyElement?.Value;
+      get => SessionKeyElement?.Value;
       set
       {
         SessionKeyElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -217,20 +283,45 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "channelType":
+          if (_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>())
+          {
+            value = Overflow["channelType"];
+            return true;
+          }
           value = _ChannelType;
-          return _ChannelType is not null;
+          return (value as Hl7.Fhir.Model.Coding) is not null;
         case "address":
+          if (_Address.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["address"];
+            return true;
+          }
           value = _Address;
-          return _Address is not null;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "additionalInfo":
+          if (_AdditionalInfoElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>())
+          {
+            value = Overflow["additionalInfo"];
+            return true;
+          }
           value = _AdditionalInfoElement;
-          return _AdditionalInfoElement?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.FhirUrl>)?.Any() is true;
         case "maxParticipants":
+          if (_MaxParticipantsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          {
+            value = Overflow["maxParticipants"];
+            return true;
+          }
           value = _MaxParticipantsElement;
-          return _MaxParticipantsElement is not null;
+          return (value as Hl7.Fhir.Model.PositiveInt) is not null;
         case "sessionKey":
+          if (_SessionKeyElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["sessionKey"];
+            return true;
+          }
           value = _SessionKeyElement;
-          return _SessionKeyElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -239,22 +330,48 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "channelType":
-          ChannelType = (Hl7.Fhir.Model.Coding?)value;
+          if (value is not (Hl7.Fhir.Model.Coding or null))
+          {
+            ChannelType = OverflowNull<Hl7.Fhir.Model.Coding>.INSTANCE;
+            Overflow["channelType"] = value;
+          }
+          else ChannelType = (Hl7.Fhir.Model.Coding?)value;
           return this;
         case "address":
-          Address = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Address = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["address"] = value;
+          }
+          else Address = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "additionalInfo":
-          AdditionalInfoElement = (List<Hl7.Fhir.Model.FhirUrl>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirUrl> or null))
+          {
+            AdditionalInfoElement = OverflowNull<List<Hl7.Fhir.Model.FhirUrl>>.INSTANCE;
+            Overflow["additionalInfo"] = value;
+          }
+          else AdditionalInfoElement = (List<Hl7.Fhir.Model.FhirUrl>?)value!;
           return this;
         case "maxParticipants":
-          MaxParticipantsElement = (Hl7.Fhir.Model.PositiveInt?)value;
+          if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+          {
+            MaxParticipantsElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+            Overflow["maxParticipants"] = value;
+          }
+          else MaxParticipantsElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "sessionKey":
-          SessionKeyElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            SessionKeyElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["sessionKey"] = value;
+          }
+          else SessionKeyElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -265,11 +382,11 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_ChannelType is not null) yield return new KeyValuePair<string,object>("channelType",_ChannelType);
-      if (_Address is not null) yield return new KeyValuePair<string,object>("address",_Address);
-      if (_AdditionalInfoElement?.Any() == true) yield return new KeyValuePair<string,object>("additionalInfo",_AdditionalInfoElement);
-      if (_MaxParticipantsElement is not null) yield return new KeyValuePair<string,object>("maxParticipants",_MaxParticipantsElement);
-      if (_SessionKeyElement is not null) yield return new KeyValuePair<string,object>("sessionKey",_SessionKeyElement);
+      if (_ChannelType is not null && !_ChannelType.InOverflow<Hl7.Fhir.Model.Coding>()) yield return new KeyValuePair<string,object>("channelType",_ChannelType);
+      if (_Address is not null && !_Address.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("address",_Address);
+      if (_AdditionalInfoElement?.Any() is true && !_AdditionalInfoElement.InOverflow<List<Hl7.Fhir.Model.FhirUrl>>()) yield return new KeyValuePair<string,object>("additionalInfo",_AdditionalInfoElement);
+      if (_MaxParticipantsElement is not null && !_MaxParticipantsElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("maxParticipants",_MaxParticipantsElement);
+      if (_SessionKeyElement is not null && !_SessionKeyElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("sessionKey",_SessionKeyElement);
     }
 
   }

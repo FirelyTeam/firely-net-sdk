@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -184,8 +185,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Function
       {
-        get { return _Function; }
-        set { _Function = value; OnPropertyChanged("Function"); }
+        get
+        {
+          if(_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["function"]);
+          return _Function;
+        }
+
+        set
+        {
+          if (_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("function");
+          _Function = value;
+          OnPropertyChanged("Function");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Function;
@@ -200,8 +214,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Actor
       {
-        get { return _Actor; }
-        set { _Actor = value; OnPropertyChanged("Actor"); }
+        get
+        {
+          if(_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["actor"]);
+          return _Actor;
+        }
+
+        set
+        {
+          if (_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            Overflow.Remove("actor");
+          _Actor = value;
+          OnPropertyChanged("Actor");
+        }
+
       }
 
       private Hl7.Fhir.Model.ResourceReference? _Actor;
@@ -241,11 +268,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "function":
+            if (_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["function"];
+              return true;
+            }
             value = _Function;
-            return _Function is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "actor":
+            if (_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+            {
+              value = Overflow["actor"];
+              return true;
+            }
             value = _Actor;
-            return _Actor is not null;
+            return (value as Hl7.Fhir.Model.ResourceReference) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -254,13 +291,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "function":
-            Function = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Function = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["function"] = value;
+            }
+            else Function = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "actor":
-            Actor = (Hl7.Fhir.Model.ResourceReference?)value;
+            if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+            {
+              Actor = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+              Overflow["actor"] = value;
+            }
+            else Actor = (Hl7.Fhir.Model.ResourceReference?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -271,8 +319,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Function is not null) yield return new KeyValuePair<string,object>("function",_Function);
-        if (_Actor is not null) yield return new KeyValuePair<string,object>("actor",_Actor);
+        if (_Function is not null && !_Function.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("function",_Function);
+        if (_Actor is not null && !_Actor.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("actor",_Actor);
       }
 
     }
@@ -301,8 +349,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Summary
       {
-        get { return _Summary; }
-        set { _Summary = value; OnPropertyChanged("Summary"); }
+        get
+        {
+          if(_Summary.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["summary"]);
+          return _Summary;
+        }
+
+        set
+        {
+          if (_Summary.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("summary");
+          _Summary = value;
+          OnPropertyChanged("Summary");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Summary;
@@ -317,8 +378,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Assessment
       {
-        get => _Assessment ??= [];
-        set { _Assessment = value; OnPropertyChanged("Assessment"); }
+        get
+        {
+          if(_Assessment.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["assessment"]);
+          return _Assessment ??= [];
+        }
+
+        set
+        {
+          if (_Assessment.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            Overflow.Remove("assessment");
+          _Assessment = value;
+          OnPropertyChanged("Assessment");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.ResourceReference>? _Assessment;
@@ -331,8 +405,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Type
       {
-        get { return _Type; }
-        set { _Type = value; OnPropertyChanged("Type"); }
+        get
+        {
+          if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
+          return _Type;
+        }
+
+        set
+        {
+          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("type");
+          _Type = value;
+          OnPropertyChanged("Type");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Type;
@@ -374,14 +461,29 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "summary":
+            if (_Summary.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["summary"];
+              return true;
+            }
             value = _Summary;
-            return _Summary is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "assessment":
+            if (_Assessment.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            {
+              value = Overflow["assessment"];
+              return true;
+            }
             value = _Assessment;
-            return _Assessment?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
           case "type":
+            if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["type"];
+              return true;
+            }
             value = _Type;
-            return _Type is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -390,16 +492,32 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "summary":
-            Summary = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Summary = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["summary"] = value;
+            }
+            else Summary = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "assessment":
-            Assessment = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+            {
+              Assessment = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+              Overflow["assessment"] = value;
+            }
+            else Assessment = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -410,9 +528,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Summary is not null) yield return new KeyValuePair<string,object>("summary",_Summary);
-        if (_Assessment?.Any() == true) yield return new KeyValuePair<string,object>("assessment",_Assessment);
-        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Summary is not null && !_Summary.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("summary",_Summary);
+        if (_Assessment?.Any() is true && !_Assessment.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("assessment",_Assessment);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
       }
 
     }
@@ -425,8 +543,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ??= [];
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Identifier>? _Identifier;
@@ -440,8 +571,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? ClinicalStatus
     {
-      get { return _ClinicalStatus; }
-      set { _ClinicalStatus = value; OnPropertyChanged("ClinicalStatus"); }
+      get
+      {
+        if(_ClinicalStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["clinicalStatus"]);
+        return _ClinicalStatus;
+      }
+
+      set
+      {
+        if (_ClinicalStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("clinicalStatus");
+        _ClinicalStatus = value;
+        OnPropertyChanged("ClinicalStatus");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _ClinicalStatus;
@@ -454,8 +598,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? VerificationStatus
     {
-      get { return _VerificationStatus; }
-      set { _VerificationStatus = value; OnPropertyChanged("VerificationStatus"); }
+      get
+      {
+        if(_VerificationStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["verificationStatus"]);
+        return _VerificationStatus;
+      }
+
+      set
+      {
+        if (_VerificationStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("verificationStatus");
+        _VerificationStatus = value;
+        OnPropertyChanged("VerificationStatus");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _VerificationStatus;
@@ -469,8 +626,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
-      get => _Category ??= [];
-      set { _Category = value; OnPropertyChanged("Category"); }
+      get
+      {
+        if(_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["category"]);
+        return _Category ??= [];
+      }
+
+      set
+      {
+        if (_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("category");
+        _Category = value;
+        OnPropertyChanged("Category");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept>? _Category;
@@ -483,8 +653,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Severity
     {
-      get { return _Severity; }
-      set { _Severity = value; OnPropertyChanged("Severity"); }
+      get
+      {
+        if(_Severity.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["severity"]);
+        return _Severity;
+      }
+
+      set
+      {
+        if (_Severity.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("severity");
+        _Severity = value;
+        OnPropertyChanged("Severity");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Severity;
@@ -497,8 +680,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Code
     {
-      get { return _Code; }
-      set { _Code = value; OnPropertyChanged("Code"); }
+      get
+      {
+        if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
+        return _Code;
+      }
+
+      set
+      {
+        if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("code");
+        _Code = value;
+        OnPropertyChanged("Code");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Code;
@@ -512,8 +708,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
     {
-      get => _BodySite ??= [];
-      set { _BodySite = value; OnPropertyChanged("BodySite"); }
+      get
+      {
+        if(_BodySite.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["bodySite"]);
+        return _BodySite ??= [];
+      }
+
+      set
+      {
+        if (_BodySite.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          Overflow.Remove("bodySite");
+        _BodySite = value;
+        OnPropertyChanged("BodySite");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept>? _BodySite;
@@ -528,8 +737,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
     {
-      get { return _Subject; }
-      set { _Subject = value; OnPropertyChanged("Subject"); }
+      get
+      {
+        if(_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["subject"]);
+        return _Subject;
+      }
+
+      set
+      {
+        if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("subject");
+        _Subject = value;
+        OnPropertyChanged("Subject");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Subject;
@@ -543,8 +765,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
     {
-      get { return _Encounter; }
-      set { _Encounter = value; OnPropertyChanged("Encounter"); }
+      get
+      {
+        if(_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["encounter"]);
+        return _Encounter;
+      }
+
+      set
+      {
+        if (_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("encounter");
+        _Encounter = value;
+        OnPropertyChanged("Encounter");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Encounter;
@@ -558,8 +793,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Onset
     {
-      get { return _Onset; }
-      set { _Onset = value; OnPropertyChanged("Onset"); }
+      get
+      {
+        if(_Onset.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["onset"]);
+        return _Onset;
+      }
+
+      set
+      {
+        if (_Onset.InOverflow<DynamicDataType>())
+          Overflow.Remove("onset");
+        _Onset = value;
+        OnPropertyChanged("Onset");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Onset;
@@ -573,8 +821,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Abatement
     {
-      get { return _Abatement; }
-      set { _Abatement = value; OnPropertyChanged("Abatement"); }
+      get
+      {
+        if(_Abatement.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["abatement"]);
+        return _Abatement;
+      }
+
+      set
+      {
+        if (_Abatement.InOverflow<DynamicDataType>())
+          Overflow.Remove("abatement");
+        _Abatement = value;
+        OnPropertyChanged("Abatement");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Abatement;
@@ -586,8 +847,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? RecordedDateElement
     {
-      get { return _RecordedDateElement; }
-      set { _RecordedDateElement = value; OnPropertyChanged("RecordedDateElement"); }
+      get
+      {
+        if(_RecordedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDateTime), Overflow["recordedDate"]);
+        return _RecordedDateElement;
+      }
+
+      set
+      {
+        if (_RecordedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          Overflow.Remove("recordedDate");
+        _RecordedDateElement = value;
+        OnPropertyChanged("RecordedDateElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDateTime? _RecordedDateElement;
@@ -599,7 +873,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? RecordedDate
     {
-      get => _RecordedDateElement?.Value;
+      get => RecordedDateElement?.Value;
       set
       {
         RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -615,8 +889,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Condition.ParticipantComponent> Participant
     {
-      get => _Participant ??= [];
-      set { _Participant = value; OnPropertyChanged("Participant"); }
+      get
+      {
+        if(_Participant.InOverflow<List<Hl7.Fhir.Model.Condition.ParticipantComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Condition.ParticipantComponent>), Overflow["participant"]);
+        return _Participant ??= [];
+      }
+
+      set
+      {
+        if (_Participant.InOverflow<List<Hl7.Fhir.Model.Condition.ParticipantComponent>>())
+          Overflow.Remove("participant");
+        _Participant = value;
+        OnPropertyChanged("Participant");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Condition.ParticipantComponent>? _Participant;
@@ -629,8 +916,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Condition.StageComponent> Stage
     {
-      get => _Stage ??= [];
-      set { _Stage = value; OnPropertyChanged("Stage"); }
+      get
+      {
+        if(_Stage.InOverflow<List<Hl7.Fhir.Model.Condition.StageComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Condition.StageComponent>), Overflow["stage"]);
+        return _Stage ??= [];
+      }
+
+      set
+      {
+        if (_Stage.InOverflow<List<Hl7.Fhir.Model.Condition.StageComponent>>())
+          Overflow.Remove("stage");
+        _Stage = value;
+        OnPropertyChanged("Stage");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Condition.StageComponent>? _Stage;
@@ -644,8 +944,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Evidence
     {
-      get => _Evidence ??= [];
-      set { _Evidence = value; OnPropertyChanged("Evidence"); }
+      get
+      {
+        if(_Evidence.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableReference>), Overflow["evidence"]);
+        return _Evidence ??= [];
+      }
+
+      set
+      {
+        if (_Evidence.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
+          Overflow.Remove("evidence");
+        _Evidence = value;
+        OnPropertyChanged("Evidence");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.CodeableReference>? _Evidence;
@@ -658,8 +971,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
-      get => _Note ??= [];
-      set { _Note = value; OnPropertyChanged("Note"); }
+      get
+      {
+        if(_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Annotation>), Overflow["note"]);
+        return _Note ??= [];
+      }
+
+      set
+      {
+        if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          Overflow.Remove("note");
+        _Note = value;
+        OnPropertyChanged("Note");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Annotation>? _Note;
@@ -729,53 +1055,133 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
           value = _Identifier;
-          return _Identifier?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "clinicalStatus":
+          if (_ClinicalStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["clinicalStatus"];
+            return true;
+          }
           value = _ClinicalStatus;
-          return _ClinicalStatus is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "verificationStatus":
+          if (_VerificationStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["verificationStatus"];
+            return true;
+          }
           value = _VerificationStatus;
-          return _VerificationStatus is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "category":
+          if (_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["category"];
+            return true;
+          }
           value = _Category;
-          return _Category?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "severity":
+          if (_Severity.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["severity"];
+            return true;
+          }
           value = _Severity;
-          return _Severity is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "code":
+          if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["code"];
+            return true;
+          }
           value = _Code;
-          return _Code is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "bodySite":
+          if (_BodySite.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+          {
+            value = Overflow["bodySite"];
+            return true;
+          }
           value = _BodySite;
-          return _BodySite?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
         case "subject":
+          if (_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["subject"];
+            return true;
+          }
           value = _Subject;
-          return _Subject is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "encounter":
+          if (_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["encounter"];
+            return true;
+          }
           value = _Encounter;
-          return _Encounter is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "onset":
+          if (_Onset.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["onset"];
+            return true;
+          }
           value = _Onset;
-          return _Onset is not null;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "abatement":
+          if (_Abatement.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["abatement"];
+            return true;
+          }
           value = _Abatement;
-          return _Abatement is not null;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "recordedDate":
+          if (_RecordedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>())
+          {
+            value = Overflow["recordedDate"];
+            return true;
+          }
           value = _RecordedDateElement;
-          return _RecordedDateElement is not null;
+          return (value as Hl7.Fhir.Model.FhirDateTime) is not null;
         case "participant":
+          if (_Participant.InOverflow<List<Hl7.Fhir.Model.Condition.ParticipantComponent>>())
+          {
+            value = Overflow["participant"];
+            return true;
+          }
           value = _Participant;
-          return _Participant?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Condition.ParticipantComponent>)?.Any() is true;
         case "stage":
+          if (_Stage.InOverflow<List<Hl7.Fhir.Model.Condition.StageComponent>>())
+          {
+            value = Overflow["stage"];
+            return true;
+          }
           value = _Stage;
-          return _Stage?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Condition.StageComponent>)?.Any() is true;
         case "evidence":
+          if (_Evidence.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
+          {
+            value = Overflow["evidence"];
+            return true;
+          }
           value = _Evidence;
-          return _Evidence?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.CodeableReference>)?.Any() is true;
         case "note":
+          if (_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>())
+          {
+            value = Overflow["note"];
+            return true;
+          }
           value = _Note;
-          return _Note?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Annotation>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -784,55 +1190,136 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "clinicalStatus":
-          ClinicalStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            ClinicalStatus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["clinicalStatus"] = value;
+          }
+          else ClinicalStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "verificationStatus":
-          VerificationStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            VerificationStatus = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["verificationStatus"] = value;
+          }
+          else VerificationStatus = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "category":
-          Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            Category = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["category"] = value;
+          }
+          else Category = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "severity":
-          Severity = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Severity = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["severity"] = value;
+          }
+          else Severity = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["code"] = value;
+          }
+          else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "bodySite":
-          BodySite = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+          {
+            BodySite = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+            Overflow["bodySite"] = value;
+          }
+          else BodySite = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Subject = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["subject"] = value;
+          }
+          else Subject = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "encounter":
-          Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Encounter = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["encounter"] = value;
+          }
+          else Encounter = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "onset":
-          Onset = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Onset = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["onset"] = value;
+          }
+          else Onset = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "abatement":
-          Abatement = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Abatement = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["abatement"] = value;
+          }
+          else Abatement = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "recordedDate":
-          RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDateTime or null))
+          {
+            RecordedDateElement = OverflowNull<Hl7.Fhir.Model.FhirDateTime>.INSTANCE;
+            Overflow["recordedDate"] = value;
+          }
+          else RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime?)value;
           return this;
         case "participant":
-          Participant = (List<Hl7.Fhir.Model.Condition.ParticipantComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Condition.ParticipantComponent> or null))
+          {
+            Participant = OverflowNull<List<Hl7.Fhir.Model.Condition.ParticipantComponent>>.INSTANCE;
+            Overflow["participant"] = value;
+          }
+          else Participant = (List<Hl7.Fhir.Model.Condition.ParticipantComponent>?)value!;
           return this;
         case "stage":
-          Stage = (List<Hl7.Fhir.Model.Condition.StageComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Condition.StageComponent> or null))
+          {
+            Stage = OverflowNull<List<Hl7.Fhir.Model.Condition.StageComponent>>.INSTANCE;
+            Overflow["stage"] = value;
+          }
+          else Stage = (List<Hl7.Fhir.Model.Condition.StageComponent>?)value!;
           return this;
         case "evidence":
-          Evidence = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.CodeableReference> or null))
+          {
+            Evidence = OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.INSTANCE;
+            Overflow["evidence"] = value;
+          }
+          else Evidence = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
           return this;
         case "note":
-          Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Annotation> or null))
+          {
+            Note = OverflowNull<List<Hl7.Fhir.Model.Annotation>>.INSTANCE;
+            Overflow["note"] = value;
+          }
+          else Note = (List<Hl7.Fhir.Model.Annotation>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -843,22 +1330,22 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_ClinicalStatus is not null) yield return new KeyValuePair<string,object>("clinicalStatus",_ClinicalStatus);
-      if (_VerificationStatus is not null) yield return new KeyValuePair<string,object>("verificationStatus",_VerificationStatus);
-      if (_Category?.Any() == true) yield return new KeyValuePair<string,object>("category",_Category);
-      if (_Severity is not null) yield return new KeyValuePair<string,object>("severity",_Severity);
-      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (_BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
-      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_Encounter is not null) yield return new KeyValuePair<string,object>("encounter",_Encounter);
-      if (_Onset is not null) yield return new KeyValuePair<string,object>("onset",_Onset);
-      if (_Abatement is not null) yield return new KeyValuePair<string,object>("abatement",_Abatement);
-      if (_RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",_RecordedDateElement);
-      if (_Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",_Participant);
-      if (_Stage?.Any() == true) yield return new KeyValuePair<string,object>("stage",_Stage);
-      if (_Evidence?.Any() == true) yield return new KeyValuePair<string,object>("evidence",_Evidence);
-      if (_Note?.Any() == true) yield return new KeyValuePair<string,object>("note",_Note);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ClinicalStatus is not null && !_ClinicalStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("clinicalStatus",_ClinicalStatus);
+      if (_VerificationStatus is not null && !_VerificationStatus.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("verificationStatus",_VerificationStatus);
+      if (_Category?.Any() is true && !_Category.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("category",_Category);
+      if (_Severity is not null && !_Severity.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("severity",_Severity);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_BodySite?.Any() is true && !_BodySite.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("bodySite",_BodySite);
+      if (_Subject is not null && !_Subject.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_Encounter is not null && !_Encounter.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("encounter",_Encounter);
+      if (_Onset is not null && !_Onset.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("onset",_Onset);
+      if (_Abatement is not null && !_Abatement.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("abatement",_Abatement);
+      if (_RecordedDateElement is not null && !_RecordedDateElement.InOverflow<Hl7.Fhir.Model.FhirDateTime>()) yield return new KeyValuePair<string,object>("recordedDate",_RecordedDateElement);
+      if (_Participant?.Any() is true && !_Participant.InOverflow<List<Hl7.Fhir.Model.Condition.ParticipantComponent>>()) yield return new KeyValuePair<string,object>("participant",_Participant);
+      if (_Stage?.Any() is true && !_Stage.InOverflow<List<Hl7.Fhir.Model.Condition.StageComponent>>()) yield return new KeyValuePair<string,object>("stage",_Stage);
+      if (_Evidence?.Any() is true && !_Evidence.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("evidence",_Evidence);
+      if (_Note?.Any() is true && !_Note.InOverflow<List<Hl7.Fhir.Model.Annotation>>()) yield return new KeyValuePair<string,object>("note",_Note);
     }
 
   }

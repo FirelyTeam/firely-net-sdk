@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public bool? Value
     {
-      get { return ObjectValue is bool or null ? (bool?)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
+      get { return ObjectValue is bool or null ? (bool?)ObjectValue : throw COVE.FromTypes(typeof(FhirBoolean), ObjectValue); }
       set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 

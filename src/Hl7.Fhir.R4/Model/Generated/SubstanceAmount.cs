@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -79,8 +80,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Quantity? LowLimit
       {
-        get { return _LowLimit; }
-        set { _LowLimit = value; OnPropertyChanged("LowLimit"); }
+        get
+        {
+          if(_LowLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["lowLimit"]);
+          return _LowLimit;
+        }
+
+        set
+        {
+          if (_LowLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            Overflow.Remove("lowLimit");
+          _LowLimit = value;
+          OnPropertyChanged("LowLimit");
+        }
+
       }
 
       private Hl7.Fhir.Model.Quantity? _LowLimit;
@@ -92,8 +106,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Quantity? HighLimit
       {
-        get { return _HighLimit; }
-        set { _HighLimit = value; OnPropertyChanged("HighLimit"); }
+        get
+        {
+          if(_HighLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["highLimit"]);
+          return _HighLimit;
+        }
+
+        set
+        {
+          if (_HighLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            Overflow.Remove("highLimit");
+          _HighLimit = value;
+          OnPropertyChanged("HighLimit");
+        }
+
       }
 
       private Hl7.Fhir.Model.Quantity? _HighLimit;
@@ -133,11 +160,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "lowLimit":
+            if (_LowLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            {
+              value = Overflow["lowLimit"];
+              return true;
+            }
             value = _LowLimit;
-            return _LowLimit is not null;
+            return (value as Hl7.Fhir.Model.Quantity) is not null;
           case "highLimit":
+            if (_HighLimit.InOverflow<Hl7.Fhir.Model.Quantity>())
+            {
+              value = Overflow["highLimit"];
+              return true;
+            }
             value = _HighLimit;
-            return _HighLimit is not null;
+            return (value as Hl7.Fhir.Model.Quantity) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -146,13 +183,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "lowLimit":
-            LowLimit = (Hl7.Fhir.Model.Quantity?)value;
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              LowLimit = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["lowLimit"] = value;
+            }
+            else LowLimit = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "highLimit":
-            HighLimit = (Hl7.Fhir.Model.Quantity?)value;
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              HighLimit = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["highLimit"] = value;
+            }
+            else HighLimit = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -163,8 +211,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_LowLimit is not null) yield return new KeyValuePair<string,object>("lowLimit",_LowLimit);
-        if (_HighLimit is not null) yield return new KeyValuePair<string,object>("highLimit",_HighLimit);
+        if (_LowLimit is not null && !_LowLimit.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("lowLimit",_LowLimit);
+        if (_HighLimit is not null && !_HighLimit.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("highLimit",_HighLimit);
       }
 
     }
@@ -178,8 +226,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Amount
     {
-      get { return _Amount; }
-      set { _Amount = value; OnPropertyChanged("Amount"); }
+      get
+      {
+        if(_Amount.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["amount"]);
+        return _Amount;
+      }
+
+      set
+      {
+        if (_Amount.InOverflow<DynamicDataType>())
+          Overflow.Remove("amount");
+        _Amount = value;
+        OnPropertyChanged("Amount");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Amount;
@@ -191,8 +252,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? AmountType
     {
-      get { return _AmountType; }
-      set { _AmountType = value; OnPropertyChanged("AmountType"); }
+      get
+      {
+        if(_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["amountType"]);
+        return _AmountType;
+      }
+
+      set
+      {
+        if (_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("amountType");
+        _AmountType = value;
+        OnPropertyChanged("AmountType");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _AmountType;
@@ -204,8 +278,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? AmountTextElement
     {
-      get { return _AmountTextElement; }
-      set { _AmountTextElement = value; OnPropertyChanged("AmountTextElement"); }
+      get
+      {
+        if(_AmountTextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["amountText"]);
+        return _AmountTextElement;
+      }
+
+      set
+      {
+        if (_AmountTextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("amountText");
+        _AmountTextElement = value;
+        OnPropertyChanged("AmountTextElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _AmountTextElement;
@@ -217,7 +304,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AmountText
     {
-      get => _AmountTextElement?.Value;
+      get => AmountTextElement?.Value;
       set
       {
         AmountTextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -232,8 +319,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent? ReferenceRange
     {
-      get { return _ReferenceRange; }
-      set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
+      get
+      {
+        if(_ReferenceRange.InOverflow<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent), Overflow["referenceRange"]);
+        return _ReferenceRange;
+      }
+
+      set
+      {
+        if (_ReferenceRange.InOverflow<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>())
+          Overflow.Remove("referenceRange");
+        _ReferenceRange = value;
+        OnPropertyChanged("ReferenceRange");
+      }
+
     }
 
     private Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent? _ReferenceRange;
@@ -277,17 +377,37 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "amount":
+          if (_Amount.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["amount"];
+            return true;
+          }
           value = _Amount;
-          return _Amount is not null;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "amountType":
+          if (_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["amountType"];
+            return true;
+          }
           value = _AmountType;
-          return _AmountType is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "amountText":
+          if (_AmountTextElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["amountText"];
+            return true;
+          }
           value = _AmountTextElement;
-          return _AmountTextElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "referenceRange":
+          if (_ReferenceRange.InOverflow<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>())
+          {
+            value = Overflow["referenceRange"];
+            return true;
+          }
           value = _ReferenceRange;
-          return _ReferenceRange is not null;
+          return (value as Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -296,19 +416,40 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "amount":
-          Amount = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Amount = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["amount"] = value;
+          }
+          else Amount = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "amountType":
-          AmountType = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            AmountType = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["amountType"] = value;
+          }
+          else AmountType = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "amountText":
-          AmountTextElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            AmountTextElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["amountText"] = value;
+          }
+          else AmountTextElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "referenceRange":
-          ReferenceRange = (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent?)value;
+          if (value is not (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent or null))
+          {
+            ReferenceRange = OverflowNull<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>.INSTANCE;
+            Overflow["referenceRange"] = value;
+          }
+          else ReferenceRange = (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -319,10 +460,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
-      if (_AmountType is not null) yield return new KeyValuePair<string,object>("amountType",_AmountType);
-      if (_AmountTextElement is not null) yield return new KeyValuePair<string,object>("amountText",_AmountTextElement);
-      if (_ReferenceRange is not null) yield return new KeyValuePair<string,object>("referenceRange",_ReferenceRange);
+      if (_Amount is not null && !_Amount.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("amount",_Amount);
+      if (_AmountType is not null && !_AmountType.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("amountType",_AmountType);
+      if (_AmountTextElement is not null && !_AmountTextElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("amountText",_AmountTextElement);
+      if (_ReferenceRange is not null && !_ReferenceRange.InOverflow<Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent>()) yield return new KeyValuePair<string,object>("referenceRange",_ReferenceRange);
     }
 
   }

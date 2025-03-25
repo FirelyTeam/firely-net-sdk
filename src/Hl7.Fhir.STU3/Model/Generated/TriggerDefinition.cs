@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -124,8 +125,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>? TypeElement
     {
-      get { return _TypeElement; }
-      set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+      get
+      {
+        if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>), Overflow["type"]);
+        return _TypeElement;
+      }
+
+      set
+      {
+        if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
+          Overflow.Remove("type");
+        _TypeElement = value;
+        OnPropertyChanged("TypeElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>? _TypeElement;
@@ -137,7 +151,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TriggerDefinition.TriggerType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>(value);
@@ -152,8 +166,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? EventNameElement
     {
-      get { return _EventNameElement; }
-      set { _EventNameElement = value; OnPropertyChanged("EventNameElement"); }
+      get
+      {
+        if(_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["eventName"]);
+        return _EventNameElement;
+      }
+
+      set
+      {
+        if (_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("eventName");
+        _EventNameElement = value;
+        OnPropertyChanged("EventNameElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _EventNameElement;
@@ -165,7 +192,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? EventName
     {
-      get => _EventNameElement?.Value;
+      get => EventNameElement?.Value;
       set
       {
         EventNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -183,8 +210,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? EventTiming
     {
-      get { return _EventTiming; }
-      set { _EventTiming = value; OnPropertyChanged("EventTiming"); }
+      get
+      {
+        if(_EventTiming.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["eventTiming"]);
+        return _EventTiming;
+      }
+
+      set
+      {
+        if (_EventTiming.InOverflow<DynamicDataType>())
+          Overflow.Remove("eventTiming");
+        _EventTiming = value;
+        OnPropertyChanged("EventTiming");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _EventTiming;
@@ -196,8 +236,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataRequirement? EventData
     {
-      get { return _EventData; }
-      set { _EventData = value; OnPropertyChanged("EventData"); }
+      get
+      {
+        if(_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataRequirement), Overflow["eventData"]);
+        return _EventData;
+      }
+
+      set
+      {
+        if (_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>())
+          Overflow.Remove("eventData");
+        _EventData = value;
+        OnPropertyChanged("EventData");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataRequirement? _EventData;
@@ -241,17 +294,37 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
+          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>())
+          {
+            value = Overflow["type"];
+            return true;
+          }
           value = _TypeElement;
-          return _TypeElement is not null;
+          return (value as Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>) is not null;
         case "eventName":
+          if (_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["eventName"];
+            return true;
+          }
           value = _EventNameElement;
-          return _EventNameElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "eventTiming":
+          if (_EventTiming.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["eventTiming"];
+            return true;
+          }
           value = _EventTiming;
-          return _EventTiming is not null;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "eventData":
+          if (_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>())
+          {
+            value = Overflow["eventData"];
+            return true;
+          }
           value = _EventData;
-          return _EventData is not null;
+          return (value as Hl7.Fhir.Model.DataRequirement) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -260,19 +333,40 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> or null))
+          {
+            TypeElement = OverflowNull<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>?)value;
           return this;
         case "eventName":
-          EventNameElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            EventNameElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["eventName"] = value;
+          }
+          else EventNameElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "eventTiming":
-          EventTiming = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            EventTiming = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["eventTiming"] = value;
+          }
+          else EventTiming = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "eventData":
-          EventData = (Hl7.Fhir.Model.DataRequirement?)value;
+          if (value is not (Hl7.Fhir.Model.DataRequirement or null))
+          {
+            EventData = OverflowNull<Hl7.Fhir.Model.DataRequirement>.INSTANCE;
+            Overflow["eventData"] = value;
+          }
+          else EventData = (Hl7.Fhir.Model.DataRequirement?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -283,10 +377,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (_EventNameElement is not null) yield return new KeyValuePair<string,object>("eventName",_EventNameElement);
-      if (_EventTiming is not null) yield return new KeyValuePair<string,object>("eventTiming",_EventTiming);
-      if (_EventData is not null) yield return new KeyValuePair<string,object>("eventData",_EventData);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_EventNameElement is not null && !_EventNameElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("eventName",_EventNameElement);
+      if (_EventTiming is not null && !_EventTiming.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("eventTiming",_EventTiming);
+      if (_EventData is not null && !_EventData.InOverflow<Hl7.Fhir.Model.DataRequirement>()) yield return new KeyValuePair<string,object>("eventData",_EventData);
     }
 
   }

@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -87,8 +88,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Structure
       {
-        get { return _Structure; }
-        set { _Structure = value; OnPropertyChanged("Structure"); }
+        get
+        {
+          if(_Structure.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["structure"]);
+          return _Structure;
+        }
+
+        set
+        {
+          if (_Structure.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("structure");
+          _Structure = value;
+          OnPropertyChanged("Structure");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Structure;
@@ -101,8 +115,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Laterality
       {
-        get { return _Laterality; }
-        set { _Laterality = value; OnPropertyChanged("Laterality"); }
+        get
+        {
+          if(_Laterality.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["laterality"]);
+          return _Laterality;
+        }
+
+        set
+        {
+          if (_Laterality.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("laterality");
+          _Laterality = value;
+          OnPropertyChanged("Laterality");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Laterality;
@@ -115,8 +142,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent> BodyLandmarkOrientation
       {
-        get => _BodyLandmarkOrientation ??= [];
-        set { _BodyLandmarkOrientation = value; OnPropertyChanged("BodyLandmarkOrientation"); }
+        get
+        {
+          if(_BodyLandmarkOrientation.InOverflow<List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>), Overflow["bodyLandmarkOrientation"]);
+          return _BodyLandmarkOrientation ??= [];
+        }
+
+        set
+        {
+          if (_BodyLandmarkOrientation.InOverflow<List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>>())
+            Overflow.Remove("bodyLandmarkOrientation");
+          _BodyLandmarkOrientation = value;
+          OnPropertyChanged("BodyLandmarkOrientation");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>? _BodyLandmarkOrientation;
@@ -131,8 +171,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> SpatialReference
       {
-        get => _SpatialReference ??= [];
-        set { _SpatialReference = value; OnPropertyChanged("SpatialReference"); }
+        get
+        {
+          if(_SpatialReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["spatialReference"]);
+          return _SpatialReference ??= [];
+        }
+
+        set
+        {
+          if (_SpatialReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            Overflow.Remove("spatialReference");
+          _SpatialReference = value;
+          OnPropertyChanged("SpatialReference");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.ResourceReference>? _SpatialReference;
@@ -146,8 +199,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
       {
-        get => _Qualifier ??= [];
-        set { _Qualifier = value; OnPropertyChanged("Qualifier"); }
+        get
+        {
+          if(_Qualifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["qualifier"]);
+          return _Qualifier ??= [];
+        }
+
+        set
+        {
+          if (_Qualifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            Overflow.Remove("qualifier");
+          _Qualifier = value;
+          OnPropertyChanged("Qualifier");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableConcept>? _Qualifier;
@@ -193,20 +259,45 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "structure":
+            if (_Structure.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["structure"];
+              return true;
+            }
             value = _Structure;
-            return _Structure is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "laterality":
+            if (_Laterality.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["laterality"];
+              return true;
+            }
             value = _Laterality;
-            return _Laterality is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "bodyLandmarkOrientation":
+            if (_BodyLandmarkOrientation.InOverflow<List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>>())
+            {
+              value = Overflow["bodyLandmarkOrientation"];
+              return true;
+            }
             value = _BodyLandmarkOrientation;
-            return _BodyLandmarkOrientation?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>)?.Any() is true;
           case "spatialReference":
+            if (_SpatialReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            {
+              value = Overflow["spatialReference"];
+              return true;
+            }
             value = _SpatialReference;
-            return _SpatialReference?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
           case "qualifier":
+            if (_Qualifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            {
+              value = Overflow["qualifier"];
+              return true;
+            }
             value = _Qualifier;
-            return _Qualifier?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -215,22 +306,48 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "structure":
-            Structure = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Structure = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["structure"] = value;
+            }
+            else Structure = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "laterality":
-            Laterality = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Laterality = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["laterality"] = value;
+            }
+            else Laterality = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "bodyLandmarkOrientation":
-            BodyLandmarkOrientation = (List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent> or null))
+            {
+              BodyLandmarkOrientation = OverflowNull<List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>>.INSTANCE;
+              Overflow["bodyLandmarkOrientation"] = value;
+            }
+            else BodyLandmarkOrientation = (List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>?)value!;
             return this;
           case "spatialReference":
-            SpatialReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+            {
+              SpatialReference = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+              Overflow["spatialReference"] = value;
+            }
+            else SpatialReference = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "qualifier":
-            Qualifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Qualifier = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["qualifier"] = value;
+            }
+            else Qualifier = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -241,11 +358,11 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Structure is not null) yield return new KeyValuePair<string,object>("structure",_Structure);
-        if (_Laterality is not null) yield return new KeyValuePair<string,object>("laterality",_Laterality);
-        if (_BodyLandmarkOrientation?.Any() == true) yield return new KeyValuePair<string,object>("bodyLandmarkOrientation",_BodyLandmarkOrientation);
-        if (_SpatialReference?.Any() == true) yield return new KeyValuePair<string,object>("spatialReference",_SpatialReference);
-        if (_Qualifier?.Any() == true) yield return new KeyValuePair<string,object>("qualifier",_Qualifier);
+        if (_Structure is not null && !_Structure.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("structure",_Structure);
+        if (_Laterality is not null && !_Laterality.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("laterality",_Laterality);
+        if (_BodyLandmarkOrientation?.Any() is true && !_BodyLandmarkOrientation.InOverflow<List<Hl7.Fhir.Model.BodyStructure.BodyLandmarkOrientationComponent>>()) yield return new KeyValuePair<string,object>("bodyLandmarkOrientation",_BodyLandmarkOrientation);
+        if (_SpatialReference?.Any() is true && !_SpatialReference.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("spatialReference",_SpatialReference);
+        if (_Qualifier?.Any() is true && !_Qualifier.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("qualifier",_Qualifier);
       }
 
     }
@@ -275,8 +392,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> LandmarkDescription
       {
-        get => _LandmarkDescription ??= [];
-        set { _LandmarkDescription = value; OnPropertyChanged("LandmarkDescription"); }
+        get
+        {
+          if(_LandmarkDescription.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["landmarkDescription"]);
+          return _LandmarkDescription ??= [];
+        }
+
+        set
+        {
+          if (_LandmarkDescription.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            Overflow.Remove("landmarkDescription");
+          _LandmarkDescription = value;
+          OnPropertyChanged("LandmarkDescription");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableConcept>? _LandmarkDescription;
@@ -290,8 +420,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> ClockFacePosition
       {
-        get => _ClockFacePosition ??= [];
-        set { _ClockFacePosition = value; OnPropertyChanged("ClockFacePosition"); }
+        get
+        {
+          if(_ClockFacePosition.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["clockFacePosition"]);
+          return _ClockFacePosition ??= [];
+        }
+
+        set
+        {
+          if (_ClockFacePosition.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            Overflow.Remove("clockFacePosition");
+          _ClockFacePosition = value;
+          OnPropertyChanged("ClockFacePosition");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableConcept>? _ClockFacePosition;
@@ -304,8 +447,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent> DistanceFromLandmark
       {
-        get => _DistanceFromLandmark ??= [];
-        set { _DistanceFromLandmark = value; OnPropertyChanged("DistanceFromLandmark"); }
+        get
+        {
+          if(_DistanceFromLandmark.InOverflow<List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>), Overflow["distanceFromLandmark"]);
+          return _DistanceFromLandmark ??= [];
+        }
+
+        set
+        {
+          if (_DistanceFromLandmark.InOverflow<List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>>())
+            Overflow.Remove("distanceFromLandmark");
+          _DistanceFromLandmark = value;
+          OnPropertyChanged("DistanceFromLandmark");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>? _DistanceFromLandmark;
@@ -319,8 +475,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> SurfaceOrientation
       {
-        get => _SurfaceOrientation ??= [];
-        set { _SurfaceOrientation = value; OnPropertyChanged("SurfaceOrientation"); }
+        get
+        {
+          if(_SurfaceOrientation.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["surfaceOrientation"]);
+          return _SurfaceOrientation ??= [];
+        }
+
+        set
+        {
+          if (_SurfaceOrientation.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            Overflow.Remove("surfaceOrientation");
+          _SurfaceOrientation = value;
+          OnPropertyChanged("SurfaceOrientation");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableConcept>? _SurfaceOrientation;
@@ -364,17 +533,37 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "landmarkDescription":
+            if (_LandmarkDescription.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            {
+              value = Overflow["landmarkDescription"];
+              return true;
+            }
             value = _LandmarkDescription;
-            return _LandmarkDescription?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
           case "clockFacePosition":
+            if (_ClockFacePosition.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            {
+              value = Overflow["clockFacePosition"];
+              return true;
+            }
             value = _ClockFacePosition;
-            return _ClockFacePosition?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
           case "distanceFromLandmark":
+            if (_DistanceFromLandmark.InOverflow<List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>>())
+            {
+              value = Overflow["distanceFromLandmark"];
+              return true;
+            }
             value = _DistanceFromLandmark;
-            return _DistanceFromLandmark?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>)?.Any() is true;
           case "surfaceOrientation":
+            if (_SurfaceOrientation.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            {
+              value = Overflow["surfaceOrientation"];
+              return true;
+            }
             value = _SurfaceOrientation;
-            return _SurfaceOrientation?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -383,19 +572,40 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "landmarkDescription":
-            LandmarkDescription = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              LandmarkDescription = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["landmarkDescription"] = value;
+            }
+            else LandmarkDescription = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "clockFacePosition":
-            ClockFacePosition = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              ClockFacePosition = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["clockFacePosition"] = value;
+            }
+            else ClockFacePosition = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "distanceFromLandmark":
-            DistanceFromLandmark = (List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent> or null))
+            {
+              DistanceFromLandmark = OverflowNull<List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>>.INSTANCE;
+              Overflow["distanceFromLandmark"] = value;
+            }
+            else DistanceFromLandmark = (List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>?)value!;
             return this;
           case "surfaceOrientation":
-            SurfaceOrientation = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              SurfaceOrientation = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["surfaceOrientation"] = value;
+            }
+            else SurfaceOrientation = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -406,10 +616,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_LandmarkDescription?.Any() == true) yield return new KeyValuePair<string,object>("landmarkDescription",_LandmarkDescription);
-        if (_ClockFacePosition?.Any() == true) yield return new KeyValuePair<string,object>("clockFacePosition",_ClockFacePosition);
-        if (_DistanceFromLandmark?.Any() == true) yield return new KeyValuePair<string,object>("distanceFromLandmark",_DistanceFromLandmark);
-        if (_SurfaceOrientation?.Any() == true) yield return new KeyValuePair<string,object>("surfaceOrientation",_SurfaceOrientation);
+        if (_LandmarkDescription?.Any() is true && !_LandmarkDescription.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("landmarkDescription",_LandmarkDescription);
+        if (_ClockFacePosition?.Any() is true && !_ClockFacePosition.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("clockFacePosition",_ClockFacePosition);
+        if (_DistanceFromLandmark?.Any() is true && !_DistanceFromLandmark.InOverflow<List<Hl7.Fhir.Model.BodyStructure.DistanceFromLandmarkComponent>>()) yield return new KeyValuePair<string,object>("distanceFromLandmark",_DistanceFromLandmark);
+        if (_SurfaceOrientation?.Any() is true && !_SurfaceOrientation.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("surfaceOrientation",_SurfaceOrientation);
       }
 
     }
@@ -439,8 +649,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Device
       {
-        get => _Device ??= [];
-        set { _Device = value; OnPropertyChanged("Device"); }
+        get
+        {
+          if(_Device.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableReference>), Overflow["device"]);
+          return _Device ??= [];
+        }
+
+        set
+        {
+          if (_Device.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
+            Overflow.Remove("device");
+          _Device = value;
+          OnPropertyChanged("Device");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableReference>? _Device;
@@ -453,8 +676,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Quantity> Value
       {
-        get => _Value ??= [];
-        set { _Value = value; OnPropertyChanged("Value"); }
+        get
+        {
+          if(_Value.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Quantity>), Overflow["value"]);
+          return _Value ??= [];
+        }
+
+        set
+        {
+          if (_Value.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
+            Overflow.Remove("value");
+          _Value = value;
+          OnPropertyChanged("Value");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.Quantity>? _Value;
@@ -494,11 +730,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "device":
+            if (_Device.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>())
+            {
+              value = Overflow["device"];
+              return true;
+            }
             value = _Device;
-            return _Device?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.CodeableReference>)?.Any() is true;
           case "value":
+            if (_Value.InOverflow<List<Hl7.Fhir.Model.Quantity>>())
+            {
+              value = Overflow["value"];
+              return true;
+            }
             value = _Value;
-            return _Value?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.Quantity>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -507,13 +753,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "device":
-            Device = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableReference> or null))
+            {
+              Device = OverflowNull<List<Hl7.Fhir.Model.CodeableReference>>.INSTANCE;
+              Overflow["device"] = value;
+            }
+            else Device = (List<Hl7.Fhir.Model.CodeableReference>?)value!;
             return this;
           case "value":
-            Value = (List<Hl7.Fhir.Model.Quantity>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.Quantity> or null))
+            {
+              Value = OverflowNull<List<Hl7.Fhir.Model.Quantity>>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else Value = (List<Hl7.Fhir.Model.Quantity>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -524,8 +781,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Device?.Any() == true) yield return new KeyValuePair<string,object>("device",_Device);
-        if (_Value?.Any() == true) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_Device?.Any() is true && !_Device.InOverflow<List<Hl7.Fhir.Model.CodeableReference>>()) yield return new KeyValuePair<string,object>("device",_Device);
+        if (_Value?.Any() is true && !_Value.InOverflow<List<Hl7.Fhir.Model.Quantity>>()) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -538,8 +795,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ??= [];
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Identifier>? _Identifier;
@@ -551,8 +821,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
     {
-      get { return _ActiveElement; }
-      set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
+      get
+      {
+        if(_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirBoolean), Overflow["active"]);
+        return _ActiveElement;
+      }
+
+      set
+      {
+        if (_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+          Overflow.Remove("active");
+        _ActiveElement = value;
+        OnPropertyChanged("ActiveElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirBoolean? _ActiveElement;
@@ -564,7 +847,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get => _ActiveElement?.Value;
+      get => ActiveElement?.Value;
       set
       {
         ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -580,8 +863,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Morphology
     {
-      get { return _Morphology; }
-      set { _Morphology = value; OnPropertyChanged("Morphology"); }
+      get
+      {
+        if(_Morphology.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["morphology"]);
+        return _Morphology;
+      }
+
+      set
+      {
+        if (_Morphology.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("morphology");
+        _Morphology = value;
+        OnPropertyChanged("Morphology");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Morphology;
@@ -594,8 +890,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> IncludedStructure
     {
-      get => _IncludedStructure ??= [];
-      set { _IncludedStructure = value; OnPropertyChanged("IncludedStructure"); }
+      get
+      {
+        if(_IncludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>), Overflow["includedStructure"]);
+        return _IncludedStructure ??= [];
+      }
+
+      set
+      {
+        if (_IncludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>())
+          Overflow.Remove("includedStructure");
+        _IncludedStructure = value;
+        OnPropertyChanged("IncludedStructure");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>? _IncludedStructure;
@@ -608,8 +917,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> ExcludedStructure
     {
-      get => _ExcludedStructure ??= [];
-      set { _ExcludedStructure = value; OnPropertyChanged("ExcludedStructure"); }
+      get
+      {
+        if(_ExcludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>), Overflow["excludedStructure"]);
+        return _ExcludedStructure ??= [];
+      }
+
+      set
+      {
+        if (_ExcludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>())
+          Overflow.Remove("excludedStructure");
+        _ExcludedStructure = value;
+        OnPropertyChanged("ExcludedStructure");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>? _ExcludedStructure;
@@ -621,8 +943,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
     {
-      get { return _DescriptionElement; }
-      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+      get
+      {
+        if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Markdown), Overflow["description"]);
+        return _DescriptionElement;
+      }
+
+      set
+      {
+        if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
+          Overflow.Remove("description");
+        _DescriptionElement = value;
+        OnPropertyChanged("DescriptionElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Markdown? _DescriptionElement;
@@ -634,7 +969,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -650,8 +985,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
-      get => _Image ??= [];
-      set { _Image = value; OnPropertyChanged("Image"); }
+      get
+      {
+        if(_Image.InOverflow<List<Hl7.Fhir.Model.Attachment>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Attachment>), Overflow["image"]);
+        return _Image ??= [];
+      }
+
+      set
+      {
+        if (_Image.InOverflow<List<Hl7.Fhir.Model.Attachment>>())
+          Overflow.Remove("image");
+        _Image = value;
+        OnPropertyChanged("Image");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Attachment>? _Image;
@@ -666,8 +1014,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Patient
     {
-      get { return _Patient; }
-      set { _Patient = value; OnPropertyChanged("Patient"); }
+      get
+      {
+        if(_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["patient"]);
+        return _Patient;
+      }
+
+      set
+      {
+        if (_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("patient");
+        _Patient = value;
+        OnPropertyChanged("Patient");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Patient;
@@ -721,29 +1082,69 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
           value = _Identifier;
-          return _Identifier?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "active":
+          if (_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>())
+          {
+            value = Overflow["active"];
+            return true;
+          }
           value = _ActiveElement;
-          return _ActiveElement is not null;
+          return (value as Hl7.Fhir.Model.FhirBoolean) is not null;
         case "morphology":
+          if (_Morphology.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["morphology"];
+            return true;
+          }
           value = _Morphology;
-          return _Morphology is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "includedStructure":
+          if (_IncludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>())
+          {
+            value = Overflow["includedStructure"];
+            return true;
+          }
           value = _IncludedStructure;
-          return _IncludedStructure?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>)?.Any() is true;
         case "excludedStructure":
+          if (_ExcludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>())
+          {
+            value = Overflow["excludedStructure"];
+            return true;
+          }
           value = _ExcludedStructure;
-          return _ExcludedStructure?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>)?.Any() is true;
         case "description":
+          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>())
+          {
+            value = Overflow["description"];
+            return true;
+          }
           value = _DescriptionElement;
-          return _DescriptionElement is not null;
+          return (value as Hl7.Fhir.Model.Markdown) is not null;
         case "image":
+          if (_Image.InOverflow<List<Hl7.Fhir.Model.Attachment>>())
+          {
+            value = Overflow["image"];
+            return true;
+          }
           value = _Image;
-          return _Image?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Attachment>)?.Any() is true;
         case "patient":
+          if (_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["patient"];
+            return true;
+          }
           value = _Patient;
-          return _Patient is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -752,31 +1153,72 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "active":
-          ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
+          if (value is not (Hl7.Fhir.Model.FhirBoolean or null))
+          {
+            ActiveElement = OverflowNull<Hl7.Fhir.Model.FhirBoolean>.INSTANCE;
+            Overflow["active"] = value;
+          }
+          else ActiveElement = (Hl7.Fhir.Model.FhirBoolean?)value;
           return this;
         case "morphology":
-          Morphology = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Morphology = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["morphology"] = value;
+          }
+          else Morphology = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "includedStructure":
-          IncludedStructure = (List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> or null))
+          {
+            IncludedStructure = OverflowNull<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>.INSTANCE;
+            Overflow["includedStructure"] = value;
+          }
+          else IncludedStructure = (List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>?)value!;
           return this;
         case "excludedStructure":
-          ExcludedStructure = (List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent> or null))
+          {
+            ExcludedStructure = OverflowNull<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>.INSTANCE;
+            Overflow["excludedStructure"] = value;
+          }
+          else ExcludedStructure = (List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>?)value!;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
+          if (value is not (Hl7.Fhir.Model.Markdown or null))
+          {
+            DescriptionElement = OverflowNull<Hl7.Fhir.Model.Markdown>.INSTANCE;
+            Overflow["description"] = value;
+          }
+          else DescriptionElement = (Hl7.Fhir.Model.Markdown?)value;
           return this;
         case "image":
-          Image = (List<Hl7.Fhir.Model.Attachment>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Attachment> or null))
+          {
+            Image = OverflowNull<List<Hl7.Fhir.Model.Attachment>>.INSTANCE;
+            Overflow["image"] = value;
+          }
+          else Image = (List<Hl7.Fhir.Model.Attachment>?)value!;
           return this;
         case "patient":
-          Patient = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Patient = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["patient"] = value;
+          }
+          else Patient = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -787,14 +1229,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_ActiveElement is not null) yield return new KeyValuePair<string,object>("active",_ActiveElement);
-      if (_Morphology is not null) yield return new KeyValuePair<string,object>("morphology",_Morphology);
-      if (_IncludedStructure?.Any() == true) yield return new KeyValuePair<string,object>("includedStructure",_IncludedStructure);
-      if (_ExcludedStructure?.Any() == true) yield return new KeyValuePair<string,object>("excludedStructure",_ExcludedStructure);
-      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (_Image?.Any() == true) yield return new KeyValuePair<string,object>("image",_Image);
-      if (_Patient is not null) yield return new KeyValuePair<string,object>("patient",_Patient);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_ActiveElement is not null && !_ActiveElement.InOverflow<Hl7.Fhir.Model.FhirBoolean>()) yield return new KeyValuePair<string,object>("active",_ActiveElement);
+      if (_Morphology is not null && !_Morphology.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("morphology",_Morphology);
+      if (_IncludedStructure?.Any() is true && !_IncludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>()) yield return new KeyValuePair<string,object>("includedStructure",_IncludedStructure);
+      if (_ExcludedStructure?.Any() is true && !_ExcludedStructure.InOverflow<List<Hl7.Fhir.Model.BodyStructure.IncludedStructureComponent>>()) yield return new KeyValuePair<string,object>("excludedStructure",_ExcludedStructure);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.Markdown>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_Image?.Any() is true && !_Image.InOverflow<List<Hl7.Fhir.Model.Attachment>>()) yield return new KeyValuePair<string,object>("image",_Image);
+      if (_Patient is not null && !_Patient.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("patient",_Patient);
     }
 
   }

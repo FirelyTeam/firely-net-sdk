@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -64,8 +65,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Narrative? Text
     {
-      get { return _Text; }
-      set { _Text = value; OnPropertyChanged("Text"); }
+      get
+      {
+        if(_Text.InOverflow<Hl7.Fhir.Model.Narrative>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Narrative), Overflow["text"]);
+        return _Text;
+      }
+
+      set
+      {
+        if (_Text.InOverflow<Hl7.Fhir.Model.Narrative>())
+          Overflow.Remove("text");
+        _Text = value;
+        OnPropertyChanged("Text");
+      }
+
     }
 
     private Hl7.Fhir.Model.Narrative? _Text;
@@ -80,8 +94,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Resource> Contained
     {
-      get => _Contained ??= [];
-      set { _Contained = value; OnPropertyChanged("Contained"); }
+      get
+      {
+        if(_Contained.InOverflow<List<Hl7.Fhir.Model.Resource>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Resource>), Overflow["contained"]);
+        return _Contained ??= [];
+      }
+
+      set
+      {
+        if (_Contained.InOverflow<List<Hl7.Fhir.Model.Resource>>())
+          Overflow.Remove("contained");
+        _Contained = value;
+        OnPropertyChanged("Contained");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Resource>? _Contained;
@@ -94,8 +121,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
-      get => _Extension ??= [];
-      set { _Extension = value; OnPropertyChanged("Extension"); }
+      get
+      {
+        if(_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["extension"]);
+        return _Extension ??= [];
+      }
+
+      set
+      {
+        if (_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          Overflow.Remove("extension");
+        _Extension = value;
+        OnPropertyChanged("Extension");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Extension>? _Extension;
@@ -108,8 +148,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
-      get => _ModifierExtension ??= [];
-      set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
+      get
+      {
+        if(_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Extension>), Overflow["modifierExtension"]);
+        return _ModifierExtension ??= [];
+      }
+
+      set
+      {
+        if (_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          Overflow.Remove("modifierExtension");
+        _ModifierExtension = value;
+        OnPropertyChanged("ModifierExtension");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Extension>? _ModifierExtension;
@@ -146,17 +199,37 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "text":
+          if (_Text.InOverflow<Hl7.Fhir.Model.Narrative>())
+          {
+            value = Overflow["text"];
+            return true;
+          }
           value = _Text;
-          return _Text is not null;
+          return (value as Hl7.Fhir.Model.Narrative) is not null;
         case "contained":
+          if (_Contained.InOverflow<List<Hl7.Fhir.Model.Resource>>())
+          {
+            value = Overflow["contained"];
+            return true;
+          }
           value = _Contained;
-          return _Contained?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Resource>)?.Any() is true;
         case "extension":
+          if (_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          {
+            value = Overflow["extension"];
+            return true;
+          }
           value = _Extension;
-          return _Extension?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Extension>)?.Any() is true;
         case "modifierExtension":
+          if (_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>())
+          {
+            value = Overflow["modifierExtension"];
+            return true;
+          }
           value = _ModifierExtension;
-          return _ModifierExtension?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Extension>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -165,19 +238,40 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "text":
-          Text = (Hl7.Fhir.Model.Narrative?)value;
+          if (value is not (Hl7.Fhir.Model.Narrative or null))
+          {
+            Text = OverflowNull<Hl7.Fhir.Model.Narrative>.INSTANCE;
+            Overflow["text"] = value;
+          }
+          else Text = (Hl7.Fhir.Model.Narrative?)value;
           return this;
         case "contained":
-          Contained = (List<Hl7.Fhir.Model.Resource>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Resource> or null))
+          {
+            Contained = OverflowNull<List<Hl7.Fhir.Model.Resource>>.INSTANCE;
+            Overflow["contained"] = value;
+          }
+          else Contained = (List<Hl7.Fhir.Model.Resource>?)value!;
           return this;
         case "extension":
-          Extension = (List<Hl7.Fhir.Model.Extension>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Extension> or null))
+          {
+            Extension = OverflowNull<List<Hl7.Fhir.Model.Extension>>.INSTANCE;
+            Overflow["extension"] = value;
+          }
+          else Extension = (List<Hl7.Fhir.Model.Extension>?)value!;
           return this;
         case "modifierExtension":
-          ModifierExtension = (List<Hl7.Fhir.Model.Extension>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Extension> or null))
+          {
+            ModifierExtension = OverflowNull<List<Hl7.Fhir.Model.Extension>>.INSTANCE;
+            Overflow["modifierExtension"] = value;
+          }
+          else ModifierExtension = (List<Hl7.Fhir.Model.Extension>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -188,10 +282,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Text is not null) yield return new KeyValuePair<string,object>("text",_Text);
-      if (_Contained?.Any() == true) yield return new KeyValuePair<string,object>("contained",_Contained);
-      if (_Extension?.Any() == true) yield return new KeyValuePair<string,object>("extension",_Extension);
-      if (_ModifierExtension?.Any() == true) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
+      if (_Text is not null && !_Text.InOverflow<Hl7.Fhir.Model.Narrative>()) yield return new KeyValuePair<string,object>("text",_Text);
+      if (_Contained?.Any() is true && !_Contained.InOverflow<List<Hl7.Fhir.Model.Resource>>()) yield return new KeyValuePair<string,object>("contained",_Contained);
+      if (_Extension?.Any() is true && !_Extension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("extension",_Extension);
+      if (_ModifierExtension?.Any() is true && !_ModifierExtension.InOverflow<List<Hl7.Fhir.Model.Extension>>()) yield return new KeyValuePair<string,object>("modifierExtension",_ModifierExtension);
     }
 
   }

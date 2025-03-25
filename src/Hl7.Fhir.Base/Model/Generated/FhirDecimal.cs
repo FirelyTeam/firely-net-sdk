@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public decimal? Value
     {
-      get { return ObjectValue is decimal or null ? (decimal?)ObjectValue : throw COVE.INCORRECT_LITERAL_VALUE_TYPE(null, ObjectValue, this.TypeName); }
+      get { return ObjectValue is decimal or null ? (decimal?)ObjectValue : throw COVE.FromTypes(typeof(FhirDecimal), ObjectValue); }
       set { ObjectValue = value; OnPropertyChanged("Value"); }
     }
 

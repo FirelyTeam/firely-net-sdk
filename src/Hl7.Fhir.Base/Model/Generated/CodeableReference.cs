@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -69,8 +70,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Concept
     {
-      get { return _Concept; }
-      set { _Concept = value; OnPropertyChanged("Concept"); }
+      get
+      {
+        if(_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["concept"]);
+        return _Concept;
+      }
+
+      set
+      {
+        if (_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("concept");
+        _Concept = value;
+        OnPropertyChanged("Concept");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Concept;
@@ -82,8 +96,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Reference
     {
-      get { return _Reference; }
-      set { _Reference = value; OnPropertyChanged("Reference"); }
+      get
+      {
+        if(_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["reference"]);
+        return _Reference;
+      }
+
+      set
+      {
+        if (_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("reference");
+        _Reference = value;
+        OnPropertyChanged("Reference");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Reference;
@@ -123,11 +150,21 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "concept":
+          if (_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["concept"];
+            return true;
+          }
           value = _Concept;
-          return _Concept is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "reference":
+          if (_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["reference"];
+            return true;
+          }
           value = _Reference;
-          return _Reference is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -136,13 +173,24 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "concept":
-          Concept = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Concept = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["concept"] = value;
+          }
+          else Concept = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "reference":
-          Reference = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Reference = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["reference"] = value;
+          }
+          else Reference = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -153,8 +201,8 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Concept is not null) yield return new KeyValuePair<string,object>("concept",_Concept);
-      if (_Reference is not null) yield return new KeyValuePair<string,object>("reference",_Reference);
+      if (_Concept is not null && !_Concept.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("concept",_Concept);
+      if (_Reference is not null && !_Reference.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("reference",_Reference);
     }
 
   }

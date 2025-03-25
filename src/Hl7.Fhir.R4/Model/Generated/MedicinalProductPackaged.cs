@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -80,8 +81,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Identifier? OuterPackaging
       {
-        get { return _OuterPackaging; }
-        set { _OuterPackaging = value; OnPropertyChanged("OuterPackaging"); }
+        get
+        {
+          if(_OuterPackaging.InOverflow<Hl7.Fhir.Model.Identifier>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["outerPackaging"]);
+          return _OuterPackaging;
+        }
+
+        set
+        {
+          if (_OuterPackaging.InOverflow<Hl7.Fhir.Model.Identifier>())
+            Overflow.Remove("outerPackaging");
+          _OuterPackaging = value;
+          OnPropertyChanged("OuterPackaging");
+        }
+
       }
 
       private Hl7.Fhir.Model.Identifier? _OuterPackaging;
@@ -93,8 +107,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Identifier? ImmediatePackaging
       {
-        get { return _ImmediatePackaging; }
-        set { _ImmediatePackaging = value; OnPropertyChanged("ImmediatePackaging"); }
+        get
+        {
+          if(_ImmediatePackaging.InOverflow<Hl7.Fhir.Model.Identifier>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Identifier), Overflow["immediatePackaging"]);
+          return _ImmediatePackaging;
+        }
+
+        set
+        {
+          if (_ImmediatePackaging.InOverflow<Hl7.Fhir.Model.Identifier>())
+            Overflow.Remove("immediatePackaging");
+          _ImmediatePackaging = value;
+          OnPropertyChanged("ImmediatePackaging");
+        }
+
       }
 
       private Hl7.Fhir.Model.Identifier? _ImmediatePackaging;
@@ -134,11 +161,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "outerPackaging":
+            if (_OuterPackaging.InOverflow<Hl7.Fhir.Model.Identifier>())
+            {
+              value = Overflow["outerPackaging"];
+              return true;
+            }
             value = _OuterPackaging;
-            return _OuterPackaging is not null;
+            return (value as Hl7.Fhir.Model.Identifier) is not null;
           case "immediatePackaging":
+            if (_ImmediatePackaging.InOverflow<Hl7.Fhir.Model.Identifier>())
+            {
+              value = Overflow["immediatePackaging"];
+              return true;
+            }
             value = _ImmediatePackaging;
-            return _ImmediatePackaging is not null;
+            return (value as Hl7.Fhir.Model.Identifier) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -147,13 +184,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "outerPackaging":
-            OuterPackaging = (Hl7.Fhir.Model.Identifier?)value;
+            if (value is not (Hl7.Fhir.Model.Identifier or null))
+            {
+              OuterPackaging = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+              Overflow["outerPackaging"] = value;
+            }
+            else OuterPackaging = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           case "immediatePackaging":
-            ImmediatePackaging = (Hl7.Fhir.Model.Identifier?)value;
+            if (value is not (Hl7.Fhir.Model.Identifier or null))
+            {
+              ImmediatePackaging = OverflowNull<Hl7.Fhir.Model.Identifier>.INSTANCE;
+              Overflow["immediatePackaging"] = value;
+            }
+            else ImmediatePackaging = (Hl7.Fhir.Model.Identifier?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -164,8 +212,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_OuterPackaging is not null) yield return new KeyValuePair<string,object>("outerPackaging",_OuterPackaging);
-        if (_ImmediatePackaging is not null) yield return new KeyValuePair<string,object>("immediatePackaging",_ImmediatePackaging);
+        if (_OuterPackaging is not null && !_OuterPackaging.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("outerPackaging",_OuterPackaging);
+        if (_ImmediatePackaging is not null && !_ImmediatePackaging.InOverflow<Hl7.Fhir.Model.Identifier>()) yield return new KeyValuePair<string,object>("immediatePackaging",_ImmediatePackaging);
       }
 
     }
@@ -191,8 +239,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
-        get => _Identifier ??= [];
-        set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        get
+        {
+          if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+          return _Identifier ??= [];
+        }
+
+        set
+        {
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+            Overflow.Remove("identifier");
+          _Identifier = value;
+          OnPropertyChanged("Identifier");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.Identifier>? _Identifier;
@@ -205,8 +266,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Type
       {
-        get { return _Type; }
-        set { _Type = value; OnPropertyChanged("Type"); }
+        get
+        {
+          if(_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["type"]);
+          return _Type;
+        }
+
+        set
+        {
+          if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            Overflow.Remove("type");
+          _Type = value;
+          OnPropertyChanged("Type");
+        }
+
       }
 
       private Hl7.Fhir.Model.CodeableConcept? _Type;
@@ -219,8 +293,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
       {
-        get { return _Quantity; }
-        set { _Quantity = value; OnPropertyChanged("Quantity"); }
+        get
+        {
+          if(_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Quantity), Overflow["quantity"]);
+          return _Quantity;
+        }
+
+        set
+        {
+          if (_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
+            Overflow.Remove("quantity");
+          _Quantity = value;
+          OnPropertyChanged("Quantity");
+        }
+
       }
 
       private Hl7.Fhir.Model.Quantity? _Quantity;
@@ -233,8 +320,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Material
       {
-        get => _Material ??= [];
-        set { _Material = value; OnPropertyChanged("Material"); }
+        get
+        {
+          if(_Material.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["material"]);
+          return _Material ??= [];
+        }
+
+        set
+        {
+          if (_Material.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            Overflow.Remove("material");
+          _Material = value;
+          OnPropertyChanged("Material");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableConcept>? _Material;
@@ -247,8 +347,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AlternateMaterial
       {
-        get => _AlternateMaterial ??= [];
-        set { _AlternateMaterial = value; OnPropertyChanged("AlternateMaterial"); }
+        get
+        {
+          if(_AlternateMaterial.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["alternateMaterial"]);
+          return _AlternateMaterial ??= [];
+        }
+
+        set
+        {
+          if (_AlternateMaterial.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            Overflow.Remove("alternateMaterial");
+          _AlternateMaterial = value;
+          OnPropertyChanged("AlternateMaterial");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableConcept>? _AlternateMaterial;
@@ -263,8 +376,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Device
       {
-        get => _Device ??= [];
-        set { _Device = value; OnPropertyChanged("Device"); }
+        get
+        {
+          if(_Device.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["device"]);
+          return _Device ??= [];
+        }
+
+        set
+        {
+          if (_Device.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            Overflow.Remove("device");
+          _Device = value;
+          OnPropertyChanged("Device");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.ResourceReference>? _Device;
@@ -279,8 +405,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> ManufacturedItem
       {
-        get => _ManufacturedItem ??= [];
-        set { _ManufacturedItem = value; OnPropertyChanged("ManufacturedItem"); }
+        get
+        {
+          if(_ManufacturedItem.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["manufacturedItem"]);
+          return _ManufacturedItem ??= [];
+        }
+
+        set
+        {
+          if (_ManufacturedItem.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            Overflow.Remove("manufacturedItem");
+          _ManufacturedItem = value;
+          OnPropertyChanged("ManufacturedItem");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.ResourceReference>? _ManufacturedItem;
@@ -293,8 +432,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> PackageItem
       {
-        get => _PackageItem ??= [];
-        set { _PackageItem = value; OnPropertyChanged("PackageItem"); }
+        get
+        {
+          if(_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>), Overflow["packageItem"]);
+          return _PackageItem ??= [];
+        }
+
+        set
+        {
+          if (_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>())
+            Overflow.Remove("packageItem");
+          _PackageItem = value;
+          OnPropertyChanged("PackageItem");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>? _PackageItem;
@@ -306,8 +458,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.ProdCharacteristic? PhysicalCharacteristics
       {
-        get { return _PhysicalCharacteristics; }
-        set { _PhysicalCharacteristics = value; OnPropertyChanged("PhysicalCharacteristics"); }
+        get
+        {
+          if(_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ProdCharacteristic), Overflow["physicalCharacteristics"]);
+          return _PhysicalCharacteristics;
+        }
+
+        set
+        {
+          if (_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>())
+            Overflow.Remove("physicalCharacteristics");
+          _PhysicalCharacteristics = value;
+          OnPropertyChanged("PhysicalCharacteristics");
+        }
+
       }
 
       private Hl7.Fhir.Model.ProdCharacteristic? _PhysicalCharacteristics;
@@ -320,8 +485,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> OtherCharacteristics
       {
-        get => _OtherCharacteristics ??= [];
-        set { _OtherCharacteristics = value; OnPropertyChanged("OtherCharacteristics"); }
+        get
+        {
+          if(_OtherCharacteristics.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.CodeableConcept>), Overflow["otherCharacteristics"]);
+          return _OtherCharacteristics ??= [];
+        }
+
+        set
+        {
+          if (_OtherCharacteristics.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            Overflow.Remove("otherCharacteristics");
+          _OtherCharacteristics = value;
+          OnPropertyChanged("OtherCharacteristics");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.CodeableConcept>? _OtherCharacteristics;
@@ -334,8 +512,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ProductShelfLife> ShelfLifeStorage
       {
-        get => _ShelfLifeStorage ??= [];
-        set { _ShelfLifeStorage = value; OnPropertyChanged("ShelfLifeStorage"); }
+        get
+        {
+          if(_ShelfLifeStorage.InOverflow<List<Hl7.Fhir.Model.ProductShelfLife>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ProductShelfLife>), Overflow["shelfLifeStorage"]);
+          return _ShelfLifeStorage ??= [];
+        }
+
+        set
+        {
+          if (_ShelfLifeStorage.InOverflow<List<Hl7.Fhir.Model.ProductShelfLife>>())
+            Overflow.Remove("shelfLifeStorage");
+          _ShelfLifeStorage = value;
+          OnPropertyChanged("ShelfLifeStorage");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.ProductShelfLife>? _ShelfLifeStorage;
@@ -350,8 +541,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
       {
-        get => _Manufacturer ??= [];
-        set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
+        get
+        {
+          if(_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["manufacturer"]);
+          return _Manufacturer ??= [];
+        }
+
+        set
+        {
+          if (_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            Overflow.Remove("manufacturer");
+          _Manufacturer = value;
+          OnPropertyChanged("Manufacturer");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.ResourceReference>? _Manufacturer;
@@ -411,41 +615,101 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "identifier":
+            if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+            {
+              value = Overflow["identifier"];
+              return true;
+            }
             value = _Identifier;
-            return _Identifier?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
           case "type":
+            if (_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+            {
+              value = Overflow["type"];
+              return true;
+            }
             value = _Type;
-            return _Type is not null;
+            return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
           case "quantity":
+            if (_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>())
+            {
+              value = Overflow["quantity"];
+              return true;
+            }
             value = _Quantity;
-            return _Quantity is not null;
+            return (value as Hl7.Fhir.Model.Quantity) is not null;
           case "material":
+            if (_Material.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            {
+              value = Overflow["material"];
+              return true;
+            }
             value = _Material;
-            return _Material?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
           case "alternateMaterial":
+            if (_AlternateMaterial.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            {
+              value = Overflow["alternateMaterial"];
+              return true;
+            }
             value = _AlternateMaterial;
-            return _AlternateMaterial?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
           case "device":
+            if (_Device.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            {
+              value = Overflow["device"];
+              return true;
+            }
             value = _Device;
-            return _Device?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
           case "manufacturedItem":
+            if (_ManufacturedItem.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            {
+              value = Overflow["manufacturedItem"];
+              return true;
+            }
             value = _ManufacturedItem;
-            return _ManufacturedItem?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
           case "packageItem":
+            if (_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>())
+            {
+              value = Overflow["packageItem"];
+              return true;
+            }
             value = _PackageItem;
-            return _PackageItem?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>)?.Any() is true;
           case "physicalCharacteristics":
+            if (_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>())
+            {
+              value = Overflow["physicalCharacteristics"];
+              return true;
+            }
             value = _PhysicalCharacteristics;
-            return _PhysicalCharacteristics is not null;
+            return (value as Hl7.Fhir.Model.ProdCharacteristic) is not null;
           case "otherCharacteristics":
+            if (_OtherCharacteristics.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>())
+            {
+              value = Overflow["otherCharacteristics"];
+              return true;
+            }
             value = _OtherCharacteristics;
-            return _OtherCharacteristics?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.CodeableConcept>)?.Any() is true;
           case "shelfLifeStorage":
+            if (_ShelfLifeStorage.InOverflow<List<Hl7.Fhir.Model.ProductShelfLife>>())
+            {
+              value = Overflow["shelfLifeStorage"];
+              return true;
+            }
             value = _ShelfLifeStorage;
-            return _ShelfLifeStorage?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.ProductShelfLife>)?.Any() is true;
           case "manufacturer":
+            if (_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+            {
+              value = Overflow["manufacturer"];
+              return true;
+            }
             value = _Manufacturer;
-            return _Manufacturer?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -454,43 +718,104 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "identifier":
-            Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+            {
+              Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+              Overflow["identifier"] = value;
+            }
+            else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
             return this;
           case "type":
-            Type = (Hl7.Fhir.Model.CodeableConcept?)value;
+            if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+            {
+              Type = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+              Overflow["type"] = value;
+            }
+            else Type = (Hl7.Fhir.Model.CodeableConcept?)value;
             return this;
           case "quantity":
-            Quantity = (Hl7.Fhir.Model.Quantity?)value;
+            if (value is not (Hl7.Fhir.Model.Quantity or null))
+            {
+              Quantity = OverflowNull<Hl7.Fhir.Model.Quantity>.INSTANCE;
+              Overflow["quantity"] = value;
+            }
+            else Quantity = (Hl7.Fhir.Model.Quantity?)value;
             return this;
           case "material":
-            Material = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              Material = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["material"] = value;
+            }
+            else Material = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "alternateMaterial":
-            AlternateMaterial = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              AlternateMaterial = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["alternateMaterial"] = value;
+            }
+            else AlternateMaterial = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "device":
-            Device = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+            {
+              Device = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+              Overflow["device"] = value;
+            }
+            else Device = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "manufacturedItem":
-            ManufacturedItem = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+            {
+              ManufacturedItem = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+              Overflow["manufacturedItem"] = value;
+            }
+            else ManufacturedItem = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           case "packageItem":
-            PackageItem = (List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> or null))
+            {
+              PackageItem = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>.INSTANCE;
+              Overflow["packageItem"] = value;
+            }
+            else PackageItem = (List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>?)value!;
             return this;
           case "physicalCharacteristics":
-            PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic?)value;
+            if (value is not (Hl7.Fhir.Model.ProdCharacteristic or null))
+            {
+              PhysicalCharacteristics = OverflowNull<Hl7.Fhir.Model.ProdCharacteristic>.INSTANCE;
+              Overflow["physicalCharacteristics"] = value;
+            }
+            else PhysicalCharacteristics = (Hl7.Fhir.Model.ProdCharacteristic?)value;
             return this;
           case "otherCharacteristics":
-            OtherCharacteristics = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.CodeableConcept> or null))
+            {
+              OtherCharacteristics = OverflowNull<List<Hl7.Fhir.Model.CodeableConcept>>.INSTANCE;
+              Overflow["otherCharacteristics"] = value;
+            }
+            else OtherCharacteristics = (List<Hl7.Fhir.Model.CodeableConcept>?)value!;
             return this;
           case "shelfLifeStorage":
-            ShelfLifeStorage = (List<Hl7.Fhir.Model.ProductShelfLife>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ProductShelfLife> or null))
+            {
+              ShelfLifeStorage = OverflowNull<List<Hl7.Fhir.Model.ProductShelfLife>>.INSTANCE;
+              Overflow["shelfLifeStorage"] = value;
+            }
+            else ShelfLifeStorage = (List<Hl7.Fhir.Model.ProductShelfLife>?)value!;
             return this;
           case "manufacturer":
-            Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+            {
+              Manufacturer = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+              Overflow["manufacturer"] = value;
+            }
+            else Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -501,18 +826,18 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-        if (_Type is not null) yield return new KeyValuePair<string,object>("type",_Type);
-        if (_Quantity is not null) yield return new KeyValuePair<string,object>("quantity",_Quantity);
-        if (_Material?.Any() == true) yield return new KeyValuePair<string,object>("material",_Material);
-        if (_AlternateMaterial?.Any() == true) yield return new KeyValuePair<string,object>("alternateMaterial",_AlternateMaterial);
-        if (_Device?.Any() == true) yield return new KeyValuePair<string,object>("device",_Device);
-        if (_ManufacturedItem?.Any() == true) yield return new KeyValuePair<string,object>("manufacturedItem",_ManufacturedItem);
-        if (_PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",_PackageItem);
-        if (_PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",_PhysicalCharacteristics);
-        if (_OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",_OtherCharacteristics);
-        if (_ShelfLifeStorage?.Any() == true) yield return new KeyValuePair<string,object>("shelfLifeStorage",_ShelfLifeStorage);
-        if (_Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+        if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+        if (_Type is not null && !_Type.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("type",_Type);
+        if (_Quantity is not null && !_Quantity.InOverflow<Hl7.Fhir.Model.Quantity>()) yield return new KeyValuePair<string,object>("quantity",_Quantity);
+        if (_Material?.Any() is true && !_Material.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("material",_Material);
+        if (_AlternateMaterial?.Any() is true && !_AlternateMaterial.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("alternateMaterial",_AlternateMaterial);
+        if (_Device?.Any() is true && !_Device.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("device",_Device);
+        if (_ManufacturedItem?.Any() is true && !_ManufacturedItem.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("manufacturedItem",_ManufacturedItem);
+        if (_PackageItem?.Any() is true && !_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>()) yield return new KeyValuePair<string,object>("packageItem",_PackageItem);
+        if (_PhysicalCharacteristics is not null && !_PhysicalCharacteristics.InOverflow<Hl7.Fhir.Model.ProdCharacteristic>()) yield return new KeyValuePair<string,object>("physicalCharacteristics",_PhysicalCharacteristics);
+        if (_OtherCharacteristics?.Any() is true && !_OtherCharacteristics.InOverflow<List<Hl7.Fhir.Model.CodeableConcept>>()) yield return new KeyValuePair<string,object>("otherCharacteristics",_OtherCharacteristics);
+        if (_ShelfLifeStorage?.Any() is true && !_ShelfLifeStorage.InOverflow<List<Hl7.Fhir.Model.ProductShelfLife>>()) yield return new KeyValuePair<string,object>("shelfLifeStorage",_ShelfLifeStorage);
+        if (_Manufacturer?.Any() is true && !_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
       }
 
     }
@@ -525,8 +850,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ??= [];
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Identifier>? _Identifier;
@@ -541,8 +879,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
-      get => _Subject ??= [];
-      set { _Subject = value; OnPropertyChanged("Subject"); }
+      get
+      {
+        if(_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["subject"]);
+        return _Subject ??= [];
+      }
+
+      set
+      {
+        if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("subject");
+        _Subject = value;
+        OnPropertyChanged("Subject");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Subject;
@@ -554,8 +905,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
     {
-      get { return _DescriptionElement; }
-      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+      get
+      {
+        if(_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["description"]);
+        return _DescriptionElement;
+      }
+
+      set
+      {
+        if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("description");
+        _DescriptionElement = value;
+        OnPropertyChanged("DescriptionElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _DescriptionElement;
@@ -567,7 +931,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -582,8 +946,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? LegalStatusOfSupply
     {
-      get { return _LegalStatusOfSupply; }
-      set { _LegalStatusOfSupply = value; OnPropertyChanged("LegalStatusOfSupply"); }
+      get
+      {
+        if(_LegalStatusOfSupply.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["legalStatusOfSupply"]);
+        return _LegalStatusOfSupply;
+      }
+
+      set
+      {
+        if (_LegalStatusOfSupply.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("legalStatusOfSupply");
+        _LegalStatusOfSupply = value;
+        OnPropertyChanged("LegalStatusOfSupply");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _LegalStatusOfSupply;
@@ -596,8 +973,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
-      get => _MarketingStatus ??= [];
-      set { _MarketingStatus = value; OnPropertyChanged("MarketingStatus"); }
+      get
+      {
+        if(_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MarketingStatus>), Overflow["marketingStatus"]);
+        return _MarketingStatus ??= [];
+      }
+
+      set
+      {
+        if (_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>())
+          Overflow.Remove("marketingStatus");
+        _MarketingStatus = value;
+        OnPropertyChanged("MarketingStatus");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.MarketingStatus>? _MarketingStatus;
@@ -611,8 +1001,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? MarketingAuthorization
     {
-      get { return _MarketingAuthorization; }
-      set { _MarketingAuthorization = value; OnPropertyChanged("MarketingAuthorization"); }
+      get
+      {
+        if(_MarketingAuthorization.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["marketingAuthorization"]);
+        return _MarketingAuthorization;
+      }
+
+      set
+      {
+        if (_MarketingAuthorization.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("marketingAuthorization");
+        _MarketingAuthorization = value;
+        OnPropertyChanged("MarketingAuthorization");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _MarketingAuthorization;
@@ -627,8 +1030,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
-      get => _Manufacturer ??= [];
-      set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
+      get
+      {
+        if(_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.ResourceReference>), Overflow["manufacturer"]);
+        return _Manufacturer ??= [];
+      }
+
+      set
+      {
+        if (_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          Overflow.Remove("manufacturer");
+        _Manufacturer = value;
+        OnPropertyChanged("Manufacturer");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.ResourceReference>? _Manufacturer;
@@ -641,8 +1057,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent> BatchIdentifier
     {
-      get => _BatchIdentifier ??= [];
-      set { _BatchIdentifier = value; OnPropertyChanged("BatchIdentifier"); }
+      get
+      {
+        if(_BatchIdentifier.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>), Overflow["batchIdentifier"]);
+        return _BatchIdentifier ??= [];
+      }
+
+      set
+      {
+        if (_BatchIdentifier.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>>())
+          Overflow.Remove("batchIdentifier");
+        _BatchIdentifier = value;
+        OnPropertyChanged("BatchIdentifier");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>? _BatchIdentifier;
@@ -655,8 +1084,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> PackageItem
     {
-      get => _PackageItem ??= [];
-      set { _PackageItem = value; OnPropertyChanged("PackageItem"); }
+      get
+      {
+        if(_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>), Overflow["packageItem"]);
+        return _PackageItem ??= [];
+      }
+
+      set
+      {
+        if (_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>())
+          Overflow.Remove("packageItem");
+        _PackageItem = value;
+        OnPropertyChanged("PackageItem");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>? _PackageItem;
@@ -712,32 +1154,77 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
           value = _Identifier;
-          return _Identifier?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "subject":
+          if (_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["subject"];
+            return true;
+          }
           value = _Subject;
-          return _Subject?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "description":
+          if (_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["description"];
+            return true;
+          }
           value = _DescriptionElement;
-          return _DescriptionElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "legalStatusOfSupply":
+          if (_LegalStatusOfSupply.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["legalStatusOfSupply"];
+            return true;
+          }
           value = _LegalStatusOfSupply;
-          return _LegalStatusOfSupply is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "marketingStatus":
+          if (_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>())
+          {
+            value = Overflow["marketingStatus"];
+            return true;
+          }
           value = _MarketingStatus;
-          return _MarketingStatus?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.MarketingStatus>)?.Any() is true;
         case "marketingAuthorization":
+          if (_MarketingAuthorization.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["marketingAuthorization"];
+            return true;
+          }
           value = _MarketingAuthorization;
-          return _MarketingAuthorization is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "manufacturer":
+          if (_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>())
+          {
+            value = Overflow["manufacturer"];
+            return true;
+          }
           value = _Manufacturer;
-          return _Manufacturer?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.ResourceReference>)?.Any() is true;
         case "batchIdentifier":
+          if (_BatchIdentifier.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>>())
+          {
+            value = Overflow["batchIdentifier"];
+            return true;
+          }
           value = _BatchIdentifier;
-          return _BatchIdentifier?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>)?.Any() is true;
         case "packageItem":
+          if (_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>())
+          {
+            value = Overflow["packageItem"];
+            return true;
+          }
           value = _PackageItem;
-          return _PackageItem?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -746,34 +1233,80 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "subject":
-          Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Subject = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["subject"] = value;
+          }
+          else Subject = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "description":
-          DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            DescriptionElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["description"] = value;
+          }
+          else DescriptionElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "legalStatusOfSupply":
-          LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            LegalStatusOfSupply = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["legalStatusOfSupply"] = value;
+          }
+          else LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "marketingStatus":
-          MarketingStatus = (List<Hl7.Fhir.Model.MarketingStatus>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.MarketingStatus> or null))
+          {
+            MarketingStatus = OverflowNull<List<Hl7.Fhir.Model.MarketingStatus>>.INSTANCE;
+            Overflow["marketingStatus"] = value;
+          }
+          else MarketingStatus = (List<Hl7.Fhir.Model.MarketingStatus>?)value!;
           return this;
         case "marketingAuthorization":
-          MarketingAuthorization = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            MarketingAuthorization = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["marketingAuthorization"] = value;
+          }
+          else MarketingAuthorization = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "manufacturer":
-          Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.ResourceReference> or null))
+          {
+            Manufacturer = OverflowNull<List<Hl7.Fhir.Model.ResourceReference>>.INSTANCE;
+            Overflow["manufacturer"] = value;
+          }
+          else Manufacturer = (List<Hl7.Fhir.Model.ResourceReference>?)value!;
           return this;
         case "batchIdentifier":
-          BatchIdentifier = (List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent> or null))
+          {
+            BatchIdentifier = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>>.INSTANCE;
+            Overflow["batchIdentifier"] = value;
+          }
+          else BatchIdentifier = (List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>?)value!;
           return this;
         case "packageItem":
-          PackageItem = (List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> or null))
+          {
+            PackageItem = OverflowNull<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>.INSTANCE;
+            Overflow["packageItem"] = value;
+          }
+          else PackageItem = (List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -784,15 +1317,15 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
-      if (_LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",_LegalStatusOfSupply);
-      if (_MarketingStatus?.Any() == true) yield return new KeyValuePair<string,object>("marketingStatus",_MarketingStatus);
-      if (_MarketingAuthorization is not null) yield return new KeyValuePair<string,object>("marketingAuthorization",_MarketingAuthorization);
-      if (_Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
-      if (_BatchIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("batchIdentifier",_BatchIdentifier);
-      if (_PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",_PackageItem);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_Subject?.Any() is true && !_Subject.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_DescriptionElement is not null && !_DescriptionElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("description",_DescriptionElement);
+      if (_LegalStatusOfSupply is not null && !_LegalStatusOfSupply.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("legalStatusOfSupply",_LegalStatusOfSupply);
+      if (_MarketingStatus?.Any() is true && !_MarketingStatus.InOverflow<List<Hl7.Fhir.Model.MarketingStatus>>()) yield return new KeyValuePair<string,object>("marketingStatus",_MarketingStatus);
+      if (_MarketingAuthorization is not null && !_MarketingAuthorization.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("marketingAuthorization",_MarketingAuthorization);
+      if (_Manufacturer?.Any() is true && !_Manufacturer.InOverflow<List<Hl7.Fhir.Model.ResourceReference>>()) yield return new KeyValuePair<string,object>("manufacturer",_Manufacturer);
+      if (_BatchIdentifier?.Any() is true && !_BatchIdentifier.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent>>()) yield return new KeyValuePair<string,object>("batchIdentifier",_BatchIdentifier);
+      if (_PackageItem?.Any() is true && !_PackageItem.InOverflow<List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent>>()) yield return new KeyValuePair<string,object>("packageItem",_PackageItem);
     }
 
   }

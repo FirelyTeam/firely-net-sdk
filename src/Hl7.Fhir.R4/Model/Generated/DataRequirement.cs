@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -107,8 +108,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PathElement
       {
-        get { return _PathElement; }
-        set { _PathElement = value; OnPropertyChanged("PathElement"); }
+        get
+        {
+          if(_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["path"]);
+          return _PathElement;
+        }
+
+        set
+        {
+          if (_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("path");
+          _PathElement = value;
+          OnPropertyChanged("PathElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _PathElement;
@@ -120,7 +134,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Path
       {
-        get => _PathElement?.Value;
+        get => PathElement?.Value;
         set
         {
           PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -135,8 +149,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SearchParamElement
       {
-        get { return _SearchParamElement; }
-        set { _SearchParamElement = value; OnPropertyChanged("SearchParamElement"); }
+        get
+        {
+          if(_SearchParamElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["searchParam"]);
+          return _SearchParamElement;
+        }
+
+        set
+        {
+          if (_SearchParamElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("searchParam");
+          _SearchParamElement = value;
+          OnPropertyChanged("SearchParamElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _SearchParamElement;
@@ -148,7 +175,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SearchParam
       {
-        get => _SearchParamElement?.Value;
+        get => SearchParamElement?.Value;
         set
         {
           SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -163,8 +190,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.Canonical? ValueSetElement
       {
-        get { return _ValueSetElement; }
-        set { _ValueSetElement = value; OnPropertyChanged("ValueSetElement"); }
+        get
+        {
+          if(_ValueSetElement.InOverflow<Hl7.Fhir.Model.Canonical>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Canonical), Overflow["valueSet"]);
+          return _ValueSetElement;
+        }
+
+        set
+        {
+          if (_ValueSetElement.InOverflow<Hl7.Fhir.Model.Canonical>())
+            Overflow.Remove("valueSet");
+          _ValueSetElement = value;
+          OnPropertyChanged("ValueSetElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.Canonical? _ValueSetElement;
@@ -176,7 +216,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ValueSet
       {
-        get => _ValueSetElement?.Value;
+        get => ValueSetElement?.Value;
         set
         {
           ValueSetElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
@@ -192,8 +232,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Code
       {
-        get => _Code ??= [];
-        set { _Code = value; OnPropertyChanged("Code"); }
+        get
+        {
+          if(_Code.InOverflow<List<Hl7.Fhir.Model.Coding>>())
+            throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Coding>), Overflow["code"]);
+          return _Code ??= [];
+        }
+
+        set
+        {
+          if (_Code.InOverflow<List<Hl7.Fhir.Model.Coding>>())
+            Overflow.Remove("code");
+          _Code = value;
+          OnPropertyChanged("Code");
+        }
+
       }
 
       private List<Hl7.Fhir.Model.Coding>? _Code;
@@ -237,17 +290,37 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "path":
+            if (_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["path"];
+              return true;
+            }
             value = _PathElement;
-            return _PathElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "searchParam":
+            if (_SearchParamElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["searchParam"];
+              return true;
+            }
             value = _SearchParamElement;
-            return _SearchParamElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "valueSet":
+            if (_ValueSetElement.InOverflow<Hl7.Fhir.Model.Canonical>())
+            {
+              value = Overflow["valueSet"];
+              return true;
+            }
             value = _ValueSetElement;
-            return _ValueSetElement is not null;
+            return (value as Hl7.Fhir.Model.Canonical) is not null;
           case "code":
+            if (_Code.InOverflow<List<Hl7.Fhir.Model.Coding>>())
+            {
+              value = Overflow["code"];
+              return true;
+            }
             value = _Code;
-            return _Code?.Any() == true;
+            return (value as List<Hl7.Fhir.Model.Coding>)?.Any() is true;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -256,19 +329,40 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "path":
-            PathElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              PathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["path"] = value;
+            }
+            else PathElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "searchParam":
-            SearchParamElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              SearchParamElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["searchParam"] = value;
+            }
+            else SearchParamElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "valueSet":
-            ValueSetElement = (Hl7.Fhir.Model.Canonical?)value;
+            if (value is not (Hl7.Fhir.Model.Canonical or null))
+            {
+              ValueSetElement = OverflowNull<Hl7.Fhir.Model.Canonical>.INSTANCE;
+              Overflow["valueSet"] = value;
+            }
+            else ValueSetElement = (Hl7.Fhir.Model.Canonical?)value;
             return this;
           case "code":
-            Code = (List<Hl7.Fhir.Model.Coding>?)value!;
+            if (value is not (List<Hl7.Fhir.Model.Coding> or null))
+            {
+              Code = OverflowNull<List<Hl7.Fhir.Model.Coding>>.INSTANCE;
+              Overflow["code"] = value;
+            }
+            else Code = (List<Hl7.Fhir.Model.Coding>?)value!;
             return this;
           default:
             return base.SetValue(key, value);
@@ -279,10 +373,10 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
-        if (_SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",_SearchParamElement);
-        if (_ValueSetElement is not null) yield return new KeyValuePair<string,object>("valueSet",_ValueSetElement);
-        if (_Code?.Any() == true) yield return new KeyValuePair<string,object>("code",_Code);
+        if (_PathElement is not null && !_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_SearchParamElement is not null && !_SearchParamElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("searchParam",_SearchParamElement);
+        if (_ValueSetElement is not null && !_ValueSetElement.InOverflow<Hl7.Fhir.Model.Canonical>()) yield return new KeyValuePair<string,object>("valueSet",_ValueSetElement);
+        if (_Code?.Any() is true && !_Code.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("code",_Code);
       }
 
     }
@@ -310,8 +404,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PathElement
       {
-        get { return _PathElement; }
-        set { _PathElement = value; OnPropertyChanged("PathElement"); }
+        get
+        {
+          if(_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["path"]);
+          return _PathElement;
+        }
+
+        set
+        {
+          if (_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("path");
+          _PathElement = value;
+          OnPropertyChanged("PathElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _PathElement;
@@ -323,7 +430,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Path
       {
-        get => _PathElement?.Value;
+        get => PathElement?.Value;
         set
         {
           PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -338,8 +445,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SearchParamElement
       {
-        get { return _SearchParamElement; }
-        set { _SearchParamElement = value; OnPropertyChanged("SearchParamElement"); }
+        get
+        {
+          if(_SearchParamElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["searchParam"]);
+          return _SearchParamElement;
+        }
+
+        set
+        {
+          if (_SearchParamElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("searchParam");
+          _SearchParamElement = value;
+          OnPropertyChanged("SearchParamElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _SearchParamElement;
@@ -351,7 +471,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SearchParam
       {
-        get => _SearchParamElement?.Value;
+        get => SearchParamElement?.Value;
         set
         {
           SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -368,8 +488,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
       {
-        get { return _Value; }
-        set { _Value = value; OnPropertyChanged("Value"); }
+        get
+        {
+          if(_Value.InOverflow<DynamicDataType>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["value"]);
+          return _Value;
+        }
+
+        set
+        {
+          if (_Value.InOverflow<DynamicDataType>())
+            Overflow.Remove("value");
+          _Value = value;
+          OnPropertyChanged("Value");
+        }
+
       }
 
       private Hl7.Fhir.Model.DataType? _Value;
@@ -411,14 +544,29 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "path":
+            if (_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["path"];
+              return true;
+            }
             value = _PathElement;
-            return _PathElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "searchParam":
+            if (_SearchParamElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["searchParam"];
+              return true;
+            }
             value = _SearchParamElement;
-            return _SearchParamElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "value":
+            if (_Value.InOverflow<DynamicDataType>())
+            {
+              value = Overflow["value"];
+              return true;
+            }
             value = _Value;
-            return _Value is not null;
+            return (value as Hl7.Fhir.Model.DataType) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -427,16 +575,32 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "path":
-            PathElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              PathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["path"] = value;
+            }
+            else PathElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "searchParam":
-            SearchParamElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              SearchParamElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["searchParam"] = value;
+            }
+            else SearchParamElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "value":
-            Value = (Hl7.Fhir.Model.DataType?)value;
+            if (value is not (Hl7.Fhir.Model.DataType or null))
+            {
+              Value = OverflowNull<DynamicDataType>.INSTANCE;
+              Overflow["value"] = value;
+            }
+            else Value = (Hl7.Fhir.Model.DataType?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -447,9 +611,9 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
-        if (_SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",_SearchParamElement);
-        if (_Value is not null) yield return new KeyValuePair<string,object>("value",_Value);
+        if (_PathElement is not null && !_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_SearchParamElement is not null && !_SearchParamElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("searchParam",_SearchParamElement);
+        if (_Value is not null && !_Value.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("value",_Value);
       }
 
     }
@@ -479,8 +643,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PathElement
       {
-        get { return _PathElement; }
-        set { _PathElement = value; OnPropertyChanged("PathElement"); }
+        get
+        {
+          if(_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["path"]);
+          return _PathElement;
+        }
+
+        set
+        {
+          if (_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            Overflow.Remove("path");
+          _PathElement = value;
+          OnPropertyChanged("PathElement");
+        }
+
       }
 
       private Hl7.Fhir.Model.FhirString? _PathElement;
@@ -492,7 +669,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Path
       {
-        get => _PathElement?.Value;
+        get => PathElement?.Value;
         set
         {
           PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -510,8 +687,21 @@ namespace Hl7.Fhir.Model
       [DataMember]
       public Code<Hl7.Fhir.Model.DataRequirement.SortDirection>? DirectionElement
       {
-        get { return _DirectionElement; }
-        set { _DirectionElement = value; OnPropertyChanged("DirectionElement"); }
+        get
+        {
+          if(_DirectionElement.InOverflow<Code<Hl7.Fhir.Model.DataRequirement.SortDirection>>())
+            throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.DataRequirement.SortDirection>), Overflow["direction"]);
+          return _DirectionElement;
+        }
+
+        set
+        {
+          if (_DirectionElement.InOverflow<Code<Hl7.Fhir.Model.DataRequirement.SortDirection>>())
+            Overflow.Remove("direction");
+          _DirectionElement = value;
+          OnPropertyChanged("DirectionElement");
+        }
+
       }
 
       private Code<Hl7.Fhir.Model.DataRequirement.SortDirection>? _DirectionElement;
@@ -523,7 +713,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DataRequirement.SortDirection? Direction
       {
-        get => _DirectionElement?.Value;
+        get => DirectionElement?.Value;
         set
         {
           DirectionElement = value is null ? null : new Code<Hl7.Fhir.Model.DataRequirement.SortDirection>(value);
@@ -566,11 +756,21 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "path":
+            if (_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+            {
+              value = Overflow["path"];
+              return true;
+            }
             value = _PathElement;
-            return _PathElement is not null;
+            return (value as Hl7.Fhir.Model.FhirString) is not null;
           case "direction":
+            if (_DirectionElement.InOverflow<Code<Hl7.Fhir.Model.DataRequirement.SortDirection>>())
+            {
+              value = Overflow["direction"];
+              return true;
+            }
             value = _DirectionElement;
-            return _DirectionElement is not null;
+            return (value as Code<Hl7.Fhir.Model.DataRequirement.SortDirection>) is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -579,13 +779,24 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
         switch (key)
         {
           case "path":
-            PathElement = (Hl7.Fhir.Model.FhirString?)value;
+            if (value is not (Hl7.Fhir.Model.FhirString or null))
+            {
+              PathElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+              Overflow["path"] = value;
+            }
+            else PathElement = (Hl7.Fhir.Model.FhirString?)value;
             return this;
           case "direction":
-            DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>?)value;
+            if (value is not (Code<Hl7.Fhir.Model.DataRequirement.SortDirection> or null))
+            {
+              DirectionElement = OverflowNull<Code<Hl7.Fhir.Model.DataRequirement.SortDirection>>.INSTANCE;
+              Overflow["direction"] = value;
+            }
+            else DirectionElement = (Code<Hl7.Fhir.Model.DataRequirement.SortDirection>?)value;
             return this;
           default:
             return base.SetValue(key, value);
@@ -596,8 +807,8 @@ namespace Hl7.Fhir.Model
       public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
       {
         foreach (var kvp in base.EnumerateElements()) yield return kvp;
-        if (_PathElement is not null) yield return new KeyValuePair<string,object>("path",_PathElement);
-        if (_DirectionElement is not null) yield return new KeyValuePair<string,object>("direction",_DirectionElement);
+        if (_PathElement is not null && !_PathElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("path",_PathElement);
+        if (_DirectionElement is not null && !_DirectionElement.InOverflow<Code<Hl7.Fhir.Model.DataRequirement.SortDirection>>()) yield return new KeyValuePair<string,object>("direction",_DirectionElement);
       }
 
     }
@@ -612,8 +823,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRAllTypes>? TypeElement
     {
-      get { return _TypeElement; }
-      set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+      get
+      {
+        if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.FHIRAllTypes>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.FHIRAllTypes>), Overflow["type"]);
+        return _TypeElement;
+      }
+
+      set
+      {
+        if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.FHIRAllTypes>>())
+          Overflow.Remove("type");
+        _TypeElement = value;
+        OnPropertyChanged("TypeElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.FHIRAllTypes>? _TypeElement;
@@ -625,7 +849,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FHIRAllTypes? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
@@ -641,8 +865,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> ProfileElement
     {
-      get => _ProfileElement ??= [];
-      set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
+      get
+      {
+        if(_ProfileElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Canonical>), Overflow["profile"]);
+        return _ProfileElement ??= [];
+      }
+
+      set
+      {
+        if (_ProfileElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>())
+          Overflow.Remove("profile");
+        _ProfileElement = value;
+        OnPropertyChanged("ProfileElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Canonical>? _ProfileElement;
@@ -676,8 +913,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.DataType? Subject
     {
-      get { return _Subject; }
-      set { _Subject = value; OnPropertyChanged("Subject"); }
+      get
+      {
+        if(_Subject.InOverflow<DynamicDataType>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.DataType), Overflow["subject"]);
+        return _Subject;
+      }
+
+      set
+      {
+        if (_Subject.InOverflow<DynamicDataType>())
+          Overflow.Remove("subject");
+        _Subject = value;
+        OnPropertyChanged("Subject");
+      }
+
     }
 
     private Hl7.Fhir.Model.DataType? _Subject;
@@ -690,8 +940,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> MustSupportElement
     {
-      get => _MustSupportElement ??= [];
-      set { _MustSupportElement = value; OnPropertyChanged("MustSupportElement"); }
+      get
+      {
+        if(_MustSupportElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.FhirString>), Overflow["mustSupport"]);
+        return _MustSupportElement ??= [];
+      }
+
+      set
+      {
+        if (_MustSupportElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          Overflow.Remove("mustSupport");
+        _MustSupportElement = value;
+        OnPropertyChanged("MustSupportElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.FhirString>? _MustSupportElement;
@@ -722,8 +985,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> CodeFilter
     {
-      get => _CodeFilter ??= [];
-      set { _CodeFilter = value; OnPropertyChanged("CodeFilter"); }
+      get
+      {
+        if(_CodeFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>), Overflow["codeFilter"]);
+        return _CodeFilter ??= [];
+      }
+
+      set
+      {
+        if (_CodeFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>>())
+          Overflow.Remove("codeFilter");
+        _CodeFilter = value;
+        OnPropertyChanged("CodeFilter");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>? _CodeFilter;
@@ -736,8 +1012,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> DateFilter
     {
-      get => _DateFilter ??= [];
-      set { _DateFilter = value; OnPropertyChanged("DateFilter"); }
+      get
+      {
+        if(_DateFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>), Overflow["dateFilter"]);
+        return _DateFilter ??= [];
+      }
+
+      set
+      {
+        if (_DateFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>>())
+          Overflow.Remove("dateFilter");
+        _DateFilter = value;
+        OnPropertyChanged("DateFilter");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>? _DateFilter;
@@ -749,8 +1038,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? LimitElement
     {
-      get { return _LimitElement; }
-      set { _LimitElement = value; OnPropertyChanged("LimitElement"); }
+      get
+      {
+        if(_LimitElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.PositiveInt), Overflow["limit"]);
+        return _LimitElement;
+      }
+
+      set
+      {
+        if (_LimitElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          Overflow.Remove("limit");
+        _LimitElement = value;
+        OnPropertyChanged("LimitElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.PositiveInt? _LimitElement;
@@ -762,7 +1064,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Limit
     {
-      get => _LimitElement?.Value;
+      get => LimitElement?.Value;
       set
       {
         LimitElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -778,8 +1080,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement.SortComponent> Sort
     {
-      get => _Sort ??= [];
-      set { _Sort = value; OnPropertyChanged("Sort"); }
+      get
+      {
+        if(_Sort.InOverflow<List<Hl7.Fhir.Model.DataRequirement.SortComponent>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.DataRequirement.SortComponent>), Overflow["sort"]);
+        return _Sort ??= [];
+      }
+
+      set
+      {
+        if (_Sort.InOverflow<List<Hl7.Fhir.Model.DataRequirement.SortComponent>>())
+          Overflow.Remove("sort");
+        _Sort = value;
+        OnPropertyChanged("Sort");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.DataRequirement.SortComponent>? _Sort;
@@ -831,29 +1146,69 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
+          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.FHIRAllTypes>>())
+          {
+            value = Overflow["type"];
+            return true;
+          }
           value = _TypeElement;
-          return _TypeElement is not null;
+          return (value as Code<Hl7.Fhir.Model.FHIRAllTypes>) is not null;
         case "profile":
+          if (_ProfileElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>())
+          {
+            value = Overflow["profile"];
+            return true;
+          }
           value = _ProfileElement;
-          return _ProfileElement?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Canonical>)?.Any() is true;
         case "subject":
+          if (_Subject.InOverflow<DynamicDataType>())
+          {
+            value = Overflow["subject"];
+            return true;
+          }
           value = _Subject;
-          return _Subject is not null;
+          return (value as Hl7.Fhir.Model.DataType) is not null;
         case "mustSupport":
+          if (_MustSupportElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>())
+          {
+            value = Overflow["mustSupport"];
+            return true;
+          }
           value = _MustSupportElement;
-          return _MustSupportElement?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.FhirString>)?.Any() is true;
         case "codeFilter":
+          if (_CodeFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>>())
+          {
+            value = Overflow["codeFilter"];
+            return true;
+          }
           value = _CodeFilter;
-          return _CodeFilter?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>)?.Any() is true;
         case "dateFilter":
+          if (_DateFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>>())
+          {
+            value = Overflow["dateFilter"];
+            return true;
+          }
           value = _DateFilter;
-          return _DateFilter?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>)?.Any() is true;
         case "limit":
+          if (_LimitElement.InOverflow<Hl7.Fhir.Model.PositiveInt>())
+          {
+            value = Overflow["limit"];
+            return true;
+          }
           value = _LimitElement;
-          return _LimitElement is not null;
+          return (value as Hl7.Fhir.Model.PositiveInt) is not null;
         case "sort":
+          if (_Sort.InOverflow<List<Hl7.Fhir.Model.DataRequirement.SortComponent>>())
+          {
+            value = Overflow["sort"];
+            return true;
+          }
           value = _Sort;
-          return _Sort?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.DataRequirement.SortComponent>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -862,31 +1217,72 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.FHIRAllTypes> or null))
+          {
+            TypeElement = OverflowNull<Code<Hl7.Fhir.Model.FHIRAllTypes>>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>?)value;
           return this;
         case "profile":
-          ProfileElement = (List<Hl7.Fhir.Model.Canonical>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Canonical> or null))
+          {
+            ProfileElement = OverflowNull<List<Hl7.Fhir.Model.Canonical>>.INSTANCE;
+            Overflow["profile"] = value;
+          }
+          else ProfileElement = (List<Hl7.Fhir.Model.Canonical>?)value!;
           return this;
         case "subject":
-          Subject = (Hl7.Fhir.Model.DataType?)value;
+          if (value is not (Hl7.Fhir.Model.DataType or null))
+          {
+            Subject = OverflowNull<DynamicDataType>.INSTANCE;
+            Overflow["subject"] = value;
+          }
+          else Subject = (Hl7.Fhir.Model.DataType?)value;
           return this;
         case "mustSupport":
-          MustSupportElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.FhirString> or null))
+          {
+            MustSupportElement = OverflowNull<List<Hl7.Fhir.Model.FhirString>>.INSTANCE;
+            Overflow["mustSupport"] = value;
+          }
+          else MustSupportElement = (List<Hl7.Fhir.Model.FhirString>?)value!;
           return this;
         case "codeFilter":
-          CodeFilter = (List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> or null))
+          {
+            CodeFilter = OverflowNull<List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>>.INSTANCE;
+            Overflow["codeFilter"] = value;
+          }
+          else CodeFilter = (List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>?)value!;
           return this;
         case "dateFilter":
-          DateFilter = (List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> or null))
+          {
+            DateFilter = OverflowNull<List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>>.INSTANCE;
+            Overflow["dateFilter"] = value;
+          }
+          else DateFilter = (List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>?)value!;
           return this;
         case "limit":
-          LimitElement = (Hl7.Fhir.Model.PositiveInt?)value;
+          if (value is not (Hl7.Fhir.Model.PositiveInt or null))
+          {
+            LimitElement = OverflowNull<Hl7.Fhir.Model.PositiveInt>.INSTANCE;
+            Overflow["limit"] = value;
+          }
+          else LimitElement = (Hl7.Fhir.Model.PositiveInt?)value;
           return this;
         case "sort":
-          Sort = (List<Hl7.Fhir.Model.DataRequirement.SortComponent>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.DataRequirement.SortComponent> or null))
+          {
+            Sort = OverflowNull<List<Hl7.Fhir.Model.DataRequirement.SortComponent>>.INSTANCE;
+            Overflow["sort"] = value;
+          }
+          else Sort = (List<Hl7.Fhir.Model.DataRequirement.SortComponent>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -897,14 +1293,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (_ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
-      if (_Subject is not null) yield return new KeyValuePair<string,object>("subject",_Subject);
-      if (_MustSupportElement?.Any() == true) yield return new KeyValuePair<string,object>("mustSupport",_MustSupportElement);
-      if (_CodeFilter?.Any() == true) yield return new KeyValuePair<string,object>("codeFilter",_CodeFilter);
-      if (_DateFilter?.Any() == true) yield return new KeyValuePair<string,object>("dateFilter",_DateFilter);
-      if (_LimitElement is not null) yield return new KeyValuePair<string,object>("limit",_LimitElement);
-      if (_Sort?.Any() == true) yield return new KeyValuePair<string,object>("sort",_Sort);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.FHIRAllTypes>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_ProfileElement?.Any() is true && !_ProfileElement.InOverflow<List<Hl7.Fhir.Model.Canonical>>()) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
+      if (_Subject is not null && !_Subject.InOverflow<DynamicDataType>()) yield return new KeyValuePair<string,object>("subject",_Subject);
+      if (_MustSupportElement?.Any() is true && !_MustSupportElement.InOverflow<List<Hl7.Fhir.Model.FhirString>>()) yield return new KeyValuePair<string,object>("mustSupport",_MustSupportElement);
+      if (_CodeFilter?.Any() is true && !_CodeFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>>()) yield return new KeyValuePair<string,object>("codeFilter",_CodeFilter);
+      if (_DateFilter?.Any() is true && !_DateFilter.InOverflow<List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>>()) yield return new KeyValuePair<string,object>("dateFilter",_DateFilter);
+      if (_LimitElement is not null && !_LimitElement.InOverflow<Hl7.Fhir.Model.PositiveInt>()) yield return new KeyValuePair<string,object>("limit",_LimitElement);
+      if (_Sort?.Any() is true && !_Sort.InOverflow<List<Hl7.Fhir.Model.DataRequirement.SortComponent>>()) yield return new KeyValuePair<string,object>("sort",_Sort);
     }
 
   }

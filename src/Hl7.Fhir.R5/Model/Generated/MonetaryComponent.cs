@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -115,8 +116,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>? TypeElement
     {
-      get { return _TypeElement; }
-      set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
+      get
+      {
+        if(_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>), Overflow["type"]);
+        return _TypeElement;
+      }
+
+      set
+      {
+        if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>>())
+          Overflow.Remove("type");
+        _TypeElement = value;
+        OnPropertyChanged("TypeElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>? _TypeElement;
@@ -128,7 +142,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MonetaryComponent.PriceComponentType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>(value);
@@ -144,8 +158,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Code
     {
-      get { return _Code; }
-      set { _Code = value; OnPropertyChanged("Code"); }
+      get
+      {
+        if(_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.CodeableConcept), Overflow["code"]);
+        return _Code;
+      }
+
+      set
+      {
+        if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          Overflow.Remove("code");
+        _Code = value;
+        OnPropertyChanged("Code");
+      }
+
     }
 
     private Hl7.Fhir.Model.CodeableConcept? _Code;
@@ -157,8 +184,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? FactorElement
     {
-      get { return _FactorElement; }
-      set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
+      get
+      {
+        if(_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirDecimal), Overflow["factor"]);
+        return _FactorElement;
+      }
+
+      set
+      {
+        if (_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+          Overflow.Remove("factor");
+        _FactorElement = value;
+        OnPropertyChanged("FactorElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirDecimal? _FactorElement;
@@ -170,7 +210,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Factor
     {
-      get => _FactorElement?.Value;
+      get => FactorElement?.Value;
       set
       {
         FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -185,8 +225,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Money? Amount
     {
-      get { return _Amount; }
-      set { _Amount = value; OnPropertyChanged("Amount"); }
+      get
+      {
+        if(_Amount.InOverflow<Hl7.Fhir.Model.Money>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Money), Overflow["amount"]);
+        return _Amount;
+      }
+
+      set
+      {
+        if (_Amount.InOverflow<Hl7.Fhir.Model.Money>())
+          Overflow.Remove("amount");
+        _Amount = value;
+        OnPropertyChanged("Amount");
+      }
+
     }
 
     private Hl7.Fhir.Model.Money? _Amount;
@@ -230,17 +283,37 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "type":
+          if (_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>>())
+          {
+            value = Overflow["type"];
+            return true;
+          }
           value = _TypeElement;
-          return _TypeElement is not null;
+          return (value as Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>) is not null;
         case "code":
+          if (_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>())
+          {
+            value = Overflow["code"];
+            return true;
+          }
           value = _Code;
-          return _Code is not null;
+          return (value as Hl7.Fhir.Model.CodeableConcept) is not null;
         case "factor":
+          if (_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>())
+          {
+            value = Overflow["factor"];
+            return true;
+          }
           value = _FactorElement;
-          return _FactorElement is not null;
+          return (value as Hl7.Fhir.Model.FhirDecimal) is not null;
         case "amount":
+          if (_Amount.InOverflow<Hl7.Fhir.Model.Money>())
+          {
+            value = Overflow["amount"];
+            return true;
+          }
           value = _Amount;
-          return _Amount is not null;
+          return (value as Hl7.Fhir.Model.Money) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -249,19 +322,40 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "type":
-          TypeElement = (Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType> or null))
+          {
+            TypeElement = OverflowNull<Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>>.INSTANCE;
+            Overflow["type"] = value;
+          }
+          else TypeElement = (Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>?)value;
           return this;
         case "code":
-          Code = (Hl7.Fhir.Model.CodeableConcept?)value;
+          if (value is not (Hl7.Fhir.Model.CodeableConcept or null))
+          {
+            Code = OverflowNull<Hl7.Fhir.Model.CodeableConcept>.INSTANCE;
+            Overflow["code"] = value;
+          }
+          else Code = (Hl7.Fhir.Model.CodeableConcept?)value;
           return this;
         case "factor":
-          FactorElement = (Hl7.Fhir.Model.FhirDecimal?)value;
+          if (value is not (Hl7.Fhir.Model.FhirDecimal or null))
+          {
+            FactorElement = OverflowNull<Hl7.Fhir.Model.FhirDecimal>.INSTANCE;
+            Overflow["factor"] = value;
+          }
+          else FactorElement = (Hl7.Fhir.Model.FhirDecimal?)value;
           return this;
         case "amount":
-          Amount = (Hl7.Fhir.Model.Money?)value;
+          if (value is not (Hl7.Fhir.Model.Money or null))
+          {
+            Amount = OverflowNull<Hl7.Fhir.Model.Money>.INSTANCE;
+            Overflow["amount"] = value;
+          }
+          else Amount = (Hl7.Fhir.Model.Money?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -272,10 +366,10 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_TypeElement is not null) yield return new KeyValuePair<string,object>("type",_TypeElement);
-      if (_Code is not null) yield return new KeyValuePair<string,object>("code",_Code);
-      if (_FactorElement is not null) yield return new KeyValuePair<string,object>("factor",_FactorElement);
-      if (_Amount is not null) yield return new KeyValuePair<string,object>("amount",_Amount);
+      if (_TypeElement is not null && !_TypeElement.InOverflow<Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType>>()) yield return new KeyValuePair<string,object>("type",_TypeElement);
+      if (_Code is not null && !_Code.InOverflow<Hl7.Fhir.Model.CodeableConcept>()) yield return new KeyValuePair<string,object>("code",_Code);
+      if (_FactorElement is not null && !_FactorElement.InOverflow<Hl7.Fhir.Model.FhirDecimal>()) yield return new KeyValuePair<string,object>("factor",_FactorElement);
+      if (_Amount is not null && !_Amount.InOverflow<Hl7.Fhir.Model.Money>()) yield return new KeyValuePair<string,object>("amount",_Amount);
     }
 
   }

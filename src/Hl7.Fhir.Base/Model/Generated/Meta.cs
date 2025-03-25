@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -69,8 +70,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Id? VersionIdElement
     {
-      get { return _VersionIdElement; }
-      set { _VersionIdElement = value; OnPropertyChanged("VersionIdElement"); }
+      get
+      {
+        if(_VersionIdElement.InOverflow<Hl7.Fhir.Model.Id>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Id), Overflow["versionId"]);
+        return _VersionIdElement;
+      }
+
+      set
+      {
+        if (_VersionIdElement.InOverflow<Hl7.Fhir.Model.Id>())
+          Overflow.Remove("versionId");
+        _VersionIdElement = value;
+        OnPropertyChanged("VersionIdElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Id? _VersionIdElement;
@@ -82,7 +96,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? VersionId
     {
-      get => _VersionIdElement?.Value;
+      get => VersionIdElement?.Value;
       set
       {
         VersionIdElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
@@ -97,8 +111,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Instant? LastUpdatedElement
     {
-      get { return _LastUpdatedElement; }
-      set { _LastUpdatedElement = value; OnPropertyChanged("LastUpdatedElement"); }
+      get
+      {
+        if(_LastUpdatedElement.InOverflow<Hl7.Fhir.Model.Instant>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Instant), Overflow["lastUpdated"]);
+        return _LastUpdatedElement;
+      }
+
+      set
+      {
+        if (_LastUpdatedElement.InOverflow<Hl7.Fhir.Model.Instant>())
+          Overflow.Remove("lastUpdated");
+        _LastUpdatedElement = value;
+        OnPropertyChanged("LastUpdatedElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.Instant? _LastUpdatedElement;
@@ -110,7 +137,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? LastUpdated
     {
-      get => _LastUpdatedElement?.Value;
+      get => LastUpdatedElement?.Value;
       set
       {
         LastUpdatedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -128,8 +155,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? SourceElement
     {
-      get { return _SourceElement; }
-      set { _SourceElement = value; OnPropertyChanged("SourceElement"); }
+      get
+      {
+        if(_SourceElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirUri), Overflow["source"]);
+        return _SourceElement;
+      }
+
+      set
+      {
+        if (_SourceElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          Overflow.Remove("source");
+        _SourceElement = value;
+        OnPropertyChanged("SourceElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirUri? _SourceElement;
@@ -141,7 +181,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Source
     {
-      get => _SourceElement?.Value;
+      get => SourceElement?.Value;
       set
       {
         SourceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -167,8 +207,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.PrimitiveType> ProfileElement
     {
-      get => _ProfileElement ??= [];
-      set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
+      get
+      {
+        if(_ProfileElement.InOverflow<List<Hl7.Fhir.Model.PrimitiveType>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.PrimitiveType>), Overflow["profile"]);
+        return _ProfileElement ??= [];
+      }
+
+      set
+      {
+        if (_ProfileElement.InOverflow<List<Hl7.Fhir.Model.PrimitiveType>>())
+          Overflow.Remove("profile");
+        _ProfileElement = value;
+        OnPropertyChanged("ProfileElement");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.PrimitiveType>? _ProfileElement;
@@ -218,8 +271,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Security
     {
-      get => _Security ??= [];
-      set { _Security = value; OnPropertyChanged("Security"); }
+      get
+      {
+        if(_Security.InOverflow<List<Hl7.Fhir.Model.Coding>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Coding>), Overflow["security"]);
+        return _Security ??= [];
+      }
+
+      set
+      {
+        if (_Security.InOverflow<List<Hl7.Fhir.Model.Coding>>())
+          Overflow.Remove("security");
+        _Security = value;
+        OnPropertyChanged("Security");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Coding>? _Security;
@@ -233,8 +299,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Tag
     {
-      get => _Tag ??= [];
-      set { _Tag = value; OnPropertyChanged("Tag"); }
+      get
+      {
+        if(_Tag.InOverflow<List<Hl7.Fhir.Model.Coding>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Coding>), Overflow["tag"]);
+        return _Tag ??= [];
+      }
+
+      set
+      {
+        if (_Tag.InOverflow<List<Hl7.Fhir.Model.Coding>>())
+          Overflow.Remove("tag");
+        _Tag = value;
+        OnPropertyChanged("Tag");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Coding>? _Tag;
@@ -282,23 +361,53 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "versionId":
+          if (_VersionIdElement.InOverflow<Hl7.Fhir.Model.Id>())
+          {
+            value = Overflow["versionId"];
+            return true;
+          }
           value = _VersionIdElement;
-          return _VersionIdElement is not null;
+          return (value as Hl7.Fhir.Model.Id) is not null;
         case "lastUpdated":
+          if (_LastUpdatedElement.InOverflow<Hl7.Fhir.Model.Instant>())
+          {
+            value = Overflow["lastUpdated"];
+            return true;
+          }
           value = _LastUpdatedElement;
-          return _LastUpdatedElement is not null;
+          return (value as Hl7.Fhir.Model.Instant) is not null;
         case "source":
+          if (_SourceElement.InOverflow<Hl7.Fhir.Model.FhirUri>())
+          {
+            value = Overflow["source"];
+            return true;
+          }
           value = _SourceElement;
-          return _SourceElement is not null;
+          return (value as Hl7.Fhir.Model.FhirUri) is not null;
         case "profile":
+          if (_ProfileElement.InOverflow<List<Hl7.Fhir.Model.PrimitiveType>>())
+          {
+            value = Overflow["profile"];
+            return true;
+          }
           value = _ProfileElement;
-          return _ProfileElement?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.PrimitiveType>)?.Any() is true;
         case "security":
+          if (_Security.InOverflow<List<Hl7.Fhir.Model.Coding>>())
+          {
+            value = Overflow["security"];
+            return true;
+          }
           value = _Security;
-          return _Security?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Coding>)?.Any() is true;
         case "tag":
+          if (_Tag.InOverflow<List<Hl7.Fhir.Model.Coding>>())
+          {
+            value = Overflow["tag"];
+            return true;
+          }
           value = _Tag;
-          return _Tag?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Coding>)?.Any() is true;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -307,25 +416,56 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "versionId":
-          VersionIdElement = (Hl7.Fhir.Model.Id?)value;
+          if (value is not (Hl7.Fhir.Model.Id or null))
+          {
+            VersionIdElement = OverflowNull<Hl7.Fhir.Model.Id>.INSTANCE;
+            Overflow["versionId"] = value;
+          }
+          else VersionIdElement = (Hl7.Fhir.Model.Id?)value;
           return this;
         case "lastUpdated":
-          LastUpdatedElement = (Hl7.Fhir.Model.Instant?)value;
+          if (value is not (Hl7.Fhir.Model.Instant or null))
+          {
+            LastUpdatedElement = OverflowNull<Hl7.Fhir.Model.Instant>.INSTANCE;
+            Overflow["lastUpdated"] = value;
+          }
+          else LastUpdatedElement = (Hl7.Fhir.Model.Instant?)value;
           return this;
         case "source":
-          SourceElement = (Hl7.Fhir.Model.FhirUri?)value;
+          if (value is not (Hl7.Fhir.Model.FhirUri or null))
+          {
+            SourceElement = OverflowNull<Hl7.Fhir.Model.FhirUri>.INSTANCE;
+            Overflow["source"] = value;
+          }
+          else SourceElement = (Hl7.Fhir.Model.FhirUri?)value;
           return this;
         case "profile":
-          ProfileElement = (List<Hl7.Fhir.Model.PrimitiveType>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.PrimitiveType> or null))
+          {
+            ProfileElement = OverflowNull<List<Hl7.Fhir.Model.PrimitiveType>>.INSTANCE;
+            Overflow["profile"] = value;
+          }
+          else ProfileElement = (List<Hl7.Fhir.Model.PrimitiveType>?)value!;
           return this;
         case "security":
-          Security = (List<Hl7.Fhir.Model.Coding>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Coding> or null))
+          {
+            Security = OverflowNull<List<Hl7.Fhir.Model.Coding>>.INSTANCE;
+            Overflow["security"] = value;
+          }
+          else Security = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         case "tag":
-          Tag = (List<Hl7.Fhir.Model.Coding>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Coding> or null))
+          {
+            Tag = OverflowNull<List<Hl7.Fhir.Model.Coding>>.INSTANCE;
+            Overflow["tag"] = value;
+          }
+          else Tag = (List<Hl7.Fhir.Model.Coding>?)value!;
           return this;
         default:
           return base.SetValue(key, value);
@@ -336,12 +476,12 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_VersionIdElement is not null) yield return new KeyValuePair<string,object>("versionId",_VersionIdElement);
-      if (_LastUpdatedElement is not null) yield return new KeyValuePair<string,object>("lastUpdated",_LastUpdatedElement);
-      if (_SourceElement is not null) yield return new KeyValuePair<string,object>("source",_SourceElement);
-      if (_ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
-      if (_Security?.Any() == true) yield return new KeyValuePair<string,object>("security",_Security);
-      if (_Tag?.Any() == true) yield return new KeyValuePair<string,object>("tag",_Tag);
+      if (_VersionIdElement is not null && !_VersionIdElement.InOverflow<Hl7.Fhir.Model.Id>()) yield return new KeyValuePair<string,object>("versionId",_VersionIdElement);
+      if (_LastUpdatedElement is not null && !_LastUpdatedElement.InOverflow<Hl7.Fhir.Model.Instant>()) yield return new KeyValuePair<string,object>("lastUpdated",_LastUpdatedElement);
+      if (_SourceElement is not null && !_SourceElement.InOverflow<Hl7.Fhir.Model.FhirUri>()) yield return new KeyValuePair<string,object>("source",_SourceElement);
+      if (_ProfileElement?.Any() is true && !_ProfileElement.InOverflow<List<Hl7.Fhir.Model.PrimitiveType>>()) yield return new KeyValuePair<string,object>("profile",_ProfileElement);
+      if (_Security?.Any() is true && !_Security.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("security",_Security);
+      if (_Tag?.Any() is true && !_Tag.InOverflow<List<Hl7.Fhir.Model.Coding>>()) yield return new KeyValuePair<string,object>("tag",_Tag);
     }
 
   }

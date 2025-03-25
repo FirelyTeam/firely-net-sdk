@@ -2,6 +2,7 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -159,8 +160,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
-      get => _Identifier ??= [];
-      set { _Identifier = value; OnPropertyChanged("Identifier"); }
+      get
+      {
+        if(_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          throw CodedValidationException.FromTypes(typeof(List<Hl7.Fhir.Model.Identifier>), Overflow["identifier"]);
+        return _Identifier ??= [];
+      }
+
+      set
+      {
+        if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          Overflow.Remove("identifier");
+        _Identifier = value;
+        OnPropertyChanged("Identifier");
+      }
+
     }
 
     private List<Hl7.Fhir.Model.Identifier>? _Identifier;
@@ -175,8 +189,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>? StatusElement
     {
-      get { return _StatusElement; }
-      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+      get
+      {
+        if(_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>())
+          throw CodedValidationException.FromTypes(typeof(Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>), Overflow["status"]);
+        return _StatusElement;
+      }
+
+      set
+      {
+        if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>())
+          Overflow.Remove("status");
+        _StatusElement = value;
+        OnPropertyChanged("StatusElement");
+      }
+
     }
 
     private Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>? _StatusElement;
@@ -188,7 +215,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>(value);
@@ -203,8 +230,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
     {
-      get { return _Period; }
-      set { _Period = value; OnPropertyChanged("Period"); }
+      get
+      {
+        if(_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.Period), Overflow["period"]);
+        return _Period;
+      }
+
+      set
+      {
+        if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          Overflow.Remove("period");
+        _Period = value;
+        OnPropertyChanged("Period");
+      }
+
     }
 
     private Hl7.Fhir.Model.Period? _Period;
@@ -219,8 +259,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Study
     {
-      get { return _Study; }
-      set { _Study = value; OnPropertyChanged("Study"); }
+      get
+      {
+        if(_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["study"]);
+        return _Study;
+      }
+
+      set
+      {
+        if (_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("study");
+        _Study = value;
+        OnPropertyChanged("Study");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Study;
@@ -235,8 +288,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Individual
     {
-      get { return _Individual; }
-      set { _Individual = value; OnPropertyChanged("Individual"); }
+      get
+      {
+        if(_Individual.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["individual"]);
+        return _Individual;
+      }
+
+      set
+      {
+        if (_Individual.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("individual");
+        _Individual = value;
+        OnPropertyChanged("Individual");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Individual;
@@ -248,8 +314,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? AssignedArmElement
     {
-      get { return _AssignedArmElement; }
-      set { _AssignedArmElement = value; OnPropertyChanged("AssignedArmElement"); }
+      get
+      {
+        if(_AssignedArmElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["assignedArm"]);
+        return _AssignedArmElement;
+      }
+
+      set
+      {
+        if (_AssignedArmElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("assignedArm");
+        _AssignedArmElement = value;
+        OnPropertyChanged("AssignedArmElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _AssignedArmElement;
@@ -261,7 +340,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AssignedArm
     {
-      get => _AssignedArmElement?.Value;
+      get => AssignedArmElement?.Value;
       set
       {
         AssignedArmElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -276,8 +355,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ActualArmElement
     {
-      get { return _ActualArmElement; }
-      set { _ActualArmElement = value; OnPropertyChanged("ActualArmElement"); }
+      get
+      {
+        if(_ActualArmElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.FhirString), Overflow["actualArm"]);
+        return _ActualArmElement;
+      }
+
+      set
+      {
+        if (_ActualArmElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          Overflow.Remove("actualArm");
+        _ActualArmElement = value;
+        OnPropertyChanged("ActualArmElement");
+      }
+
     }
 
     private Hl7.Fhir.Model.FhirString? _ActualArmElement;
@@ -289,7 +381,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ActualArm
     {
-      get => _ActualArmElement?.Value;
+      get => ActualArmElement?.Value;
       set
       {
         ActualArmElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -306,8 +398,21 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Consent
     {
-      get { return _Consent; }
-      set { _Consent = value; OnPropertyChanged("Consent"); }
+      get
+      {
+        if(_Consent.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          throw CodedValidationException.FromTypes(typeof(Hl7.Fhir.Model.ResourceReference), Overflow["consent"]);
+        return _Consent;
+      }
+
+      set
+      {
+        if (_Consent.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          Overflow.Remove("consent");
+        _Consent = value;
+        OnPropertyChanged("Consent");
+      }
+
     }
 
     private Hl7.Fhir.Model.ResourceReference? _Consent;
@@ -361,29 +466,69 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "identifier":
+          if (_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>())
+          {
+            value = Overflow["identifier"];
+            return true;
+          }
           value = _Identifier;
-          return _Identifier?.Any() == true;
+          return (value as List<Hl7.Fhir.Model.Identifier>)?.Any() is true;
         case "status":
+          if (_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>())
+          {
+            value = Overflow["status"];
+            return true;
+          }
           value = _StatusElement;
-          return _StatusElement is not null;
+          return (value as Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>) is not null;
         case "period":
+          if (_Period.InOverflow<Hl7.Fhir.Model.Period>())
+          {
+            value = Overflow["period"];
+            return true;
+          }
           value = _Period;
-          return _Period is not null;
+          return (value as Hl7.Fhir.Model.Period) is not null;
         case "study":
+          if (_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["study"];
+            return true;
+          }
           value = _Study;
-          return _Study is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "individual":
+          if (_Individual.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["individual"];
+            return true;
+          }
           value = _Individual;
-          return _Individual is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         case "assignedArm":
+          if (_AssignedArmElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["assignedArm"];
+            return true;
+          }
           value = _AssignedArmElement;
-          return _AssignedArmElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "actualArm":
+          if (_ActualArmElement.InOverflow<Hl7.Fhir.Model.FhirString>())
+          {
+            value = Overflow["actualArm"];
+            return true;
+          }
           value = _ActualArmElement;
-          return _ActualArmElement is not null;
+          return (value as Hl7.Fhir.Model.FhirString) is not null;
         case "consent":
+          if (_Consent.InOverflow<Hl7.Fhir.Model.ResourceReference>())
+          {
+            value = Overflow["consent"];
+            return true;
+          }
           value = _Consent;
-          return _Consent is not null;
+          return (value as Hl7.Fhir.Model.ResourceReference) is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -392,31 +537,72 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
       switch (key)
       {
         case "identifier":
-          Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
+          if (value is not (List<Hl7.Fhir.Model.Identifier> or null))
+          {
+            Identifier = OverflowNull<List<Hl7.Fhir.Model.Identifier>>.INSTANCE;
+            Overflow["identifier"] = value;
+          }
+          else Identifier = (List<Hl7.Fhir.Model.Identifier>?)value!;
           return this;
         case "status":
-          StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>?)value;
+          if (value is not (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus> or null))
+          {
+            StatusElement = OverflowNull<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>.INSTANCE;
+            Overflow["status"] = value;
+          }
+          else StatusElement = (Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>?)value;
           return this;
         case "period":
-          Period = (Hl7.Fhir.Model.Period?)value;
+          if (value is not (Hl7.Fhir.Model.Period or null))
+          {
+            Period = OverflowNull<Hl7.Fhir.Model.Period>.INSTANCE;
+            Overflow["period"] = value;
+          }
+          else Period = (Hl7.Fhir.Model.Period?)value;
           return this;
         case "study":
-          Study = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Study = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["study"] = value;
+          }
+          else Study = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "individual":
-          Individual = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Individual = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["individual"] = value;
+          }
+          else Individual = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         case "assignedArm":
-          AssignedArmElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            AssignedArmElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["assignedArm"] = value;
+          }
+          else AssignedArmElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "actualArm":
-          ActualArmElement = (Hl7.Fhir.Model.FhirString?)value;
+          if (value is not (Hl7.Fhir.Model.FhirString or null))
+          {
+            ActualArmElement = OverflowNull<Hl7.Fhir.Model.FhirString>.INSTANCE;
+            Overflow["actualArm"] = value;
+          }
+          else ActualArmElement = (Hl7.Fhir.Model.FhirString?)value;
           return this;
         case "consent":
-          Consent = (Hl7.Fhir.Model.ResourceReference?)value;
+          if (value is not (Hl7.Fhir.Model.ResourceReference or null))
+          {
+            Consent = OverflowNull<Hl7.Fhir.Model.ResourceReference>.INSTANCE;
+            Overflow["consent"] = value;
+          }
+          else Consent = (Hl7.Fhir.Model.ResourceReference?)value;
           return this;
         default:
           return base.SetValue(key, value);
@@ -427,14 +613,14 @@ namespace Hl7.Fhir.Model
     public override IEnumerable<KeyValuePair<string, object>> EnumerateElements()
     {
       foreach (var kvp in base.EnumerateElements()) yield return kvp;
-      if (_Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",_Identifier);
-      if (_StatusElement is not null) yield return new KeyValuePair<string,object>("status",_StatusElement);
-      if (_Period is not null) yield return new KeyValuePair<string,object>("period",_Period);
-      if (_Study is not null) yield return new KeyValuePair<string,object>("study",_Study);
-      if (_Individual is not null) yield return new KeyValuePair<string,object>("individual",_Individual);
-      if (_AssignedArmElement is not null) yield return new KeyValuePair<string,object>("assignedArm",_AssignedArmElement);
-      if (_ActualArmElement is not null) yield return new KeyValuePair<string,object>("actualArm",_ActualArmElement);
-      if (_Consent is not null) yield return new KeyValuePair<string,object>("consent",_Consent);
+      if (_Identifier?.Any() is true && !_Identifier.InOverflow<List<Hl7.Fhir.Model.Identifier>>()) yield return new KeyValuePair<string,object>("identifier",_Identifier);
+      if (_StatusElement is not null && !_StatusElement.InOverflow<Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus>>()) yield return new KeyValuePair<string,object>("status",_StatusElement);
+      if (_Period is not null && !_Period.InOverflow<Hl7.Fhir.Model.Period>()) yield return new KeyValuePair<string,object>("period",_Period);
+      if (_Study is not null && !_Study.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("study",_Study);
+      if (_Individual is not null && !_Individual.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("individual",_Individual);
+      if (_AssignedArmElement is not null && !_AssignedArmElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("assignedArm",_AssignedArmElement);
+      if (_ActualArmElement is not null && !_ActualArmElement.InOverflow<Hl7.Fhir.Model.FhirString>()) yield return new KeyValuePair<string,object>("actualArm",_ActualArmElement);
+      if (_Consent is not null && !_Consent.InOverflow<Hl7.Fhir.Model.ResourceReference>()) yield return new KeyValuePair<string,object>("consent",_Consent);
     }
 
   }
