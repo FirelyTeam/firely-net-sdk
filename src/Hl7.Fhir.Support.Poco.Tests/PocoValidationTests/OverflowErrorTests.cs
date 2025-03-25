@@ -14,16 +14,16 @@ public class OverflowErrorTests
     [TestMethod]
     public void SettingInvalidElementValue_Should_ThrowOnAccess()
     {
-        TestOnPrimitiveElement(new Patient(), COVE.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
+        TestOnPrimitiveElement(new Patient(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
         TestOnPrimitiveElement(new Integer(10), COVE.PROPERTY_TYPE_MISMATCH_CODE);
-        TestOnPrimitiveElement(new List<Patient>(), COVE.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE);
+        TestOnPrimitiveElement(new List<Patient>(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
         TestOnPrimitiveElement(new FhirBoolean(true), null);
         TestOnArrayElement(new List<Patient>(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
-        TestOnArrayElement(new Patient(), COVE.EXPECTED_ARRAY_NOT_OBJECT_CODE);
-        TestOnArrayElement(new FhirBoolean(true), COVE.EXPECTED_ARRAY_NOT_PRIMITIVE_CODE);
+        TestOnArrayElement(new Patient(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        TestOnArrayElement(new FhirBoolean(true), COVE.PROPERTY_TYPE_MISMATCH_CODE);
         TestOnArrayElement(new List<HumanName>(), null);
-        TestOnObjectElement(new FhirBoolean(false), COVE.EXPECTED_OBJECT_NOT_PRIMITIVE_CODE);
-        TestOnObjectElement(new List<HumanName>(), COVE.EXPECTED_OBJECT_NOT_ARRAY_CODE);
+        TestOnObjectElement(new FhirBoolean(false), COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        TestOnObjectElement(new List<HumanName>(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
         TestOnObjectElement(new Patient(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
         TestOnObjectElement(new Narrative("<div> this div is not centered </div>"), null);
     }
@@ -79,9 +79,9 @@ public class OverflowErrorTests
         pat.SetValue("gender", new Patient());
 
         var act = () => pat.GenderElement;
-        act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(COVE.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
+        act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(COVE.PROPERTY_TYPE_MISMATCH_CODE);
         var act2 = () => pat.Gender;
-        act2.Should().Throw<COVE>().Which.ErrorCode.Should().Be(COVE.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
+        act2.Should().Throw<COVE>().Which.ErrorCode.Should().Be(COVE.PROPERTY_TYPE_MISMATCH_CODE);
     }
 
     [TestMethod]
