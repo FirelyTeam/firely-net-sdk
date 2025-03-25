@@ -51,8 +51,6 @@ public class FhirAttributeValidator : IPocoValidator
                 .ToArray();
             return;
         }
-        
-        if(!propertyValue.IsValidValueForType(propMapping.NativeProperty.PropertyType))
 
         reportedErrors = runAttributeValidation(propertyValue, propMapping.ValidationAttributes, validationContext);
     }
