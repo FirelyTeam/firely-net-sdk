@@ -569,7 +569,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void JsonDeserializerSupportsParsingUnknownTypesAndProperties()
     {
-        var parser = new BaseFhirJsonPocoDeserializer(ModelInspector.Base);
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.Base);
 
         var dt = DateTimeOffset.UtcNow;
         
@@ -589,7 +589,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void JsonDeserializerSupportsUnknownPropertiesOnKnownTypes()
     {
-        var parser = new BaseFhirJsonPocoDeserializer(ModelInspector.ForType<Patient>());
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
 
         var dt = DateTimeOffset.UtcNow;
         
@@ -604,8 +604,6 @@ public class FhirJsonDeserializationTests
         });
 
         parser.TryDeserializeResource(ref reader, out var obj, out var errors);
-        var serial = new BaseFhirJsonSerializer(ModelInspector.ForType<Patient>());
-
         obj.Should().NotBeNull();
         obj!.TypeName.Should().Be("Patient");
         obj.Id.Should().Be("TestIdentifier");
@@ -620,7 +618,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void JsonDeserializerHandleUnexpectedObject()
     {
-        var parser = new BaseFhirJsonPocoDeserializer(ModelInspector.ForType<Patient>());
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
 
         var test = new
         {
@@ -648,7 +646,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void JsonDeserializerHandleContainedStuff()
     {
-        var parser = new BaseFhirJsonPocoDeserializer(ModelInspector.ForType<Patient>());
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
 
         var test = new
         {
