@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Introspection
                 throw new InvalidOperationException($"Property {prop.Name} in class {prop.DeclaringType!.Name} is of type " +
                     $"{fhirType}, for which a classmapping cannot be found.");
 
-            // The [AllowedElements] attribute can specify a set of allowed types for this element.
+            // The [AllowedTypes] attribute can specify a set of allowed types for this element.
             // If this is a choice element, then take this list as the declared list of FHIR types,
             // otherwise assume this is the implementing FHIR type above
             var allowedTypes = elementAttr.Choice != ChoiceType.None ? ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release) : null;

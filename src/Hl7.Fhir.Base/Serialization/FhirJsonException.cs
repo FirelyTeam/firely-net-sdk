@@ -28,24 +28,24 @@ namespace Hl7.Fhir.Serialization;
 public class FhirJsonException : ExtendedCodedException
 {
     public const string EXPECTED_START_OF_OBJECT_CODE = "JSON101";
-    public const string RESOURCETYPE_SHOULD_BE_STRING_CODE = "JSON102"; // non-duplicate
-    public const string NO_RESOURCETYPE_PROPERTY_CODE = "JSON103"; // non-duplicate
+    public const string RESOURCETYPE_SHOULD_BE_STRING_CODE = "JSON102";
+    public const string NO_RESOURCETYPE_PROPERTY_CODE = "JSON103";
     public const string EXPECTED_PRIMITIVE_NOT_OBJECT_CODE = "JSON104";
     public const string EXPECTED_PRIMITIVE_NOT_ARRAY_CODE = "JSON105";
     public const string EXPECTED_PRIMITIVE_NOT_NULL_CODE = "JSON109";
     public const string EXPECTED_START_OF_ARRAY_CODE = "JSON111";
-    public const string USE_OF_UNDERSCORE_ILLEGAL_CODE = "JSON113"; // non-duplicate
-    public const string CHOICE_ELEMENT_HAS_NO_TYPE_CODE = "JSON114"; // non-duplicate
-    public const string CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE = "JSON115"; // non-duplicate
-    public const string UNKNOWN_RESOURCE_TYPE_CODE = "JSON116"; // non-duplicate
-    public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "JSON117"; // non-duplicate
-    public const string UNKNOWN_PROPERTY_FOUND_CODE = "JSON118"; // non-duplicate
+    public const string USE_OF_UNDERSCORE_ILLEGAL_CODE = "JSON113";
+    public const string CHOICE_ELEMENT_HAS_NO_TYPE_CODE = "JSON114";
+    public const string CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE = "JSON115";
+    public const string UNKNOWN_RESOURCE_TYPE_CODE = "JSON116";
+    public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "JSON117";
+    public const string UNKNOWN_PROPERTY_FOUND_CODE = "JSON118";
     public const string OBJECTS_CANNOT_BE_EMPTY_CODE = "JSON120";
     public const string ARRAYS_CANNOT_BE_EMPTY_CODE = "JSON121";
     public const string PRIMITIVE_ARRAYS_ONLY_NULL_CODE = "JSON125";
     public const string PROPERTY_MAY_NOT_BE_EMPTY_CODE = "JSON127";
-    public const string DUPLICATE_ARRAY_CODE = "JSON128"; // non-duplicate
-    public const string DUPLICATE_PROPERTY_CODE = "JSON129"; // non-duplicate
+    public const string DUPLICATE_ARRAY_CODE = "JSON128";
+    public const string DUPLICATE_PROPERTY_CODE = "JSON129";
 
     // ==========================================
     // Unrecoverable Errors

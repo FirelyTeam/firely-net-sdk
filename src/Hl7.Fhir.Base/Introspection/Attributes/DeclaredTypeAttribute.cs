@@ -8,7 +8,11 @@
 
 #nullable enable
 
+using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hl7.Fhir.Introspection;
 
@@ -19,7 +23,17 @@ namespace Hl7.Fhir.Introspection;
 /// </summary>
 [CLSCompliant(false)]
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-public class DeclaredTypeAttribute(Type t) : FhirModelAttribute
+public class DeclaredTypeAttribute(Type t) : ValidatingFhirModelAttribute
 {
     public Type Type { get; set; } = t;
+
+    public override IReadOnlyCollection<CodedValidationException> Validate(object? value, ValidationContext validationContext)
+    {
+        if (value.IsValidValueForDeclaredType(Type))
+        {
+            return [];
+        }
+
+        return [CodedValidationException.FromTypes(Type, value, validationContext)];
+    }
 }

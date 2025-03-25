@@ -37,11 +37,19 @@ public class FhirAttributeValidator : IPocoValidator
             .SetNarrativeValidationKind(context.NarrativeValidation)
             .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
             .SetLocationProducer(context.PathStack.GetInstancePath);
-        
-        // TODO: validate expected vs actual type and call CVE.ForType()
-        // TODO: check whether this property is expected/allowed here ClassMapping/PropMapping
 
-        reportedErrors = runAttributeValidation(propertyValue, context.ElementMapping.ValidationAttributes, validationContext);
+        if (context.ElementMapping is not { } propMapping)
+        {
+            reportedErrors = [CodedValidationException.UNKNOWN_ELEMENT(validationContext, validationContext.MemberName!)];
+            return;
+        }
+
+        if (!propMapping.ImplementingType.IsInstanceOfType(propertyValue) && (ReflectionHelper.IsRepeatingElement(propertyValue, out var list) && !list.OfType<object>().All(v => propMapping.ImplementingType.IsInstanceOfType(v))))
+        {
+            reportedErrors = [CodedValidationException.FromTypes(propMapping.ImplementingType, propertyValue, validationContext)];
+        }
+
+        reportedErrors = runAttributeValidation(propertyValue, propMapping.ValidationAttributes, validationContext);
     }
 
     /// <inheritdoc />

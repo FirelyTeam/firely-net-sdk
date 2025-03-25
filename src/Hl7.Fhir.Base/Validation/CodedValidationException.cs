@@ -49,7 +49,9 @@ public class CodedValidationException : ExtendedCodedException
     public const string EXPECTED_PRIMITIVE_NOT_ARRAY_CODE = "PVAL130";
     public const string EXPECTED_ARRAY_NOT_PRIMITIVE_CODE = "PVAL131";
     public const string EXPECTED_ARRAY_NOT_OBJECT_CODE = "PVAL132";
-    public const string TYPE_MISMATCH_CODE = "PVAL133";
+    public const string PROPERTY_TYPE_MISMATCH_CODE = "PVAL133";
+    public const string UNKNOWN_ELEMENT_CODE = "PVAL135";
+    
 
     // A list of all issues mentioned above, to we can filter on them.
     internal static readonly HashSet<string> POCO_VALIDATION_ISSUES =
@@ -75,7 +77,8 @@ public class CodedValidationException : ExtendedCodedException
         EXPECTED_PRIMITIVE_NOT_ARRAY_CODE,
         EXPECTED_ARRAY_NOT_PRIMITIVE_CODE,
         EXPECTED_ARRAY_NOT_OBJECT_CODE,
-        TYPE_MISMATCH_CODE
+        PROPERTY_TYPE_MISMATCH_CODE,
+        UNKNOWN_ELEMENT_CODE
     ];
 
     internal static COVE CHOICE_TYPE_NOT_ALLOWED(ValidationContext context, string typeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{typeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Structure);
@@ -99,25 +102,28 @@ public class CodedValidationException : ExtendedCodedException
         Initialize(context, UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE, $"Value {value} is negative, which is not allowed for an UnsignedInt.", OO_Sev.Error, OO_Typ.Value);
     
     internal static COVE EXPECTED_OBJECT_NOT_PRIMITIVE(ValidationContext? context, object? value) =>
-        Initialize(context, EXPECTED_OBJECT_NOT_PRIMITIVE_CODE, $"Expected an object, but found primitive {value}.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, EXPECTED_OBJECT_NOT_PRIMITIVE_CODE, $"Expected a non-repeating complex data type, but found {value}.", OO_Sev.Error, OO_Typ.Value);
     
     internal static COVE EXPECTED_OBJECT_NOT_ARRAY(ValidationContext? context, object? value) =>
-        Initialize(context, EXPECTED_OBJECT_NOT_ARRAY_CODE, $"Expected an object, but found array {value}.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, EXPECTED_OBJECT_NOT_ARRAY_CODE, $"Expected a non-repeating complex data type, but found {value}.", OO_Sev.Error, OO_Typ.Value);
     
     internal static COVE EXPECTED_PRIMITIVE_NOT_OBJECT(ValidationContext? context, object? value) =>
-        Initialize(context, EXPECTED_PRIMITIVE_NOT_OBJECT_CODE, $"Expected a primitive, but found object {value}.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, EXPECTED_PRIMITIVE_NOT_OBJECT_CODE, $"Expected a primitive, but found {value}.", OO_Sev.Error, OO_Typ.Value);
     
     internal static COVE EXPECTED_PRIMITIVE_NOT_ARRAY(ValidationContext? context, object? value) =>
-        Initialize(context, EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, $"Expected a primitive, but found array {value}.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, $"Expected a primitive, but found {value}.", OO_Sev.Error, OO_Typ.Value);
     
     internal static COVE EXPECTED_ARRAY_NOT_PRIMITIVE(ValidationContext? context, object? value) =>
-        Initialize(context, EXPECTED_ARRAY_NOT_PRIMITIVE_CODE, $"Expected an array, but found primitive {value}.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, EXPECTED_ARRAY_NOT_PRIMITIVE_CODE, $"Expected a repeating element, but found {value}.", OO_Sev.Error, OO_Typ.Value);
     
     internal static COVE EXPECTED_ARRAY_NOT_OBJECT(ValidationContext? context, object? value) =>
-        Initialize(context, EXPECTED_ARRAY_NOT_OBJECT_CODE, $"Expected an array, but found object {value}.", OO_Sev.Error, OO_Typ.Value);
+        Initialize(context, EXPECTED_ARRAY_NOT_OBJECT_CODE, $"Expected a repeating element, but found {value}.", OO_Sev.Error, OO_Typ.Value);
     
-    internal static COVE TYPE_MISMATCH(ValidationContext? context, string expected, string actual) =>
-        Initialize(context, TYPE_MISMATCH_CODE, $"Expected type '{expected}', but found '{actual}'.", OO_Sev.Error, OO_Typ.Structure);
+    internal static COVE PROPERTY_TYPE_MISMATCH(ValidationContext? context, string expected, string actual) =>
+        Initialize(context, PROPERTY_TYPE_MISMATCH_CODE, $"Expected type '{expected}', but found '{actual}'.", OO_Sev.Error, OO_Typ.Structure);
+    
+    internal static COVE UNKNOWN_ELEMENT(ValidationContext? context, string elementName) =>
+        Initialize(context, UNKNOWN_ELEMENT_CODE, $"Found unknown element '{elementName}'.", OO_Sev.Error, OO_Typ.Unknown);
 
 
     private static string niceValue(object? v)
@@ -180,19 +186,19 @@ public class CodedValidationException : ExtendedCodedException
         return codedException;
     }
 
-    internal static CodedValidationException FromTypes(Type expected, object? actual) =>
+    internal static CodedValidationException FromTypes(Type expected, object? actual, ValidationContext? context = null) =>
         actual switch
         {
-            PrimitiveType when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_PRIMITIVE(null, actual),
-            PrimitiveType when typeof(PrimitiveType).IsAssignableFrom(expected) => TYPE_MISMATCH(null, expected.Name, actual.GetType().Name),
-            PrimitiveType when typeof(Base).IsAssignableFrom(expected) => EXPECTED_OBJECT_NOT_PRIMITIVE(null, actual),
-            Base when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_OBJECT(null, actual),
-            Base when typeof(PrimitiveType).IsAssignableFrom(expected) => EXPECTED_PRIMITIVE_NOT_OBJECT(null, actual),
-            Base when typeof(Base).IsAssignableFrom(expected) => TYPE_MISMATCH(null, expected.Name, actual.GetType().Name),
-            IEnumerable<Base> when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => TYPE_MISMATCH(null, expected.Name, actual.GetType().Name),
-            IEnumerable<Base> when typeof(PrimitiveType).IsAssignableFrom(expected) => EXPECTED_PRIMITIVE_NOT_ARRAY(null, actual),
-            IEnumerable<Base> when typeof(Base).IsAssignableFrom(expected) => EXPECTED_OBJECT_NOT_ARRAY(null, actual),
-            _ => TYPE_MISMATCH(null, expected.Name, actual?.GetType().Name ?? "null")
+            PrimitiveType when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_PRIMITIVE(context, actual),
+            PrimitiveType when typeof(PrimitiveType).IsAssignableFrom(expected) => PROPERTY_TYPE_MISMATCH(context, expected.Name, actual.GetType().Name),
+            PrimitiveType when typeof(Base).IsAssignableFrom(expected) => EXPECTED_OBJECT_NOT_PRIMITIVE(context, actual),
+            Base when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => EXPECTED_ARRAY_NOT_OBJECT(context, actual),
+            Base when typeof(PrimitiveType).IsAssignableFrom(expected) => EXPECTED_PRIMITIVE_NOT_OBJECT(context, actual),
+            Base when typeof(Base).IsAssignableFrom(expected) => PROPERTY_TYPE_MISMATCH(context, expected.Name, actual.GetType().Name),
+            IEnumerable<Base> when typeof(IEnumerable<Base>).IsAssignableFrom(expected) => PROPERTY_TYPE_MISMATCH(context, expected.Name, actual.GetType().Name),
+            IEnumerable<Base> when typeof(PrimitiveType).IsAssignableFrom(expected) => EXPECTED_PRIMITIVE_NOT_ARRAY(context, actual),
+            IEnumerable<Base> when typeof(Base).IsAssignableFrom(expected) => EXPECTED_OBJECT_NOT_ARRAY(context, actual),
+            _ => PROPERTY_TYPE_MISMATCH(context, expected.Name, actual?.GetType().Name ?? "null")
         };
 
     internal CodedValidationResult AsResult(ValidationContext? context) =>

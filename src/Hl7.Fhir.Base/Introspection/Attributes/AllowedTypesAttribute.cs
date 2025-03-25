@@ -55,12 +55,7 @@ public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAtt
     }
 
     private IReadOnlyCollection<CodedValidationException> validateValue(object? item, ValidationContext context) =>
-        item is null || IsAllowedType(item.GetType())
+        item is null || Types.Any(t => t.IsInstanceOfType(item))
             ? []
             : [COVE.CHOICE_TYPE_NOT_ALLOWED(context, ModelInspector.GetClassMappingForType(item.GetType())?.Name ?? item.GetType().Name)];
-
-    /// <summary>
-    /// Determine whether the given type is allowed according to this attribute.
-    /// </summary>
-    public bool IsAllowedType(Type t) => Types.Any(type => type.IsAssignableFrom(t));
 }

@@ -15,16 +15,16 @@ public class OverflowErrorTests
     public void SettingInvalidElementValue_Should_ThrowOnAccess()
     {
         TestOnPrimitiveElement(new Patient(), COVE.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
-        TestOnPrimitiveElement(new Integer(10), COVE.TYPE_MISMATCH_CODE);
+        TestOnPrimitiveElement(new Integer(10), COVE.PROPERTY_TYPE_MISMATCH_CODE);
         TestOnPrimitiveElement(new List<Patient>(), COVE.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE);
         TestOnPrimitiveElement(new FhirBoolean(true), null);
-        TestOnArrayElement(new List<Patient>(), COVE.TYPE_MISMATCH_CODE);
+        TestOnArrayElement(new List<Patient>(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
         TestOnArrayElement(new Patient(), COVE.EXPECTED_ARRAY_NOT_OBJECT_CODE);
         TestOnArrayElement(new FhirBoolean(true), COVE.EXPECTED_ARRAY_NOT_PRIMITIVE_CODE);
         TestOnArrayElement(new List<HumanName>(), null);
         TestOnObjectElement(new FhirBoolean(false), COVE.EXPECTED_OBJECT_NOT_PRIMITIVE_CODE);
         TestOnObjectElement(new List<HumanName>(), COVE.EXPECTED_OBJECT_NOT_ARRAY_CODE);
-        TestOnObjectElement(new Patient(), COVE.TYPE_MISMATCH_CODE);
+        TestOnObjectElement(new Patient(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
         TestOnObjectElement(new Narrative("<div> this div is not centered </div>"), null);
     }
 
@@ -94,6 +94,6 @@ public class OverflowErrorTests
         att.SizeElement.Should().BeEquivalentTo(new Integer64(5));
         // att.SizeElement = new FhirString("5");
         // var act = () => att.SizeElement;
-        // act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(COVE.TYPE_MISMATCH_CODE);
+        // act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(COVE.PROPERTY_TYPE_MISMATCH_CODE);
     }
 }
