@@ -171,7 +171,7 @@ public class FhirJsonDeserializationTests
             $"Should be the same: actual [{string.Join(",", actual.Select(a => a.ErrorCode))}] and expected [{string.Join(";", expected)}]";
         Console.WriteLine("Messages: " + string.Join(", ", actual.Select(a => a.Message)));
         actual.Count().Should().Be(expected.Length, because: why);
-        _ = actual.Zip(expected, (a, e) => a.ErrorCode.Should().Be(e, because: why)).ToList();
+        _ = actual.Zip(expected).Should().AllSatisfy(pair => pair.First.ErrorCode.Should().Be(pair.Second, because: why));
         Console.WriteLine($"Found {string.Join(", ", actual.Select(a => a.Message))}");
     }
 

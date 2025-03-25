@@ -8,6 +8,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
@@ -26,5 +27,5 @@ public class DeclaredTypeAttribute(Type t) : ValidatingFhirModelAttribute
 {
     public Type Type { get; set; } = t;
     public override IReadOnlyCollection<CodedValidationException> Validate(object? value, ValidationContext validationContext) 
-        => value is null || Type.IsInstanceOfType(value) ? [] : [CodedValidationException.FromTypes(Type, value)];
+        => value is null || Type.IsInstanceOfType(value) || (ReflectionHelper.IsRepeatingElement(value) && ReflectionHelper.GetCollectionItemType(value.GetType()) == Type) ? [] : [CodedValidationException.FromTypes(Type, value, validationContext)];
 }
