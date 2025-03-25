@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Utility
             return IsRepeatingElement(value, out var collection) && (collection.Count == 0 || type.IsAssignableFrom(collection.GetType().GetGenericArguments().FirstOrDefault() ?? typeof(object)));
         }
 
-        public static bool IsValidValueForDeclaredType(this object value, Type type)
+        public static bool IsValidValueForType(this object value, Type type)
         {
             return (value is null || type.IsInstanceOfType(value) || value.isValidCollectionForItemType(type));
         }

@@ -44,10 +44,15 @@ public class FhirAttributeValidator : IPocoValidator
             return;
         }
 
-        if (!propMapping.ImplementingType.IsInstanceOfType(propertyValue) && (ReflectionHelper.IsRepeatingElement(propertyValue, out var list) && !list.OfType<object>().All(v => propMapping.ImplementingType.IsInstanceOfType(v))))
+        if (!propertyValue.IsValidValueForType(propMapping.NativeProperty.PropertyType)) // TODO add declared type validation
         {
-            reportedErrors = [CodedValidationException.FromTypes(propMapping.ImplementingType, propertyValue, validationContext)];
+            reportedErrors = runAttributeValidation(propertyValue, propMapping.ValidationAttributes, validationContext)
+                .Append(CodedValidationException.FromTypes(propMapping.NativeProperty.PropertyType, propertyValue, validationContext))
+                .ToArray();
+            return;
         }
+        
+        if(!propertyValue.IsValidValueForType(propMapping.NativeProperty.PropertyType))
 
         reportedErrors = runAttributeValidation(propertyValue, propMapping.ValidationAttributes, validationContext);
     }
