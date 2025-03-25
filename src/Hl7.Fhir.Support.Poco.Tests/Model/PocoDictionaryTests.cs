@@ -45,7 +45,7 @@ public class PocoDictionaryTests
     {
         var pat = new Patient();
 
-        // setting an existing property to an incorrect type should fail.
+        // setting an existing property to a non-Base type should fail.
         Assert.ThrowsException<ArgumentException>(() => pat["name"] = "John");
 
         // Setting it correctly should work
