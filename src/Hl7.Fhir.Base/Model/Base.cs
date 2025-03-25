@@ -49,8 +49,6 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     public virtual string TypeName => GetType().Name;
     
     private Dictionary<string, object>? _overflow = null;
-    
-    protected bool HasOverflow => _overflow is not null && _overflow.Any();
 
     /// <summary>
     /// A dictionary containing all elements that are not explicitly defined in the class.
