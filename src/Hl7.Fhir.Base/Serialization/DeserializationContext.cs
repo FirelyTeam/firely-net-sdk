@@ -28,7 +28,7 @@ public readonly struct PropertyDeserializationContext
         string propertyName,
         long lineNumber,
         long linePosition,
-        PropertyMapping propMapping,
+        PropertyMapping? propMapping,
         NarrativeValidationKind narrativeValidation
         )
     {

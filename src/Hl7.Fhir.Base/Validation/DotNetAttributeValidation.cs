@@ -8,8 +8,11 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.Design;
 
 #nullable enable
 
@@ -30,9 +33,9 @@ public static class DotNetAttributeValidation
     /// <param name="narrativeValidation">The kind of narrative validation to perform when validating <see cref="XHtml"/>.</param>
     public static void Validate(
         this Base poco,
-        ModelInspector inspector,
         bool recurse = false,
-        NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml)
+        NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml,
+        ModelInspector? inspector = null)
     {
         var validationContext = buildContext(poco, inspector, recurse, narrativeValidation);
         Validator.ValidateObject(poco, validationContext, true);
@@ -49,10 +52,10 @@ public static class DotNetAttributeValidation
     /// <remarks>If <paramref name="validationResults"/> is <c>null</c>, no errors will be returned.</remarks>
     public static bool TryValidate(
         this Base poco,
-        ModelInspector inspector,
         ICollection<ValidationResult>? validationResults = null,
         bool recurse = false,
-        NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml)
+        NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml,
+        ModelInspector? inspector = null)
     {
         var validationContext = buildContext(poco, inspector, recurse, narrativeValidation);
 
@@ -89,11 +92,17 @@ public static class DotNetAttributeValidation
     internal static ValidationContext IntoEmptyProperty(this ValidationContext ctx, string elementName) =>
         new(ctx.ObjectInstance, ctx.Items) { MemberName = elementName };
 
-    private static ValidationContext buildContext(Base instance, ModelInspector inspector, bool recurse, NarrativeValidationKind kind)
+    private static ValidationContext buildContext(Base instance, ModelInspector? inspector, bool recurse, NarrativeValidationKind kind)
     {
-        var newContext = new ValidationContext(instance);
+        inspector ??= ModelInspector.ForType(instance.GetType());
 
-        newContext.SetModelInspector(inspector);
+        var services = new ServiceContainer();
+        services.AddService(typeof(IPocoValidator), new FhirAttributeValidator());
+        services.AddService(typeof(ModelInspector), inspector);
+
+        var newContext = new ValidationContext(instance, services, null);
+
+        //newContext.SetModelInspector(inspector);
         newContext.SetValidateRecursively(recurse);
         newContext.SetNarrativeValidationKind(kind);
         newContext.SetLocationProducer(() => instance.GetType().Name);

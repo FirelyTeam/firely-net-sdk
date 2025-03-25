@@ -28,6 +28,9 @@
 
 */
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -71,8 +74,22 @@ public sealed class FhirTypeAttribute : ValidationAttribute
 
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        if (value is null) return ValidationResult.Success;
+        if(value is null) return ValidationResult.Success;
+        if(value is not Base target) throw new ArgumentException("This attribute can only be applied to subclasses of Base.", nameof(value));
+        if(validationContext.GetService(typeof(IPocoValidator)) is not IPocoValidator validator)
+            throw new InvalidOperationException("The validation needs to have access to an IPocoValidator via the validation context's service collection..");
 
+        // Step 1: Validate the object properties.
+        // foreach (var (name,propValue) in target.EnumerateElements())
+        // {
+        //     var prop = new PropertyDeserializationContext(
+        //     validator.ValidateProperty(propValue, propValidatorContext, out var reportedErrors);
+        // }
+        //
+        // // Step 2: Validate the object.
+
+
+        throw new NotImplementedException();
         //     // If we should not validate 'value's elements, return immediately
         //     if (!validationContext.ValidateRecursively()) return ValidationResult.Success;
     }

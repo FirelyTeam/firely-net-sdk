@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Introspection
             }
 
             // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
-            if (GetAttribute<FhirTypeAttribute>(type, release) is not { } typeAttribute) return false;
+            if (ReflectionHelper.GetAttribute<FhirTypeAttribute>(type) is not { } typeAttribute) return false;
 
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
