@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Division
     {
-      get => _DivisionElement?.Value;
+      get => DivisionElement?.Value;
       set
       {
         DivisionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ExpirationDate
     {
-      get => _ExpirationDateElement?.Value;
+      get => ExpirationDateElement?.Value;
       set
       {
         ExpirationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

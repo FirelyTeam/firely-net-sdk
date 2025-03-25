@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Preferred
       {
-        get => _PreferredElement?.Value;
+        get => PreferredElement?.Value;
         set
         {
           PreferredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Person.IdentityAssuranceLevel? Assurance
       {
-        get => _AssuranceElement?.Value;
+        get => AssuranceElement?.Value;
         set
         {
           AssuranceElement = value is null ? null : new Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel>(value);
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get => _ActiveElement?.Value;
+      get => ActiveElement?.Value;
       set
       {
         ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdministrativeGender? Gender
     {
-      get => _GenderElement?.Value;
+      get => GenderElement?.Value;
       set
       {
         GenderElement = value is null ? null : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? BirthDate
     {
-      get => _BirthDateElement?.Value;
+      get => BirthDateElement?.Value;
       set
       {
         BirthDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);

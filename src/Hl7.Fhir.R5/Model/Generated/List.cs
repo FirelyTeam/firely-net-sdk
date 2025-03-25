@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Deleted
       {
-        get => _DeletedElement?.Value;
+        get => DeletedElement?.Value;
         set
         {
           DeletedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Date
       {
-        get => _DateElement?.Value;
+        get => DateElement?.Value;
         set
         {
           DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.List.ListStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.List.ListStatus>(value);
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ListMode? Mode
     {
-      get => _ModeElement?.Value;
+      get => ModeElement?.Value;
       set
       {
         ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.ListMode>(value);
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Title
     {
-      get => _TitleElement?.Value;
+      get => TitleElement?.Value;
       set
       {
         TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Longitude
       {
-        get => _LongitudeElement?.Value;
+        get => LongitudeElement?.Value;
         set
         {
           LongitudeElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Latitude
       {
-        get => _LatitudeElement?.Value;
+        get => LatitudeElement?.Value;
         set
         {
           LatitudeElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Altitude
       {
-        get => _AltitudeElement?.Value;
+        get => AltitudeElement?.Value;
         set
         {
           AltitudeElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AllDay
       {
-        get => _AllDayElement?.Value;
+        get => AllDayElement?.Value;
         set
         {
           AllDayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? OpeningTime
       {
-        get => _OpeningTimeElement?.Value;
+        get => OpeningTimeElement?.Value;
         set
         {
           OpeningTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ClosingTime
       {
-        get => _ClosingTimeElement?.Value;
+        get => ClosingTimeElement?.Value;
         set
         {
           ClosingTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
@@ -743,7 +743,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Location.LocationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Location.LocationStatus>(value);
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -897,7 +897,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -940,7 +940,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Location.LocationMode? Mode
     {
-      get => _ModeElement?.Value;
+      get => ModeElement?.Value;
       set
       {
         ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.Location.LocationMode>(value);
@@ -1198,7 +1198,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AvailabilityExceptions
     {
-      get => _AvailabilityExceptionsElement?.Value;
+      get => AvailabilityExceptionsElement?.Value;
       set
       {
         AvailabilityExceptionsElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

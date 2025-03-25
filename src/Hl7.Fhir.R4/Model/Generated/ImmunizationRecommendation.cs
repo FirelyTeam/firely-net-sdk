@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Series
       {
-        get => _SeriesElement?.Value;
+        get => SeriesElement?.Value;
         set
         {
           SeriesElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Value
       {
-        get => _ValueElement?.Value;
+        get => ValueElement?.Value;
         set
         {
           ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -987,7 +987,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

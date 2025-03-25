@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ContentType
     {
-      get => _ContentTypeElement?.Value;
+      get => ContentTypeElement?.Value;
       set
       {
         ContentTypeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public byte[]? Content
     {
-      get => _ContentElement?.Value;
+      get => ContentElement?.Value;
       set
       {
         ContentElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public byte[]? Data
     {
-      get => _DataElement?.Value;
+      get => DataElement?.Value;
       set
       {
         DataElement = value is null ? null : new Hl7.Fhir.Model.Base64Binary(value);

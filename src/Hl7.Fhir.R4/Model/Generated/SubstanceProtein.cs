@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Subunit
       {
-        get => _SubunitElement?.Value;
+        get => SubunitElement?.Value;
         set
         {
           SubunitElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Length
       {
-        get => _LengthElement?.Value;
+        get => LengthElement?.Value;
         set
         {
           LengthElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? NTerminalModification
       {
-        get => _NTerminalModificationElement?.Value;
+        get => NTerminalModificationElement?.Value;
         set
         {
           NTerminalModificationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? CTerminalModification
       {
-        get => _CTerminalModificationElement?.Value;
+        get => CTerminalModificationElement?.Value;
         set
         {
           CTerminalModificationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? NumberOfSubunits
     {
-      get => _NumberOfSubunitsElement?.Value;
+      get => NumberOfSubunitsElement?.Value;
       set
       {
         NumberOfSubunitsElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);

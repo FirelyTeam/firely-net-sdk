@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? EffectiveTime
       {
-        get => _EffectiveTimeElement?.Value;
+        get => EffectiveTimeElement?.Value;
         set
         {
           EffectiveTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Factor
       {
-        get => _FactorElement?.Value;
+        get => FactorElement?.Value;
         set
         {
           FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -777,7 +777,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Points
       {
-        get => _PointsElement?.Value;
+        get => PointsElement?.Value;
         set
         {
           PointsElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1092,7 +1092,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Issued
       {
-        get => _IssuedElement?.Value;
+        get => IssuedElement?.Value;
         set
         {
           IssuedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1353,7 +1353,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Text
       {
-        get => _TextElement?.Value;
+        get => TextElement?.Value;
         set
         {
           TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1987,7 +1987,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? EffectiveTime
       {
-        get => _EffectiveTimeElement?.Value;
+        get => EffectiveTimeElement?.Value;
         set
         {
           EffectiveTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -2080,7 +2080,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Factor
       {
-        get => _FactorElement?.Value;
+        get => FactorElement?.Value;
         set
         {
           FactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -2121,7 +2121,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Points
       {
-        get => _PointsElement?.Value;
+        get => PointsElement?.Value;
         set
         {
           PointsElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -2779,7 +2779,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Contract.ContractResourceStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes>(value);
@@ -2820,7 +2820,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Issued
     {
-      get => _IssuedElement?.Value;
+      get => IssuedElement?.Value;
       set
       {
         IssuedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

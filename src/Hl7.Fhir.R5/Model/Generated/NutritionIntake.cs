@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? NotConsumed
       {
-        get => _NotConsumedElement?.Value;
+        get => NotConsumedElement?.Value;
         set
         {
           NotConsumedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EventStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EventStatus>(value);
@@ -1184,7 +1184,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Recorded
     {
-      get => _RecordedElement?.Value;
+      get => RecordedElement?.Value;
       set
       {
         RecordedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

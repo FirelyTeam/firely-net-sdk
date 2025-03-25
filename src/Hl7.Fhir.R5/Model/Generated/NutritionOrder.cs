@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Instruction
       {
-        get => _InstructionElement?.Value;
+        get => InstructionElement?.Value;
         set
         {
           InstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AsNeeded
       {
-        get => _AsNeededElement?.Value;
+        get => AsNeededElement?.Value;
         set
         {
           AsNeededElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1045,7 +1045,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ProductName
       {
-        get => _ProductNameElement?.Value;
+        get => ProductNameElement?.Value;
         set
         {
           ProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1138,7 +1138,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Instruction
       {
-        get => _InstructionElement?.Value;
+        get => InstructionElement?.Value;
         set
         {
           InstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1371,7 +1371,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AsNeeded
       {
-        get => _AsNeededElement?.Value;
+        get => AsNeededElement?.Value;
         set
         {
           AsNeededElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1593,7 +1593,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? BaseFormulaProductName
       {
-        get => _BaseFormulaProductNameElement?.Value;
+        get => BaseFormulaProductNameElement?.Value;
         set
         {
           BaseFormulaProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1794,7 +1794,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AdministrationInstruction
       {
-        get => _AdministrationInstructionElement?.Value;
+        get => AdministrationInstructionElement?.Value;
         set
         {
           AdministrationInstructionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -2103,7 +2103,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ProductName
       {
-        get => _ProductNameElement?.Value;
+        get => ProductNameElement?.Value;
         set
         {
           ProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2532,7 +2532,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AsNeeded
       {
-        get => _AsNeededElement?.Value;
+        get => AsNeededElement?.Value;
         set
         {
           AsNeededElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -2931,7 +2931,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestStatus>(value);
@@ -2975,7 +2975,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestIntent? Intent
     {
-      get => _IntentElement?.Value;
+      get => IntentElement?.Value;
       set
       {
         IntentElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestIntent>(value);
@@ -3018,7 +3018,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.RequestPriority? Priority
     {
-      get => _PriorityElement?.Value;
+      get => PriorityElement?.Value;
       set
       {
         PriorityElement = value is null ? null : new Code<Hl7.Fhir.Model.RequestPriority>(value);
@@ -3146,7 +3146,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? DateTime
     {
-      get => _DateTimeElement?.Value;
+      get => DateTimeElement?.Value;
       set
       {
         DateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -3327,7 +3327,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? OutsideFoodAllowed
     {
-      get => _OutsideFoodAllowedElement?.Value;
+      get => OutsideFoodAllowedElement?.Value;
       set
       {
         OutsideFoodAllowedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

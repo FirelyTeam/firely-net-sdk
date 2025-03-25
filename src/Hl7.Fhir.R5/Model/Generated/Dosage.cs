@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Sequence
     {
-      get => _SequenceElement?.Value;
+      get => SequenceElement?.Value;
       set
       {
         SequenceElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Text
     {
-      get => _TextElement?.Value;
+      get => TextElement?.Value;
       set
       {
         TextElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PatientInstruction
     {
-      get => _PatientInstructionElement?.Value;
+      get => PatientInstructionElement?.Value;
       set
       {
         PatientInstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? AsNeeded
     {
-      get => _AsNeededElement?.Value;
+      get => AsNeededElement?.Value;
       set
       {
         AsNeededElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

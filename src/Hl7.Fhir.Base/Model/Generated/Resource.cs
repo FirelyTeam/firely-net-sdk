@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Id
     {
-      get => _IdElement?.Value;
+      get => IdElement?.Value;
       set
       {
         IdElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ImplicitRules
     {
-      get => _ImplicitRulesElement?.Value;
+      get => ImplicitRulesElement?.Value;
       set
       {
         ImplicitRulesElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Language
     {
-      get => _LanguageElement?.Value;
+      get => LanguageElement?.Value;
       set
       {
         LanguageElement = value is null ? null : new Hl7.Fhir.Model.Code(value);

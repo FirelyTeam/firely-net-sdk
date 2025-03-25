@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Encounter.EncounterStatus? Status
       {
-        get => _StatusElement?.Value;
+        get => StatusElement?.Value;
         set
         {
           StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Encounter.EncounterStatus>(value);
@@ -817,7 +817,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Rank
       {
-        get => _RankElement?.Value;
+        get => RankElement?.Value;
         set
         {
           RankElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -1506,7 +1506,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Encounter.EncounterLocationStatus? Status
       {
-        get => _StatusElement?.Value;
+        get => StatusElement?.Value;
         set
         {
           StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>(value);
@@ -1714,7 +1714,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Encounter.EncounterStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Encounter.EncounterStatus>(value);

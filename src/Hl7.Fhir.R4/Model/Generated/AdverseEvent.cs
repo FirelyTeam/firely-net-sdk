@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ProductRelatedness
       {
-        get => _ProductRelatednessElement?.Value;
+        get => ProductRelatednessElement?.Value;
         set
         {
           ProductRelatednessElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality? Actuality
     {
-      get => _ActualityElement?.Value;
+      get => ActualityElement?.Value;
       set
       {
         ActualityElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality>(value);
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -844,7 +844,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Detected
     {
-      get => _DetectedElement?.Value;
+      get => DetectedElement?.Value;
       set
       {
         DetectedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -885,7 +885,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? RecordedDate
     {
-      get => _RecordedDateElement?.Value;
+      get => RecordedDateElement?.Value;
       set
       {
         RecordedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

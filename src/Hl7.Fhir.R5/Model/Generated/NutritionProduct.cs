@@ -675,7 +675,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? LotNumber
       {
-        get => _LotNumberElement?.Value;
+        get => LotNumberElement?.Value;
         set
         {
           LotNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Expiry
       {
-        get => _ExpiryElement?.Value;
+        get => ExpiryElement?.Value;
         set
         {
           ExpiryElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? UseBy
       {
-        get => _UseByElement?.Value;
+        get => UseByElement?.Value;
         set
         {
           UseByElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1082,7 +1082,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.NutritionProduct.NutritionProductStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.NutritionProduct.NutritionProductStatus>(value);

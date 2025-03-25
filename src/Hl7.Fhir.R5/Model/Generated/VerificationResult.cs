@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ValidationDate
       {
-        get => _ValidationDateElement?.Value;
+        get => ValidationDateElement?.Value;
         set
         {
           ValidationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Date
       {
-        get => _DateElement?.Value;
+        get => DateElement?.Value;
         set
         {
           DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SourceIdentityCertificate
       {
-        get => _SourceIdentityCertificateElement?.Value;
+        get => SourceIdentityCertificateElement?.Value;
         set
         {
           SourceIdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -729,7 +729,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ProxyIdentityCertificate
       {
-        get => _ProxyIdentityCertificateElement?.Value;
+        get => ProxyIdentityCertificateElement?.Value;
         set
         {
           ProxyIdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1070,7 +1070,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? IdentityCertificate
       {
-        get => _IdentityCertificateElement?.Value;
+        get => IdentityCertificateElement?.Value;
         set
         {
           IdentityCertificateElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1352,7 +1352,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.VerificationResult.StatusCode? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.VerificationResult.StatusCode>(value);
@@ -1393,7 +1393,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StatusDate
     {
-      get => _StatusDateElement?.Value;
+      get => StatusDateElement?.Value;
       set
       {
         StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1515,7 +1515,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? LastPerformed
     {
-      get => _LastPerformedElement?.Value;
+      get => LastPerformedElement?.Value;
       set
       {
         LastPerformedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1556,7 +1556,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? NextScheduled
     {
-      get => _NextScheduledElement?.Value;
+      get => NextScheduledElement?.Value;
       set
       {
         NextScheduledElement = value is null ? null : new Hl7.Fhir.Model.Date(value);

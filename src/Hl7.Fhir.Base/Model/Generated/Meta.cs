@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? VersionId
     {
-      get => _VersionIdElement?.Value;
+      get => VersionIdElement?.Value;
       set
       {
         VersionIdElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? LastUpdated
     {
-      get => _LastUpdatedElement?.Value;
+      get => LastUpdatedElement?.Value;
       set
       {
         LastUpdatedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Source
     {
-      get => _SourceElement?.Value;
+      get => SourceElement?.Value;
       set
       {
         SourceElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);

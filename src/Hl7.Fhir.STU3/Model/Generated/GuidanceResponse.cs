@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? RequestId
     {
-      get => _RequestIdElement?.Value;
+      get => RequestIdElement?.Value;
       set
       {
         RequestIdElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>(value);
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? OccurrenceDateTime
     {
-      get => _OccurrenceDateTimeElement?.Value;
+      get => OccurrenceDateTimeElement?.Value;
       set
       {
         OccurrenceDateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

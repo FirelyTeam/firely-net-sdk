@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? SequenceLinkId
       {
-        get => _SequenceLinkIdElement?.Value;
+        get => SequenceLinkIdElement?.Value;
         set
         {
           SequenceLinkIdElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ProcessRequest.ActionList? Action
     {
-      get => _ActionElement?.Value;
+      get => ActionElement?.Value;
       set
       {
         ActionElement = value is null ? null : new Code<Hl7.Fhir.Model.ProcessRequest.ActionList>(value);
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Created
     {
-      get => _CreatedElement?.Value;
+      get => CreatedElement?.Value;
       set
       {
         CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Nullify
     {
-      get => _NullifyElement?.Value;
+      get => NullifyElement?.Value;
       set
       {
         NullifyElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Reference
     {
-      get => _ReferenceElement?.Value;
+      get => ReferenceElement?.Value;
       set
       {
         ReferenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

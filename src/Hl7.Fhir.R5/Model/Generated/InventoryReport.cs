@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? CountingDateTime
       {
-        get => _CountingDateTimeElement?.Value;
+        get => CountingDateTimeElement?.Value;
         set
         {
           CountingDateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.InventoryReport.InventoryReportStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus>(value);
@@ -691,7 +691,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.InventoryReport.InventoryCountType? CountType
     {
-      get => _CountTypeElement?.Value;
+      get => CountTypeElement?.Value;
       set
       {
         CountTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType>(value);
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ReportedDateTime
     {
-      get => _ReportedDateTimeElement?.Value;
+      get => ReportedDateTimeElement?.Value;
       set
       {
         ReportedDateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

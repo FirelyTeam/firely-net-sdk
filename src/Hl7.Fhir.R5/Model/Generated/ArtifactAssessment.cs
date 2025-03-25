@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType? InformationType
       {
-        get => _InformationTypeElement?.Value;
+        get => InformationTypeElement?.Value;
         set
         {
           InformationTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>(value);
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Summary
       {
-        get => _SummaryElement?.Value;
+        get => SummaryElement?.Value;
         set
         {
           SummaryElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? FreeToShare
       {
-        get => _FreeToShareElement?.Value;
+        get => FreeToShareElement?.Value;
         set
         {
           FreeToShareElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -871,7 +871,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Title
     {
-      get => _TitleElement?.Value;
+      get => TitleElement?.Value;
       set
       {
         TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -941,7 +941,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -982,7 +982,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Copyright
     {
-      get => _CopyrightElement?.Value;
+      get => CopyrightElement?.Value;
       set
       {
         CopyrightElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ApprovalDate
     {
-      get => _ApprovalDateElement?.Value;
+      get => ApprovalDateElement?.Value;
       set
       {
         ApprovalDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -1064,7 +1064,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? LastReviewDate
     {
-      get => _LastReviewDateElement?.Value;
+      get => LastReviewDateElement?.Value;
       set
       {
         LastReviewDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -1164,7 +1164,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus? WorkflowStatus
     {
-      get => _WorkflowStatusElement?.Value;
+      get => WorkflowStatusElement?.Value;
       set
       {
         WorkflowStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>(value);
@@ -1207,7 +1207,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition? Disposition
     {
-      get => _DispositionElement?.Value;
+      get => DispositionElement?.Value;
       set
       {
         DispositionElement = value is null ? null : new Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>(value);

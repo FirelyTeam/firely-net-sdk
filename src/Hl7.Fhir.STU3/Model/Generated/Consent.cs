@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Authority
       {
-        get => _AuthorityElement?.Value;
+        get => AuthorityElement?.Value;
         set
         {
           AuthorityElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Uri
       {
-        get => _UriElement?.Value;
+        get => UriElement?.Value;
         set
         {
           UriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Consent.ConsentDataMeaning? Meaning
       {
-        get => _MeaningElement?.Value;
+        get => MeaningElement?.Value;
         set
         {
           MeaningElement = value is null ? null : new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Consent.ConsentExceptType? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Consent.ConsentExceptType>(value);
@@ -1468,7 +1468,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Consent.ConsentDataMeaning? Meaning
       {
-        get => _MeaningElement?.Value;
+        get => MeaningElement?.Value;
         set
         {
           MeaningElement = value is null ? null : new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
@@ -1659,7 +1659,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Consent.ConsentState? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
@@ -1783,7 +1783,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? DateTime
     {
-      get => _DateTimeElement?.Value;
+      get => DateTimeElement?.Value;
       set
       {
         DateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1993,7 +1993,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PolicyRule
     {
-      get => _PolicyRuleElement?.Value;
+      get => PolicyRuleElement?.Value;
       set
       {
         PolicyRuleElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);

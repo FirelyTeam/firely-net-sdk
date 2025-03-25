@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.VisionPrescription.VisionEyes? Eye
       {
-        get => _EyeElement?.Value;
+        get => EyeElement?.Value;
         set
         {
           EyeElement = value is null ? null : new Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>(value);
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Sphere
       {
-        get => _SphereElement?.Value;
+        get => SphereElement?.Value;
         set
         {
           SphereElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Cylinder
       {
-        get => _CylinderElement?.Value;
+        get => CylinderElement?.Value;
         set
         {
           CylinderElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Axis
       {
-        get => _AxisElement?.Value;
+        get => AxisElement?.Value;
         set
         {
           AxisElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Add
       {
-        get => _AddElement?.Value;
+        get => AddElement?.Value;
         set
         {
           AddElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Power
       {
-        get => _PowerElement?.Value;
+        get => PowerElement?.Value;
         set
         {
           PowerElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? BackCurve
       {
-        get => _BackCurveElement?.Value;
+        get => BackCurveElement?.Value;
         set
         {
           BackCurveElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Diameter
       {
-        get => _DiameterElement?.Value;
+        get => DiameterElement?.Value;
         set
         {
           DiameterElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Color
       {
-        get => _ColorElement?.Value;
+        get => ColorElement?.Value;
         set
         {
           ColorElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Brand
       {
-        get => _BrandElement?.Value;
+        get => BrandElement?.Value;
         set
         {
           BrandElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1025,7 +1025,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Amount
       {
-        get => _AmountElement?.Value;
+        get => AmountElement?.Value;
         set
         {
           AmountElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1069,7 +1069,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.VisionPrescription.VisionBase? Base
       {
-        get => _BaseElement?.Value;
+        get => BaseElement?.Value;
         set
         {
           BaseElement = value is null ? null : new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
@@ -1232,7 +1232,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
@@ -1274,7 +1274,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Created
     {
-      get => _CreatedElement?.Value;
+      get => CreatedElement?.Value;
       set
       {
         CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1373,7 +1373,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? DateWritten
     {
-      get => _DateWrittenElement?.Value;
+      get => DateWrittenElement?.Value;
       set
       {
         DateWrittenElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Appointment.ParticipantRequired? Required
       {
-        get => _RequiredElement?.Value;
+        get => RequiredElement?.Value;
         set
         {
           RequiredElement = value is null ? null : new Code<Hl7.Fhir.Model.Appointment.ParticipantRequired>(value);
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ParticipationStatus? Status
       {
-        get => _StatusElement?.Value;
+        get => StatusElement?.Value;
         set
         {
           StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Appointment.AppointmentStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>(value);
@@ -790,7 +790,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Priority
     {
-      get => _PriorityElement?.Value;
+      get => PriorityElement?.Value;
       set
       {
         PriorityElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -901,7 +901,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Start
     {
-      get => _StartElement?.Value;
+      get => StartElement?.Value;
       set
       {
         StartElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -942,7 +942,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get => _EndElement?.Value;
+      get => EndElement?.Value;
       set
       {
         EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -983,7 +983,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? MinutesDuration
     {
-      get => _MinutesDurationElement?.Value;
+      get => MinutesDurationElement?.Value;
       set
       {
         MinutesDurationElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -1053,7 +1053,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Created
     {
-      get => _CreatedElement?.Value;
+      get => CreatedElement?.Value;
       set
       {
         CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1094,7 +1094,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Comment
     {
-      get => _CommentElement?.Value;
+      get => CommentElement?.Value;
       set
       {
         CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1135,7 +1135,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PatientInstruction
     {
-      get => _PatientInstructionElement?.Value;
+      get => PatientInstructionElement?.Value;
       set
       {
         PatientInstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Inforce
       {
-        get => _InforceElement?.Value;
+        get => InforceElement?.Value;
         set
         {
           InforceElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Excluded
       {
-        get => _ExcludedElement?.Value;
+        get => ExcludedElement?.Value;
         set
         {
           ExcludedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -765,7 +765,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -955,7 +955,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AuthorizationRequired
       {
-        get => _AuthorizationRequiredElement?.Value;
+        get => AuthorizationRequiredElement?.Value;
         set
         {
           AuthorizationRequiredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1024,7 +1024,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AuthorizationUrl
       {
-        get => _AuthorizationUrlElement?.Value;
+        get => AuthorizationUrlElement?.Value;
         set
         {
           AuthorizationUrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -1807,7 +1807,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FinancialResourceStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>(value);
@@ -1980,7 +1980,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Created
     {
-      get => _CreatedElement?.Value;
+      get => CreatedElement?.Value;
       set
       {
         CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -2081,7 +2081,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome? Outcome
     {
-      get => _OutcomeElement?.Value;
+      get => OutcomeElement?.Value;
       set
       {
         OutcomeElement = value is null ? null : new Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityOutcome>(value);
@@ -2122,7 +2122,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Disposition
     {
-      get => _DispositionElement?.Value;
+      get => DispositionElement?.Value;
       set
       {
         DispositionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2219,7 +2219,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PreAuthRef
     {
-      get => _PreAuthRefElement?.Value;
+      get => PreAuthRefElement?.Value;
       set
       {
         PreAuthRefElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

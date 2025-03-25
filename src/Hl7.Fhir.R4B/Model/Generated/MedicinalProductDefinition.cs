@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ProductName
       {
-        get => _ProductNameElement?.Value;
+        get => ProductNameElement?.Value;
         set
         {
           ProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Part
       {
-        get => _PartElement?.Value;
+        get => PartElement?.Value;
         set
         {
           PartElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1568,7 +1568,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Version
     {
-      get => _VersionElement?.Value;
+      get => VersionElement?.Value;
       set
       {
         VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1636,7 +1636,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StatusDate
     {
-      get => _StatusDateElement?.Value;
+      get => StatusDateElement?.Value;
       set
       {
         StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1677,7 +1677,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -1773,7 +1773,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Indication
     {
-      get => _IndicationElement?.Value;
+      get => IndicationElement?.Value;
       set
       {
         IndicationElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);

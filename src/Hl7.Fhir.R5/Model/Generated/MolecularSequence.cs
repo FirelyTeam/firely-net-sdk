@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? OrdinalPosition
       {
-        get => _OrdinalPositionElement?.Value;
+        get => OrdinalPositionElement?.Value;
         set
         {
           OrdinalPositionElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? WindowStart
       {
-        get => _WindowStartElement?.Value;
+        get => WindowStartElement?.Value;
         set
         {
           WindowStartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? WindowEnd
       {
-        get => _WindowEndElement?.Value;
+        get => WindowEndElement?.Value;
         set
         {
           WindowEndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MolecularSequence.OrientationType? Orientation
       {
-        get => _OrientationElement?.Value;
+        get => OrientationElement?.Value;
         set
         {
           OrientationElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>(value);
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MolecularSequence.StrandType? Strand
       {
-        get => _StrandElement?.Value;
+        get => StrandElement?.Value;
         set
         {
           StrandElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.StrandType>(value);
@@ -942,7 +942,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Start
       {
-        get => _StartElement?.Value;
+        get => StartElement?.Value;
         set
         {
           StartElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -983,7 +983,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? End
       {
-        get => _EndElement?.Value;
+        get => EndElement?.Value;
         set
         {
           EndElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1024,7 +1024,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ReplacementSequence
       {
-        get => _ReplacementSequenceElement?.Value;
+        get => ReplacementSequenceElement?.Value;
         set
         {
           ReplacementSequenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1065,7 +1065,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ReplacedSequence
       {
-        get => _ReplacedSequenceElement?.Value;
+        get => ReplacedSequenceElement?.Value;
         set
         {
           ReplacedSequenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1265,7 +1265,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MolecularSequence.SequenceType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>(value);
@@ -1447,7 +1447,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Literal
     {
-      get => _LiteralElement?.Value;
+      get => LiteralElement?.Value;
       set
       {
         LiteralElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

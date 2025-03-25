@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Url
       {
-        get => _UrlElement?.Value;
+        get => UrlElement?.Value;
         set
         {
           UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Verified
       {
-        get => _VerifiedElement?.Value;
+        get => VerifiedElement?.Value;
         set
         {
           VerifiedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1461,7 +1461,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ConsentDataMeaning? Meaning
       {
-        get => _MeaningElement?.Value;
+        get => MeaningElement?.Value;
         set
         {
           MeaningElement = value is null ? null : new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
@@ -1653,7 +1653,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Consent.ConsentState? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Consent.ConsentState>(value);
@@ -1750,7 +1750,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -2101,7 +2101,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ConsentProvisionType? Decision
     {
-      get => _DecisionElement?.Value;
+      get => DecisionElement?.Value;
       set
       {
         DecisionElement = value is null ? null : new Code<Hl7.Fhir.Model.ConsentProvisionType>(value);

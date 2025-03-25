@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality? Causality
       {
-        get => _CausalityElement?.Value;
+        get => CausalityElement?.Value;
         set
         {
           CausalityElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality>(value);
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? CausalityProductRelatedness
       {
-        get => _CausalityProductRelatednessElement?.Value;
+        get => CausalityProductRelatednessElement?.Value;
         set
         {
           CausalityProductRelatednessElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -640,7 +640,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory? Category
     {
-      get => _CategoryElement?.Value;
+      get => CategoryElement?.Value;
       set
       {
         CategoryElement = value is null ? null : new Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory>(value);
@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

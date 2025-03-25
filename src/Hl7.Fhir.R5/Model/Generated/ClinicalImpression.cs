@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Basis
       {
-        get => _BasisElement?.Value;
+        get => BasisElement?.Value;
         set
         {
           BasisElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EventStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EventStatus>(value);
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Date
     {
-      get => _DateElement?.Value;
+      get => DateElement?.Value;
       set
       {
         DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Summary
     {
-      get => _SummaryElement?.Value;
+      get => SummaryElement?.Value;
       set
       {
         SummaryElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

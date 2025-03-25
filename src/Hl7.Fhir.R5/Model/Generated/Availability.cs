@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? AllDay
       {
-        get => _AllDayElement?.Value;
+        get => AllDayElement?.Value;
         set
         {
           AllDayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AvailableStartTime
       {
-        get => _AvailableStartTimeElement?.Value;
+        get => AvailableStartTimeElement?.Value;
         set
         {
           AvailableStartTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AvailableEndTime
       {
-        get => _AvailableEndTimeElement?.Value;
+        get => AvailableEndTimeElement?.Value;
         set
         {
           AvailableEndTimeElement = value is null ? null : new Hl7.Fhir.Model.Time(value);
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

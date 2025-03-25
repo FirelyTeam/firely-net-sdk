@@ -63,4 +63,37 @@ public class OverflowErrorTests
         else 
             act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(coveCode);
     }
+
+    [TestMethod]
+    public void SettingProperty_Should_ImpactHelperProperty()
+    {
+        var pat = new Patient();
+        pat.Gender = AdministrativeGender.Male;
+        pat.GenderElement.Should().BeEquivalentTo(new Code<AdministrativeGender>(AdministrativeGender.Male));
+
+        pat.SetValue("gender", null);
+        
+        pat.GenderElement.Should().BeNull();
+        pat.Gender.Should().BeNull();
+
+        pat.SetValue("gender", new Patient());
+
+        var act = () => pat.GenderElement;
+        act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(COVE.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
+        var act2 = () => pat.Gender;
+        act2.Should().Throw<COVE>().Which.ErrorCode.Should().Be(COVE.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
+    }
+
+    [TestMethod]
+    public void SettingCommonProperty_Should_HandleTypesCorrectly()
+    {
+        var att = new Attachment();
+        att.SizeElement = new Integer(5);
+        att.SizeElement.Should().BeEquivalentTo(new Integer(5));
+        att.SizeElement = new Integer64(5);
+        att.SizeElement.Should().BeEquivalentTo(new Integer64(5));
+        // att.SizeElement = new FhirString("5");
+        // var act = () => att.SizeElement;
+        // act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(COVE.TYPE_MISMATCH_CODE);
+    }
 }

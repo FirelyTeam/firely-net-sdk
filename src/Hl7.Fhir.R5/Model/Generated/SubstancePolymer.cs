@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? IsDefining
       {
-        get => _IsDefiningElement?.Value;
+        get => IsDefiningElement?.Value;
         set
         {
           IsDefiningElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AverageMolecularFormula
       {
-        get => _AverageMolecularFormulaElement?.Value;
+        get => AverageMolecularFormulaElement?.Value;
         set
         {
           AverageMolecularFormulaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -743,7 +743,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Unit
       {
-        get => _UnitElement?.Value;
+        get => UnitElement?.Value;
         set
         {
           UnitElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Amount
       {
-        get => _AmountElement?.Value;
+        get => AmountElement?.Value;
         set
         {
           AmountElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1093,7 +1093,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Average
       {
-        get => _AverageElement?.Value;
+        get => AverageElement?.Value;
         set
         {
           AverageElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1134,7 +1134,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Low
       {
-        get => _LowElement?.Value;
+        get => LowElement?.Value;
         set
         {
           LowElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? High
       {
-        get => _HighElement?.Value;
+        get => HighElement?.Value;
         set
         {
           HighElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1385,7 +1385,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Representation
       {
-        get => _RepresentationElement?.Value;
+        get => RepresentationElement?.Value;
         set
         {
           RepresentationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1713,7 +1713,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Modification
     {
-      get => _ModificationElement?.Value;
+      get => ModificationElement?.Value;
       set
       {
         ModificationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

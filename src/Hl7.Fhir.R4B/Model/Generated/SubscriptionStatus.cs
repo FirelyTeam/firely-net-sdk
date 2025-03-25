@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? EventNumber
       {
-        get => _EventNumberElement?.Value;
+        get => EventNumberElement?.Value;
         set
         {
           EventNumberElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public DateTimeOffset? Timestamp
       {
-        get => _TimestampElement?.Value;
+        get => TimestampElement?.Value;
         set
         {
           TimestampElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.SubscriptionStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.SubscriptionStatusCodes>(value);
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType>(value);
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? EventsSinceSubscriptionStart
     {
-      get => _EventsSinceSubscriptionStartElement?.Value;
+      get => EventsSinceSubscriptionStartElement?.Value;
       set
       {
         EventsSinceSubscriptionStartElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Topic
     {
-      get => _TopicElement?.Value;
+      get => TopicElement?.Value;
       set
       {
         TopicElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);

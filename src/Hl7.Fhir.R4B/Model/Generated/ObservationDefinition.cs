@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? ConversionFactor
       {
-        get => _ConversionFactorElement?.Value;
+        get => ConversionFactorElement?.Value;
         set
         {
           ConversionFactorElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? DecimalPrecision
       {
-        get => _DecimalPrecisionElement?.Value;
+        get => DecimalPrecisionElement?.Value;
         set
         {
           DecimalPrecisionElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory? Category
       {
-        get => _CategoryElement?.Value;
+        get => CategoryElement?.Value;
         set
         {
           CategoryElement = value is null ? null : new Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>(value);
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.AdministrativeGender? Gender
       {
-        get => _GenderElement?.Value;
+        get => GenderElement?.Value;
         set
         {
           GenderElement = value is null ? null : new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
@@ -717,7 +717,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Condition
       {
-        get => _ConditionElement?.Value;
+        get => ConditionElement?.Value;
         set
         {
           ConditionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1094,7 +1094,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? MultipleResultsAllowed
     {
-      get => _MultipleResultsAllowedElement?.Value;
+      get => MultipleResultsAllowedElement?.Value;
       set
       {
         MultipleResultsAllowedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1162,7 +1162,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? PreferredReportName
     {
-      get => _PreferredReportNameElement?.Value;
+      get => PreferredReportNameElement?.Value;
       set
       {
         PreferredReportNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SupportingInformation
       {
-        get => _SupportingInformationElement?.Value;
+        get => SupportingInformationElement?.Value;
         set
         {
           SupportingInformationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

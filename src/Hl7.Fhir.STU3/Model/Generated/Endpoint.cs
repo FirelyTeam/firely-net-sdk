@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Endpoint.EndpointStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>(value);
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Address
     {
-      get => _AddressElement?.Value;
+      get => AddressElement?.Value;
       set
       {
         AddressElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);

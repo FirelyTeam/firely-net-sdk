@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes>(value);
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? DateAsserted
     {
-      get => _DateAssertedElement?.Value;
+      get => DateAssertedElement?.Value;
       set
       {
         DateAssertedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

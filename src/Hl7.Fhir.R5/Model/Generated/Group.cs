@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Exclude
       {
-        get => _ExcludeElement?.Value;
+        get => ExcludeElement?.Value;
         set
         {
           ExcludeElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Inactive
       {
-        get => _InactiveElement?.Value;
+        get => InactiveElement?.Value;
         set
         {
           InactiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Active
     {
-      get => _ActiveElement?.Value;
+      get => ActiveElement?.Value;
       set
       {
         ActiveElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Group.GroupType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Group.GroupType>(value);
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Group.GroupMembershipBasis? Membership
     {
-      get => _MembershipElement?.Value;
+      get => MembershipElement?.Value;
       set
       {
         MembershipElement = value is null ? null : new Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>(value);
@@ -866,7 +866,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -907,7 +907,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -948,7 +948,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Quantity
     {
-      get => _QuantityElement?.Value;
+      get => QuantityElement?.Value;
       set
       {
         QuantityElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);

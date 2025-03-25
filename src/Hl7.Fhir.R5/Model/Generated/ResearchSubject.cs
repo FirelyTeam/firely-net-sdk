@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? StartDate
       {
-        get => _StartDateElement?.Value;
+        get => StartDateElement?.Value;
         set
         {
           StartDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? EndDate
       {
-        get => _EndDateElement?.Value;
+        get => EndDateElement?.Value;
         set
         {
           EndDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AssignedComparisonGroup
     {
-      get => _AssignedComparisonGroupElement?.Value;
+      get => AssignedComparisonGroupElement?.Value;
       set
       {
         AssignedComparisonGroupElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ActualComparisonGroup
     {
-      get => _ActualComparisonGroupElement?.Value;
+      get => ActualComparisonGroupElement?.Value;
       set
       {
         ActualComparisonGroupElement = value is null ? null : new Hl7.Fhir.Model.Id(value);

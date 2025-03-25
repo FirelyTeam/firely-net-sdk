@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ResourceType
       {
-        get => _ResourceTypeElement?.Value;
+        get => ResourceTypeElement?.Value;
         set
         {
           ResourceTypeElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? FilterParameter
       {
-        get => _FilterParameterElement?.Value;
+        get => FilterParameterElement?.Value;
         set
         {
           FilterParameterElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.SearchComparator? Comparator
       {
-        get => _ComparatorElement?.Value;
+        get => ComparatorElement?.Value;
         set
         {
           ComparatorElement = value is null ? null : new Code<Hl7.Fhir.Model.SearchComparator>(value);
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.SearchModifierCode? Modifier
       {
-        get => _ModifierElement?.Value;
+        get => ModifierElement?.Value;
         set
         {
           ModifierElement = value is null ? null : new Code<Hl7.Fhir.Model.SearchModifierCode>(value);
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Value
       {
-        get => _ValueElement?.Value;
+        get => ValueElement?.Value;
         set
         {
           ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -560,7 +560,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Value
       {
-        get => _ValueElement?.Value;
+        get => ValueElement?.Value;
         set
         {
           ValueElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.SubscriptionStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.SubscriptionStatusCodes>(value);
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Topic
     {
-      get => _TopicElement?.Value;
+      get => TopicElement?.Value;
       set
       {
         TopicElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
@@ -874,7 +874,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get => _EndElement?.Value;
+      get => EndElement?.Value;
       set
       {
         EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -943,7 +943,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Reason
     {
-      get => _ReasonElement?.Value;
+      get => ReasonElement?.Value;
       set
       {
         ReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1039,7 +1039,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Endpoint
     {
-      get => _EndpointElement?.Value;
+      get => EndpointElement?.Value;
       set
       {
         EndpointElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
@@ -1107,7 +1107,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? HeartbeatPeriod
     {
-      get => _HeartbeatPeriodElement?.Value;
+      get => HeartbeatPeriodElement?.Value;
       set
       {
         HeartbeatPeriodElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -1148,7 +1148,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Timeout
     {
-      get => _TimeoutElement?.Value;
+      get => TimeoutElement?.Value;
       set
       {
         TimeoutElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -1190,7 +1190,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ContentType
     {
-      get => _ContentTypeElement?.Value;
+      get => ContentTypeElement?.Value;
       set
       {
         ContentTypeElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent? Content
     {
-      get => _ContentElement?.Value;
+      get => ContentElement?.Value;
       set
       {
         ContentElement = value is null ? null : new Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>(value);
@@ -1274,7 +1274,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? MaxCount
     {
-      get => _MaxCountElement?.Value;
+      get => MaxCountElement?.Value;
       set
       {
         MaxCountElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);

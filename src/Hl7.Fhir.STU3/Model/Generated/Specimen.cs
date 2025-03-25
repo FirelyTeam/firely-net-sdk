@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -744,7 +744,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1117,7 +1117,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Specimen.SpecimenStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Specimen.SpecimenStatus>(value);
@@ -1214,7 +1214,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ReceivedTime
     {
-      get => _ReceivedTimeElement?.Value;
+      get => ReceivedTimeElement?.Value;
       set
       {
         ReceivedTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

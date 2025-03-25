@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Priority
       {
-        get => _PriorityElement?.Value;
+        get => PriorityElement?.Value;
         set
         {
           PriorityElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? OnHold
       {
-        get => _OnHoldElement?.Value;
+        get => OnHoldElement?.Value;
         set
         {
           OnHoldElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? DateOfDiagnosis
       {
-        get => _DateOfDiagnosisElement?.Value;
+        get => DateOfDiagnosisElement?.Value;
         set
         {
           DateOfDiagnosisElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? OnAdmission
       {
-        get => _OnAdmissionElement?.Value;
+        get => OnAdmissionElement?.Value;
         set
         {
           OnAdmissionElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -945,7 +945,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -1013,7 +1013,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? DateOfService
       {
-        get => _DateOfServiceElement?.Value;
+        get => DateOfServiceElement?.Value;
         set
         {
           DateOfServiceElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1539,7 +1539,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Estimate
       {
-        get => _EstimateElement?.Value;
+        get => EstimateElement?.Value;
         set
         {
           EstimateElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1767,7 +1767,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Account.AccountStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Account.AccountStatus>(value);
@@ -1862,7 +1862,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2013,7 +2013,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -2216,7 +2216,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? CalculatedAt
     {
-      get => _CalculatedAtElement?.Value;
+      get => CalculatedAtElement?.Value;
       set
       {
         CalculatedAtElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);

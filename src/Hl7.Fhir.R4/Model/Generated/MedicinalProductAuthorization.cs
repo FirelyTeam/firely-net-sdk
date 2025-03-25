@@ -772,7 +772,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StatusDate
     {
-      get => _StatusDateElement?.Value;
+      get => StatusDateElement?.Value;
       set
       {
         StatusDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? RestoreDate
     {
-      get => _RestoreDateElement?.Value;
+      get => RestoreDateElement?.Value;
       set
       {
         RestoreDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -906,7 +906,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? DateOfFirstAuthorization
     {
-      get => _DateOfFirstAuthorizationElement?.Value;
+      get => DateOfFirstAuthorizationElement?.Value;
       set
       {
         DateOfFirstAuthorizationElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -947,7 +947,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? InternationalBirthDate
     {
-      get => _InternationalBirthDateElement?.Value;
+      get => InternationalBirthDateElement?.Value;
       set
       {
         InternationalBirthDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

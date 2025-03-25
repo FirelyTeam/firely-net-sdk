@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Goal.GoalStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Goal.GoalStatus>(value);
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StatusDate
     {
-      get => _StatusDateElement?.Value;
+      get => StatusDateElement?.Value;
       set
       {
         StatusDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -673,7 +673,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StatusReason
     {
-      get => _StatusReasonElement?.Value;
+      get => StatusReasonElement?.Value;
       set
       {
         StatusReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         [Obsolete(
             "Use the SerializationEngine setting instead, chosing one of the options on FhirSerializationEngineFactory.")]
-        public ParserSettings ParserSettings = new ParserSettings().UsingMode(DeserializationMode.Recoverable);
+        public DeserializerSettings ParserSettings = new DeserializerSettings().UsingMode(DeserializationMode.Recoverable);
 
         /// <summary>
         /// How to transfer binary data when sending data to a Binary endpoint.

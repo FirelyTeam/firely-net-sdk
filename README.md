@@ -27,12 +27,12 @@ Before installing one of the NuGet packages (or clone the repo) it is important 
 
 Read the [online documentation][netsdk-docu], and download the correct for your FHIR release. Depending on the version of FHIR you require, you'll find the relevant link to the package below. For most developers, just including this NuGet package is enough to get started. 
 
-|Spec version|Git branch| NuGet|
-|---|---|---|
-|R5 | https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.R5 |
-|R4B| https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.R4B |
-|R4| https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.R4 | 
-|STU3| https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.STU3 | 
+| Spec version | Git branch                                                      | NuGet                                        |
+|--------------|-----------------------------------------------------------------|----------------------------------------------|
+| R5           | https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.R5   |
+| R4B          | https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.R4B  |
+| R4           | https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.R4   | 
+| STU3         | https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.STU3 |
 
 ### Using a pre-release NuGet package
 Every release of the SDK results in a NuGet package on the normal NuGet feed. However, each commit on our develop branch also results in a pre-release package.
@@ -49,12 +49,13 @@ These are public too. So if you want to be brave and use a pre-release packages,
 ## Upgrading
 We spend a lot of effort trying to maintain *compile* compatibility (not binary compatibility) between minor releases of the SDK. We do, however, publish a new major version with breaking changes about once a year. The table below lists the breaking changes for each of the major upgrades.
 
-|SDK version|Breaking changes
-|---|---|
-|2.x|https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-2.0|
-|3.x|https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-3.0|
-|4.x|https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-4.0|
-|5.x|https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-5.0|
+| SDK version | Breaking changes                                                          |
+|-------------|---------------------------------------------------------------------------|
+| 2.x         | https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-2.0 |
+| 3.x         | https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-3.0 |
+| 4.x         | https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-4.0 |
+| 5.x         | https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-5.0 |
+| 6.x         | https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-6.0 |
 
 The SDK has been restructured for the 5.0 release. Please take note of the following changes if you are upgrading:
 * You should only reference the main package (`Hl7.Fhir.<release>`). 

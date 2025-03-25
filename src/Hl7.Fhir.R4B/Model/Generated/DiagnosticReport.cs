@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Comment
       {
-        get => _CommentElement?.Value;
+        get => CommentElement?.Value;
         set
         {
           CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>(value);
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Issued
     {
-      get => _IssuedElement?.Value;
+      get => IssuedElement?.Value;
       set
       {
         IssuedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Conclusion
     {
-      get => _ConclusionElement?.Value;
+      get => ConclusionElement?.Value;
       set
       {
         ConclusionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

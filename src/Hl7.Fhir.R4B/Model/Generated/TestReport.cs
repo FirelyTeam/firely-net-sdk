@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.TestReport.TestReportParticipantType? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType>(value);
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Uri
       {
-        get => _UriElement?.Value;
+        get => UriElement?.Value;
         set
         {
           UriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Display
       {
-        get => _DisplayElement?.Value;
+        get => DisplayElement?.Value;
         set
         {
           DisplayElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -775,7 +775,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.TestReport.TestReportActionResult? Result
       {
-        get => _ResultElement?.Value;
+        get => ResultElement?.Value;
         set
         {
           ResultElement = value is null ? null : new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
@@ -816,7 +816,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Message
       {
-        get => _MessageElement?.Value;
+        get => MessageElement?.Value;
         set
         {
           MessageElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -857,7 +857,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Detail
       {
-        get => _DetailElement?.Value;
+        get => DetailElement?.Value;
         set
         {
           DetailElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -1028,7 +1028,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.TestReport.TestReportActionResult? Result
       {
-        get => _ResultElement?.Value;
+        get => ResultElement?.Value;
         set
         {
           ResultElement = value is null ? null : new Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>(value);
@@ -1069,7 +1069,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Message
       {
-        get => _MessageElement?.Value;
+        get => MessageElement?.Value;
         set
         {
           MessageElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);
@@ -1110,7 +1110,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Detail
       {
-        get => _DetailElement?.Value;
+        get => DetailElement?.Value;
         set
         {
           DetailElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1275,7 +1275,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1316,7 +1316,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1915,7 +1915,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1959,7 +1959,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TestReport.TestReportStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.TestReport.TestReportStatus>(value);
@@ -2032,7 +2032,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.TestReport.TestReportResult? Result
     {
-      get => _ResultElement?.Value;
+      get => ResultElement?.Value;
       set
       {
         ResultElement = value is null ? null : new Code<Hl7.Fhir.Model.TestReport.TestReportResult>(value);
@@ -2073,7 +2073,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Score
     {
-      get => _ScoreElement?.Value;
+      get => ScoreElement?.Value;
       set
       {
         ScoreElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -2114,7 +2114,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Tester
     {
-      get => _TesterElement?.Value;
+      get => TesterElement?.Value;
       set
       {
         TesterElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2155,7 +2155,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Issued
     {
-      get => _IssuedElement?.Value;
+      get => IssuedElement?.Value;
       set
       {
         IssuedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

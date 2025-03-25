@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Goal.GoalLifecycleStatus? LifecycleStatus
     {
-      get => _LifecycleStatusElement?.Value;
+      get => LifecycleStatusElement?.Value;
       set
       {
         LifecycleStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus>(value);
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? Continuous
     {
-      get => _ContinuousElement?.Value;
+      get => ContinuousElement?.Value;
       set
       {
         ContinuousElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StatusDate
     {
-      get => _StatusDateElement?.Value;
+      get => StatusDateElement?.Value;
       set
       {
         StatusDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StatusReason
     {
-      get => _StatusReasonElement?.Value;
+      get => StatusReasonElement?.Value;
       set
       {
         StatusReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

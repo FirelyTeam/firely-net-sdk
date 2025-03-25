@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Uid
       {
-        get => _UidElement?.Value;
+        get => UidElement?.Value;
         set
         {
           UidElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Number
       {
-        get => _NumberElement?.Value;
+        get => NumberElement?.Value;
         set
         {
           NumberElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -785,7 +785,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType? RegionType
       {
-        get => _RegionTypeElement?.Value;
+        get => RegionTypeElement?.Value;
         set
         {
           RegionTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType>(value);
@@ -982,7 +982,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType? RegionType
       {
-        get => _RegionTypeElement?.Value;
+        get => RegionTypeElement?.Value;
         set
         {
           RegionTypeElement = value is null ? null : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType>(value);
@@ -1190,7 +1190,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus>(value);
@@ -1259,7 +1259,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Issued
     {
-      get => _IssuedElement?.Value;
+      get => IssuedElement?.Value;
       set
       {
         IssuedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -1412,7 +1412,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StudyUid
     {
-      get => _StudyUidElement?.Value;
+      get => StudyUidElement?.Value;
       set
       {
         StudyUidElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
@@ -1511,7 +1511,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? SeriesUid
     {
-      get => _SeriesUidElement?.Value;
+      get => SeriesUidElement?.Value;
       set
       {
         SeriesUidElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
@@ -1552,7 +1552,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? SeriesNumber
     {
-      get => _SeriesNumberElement?.Value;
+      get => SeriesNumberElement?.Value;
       set
       {
         SeriesNumberElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);
@@ -1593,7 +1593,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? FrameOfReferenceUid
     {
-      get => _FrameOfReferenceUidElement?.Value;
+      get => FrameOfReferenceUidElement?.Value;
       set
       {
         FrameOfReferenceUidElement = value is null ? null : new Hl7.Fhir.Model.Id(value);

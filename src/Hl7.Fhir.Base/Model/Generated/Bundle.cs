@@ -1000,7 +1000,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? RelationString
       {
-        get => ((IValue<string>?)_RelationElement)?.Value;
+        get => ((IValue<string>?)RelationElement)?.Value;
         set
         {
           RelationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1015,7 +1015,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Relation
       {
-        get => ((IValue<string>?)_RelationElement)?.Value;
+        get => ((IValue<string>?)RelationElement)?.Value;
         set
         {
           RelationElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -1057,7 +1057,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Url
       {
-        get => _UrlElement?.Value;
+        get => UrlElement?.Value;
         set
         {
           UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? FullUrl
       {
-        get => _FullUrlElement?.Value;
+        get => FullUrlElement?.Value;
         set
         {
           FullUrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -1566,7 +1566,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Bundle.SearchEntryMode? Mode
       {
-        get => _ModeElement?.Value;
+        get => ModeElement?.Value;
         set
         {
           ModeElement = value is null ? null : new Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>(value);
@@ -1607,7 +1607,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public decimal? Score
       {
-        get => _ScoreElement?.Value;
+        get => ScoreElement?.Value;
         set
         {
           ScoreElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1759,7 +1759,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Bundle.HTTPVerb? Method
       {
-        get => _MethodElement?.Value;
+        get => MethodElement?.Value;
         set
         {
           MethodElement = value is null ? null : new Code<Hl7.Fhir.Model.Bundle.HTTPVerb>(value);
@@ -1801,7 +1801,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Url
       {
-        get => _UrlElement?.Value;
+        get => UrlElement?.Value;
         set
         {
           UrlElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -1842,7 +1842,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? IfNoneMatch
       {
-        get => _IfNoneMatchElement?.Value;
+        get => IfNoneMatchElement?.Value;
         set
         {
           IfNoneMatchElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1883,7 +1883,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public DateTimeOffset? IfModifiedSince
       {
-        get => _IfModifiedSinceElement?.Value;
+        get => IfModifiedSinceElement?.Value;
         set
         {
           IfModifiedSinceElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -1924,7 +1924,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? IfMatch
       {
-        get => _IfMatchElement?.Value;
+        get => IfMatchElement?.Value;
         set
         {
           IfMatchElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1965,7 +1965,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? IfNoneExist
       {
-        get => _IfNoneExistElement?.Value;
+        get => IfNoneExistElement?.Value;
         set
         {
           IfNoneExistElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2191,7 +2191,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Status
       {
-        get => _StatusElement?.Value;
+        get => StatusElement?.Value;
         set
         {
           StatusElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2232,7 +2232,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Location
       {
-        get => _LocationElement?.Value;
+        get => LocationElement?.Value;
         set
         {
           LocationElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -2273,7 +2273,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Etag
       {
-        get => _EtagElement?.Value;
+        get => EtagElement?.Value;
         set
         {
           EtagElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -2314,7 +2314,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public DateTimeOffset? LastModified
       {
-        get => _LastModifiedElement?.Value;
+        get => LastModifiedElement?.Value;
         set
         {
           LastModifiedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -2561,7 +2561,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Bundle.BundleType? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Bundle.BundleType>(value);
@@ -2605,7 +2605,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Timestamp
     {
-      get => _TimestampElement?.Value;
+      get => TimestampElement?.Value;
       set
       {
         TimestampElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -2646,7 +2646,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Total
     {
-      get => _TotalElement?.Value;
+      get => TotalElement?.Value;
       set
       {
         TotalElement = value is null ? null : new Hl7.Fhir.Model.UnsignedInt(value);

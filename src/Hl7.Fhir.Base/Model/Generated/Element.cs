@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? ElementId
     {
-      get => _ElementIdElement?.Value;
+      get => ElementIdElement?.Value;
       set
       {
         ElementIdElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Subunit
       {
-        get => _SubunitElement?.Value;
+        get => SubunitElement?.Value;
         set
         {
           SubunitElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Sequence
       {
-        get => _SequenceElement?.Value;
+        get => SequenceElement?.Value;
         set
         {
           SequenceElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? Length
       {
-        get => _LengthElement?.Value;
+        get => LengthElement?.Value;
         set
         {
           LengthElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Connectivity
       {
-        get => _ConnectivityElement?.Value;
+        get => ConnectivityElement?.Value;
         set
         {
           ConnectivityElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -646,7 +646,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ResidueSite
       {
-        get => _ResidueSiteElement?.Value;
+        get => ResidueSiteElement?.Value;
         set
         {
           ResidueSiteElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -897,7 +897,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ResidueSite
       {
-        get => _ResidueSiteElement?.Value;
+        get => ResidueSiteElement?.Value;
         set
         {
           ResidueSiteElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1116,7 +1116,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? NumberOfSubunits
     {
-      get => _NumberOfSubunitsElement?.Value;
+      get => NumberOfSubunitsElement?.Value;
       set
       {
         NumberOfSubunitsElement = value is null ? null : new Hl7.Fhir.Model.Integer(value);
@@ -1157,7 +1157,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AreaOfHybridisation
     {
-      get => _AreaOfHybridisationElement?.Value;
+      get => AreaOfHybridisationElement?.Value;
       set
       {
         AreaOfHybridisationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

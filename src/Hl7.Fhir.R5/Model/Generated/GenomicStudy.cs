@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? InstantiatesCanonical
       {
-        get => _InstantiatesCanonicalElement?.Value;
+        get => InstantiatesCanonicalElement?.Value;
         set
         {
           InstantiatesCanonicalElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? InstantiatesUri
       {
-        get => _InstantiatesUriElement?.Value;
+        get => InstantiatesUriElement?.Value;
         set
         {
           InstantiatesUriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Title
       {
-        get => _TitleElement?.Value;
+        get => TitleElement?.Value;
         set
         {
           TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Date
       {
-        get => _DateElement?.Value;
+        get => DateElement?.Value;
         set
         {
           DateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1816,7 +1816,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.GenomicStudy.GenomicStudyStatus>(value);
@@ -1942,7 +1942,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? StartDate
     {
-      get => _StartDateElement?.Value;
+      get => StartDateElement?.Value;
       set
       {
         StartDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -2096,7 +2096,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? InstantiatesCanonical
     {
-      get => _InstantiatesCanonicalElement?.Value;
+      get => InstantiatesCanonicalElement?.Value;
       set
       {
         InstantiatesCanonicalElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
@@ -2137,7 +2137,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? InstantiatesUri
     {
-      get => _InstantiatesUriElement?.Value;
+      get => InstantiatesUriElement?.Value;
       set
       {
         InstantiatesUriElement = value is null ? null : new Hl7.Fhir.Model.FhirUri(value);
@@ -2205,7 +2205,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.Markdown(value);

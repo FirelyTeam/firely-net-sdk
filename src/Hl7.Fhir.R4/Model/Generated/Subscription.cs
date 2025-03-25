@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Subscription.SubscriptionChannelType? Type
       {
-        get => _TypeElement?.Value;
+        get => TypeElement?.Value;
         set
         {
           TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>(value);
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Endpoint
       {
-        get => _EndpointElement?.Value;
+        get => EndpointElement?.Value;
         set
         {
           EndpointElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Payload
       {
-        get => _PayloadElement?.Value;
+        get => PayloadElement?.Value;
         set
         {
           PayloadElement = value is null ? null : new Hl7.Fhir.Model.Code(value);
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Subscription.SubscriptionStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>(value);
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get => _EndElement?.Value;
+      get => EndElement?.Value;
       set
       {
         EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Reason
     {
-      get => _ReasonElement?.Value;
+      get => ReasonElement?.Value;
       set
       {
         ReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Criteria
     {
-      get => _CriteriaElement?.Value;
+      get => CriteriaElement?.Value;
       set
       {
         CriteriaElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Error
     {
-      get => _ErrorElement?.Value;
+      get => ErrorElement?.Value;
       set
       {
         ErrorElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

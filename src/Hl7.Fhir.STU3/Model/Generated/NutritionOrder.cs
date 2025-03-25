@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Instruction
       {
-        get => _InstructionElement?.Value;
+        get => InstructionElement?.Value;
         set
         {
           InstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -888,7 +888,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ProductName
       {
-        get => _ProductNameElement?.Value;
+        get => ProductNameElement?.Value;
         set
         {
           ProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -982,7 +982,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Instruction
       {
-        get => _InstructionElement?.Value;
+        get => InstructionElement?.Value;
         set
         {
           InstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1215,7 +1215,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? BaseFormulaProductName
       {
-        get => _BaseFormulaProductNameElement?.Value;
+        get => BaseFormulaProductNameElement?.Value;
         set
         {
           BaseFormulaProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1283,7 +1283,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AdditiveProductName
       {
-        get => _AdditiveProductNameElement?.Value;
+        get => AdditiveProductNameElement?.Value;
         set
         {
           AdditiveProductNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1430,7 +1430,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? AdministrationInstruction
       {
-        get => _AdministrationInstructionElement?.Value;
+        get => AdministrationInstructionElement?.Value;
         set
         {
           AdministrationInstructionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1933,7 +1933,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>(value);
@@ -2032,7 +2032,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? DateTime
     {
-      get => _DateTimeElement?.Value;
+      get => DateTimeElement?.Value;
       set
       {
         DateTimeElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

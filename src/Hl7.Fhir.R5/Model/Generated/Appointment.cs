@@ -3158,7 +3158,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Required
       {
-        get => _RequiredElement?.Value;
+        get => RequiredElement?.Value;
         set
         {
           RequiredElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -3202,7 +3202,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.Appointment.ParticipationStatus? Status
       {
-        get => _StatusElement?.Value;
+        get => StatusElement?.Value;
         set
         {
           StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>(value);
@@ -3463,7 +3463,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? LastOccurrenceDate
       {
-        get => _LastOccurrenceDateElement?.Value;
+        get => LastOccurrenceDateElement?.Value;
         set
         {
           LastOccurrenceDateElement = value is null ? null : new Hl7.Fhir.Model.Date(value);
@@ -3504,7 +3504,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? OccurrenceCount
       {
-        get => _OccurrenceCountElement?.Value;
+        get => OccurrenceCountElement?.Value;
         set
         {
           OccurrenceCountElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -4015,7 +4015,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Monday
       {
-        get => _MondayElement?.Value;
+        get => MondayElement?.Value;
         set
         {
           MondayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -4056,7 +4056,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Tuesday
       {
-        get => _TuesdayElement?.Value;
+        get => TuesdayElement?.Value;
         set
         {
           TuesdayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -4097,7 +4097,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Wednesday
       {
-        get => _WednesdayElement?.Value;
+        get => WednesdayElement?.Value;
         set
         {
           WednesdayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -4138,7 +4138,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Thursday
       {
-        get => _ThursdayElement?.Value;
+        get => ThursdayElement?.Value;
         set
         {
           ThursdayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -4179,7 +4179,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Friday
       {
-        get => _FridayElement?.Value;
+        get => FridayElement?.Value;
         set
         {
           FridayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -4220,7 +4220,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Saturday
       {
-        get => _SaturdayElement?.Value;
+        get => SaturdayElement?.Value;
         set
         {
           SaturdayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -4261,7 +4261,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Sunday
       {
-        get => _SundayElement?.Value;
+        get => SundayElement?.Value;
         set
         {
           SundayElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -4302,7 +4302,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? WeekInterval
       {
-        get => _WeekIntervalElement?.Value;
+        get => WeekIntervalElement?.Value;
         set
         {
           WeekIntervalElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -4562,7 +4562,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? DayOfMonth
       {
-        get => _DayOfMonthElement?.Value;
+        get => DayOfMonthElement?.Value;
         set
         {
           DayOfMonthElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -4658,7 +4658,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? MonthInterval
       {
-        get => _MonthIntervalElement?.Value;
+        get => MonthIntervalElement?.Value;
         set
         {
           MonthIntervalElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -4843,7 +4843,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? YearInterval
       {
-        get => _YearIntervalElement?.Value;
+        get => YearIntervalElement?.Value;
         set
         {
           YearIntervalElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -4987,7 +4987,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Appointment.AppointmentStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Appointment.AppointmentStatus>(value);
@@ -5249,7 +5249,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -5431,7 +5431,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Start
     {
-      get => _StartElement?.Value;
+      get => StartElement?.Value;
       set
       {
         StartElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -5472,7 +5472,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? End
     {
-      get => _EndElement?.Value;
+      get => EndElement?.Value;
       set
       {
         EndElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -5513,7 +5513,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? MinutesDuration
     {
-      get => _MinutesDurationElement?.Value;
+      get => MinutesDurationElement?.Value;
       set
       {
         MinutesDurationElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -5639,7 +5639,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Created
     {
-      get => _CreatedElement?.Value;
+      get => CreatedElement?.Value;
       set
       {
         CreatedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -5680,7 +5680,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? CancellationDate
     {
-      get => _CancellationDateElement?.Value;
+      get => CancellationDateElement?.Value;
       set
       {
         CancellationDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -5859,7 +5859,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? RecurrenceId
     {
-      get => _RecurrenceIdElement?.Value;
+      get => RecurrenceIdElement?.Value;
       set
       {
         RecurrenceIdElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -5900,7 +5900,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public bool? OccurrenceChanged
     {
-      get => _OccurrenceChangedElement?.Value;
+      get => OccurrenceChangedElement?.Value;
       set
       {
         OccurrenceChangedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);

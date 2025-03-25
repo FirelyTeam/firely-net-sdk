@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Path
       {
-        get => _PathElement?.Value;
+        get => PathElement?.Value;
         set
         {
           PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SearchParam
       {
-        get => _SearchParamElement?.Value;
+        get => SearchParamElement?.Value;
         set
         {
           SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? ValueSet
       {
-        get => _ValueSetElement?.Value;
+        get => ValueSetElement?.Value;
         set
         {
           ValueSetElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Path
       {
-        get => _PathElement?.Value;
+        get => PathElement?.Value;
         set
         {
           PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SearchParam
       {
-        get => _SearchParamElement?.Value;
+        get => SearchParamElement?.Value;
         set
         {
           SearchParamElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Path
       {
-        get => _PathElement?.Value;
+        get => PathElement?.Value;
         set
         {
           PathElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.DataRequirement.SortDirection? Direction
       {
-        get => _DirectionElement?.Value;
+        get => DirectionElement?.Value;
         set
         {
           DirectionElement = value is null ? null : new Code<Hl7.Fhir.Model.DataRequirement.SortDirection>(value);
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.FHIRAllTypes? Type
     {
-      get => _TypeElement?.Value;
+      get => TypeElement?.Value;
       set
       {
         TypeElement = value is null ? null : new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Limit
     {
-      get => _LimitElement?.Value;
+      get => LimitElement?.Value;
       set
       {
         LimitElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);

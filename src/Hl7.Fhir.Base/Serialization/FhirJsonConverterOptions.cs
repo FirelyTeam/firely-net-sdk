@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Serialization;
 /// <summary>
 /// Specify the optional features for Json deserialization.
 /// </summary>
-public record FhirJsonConverterOptions : ParserSettings
+public record FhirJsonConverterOptions : DeserializerSettings
 {
     /// <summary>
     /// Specifies the filter to use for summary serialization.

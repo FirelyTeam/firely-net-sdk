@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
-            _bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            _bundle = (new FhirXmlDeserializer()).Deserialize<Bundle>(bundleXml);
         }
 
 

@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? WasSubstituted
       {
-        get => _WasSubstitutedElement?.Value;
+        get => WasSubstitutedElement?.Value;
         set
         {
           WasSubstitutedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes>(value);
@@ -1031,7 +1031,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? WhenPrepared
     {
-      get => _WhenPreparedElement?.Value;
+      get => WhenPreparedElement?.Value;
       set
       {
         WhenPreparedElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1072,7 +1072,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? WhenHandedOver
     {
-      get => _WhenHandedOverElement?.Value;
+      get => WhenHandedOverElement?.Value;
       set
       {
         WhenHandedOverElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

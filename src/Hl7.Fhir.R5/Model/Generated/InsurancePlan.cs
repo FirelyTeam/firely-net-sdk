@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Requirement
       {
-        get => _RequirementElement?.Value;
+        get => RequirementElement?.Value;
         set
         {
           RequirementElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1103,7 +1103,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public int? GroupSize
       {
-        get => _GroupSizeElement?.Value;
+        get => GroupSizeElement?.Value;
         set
         {
           GroupSizeElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -1170,7 +1170,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Comment
       {
-        get => _CommentElement?.Value;
+        get => CommentElement?.Value;
         set
         {
           CommentElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1947,7 +1947,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);
@@ -2016,7 +2016,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Name
     {
-      get => _NameElement?.Value;
+      get => NameElement?.Value;
       set
       {
         NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

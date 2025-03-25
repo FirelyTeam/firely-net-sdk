@@ -918,7 +918,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? SupportingInformation
       {
-        get => _SupportingInformationElement?.Value;
+        get => SupportingInformationElement?.Value;
         set
         {
           SupportingInformationElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1100,7 +1100,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.PublicationStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.PublicationStatus>(value);

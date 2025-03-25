@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes? ClinicalStatus
     {
-      get => _ClinicalStatusElement?.Value;
+      get => ClinicalStatusElement?.Value;
       set
       {
         ClinicalStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes>(value);
@@ -583,7 +583,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.Condition.ConditionVerificationStatus? VerificationStatus
     {
-      get => _VerificationStatusElement?.Value;
+      get => VerificationStatusElement?.Value;
       set
       {
         VerificationStatusElement = value is null ? null : new Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus>(value);
@@ -847,7 +847,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? AssertedDate
     {
-      get => _AssertedDateElement?.Value;
+      get => AssertedDateElement?.Value;
       set
       {
         AssertedDateElement = value is null ? null : new Hl7.Fhir.Model.FhirDateTime(value);

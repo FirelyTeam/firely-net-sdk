@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus? Status
       {
-        get => _StatusElement?.Value;
+        get => StatusElement?.Value;
         set
         {
           StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>(value);
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? StatusReason
       {
-        get => _StatusReasonElement?.Value;
+        get => StatusReasonElement?.Value;
         set
         {
           StatusReasonElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -805,7 +805,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public bool? Prohibited
       {
-        get => _ProhibitedElement?.Value;
+        get => ProhibitedElement?.Value;
         set
         {
           ProhibitedElement = value is null ? null : new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1013,7 +1013,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Description
       {
-        get => _DescriptionElement?.Value;
+        get => DescriptionElement?.Value;
         set
         {
           DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1558,7 +1558,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.CarePlan.CarePlanStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>(value);
@@ -1602,7 +1602,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.CarePlan.CarePlanIntent? Intent
     {
-      get => _IntentElement?.Value;
+      get => IntentElement?.Value;
       set
       {
         IntentElement = value is null ? null : new Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent>(value);
@@ -1671,7 +1671,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Title
     {
-      get => _TitleElement?.Value;
+      get => TitleElement?.Value;
       set
       {
         TitleElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -1712,7 +1712,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Description
     {
-      get => _DescriptionElement?.Value;
+      get => DescriptionElement?.Value;
       set
       {
         DescriptionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);

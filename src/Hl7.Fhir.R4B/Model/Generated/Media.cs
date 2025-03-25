@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public Hl7.Fhir.Model.EventStatus? Status
     {
-      get => _StatusElement?.Value;
+      get => StatusElement?.Value;
       set
       {
         StatusElement = value is null ? null : new Code<Hl7.Fhir.Model.EventStatus>(value);
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public DateTimeOffset? Issued
     {
-      get => _IssuedElement?.Value;
+      get => IssuedElement?.Value;
       set
       {
         IssuedElement = value is null ? null : new Hl7.Fhir.Model.Instant(value);
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? DeviceName
     {
-      get => _DeviceNameElement?.Value;
+      get => DeviceNameElement?.Value;
       set
       {
         DeviceNameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Height
     {
-      get => _HeightElement?.Value;
+      get => HeightElement?.Value;
       set
       {
         HeightElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Width
     {
-      get => _WidthElement?.Value;
+      get => WidthElement?.Value;
       set
       {
         WidthElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -661,7 +661,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public int? Frames
     {
-      get => _FramesElement?.Value;
+      get => FramesElement?.Value;
       set
       {
         FramesElement = value is null ? null : new Hl7.Fhir.Model.PositiveInt(value);
@@ -702,7 +702,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public decimal? Duration
     {
-      get => _DurationElement?.Value;
+      get => DurationElement?.Value;
       set
       {
         DurationElement = value is null ? null : new Hl7.Fhir.Model.FhirDecimal(value);

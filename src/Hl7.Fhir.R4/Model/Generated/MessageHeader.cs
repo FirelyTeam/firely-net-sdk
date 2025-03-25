@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Endpoint
       {
-        get => _EndpointElement?.Value;
+        get => EndpointElement?.Value;
         set
         {
           EndpointElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Name
       {
-        get => _NameElement?.Value;
+        get => NameElement?.Value;
         set
         {
           NameElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Software
       {
-        get => _SoftwareElement?.Value;
+        get => SoftwareElement?.Value;
         set
         {
           SoftwareElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Version
       {
-        get => _VersionElement?.Value;
+        get => VersionElement?.Value;
         set
         {
           VersionElement = value is null ? null : new Hl7.Fhir.Model.FhirString(value);
@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Endpoint
       {
-        get => _EndpointElement?.Value;
+        get => EndpointElement?.Value;
         set
         {
           EndpointElement = value is null ? null : new Hl7.Fhir.Model.FhirUrl(value);
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public string? Identifier
       {
-        get => _IdentifierElement?.Value;
+        get => IdentifierElement?.Value;
         set
         {
           IdentifierElement = value is null ? null : new Hl7.Fhir.Model.Id(value);
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
       [IgnoreDataMember]
       public Hl7.Fhir.Model.MessageHeader.ResponseType? Code
       {
-        get => _CodeElement?.Value;
+        get => CodeElement?.Value;
         set
         {
           CodeElement = value is null ? null : new Code<Hl7.Fhir.Model.MessageHeader.ResponseType>(value);
@@ -1284,7 +1284,7 @@ namespace Hl7.Fhir.Model
     [IgnoreDataMember]
     public string? Definition
     {
-      get => _DefinitionElement?.Value;
+      get => DefinitionElement?.Value;
       set
       {
         DefinitionElement = value is null ? null : new Hl7.Fhir.Model.Canonical(value);
