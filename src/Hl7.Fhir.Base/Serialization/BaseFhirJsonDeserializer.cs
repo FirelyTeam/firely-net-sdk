@@ -398,7 +398,7 @@ public class BaseFhirJsonDeserializer
         {
             propertyValueMapping ??= _inspector.FindClassMapping(guessFhirPrimitiveType(reader.TokenType))!;
 
-            result = DeserializeFhirPrimitive(existingValue as PrimitiveType, propertyName, propertyValueMapping, null, ref reader, parsingState, state);
+            result = DeserializeFhirPrimitive(existingValue as PrimitiveType, propertyName, propertyValueMapping, ref reader, parsingState, state);
         }
         else if (reader.TokenType == JsonTokenType.StartObject)
         {
@@ -433,7 +433,7 @@ public class BaseFhirJsonDeserializer
 
             if (propertyValueMapping.IsFhirPrimitive)
             {
-                deserializeFhirPrimitiveList(primitiveList, propertyName, propertyValueMapping, primitiveType, ref reader, parsingState, state);
+                deserializeFhirPrimitiveList(primitiveList, propertyName, propertyValueMapping, ref reader, parsingState, state);
             }
             else
             {
@@ -571,7 +571,6 @@ public class BaseFhirJsonDeserializer
         IList existingList,
         string propertyName,
         ClassMapping propertyValueMapping,
-        Type? fhirType,
         ref Utf8JsonReader reader,
         ObjectParsingState delayedValidations,
         FhirJsonPocoDeserializerState state
@@ -623,7 +622,7 @@ public class BaseFhirJsonDeserializer
             {
                 existingList[elementIndex] ??= propertyValueMapping.Factory();
                 onlyNulls = false;
-                _ = DeserializeFhirPrimitive((PrimitiveType)existingList[elementIndex]!, propertyName, propertyValueMapping, fhirType, ref reader, delayedValidations, state);
+                _ = DeserializeFhirPrimitive((PrimitiveType)existingList[elementIndex]!, propertyName, propertyValueMapping, ref reader, delayedValidations, state);
 
                 delayedValidations.SetPropertyIndex(propertyName, existingList.Count);
             }
@@ -654,7 +653,6 @@ public class BaseFhirJsonDeserializer
         PrimitiveType? existingPrimitive,
         string propertyName,
         ClassMapping propertyValueMapping,
-        Type? fhirType,
         ref Utf8JsonReader reader,
         ObjectParsingState? parsingState,
         FhirJsonPocoDeserializerState state
