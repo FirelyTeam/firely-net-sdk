@@ -44,6 +44,7 @@ public class FhirAttributeValidator : IPocoValidator
             return;
         }
 
+        // we handle choice types inside their own validating attribute
         if (propMapping.Choice == ChoiceType.None && !propertyValue.IsValidValueForType(propMapping.FhirType.Single(), propMapping.IsCollection))
         {
             reportedErrors = runAttributeValidation(propertyValue, propMapping.ValidationAttributes, validationContext)

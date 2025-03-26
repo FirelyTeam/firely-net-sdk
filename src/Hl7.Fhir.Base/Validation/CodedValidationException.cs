@@ -6,13 +6,16 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
@@ -156,8 +159,25 @@ public class CodedValidationException : ExtendedCodedException
         return codedException;
     }
 
-    internal static COVE FromTypes(Type expected, object? actual, ValidationContext? context = null) => 
-        PROPERTY_TYPE_MISMATCH(context, expected.Name, actual?.GetType().Name ?? "null");
+    internal static COVE FromTypes(Type expected, object? actual, ValidationContext? context = null)
+    {
+        string expectedFhirTypeName = typeof(Base).IsAssignableFrom(expected)
+            ? fhirTypeNameForSingleType(expected) ?? "unknown"
+            : "collection of " + (fhirTypeNameForRepeatingType(expected) ?? "unknown");
+
+        string actualFhirTypeName = actual switch
+        {
+            Base b => b.TypeName,
+            IEnumerable<Base> bases => "collection of " + (bases.FirstOrDefault()?.TypeName ?? fhirTypeNameForRepeatingType(bases.GetType()) ?? "unknown"),
+            _ => "null"
+        };
+        
+        return PROPERTY_TYPE_MISMATCH(context, expectedFhirTypeName, actualFhirTypeName);
+    }
+
+    private static string? fhirTypeNameForSingleType(Type t) => t.GetCustomAttribute<FhirTypeAttribute>()?.Name;
+
+    private static string? fhirTypeNameForRepeatingType(Type t) => fhirTypeNameForSingleType(ReflectionHelper.GetCollectionItemType(t));
 
     internal CodedValidationResult AsResult(ValidationContext? context) =>
         context?.MemberName is { } mn
