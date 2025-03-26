@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.Serialization
     {
         private readonly FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
         private readonly FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
-        private readonly FhirXmlParser FhirXmlParser = new FhirXmlParser();
+        private readonly FhirXmlDeserializer _fhirXmlDeserializer = new FhirXmlDeserializer();
 
         [TestMethod]
         public void TestConstructSystemTextJsonSerializer()

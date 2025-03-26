@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Source
         public static DirectorySourceSettings CreateDefault() => new DirectorySourceSettings();
 
         // Instance fields
-        private ParserSettings _parserSettings = new();
+        private DeserializerSettings _parserSettings = new();
         private FhirXmlParsingSettings _xmlParserSettings = FhirXmlParsingSettings.CreateDefault();
         private FhirJsonParsingSettings _jsonParserSettings = FhirJsonParsingSettings.CreateDefault();
 
@@ -302,10 +302,10 @@ namespace Hl7.Fhir.Specification.Source
         /// <para>Never returns <c>null</c>. Assigning <c>null</c> reverts back to default settings.</para>
         /// </summary>
         /// <value>A <see cref="ParserSettings"/> instance.</value>
-        public ParserSettings? ParserSettings
+        public DeserializerSettings? ParserSettings
         {
             get => _parserSettings;
-            set => _parserSettings = value ?? new ParserSettings().UsingMode(DeserializationMode.Recoverable);
+            set => _parserSettings = value ?? new DeserializerSettings().UsingMode(DeserializationMode.Recoverable);
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 // Validator = null
                 ValidateOnFailedParse = true
             };
-            var ds = new FhirJsonPocoDeserializer(settings);
+            var ds = new FhirJsonDeserializer(settings);
             return (T)ds.DeserializeResource(json);
         }
 

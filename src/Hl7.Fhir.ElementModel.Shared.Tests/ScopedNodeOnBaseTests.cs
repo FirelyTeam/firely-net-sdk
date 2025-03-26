@@ -26,7 +26,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
-            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            var bundle = (new FhirXmlDeserializer()).Deserialize<Bundle>(bundleXml);
             Assert.IsNotNull(bundle);
             _bundleNode = bundle.ToPocoNode();
         }

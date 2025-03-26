@@ -70,7 +70,7 @@ public class PocoBuilderSettings
     /// <summary>
     /// Initializes the current instance from the specified <see cref="PocoBuilderSettings"/> instance.
     /// </summary>
-    public void CopyFrom(ParserSettings settings)
+    public void CopyFrom(DeserializerSettings settings)
     {
         if (settings == null) throw Error.ArgumentNull(nameof(settings));
 

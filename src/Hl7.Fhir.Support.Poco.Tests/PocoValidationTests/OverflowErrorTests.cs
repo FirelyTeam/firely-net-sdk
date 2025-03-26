@@ -32,7 +32,7 @@ public class OverflowErrorTests
     private static void TestOnPrimitiveElement(object value, string[]? shouldBeInErrorMsg)
     {
         var pat = new Patient();
-        pat.SetValue("active", value);
+        pat["active"] = value;
 
         var act = () => pat.ActiveElement;
         if (shouldBeInErrorMsg is null)

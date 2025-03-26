@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.xml"));
             var tpJson = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
 
-            var pat = FhirXmlParser.OSTRICH.Parse<Patient>(tpXml);
+            var pat = FhirXmlDeserializer.OSTRICH.Deserialize<Patient>(tpXml);
 
             // Should work on the parent resource
             var navXml = getXmlNode(tpXml);

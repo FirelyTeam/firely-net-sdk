@@ -26,15 +26,15 @@ internal class FhirXmlJsonParserRoundtripper() : IRoundTripper
 {
     public string RoundTripXml(string original) =>
         FhirXmlSerializer.Default.SerializeToString(
-            FhirJsonParser.RECOVERABLE.Parse(
+            FhirJsonDeserializer.RECOVERABLE.Deserialize<Resource>(
                 FhirJsonSerializer.Default.SerializeToString(
-                    FhirXmlParser.RECOVERABLE.Parse(original))));
+                    FhirXmlDeserializer.RECOVERABLE.Deserialize<Resource>(original))));
 
     public string RoundTripJson(string original) =>
         FhirJsonSerializer.Default.SerializeToString(
-            FhirXmlParser.RECOVERABLE.Parse(
+            FhirXmlDeserializer.RECOVERABLE.Deserialize<Resource>(
                 FhirXmlSerializer.Default.SerializeToString(
-                    FhirJsonParser.RECOVERABLE.Parse(original))));
+                    FhirJsonDeserializer.RECOVERABLE.Deserialize<Resource>(original))));
 }
     
 internal class TypedElementBasedRoundtripper(IStructureDefinitionSummaryProvider provider) : IRoundTripper
@@ -231,8 +231,8 @@ public class RoundtripAllSerializers
         var name = entry.Name;
 
         var resource = name.EndsWith(".xml")
-            ? FhirXmlParser.RECOVERABLE.Parse(input)
-            : FhirJsonParser.RECOVERABLE.Parse(input);
+            ? FhirXmlDeserializer.RECOVERABLE.Deserialize<Resource>(input)
+            : FhirJsonDeserializer.RECOVERABLE.Deserialize<Resource>(input);
 
         var r2 = resource!.DeepCopy();
         Assert.IsTrue(resource.Matches(r2),

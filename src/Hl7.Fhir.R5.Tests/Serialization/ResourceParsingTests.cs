@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ParseBinaryForR4andHigher()
         {
             var json = "{\"resourceType\":\"Binary\",\"contentType\":\"text/plain\",\"data\":\"ZGF0YQ==\"}";
-            var binary = new FhirJsonParser().Parse<Binary>(json);
+            var binary = new FhirJsonDeserializer().Deserialize<Binary>(json);
 
             var result = new FhirJsonSerializer().SerializeToString(binary);
 

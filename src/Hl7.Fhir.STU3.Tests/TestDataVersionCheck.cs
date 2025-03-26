@@ -34,8 +34,8 @@ namespace Hl7.Fhir.Tests
 
         private static void validateFolder(string basePath, string path, StringBuilder issues)
         {
-            var xmlParser = FhirXmlParser.OSTRICH;
-            var jsonParser = FhirJsonParser.OSTRICH;
+            var xmlParser = FhirXmlDeserializer.OSTRICH;
+            var jsonParser = FhirJsonDeserializer.OSTRICH;
             Console.WriteLine($"Validating test files in {path.Replace(basePath, "")}");
             foreach (var item in Directory.EnumerateFiles(path))
             {
@@ -51,12 +51,12 @@ namespace Hl7.Fhir.Tests
                     if (new FileInfo(item).Extension == ".xml")
                     {
                         Console.WriteLine($"    {item.Replace(path+"//", "")}");
-                        xmlParser.Parse<Resource>(content);
+                        xmlParser.Deserialize<Resource>(content);
                     }
                     else if (new FileInfo(item).Extension == ".json")
                     {
                         Console.WriteLine($"    {item.Replace(path + "//", "")}");
-                        jsonParser.Parse<Resource>(content);
+                        jsonParser.Deserialize<Resource>(content);
                     }
                     else
                     {

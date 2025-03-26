@@ -21,8 +21,8 @@ namespace Hl7.Fhir.Serialization;
 /// This is an implementation of <see cref="IFhirSerializationEngine"/> which uses the
 /// new Poco-based parser and serializer, initialized with the default settings.
 /// </summary>
-public class PocoSerializationEngine(BaseFhirJsonPocoDeserializer jsonDeserializer, BaseFhirJsonSerializer jsonSerializer,
-    BaseFhirXmlPocoDeserializer xmlDeserializer, BaseFhirXmlSerializer xmlSerializer) : IFhirSerializationEngine
+public class PocoSerializationEngine(BaseFhirJsonDeserializer jsonDeserializer, BaseFhirJsonSerializer jsonSerializer,
+    BaseFhirXmlDeserializer xmlDeserializer, BaseFhirXmlSerializer xmlSerializer) : IFhirSerializationEngine
 {
     /// <inheritdoc />
     public string SerializeToJson(Resource instance) => jsonSerializer.SerializeToString(instance);
