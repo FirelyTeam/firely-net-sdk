@@ -2,6 +2,7 @@ using FluentAssertions;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 namespace Hl7.Fhir.Support.Poco.Tests;
@@ -14,54 +15,63 @@ public class OverflowErrorTests
     [TestMethod]
     public void SettingInvalidElementValue_Should_ThrowOnAccess()
     {
-        TestOnPrimitiveElement(new Patient(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
-        TestOnPrimitiveElement(new Integer(10), COVE.PROPERTY_TYPE_MISMATCH_CODE);
-        TestOnPrimitiveElement(new List<Patient>(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        TestOnPrimitiveElement(new Patient(), ["Patient", "boolean"]);
+        TestOnPrimitiveElement(new Integer(10), ["integer", "boolean"]);
+        TestOnPrimitiveElement(new List<Patient>(), ["collection of Patient", "boolean"]);
         TestOnPrimitiveElement(new FhirBoolean(true), null);
-        TestOnArrayElement(new List<Patient>(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
-        TestOnArrayElement(new Patient(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
-        TestOnArrayElement(new FhirBoolean(true), COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        TestOnArrayElement(new List<Patient>(), ["collection of Patient", "collection of HumanName"]);
+        TestOnArrayElement(new Patient(), ["Patient", "collection of HumanName"]);
+        TestOnArrayElement(new FhirBoolean(true), ["boolean", "collection of HumanName"]);
         TestOnArrayElement(new List<HumanName>(), null);
-        TestOnObjectElement(new FhirBoolean(false), COVE.PROPERTY_TYPE_MISMATCH_CODE);
-        TestOnObjectElement(new List<HumanName>(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
-        TestOnObjectElement(new Patient(), COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        TestOnObjectElement(new FhirBoolean(false), ["boolean", "Narrative"]);
+        TestOnObjectElement(new List<HumanName>(), ["collection of HumanName", "Narrative"]);
+        TestOnObjectElement(new Patient(), ["Patient", "Narrative"]);
         TestOnObjectElement(new Narrative("<div> this div is not centered </div>"), null);
     }
 
-    private static void TestOnPrimitiveElement(object value, string? coveCode)
+    private static void TestOnPrimitiveElement(object value, string[]? shouldBeInErrorMsg)
     {
         var pat = new Patient();
         pat.SetValue("active", value);
 
         var act = () => pat.ActiveElement;
-        if (coveCode is null)
+        if (shouldBeInErrorMsg is null)
             act.Should().NotThrow();
         else 
-            act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(coveCode);
+            act.Should().Throw<COVE>().Which.Should().Match<COVE>(
+                e => e.ErrorCode == COVE.PROPERTY_TYPE_MISMATCH_CODE && 
+                shouldBeInErrorMsg.All(substring => e.Message.Contains(substring))
+            );
     }
 
-    private static void TestOnArrayElement(object value, string? coveCode)
+    private static void TestOnArrayElement(object value, string[]? shouldBeInErrorMsg)
     {
         var pat = new Patient();
         pat.SetValue("name", value);
 
         var act = () => pat.Name;
-        if (coveCode is null)
+        if (shouldBeInErrorMsg is null)
             act.Should().NotThrow();
         else 
-            act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(coveCode);
+            act.Should().Throw<COVE>().Which.Should().Match<COVE>(
+                e => e.ErrorCode == COVE.PROPERTY_TYPE_MISMATCH_CODE && 
+                     shouldBeInErrorMsg.All(substring => e.Message.Contains(substring))
+            );
     }
 
-    private static void TestOnObjectElement(object value, string? coveCode)
+    private static void TestOnObjectElement(object value, string[]? shouldBeInErrorMsg)
     {
         var pat = new Patient();
         pat.SetValue("text", value);
 
         var act = () => pat.Text;
-        if (coveCode is null)
+        if (shouldBeInErrorMsg is null)
             act.Should().NotThrow();
         else 
-            act.Should().Throw<COVE>().Which.ErrorCode.Should().Be(coveCode);
+            act.Should().Throw<COVE>().Which.Should().Match<COVE>(
+                e => e.ErrorCode == COVE.PROPERTY_TYPE_MISMATCH_CODE && 
+                     shouldBeInErrorMsg.All(substring => e.Message.Contains(substring))
+            );
     }
 
     [TestMethod]
