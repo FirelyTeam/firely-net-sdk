@@ -56,16 +56,12 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual("Patient.active", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
                 Assert.AreEqual("XML121", oc.Issue[0].Details.Coding[0].Code);
-
-                Assert.AreEqual("Patient.active", oc.Issue[1].Expression.First());
+                
+                Assert.AreEqual("Patient.birthDate", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual(COVE.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.LITERAL_INVALID_CODE, oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual("Patient.birthDate", oc.Issue[2].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual(COVE.LITERAL_INVALID_CODE, oc.Issue[2].Details.Coding[0].Code);
-
-                Assert.AreEqual(3, oc.Issue.Count);
+                Assert.AreEqual(2, oc.Issue.Count);
             }
         }
         
@@ -89,7 +85,8 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var p = SerializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
-                Assert.Fail("Expected to throw parsing");
+                // no longer complain about unknown elements
+                //Assert.Fail("Expected to throw parsing");
             }
             catch (DeserializationFailedException ex)
             {
@@ -188,18 +185,10 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual("XML112", oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Patient.name[1]", oc.Issue[1].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[1].Severity);
-                Assert.AreEqual("XML104", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual("XML120", oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual("Patient.name[1]", oc.Issue[2].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual("XML120", oc.Issue[2].Details.Coding[0].Code);
-
-                Assert.AreEqual("Patient", oc.Issue[3].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[3].Severity);
-                Assert.AreEqual("XML104", oc.Issue[3].Details.Coding[0].Code);
-
-                Assert.AreEqual(4, oc.Issue.Count);
+                Assert.AreEqual(2, oc.Issue.Count);
 
                 patient["chicken"].Should().NotBeNull();
                 patient.Name[1]["turkey"].Should().NotBeNull();
@@ -289,11 +278,11 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
                 Assert.AreEqual("XML121", oc.Issue[0].Details.Coding[0].Code);
 
-                Assert.AreEqual("Patient.contact[0].gender", oc.Issue[2].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual("PVAL116", oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual("Patient.contact[0].gender", oc.Issue[1].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual("PVAL116", oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual(3, oc.Issue.Count);
+                Assert.AreEqual(2, oc.Issue.Count);
                 
                 var partialResult = ex.PartialResult as Patient;
                 partialResult!.Name.Should().HaveCount(1);
@@ -470,6 +459,38 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void XMLUnknownPropertyRoundtrip()
+        {
+            string rawData = """
+                             <Patient xmlns="http://hl7.org/fhir">
+                                 <id value="pat1"/>
+                                 <test value="true" data="test"/>
+                             </Patient>
+                             """;
+
+            try
+            {
+                var p = SerializeResource<Patient>(rawData);
+                DebugDump.OutputXml(p);
+                // no longer complain about unknown items
+                //Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputXml(ex.PartialResult);
+
+                Assert.AreEqual("Patient.name[0]", oc.Issue[1].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual("XML109", oc.Issue[1].Details.Coding[0].Code);
+
+                Assert.AreEqual(2, oc.Issue.Count);
+            }
+        }
+
+        [TestMethod]
         public void XMLInvalidPropertyOrdering()
         {
             string rawData = """
@@ -500,10 +521,6 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual("Patient.active", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
                 Assert.AreEqual("XML109", oc.Issue[0].Details.Coding[0].Code);
-
-                Assert.AreEqual("Patient.name[0]", oc.Issue[1].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("XML109", oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual(2, oc.Issue.Count);
             }
@@ -638,7 +655,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputXml(ex.PartialResult);
 
-                Assert.AreEqual(8, oc.Issue.Count);
+                Assert.AreEqual(6, oc.Issue.Count);
             }
         }
 
@@ -674,23 +691,15 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputXml(ex.PartialResult);
 
-                Assert.AreEqual("Patient.name[0]", oc.Issue[0].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
-                Assert.AreEqual("XML104", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual("Patient.active", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual("XML109", oc.Issue[0].Details.Coding[0].Code);
 
-                Assert.AreEqual("Patient.active", oc.Issue[1].Expression.First());
+                Assert.AreEqual("Patient.name[1]", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("XML109", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual("XML116", oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual("Patient.name[1]", oc.Issue[2].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual("XML116", oc.Issue[2].Details.Coding[0].Code);
-
-                Assert.AreEqual("Patient.name[1]", oc.Issue[3].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[3].Severity);
-                Assert.AreEqual("XML104", oc.Issue[3].Details.Coding[0].Code);
-
-                Assert.AreEqual(4, oc.Issue.Count);
+                Assert.AreEqual(2, oc.Issue.Count);
             }
         }
 

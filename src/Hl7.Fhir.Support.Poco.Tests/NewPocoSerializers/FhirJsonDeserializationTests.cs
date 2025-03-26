@@ -59,7 +59,8 @@ public class FhirJsonDeserializationTests
 
             var ps = new PathStack();
             ps.EnterElement("Patient", 0, false);
-            return BaseFhirJsonDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, ps);
+            var response = BaseFhirJsonDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, ps);
+            return (response.Item1, response.Item2);
         }
     }
 

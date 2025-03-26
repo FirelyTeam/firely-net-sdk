@@ -128,7 +128,7 @@ public class BaseFhirJsonDeserializer
     {
         if (reader.TokenType != JsonTokenType.StartObject)
         {
-            var result = deserializeUnexpectedJsonValue(state.Path.GetLastPart(), ref reader, state, stayOnLastToken);
+            var result = deserializeJsonValue(null, "value", ref reader, state, new ObjectParsingState());
 
             var target = _inspector.FindClassMapping(typeof(DynamicResource))?.Factory() as Resource;
             
@@ -137,12 +137,20 @@ public class BaseFhirJsonDeserializer
             return target;
         }
 
-        (ClassMapping? resourceMapping, FhirJsonException? error) = DetermineClassMappingFromInstance(ref reader, _inspector, state.Path);
+        var (resourceMapping, error, resourceType) = DetermineClassMappingFromInstance(ref reader, _inspector, state.Path);
 
+        state.Errors.Add(error!);
+        
         if (resourceMapping is not null)
         {
             // If we have at least a mapping, let's try to continue
             var newResource = (Base)resourceMapping.Factory();
+            
+            // if we're on dynamic, the type is not recognized, so we should set dynamic to report it
+            if(resourceType is not null && newResource is DynamicResource dr)
+            {
+                dr.DynamicTypeName = resourceType;
+            }
 
             try
             {
@@ -231,14 +239,13 @@ public class BaseFhirJsonDeserializer
     {
         if (reader.TokenType != JsonTokenType.StartObject)
         {
-            var result = deserializeUnexpectedJsonValue(state.Path.GetLastPart(), ref reader, state, stayOnLastToken);
-
+            var result = deserializeJsonValue(null, "value", ref reader, state, new ObjectParsingState());
+            
             target.SetValue("value", result);
             
             return;
         }
-
-        // read past start of object into first property or end of object
+        
         reader.Read();
 
         var empty = true;
@@ -263,28 +270,10 @@ public class BaseFhirJsonDeserializer
             // Lookup the metadata for this property by its name to determine the expected type of the value
             var (propMapping, propValueMapping, error) = tryGetMappedElementMetadata(_inspector, mapping, ref reader, state.Path, currentPropertyName);
 
-            if (error is not null)
-            {
-                state.Errors.Add(error);
-
-                // no mapping found, make guess for type and insert into overflow
-                deserializeUnknownPropertiesInto(target, currentPropertyName, ref reader, state, stayOnLastToken);
-            }
-            else
-            {
-                // read past the property name into the value
-                reader.Read();
-
-                try
-                {
-                    state.Path.EnterElement(propMapping!.Name, isEnteringJsonArray(ref reader) ? 0 : null, propMapping.IsPrimitive);
-                    deserializePropertyValueInto(target, currentPropertyName, propMapping, propValueMapping!, ref reader, objectParsingState, state);
-                }
-                finally
-                {
-                    state.Path.ExitElement();
-                }
-            }
+            // move past property name
+            reader.Read();
+            
+            deserializePropertyInto(target, currentPropertyName, ref reader, state, stayOnLastToken, objectParsingState, propMapping, propValueMapping);
         }
 
         // Now after having deserialized all properties we can run the validations that needed to be
@@ -308,41 +297,79 @@ public class BaseFhirJsonDeserializer
         }
     }
     
-    private void deserializeUnknownPropertiesInto<T>(
+    private void deserializePropertyInto<T>(
         T target,
         string propertyName,
         ref Utf8JsonReader reader,
         FhirJsonPocoDeserializerState state,
-        bool stayOnLastToken = false) where T : Base
+        bool stayOnLastToken = false,
+        ObjectParsingState? delayedValidations = null,
+        PropertyMapping? propertyMapping = null,
+        ClassMapping? propertyValueSuggestion = null) where T : Base
     {
-        target.TryGetValue(propertyName, out var value);
-
-        var (name, choiceType) = tryDetectChoiceTypeFromName(propertyName);
-
-        // move past property name
-        reader.Read();
-
         object? result;
-        if(choiceType is not null)
+        var oldErrorCount = state.Errors.Count;
+        var (line, pos) = reader.CurrentState.GetLocation();
+        var (name, propertyValueMapping) = tryDetectNameAndMapping(propertyName, propertyMapping, propertyValueSuggestion);
+
+        // check whether we encounter an extension marker on fhirproperty
+        if (name[0] == '_' && propertyValueMapping is null)
+            name = name.Substring(1);
+        
+        target.TryGetValue(name, out var existingValue);
+        
+        try
         {
-            state.Path.EnterElement(name, null, choiceType.IsPrimitive);
+            state.Path.EnterElement(name, reader.TokenType == JsonTokenType.StartArray ? 0 : null, propertyValueMapping?.IsPrimitive ?? isOnJsonPrimitiveType(ref reader));
             
-            result = DeserializeFhirPrimitive(value as PrimitiveType, name, choiceType, null, ref reader, new(), state);
-            
-            state.Path.ExitElement();
+            result = deserializeJsonValue(existingValue, propertyName, ref reader, state, delayedValidations!, propertyValueMapping);
         }
-        else
+        finally
         {
-            state.Path.EnterElement(name, reader.TokenType == JsonTokenType.StartArray ? 0 : null, isJsonPrimitive(ref reader));
-            
-            result = deserializeUnexpectedJsonValue(propertyName, ref reader, state, stayOnLastToken);
-            
             state.Path.ExitElement();
         }
         
-        target.SetValue(name, result);
-        (string name, ClassMapping? choiceType) tryDetectChoiceTypeFromName(string propertyName)
+        // Only do validation when no parse errors were encountered, otherwise we'll just
+        // produce spurious messages.
+        if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count) && propertyMapping is not null)
         {
+            var deserializationContext = new PropertyDeserializationContext(
+                target,
+                state.Path,
+                name,
+                line, pos,
+                propertyMapping,
+                Settings.NarrativeValidation);
+            
+            // If this is a FhirPrimitive, make sure we delay validation until we had the
+            // chance to encounter both the `name` and `_name` property.
+            if (propertyValueSuggestion!.IsFhirPrimitive)
+            {
+                var elementName = propertyMapping.Name;
+
+                delayedValidations?.ScheduleDelayedValidation(
+                    elementName + PROPERTY_VALIDATION_KEY_SUFFIX,
+                    () =>
+                    {
+                        deserializationContext.PathStack.EnterElement(elementName, null,
+                            propertyValueSuggestion.IsPrimitive);
+                        PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator!,
+                            deserializationContext, state.Errors);
+                        deserializationContext.PathStack.ExitElement();
+                    });
+            }
+            else
+                PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator!, deserializationContext, state.Errors);
+        }
+        
+        target.SetValue(name, result);
+        
+        (string name, ClassMapping? propertyValueMapping) tryDetectNameAndMapping(string propertyName, PropertyMapping? propertyMapping, ClassMapping? propertyValueSuggestion)
+        {
+            // nothing to guess, we have information already
+            if (propertyMapping is not null && propertyValueSuggestion is not null)
+                return (propertyMapping.Name, propertyValueSuggestion);
+
             var span = propertyName.AsSpan();
             for(int i = 0; i < span.Length; i++)
             {
@@ -361,49 +388,62 @@ public class BaseFhirJsonDeserializer
         }
     }
 
-    private object? deserializeUnexpectedJsonValue(string propertyName, ref Utf8JsonReader reader, FhirJsonPocoDeserializerState state, bool stayOnLastToken, ClassMapping? propertySuggestion = null)
+    private object? deserializeJsonValue(object? existingValue, string propertyName, ref Utf8JsonReader reader, FhirJsonPocoDeserializerState state, ObjectParsingState parsingState, ClassMapping? propertyValueSuggestion = null)
     {
-        if(reader.TokenType == JsonTokenType.StartObject)
-        {
-            var propMapping = propertySuggestion ?? _inspector.FindClassMapping(typeof(DynamicDataType))!;
-            
-            var primitive = (propMapping.Factory() as Base)!;
-            
-            deserializeObjectInto(primitive, propMapping, ref reader, DeserializedObjectKind.FhirPrimitive, state, stayOnLastToken);
+        object? result = null;
 
-            return primitive;
+        var propertyValueMapping = propertyValueSuggestion;
+
+        if (isOnJsonPrimitiveType(ref reader) || (propertyName[0] == '_' && reader.TokenType == JsonTokenType.StartObject))
+        {
+            propertyValueMapping ??= _inspector.FindClassMapping(guessFhirPrimitiveType(reader.TokenType))!;
+
+            result = DeserializeFhirPrimitive(existingValue as PrimitiveType, propertyName, propertyValueMapping, null, ref reader, parsingState, state);
+        }
+        else if (reader.TokenType == JsonTokenType.StartObject)
+        {
+            propertyValueMapping ??= _inspector.FindClassMapping(nameof(DynamicDataType))!;
+
+            result = deserializeSingleValue(ref reader, propertyValueMapping, state);
         }
         else if (reader.TokenType == JsonTokenType.StartArray)
         {
             var primitiveType = guessFhirPrimitiveType(peekType(ref reader));
             
-            var propMapping = propertySuggestion ?? _inspector.FindClassMapping(primitiveType!)!;
-            
-            var primitiveList = propMapping.ListFactory();
+            propertyValueMapping ??= _inspector.FindClassMapping(primitiveType!)!;
 
-            var objectState = new ObjectParsingState();
-            
-            deserializeFhirPrimitiveList(primitiveList, propertyName, propMapping, primitiveType, ref reader, objectState, state);
-            
-            return primitiveList;
+            IList primitiveList;
+            if (existingValue is IList l)
+            {
+                primitiveList = l;
+                // if the list is already populated, a property with an identical key was encountered earlier
+                // or we're processing the fhirprimitive list, and it will be handled inside
+                if (primitiveList.Count > 0 && !propertyValueMapping.IsFhirPrimitive)
+                {
+                    state.Path.IncrementIndex(primitiveList.Count);
+                    state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
+                }
+            }
+            else
+            {
+                primitiveList = propertyValueMapping.ListFactory();
+                if(existingValue is not null)
+                    primitiveList.Add(existingValue);
+            }
+
+            if (propertyValueMapping.IsFhirPrimitive)
+            {
+                deserializeFhirPrimitiveList(primitiveList, propertyName, propertyValueMapping, primitiveType, ref reader, parsingState, state);
+            }
+            else
+            {
+                deserializeNormalList(primitiveList, propertyValueMapping, ref reader, state);
+            }
+
+            result = primitiveList;
         }
-        else if (reader.TokenType switch
-        {
-            JsonTokenType.String => typeof(FhirString),
-            JsonTokenType.Number => typeof(FhirDecimal),
-            JsonTokenType.True or JsonTokenType.False => typeof(FhirBoolean),
-            _ => null
-        } is { } type)
-        {
-            var (primitive, error) = DeserializePrimitiveValue(ref reader, type, state.Path);
-            
-            if(error is not null)
-                state.Errors.Add(error);
-
-            return new DynamicPrimitive { ObjectValue = primitive };
-        }
-
-        return null;
+        
+        return result;
     }
     
     private static JsonTokenType peekType(ref Utf8JsonReader reader)
@@ -420,152 +460,27 @@ public class BaseFhirJsonDeserializer
         return reader.TokenType;
     }
     
-    private static Type? guessFhirPrimitiveType(JsonTokenType tokenType)
+    private static Type guessFhirPrimitiveType(JsonTokenType tokenType)
     {
         return tokenType switch
         {
             JsonTokenType.String => typeof(FhirString),
             JsonTokenType.Number => typeof(FhirDecimal),
             JsonTokenType.True or JsonTokenType.False => typeof(FhirBoolean),
-            JsonTokenType.StartObject => typeof(DynamicPrimitive),
-            _ => null
+            _ => typeof(DynamicDataType),
         };
     }
-        
+    
     private static bool isEnteringJsonArray(ref Utf8JsonReader reader)
     {
         return reader.TokenType == JsonTokenType.StartArray;
     }
     
-    private static bool isJsonPrimitive(ref Utf8JsonReader reader)
+    private static bool isOnJsonPrimitiveType(ref Utf8JsonReader reader)
     {
         return reader.TokenType 
             is JsonTokenType.String or JsonTokenType.Number 
             or JsonTokenType.False or JsonTokenType.True;
-    }
-
-    /// <summary>
-    /// Reads the value of a json property.
-    /// </summary>
-    /// <param name="target">The target POCO which property will be set/updated during deserialization. If null, it will be
-    /// be created based on the <paramref name="propertyMapping"/>, otherwise it will be updated.</param>
-    /// <param name="propertyName">The literal name of the property in the json serialization.</param>
-    /// <param name="propertyMapping">The cached metadata for the property we are setting.</param>
-    /// <param name="propertyValueMapping">The cached metadata for the type of value we are setting the property to.</param>
-    /// <param name="reader">The reader to deserialize from.</param>
-    /// <param name="delayedValidations">Validations to be delayed until the target has been fully deserialized.
-    /// This function will add to this list if necessary.</param>
-    /// <param name="state">Object used to track all parsing state.</param>
-    ///
-    /// <remarks>Expects the reader to be positioned on the property value.
-    /// Reader will be on the first token after the property value upon return.</remarks>
-    private void deserializePropertyValueInto(
-        Base target,
-        string propertyName,
-        PropertyMapping propertyMapping,
-        ClassMapping propertyValueMapping,
-        ref Utf8JsonReader reader,
-        ObjectParsingState delayedValidations,
-        FhirJsonPocoDeserializerState state
-    )
-    {
-        object? result;
-        var oldErrorCount = state.Errors.Count;
-        var (line, pos) = reader.CurrentState.GetLocation();
-
-        // There might be an existing value, since FhirPrimitives may be spread out over two properties
-        // (one with, and one without the '_')
-        target.TryGetValue(propertyMapping.Name, out var existingValue);
-
-        if (propertyValueMapping.IsFhirPrimitive)
-        {
-            // fix for https://github.com/FirelyTeam/firely-net-sdk/issues/2701 - use the known native type if it is in the list
-            var fhirType = propertyMapping.FhirType.Contains(propertyValueMapping.NativeType)
-                ? propertyValueMapping.NativeType
-                : propertyMapping.FhirType.FirstOrDefault();
-
-            // Note that the POCO model will always allocate a new list if the property had not been set before,
-            // so there is always an existingValue for IList
-            result = isEnteringJsonArray(ref reader) ?
-                deserializeFhirPrimitiveList((IList)(existingValue ?? propertyValueMapping.ListFactory()), propertyName, propertyValueMapping, fhirType, ref reader, delayedValidations, state) :
-                DeserializeFhirPrimitive(existingValue as PrimitiveType, propertyName, propertyValueMapping, fhirType, ref reader, delayedValidations, state);
-        }
-        else
-        {
-            // This is not a FHIR primitive, so we should not be dealing with these weird _name members.
-            if (propertyName[0] == '_')
-                state.Errors.Add(ERR.USE_OF_UNDERSCORE_ILLEGAL(ref reader, state.Path.GetInstancePath(), propertyMapping.Name, propertyName));
-
-            // handle case where we detect array where it shouldn't be, or primitive where there should be array
-            if (isEnteringJsonArray(ref reader) != propertyMapping.IsCollection)
-            {
-                result = deserializeUnexpectedJsonValue(propertyName, ref reader, state, false, propertyValueMapping);
-            }
-            // Note that repeating simple elements (like Extension.url) do not currently exist in the FHIR serialization
-            else if(propertyMapping.IsCollection)
-            {
-                var l = (IList)(existingValue ?? propertyValueMapping.ListFactory());
-                // if the list is already populated, a property with an identical key was encountered earlier
-                if (l.Count > 0)
-                {
-                    state.Path.IncrementIndex(l.Count);
-                    state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
-                }
-                result = deserializeNormalList(l, propertyValueMapping, ref reader, state);
-            }
-            else
-            {
-                // if the property already has a value, its key must have been encountered before
-                if (existingValue is not null)
-                {
-                    state.Errors.Add(ERR.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
-                }
-                result = deserializeSingleValue(ref reader, propertyValueMapping, state);
-            }
-        }
-
-        // Only do validation when no parse errors were encountered, otherwise we'll just
-        // produce spurious messages.
-        if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
-        {
-            var deserializationContext = new PropertyDeserializationContext(
-                target,
-                state.Path,
-                propertyName,
-                line, pos,
-                propertyMapping,
-                Settings.NarrativeValidation);
-
-            // If this is a FhirPrimitive, make sure we delay validation until we had the
-            // chance to encounter both the `name` and `_name` property.
-            if (propertyValueMapping.IsFhirPrimitive)
-            {
-                var elementName = propertyMapping.Name;
-
-                delayedValidations.ScheduleDelayedValidation(
-                    elementName + PROPERTY_VALIDATION_KEY_SUFFIX,
-                    () =>
-                    {
-                        deserializationContext.PathStack.EnterElement(elementName, null,
-                            propertyValueMapping.IsPrimitive);
-                        PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator!,
-                            deserializationContext, state.Errors);
-                        deserializationContext.PathStack.ExitElement();
-                    });
-            }
-            else
-                PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator!, deserializationContext, state.Errors);
-        }
-
-        target.SetValue(propertyMapping.Name, result);
-        try
-        {
-            _ = propertyMapping.GetValue(target);
-        }
-        catch (CodedValidationException ex)
-        {
-            state.Errors.Add(new CodedValidationException(ex.ErrorCode, ex.Message, state.Path.GetInstancePath(), line, pos, ex.IssueSeverity, ex.IssueType));
-        }
     }
 
     /// <summary>
@@ -669,7 +584,7 @@ public class BaseFhirJsonDeserializer
         if (reader.TokenType != JsonTokenType.StartArray)
         {
             state.Errors.Add(ERR.EXPECTED_START_OF_ARRAY(ref reader, state.Path.GetInstancePath()));
-            oneshot = true;
+            return existingList;
         }
         else
         {
@@ -715,8 +630,6 @@ public class BaseFhirJsonDeserializer
 
             elementIndex += 1;
             state.Path.IncrementIndex();
-
-            if (oneshot) break;
         }
 
         if (onlyNulls == true)
@@ -762,16 +675,7 @@ public class BaseFhirJsonDeserializer
             {
                 state.Path.EnterElement("value", 0, true);
 
-                object? result;
-                FhirJsonException? error = null;
-                if (reader.TokenType is JsonTokenType.StartObject or JsonTokenType.StartArray)
-                {
-                    result = deserializeUnexpectedJsonValue(propertyName, ref reader, state, false);
-                }
-                else
-                {
-                    (result, error) = DeserializePrimitiveValue(ref reader, primitiveValueProperty.ImplementingType, state.Path);
-                }
+                var (result, error) = DeserializePrimitiveValue(ref reader, primitiveValueProperty.ImplementingType, state.Path);
 
                 if (error is not null)
                     state.Errors.Add(error);
@@ -917,7 +821,7 @@ public class BaseFhirJsonDeserializer
     /// Returns the <see cref="ClassMapping" /> for the object to be deserialized using the `resourceType` property.
     /// </summary>
     /// <remarks>Assumes the reader is on the start of an object.</remarks>
-    internal static (ClassMapping?, FhirJsonException?) DetermineClassMappingFromInstance(ref Utf8JsonReader reader, ModelInspector inspector, PathStack path)
+    internal static (ClassMapping?, FhirJsonException?, string? resourceType) DetermineClassMappingFromInstance(ref Utf8JsonReader reader, ModelInspector inspector, PathStack path)
     {
         var (resourceType, error) = determineResourceType(ref reader);
 
@@ -929,13 +833,10 @@ public class BaseFhirJsonDeserializer
         resourceMapping ??= inspector.FindClassMapping(nameof(DynamicResource));
         
         if(resourceMapping is not null)
-            return (resourceMapping, null);
+            return (resourceMapping, null, resourceType);
         
-        if(resourceType is null)
-            return (null, error);
-        
-        
-        return (null, ERR.UNKNOWN_RESOURCE_TYPE(ref reader, path.GetInstancePath(), resourceType));
+        // should never get to this point
+        return (null, resourceType is null ? error : ERR.UNKNOWN_RESOURCE_TYPE(ref reader, path.GetInstancePath(), resourceType), resourceType);
     }
 
     private static (string?, FhirJsonException?) determineResourceType(ref Utf8JsonReader reader)
