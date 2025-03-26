@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remark>These are the defined (choice) types for this element as specified in the
         /// FHIR data definitions. It is derived from the actual property type,
-        /// or, if present, via a list of types in the [AllowedTypes] attribute. Finally,
+        /// or, if present, via a list of types in the [ChoiceTypes] attribute. Finally,
         /// it the property type does not represent FHIR metadata, it is overridden using
         /// the [DeclaredType] attribute.
         /// </remark>
@@ -212,13 +212,13 @@ namespace Hl7.Fhir.Introspection
                 throw new InvalidOperationException($"Property {prop.Name} in class {prop.DeclaringType!.Name} is of type " +
                     $"{fhirType}, for which a classmapping cannot be found.");
 
-            // The [AllowedTypes] attribute can specify a set of allowed types for this element.
+            // The [ChoiceTypes] attribute can specify a set of allowed types for this element.
             // If this is a choice element, then take this list as the declared list of FHIR types,
             // otherwise assume this is the implementing FHIR type above
-            var allowedTypes = elementAttr.Choice != ChoiceType.None ? ClassMapping.GetAttribute<ChoiceTypesAttribute>(prop, release) : null;
+            var choiceTypes = ClassMapping.GetAttribute<ChoiceTypesAttribute>(prop, release);
 
-            var fhirTypes = allowedTypes?.Types?.Any() == true ?
-                allowedTypes.Types : [fhirType];
+            var fhirTypes = choiceTypes?.Types.Any() == true ?
+                choiceTypes.Types : [fhirType];
 
             var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
 
