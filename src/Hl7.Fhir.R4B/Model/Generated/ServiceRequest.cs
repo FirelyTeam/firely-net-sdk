@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("quantity", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Quantity
     {
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=250, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
     {
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("asNeeded", InSummary=true, Order=260, Choice=ChoiceType.DatatypeChoice)]
     [Binding("ProcedureAsNeededReason")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? AsNeeded
     {

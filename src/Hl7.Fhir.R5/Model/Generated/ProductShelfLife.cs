@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("period", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.FhirString))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Period
     {

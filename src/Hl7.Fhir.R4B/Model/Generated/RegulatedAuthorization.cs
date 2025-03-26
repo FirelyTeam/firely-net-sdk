@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("date", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Date
       {

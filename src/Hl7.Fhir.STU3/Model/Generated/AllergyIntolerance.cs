@@ -983,7 +983,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("onset", Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="when.init")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Onset
     {

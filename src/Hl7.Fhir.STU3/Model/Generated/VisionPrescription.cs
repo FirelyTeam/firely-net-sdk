@@ -1251,7 +1251,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reason", Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Reason
     {

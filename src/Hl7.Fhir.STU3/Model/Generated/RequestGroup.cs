@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("timing", Order=120, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Timing
       {
@@ -1521,7 +1521,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("offset", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Offset
       {
@@ -2057,7 +2057,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reason", Order=210, Choice=ChoiceType.DatatypeChoice, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Resource")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Reason
     {

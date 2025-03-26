@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Timing
     {

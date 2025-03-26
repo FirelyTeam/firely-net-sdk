@@ -1415,7 +1415,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("serviced", Order=110, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Serviced
       {
@@ -1445,7 +1445,7 @@ namespace Hl7.Fhir.Model
       [Binding("ServicePlace")]
       [CLSCompliant(false)]
       [References("Location")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Location
       {

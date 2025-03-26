@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("cost", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [Binding("MedicationCostCategory")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Cost
@@ -1481,7 +1481,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
       {
@@ -1641,7 +1641,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("source", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Source
       {
@@ -2280,7 +2280,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -3359,7 +3359,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("strength", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [Binding("MedicationIngredientStrength")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Strength
       {
@@ -3541,7 +3541,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.Attachment))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.Attachment))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
       {

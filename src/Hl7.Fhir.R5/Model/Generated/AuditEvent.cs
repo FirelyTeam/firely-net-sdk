@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("network", Order=100, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.where[x]")]
       [CLSCompliant(false)]
       [References("Endpoint")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirString))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Network
       {
@@ -1432,7 +1432,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.context")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Base64Binary))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Base64Binary))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -1695,7 +1695,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("occurred", Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurred
     {

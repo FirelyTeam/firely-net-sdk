@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
     {
@@ -988,7 +988,7 @@ namespace Hl7.Fhir.Model
     [Binding("ChargeItemProduct")]
     [CLSCompliant(false)]
     [References("Device","Medication","Substance")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Product
     {

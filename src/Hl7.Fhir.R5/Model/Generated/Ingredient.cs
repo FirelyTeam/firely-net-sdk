@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("presentation", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Presentation
       {
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("concentration", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Concentration
       {
@@ -959,7 +959,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("strength", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.Quantity))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.Quantity))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Strength

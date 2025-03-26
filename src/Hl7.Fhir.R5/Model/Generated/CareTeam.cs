@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("coverage", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Coverage
       {

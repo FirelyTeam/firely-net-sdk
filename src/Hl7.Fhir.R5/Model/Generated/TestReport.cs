@@ -1298,7 +1298,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("link", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Link
       {

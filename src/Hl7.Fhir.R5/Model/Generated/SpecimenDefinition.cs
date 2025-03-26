@@ -840,7 +840,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("minimumVolume", Order=90, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? MinimumVolume
       {
@@ -1160,7 +1160,7 @@ namespace Hl7.Fhir.Model
       [Binding("ContainerAdditive")]
       [CLSCompliant(false)]
       [References("SubstanceDefinition")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Additive
@@ -1636,7 +1636,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
     {
@@ -1922,7 +1922,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("subject", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Group")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Subject
     {

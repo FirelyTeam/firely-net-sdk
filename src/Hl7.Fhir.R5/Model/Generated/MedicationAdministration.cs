@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("rate", Order=90, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Quantity))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Rate
       {
@@ -941,7 +941,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("occurence", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurence

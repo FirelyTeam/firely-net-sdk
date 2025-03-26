@@ -633,10 +633,6 @@ namespace Hl7.Fhir.Model
       /// </remarks>
       [FhirElement("description", InSummary=true, Order=40)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Markdown))]
-      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DeclaredType(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [DeclaredType(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
@@ -4720,7 +4716,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice, Since=FhirRelease.R5)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
     {

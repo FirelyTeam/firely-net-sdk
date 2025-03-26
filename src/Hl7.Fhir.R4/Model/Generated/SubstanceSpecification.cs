@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Amount
       {
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("definingSubstance", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("SubstanceSpecification","Substance")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? DefiningSubstance
       {
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Amount
       {
@@ -3122,7 +3122,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("substance", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("SubstanceSpecification")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Substance
       {
@@ -3217,7 +3217,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("amount", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirString))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Amount
       {

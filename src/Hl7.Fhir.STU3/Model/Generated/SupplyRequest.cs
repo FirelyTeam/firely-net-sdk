@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
       [Binding("SupplyRequestItem")]
       [CLSCompliant(false)]
       [References("Medication","Substance","Device")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Item
       {
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
     {
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
     [Binding("SupplyRequestReason")]
     [CLSCompliant(false)]
     [References("Resource")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Reason
     {

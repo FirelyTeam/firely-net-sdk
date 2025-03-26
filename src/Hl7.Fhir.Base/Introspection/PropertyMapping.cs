@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Introspection
             // The [AllowedTypes] attribute can specify a set of allowed types for this element.
             // If this is a choice element, then take this list as the declared list of FHIR types,
             // otherwise assume this is the implementing FHIR type above
-            var allowedTypes = elementAttr.Choice != ChoiceType.None ? ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release) : null;
+            var allowedTypes = elementAttr.Choice != ChoiceType.None ? ClassMapping.GetAttribute<ChoiceTypesAttribute>(prop, release) : null;
 
             var fhirTypes = allowedTypes?.Types?.Any() == true ?
                 allowedTypes.Types : [fhirType];

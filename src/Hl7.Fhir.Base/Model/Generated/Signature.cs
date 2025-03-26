@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Who
     {
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
     [CLSCompliant(false)]
     [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? OnBehalfOf
     {

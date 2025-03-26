@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("duration", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Duration
       {
@@ -1368,7 +1368,7 @@ namespace Hl7.Fhir.Model
       [Binding("Interactant")]
       [CLSCompliant(false)]
       [References("MedicinalProductDefinition","Medication","Substance","NutritionProduct","BiologicallyDerivedProduct","ObservationDefinition")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Item

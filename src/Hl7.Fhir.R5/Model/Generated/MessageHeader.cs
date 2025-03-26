@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("endpoint", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Endpoint")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Endpoint
       {
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("endpoint", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Endpoint")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Endpoint
       {
@@ -939,7 +939,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("event", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [Binding("MessageEvent")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Canonical))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Canonical))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Event

@@ -3370,7 +3370,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("example", Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Example
       {
@@ -3625,7 +3625,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("name", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Binary")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Name
@@ -4732,7 +4732,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("example", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Example
       {

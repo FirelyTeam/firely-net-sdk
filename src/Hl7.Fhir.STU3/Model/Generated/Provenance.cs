@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="who.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Who
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("onBehalfOf", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? OnBehalfOf
       {
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("what", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Resource")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Identifier))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Identifier))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? What

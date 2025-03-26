@@ -1074,7 +1074,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("deceased", InSummary=true, IsModifier=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Deceased
     {
@@ -1156,7 +1156,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("multipleBirth", Order=180, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? MultipleBirth
     {

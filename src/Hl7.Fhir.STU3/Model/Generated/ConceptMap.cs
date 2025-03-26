@@ -2398,7 +2398,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("source", InSummary=true, Order=240, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("ValueSet")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Source
     {
@@ -2427,7 +2427,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("target", InSummary=true, Order=250, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("ValueSet")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Target
     {

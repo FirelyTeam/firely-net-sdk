@@ -1150,7 +1150,7 @@ namespace Hl7.Fhir.Model
       [Binding("ICD10")]
       [CLSCompliant(false)]
       [References("Condition")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Diagnosis
       {
@@ -1425,7 +1425,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("serviced", Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Serviced
     {

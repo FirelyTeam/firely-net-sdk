@@ -980,7 +980,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("event", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [Binding("MessageEvent")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Event

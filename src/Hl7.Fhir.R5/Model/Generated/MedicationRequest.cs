@@ -862,7 +862,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("allowed", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("MedicationRequestSubstitution")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Allowed

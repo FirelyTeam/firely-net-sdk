@@ -886,7 +886,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("citeAs", Order=110, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Citation")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Markdown))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Markdown))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? CiteAs
     {
@@ -1079,7 +1079,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("artifact", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Resource")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.FhirUri))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Artifact

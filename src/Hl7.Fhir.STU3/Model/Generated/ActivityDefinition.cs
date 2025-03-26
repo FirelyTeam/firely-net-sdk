@@ -1450,7 +1450,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("timing", Order=340, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Timing
     {
@@ -1535,7 +1535,7 @@ namespace Hl7.Fhir.Model
     [Binding("ActivityProduct")]
     [CLSCompliant(false)]
     [References("Medication","Substance")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Product
     {

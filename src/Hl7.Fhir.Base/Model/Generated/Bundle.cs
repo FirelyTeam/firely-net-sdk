@@ -965,10 +965,6 @@ namespace Hl7.Fhir.Model
       /// </remarks>
       [FhirElement("relation", InSummary=true, Order=40)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Code))]
-      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
       [DeclaredType(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [DeclaredType(typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
@@ -1247,7 +1243,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
       public Hl7.Fhir.Model.Resource? Resource
       {
@@ -2328,7 +2324,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("outcome", InSummary=true, Order=80, Choice=ChoiceType.ResourceChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
       public Hl7.Fhir.Model.Resource? Outcome
       {
@@ -2743,7 +2739,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("issues", InSummary=true, Order=120, Choice=ChoiceType.ResourceChoice, Since=FhirRelease.R5)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Resource))]
     [DataMember]
     public Hl7.Fhir.Model.Resource? Issues
     {

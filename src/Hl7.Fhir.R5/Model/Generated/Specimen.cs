@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("collected", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.init")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Collected
       {
@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("fastingStatus", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
       [Binding("FastingStatus")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Duration))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? FastingStatus
       {
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Time
       {

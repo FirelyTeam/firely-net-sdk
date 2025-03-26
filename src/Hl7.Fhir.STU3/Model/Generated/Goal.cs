@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("detail", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("GoalTargetDetail")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Detail
       {
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("due", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Due
       {
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("start", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
     [Binding("GoalStartEvent")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Start
     {

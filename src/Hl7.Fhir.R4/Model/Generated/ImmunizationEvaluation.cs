@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("doseNumber", Order=200, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? DoseNumber
     {
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("seriesDoses", Order=210, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? SeriesDoses
     {

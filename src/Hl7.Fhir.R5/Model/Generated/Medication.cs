@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("strength", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [Binding("MedicationIngredientStrength")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Strength
       {

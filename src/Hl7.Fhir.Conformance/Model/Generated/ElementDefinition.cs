@@ -1687,10 +1687,6 @@ namespace Hl7.Fhir.Model
       /// </remarks>
       [FhirElement("requirements", InSummary=true, Order=40)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Markdown))]
-      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DeclaredType(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [DeclaredType(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DataMember]
@@ -2277,10 +2273,6 @@ namespace Hl7.Fhir.Model
       /// </remarks>
       [FhirElement("description", InSummary=true, Order=40)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Markdown))]
-      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DeclaredType(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [DeclaredType(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DataMember]
@@ -3125,10 +3117,6 @@ namespace Hl7.Fhir.Model
       /// </remarks>
       [FhirElement("comment", InSummary=true, Order=60)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Markdown))]
-      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DeclaredType(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [DeclaredType(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DataMember]
@@ -4156,7 +4144,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("minValue", InSummary=true, Order=270, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Integer64),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Quantity))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Integer64),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Quantity))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? MinValue
     {
@@ -4184,7 +4172,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("maxValue", InSummary=true, Order=280, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Integer64),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Quantity))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Integer64),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Quantity))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? MaxValue
     {

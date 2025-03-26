@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("definition", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.DataRequirement))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.DataRequirement))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Definition
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("studyEffective", Order=90, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Timing))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Timing))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? StudyEffective
       {
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("participantEffective", Order=130, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Timing))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Timing))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? ParticipantEffective
       {
@@ -1156,7 +1156,7 @@ namespace Hl7.Fhir.Model
     [Binding("SubjectType")]
     [CLSCompliant(false)]
     [References("Group")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Subject
     {

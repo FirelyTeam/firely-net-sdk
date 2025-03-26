@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("when", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? When
@@ -1085,7 +1085,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("timing", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Timing
       {
@@ -1114,7 +1114,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("value", Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Resource")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Identifier))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Identifier))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
       {
@@ -1397,7 +1397,7 @@ namespace Hl7.Fhir.Model
       [Binding("ICD10")]
       [CLSCompliant(false)]
       [References("Condition")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Diagnosis
@@ -1740,7 +1740,7 @@ namespace Hl7.Fhir.Model
       [Binding("ICD10_Procedures")]
       [CLSCompliant(false)]
       [References("Procedure")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Procedure
@@ -2276,7 +2276,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("location", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Location")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Location
       {
@@ -2873,7 +2873,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("serviced", Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Serviced
       {
@@ -2903,7 +2903,7 @@ namespace Hl7.Fhir.Model
       [Binding("ServicePlace")]
       [CLSCompliant(false)]
       [References("Location")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Location
       {
@@ -6888,7 +6888,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("serviced", Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Serviced
       {
@@ -6918,7 +6918,7 @@ namespace Hl7.Fhir.Model
       [Binding("ServicePlace")]
       [CLSCompliant(false)]
       [References("Location")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Location
       {
@@ -10796,7 +10796,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("allowed", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Money))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Money))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Allowed
       {
@@ -10824,7 +10824,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("used", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Money))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Money))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Used
       {

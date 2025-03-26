@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
       [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
       public Hl7.Fhir.Model.Resource? Resource
       {

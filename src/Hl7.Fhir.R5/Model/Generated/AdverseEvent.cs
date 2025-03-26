@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("instance", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Immunization","Procedure","Substance","Medication","MedicationAdministration","MedicationStatement","Device","BiologicallyDerivedProduct","ResearchStudy")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Instance
@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model
       [Binding("AdverseEventContributingFactor")]
       [CLSCompliant(false)]
       [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","Device","DeviceUsage","DocumentReference","MedicationAdministration","MedicationStatement")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Item
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
       [Binding("AdverseEventPreventiveAction")]
       [CLSCompliant(false)]
       [References("Immunization","Procedure","DocumentReference","MedicationAdministration","MedicationRequest")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Item
@@ -913,7 +913,7 @@ namespace Hl7.Fhir.Model
       [Binding("AdverseEventMitigatingAction")]
       [CLSCompliant(false)]
       [References("Procedure","DocumentReference","MedicationAdministration","MedicationRequest")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Item
@@ -1030,7 +1030,7 @@ namespace Hl7.Fhir.Model
       [Binding("AdverseEventSupportingInfo")]
       [CLSCompliant(false)]
       [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","DocumentReference","MedicationAdministration","MedicationStatement","QuestionnaireResponse")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Item
@@ -1359,7 +1359,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
     {

@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("contained", Order=60, Choice=ChoiceType.ResourceChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Resource))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Resource> Contained

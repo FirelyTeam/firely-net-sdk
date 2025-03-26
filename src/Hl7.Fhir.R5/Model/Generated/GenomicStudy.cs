@@ -1142,7 +1142,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("generatedBy", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("GenomicStudy")]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [ChoiceTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? GeneratedBy
       {

@@ -844,7 +844,7 @@ namespace Hl7.Fhir.Model
     [Binding("SubjectType")]
     [CLSCompliant(false)]
     [References("Group")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Subject
     {
@@ -1754,7 +1754,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("timing", Order=430, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Duration))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Duration))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Timing
     {
@@ -1839,7 +1839,7 @@ namespace Hl7.Fhir.Model
     [Binding("ActivityProduct")]
     [CLSCompliant(false)]
     [References("Medication","Substance","Ingredient")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Product
     {

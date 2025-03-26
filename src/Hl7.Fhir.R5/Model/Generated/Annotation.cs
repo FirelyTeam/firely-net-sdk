@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Patient","RelatedPerson","Organization")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Author
     {

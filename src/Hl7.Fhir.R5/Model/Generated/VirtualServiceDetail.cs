@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("address", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.ExtendedContactDetail))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.ExtendedContactDetail))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Address
     {

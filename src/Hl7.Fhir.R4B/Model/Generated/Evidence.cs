@@ -2859,7 +2859,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("citeAs", Order=130, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Citation")]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Markdown))]
+    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Markdown))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? CiteAs
     {
