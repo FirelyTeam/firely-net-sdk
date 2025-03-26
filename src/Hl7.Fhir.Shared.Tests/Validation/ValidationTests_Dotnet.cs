@@ -8,6 +8,7 @@
 
 using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -19,7 +20,7 @@ using Validator = System.ComponentModel.DataAnnotations.Validator;
 namespace Hl7.Fhir.Tests.Validation
 {
     [TestClass]
-    public class ValidationTests
+    public class ValidationTests_Dotnet
     {
         [TestMethod]
         public void TestIdValidation()
