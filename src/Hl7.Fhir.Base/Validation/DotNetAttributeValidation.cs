@@ -66,15 +66,12 @@ public static class DotNetAttributeValidation
 
     internal static ValidationContext IntoPath(this ValidationContext ctx, Base poco, string nestedElementName)
     {
-        // TODO: this will still trigger production of the location, so wasting time.
-        // need to defer this here too, but have to check first what that means for the PathStack,
-        // which keeps being updated in the face of delayed validations.
-        var location = ctx.GetLocation();
+        var location = ctx.GetLocationProducer();
 
-        var newContext = new ValidationContext(poco, ctx.Items);
+        var newContext = new ValidationContext(poco, ctx, ctx.Items);
 
         if (location is not null)
-            newContext.SetLocationProducer(() => $"{location}.{nestedElementName}");
+            newContext.SetLocationProducer(() => $"{location()}.{nestedElementName}");
         else
             newContext.SetLocationProducer(() => nestedElementName);
 
@@ -90,7 +87,7 @@ public static class DotNetAttributeValidation
     /// <param name="elementName"></param>
     /// <returns></returns>
     internal static ValidationContext IntoEmptyProperty(this ValidationContext ctx, string elementName) =>
-        new(ctx.ObjectInstance, ctx.Items) { MemberName = elementName };
+        new(ctx.ObjectInstance, ctx, ctx.Items) { MemberName = elementName };
 
     private static ValidationContext buildContext(Base instance, ModelInspector? inspector, bool recurse, NarrativeValidationKind kind)
     {

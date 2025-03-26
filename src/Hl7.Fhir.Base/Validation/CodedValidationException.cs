@@ -130,7 +130,7 @@ public class CodedValidationException : ExtendedCodedException
 
     internal static CodedValidationException Initialize(ValidationContext? context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType)
     {
-        var path = context?.GetLocation();
+        var path = context?.GetLocationProducer()?.Invoke();
 
         if (path is not null)
         {

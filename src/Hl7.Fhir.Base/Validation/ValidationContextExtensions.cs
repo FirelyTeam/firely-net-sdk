@@ -108,7 +108,7 @@ public static class ValidationContextExtensions
     /// <summary>
     /// Gets the human-readable location for the validation errors from the ValidationContext.
     /// </summary>
-    public static string? GetLocation(this ValidationContext ctx) =>
+    public static Func<string>? GetLocationProducer(this ValidationContext ctx) =>
         ctx.Items.TryGetValue(LOCATION_ITEM_KEY, out var result) && result is Func<string> locProducer ?
-            locProducer() : null;
+            locProducer : null;
 }

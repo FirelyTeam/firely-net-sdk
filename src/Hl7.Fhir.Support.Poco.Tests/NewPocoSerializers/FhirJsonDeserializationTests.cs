@@ -605,7 +605,7 @@ public class FhirJsonDeserializationTests
         {
             base.ValidateProperty(propertyValue, context, out reportedErrors);
 
-            if (context.Path == "Patient.deceased")
+            if (context.PathProducer.Invoke() == "Patient.deceased")
             {
                 var fdt = propertyValue.Should().BeOfType<FhirDateTime>().Subject;
 
@@ -613,16 +613,16 @@ public class FhirJsonDeserializationTests
                 DateTimeSeenByPropertyValidator = fdt;
 
                 var validationContext = new ValidationContext(context.ObjectInstance)
-                    .SetValidateRecursively(
-                        false) // Don't go deeper - we've already validated the children because we're parsing bottom-up.
-                    .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
-                    .SetLocationProducer(context.PathStack.GetInstancePath);
-                reportedErrors = [..reportedErrors ?? [], COVE.LITERAL_INVALID(validationContext, "Nothing wrong, really", "DateTime")];
+                    .SetValidateRecursively(false) // Don't go deeper - we've already validated the children because we're parsing bottom-up.
+                    .SetLocationProducer(context.PathProducer);
+
+                if (context.LinePosition is not null && context.LineNumber is not null)
+                    validationContext.SetPositionInfo(new PositionInfo((int)context.LineNumber,
+                        (int)context.LinePosition));
+
+                reportedErrors = [..reportedErrors, COVE.LITERAL_INVALID(validationContext, "Nothing wrong, really", "DateTime")];
             }
         }
-
-
-
     }
 
     [TestMethod]
