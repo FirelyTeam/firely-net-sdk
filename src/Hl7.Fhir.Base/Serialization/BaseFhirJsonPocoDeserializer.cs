@@ -331,7 +331,7 @@ public class BaseFhirJsonParser
         // to avoid spurious error messages.
         if (Settings.Validator is not null && kind != DeserializedObjectKind.FhirPrimitive && (Settings.ValidateOnFailedParse || state.Errors.Count == oldErrorCount))
         {
-            var context = new InstanceDeserializationContext(state.Path, line, pos, mapping, Settings.NarrativeValidation);
+            var context = new InstanceDeserializationContext(state.Path.GetInstancePath, line, pos, mapping, Settings.NarrativeValidation);
             PocoDeserializationHelper.RunInstanceValidation(target, Settings.Validator, context, state.Errors);
         }
     }
@@ -417,7 +417,7 @@ public class BaseFhirJsonParser
         {
             var deserializationContext = new PropertyDeserializationContext(
                 target,
-                state.Path,
+                state.Path.GetInstancePath,
                 propertyName,
                 line, pos,
                 propertyMapping,
@@ -433,11 +433,11 @@ public class BaseFhirJsonParser
                     elementName + PROPERTY_VALIDATION_KEY_SUFFIX,
                     () =>
                     {
-                        deserializationContext.PathStack.EnterElement(elementName, null,
+                        state.Path.EnterElement(elementName, null,
                             propertyValueMapping.IsPrimitive);
                         PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator!,
                             deserializationContext, state.Errors);
-                        deserializationContext.PathStack.ExitElement();
+                        state.Path.ExitElement();
                     });
             }
             else
@@ -673,7 +673,7 @@ public class BaseFhirJsonParser
         // the `name` and `_name` property.
         if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
         {
-            var context = new InstanceDeserializationContext(state.Path, line, pos, propertyValueMapping, Settings.NarrativeValidation);
+            var context = new InstanceDeserializationContext(state.Path.GetInstancePath, line, pos, propertyValueMapping, Settings.NarrativeValidation);
             if (parsingState is null)
                 PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors);
             else
@@ -683,11 +683,11 @@ public class BaseFhirJsonParser
                     elementName + INSTANCE_VALIDATION_KEY_SUFFIX,
                     () =>
                     {
-                        context.PathStack.EnterElement(elementName, null,
+                        state.Path.EnterElement(elementName, null,
                             propertyValueMapping.IsPrimitive);
                         PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context,
                             state.Errors);
-                        context.PathStack.ExitElement();
+                        state.Path.ExitElement();
                     });
             }
         }

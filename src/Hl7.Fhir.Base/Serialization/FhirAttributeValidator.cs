@@ -35,8 +35,10 @@ public class FhirAttributeValidator : IPocoValidator
         var validationContext = new ValidationContext(context.ObjectInstance)
             .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
             .SetNarrativeValidationKind(context.NarrativeValidation)
-            .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
-            .SetLocationProducer(context.PathStack.GetInstancePath);
+            .SetLocationProducer(context.PathProducer);
+
+        if (context.LinePosition is not null && context.LineNumber is not null)
+            validationContext.SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition));
 
         if (context.ElementMapping is not { } propMapping)
         {
@@ -63,8 +65,10 @@ public class FhirAttributeValidator : IPocoValidator
         var validationContext = new ValidationContext(instance)
             .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
             .SetNarrativeValidationKind(context.NarrativeValidation)
-            .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
-            .SetLocationProducer(context.PathStack.GetInstancePath);
+            .SetLocationProducer(context.PathProducer);
+
+        if (context.LinePosition is not null && context.LineNumber is not null)
+            validationContext.SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition));
 
         IEnumerable<CodedValidationException> errors = [];
 

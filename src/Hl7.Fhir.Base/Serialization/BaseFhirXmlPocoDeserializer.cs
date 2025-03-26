@@ -333,7 +333,7 @@ public class BaseFhirXmlParser
         if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
         {
             var context = new InstanceDeserializationContext(
-                state.Path,
+                state.Path.GetInstancePath,
                 lineNumber, position,
                 mapping,
                 Settings.NarrativeValidation);
@@ -380,7 +380,7 @@ public class BaseFhirXmlParser
         {
             var context = new PropertyDeserializationContext(
                 target,
-                state.Path, // should this path GetPath or this?
+                state.Path.GetInstancePath, // should this path GetPath or this?
                 name,
                 lineNumber, position,
                 propMapping,

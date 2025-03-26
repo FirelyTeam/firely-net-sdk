@@ -10,6 +10,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Validation;
+using System;
 
 #nullable enable
 
@@ -24,15 +25,15 @@ public readonly struct PropertyDeserializationContext
 {
     internal PropertyDeserializationContext(
         Base objectInstance,
-        PathStack path,
+        Func<string> pathProducer,
         string propertyName,
-        long lineNumber,
-        long linePosition,
-        PropertyMapping propMapping,
+        long? lineNumber,
+        long? linePosition,
+        PropertyMapping? propMapping,
         NarrativeValidationKind narrativeValidation
         )
     {
-        PathStack = path;
+        PathProducer = pathProducer;
         ObjectInstance = objectInstance;
         PropertyName = propertyName;
         LineNumber = lineNumber;
@@ -40,13 +41,6 @@ public readonly struct PropertyDeserializationContext
         ElementMapping = propMapping;
         NarrativeValidation = narrativeValidation;
     }
-
-    internal PathStack PathStack { get; }
-
-    /// <summary>
-    /// The dotted path leading to this element from the root (has no indexers and includes the value virtual property on primitives)
-    /// </summary>
-    public string Path => PathStack.GetPath();
 
     /// <summary>
     /// The POCO this property is an element of.
@@ -59,14 +53,19 @@ public readonly struct PropertyDeserializationContext
     public string PropertyName { get; }
 
     /// <summary>
+    /// A function that returns the current instance location of the property being validated.
+    /// </summary>
+    public Func<string> PathProducer { get; }
+
+    /// <summary>
     /// The approximate line number in the source data that is being deserialized.
     /// </summary>
-    public long LineNumber { get; }
+    public long? LineNumber { get; }
 
     /// <summary>
     /// The approximate line position in the source data that is being deserialized.
     /// </summary>
-    public long LinePosition { get; }
+    public long? LinePosition { get; }
 
     /// <summary>
     /// The metadata for the element that is currently being deserialized.
@@ -89,35 +88,30 @@ public readonly struct PropertyDeserializationContext
 public readonly struct InstanceDeserializationContext
 {
     internal InstanceDeserializationContext(
-        PathStack path,
-        long lineNumber,
-        long linePosition,
+        Func<string> pathProducer,
+        long? lineNumber,
+        long? linePosition,
         ClassMapping instanceMapping,
         NarrativeValidationKind narrativeValidation)
     {
-        PathStack = path;
+        PathProducer = pathProducer;
         LineNumber = lineNumber;
         LinePosition = linePosition;
         InstanceMapping = instanceMapping;
         NarrativeValidation = narrativeValidation;
     }
 
-    internal PathStack PathStack { get; }
-
-    /// <summary>
-    /// The dotted FhirPath path leading to this element from the root.
-    /// </summary>
-    public string Path => PathStack.GetPath();
+    internal Func<string> PathProducer { get; }
 
     /// <summary>
     /// The approximate line number in the source data that is being deserialized.
     /// </summary>
-    public long LineNumber { get; }
+    public long? LineNumber { get; }
 
     /// <summary>
     /// The approximate line position in the source data that is being deserialized.
     /// </summary>
-    public long LinePosition { get; }
+    public long? LinePosition { get; }
 
     /// <summary>
     /// The metadata for the type of which the current property is part of.
