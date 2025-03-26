@@ -32,7 +32,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)TrainingTests\Z-TrainingUnitTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validation\SearchDataExtraction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidatePatient.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidationTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidationTests_Dotnet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidationTests_FhirAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)TestData\BinaryPicture.json" />
