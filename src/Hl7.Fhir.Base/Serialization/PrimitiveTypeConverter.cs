@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Globalization;
@@ -77,6 +78,7 @@ namespace Hl7.Fhir.Serialization
                 Enum en => en.GetLiteral(),
                 BigInteger bi => bi.ToString(),
                 P.Quantity q => q.ToString(),
+                FhirString s => s.ToString(),
                 _ => throw Error.NotSupported($"Cannot convert '{value.GetType().Name}' value '{value}' to string"),
             };
         }
@@ -134,6 +136,8 @@ namespace Hl7.Fhir.Serialization
                 return P.Quantity.Parse(value);
             if (typeof(BigInteger) == to)
                 return BigInteger.Parse(value);
+            if (typeof(FhirString) == to)
+                return new FhirString(value);
 
             if (to.IsEnum())
             {

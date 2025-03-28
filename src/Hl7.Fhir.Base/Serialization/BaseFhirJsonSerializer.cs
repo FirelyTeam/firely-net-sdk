@@ -242,6 +242,14 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             writer.WritePropertyName(elementName);
             SerializePrimitiveValue(value.ObjectValue, writer, requiredType);
         }
+        // Since the object is not null, try overflow, but only if no extension data defined
+        else if(value.EnumerateElements().Any() && !value.HasElements)
+        {
+            // Write a property with 'elementName'
+            writer.WritePropertyName(elementName);
+            // serialize overflow
+            serializeInternal(value, writer, filter);
+        }
 
         if (!value.HasElements) return;
 
@@ -263,7 +271,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// to be written that fit in .NET's <see cref="decimal"/> type, which may be less
     /// precision than required by the FHIR specification (http://hl7.org/fhir/json.html#primitive).
     /// </remarks>
-    protected virtual void SerializePrimitiveValue(object value, Utf8JsonWriter writer, Type? requiredType)
+    protected virtual void SerializePrimitiveValue(object? value, Utf8JsonWriter writer, Type? requiredType)
     {
         switch (value)
         {

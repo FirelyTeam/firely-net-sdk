@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void ConfigureFailOnUnknownMember()
         {
-            const string xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
+            const string xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona value='test'></daytona></Patient>";
             var parser = new FhirXmlDeserializer();
             parser.Settings = parser.Settings with { AllowUnrecognizedEnums = true };
 
@@ -48,11 +48,10 @@ namespace Hl7.Fhir.Tests.Serialization
             var resource = parser.Deserialize<Resource>(xml);
         }
 
-
         [TestMethod]
         public void ReturnsLineNumbersXml()
         {
-            var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /></Patient>";
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /><active value='true'/><active value='true'/></Patient>";
             var parser = new FhirXmlDeserializer();
 
             try
@@ -62,15 +61,20 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsFalse(fe.Message.Contains("pos -1"));
+                fe.Message.Should().Match("*, line *, position *");
             }
         }
 
         [TestMethod]
         public void ReturnsLineNumbersJson()
         {
-            var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /></Patient>";
-            var parser = new FhirXmlDeserializer();
+            var xml = """
+                      {
+                          "resourceType": "Patient",
+                          "active": [{ "value": true }],
+                      }
+                      """;
+            var parser = new FhirJsonDeserializer();
 
             try
             {
@@ -79,10 +83,9 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsFalse(fe.Message.Contains("pos -1"));
+                fe.Message.Should().Match("*, line *, position *");
             }
         }
-
 
         [TestMethod]
         public void RequiresHl7Namespace()

@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             datatype.As<HumanName>().GivenElement[0].Value.Should().Be("foo");
             datatype.As<HumanName>().Family.Should().Be("oof");
 
-            state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.UNKNOWN_ELEMENT_CODE);
+            state.Errors.Should().BeEmpty();
         }
 
         [TestMethod]
