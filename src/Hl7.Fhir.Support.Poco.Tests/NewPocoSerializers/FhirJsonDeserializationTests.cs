@@ -584,7 +584,7 @@ public class FhirJsonDeserializationTests
         //     base.ValidateObjectValue(ref value, context, out reportedErrors);
         // }
 
-        public override void ValidateInstance(Base instance, in InstanceDeserializationContext context,
+        public override void ValidateObject(Base instance, in InstanceDeserializationContext context,
             out IReadOnlyCollection<COVE> reportedErrors)
         {
             if (instance is FhirDateTime fdt)
@@ -593,7 +593,7 @@ public class FhirJsonDeserializationTests
                 fdt.ObjectValue = "1972-11-30T12:00:00Z";
             }
 
-            base.ValidateInstance(instance, context, out reportedErrors);
+            base.ValidateObject(instance, context, out reportedErrors);
         }
 
         public override void ValidateProperty(object? propertyValue, in PropertyDeserializationContext context,

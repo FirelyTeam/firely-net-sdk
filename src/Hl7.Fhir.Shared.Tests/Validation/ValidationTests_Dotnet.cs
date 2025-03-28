@@ -23,6 +23,29 @@ namespace Hl7.Fhir.Tests.Validation
     public class ValidationTests_Dotnet
     {
         [TestMethod]
+        public void Will_validate_recursively()
+        {
+            var organization = new Organization
+            {
+                Text = new Narrative { Div = "<wrong />", Status = Narrative.NarrativeStatus.Generated }
+            };
+
+            var patient = new Patient();
+            patient.Contained.Add(organization);
+
+            var results = new List<ValidationResult>();
+            Assert.IsFalse(patient.TryValidate(results, recurse: true));
+            Assert.IsTrue(results.Count > 0);
+
+            results.Clear();
+            organization.Text = null;
+
+            // Try again
+            var result = patient.TryValidate(results, true);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
         public void TestIdValidation()
         {
             Id id = new("az23");
@@ -89,21 +112,19 @@ namespace Hl7.Fhir.Tests.Validation
             var oidWithZero = "urn:oid:1.2.0.3.4";
 
             FhirUri uri = new(oidUrl);
-            Validator.ValidateObject(uri, new ValidationContext(uri), true);
+            uri.Validate(); // should not throw
 
             uri = new FhirUri(illOidUrl);
             validateErrorOrFail(uri);
 
             uri = new FhirUri(uuidUrl);
-            Validator.ValidateObject(uri, new ValidationContext(uri), true);
+            uri.Validate();
 
             uri = new FhirUri(illUuidUrl);
             validateErrorOrFail(uri);
 
             uri = new FhirUri(oidWithZero);
-            Validator.ValidateObject(uri, new ValidationContext(uri), true);
-
-            Assert.IsTrue(Uri.Equals(new Uri("http://nu.nl"), new Uri("http://nu.nl")));
+            uri.Validate();
         }
 
 
@@ -236,35 +257,43 @@ namespace Hl7.Fhir.Tests.Validation
 #endif
 
         [TestMethod]
-        public void TestBinaryContentCardinalityValidation()
+        public void Test_Is_Aware_Of_Version_Differences()
         {
             var bin = new Binary
             {
                 ContentType = "text/plain",
+#if STU3
                 Content = [0, 1, 2, 3],
+#else
                 Data = [0, 1, 2, 3]
+#endif
             };
 
-            var validation = () => bin.Validate();
+            var validation = () => bin.Validate(inspector: ModelInfo.ModelInspector);
             validation.Should().NotThrow<ValidationException>();
-
 
             //We removed  the cardinality validation for the Content property for issue #2821
             bin = new Binary
             {
                 ContentType = "text/plain",
-                Data = [0, 1, 2, 3]
             };
 
-            validation = () => bin.Validate();
+            validation = () => bin.Validate(inspector: ModelInfo.ModelInspector);
             validation.Should().NotThrow<ValidationException>();
 
             bin = new Binary
             {
+                ContentType = "text/plain",
+
+                // Used R4 element in R3 and vice versa
+#if STU3
                 Data = [0, 1, 2, 3]
+#else
+                Content = [0, 1, 2, 3],
+#endif
             };
 
-            validation = () => bin.Validate();
+            validation = () => bin.Validate(inspector: ModelInfo.ModelInspector);
             validation.Should().Throw<ValidationException>();
         }
     }

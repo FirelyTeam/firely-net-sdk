@@ -30,7 +30,7 @@ public class ValidationTests_FhirAttribute
     
     private void assertInstanceValidationErrors(Base instance, params string?[] expectedErrorCodes)
     {
-        validator.ValidateInstance(
+        validator.ValidateObject(
             instance, 
             new InstanceDeserializationContext(
                 () => "",

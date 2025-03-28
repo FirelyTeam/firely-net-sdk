@@ -32,6 +32,6 @@ public abstract class FhirModelAttribute : Attribute
 
 public abstract class ValidatingFhirModelAttribute : FhirModelAttribute
 {
-    public abstract IReadOnlyCollection<CodedValidationException> Validate(object? value, ValidationContext validationContext);
+    public abstract IReadOnlyCollection<CodedValidationException> Validate(object? value, PocoValidationContext validationContext);
 
 }

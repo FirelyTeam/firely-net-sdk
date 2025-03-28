@@ -89,48 +89,4 @@ public sealed class FhirElementAttribute : FhirModelAttribute
     public bool IsModifier { get; set; }
 
     public string FiveWs { get; set; } = string.Empty;
-
-    // // This attribute is a subclass of ValidationAttribute so that IsValid() is called on every
-    // // FhirElement while validating. This allows us to extend validation into each FhirElement,
-    // // while normally, the .NET validation will only validate one level, but will not recurse
-    // // into each element. This is controllable by the SetValidateRecursively extension of the
-    // // ValidationContext
-    // protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
-    // {
-    //     if (validationContext is null) throw new ArgumentNullException(nameof(validationContext));
-    //
-    //     if (value is null) return ValidationResult.Success;
-    //
-    //     // If we should not validate 'value's elements, return immediately
-    //     if (!validationContext.ValidateRecursively()) return ValidationResult.Success;
-    //
-    //     var result = new List<ValidationResult>();
-    //
-    //     if (ReflectionHelper.IsRepeatingElement(value, out var list))
-    //     {
-    //         foreach (var element in list)
-    //         {
-    //             if (element != null)
-    //             {
-    //                 validateElement(element, validationContext, result);
-    //             }
-    //         }
-    //     }
-    //     else
-    //     {
-    //         validateElement(value, validationContext, result);
-    //     }
-    //
-    //     return result.FirstOrDefault();
-    // }
-    //
-    // private void validateElement(object value, ValidationContext validationContext, List<ValidationResult> results)
-    // {
-    //     // We will only validate the element's value recursively if it is a POCO, otherwise, this attribute
-    //     // will do nothing.
-    //     if (value is not Base b) return;
-    //
-    //     var nestedContext = validationContext.IntoPath(b, validationContext.MemberName ?? Name);
-    //     _ = Validator.TryValidateObject(b, nestedContext, results, validateAllProperties: true);
-    // }
 }

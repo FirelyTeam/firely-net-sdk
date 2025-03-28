@@ -8,6 +8,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 #nullable enable
 
 namespace Hl7.Fhir.Validation;

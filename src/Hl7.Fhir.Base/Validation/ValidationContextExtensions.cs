@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
@@ -25,23 +24,6 @@ public static class ValidationContextExtensions
     private const string NARRATIVE_VALIDATION_KIND_ITEM_KEY = "__dotnetapi_narrative_validation_kind__";
     private const string POSITIONINFO_ITEM_KEY = "__dotnetapi_positioninfo__";
     private const string LOCATION_ITEM_KEY = "__dotnetapi_location__";
-    // private const string MODELINSPECTOR_ITEM_KEY = "__dotnetapi_modelinspector__";
-    // private const string POCOVALIDATOR_ITEM_KEY = "__dotnetapi_pocovalidator__";
-    //
-    // /// <summary>
-    // /// Adds the required ModelInspector to the ValidationContext.
-    // /// </summary>
-    // public static ValidationContext SetModelInspector(this ValidationContext ctx, ModelInspector inspector)
-    // {
-    //     ctx.Items[MODELINSPECTOR_ITEM_KEY] = inspector;
-    //     return ctx;
-    // }
-    //
-    // /// <summary>
-    // /// Gets ModelInspector from the ValidationContext.
-    // /// </summary>
-    // public static ModelInspector? ModelInspector(this ValidationContext ctx) =>
-    //     ctx.Items.TryGetValue(MODELINSPECTOR_ITEM_KEY, out var result) && result is ModelInspector mi ? mi : null;
 
     /// <summary>
     /// Alters the ValidationContext to indicate that validation should or should not recurse into nested objects

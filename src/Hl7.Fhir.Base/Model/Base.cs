@@ -31,12 +31,11 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
 
 namespace Hl7.Fhir.Model;
@@ -147,4 +146,9 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     /// <remarks>The <paramref name="comparer"/> must implement both <c>IEqualityComparer&lt;Base&gt;</c> and
     /// <c>IEqualityComparer&lt;IEnumerable&lt;Base&gt;&gt;</c>.</remarks>
     public virtual bool CompareChildren(Base other, IEqualityComparer<Base> comparer) => true;
+
+    /// <summary>
+    /// Validate invariants that hold across properties, or cannot be expressed by attributes on properties.
+    /// </summary>
+    protected internal virtual IReadOnlyCollection<CodedValidationException> ValidateInvariants(PocoValidationContext validationContext) => [];
 }
