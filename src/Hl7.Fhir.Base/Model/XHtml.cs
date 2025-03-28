@@ -48,7 +48,7 @@ public partial class XHtml
     /// <summary>
     /// Validates the JsonValue.
     /// </summary>
-    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
         ObjectValue switch
         {
             null => null,

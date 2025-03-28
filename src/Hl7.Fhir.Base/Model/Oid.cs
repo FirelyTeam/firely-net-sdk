@@ -29,6 +29,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
@@ -40,7 +41,7 @@ namespace Hl7.Fhir.Model;
 public partial class Oid
 {
     /// Validates the JsonValue.
-    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
         ObjectValue switch
         {
             null => null,

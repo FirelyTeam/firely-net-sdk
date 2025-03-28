@@ -31,6 +31,7 @@
 using Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -91,7 +92,7 @@ public partial class Base64Binary
     /// Validates the JsonValue and updates the internal cached byte[] Value, releasing
     /// the data in JsonValue to save memory.
     /// </summary>
-    protected internal override COVE? ValidateObjectValue(ValidationContext? context)
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
         if (_parsedValue is not null || base.ObjectValue is null) return null;
         _parsedValue = null;

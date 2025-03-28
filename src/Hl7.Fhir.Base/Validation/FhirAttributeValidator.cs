@@ -49,14 +49,14 @@ public class FhirAttributeValidator : IPocoValidator
     }
 
    /// <inheritdoc />
-    public virtual IReadOnlyCollection<CodedValidationException> ValidateObject(Base instance, ClassMapping classMapping, PocoValidationContext context)
+    public virtual IReadOnlyCollection<CodedValidationException> ValidateObject(Base instance, ClassMapping? classMapping, PocoValidationContext context)
     {
         var errors = new List<CodedValidationException>();
 
         // Make sure we detect missing values - go over all members that have cardinality constraints
         // and invoke those if there is no value (if there was a value, ValidateProperty will have been
         // called on it while deserializing the member).
-        foreach (var propMapping in classMapping.PropertyMappings)
+        foreach (var propMapping in classMapping!.PropertyMappings)
         {
             var cardinality = propMapping.ValidationAttributes.OfType<CardinalityAttribute>().SingleOrDefault();
             if (cardinality is not null && cardinality.Min > 0)

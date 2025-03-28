@@ -32,7 +32,7 @@ public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAtt
     public Type[] Types { get; set; } = types;
 
     /// <inheritdoc />
-    public override IReadOnlyCollection<CodedValidationException> Validate(object? value, ValidationContext validationContext)
+    public override IReadOnlyCollection<CodedValidationException> Validate(object? value, PocoValidationContext validationContext)
     {
         if (value is null) return [];
 
@@ -54,7 +54,7 @@ public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAtt
         return result;
     }
 
-    private IReadOnlyCollection<CodedValidationException> validateValue(object? item, ValidationContext context) =>
+    private IReadOnlyCollection<CodedValidationException> validateValue(object? item, PocoValidationContext context) =>
         item is null || Types.Any(t => t.IsInstanceOfType(item))
             ? []
             : [COVE.CHOICE_TYPE_NOT_ALLOWED(context, ModelInspector.GetClassMappingForType(item.GetType())?.Name ?? item.GetType().Name)];

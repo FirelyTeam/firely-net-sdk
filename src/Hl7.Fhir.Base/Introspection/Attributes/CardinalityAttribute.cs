@@ -35,11 +35,11 @@ public class CardinalityAttribute : ValidatingFhirModelAttribute
     public int Max { get; set; } = 1;
 
     /// <inheritdoc/>
-    public override IReadOnlyCollection<CodedValidationException> Validate(object? value, ValidationContext validationContext)
+    public override IReadOnlyCollection<CodedValidationException> Validate(object? value, PocoValidationContext validationContext)
     {
         if (value is null)
             return (Min == 0) ? [] :
-                [COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL(validationContext, validationContext.MemberName, Min)];
+                [COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL(validationContext, validationContext.PathProducer(), Min)];
 
         var count = 1;
 
