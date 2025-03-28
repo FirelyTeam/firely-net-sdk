@@ -485,37 +485,6 @@ public class FhirJsonDeserializationTests
             // ok!
         }
     }
-    public static class DebugDump
-    {
-        /// <summary>
-        /// Dump the provided FHIR Resource fragment to the console in XML (pretty printed)
-        /// </summary>
-        /// <param name="fragment"></param>
-        public static void OutputXml(Base fragment)
-        {
-            if (fragment == null)
-                Console.WriteLine("(null)");
-            else
-            {
-                var doc = System.Xml.Linq.XDocument.Parse(new FhirXmlSerializer().SerializeToString(fragment));
-                Console.WriteLine(doc.ToString(System.Xml.Linq.SaveOptions.None));
-            }
-        }
-
-        /// <summary>
-        /// Dump the provided FHIR Resource fragment to the console in Json (pretty printed)
-        /// </summary>
-        /// <param name="fragment"></param>
-        public static void OutputJson(Base fragment)
-        {
-            if (fragment == null)
-                Console.WriteLine("(null)");
-            else
-            {
-                File.WriteAllText("/tmp/output.json", new FhirJsonSerializer().SerializeToString(fragment, pretty: true));
-            }
-        }
-    }
 
     [TestMethod]
     public void TestRecovery()
@@ -523,7 +492,7 @@ public class FhirJsonDeserializationTests
         var filename = Path.Combine("TestData", "fp-test-patient-errors.json");
         var jsonInput = File.ReadAllText(filename);
 
-        var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).Pretty();
+        var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
         try
         {
@@ -534,7 +503,6 @@ public class FhirJsonDeserializationTests
         {
             Console.WriteLine(dfe.Message);
             var recoveredActual = JsonSerializer.Serialize(dfe.PartialResult, options);
-            File.WriteAllText("/tmp/output.json", recoveredActual);
             Console.WriteLine(recoveredActual);
 
             assertErrors(dfe.Exceptions, [
