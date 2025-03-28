@@ -158,8 +158,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// phone | fax | email | pager | url | sms | other.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("system", InSummary=true, Order=30)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ContactPointSystem")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>? SystemElement
@@ -201,6 +202,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual contact point details.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("value", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ValueElement
@@ -242,8 +244,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// home | work | temp | old | mobile - purpose of this contact point.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("use", InSummary=true, IsModifier=true, Order=50)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ContactPointUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>? UseElement
@@ -285,6 +288,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specify preferred order of use (1 = highest).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("rank", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? RankElement
@@ -326,6 +330,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period when the contact point was/is in use.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period

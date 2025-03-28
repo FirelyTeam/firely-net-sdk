@@ -82,8 +82,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// patient | practitioner | related-person.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ActivityParticipantType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -126,6 +127,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// E.g. Nurse, Surgeon, Parent, etc.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("role", Order=50)]
       [Binding("ActivityParticipantRole")]
       [DataMember]
@@ -261,6 +263,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Natural language description of the dynamic value.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -302,6 +305,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The path to the element to be set dynamically.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("path", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PathElement
@@ -343,6 +347,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Language of the expression.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("language", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? LanguageElement
@@ -384,6 +389,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An expression that provides the dynamic value for the customization.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("expression", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ExpressionElement
@@ -555,6 +561,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this activity definition (globally unique).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -596,6 +603,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the activity definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -623,6 +631,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the activity definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -664,6 +673,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this activity definition (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -705,6 +715,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this activity definition (human friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -746,8 +757,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -790,6 +802,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -831,6 +844,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -872,6 +886,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=170, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -913,6 +928,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the activity definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -954,6 +970,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this activity definition is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=190, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -995,6 +1012,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the clinical usage of the asset.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("usage", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? UsageElement
@@ -1036,6 +1054,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity definition was approved by publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -1077,6 +1096,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity definition was last reviewed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -1118,6 +1138,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity definition is expected to be used.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -1144,6 +1165,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context the content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1171,6 +1193,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for activity definition (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1199,6 +1222,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("topic", Order=260)]
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
@@ -1227,6 +1251,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A content contributor.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contributor", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1254,6 +1279,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1281,6 +1307,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyright", Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -1322,6 +1349,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1349,8 +1377,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logic used by the asset.
     /// </summary>
-    [FhirElement("library", Order=310)]
     [CLSCompliant(false)]
+    [FhirElement("library", Order=310)]
     [References("Library")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1378,8 +1406,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("kind", Order=320)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ActivityDefinitionKind")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResourceType>? KindElement
@@ -1421,6 +1450,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detail type of activity.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", Order=330)]
     [Binding("ActivityDefinitionType")]
     [DataMember]
@@ -1448,9 +1478,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When activity is to occur.
     /// </summary>
-    [FhirElement("timing", Order=340, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
+    [FhirElement("timing", Order=340, Choice=ChoiceType.DatatypeChoice)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Timing
     {
@@ -1476,8 +1506,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where it should happen.
     /// </summary>
-    [FhirElement("location", Order=350)]
     [CLSCompliant(false)]
+    [FhirElement("location", Order=350)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -1504,6 +1534,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who should participate in the action.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("participant", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1531,11 +1562,11 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What's administered/supplied.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("product", Order=370, Choice=ChoiceType.DatatypeChoice)]
     [Binding("ActivityProduct")]
-    [CLSCompliant(false)]
     [References("Medication","Substance")]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Product
     {
@@ -1561,6 +1592,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How much is administered/consumed/supplied.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("quantity", Order=380)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Quantity
@@ -1587,6 +1619,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detailed dosage instructions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("dosage", Order=390)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1614,6 +1647,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What part of body to perform on.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("bodySite", Order=400)]
     [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
@@ -1642,8 +1676,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Transform to apply the template.
     /// </summary>
-    [FhirElement("transform", Order=410)]
     [CLSCompliant(false)]
+    [FhirElement("transform", Order=410)]
     [References("StructureMap")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Transform
@@ -1670,6 +1704,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dynamic aspects of the definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("dynamicValue", Order=420)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

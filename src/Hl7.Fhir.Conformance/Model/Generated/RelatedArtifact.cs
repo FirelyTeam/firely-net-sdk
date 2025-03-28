@@ -293,8 +293,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of | part-of | amends | amended-with | appends | appended-with | cites | cited-by | comments-on | comment-in | contains | contained-in | corrects | correction-in | replaces | replaced-with | retracts | retracted-by | signs | similar-to | supports | supported-with | transforms | transformed-into | transformed-with | documents | specification-of | created-with | cite-as.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=30)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("RelatedArtifactType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -340,6 +341,7 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
+    [CLSCompliant(false)]
     [FhirElement("classifier", InSummary=true, Order=40, Since=FhirRelease.R5)]
     [Binding("RelatedArtifactClassifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -368,6 +370,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Short label.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("label", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? LabelElement
@@ -409,6 +412,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Brief description of the related artifact.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DisplayElement
@@ -450,6 +454,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Bibliographic citation for the artifact.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("citation", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CitationElement
@@ -494,6 +499,7 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element is deprecated since R5, do not use with R5 and newer releases.
     /// </remarks>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=80)]
     [NotMapped(Since=FhirRelease.R5)]
     [DataMember]
@@ -536,6 +542,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What document is being referenced.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("document", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.Attachment? Document
@@ -562,6 +569,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What artifact is being referenced.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("resource", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? ResourceElement
@@ -606,8 +614,8 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [FhirElement("resourceReference", InSummary=true, Order=110, Since=FhirRelease.R5)]
     [CLSCompliant(false)]
+    [FhirElement("resourceReference", InSummary=true, Order=110, Since=FhirRelease.R5)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ResourceReference
@@ -637,8 +645,9 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
+    [CLSCompliant(false)]
     [FhirElement("publicationStatus", InSummary=true, Order=120, Since=FhirRelease.R5)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("RelatedArtifactPublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus>? PublicationStatusElement
@@ -683,6 +692,7 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
+    [CLSCompliant(false)]
     [FhirElement("publicationDate", InSummary=true, Order=130, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Date? PublicationDateElement

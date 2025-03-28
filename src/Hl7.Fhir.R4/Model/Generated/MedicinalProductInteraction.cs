@@ -79,10 +79,10 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific medication, food or laboratory test that interacts.
       /// </summary>
-      [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [References("MedicinalProduct","Medication","Substance","ObservationDefinition")]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Item
@@ -182,8 +182,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The medication for which this is a described interaction.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=90)]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=90)]
     [References("MedicinalProduct","Medication","Substance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -211,6 +211,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The interaction described.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -252,6 +253,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specific medication, food or laboratory test that interacts.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("interactant", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -279,6 +281,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of the interaction e.g. drug-drug interaction, drug-food interaction, drug-lab test interaction.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Type
@@ -305,6 +308,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The effect of the interaction, for example "reduced gastric absorption of primary medication".
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("effect", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Effect
@@ -331,6 +335,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The incidence of the interaction, e.g. theoretical, observed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("incidence", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Incidence
@@ -357,6 +362,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actions for managing the interaction.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("management", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Management

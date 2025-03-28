@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Mandatory fixed portion of UDI.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("deviceIdentifier", InSummary=true, Order=40, FiveWs="what")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DeviceIdentifierElement
@@ -204,6 +205,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Device Name as appears on UDI label.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=50, FiveWs="what")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -245,6 +247,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Regional UDI authority.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("jurisdiction", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? JurisdictionElement
@@ -286,6 +289,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// UDI Human Readable Barcode String.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("carrierHRF", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CarrierHRFElement
@@ -327,6 +331,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// UDI Machine Readable Barcode String.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("carrierAIDC", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Base64Binary? CarrierAIDCElement
@@ -368,6 +373,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// UDI Issuing Organization.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("issuer", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? IssuerElement
@@ -409,8 +415,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// barcode | rfid | manual +.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("entryType", Order=100)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("UDIEntryType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Device.UDIEntryType>? EntryTypeElement
@@ -639,6 +646,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -666,6 +674,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique Device Identifier (UDI) Barcode string.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("udi", InSummary=true, Order=100, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Device.UdiComponent? Udi
@@ -692,8 +701,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("FHIRDeviceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>? StatusElement
@@ -735,6 +745,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What kind of device this is.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", Order=120, FiveWs="what")]
     [Binding("DeviceKind")]
     [DataMember]
@@ -762,6 +773,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Lot number of manufacture.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lotNumber", Order=130, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? LotNumberElement
@@ -803,6 +815,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of device manufacturer.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("manufacturer", Order=140, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ManufacturerElement
@@ -844,6 +857,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date when the device was made.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("manufactureDate", Order=150, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? ManufactureDateElement
@@ -885,6 +899,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date and time of expiry of this device (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("expirationDate", Order=160, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? ExpirationDateElement
@@ -926,6 +941,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Model id assigned by the manufacturer.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("model", Order=170, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ModelElement
@@ -967,6 +983,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Version number (i.e. software).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", Order=180, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -1008,8 +1025,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient to whom Device is affixed.
     /// </summary>
-    [FhirElement("patient", Order=190, FiveWs="who.focus")]
     [CLSCompliant(false)]
+    [FhirElement("patient", Order=190, FiveWs="who.focus")]
     [References("Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Patient
@@ -1036,8 +1053,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization responsible for device.
     /// </summary>
-    [FhirElement("owner", Order=200, FiveWs="who.source")]
     [CLSCompliant(false)]
+    [FhirElement("owner", Order=200, FiveWs="who.source")]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Owner
@@ -1064,6 +1081,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details for human/organization for support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", Order=210, FiveWs="who.source")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1091,8 +1109,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the resource is found.
     /// </summary>
-    [FhirElement("location", Order=220, FiveWs="where")]
     [CLSCompliant(false)]
+    [FhirElement("location", Order=220, FiveWs="where")]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -1119,6 +1137,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Network address to contact device.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", Order=230, FiveWs="where")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -1160,6 +1179,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Device notes and comments.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1187,6 +1207,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Safety Characteristics of Device.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("safety", InSummary=true, Order=250)]
     [Binding("DeviceSafety")]
     [Cardinality(Min=0,Max=-1)]

@@ -98,6 +98,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// ID or acronym of the actor.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("actorId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -140,8 +141,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// person | entity.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ExampleScenarioActorType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -184,6 +186,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The name of the actor as shown in the page.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -225,6 +228,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The description of the actor.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -409,6 +413,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The id of the resource for referencing.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("resourceId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -451,8 +456,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of the resource.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("resourceType", Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("FHIRResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -495,6 +501,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A short name for the resource instance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -536,6 +543,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human-friendly description of the resource instance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -577,6 +585,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A specific version of the resource.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("version", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -604,6 +613,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Resources contained in the instance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("containedInstance", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -812,6 +822,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The identifier of a specific version of a resource.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("versionId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -854,6 +865,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The description of the resource version.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1004,6 +1016,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Each resource contained in the instance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("resourceId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1046,6 +1059,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A specific version of a resource contained in the instance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("versionId", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? VersionIdElement
@@ -1192,6 +1206,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The diagram title of the group of operations.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("title", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1234,6 +1249,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A longer description of the group of operations.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1275,6 +1291,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of initial status before the process starts.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("preConditions", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? PreConditionsElement
@@ -1316,6 +1333,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of final status after the process ends.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("postConditions", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? PostConditionsElement
@@ -1357,6 +1375,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Each step of the process.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("step", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1546,6 +1565,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested process.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("process", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1573,6 +1593,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If there is a pause in the flow.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("pause", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? PauseElement
@@ -1614,6 +1635,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Each interaction or action.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("operation", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.ExampleScenario.OperationComponent? Operation
@@ -1640,6 +1662,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Alternate non-typical step action.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("alternative", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1810,6 +1833,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The sequential number of the interaction.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("number", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1852,6 +1876,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of operation - CRUD.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TypeElement
@@ -1893,6 +1918,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The human-friendly name of the interaction.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -1934,6 +1960,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who starts the transaction.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("initiator", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? InitiatorElement
@@ -1975,6 +2002,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who receives the transaction.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("receiver", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ReceiverElement
@@ -2016,6 +2044,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A comment to be inserted in the diagram.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -2057,6 +2086,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether the initiator is deactivated right after the transaction.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("initiatorActive", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? InitiatorActiveElement
@@ -2098,6 +2128,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether the receiver is deactivated right after the transaction.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("receiverActive", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ReceiverActiveElement
@@ -2139,6 +2170,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Each resource instance used by the initiator.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("request", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.ExampleScenario.ContainedInstanceComponent? Request
@@ -2165,6 +2197,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Each resource instance used by the responder.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("response", Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.ExampleScenario.ContainedInstanceComponent? Response
@@ -2451,6 +2484,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for alternative.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("title", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2493,6 +2527,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A human-readable description of each option.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -2534,6 +2569,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What happens in each alternative option.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("step", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2672,6 +2708,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this example scenario, represented as a URI (globally unique).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -2713,6 +2750,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the example scenario.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2740,6 +2778,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the example scenario.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -2781,6 +2820,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this example scenario (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -2822,8 +2862,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2866,6 +2907,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=140, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -2907,6 +2949,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -2948,6 +2991,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=160, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -2989,6 +3033,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3016,6 +3061,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3043,6 +3089,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for example scenario (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=190)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -3071,6 +3118,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyright", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -3112,6 +3160,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The purpose of the example, e.g. to illustrate a scenario.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=210, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -3153,6 +3202,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actor participating in the resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("actor", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3180,6 +3230,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Each resource and each version that is present in the workflow.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("instance", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3207,6 +3258,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Each major process - a group of operations.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("process", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3234,6 +3286,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Another nested workflow.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("workflow", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

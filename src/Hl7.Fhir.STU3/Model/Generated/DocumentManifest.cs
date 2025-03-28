@@ -82,10 +82,10 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contents of this set of documents.
       /// </summary>
-      [FhirElement("p", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("p", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [References("Resource")]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? P
@@ -202,6 +202,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifiers of things that are related.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -228,8 +229,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Related Resource.
       /// </summary>
-      [FhirElement("ref", InSummary=true, Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("ref", InSummary=true, Order=50)]
       [References("Resource")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Ref
@@ -348,6 +349,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique Identifier for the set of documents.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("masterIdentifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? MasterIdentifier
@@ -374,6 +376,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other identifiers for the manifest.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -401,8 +404,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | superseded | entered-in-error.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("DocumentReferenceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -445,6 +449,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of document set.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=120, FiveWs="class")]
     [Binding("DocumentC80Type")]
     [DataMember]
@@ -472,8 +477,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the set of documents.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [References("Patient","Practitioner","Group","Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -500,6 +505,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this document manifest created.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("created", InSummary=true, Order=140, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -541,8 +547,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what authored the manifest.
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=150, FiveWs="who.author")]
     [CLSCompliant(false)]
+    [FhirElement("author", InSummary=true, Order=150, FiveWs="who.author")]
     [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -570,8 +576,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended to get notified about this set of documents.
     /// </summary>
-    [FhirElement("recipient", InSummary=true, Order=160, FiveWs="who.cause")]
     [CLSCompliant(false)]
+    [FhirElement("recipient", InSummary=true, Order=160, FiveWs="who.cause")]
     [References("Patient","Practitioner","RelatedPerson","Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -599,6 +605,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The source system/application/software.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("source", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? SourceElement
@@ -640,6 +647,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human-readable description (title).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -681,6 +689,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The items included.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("content", InSummary=true, Order=190)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -708,6 +717,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Related things.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("related", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

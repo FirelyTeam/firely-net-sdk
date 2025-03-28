@@ -79,6 +79,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of relationship between the medicinal product indication or contraindication and another therapy.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("therapyRelationshipType", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -106,10 +107,10 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to a specific medication (active substance, medicinal product or class of products) as part of an indication or contraindication.
       /// </summary>
-      [FhirElement("medication", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("medication", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [References("MedicinalProduct","Medication","Substance","SubstanceSpecification")]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Medication
@@ -228,8 +229,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The medication for which this is an indication.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=90)]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=90)]
     [References("MedicinalProduct","Medication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -257,6 +258,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The disease, symptom or procedure for the contraindication.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("disease", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Disease
@@ -283,6 +285,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The status of the disease or symptom for the contraindication.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("diseaseStatus", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? DiseaseStatus
@@ -309,6 +312,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A comorbidity (concurrent condition) or coinfection.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("comorbidity", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -336,8 +340,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the use of the medicinal product in relation to other therapies as part of the indication.
     /// </summary>
-    [FhirElement("therapeuticIndication", InSummary=true, Order=130)]
     [CLSCompliant(false)]
+    [FhirElement("therapeuticIndication", InSummary=true, Order=130)]
     [References("MedicinalProductIndication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -365,6 +369,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the use of the medicinal product in relation to other therapies described as part of the indication.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("otherTherapy", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -392,6 +397,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The population group to which this applies.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("population", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

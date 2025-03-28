@@ -67,6 +67,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Low limit.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("low", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Low
@@ -93,6 +94,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// High limit.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("high", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? High

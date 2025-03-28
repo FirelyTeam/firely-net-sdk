@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -93,8 +94,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("EnrollmentRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
@@ -136,6 +138,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("created", Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -177,8 +180,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target.
     /// </summary>
-    [FhirElement("insurer", Order=120)]
     [CLSCompliant(false)]
+    [FhirElement("insurer", Order=120)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Insurer
@@ -205,8 +208,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner.
     /// </summary>
-    [FhirElement("provider", Order=130)]
     [CLSCompliant(false)]
+    [FhirElement("provider", Order=130)]
     [References("Practitioner")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Provider
@@ -233,8 +236,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization.
     /// </summary>
-    [FhirElement("organization", Order=140)]
     [CLSCompliant(false)]
+    [FhirElement("organization", Order=140)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Organization
@@ -261,8 +264,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the Products and Services.
     /// </summary>
-    [FhirElement("subject", Order=150)]
     [CLSCompliant(false)]
+    [FhirElement("subject", Order=150)]
     [References("Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -289,8 +292,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurance information.
     /// </summary>
-    [FhirElement("coverage", Order=160)]
     [CLSCompliant(false)]
+    [FhirElement("coverage", Order=160)]
     [References("Coverage")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Coverage

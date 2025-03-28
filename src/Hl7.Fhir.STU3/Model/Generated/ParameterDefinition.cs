@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name used to access the parameter value.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Code? NameElement
@@ -107,8 +108,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in | out.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("use", InSummary=true, Order=40)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ParameterUse")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -151,6 +153,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Minimum cardinality.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("min", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Integer? MinElement
@@ -192,6 +195,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Maximum cardinality (a number of *).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("max", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? MaxElement
@@ -233,6 +237,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A brief description of the parameter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("documentation", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DocumentationElement
@@ -274,8 +279,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What type of value.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=80)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("FHIRAllTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -318,8 +324,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What profile the value is expected to be.
     /// </summary>
-    [FhirElement("profile", InSummary=true, Order=90)]
     [CLSCompliant(false)]
+    [FhirElement("profile", InSummary=true, Order=90)]
     [References("StructureDefinition")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Profile

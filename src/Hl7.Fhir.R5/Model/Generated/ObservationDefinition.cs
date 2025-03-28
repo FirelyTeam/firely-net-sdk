@@ -187,6 +187,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Context qualifier for the set of qualified values.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("context", Order=40)]
       [Binding("ObservationRangeMeaning")]
       [DataMember]
@@ -214,6 +215,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Targetted population for the set of qualified values.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("appliesTo", Order=50)]
       [Binding("ObservationRangeAppliesTo")]
       [Cardinality(Min=0,Max=-1)]
@@ -242,8 +244,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// male | female | other | unknown.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("gender", Order=60)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("AdministrativeGender")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement
@@ -285,6 +288,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable age range for the set of qualified values.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("age", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Range? Age
@@ -311,6 +315,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable gestational age range for the set of qualified values.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("gestationalAge", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Range? GestationalAge
@@ -337,6 +342,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Condition associated with the set of qualified values.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("condition", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ConditionElement
@@ -378,8 +384,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// reference | critical | absolute.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("rangeCategory", Order=100)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ObservationRangeCategory")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>? RangeCategoryElement
@@ -421,6 +428,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The range for continuous or ordinal observations.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("range", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Range? Range
@@ -447,6 +455,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value set of valid coded values as part of this set of qualified values.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("validCodedValueSet", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? ValidCodedValueSetElement
@@ -488,6 +497,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value set of normal coded values as part of this set of qualified values.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("normalCodedValueSet", Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? NormalCodedValueSetElement
@@ -529,6 +539,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value set of abnormal coded values as part of this set of qualified values.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("abnormalCodedValueSet", Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? AbnormalCodedValueSetElement
@@ -570,6 +581,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value set of critical coded values as part of this set of qualified values.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("criticalCodedValueSet", Order=150)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? CriticalCodedValueSetElement
@@ -909,6 +921,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of observation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Binding("ObservationCode")]
       [Cardinality(Min=1,Max=1)]
@@ -937,8 +950,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("permittedDataType", Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ObservationDataType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -984,6 +998,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Unit for quantitative results.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("permittedUnit", Order=60)]
       [Binding("ObservationUnit")]
       [Cardinality(Min=0,Max=-1)]
@@ -1012,6 +1027,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Set of qualified values for observation results.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("qualifiedValue", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1169,6 +1185,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical canonical URL to reference this ObservationDefinition (globally unique).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -1210,6 +1227,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier of the ObservationDefinition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -1236,6 +1254,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the ObservationDefinition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -1277,9 +1296,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to compare versions.
     /// </summary>
-    [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
+    [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
     {
@@ -1305,6 +1324,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this ObservationDefinition (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -1346,6 +1366,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this ObservationDefinition (human friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -1387,8 +1408,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1431,6 +1453,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If for testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -1472,6 +1495,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -1513,6 +1537,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The name of the individual or organization that published the ObservationDefinition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -1554,6 +1579,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1581,6 +1607,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the ObservationDefinition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1622,6 +1649,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Content intends to support these contexts.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1649,6 +1677,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for this ObservationDefinition (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1677,6 +1706,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this ObservationDefinition is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -1718,6 +1748,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyright", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -1759,6 +1790,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Copyright holder and year(s).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyrightLabel", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CopyrightLabelElement
@@ -1800,6 +1832,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When ObservationDefinition was approved by publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -1841,6 +1874,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date on which the asset content was last reviewed by the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -1882,6 +1916,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The effective date range for the ObservationDefinition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -1908,6 +1943,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Based on FHIR definition of another observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("derivedFromCanonical", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1953,6 +1989,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Based on external definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("derivedFromUri", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1998,6 +2035,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of subject for the defined observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2025,6 +2063,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Desired kind of performer for such kind of observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("performerType", InSummary=true, Order=320)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? PerformerType
@@ -2051,6 +2090,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General type of observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=330, FiveWs="FiveWs.class")]
     [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -2079,6 +2119,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=340, FiveWs="FiveWs.what[x]")]
     [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
@@ -2107,8 +2148,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("permittedDataType", Order=350)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ObservationDataType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2154,6 +2196,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Multiple results allowed for conforming observations.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("multipleResultsAllowed", Order=360)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? MultipleResultsAllowedElement
@@ -2195,6 +2238,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Body part to be observed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("bodySite", Order=370)]
     [Binding("ObservationBodySite")]
     [DataMember]
@@ -2222,6 +2266,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Method used to produce the observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("method", Order=380)]
     [Binding("ObservationMethod")]
     [DataMember]
@@ -2249,8 +2294,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of specimen used by this type of observation.
     /// </summary>
-    [FhirElement("specimen", Order=390)]
     [CLSCompliant(false)]
+    [FhirElement("specimen", Order=390)]
     [References("SpecimenDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2278,8 +2323,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Measurement device or model of device.
     /// </summary>
-    [FhirElement("device", Order=400)]
     [CLSCompliant(false)]
+    [FhirElement("device", Order=400)]
     [References("DeviceDefinition","Device")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2307,6 +2352,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The preferred name to be used when reporting the observation results.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("preferredReportName", Order=410)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PreferredReportNameElement
@@ -2348,6 +2394,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unit for quantitative results.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("permittedUnit", Order=420)]
     [Binding("ObservationUnit")]
     [Cardinality(Min=0,Max=-1)]
@@ -2376,6 +2423,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Set of qualified values for observation results.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("qualifiedValue", Order=430)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2403,8 +2451,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definitions of related resources belonging to this kind of observation group.
     /// </summary>
-    [FhirElement("hasMember", Order=440)]
     [CLSCompliant(false)]
+    [FhirElement("hasMember", Order=440)]
     [References("ObservationDefinition","Questionnaire")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2432,6 +2480,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Component results.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("component", Order=450)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

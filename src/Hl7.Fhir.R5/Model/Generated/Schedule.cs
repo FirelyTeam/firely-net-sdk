@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -90,6 +91,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this schedule is in active use.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -131,6 +133,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// High-level category.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("serviceCategory", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
@@ -159,6 +162,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific service.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("serviceType", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
@@ -187,6 +191,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of specialty needed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("specialty", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
@@ -215,6 +220,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human-readable label.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -256,8 +262,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource(s) that availability information is being provided for.
     /// </summary>
-    [FhirElement("actor", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("actor", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [References("Patient","Practitioner","PractitionerRole","CareTeam","RelatedPerson","Device","HealthcareService","Location")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -285,6 +291,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period of time covered by schedule.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("planningHorizon", InSummary=true, Order=160, FiveWs="FiveWs.planned")]
     [DataMember]
     public Hl7.Fhir.Model.Period? PlanningHorizon
@@ -311,6 +318,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments on availability.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("comment", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CommentElement

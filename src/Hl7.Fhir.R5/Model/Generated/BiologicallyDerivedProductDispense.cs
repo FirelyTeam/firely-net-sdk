@@ -137,6 +137,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies the function of the performer during the dispense.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("BiologicallyDerivedProductDispensPerformerFunction")]
       [DataMember]
@@ -164,8 +165,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who performed the action.
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("actor", InSummary=true, Order=50)]
       [References("Practitioner")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -285,6 +286,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this dispense.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -312,8 +314,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The order or request that this dispense is fulfilling.
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
+    [FhirElement("basedOn", InSummary=true, Order=100)]
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -341,8 +343,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Short description.
     /// </summary>
-    [FhirElement("partOf", InSummary=true, Order=110)]
     [CLSCompliant(false)]
+    [FhirElement("partOf", InSummary=true, Order=110)]
     [References("BiologicallyDerivedProductDispense")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -370,8 +372,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | allocated | issued | unfulfilled | returned | entered-in-error | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=120)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("BiologicallyDerivedProductDispenseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -414,6 +417,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relationship between the donor and intended recipient.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("originRelationshipType", InSummary=true, Order=130)]
     [Binding("BiologicallyDerivedProductDispenseOriginRelationship")]
     [DataMember]
@@ -441,8 +445,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The BiologicallyDerivedProduct that is dispensed.
     /// </summary>
-    [FhirElement("product", InSummary=true, Order=140)]
     [CLSCompliant(false)]
+    [FhirElement("product", InSummary=true, Order=140)]
     [References("BiologicallyDerivedProduct")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -470,8 +474,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The intended recipient of the dispensed product.
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=150)]
     [CLSCompliant(false)]
+    [FhirElement("patient", InSummary=true, Order=150)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -499,6 +503,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates the type of matching associated with the dispense.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("matchStatus", InSummary=true, Order=160)]
     [Binding("BiologicallyDerivedProductDispenseMatchStatus")]
     [DataMember]
@@ -526,6 +531,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates who or what performed an action.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("performer", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -553,8 +559,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the dispense occurred.
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=180)]
     [CLSCompliant(false)]
+    [FhirElement("location", InSummary=true, Order=180)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -581,6 +587,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Amount dispensed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("quantity", InSummary=true, Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Quantity
@@ -607,6 +614,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When product was selected/matched.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("preparedDate", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? PreparedDateElement
@@ -648,6 +656,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the product was dispatched.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("whenHandedOver", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? WhenHandedOverElement
@@ -689,8 +698,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the product was dispatched to.
     /// </summary>
-    [FhirElement("destination", InSummary=true, Order=220)]
     [CLSCompliant(false)]
+    [FhirElement("destination", InSummary=true, Order=220)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Destination
@@ -717,6 +726,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional notes.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -744,6 +754,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific instructions for use.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("usageInstruction", InSummary=true, Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? UsageInstructionElement

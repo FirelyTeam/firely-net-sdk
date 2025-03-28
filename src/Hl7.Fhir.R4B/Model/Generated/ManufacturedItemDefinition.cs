@@ -76,6 +76,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A code expressing the type of characteristic.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("SNOMEDCTCharacteristicCodes")]
       [Cardinality(Min=1,Max=1)]
@@ -104,9 +105,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A value for the characteristic.
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
+      [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
       {
@@ -224,6 +225,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -251,8 +253,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -295,6 +298,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dose form as manufactured (before any necessary transformation).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=110)]
     [Binding("ManufacturedDoseForm")]
     [Cardinality(Min=1,Max=1)]
@@ -323,6 +327,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The “real world” units in which the quantity of the item is described.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("unitOfPresentation", InSummary=true, Order=120)]
     [Binding("UnitOfPresentation")]
     [DataMember]
@@ -350,8 +355,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues).
     /// </summary>
-    [FhirElement("manufacturer", InSummary=true, Order=130)]
     [CLSCompliant(false)]
+    [FhirElement("manufacturer", InSummary=true, Order=130)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -379,6 +384,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("ingredient", InSummary=true, Order=140)]
     [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
@@ -407,6 +413,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General characteristics of this item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("property", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

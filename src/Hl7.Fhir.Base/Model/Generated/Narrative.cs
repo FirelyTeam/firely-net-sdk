@@ -100,8 +100,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// generated | extensions | additional | empty.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", Order=30)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("NarrativeStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -144,6 +145,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Limited xhtml content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("div", XmlSerialization = XmlRepresentation.XHtml, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -93,6 +94,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
     [Binding("BasicResourceType")]
     [Cardinality(Min=1,Max=1)]
@@ -121,8 +123,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies the focus of this resource.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -149,6 +151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When created.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("created", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -190,8 +193,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who created.
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=130, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
+    [FhirElement("author", InSummary=true, Order=130, FiveWs="FiveWs.author")]
     [References("Practitioner","PractitionerRole","Patient","RelatedPerson","Organization","Device","CareTeam")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author

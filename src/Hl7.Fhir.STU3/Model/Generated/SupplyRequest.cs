@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The requested amount of the item indicated.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("quantity", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -158,11 +159,11 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Medication, Substance, or Device requested to be supplied.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("item", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("SupplyRequestItem")]
-      [CLSCompliant(false)]
       [References("Medication","Substance","Device")]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Item
       {
@@ -296,8 +297,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual making the request.
       /// </summary>
-      [FhirElement("agent", InSummary=true, Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("agent", InSummary=true, Order=40)]
       [References("Practitioner","Organization","Patient","RelatedPerson","Device")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -325,8 +326,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization agent is acting for.
       /// </summary>
-      [FhirElement("onBehalfOf", Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("onBehalfOf", Order=50)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? OnBehalfOf
@@ -445,6 +446,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -471,8 +473,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | suspended +.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("SupplyRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>? StatusElement
@@ -514,6 +517,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The kind of supply (central, non-stock, etc.).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
     [Binding("SupplyRequestKind")]
     [DataMember]
@@ -541,8 +545,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("priority", InSummary=true, Order=120, FiveWs="grade")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement
@@ -584,6 +589,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The item being requested.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("orderedItem", InSummary=true, Order=130, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.SupplyRequest.OrderedItemComponent? OrderedItem
@@ -610,9 +616,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the request should be fulfilled.
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
     [CLSCompliant(false)]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+    [FhirElement("occurrence", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
     {
@@ -638,6 +644,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the request was made.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("authoredOn", InSummary=true, Order=150, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? AuthoredOnElement
@@ -679,6 +686,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what is requesting service.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("requester", InSummary=true, Order=160, FiveWs="who.author")]
     [DataMember]
     public Hl7.Fhir.Model.SupplyRequest.RequesterComponent? Requester
@@ -705,8 +713,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is intended to fulfill the request.
     /// </summary>
-    [FhirElement("supplier", InSummary=true, Order=170, FiveWs="who.actor")]
     [CLSCompliant(false)]
+    [FhirElement("supplier", InSummary=true, Order=170, FiveWs="who.actor")]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -734,11 +742,11 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the supply item was requested.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reason", Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="why")]
     [Binding("SupplyRequestReason")]
-    [CLSCompliant(false)]
     [References("Resource")]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Reason
     {
@@ -764,8 +772,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The origin of the supply.
     /// </summary>
-    [FhirElement("deliverFrom", Order=190)]
     [CLSCompliant(false)]
+    [FhirElement("deliverFrom", Order=190)]
     [References("Organization","Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? DeliverFrom
@@ -792,8 +800,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The destination of the supply.
     /// </summary>
-    [FhirElement("deliverTo", Order=200)]
     [CLSCompliant(false)]
+    [FhirElement("deliverTo", Order=200)]
     [References("Organization","Location","Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? DeliverTo

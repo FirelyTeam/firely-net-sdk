@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Study instance UID.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -125,8 +126,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to ImagingStudy.
       /// </summary>
-      [FhirElement("imagingStudy", InSummary=true, Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("imagingStudy", InSummary=true, Order=50)]
       [References("ImagingStudy")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? ImagingStudy
@@ -153,8 +154,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Study access service endpoint.
       /// </summary>
-      [FhirElement("endpoint", InSummary=true, Order=60)]
       [CLSCompliant(false)]
+      [FhirElement("endpoint", InSummary=true, Order=60)]
       [References("Endpoint")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -182,6 +183,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Series identity of the selected instances.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("series", InSummary=true, Order=70)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -356,6 +358,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Series instance UID.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -398,8 +401,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Series access endpoint.
       /// </summary>
-      [FhirElement("endpoint", InSummary=true, Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("endpoint", InSummary=true, Order=50)]
       [References("Endpoint")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -427,6 +430,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The selected instance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("instance", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -582,6 +586,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// SOP class UID of instance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("sopClass", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -624,6 +629,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Selected instance UID.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("uid", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -758,6 +764,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// SOP Instance UID.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -784,8 +791,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient of the selected objects.
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=100, FiveWs="who.focus")]
     [CLSCompliant(false)]
+    [FhirElement("patient", InSummary=true, Order=100, FiveWs="who.focus")]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -813,6 +820,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time when the selection of instances was made.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("authoringTime", InSummary=true, Order=110, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? AuthoringTimeElement
@@ -854,8 +862,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Author (human or machine).
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=120, FiveWs="who.author")]
     [CLSCompliant(false)]
+    [FhirElement("author", InSummary=true, Order=120, FiveWs="who.author")]
     [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author
@@ -882,6 +890,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description text.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -923,6 +932,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Study identity of the selected instances.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("study", InSummary=true, Order=140)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]

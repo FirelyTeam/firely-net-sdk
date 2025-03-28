@@ -144,6 +144,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Manifestation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", Order=40, FiveWs="FiveWs.why[x]")]
       [Binding("DetectedIssueEvidenceCode")]
       [Cardinality(Min=0,Max=-1)]
@@ -172,8 +173,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Supporting information.
       /// </summary>
-      [FhirElement("detail", Order=50, FiveWs="FiveWs.why[x]")]
       [CLSCompliant(false)]
+      [FhirElement("detail", Order=50, FiveWs="FiveWs.why[x]")]
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -309,6 +310,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What mitigation?.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("action", Order=40)]
       [Binding("DetectedIssueMitigationAction")]
       [Cardinality(Min=1,Max=1)]
@@ -337,6 +339,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date committed.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("date", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -378,8 +381,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who is committing?.
       /// </summary>
-      [FhirElement("author", Order=60)]
       [CLSCompliant(false)]
+      [FhirElement("author", Order=60)]
       [References("Practitioner","PractitionerRole")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Author
@@ -406,6 +409,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional notes about the mitigation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("note", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -563,6 +567,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique id for the detected issue.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -590,8 +595,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preliminary | final | entered-in-error | mitigated.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("DetectedIssueStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -634,6 +640,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of detected issue, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", Order=110, FiveWs="FiveWs.class")]
     [Binding("DetectedIssueCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -662,6 +669,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific type of detected issue, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("DetectedIssueCategory")]
     [DataMember]
@@ -689,8 +697,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// high | moderate | low.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("severity", InSummary=true, Order=130, FiveWs="FiveWs.grade")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("DetectedIssueSeverity")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>? SeverityElement
@@ -732,8 +741,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated subject.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [References("Patient","Group","Device","Location","Organization","Procedure","Practitioner","Medication","Substance","BiologicallyDerivedProduct","NutritionProduct")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -760,8 +769,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter detected issue is part of.
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
+    [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -788,9 +797,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When identified.
     /// </summary>
-    [FhirElement("identified", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.recorded")]
     [CLSCompliant(false)]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+    [FhirElement("identified", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.recorded")]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Identified
     {
@@ -816,8 +825,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The provider or device that identified the issue.
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=170, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
+    [FhirElement("author", InSummary=true, Order=170, FiveWs="FiveWs.author")]
     [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author
@@ -844,8 +853,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Problem resource.
     /// </summary>
-    [FhirElement("implicated", InSummary=true, Order=180)]
     [CLSCompliant(false)]
+    [FhirElement("implicated", InSummary=true, Order=180)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -873,6 +882,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting evidence.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("evidence", Order=190, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -900,6 +910,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description and context.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("detail", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DetailElement
@@ -941,6 +952,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Authority for issue.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reference", Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? ReferenceElement
@@ -982,6 +994,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Step taken to address.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("mitigation", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

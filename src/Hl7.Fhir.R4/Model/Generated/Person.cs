@@ -114,8 +114,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The resource to which this actual person is associated.
       /// </summary>
-      [FhirElement("target", Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("target", Order=40)]
       [References("Patient","Practitioner","RelatedPerson","Person")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -143,8 +143,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// level1 | level2 | level3 | level4.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("assurance", Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("IdentityAssuranceLevel")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel>? AssuranceElement
@@ -278,6 +279,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A human identifier for this person.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -305,6 +307,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name associated with the person.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -332,6 +335,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the person.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("telecom", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -359,8 +363,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("gender", InSummary=true, Order=120)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement
@@ -402,6 +407,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date on which the person was born.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("birthDate", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.Date? BirthDateElement
@@ -443,6 +449,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// One or more addresses for the person.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("address", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -470,6 +477,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Image of the person.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("photo", Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.Attachment? Photo
@@ -496,8 +504,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The organization that is the custodian of the person record.
     /// </summary>
-    [FhirElement("managingOrganization", InSummary=true, Order=160)]
     [CLSCompliant(false)]
+    [FhirElement("managingOrganization", InSummary=true, Order=160)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ManagingOrganization
@@ -524,6 +532,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This person's record is in active use.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, IsModifier=true, Order=170, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -565,6 +574,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link to a resource that concerns the same actual person.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("link", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

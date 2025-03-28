@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The identifier that is to be associated with every Device that references this DeviceDefintiion for the issuer and jurisdication porvided in the DeviceDefinition.udiDeviceIdentifier.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("deviceIdentifier", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -125,6 +126,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The organization that assigns the identifier algorithm.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("issuer", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -167,6 +169,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The jurisdiction to which the deviceIdentifier applies.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("jurisdiction", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -333,6 +336,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The name of the device.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -375,8 +379,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// udi-label-name | user-friendly-name | patient-reported-name | manufacturer-name | model-name | other.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=50, FiveWs="FiveWs.what[x]")]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -524,6 +529,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The standard that is used to operate and communicate.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("systemType", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -566,6 +572,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The version of the standard that is used to operate and communicate.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("version", Order=50, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? VersionElement
@@ -712,6 +719,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of capability.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -739,6 +747,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of capability.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -871,6 +880,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that specifies the property DeviceDefinitionPropetyCode (Extensible).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -898,6 +908,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Property value as a quantity.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("valueQuantity", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -925,6 +936,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Property value as a code, e.g., NTP4 (synced to NTP).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("valueCode", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1076,6 +1088,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The substance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("substance", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1103,6 +1116,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Indicates an alternative material of the device.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("alternate", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? AlternateElement
@@ -1144,6 +1158,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether the substance is a known or suspected allergen.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("allergenicIndicator", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? AllergenicIndicatorElement
@@ -1296,6 +1311,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1323,6 +1339,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique Device Identifier (UDI) Barcode string.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("udiDeviceIdentifier", Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1350,10 +1367,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of device manufacturer.
     /// </summary>
-    [FhirElement("manufacturer", Order=110, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
+    [FhirElement("manufacturer", Order=110, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [References("Organization")]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Manufacturer
     {
@@ -1379,6 +1396,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name given to the device to identify it.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("deviceName", Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1406,6 +1424,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The model number for the device.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("modelNumber", Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ModelNumberElement
@@ -1447,6 +1466,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What kind of device or device system this is.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", Order=140)]
     [Binding("DeviceKind")]
     [DataMember]
@@ -1474,6 +1494,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("specialization", Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1501,6 +1522,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Available versions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1546,6 +1568,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Safety characteristics of the device.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("safety", InSummary=true, Order=170)]
     [Binding("Safety")]
     [Cardinality(Min=0,Max=-1)]
@@ -1574,6 +1597,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Shelf Life and storage information.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("shelfLifeStorage", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1601,6 +1625,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dimensions, color etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("physicalCharacteristics", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.ProdCharacteristic? PhysicalCharacteristics
@@ -1627,6 +1652,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Language code for the human-readable text strings produced by the device (all supported).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("languageCode", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1654,6 +1680,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Device capabilities.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("capability", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1681,6 +1708,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("property", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1708,8 +1736,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization responsible for device.
     /// </summary>
-    [FhirElement("owner", Order=230, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
+    [FhirElement("owner", Order=230, FiveWs="FiveWs.source")]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Owner
@@ -1736,6 +1764,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details for human/organization for support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", Order=240, FiveWs="FiveWs.source")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1763,6 +1792,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Network address to contact device.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", Order=250, FiveWs="FiveWs.where[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -1804,6 +1834,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Access to on-line information.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("onlineInformation", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? OnlineInformationElement
@@ -1845,6 +1876,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Device notes and comments.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1872,6 +1904,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The quantity of the device present in the packaging (e.g. the number of devices present in a pack, or the number of devices in the same package of the medicinal product).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("quantity", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Quantity
@@ -1898,8 +1931,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The parent device it can be part of.
     /// </summary>
-    [FhirElement("parentDevice", InSummary=true, Order=290)]
     [CLSCompliant(false)]
+    [FhirElement("parentDevice", InSummary=true, Order=290)]
     [References("DeviceDefinition")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ParentDevice
@@ -1926,6 +1959,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A substance used to create the material(s) of which the device is made.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("material", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

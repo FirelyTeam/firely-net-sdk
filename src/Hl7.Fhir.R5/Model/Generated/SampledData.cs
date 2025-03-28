@@ -67,6 +67,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Zero value and units.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("origin", InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -94,6 +95,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of intervalUnits between samples.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("interval", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? IntervalElement
@@ -135,6 +137,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The measurement unit of the interval between samples.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("intervalUnit", InSummary=true, Order=50)]
     [Binding("Units")]
     [Cardinality(Min=1,Max=1)]
@@ -178,6 +181,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Multiply data by this before adding to origin.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("factor", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? FactorElement
@@ -219,6 +223,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Lower limit of detection.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lowerLimit", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? LowerLimitElement
@@ -260,6 +265,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Upper limit of detection.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("upperLimit", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? UpperLimitElement
@@ -301,6 +307,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of sample points at each time point.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("dimensions", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -343,6 +350,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Defines the codes used in the data.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("codeMap", Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? CodeMapElement
@@ -384,6 +392,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Offsets, typically in time, at which data values were taken.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("offsets", Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? OffsetsElement
@@ -425,6 +434,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Decimal values with spaces, or "E" | "U" | "L", or another code.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("data", Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DataElement

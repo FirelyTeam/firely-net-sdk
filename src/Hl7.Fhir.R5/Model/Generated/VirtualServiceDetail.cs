@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Channel Type.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("channelType", InSummary=true, Order=30)]
     [Binding("VirtualServiceType")]
     [DataMember]
@@ -90,9 +91,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact address/number.
     /// </summary>
-    [FhirElement("address", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.ExtendedContactDetail))]
+    [FhirElement("address", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.ExtendedContactDetail))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Address
     {
@@ -118,6 +119,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Address to see alternative connection details.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("additionalInfo", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -163,6 +165,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Maximum number of participants supported by the virtual service.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("maxParticipants", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? MaxParticipantsElement
@@ -204,6 +207,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Session Key required by the virtual service.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("sessionKey", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SessionKeyElement

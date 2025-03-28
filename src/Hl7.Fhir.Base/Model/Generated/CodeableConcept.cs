@@ -67,6 +67,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code defined by a terminology system.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("coding", InSummary=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -94,6 +95,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Plain text representation of the concept.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("text", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TextElement

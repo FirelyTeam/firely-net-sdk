@@ -148,6 +148,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The parameter whose value is being tracked.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("measure", InSummary=true, Order=40)]
       [Binding("GoalTargetMeasure")]
       [DataMember]
@@ -175,10 +176,10 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The target value to be achieved.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("detail", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("GoalTargetDetail")]
-      [CLSCompliant(false)]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Ratio))]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Ratio))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Detail
       {
@@ -204,9 +205,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reach goal on or before.
       /// </summary>
-      [FhirElement("due", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
       [CLSCompliant(false)]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
+      [FhirElement("due", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Due
       {
@@ -343,6 +344,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this goal.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -370,8 +372,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lifecycleStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("GoalLifecycleStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -414,6 +417,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("achievementStatus", InSummary=true, Order=110)]
     [Binding("GoalAchievementStatus")]
     [DataMember]
@@ -441,6 +445,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Treatment, dietary, behavioral, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("GoalCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -469,6 +474,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// high-priority | medium-priority | low-priority.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("priority", InSummary=true, Order=130, FiveWs="FiveWs.grade")]
     [Binding("GoalPriority")]
     [DataMember]
@@ -496,6 +502,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code or text describing goal.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [Binding("GoalDescription")]
     [Cardinality(Min=1,Max=1)]
@@ -524,8 +531,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this goal is intended for.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [References("Patient","Group","Organization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -553,10 +560,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When goal pursuit begins.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("start", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
     [Binding("GoalStartEvent")]
-    [CLSCompliant(false)]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Start
     {
@@ -582,6 +589,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target outcome for the goal.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("target", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -609,6 +617,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When goal status took effect.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("statusDate", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Date? StatusDateElement
@@ -650,6 +659,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("statusReason", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? StatusReasonElement
@@ -691,8 +701,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who's responsible for creating Goal?.
     /// </summary>
-    [FhirElement("expressedBy", InSummary=true, Order=200, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
+    [FhirElement("expressedBy", InSummary=true, Order=200, FiveWs="FiveWs.source")]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ExpressedBy
@@ -719,8 +729,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Issues addressed by this goal.
     /// </summary>
-    [FhirElement("addresses", Order=210, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
+    [FhirElement("addresses", Order=210, FiveWs="FiveWs.why[x]")]
     [References("Condition","Observation","MedicationStatement","NutritionOrder","ServiceRequest","RiskAssessment")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -748,6 +758,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments about the goal.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -775,6 +786,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What result was achieved regarding the goal?.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("outcomeCode", Order=230)]
     [Binding("GoalOutcome")]
     [Cardinality(Min=0,Max=-1)]
@@ -803,8 +815,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Observation that resulted from goal.
     /// </summary>
-    [FhirElement("outcomeReference", Order=240)]
     [CLSCompliant(false)]
+    [FhirElement("outcomeReference", Order=240)]
     [References("Observation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

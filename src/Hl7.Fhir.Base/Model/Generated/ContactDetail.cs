@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of an individual to contact.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -107,6 +108,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for individual or organization.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("telecom", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

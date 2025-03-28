@@ -119,8 +119,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// usual | official | temp | nickname | anonymous | old | maiden.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("NameUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.HumanName.NameUse>? UseElement
@@ -162,6 +163,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Text representation of the full name.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("text", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TextElement
@@ -203,6 +205,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Family name (often called 'Surname').
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("family", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? FamilyElement
@@ -244,6 +247,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Given names (not always 'first'). Includes middle names.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("given", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -289,6 +293,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Parts that come before the name.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("prefix", InSummary=true, Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -334,6 +339,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Parts that come after the name.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("suffix", InSummary=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -379,6 +385,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period when name was/is in use.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period

@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Path in the resource that contains the link.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("path", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PathElement
@@ -176,6 +177,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Which slice (if profiled).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("sliceName", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SliceNameElement
@@ -217,6 +219,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Minimum occurrences for this link.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("min", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? MinElement
@@ -258,6 +261,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Maximum occurrences for this link.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("max", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MaxElement
@@ -299,6 +303,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why this link is specified.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -340,6 +345,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Potential target for the link.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("target", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -548,8 +554,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of resource this link refers to.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -592,6 +599,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Criteria for reverse lookup.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("params", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ParamsElement
@@ -633,6 +641,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Profile for the target resource.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("profile", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? ProfileElement
@@ -674,6 +683,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Compartment Consistency Rules.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("compartment", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -701,6 +711,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional links from target resource.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("link", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -890,8 +901,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// condition | requirement.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("use", Order=40)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("GraphCompartmentUse")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -934,8 +946,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Patient | Encounter | RelatedPerson | Practitioner | Device.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("CompartmentCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -978,8 +991,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// identical | matching | different | custom.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("rule", Order=60)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("GraphCompartmentRule")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1022,6 +1036,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Custom rule, as a FHIRPath expression.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("expression", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ExpressionElement
@@ -1063,6 +1078,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Documentation for FHIRPath expression.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -1253,6 +1269,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this graph definition, represented as a URI (globally unique).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -1294,6 +1311,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the graph definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=100, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -1335,6 +1353,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this graph definition (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1377,8 +1396,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1421,6 +1441,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -1462,6 +1483,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -1503,6 +1525,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=150, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -1544,6 +1567,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1571,6 +1595,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the graph definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1612,6 +1637,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1639,6 +1665,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for graph definition (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=190)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1667,6 +1694,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this graph definition is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=200, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -1708,8 +1736,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of resource at which the graph starts.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("start", InSummary=true, Order=210)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ResourceType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1752,6 +1781,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Profile on base resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("profile", Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? ProfileElement
@@ -1793,6 +1823,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Links this graph makes rules about.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("link", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this library, represented as a URI (globally unique).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -107,6 +108,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the library.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -134,6 +136,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the library.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -175,6 +178,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this library (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -216,6 +220,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this library (human friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -257,6 +262,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subordinate title of the library.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("subtitle", Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SubtitleElement
@@ -298,8 +304,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -342,6 +349,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -383,6 +391,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// logic-library | model-definition | asset-collection | module-definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=170, FiveWs="FiveWs.what[x]")]
     [Binding("LibraryType")]
     [Cardinality(Min=1,Max=1)]
@@ -411,11 +420,11 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of individual the library content is focused on.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
     [Binding("SubjectType")]
-    [CLSCompliant(false)]
     [References("Group")]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Subject
     {
@@ -441,6 +450,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -482,6 +492,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=200, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -523,6 +534,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -550,6 +562,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the library.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -591,6 +604,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -618,6 +632,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for library (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=240)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -646,6 +661,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this library is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=250, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -687,6 +703,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the clinical usage of the library.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("usage", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? UsageElement
@@ -728,6 +745,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyright", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -769,6 +787,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the library was approved by publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -810,6 +829,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the library was last reviewed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -851,6 +871,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the library is expected to be used.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -877,6 +898,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("topic", Order=310)]
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
@@ -905,6 +927,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("author", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -932,6 +955,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("editor", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -959,6 +983,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reviewer", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -986,6 +1011,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("endorser", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1013,6 +1039,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1040,6 +1067,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Parameters defined by the library.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("parameter", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1067,6 +1095,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What data is referenced by this library.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("dataRequirement", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1094,6 +1123,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contents of the library, either embedded or referenced.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("content", InSummary=true, Order=390)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

@@ -83,8 +83,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Location the encounter takes place.
       /// </summary>
-      [FhirElement("location", Order=40, FiveWs="FiveWs.where[x]")]
       [CLSCompliant(false)]
+      [FhirElement("location", Order=40, FiveWs="FiveWs.where[x]")]
       [References("Location")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -112,6 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The physical type of the location (usually the level in the location hierarchy - bed, room, ward, virtual etc.).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("form", Order=50)]
       [Binding("LocationForm")]
       [DataMember]
@@ -231,8 +232,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The Encounter associated with this set of historic values.
     /// </summary>
-    [FhirElement("encounter", Order=90)]
     [CLSCompliant(false)]
+    [FhirElement("encounter", Order=90)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -259,6 +260,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier(s) by which this encounter is known.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -286,8 +288,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// planned | in-progress | on-hold | discharged | completed | cancelled | discontinued | entered-in-error | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("EncounterStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -330,6 +333,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of patient encounter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("class", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("EncounterClass")]
     [Cardinality(Min=1,Max=1)]
@@ -358,6 +362,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific type of encounter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("EncounterType")]
     [Cardinality(Min=0,Max=-1)]
@@ -386,6 +391,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific type of service.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("serviceType", InSummary=true, Order=140)]
     [Binding("EncounterServiceType")]
     [Cardinality(Min=0,Max=-1)]
@@ -414,8 +420,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient or group related to this encounter.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [References("Patient","Group")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -442,6 +448,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The current status of the subject in relation to the Encounter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("subjectStatus", Order=160)]
     [Binding("SubjectStatus")]
     [DataMember]
@@ -469,6 +476,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual start and end time associated with this set of values associated with the encounter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("actualPeriod", Order=170, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period? ActualPeriod
@@ -495,6 +503,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The planned start date/time (or admission date) of the encounter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("plannedStartDate", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? PlannedStartDateElement
@@ -536,6 +545,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The planned end date/time (or discharge date) of the encounter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("plannedEndDate", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? PlannedEndDateElement
@@ -577,6 +587,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actual quantity of time the encounter lasted (less time absent).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("length", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Duration? Length
@@ -603,6 +614,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Location of the patient at this point in the encounter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("location", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

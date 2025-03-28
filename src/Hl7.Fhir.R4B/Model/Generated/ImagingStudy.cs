@@ -122,6 +122,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// DICOM Series Instance UID for the series.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -164,6 +165,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Numeric identifier of this series.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("number", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? NumberElement
@@ -205,6 +207,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The modality of the instances in the series.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("modality", InSummary=true, Order=60)]
       [Binding("ImagingModality")]
       [Cardinality(Min=1,Max=1)]
@@ -233,6 +236,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A short human readable summary of the series.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -274,6 +278,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Number of Series Related Instances.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("numberOfInstances", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? NumberOfInstancesElement
@@ -315,8 +320,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Series access endpoint.
       /// </summary>
-      [FhirElement("endpoint", InSummary=true, Order=90)]
       [CLSCompliant(false)]
+      [FhirElement("endpoint", InSummary=true, Order=90)]
       [References("Endpoint")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -344,6 +349,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Body part examined.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("bodySite", InSummary=true, Order=100)]
       [Binding("BodySite")]
       [DataMember]
@@ -371,6 +377,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Body part laterality.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("laterality", InSummary=true, Order=110)]
       [Binding("Laterality")]
       [DataMember]
@@ -398,8 +405,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specimen imaged.
       /// </summary>
-      [FhirElement("specimen", InSummary=true, Order=120)]
       [CLSCompliant(false)]
+      [FhirElement("specimen", InSummary=true, Order=120)]
       [References("Specimen")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -427,6 +434,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the series started.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("started", InSummary=true, Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? StartedElement
@@ -468,6 +476,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who performed the series.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("performer", InSummary=true, Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -495,6 +504,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A single SOP instance from the series.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("instance", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -821,6 +831,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of performance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("EventPerformerFunction")]
       [DataMember]
@@ -848,8 +859,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who performed the series.
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -985,6 +996,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// DICOM SOP Instance UID.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("uid", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1027,6 +1039,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// DICOM class type.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("sopClass", Order=50)]
       [Binding("sopClass")]
       [Cardinality(Min=1,Max=1)]
@@ -1055,6 +1068,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The number of this instance in the series.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("number", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? NumberElement
@@ -1096,6 +1110,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of instance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("title", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TitleElement
@@ -1267,6 +1282,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifiers for the whole study.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1294,8 +1310,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | available | cancelled | entered-in-error | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ImagingStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1338,6 +1355,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// All series modality if actual acquisition modalities.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("modality", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("ImagingModality")]
     [Cardinality(Min=0,Max=-1)]
@@ -1366,8 +1384,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who or what is the subject of the study.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [References("Patient","Device","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1395,8 +1413,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter with which this imaging study is associated.
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=130, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
+    [FhirElement("encounter", InSummary=true, Order=130, FiveWs="FiveWs.context")]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -1423,6 +1441,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the study was started.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("started", InSummary=true, Order=140, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? StartedElement
@@ -1464,8 +1483,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled.
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=150, FiveWs="FiveWs.cause")]
     [CLSCompliant(false)]
+    [FhirElement("basedOn", InSummary=true, Order=150, FiveWs="FiveWs.cause")]
     [References("CarePlan","ServiceRequest","Appointment","AppointmentResponse","Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1493,8 +1512,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Referring physician.
     /// </summary>
-    [FhirElement("referrer", InSummary=true, Order=160, FiveWs="FiveWs.cause")]
     [CLSCompliant(false)]
+    [FhirElement("referrer", InSummary=true, Order=160, FiveWs="FiveWs.cause")]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Referrer
@@ -1521,8 +1540,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who interpreted images.
     /// </summary>
-    [FhirElement("interpreter", InSummary=true, Order=170, FiveWs="FiveWs.witness")]
     [CLSCompliant(false)]
+    [FhirElement("interpreter", InSummary=true, Order=170, FiveWs="FiveWs.witness")]
     [References("Practitioner","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1550,8 +1569,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Study access endpoint.
     /// </summary>
-    [FhirElement("endpoint", InSummary=true, Order=180)]
     [CLSCompliant(false)]
+    [FhirElement("endpoint", InSummary=true, Order=180)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1579,6 +1598,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of Study Related Series.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("numberOfSeries", InSummary=true, Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? NumberOfSeriesElement
@@ -1620,6 +1640,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of Study Related Instances.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("numberOfInstances", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? NumberOfInstancesElement
@@ -1661,8 +1682,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The performed Procedure reference.
     /// </summary>
-    [FhirElement("procedureReference", InSummary=true, Order=210)]
     [CLSCompliant(false)]
+    [FhirElement("procedureReference", InSummary=true, Order=210)]
     [References("Procedure")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ProcedureReference
@@ -1689,6 +1710,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The performed procedure code.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("procedureCode", InSummary=true, Order=220)]
     [Binding("ImagingProcedureCode")]
     [Cardinality(Min=0,Max=-1)]
@@ -1717,8 +1739,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where ImagingStudy occurred.
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=230, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
+    [FhirElement("location", InSummary=true, Order=230, FiveWs="FiveWs.where[x]")]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -1745,6 +1767,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the study was requested.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reasonCode", InSummary=true, Order=240, FiveWs="FiveWs.why[x]")]
     [Binding("ImagingReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -1773,8 +1796,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was study performed.
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=250, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
+    [FhirElement("reasonReference", InSummary=true, Order=250, FiveWs="FiveWs.why[x]")]
     [References("Condition","Observation","Media","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1802,6 +1825,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// User-defined comments.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1829,6 +1853,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Institution-generated description.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -1870,6 +1895,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Each study has one or more series of instances.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("series", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

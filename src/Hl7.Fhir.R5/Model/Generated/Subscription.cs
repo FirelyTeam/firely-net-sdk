@@ -110,6 +110,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Allowed Resource (reference to definition) for this Subscription filter.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("resourceType", InSummary=true, Order=40)]
       [Binding("FHIRTypes")]
       [DataMember]
@@ -152,6 +153,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Filter label defined in SubscriptionTopic.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("filterParameter", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -194,8 +196,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// eq | ne | gt | lt | ge | le | sa | eb | ap.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("comparator", Order=60)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("SearchComparator")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchComparator>? ComparatorElement
@@ -237,8 +240,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// missing | exact | contains | not | text | in | not-in | below | above | type | identifier | of-type | code-text | text-advanced | iterate.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("modifier", Order=70)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("SearchModifierCode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchModifierCode>? ModifierElement
@@ -280,6 +284,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Literal value or resource path.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=80)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -488,6 +493,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name (key) of the parameter.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -530,6 +536,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value of the parameter to use or pass through.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("value", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -664,6 +671,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifiers (business identifier).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -691,6 +699,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human readable name for this subscription.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -732,8 +741,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// requested | active | error | off | entered-in-error.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("SubscriptionStatusCodes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -776,6 +786,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the subscription topic being subscribed to.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("topic", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -818,6 +829,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for source (e.g. troubleshooting).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -845,6 +857,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When to automatically delete the subscription.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("end", InSummary=true, Order=140, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? EndElement
@@ -886,8 +899,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Entity responsible for Subscription changes.
     /// </summary>
-    [FhirElement("managingEntity", InSummary=true, Order=150, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
+    [FhirElement("managingEntity", InSummary=true, Order=150, FiveWs="FiveWs.author")]
     [References("CareTeam","HealthcareService","Organization","RelatedPerson","Patient","Practitioner","PractitionerRole")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ManagingEntity
@@ -914,6 +927,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of why this subscription was created.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reason", InSummary=true, Order=160, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ReasonElement
@@ -955,6 +969,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Criteria for narrowing the subscription topic stream.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("filterBy", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -982,6 +997,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Channel type for notifications.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("channelType", InSummary=true, Order=180)]
     [Binding("SubscriptionChannelType")]
     [Cardinality(Min=1,Max=1)]
@@ -1010,6 +1026,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the channel points to.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("endpoint", InSummary=true, Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUrl? EndpointElement
@@ -1051,6 +1068,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Channel type.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("parameter", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1078,6 +1096,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Interval in seconds to send 'heartbeat' notification.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("heartbeatPeriod", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? HeartbeatPeriodElement
@@ -1119,6 +1138,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Timeout in seconds to attempt notification delivery.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("timeout", InSummary=true, Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? TimeoutElement
@@ -1160,6 +1180,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// MIME type to send, or omit for no payload.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contentType", InSummary=true, Order=230)]
     [Binding("MimeType")]
     [DataMember]
@@ -1202,8 +1223,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// empty | id-only | full-resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("content", InSummary=true, Order=240)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("SubscriptionPayloadContent")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>? ContentElement
@@ -1245,6 +1267,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Maximum number of events that can be combined in a single notification.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("maxCount", InSummary=true, Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? MaxCountElement

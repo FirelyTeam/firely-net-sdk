@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Numerical value (with implicit precision).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("value", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? ValueElement
@@ -104,8 +105,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ISO 4217 Currency Code.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("currency", InSummary=true, Order=40)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("CurrencyCode")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Currencies>? CurrencyElement

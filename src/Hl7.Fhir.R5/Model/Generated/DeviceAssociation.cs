@@ -116,6 +116,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Device operational condition.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("status", InSummary=true, Order=40)]
       [Binding("DeviceAssociationOperationStatus")]
       [Cardinality(Min=1,Max=1)]
@@ -144,8 +145,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The individual performing the action enabled by the device.
       /// </summary>
-      [FhirElement("operator", InSummary=true, Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("operator", InSummary=true, Order=50)]
       [References("Patient","Practitioner","RelatedPerson")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -173,6 +174,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Begin and end dates and times for the device's operation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("period", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -310,6 +312,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -337,8 +340,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the devices associated with the patient or group.
     /// </summary>
-    [FhirElement("device", InSummary=true, Order=100)]
     [CLSCompliant(false)]
+    [FhirElement("device", InSummary=true, Order=100)]
     [References("Device")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -366,6 +369,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the relationship between the device and subject.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -393,6 +397,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// implanted | explanted | attached | entered-in-error | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=120)]
     [Binding("DeviceAssociationStatus")]
     [Cardinality(Min=1,Max=1)]
@@ -421,6 +426,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The reasons given for the current association status.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("statusReason", InSummary=true, Order=130)]
     [Binding("DeviceAssociationStatusReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -449,8 +455,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The individual, group of individuals or device that the device is on or associated with.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=140)]
     [References("Patient","Group","Practitioner","RelatedPerson","Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -477,8 +483,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Current anatomical location of the device in/on subject.
     /// </summary>
-    [FhirElement("bodyStructure", InSummary=true, Order=150)]
     [CLSCompliant(false)]
+    [FhirElement("bodyStructure", InSummary=true, Order=150)]
     [References("BodyStructure")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? BodyStructure
@@ -505,6 +511,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Begin and end dates and times for the device association.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -531,6 +538,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The details about the device when it is in use to describe its operation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("operation", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

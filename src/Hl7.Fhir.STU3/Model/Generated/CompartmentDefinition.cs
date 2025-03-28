@@ -83,8 +83,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of resource type.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -127,6 +128,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Search Parameter Name, or chained parameters.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("param", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -172,6 +174,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional documentation about the resource and compartment.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("documentation", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DocumentationElement
@@ -324,6 +327,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this compartment definition (globally unique).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -366,6 +370,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this compartment definition (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=100)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -408,6 +413,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this compartment definition (human friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -449,8 +455,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -493,6 +500,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -534,6 +542,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -575,6 +584,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=150, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -616,6 +626,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -643,6 +654,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the compartment definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -684,6 +696,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this compartment definition is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=180, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -725,6 +738,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context the content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -752,6 +766,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for compartment definition (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -780,8 +795,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient | Encounter | RelatedPerson | Practitioner | Device.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=210)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("CompartmentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -824,6 +840,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the search syntax is supported.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("search", InSummary=true, Order=220)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -866,6 +883,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How a resource is related to the compartment.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("resource", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

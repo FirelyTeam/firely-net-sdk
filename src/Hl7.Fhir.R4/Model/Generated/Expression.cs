@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the condition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -107,6 +108,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Short name assigned to expression for reuse.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Id? NameElement
@@ -148,6 +150,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// text/cql | text/fhirpath | application/x-fhir-query | etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("language", InSummary=true, Order=50)]
     [Binding("ExpressionLanguage")]
     [Cardinality(Min=1,Max=1)]
@@ -191,6 +194,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Expression in specified language.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("expression", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ExpressionElement
@@ -232,6 +236,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the expression is found.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reference", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? ReferenceElement

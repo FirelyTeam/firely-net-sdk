@@ -107,8 +107,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// usual | official | temp | secondary | old (If known).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("IdentifierUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Identifier.IdentifierUse>? UseElement
@@ -150,6 +151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=40)]
     [Binding("IdentifierType")]
     [DataMember]
@@ -177,6 +179,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The namespace for the identifier value.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("system", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? SystemElement
@@ -218,6 +221,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The value that is unique.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("value", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ValueElement
@@ -259,6 +263,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period when id is/was valid for use.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -285,8 +290,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that issued id (may be just text).
     /// </summary>
-    [FhirElement("assigner", InSummary=true, Order=80)]
     [CLSCompliant(false)]
+    [FhirElement("assigner", InSummary=true, Order=80)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Assigner

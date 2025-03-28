@@ -116,6 +116,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Condition suffered by relation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Binding("ConditionCode")]
       [Cardinality(Min=1,Max=1)]
@@ -144,6 +145,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// deceased | permanent disability | etc.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("outcome", Order=50)]
       [Binding("ConditionOutcome")]
       [DataMember]
@@ -171,6 +173,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether the condition contributed to the cause of death.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("contributedToDeath", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ContributedToDeathElement
@@ -212,9 +215,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When condition first manifested.
       /// </summary>
-      [FhirElement("onset", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
+      [FhirElement("onset", Order=70, Choice=ChoiceType.DatatypeChoice)]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Onset
       {
@@ -240,6 +243,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Extra information about condition.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("note", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -416,6 +420,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Id(s) for this record.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -443,6 +448,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR protocol or definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -488,6 +494,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates external protocol or definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -533,8 +540,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// partial | completed | entered-in-error | health-unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("FamilyHistoryStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -577,6 +585,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// subject-unknown | withheld | unable-to-obtain | deferred.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("dataAbsentReason", InSummary=true, Order=130)]
     [Binding("FamilyHistoryAbsentReason")]
     [DataMember]
@@ -604,8 +613,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient history is about.
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("patient", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -633,6 +642,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When history was recorded or last updated.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -674,6 +684,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The family member described.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -715,6 +726,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relationship to the subject.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("relationship", InSummary=true, Order=170)]
     [Binding("FamilialRelationship")]
     [Cardinality(Min=1,Max=1)]
@@ -743,6 +755,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("sex", InSummary=true, Order=180)]
     [Binding("Sex")]
     [DataMember]
@@ -770,9 +783,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// (approximate) date of birth.
     /// </summary>
-    [FhirElement("born", Order=190, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
+    [FhirElement("born", Order=190, Choice=ChoiceType.DatatypeChoice)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Born
     {
@@ -798,9 +811,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// (approximate) age.
     /// </summary>
-    [FhirElement("age", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+    [FhirElement("age", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Age
     {
@@ -826,6 +839,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Age is estimated?.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("estimatedAge", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? EstimatedAgeElement
@@ -867,9 +881,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dead? How old/when?.
     /// </summary>
-    [FhirElement("deceased", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
+    [FhirElement("deceased", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Deceased
     {
@@ -895,6 +909,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was family member history performed?.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reasonCode", InSummary=true, Order=230, FiveWs="FiveWs.why[x]")]
     [Binding("FamilyHistoryReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -923,8 +938,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was family member history performed?.
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=240, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
+    [FhirElement("reasonReference", InSummary=true, Order=240, FiveWs="FiveWs.why[x]")]
     [References("Condition","Observation","AllergyIntolerance","QuestionnaireResponse","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -952,6 +967,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General note about related person.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -979,6 +995,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition that the related person had.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("condition", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique id for inter-element referencing.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("id", XmlSerialization = XmlRepresentation.XmlAttr, Order=10)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ElementIdElement
@@ -102,6 +103,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional content defined by implementations.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("extension", Order=20)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

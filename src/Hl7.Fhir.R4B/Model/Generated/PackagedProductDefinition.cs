@@ -76,6 +76,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual status of supply. In what situation this package type may be supplied for use.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [Binding("LegalStatusOfSupply")]
       [DataMember]
@@ -103,6 +104,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The place where the legal status of supply applies.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("jurisdiction", InSummary=true, Order=50)]
       [Binding("Jurisdiction")]
       [DataMember]
@@ -238,6 +240,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An identifier that is specific to this particular part of the packaging. Including possibly a Data Carrier Identifier.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -265,6 +268,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The physical type of the container of the items.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("PackagingType")]
       [DataMember]
@@ -292,6 +296,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The quantity of this level of packaging in the package that contains it (with the outermost level being 1).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("quantity", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? QuantityElement
@@ -333,6 +338,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Material type of the package item.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("material", InSummary=true, Order=70)]
       [Binding("PackageMaterial")]
       [Cardinality(Min=0,Max=-1)]
@@ -361,6 +367,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A possible alternate material for this part of the packaging, that is allowed to be used instead of the usual material.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("alternateMaterial", InSummary=true, Order=80)]
       [Binding("PackageMaterial")]
       [Cardinality(Min=0,Max=-1)]
@@ -389,6 +396,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Shelf Life and storage information.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("shelfLifeStorage", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -416,8 +424,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Manufacturer of this package Item (multiple means these are all possible manufacturers).
       /// </summary>
-      [FhirElement("manufacturer", InSummary=true, Order=100)]
       [CLSCompliant(false)]
+      [FhirElement("manufacturer", InSummary=true, Order=100)]
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -445,6 +453,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// General characteristics of this item.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("property", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -472,6 +481,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The item(s) within the packaging.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("containedItem", InSummary=true, Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -499,6 +509,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Allows containers (and parts of containers) within containers, still a single packaged product.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("package", InSummary=true, Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -783,6 +794,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Type
@@ -809,9 +821,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
       /// </summary>
-      [FhirElement("period", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.FhirString))]
+      [FhirElement("period", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Period
       {
@@ -837,6 +849,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary. The controlled term and the controlled term identifier shall be specified.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("specialPrecautionsForStorage", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -988,6 +1001,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A code expressing the type of characteristic.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("ProductCharacteristic")]
       [Cardinality(Min=1,Max=1)]
@@ -1016,9 +1030,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A value for the characteristic.
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
+      [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
       {
@@ -1149,6 +1163,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual item(s) of medication, as manufactured, or a device, or other medically related item (food, biologicals, raw materials, medical fluids, gases etc.), as contained in the package.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("item", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1176,6 +1191,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The number of this type of item within this packaging.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Amount
@@ -1294,6 +1310,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A unique identifier for this package as whole.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1321,6 +1338,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name for this package. Typically as listed in a drug formulary, catalogue, inventory etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -1362,6 +1380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A high level category e.g. medicinal product, raw material, shipping container etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=110)]
     [Binding("PackageType")]
     [DataMember]
@@ -1389,8 +1408,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The product that this is a pack for.
     /// </summary>
-    [FhirElement("packageFor", InSummary=true, Order=120)]
     [CLSCompliant(false)]
+    [FhirElement("packageFor", InSummary=true, Order=120)]
     [References("MedicinalProductDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1418,6 +1437,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The status within the lifecycle of this item. High level - not intended to duplicate details elsewhere e.g. legal status, or authorization/marketing status.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
     [Binding("PublicationStatus")]
     [DataMember]
@@ -1445,6 +1465,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date at which the given status became applicable.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("statusDate", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? StatusDateElement
@@ -1486,6 +1507,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A total of the complete count of contained items of a particular type/form, independent of sub-packaging or organization. This can be considered as the pack size.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("containedItemQuantity", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1513,6 +1535,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Textual description. Note that this is not the name of the package or product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1554,6 +1577,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The legal status of supply of the packaged item as classified by the regulator.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("legalStatusOfSupply", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1581,6 +1605,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("marketingStatus", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1608,6 +1633,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Allows the key features to be recorded, such as "hospital pack", "nurse prescribable".
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("characteristic", InSummary=true, Order=190)]
     [Binding("PackageCharacteristic")]
     [Cardinality(Min=0,Max=-1)]
@@ -1636,6 +1662,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If the drug product is supplied with another item such as a diluent or adjuvant.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copackagedIndicator", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? CopackagedIndicatorElement
@@ -1677,8 +1704,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of this package type (multiple means these are all possible manufacturers).
     /// </summary>
-    [FhirElement("manufacturer", InSummary=true, Order=210)]
     [CLSCompliant(false)]
+    [FhirElement("manufacturer", InSummary=true, Order=210)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1706,6 +1733,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("package", InSummary=true, Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.PackagedProductDefinition.PackageComponent? Package

@@ -122,6 +122,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifiers for the analysis event.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -149,6 +150,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of the methods used in the analysis (e.g., FISH, Karyotyping, MSI).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("methodType", InSummary=true, Order=50)]
       [Binding("GenomicStudyMethodType")]
       [Cardinality(Min=0,Max=-1)]
@@ -177,6 +179,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of the genomic changes studied in the analysis (e.g., DNA, RNA, or AA change).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("changeType", Order=60)]
       [Binding("GenomicStudyChangeType")]
       [Cardinality(Min=0,Max=-1)]
@@ -205,6 +208,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Genome build that is used in this analysis.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("genomeBuild", Order=70)]
       [Binding("HumanRefSeqNCBIBuildId")]
       [DataMember]
@@ -232,6 +236,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The defined protocol that describes the analysis.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("instantiatesCanonical", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? InstantiatesCanonicalElement
@@ -273,6 +278,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The URL pointing to an externally maintained protocol that describes the analysis.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("instantiatesUri", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? InstantiatesUriElement
@@ -314,6 +320,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of the analysis event (human friendly).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("title", InSummary=true, Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TitleElement
@@ -355,8 +362,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What the genomic analysis is about, when it is not about the subject of record.
       /// </summary>
-      [FhirElement("focus", InSummary=true, Order=110)]
       [CLSCompliant(false)]
+      [FhirElement("focus", InSummary=true, Order=110)]
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -384,8 +391,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specimen used in the analysis event.
       /// </summary>
-      [FhirElement("specimen", InSummary=true, Order=120)]
       [CLSCompliant(false)]
+      [FhirElement("specimen", InSummary=true, Order=120)]
       [References("Specimen")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -413,6 +420,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The date of the analysis event.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("date", Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -454,6 +462,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Any notes capture with the analysis event.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("note", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -481,8 +490,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The protocol that was performed for the analysis event.
       /// </summary>
-      [FhirElement("protocolPerformed", Order=150)]
       [CLSCompliant(false)]
+      [FhirElement("protocolPerformed", Order=150)]
       [References("Procedure","Task")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? ProtocolPerformed
@@ -509,8 +518,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The genomic regions to be studied in the analysis (BED file).
       /// </summary>
-      [FhirElement("regionsStudied", Order=160)]
       [CLSCompliant(false)]
+      [FhirElement("regionsStudied", Order=160)]
       [References("DocumentReference","Observation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -538,8 +547,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Genomic regions actually called in the analysis event (BED file).
       /// </summary>
-      [FhirElement("regionsCalled", Order=170)]
       [CLSCompliant(false)]
+      [FhirElement("regionsCalled", Order=170)]
       [References("DocumentReference","Observation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -567,6 +576,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Inputs for the analysis event.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("input", Order=180)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -594,6 +604,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Outputs for the analysis event.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("output", Order=190)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -621,6 +632,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Performer for the analysis event.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("performer", Order=200)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -648,6 +660,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Devices used for the analysis (e.g., instruments, software), with settings and parameters.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("device", Order=210)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1084,8 +1097,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// File containing input data.
       /// </summary>
-      [FhirElement("file", InSummary=true, Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("file", InSummary=true, Order=40)]
       [References("DocumentReference")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? File
@@ -1112,6 +1125,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of input data (e.g., BAM, CRAM, or FASTA).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
       [Binding("GenomicStudyDataFormat")]
       [DataMember]
@@ -1139,10 +1153,10 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The analysis event or other GenomicStudy that generated this input file.
       /// </summary>
-      [FhirElement("generatedBy", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("generatedBy", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [References("GenomicStudy")]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? GeneratedBy
       {
@@ -1292,8 +1306,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// File containing output data.
       /// </summary>
-      [FhirElement("file", InSummary=true, Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("file", InSummary=true, Order=40)]
       [References("DocumentReference")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? File
@@ -1320,6 +1334,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of output data (e.g., VCF, MAF, or BAM).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("GenomicStudyDataFormat")]
       [DataMember]
@@ -1452,8 +1467,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The organization, healthcare professional, or others who participated in performing this analysis.
       /// </summary>
-      [FhirElement("actor", Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("actor", Order=40)]
       [References("Practitioner","PractitionerRole","Organization","Device")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Actor
@@ -1480,6 +1495,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Role of the actor for this analysis.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("role", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Role
@@ -1611,8 +1627,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Device used for the analysis.
       /// </summary>
-      [FhirElement("device", Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("device", Order=40)]
       [References("Device")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Device
@@ -1639,6 +1655,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific function for the device used for the analysis.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("function", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Function
@@ -1757,6 +1774,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifiers for this genomic study.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1784,8 +1802,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | available | cancelled | entered-in-error | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("GenomicStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1828,6 +1847,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of the study (e.g., Familial variant segregation, Functional variation detection, or Gene expression profiling).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=110)]
     [Binding("GenomicStudyType")]
     [Cardinality(Min=0,Max=-1)]
@@ -1856,8 +1876,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The primary subject of the genomic study.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=120)]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=120)]
     [References("Patient","Group","Substance","BiologicallyDerivedProduct","NutritionProduct")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1885,8 +1905,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The healthcare event with which this genomics study is associated.
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=130)]
     [CLSCompliant(false)]
+    [FhirElement("encounter", InSummary=true, Order=130)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -1913,6 +1933,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the genomic study was started.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("startDate", Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? StartDateElement
@@ -1954,8 +1975,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Event resources that the genomic study is based on.
     /// </summary>
-    [FhirElement("basedOn", Order=150)]
     [CLSCompliant(false)]
+    [FhirElement("basedOn", Order=150)]
     [References("ServiceRequest","Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1983,8 +2004,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare professional who requested or referred the genomic study.
     /// </summary>
-    [FhirElement("referrer", Order=160)]
     [CLSCompliant(false)]
+    [FhirElement("referrer", Order=160)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Referrer
@@ -2011,8 +2032,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare professionals who interpreted the genomic study.
     /// </summary>
-    [FhirElement("interpreter", Order=170)]
     [CLSCompliant(false)]
+    [FhirElement("interpreter", Order=170)]
     [References("Practitioner","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2040,6 +2061,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the genomic study was performed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reason", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2067,6 +2089,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The defined protocol that describes the study.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("instantiatesCanonical", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? InstantiatesCanonicalElement
@@ -2108,6 +2131,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The URL pointing to an externally maintained protocol that describes the study.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("instantiatesUri", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? InstantiatesUriElement
@@ -2149,6 +2173,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments related to the genomic study.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2176,6 +2201,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of the genomic study.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -2217,6 +2243,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Genomic Analysis Event.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("analysis", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

@@ -79,6 +79,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Format for display of the citation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("style", Order=40)]
       [Binding("CitationSummaryStyle")]
       [DataMember]
@@ -106,6 +107,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The human-readable display of the citation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("text", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -253,6 +255,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The kind of classifier (e.g. publication type, keyword).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("CitationClassificationType")]
       [DataMember]
@@ -280,6 +283,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific classification value.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("classifier", Order=50)]
       [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
@@ -413,6 +417,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Classification of the status.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("activity", Order=40)]
       [Binding("CitationStatusType")]
       [Cardinality(Min=1,Max=1)]
@@ -441,6 +446,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Either occurred or expected.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("actual", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ActualElement
@@ -482,6 +488,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the status started and/or ended.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("period", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -633,6 +640,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How the Citation resource relates to the target artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("relationshipType", Order=40)]
       [Binding("ArtifactRelationshipType")]
       [Cardinality(Min=1,Max=1)]
@@ -661,6 +669,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The clasification of the related artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("targetClassifier", Order=50)]
       [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
@@ -689,10 +698,10 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The article or artifact that the Citation Resource is related to.
       /// </summary>
-      [FhirElement("target", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("target", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [References("Resource")]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Attachment))]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Attachment))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Target
@@ -843,6 +852,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// May include DOI, PMID, PMCID, etc.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -870,6 +880,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// May include trial registry identifiers.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("relatedIdentifier", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -897,6 +908,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the cited artifact was accessed.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("dateAccessed", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? DateAccessedElement
@@ -938,6 +950,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The defined version of the cited artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("version", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Citation.CitedArtifactVersionComponent? Version
@@ -964,6 +977,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The status of the cited artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("currentState", Order=80)]
       [Binding("CitedArtifactStatusType")]
       [Cardinality(Min=0,Max=-1)]
@@ -992,6 +1006,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An effective date or period for a status of the cited artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("statusDate", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1019,6 +1034,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The title details of the article or artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("title", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1046,6 +1062,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Summary of the article or artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("abstract", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1073,6 +1090,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The component of the article or artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("part", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.Citation.CitedArtifactPartComponent? Part
@@ -1099,6 +1117,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The artifact related to the cited artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("relatesTo", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1126,6 +1145,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If multiple, used to represent alternative forms of the article that are not separate citations.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("publicationForm", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1153,6 +1173,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used for any URL for the article or artifact cited.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("webLocation", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1180,6 +1201,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The assignment to an organizing scheme.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("classification", Order=160)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1207,6 +1229,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Attribution of authors and other contributors.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("contributorship", Order=170)]
       [DataMember]
       public Hl7.Fhir.Model.Citation.CitedArtifactContributorshipComponent? Contributorship
@@ -1233,6 +1256,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Any additional information or content for the article or artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("note", Order=180)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1612,6 +1636,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The version number or other version identifier.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("value", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1654,8 +1679,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Citation for the main version of the cited artifact.
       /// </summary>
-      [FhirElement("baseCitation", Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("baseCitation", Order=50)]
       [References("Citation")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? BaseCitation
@@ -1787,6 +1812,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Classification of the status.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("activity", Order=40)]
       [Binding("CitedArtifactStatusType")]
       [Cardinality(Min=1,Max=1)]
@@ -1815,6 +1841,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Either occurred or expected.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("actual", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ActualElement
@@ -1856,6 +1883,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the status started and/or ended.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("period", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2007,6 +2035,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The kind of title.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("TitleType")]
       [Cardinality(Min=0,Max=-1)]
@@ -2035,6 +2064,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used to express the specific language.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("language", Order=50)]
       [Binding("Language")]
       [DataMember]
@@ -2062,6 +2092,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The title of the article or artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("text", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2228,6 +2259,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The kind of abstract.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("CitedArtifactAbstractType")]
       [DataMember]
@@ -2255,6 +2287,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used to express the specific language.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("language", Order=50)]
       [Binding("Language")]
       [DataMember]
@@ -2282,6 +2315,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Abstract content.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("text", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2324,6 +2358,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Copyright notice for the abstract.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("copyright", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -2508,6 +2543,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The kind of component.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("CitedArtifactPartType")]
       [DataMember]
@@ -2535,6 +2571,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specification of the component.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("value", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ValueElement
@@ -2576,8 +2613,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The citation for the full article or artifact.
       /// </summary>
-      [FhirElement("baseCitation", Order=60)]
       [CLSCompliant(false)]
+      [FhirElement("baseCitation", Order=60)]
       [References("Citation")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? BaseCitation
@@ -2728,6 +2765,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How the cited artifact relates to the target artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("relationshipType", Order=40)]
       [Binding("ArtifactRelationshipType")]
       [Cardinality(Min=1,Max=1)]
@@ -2756,6 +2794,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The clasification of the related artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("targetClassifier", Order=50)]
       [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
@@ -2784,10 +2823,10 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The article or artifact that the cited artifact is related to.
       /// </summary>
-      [FhirElement("target", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("target", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [References("Resource")]
-      [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Attachment))]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Attachment))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Target
@@ -2941,6 +2980,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The collection the cited article or artifact is published in.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("publishedIn", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Citation.CitedArtifactPublicationFormPublishedInComponent? PublishedIn
@@ -2967,6 +3007,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific issue in which the cited article resides.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("periodicRelease", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Citation.CitedArtifactPublicationFormPeriodicReleaseComponent? PeriodicRelease
@@ -2993,6 +3034,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The date the article was added to the database, or the date the article was released.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("articleDate", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? ArticleDateElement
@@ -3034,6 +3076,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The date the article was last revised or updated in the database.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("lastRevisionDate", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? LastRevisionDateElement
@@ -3075,6 +3118,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Language in which this form of the article is published.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("language", Order=80)]
       [Binding("Language")]
       [Cardinality(Min=0,Max=-1)]
@@ -3103,6 +3147,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Entry number or identifier for inclusion in a database.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("accessionNumber", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? AccessionNumberElement
@@ -3144,6 +3189,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used for full display of pagination.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("pageString", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PageStringElement
@@ -3185,6 +3231,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used for isolated representation of first page.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("firstPage", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? FirstPageElement
@@ -3226,6 +3273,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used for isolated representation of last page.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("lastPage", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? LastPageElement
@@ -3267,6 +3315,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Number of pages or screens.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("pageCount", Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PageCountElement
@@ -3308,6 +3357,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Copyright notice for the full article or artifact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("copyright", Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -3625,6 +3675,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Kind of container (e.g. Periodical, database, or book).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("PublishedInType")]
       [DataMember]
@@ -3652,6 +3703,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Journal identifiers include ISSN, ISO Abbreviation and NLMuniqueID; Book identifiers include ISBN.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("identifier", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3679,6 +3731,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of the database or title of the book or journal.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("title", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TitleElement
@@ -3720,8 +3773,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of the publisher.
       /// </summary>
-      [FhirElement("publisher", Order=70)]
       [CLSCompliant(false)]
+      [FhirElement("publisher", Order=70)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Publisher
@@ -3748,6 +3801,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Geographic location of the publisher.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("publisherLocation", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PublisherLocationElement
@@ -3951,6 +4005,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Internet or Print.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("citedMedium", Order=40)]
       [Binding("CitedMedium")]
       [DataMember]
@@ -3978,6 +4033,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Volume number of journal in which the article is published.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("volume", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? VolumeElement
@@ -4019,6 +4075,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Issue, part or supplement of journal in which the article is published.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("issue", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? IssueElement
@@ -4060,6 +4117,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Defining the date on which the issue of the journal was published.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("dateOfPublication", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Citation.CitedArtifactPublicationFormPeriodicReleaseDateOfPublicationComponent? DateOfPublication
@@ -4229,6 +4287,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date on which the issue of the journal was published.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("date", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Date? DateElement
@@ -4270,6 +4329,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Year on which the issue of the journal was published.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("year", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? YearElement
@@ -4311,6 +4371,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Month on which the issue of the journal was published.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("month", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MonthElement
@@ -4352,6 +4413,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Day on which the issue of the journal was published.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("day", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DayElement
@@ -4393,6 +4455,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Season on which the issue of the journal was published.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("season", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SeasonElement
@@ -4434,6 +4497,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text representation of the date of which the issue of the journal was published.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("text", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextElement
@@ -4656,6 +4720,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code the reason for different URLs, e.g. abstract and full-text.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("ArticleUrlType")]
       [DataMember]
@@ -4683,6 +4748,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific URL.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("url", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -4829,6 +4895,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The kind of classifier (e.g. publication type, keyword).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("CitedArtifactClassificationType")]
       [DataMember]
@@ -4856,6 +4923,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific classification value.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("classifier", Order=50)]
       [Binding("CitationArtifactClassifier")]
       [Cardinality(Min=0,Max=-1)]
@@ -4884,6 +4952,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Provenance and copyright of classification.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("whoClassified", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Citation.CitedArtifactClassificationWhoClassifiedComponent? WhoClassified
@@ -5034,8 +5103,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Person who created the classification.
       /// </summary>
-      [FhirElement("person", Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("person", Order=40)]
       [References("Person","Practitioner")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Person
@@ -5062,8 +5131,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization who created the classification.
       /// </summary>
-      [FhirElement("organization", Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("organization", Order=50)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Organization
@@ -5090,8 +5159,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The publisher of the classification, not the publisher of the article or artifact being cited.
       /// </summary>
-      [FhirElement("publisher", Order=60)]
       [CLSCompliant(false)]
+      [FhirElement("publisher", Order=60)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Publisher
@@ -5118,6 +5187,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Rights management statement for the classification.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("classifierCopyright", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ClassifierCopyrightElement
@@ -5159,6 +5229,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Acceptable to re-use the classification.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("freeToShare", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? FreeToShareElement
@@ -5365,6 +5436,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Indicates if the list includes all authors and/or contributors.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("complete", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? CompleteElement
@@ -5406,6 +5478,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An individual entity named in the list.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("entry", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5433,6 +5506,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used to record a display of the author/contributor list without separate coding for each list member.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("summary", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5588,6 +5662,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A name associated with the person.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.HumanName? Name
@@ -5614,6 +5689,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Initials for forename.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("initials", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? InitialsElement
@@ -5655,6 +5731,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used for collective or corporate name as an author.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("collectiveName", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CollectiveNameElement
@@ -5696,6 +5773,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Author identifier, eg ORCID.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("identifier", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5723,6 +5801,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organizational affiliation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("affiliationInfo", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5750,6 +5829,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Physical mailing address.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("address", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5777,6 +5857,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Email or telephone contact methods for the author or contributor.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("telecom", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5804,6 +5885,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific contribution.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("contributionType", Order=110)]
       [Binding("ArtifactContributionType")]
       [Cardinality(Min=0,Max=-1)]
@@ -5832,6 +5914,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The role of the contributor (e.g. author, editor, reviewer).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("role", Order=120)]
       [Binding("ContributorRole")]
       [DataMember]
@@ -5859,6 +5942,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contributions with accounting for time or number.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("contributionInstance", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5886,6 +5970,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Indication of which contributor is the corresponding contributor for the role.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("correspondingContact", Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? CorrespondingContactElement
@@ -5927,6 +6012,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used to code order of authors.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("listOrder", Order=150)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? ListOrderElement
@@ -6266,6 +6352,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Display for the organization.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("affiliation", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? AffiliationElement
@@ -6307,6 +6394,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Role within the organization, such as professional title.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("role", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? RoleElement
@@ -6348,6 +6436,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier for the organization.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("identifier", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -6499,6 +6588,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific contribution.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("ArtifactContributionInstanceType")]
       [Cardinality(Min=1,Max=1)]
@@ -6527,6 +6617,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The time that the contribution was made.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("time", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? TimeElement
@@ -6673,6 +6764,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Either authorList or contributorshipStatement.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("ContributorSummaryType")]
       [DataMember]
@@ -6700,6 +6792,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The format for the display string.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("style", Order=50)]
       [Binding("ContributorSummaryStyle")]
       [DataMember]
@@ -6727,6 +6820,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used to code the producer or rule for creating the display string.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("source", Order=60)]
       [Binding("ContributorSummarySource")]
       [DataMember]
@@ -6754,6 +6848,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The display string for the author list, contributor list, or contributorship statement.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("value", Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -6926,6 +7021,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this citation, represented as a globally unique URI.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -6967,6 +7063,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier for the Citation resource itself.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -6994,6 +7091,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the citation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -7035,6 +7133,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this citation (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -7076,6 +7175,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this citation (human friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -7117,8 +7217,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -7161,6 +7262,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -7202,6 +7304,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -7243,6 +7346,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The publisher of the Citation, not the publisher of the article or artifact being cited.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=170, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -7284,6 +7388,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher of the Citation Resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7311,6 +7416,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the citation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -7352,6 +7458,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the Citation Resource content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7379,6 +7486,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for citation (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -7407,6 +7515,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this citation is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=220, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -7448,6 +7557,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions for the Citation, not for the cited artifact.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyright", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -7489,6 +7599,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the citation was approved by publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -7530,6 +7641,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the citation was last reviewed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -7571,6 +7683,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the citation is expected to be used.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -7597,6 +7710,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the Citation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("author", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7624,6 +7738,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the Citation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("editor", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7651,6 +7766,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the Citation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reviewer", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7678,6 +7794,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the Citation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("endorser", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7705,6 +7822,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A human-readable display of the citation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("summary", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7732,6 +7850,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The assignment to an organizing scheme.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("classification", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7759,6 +7878,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used for general notes and annotations not coded elsewhere.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7786,6 +7906,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The status of the citation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("currentState", Order=340)]
     [Binding("CitationStatusType")]
     [Cardinality(Min=0,Max=-1)]
@@ -7814,6 +7935,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An effective date or period for a status of the citation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("statusDate", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7841,6 +7963,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Artifact related to the Citation Resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("relatesTo", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7868,6 +7991,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The article or artifact being described.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("citedArtifact", Order=370)]
     [DataMember]
     public Hl7.Fhir.Model.Citation.CitedArtifactComponent? CitedArtifact

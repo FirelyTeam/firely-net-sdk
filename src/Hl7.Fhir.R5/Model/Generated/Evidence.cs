@@ -79,6 +79,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A text description or summary of the variable.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -120,6 +121,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Footnotes and/or explanatory notes.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -147,6 +149,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// population | subpopulation | exposure | referenceExposure | measuredVariable | confounder.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("variableRole", InSummary=true, Order=60)]
       [Binding("EvidenceVariableRole")]
       [Cardinality(Min=1,Max=1)]
@@ -175,8 +178,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Definition of the actual variable related to the statistic(s).
       /// </summary>
-      [FhirElement("observed", InSummary=true, Order=70)]
       [CLSCompliant(false)]
+      [FhirElement("observed", InSummary=true, Order=70)]
       [References("Group","EvidenceVariable")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Observed
@@ -203,8 +206,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Definition of the intended variable related to the Evidence.
       /// </summary>
-      [FhirElement("intended", Order=80)]
       [CLSCompliant(false)]
+      [FhirElement("intended", Order=80)]
       [References("Group","EvidenceVariable")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Intended
@@ -231,6 +234,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// low | moderate | high | exact.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("directnessMatch", Order=90)]
       [Binding("EvidenceDirectness")]
       [DataMember]
@@ -439,6 +443,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of content.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -480,6 +485,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Footnotes and/or explanatory notes.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -507,6 +513,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of statistic, e.g., relative risk.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("statisticType", Order=60)]
       [Binding("StatisticType")]
       [DataMember]
@@ -534,6 +541,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Associated category for categorical variable.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("category", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Category
@@ -560,6 +568,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Statistic value.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("quantity", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -586,6 +595,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The number of events associated with the statistic.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("numberOfEvents", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? NumberOfEventsElement
@@ -627,6 +637,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The number of participants affected.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("numberAffected", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? NumberAffectedElement
@@ -668,6 +679,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Number of samples in the statistic.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("sampleSize", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Evidence.SampleSizeComponent? SampleSize
@@ -694,6 +706,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An attribute of the Statistic.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("attributeEstimate", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -721,6 +734,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An aspect of the statistical model.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("modelCharacteristic", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1005,6 +1019,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Textual description of sample size for statistic.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1046,6 +1061,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Footnote or explanatory note about the sample size.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1073,6 +1089,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Number of contributing studies.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("numberOfStudies", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? NumberOfStudiesElement
@@ -1114,6 +1131,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Cumulative number of participants.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("numberOfParticipants", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? NumberOfParticipantsElement
@@ -1155,6 +1173,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Number of participants with known results for measured variables.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("knownDataCount", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? KnownDataCountElement
@@ -1361,6 +1380,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Textual description of the attribute estimate.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1402,6 +1422,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Footnote or explanatory note about the estimate.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1429,6 +1450,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of attribute estimate, e.g., confidence interval or p value.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=60)]
       [Binding("AttributeEstimateType")]
       [DataMember]
@@ -1456,6 +1478,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The singular quantity of the attribute estimate, for attribute estimates represented as single values; also used to report unit of measure.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("quantity", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -1482,6 +1505,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Level of confidence interval, e.g., 0.95 for 95% confidence interval.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("level", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? LevelElement
@@ -1523,6 +1547,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lower and upper bound values of the attribute estimate.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("range", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Range? Range
@@ -1549,6 +1574,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A nested attribute estimate; which is the attribute estimate of an attribute estimate.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("attributeEstimate", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1779,6 +1805,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Model specification.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Binding("StatisticModelCode")]
       [Cardinality(Min=1,Max=1)]
@@ -1807,6 +1834,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Numerical value to complete model specification.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("value", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Value
@@ -1833,6 +1861,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A variable adjusted for in the adjusted analysis.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("variable", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1860,6 +1889,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An attribute of the statistic used as a model characteristic.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("attributeEstimate", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2030,8 +2060,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of the variable.
       /// </summary>
-      [FhirElement("variableDefinition", Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("variableDefinition", Order=40)]
       [References("Group","EvidenceVariable")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2059,8 +2089,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// continuous | dichotomous | ordinal | polychotomous.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("handling", Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("EvidenceVariableHandling")]
       [DataMember]
       public Code<Hl7.Fhir.Model.EvidenceVariableHandling>? HandlingElement
@@ -2102,6 +2133,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description for grouping of ordinal or polychotomous variables.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("valueCategory", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2129,6 +2161,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Discrete value for grouping of ordinal or polychotomous variables.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("valueQuantity", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2156,6 +2189,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Range of values for grouping of ordinal or polychotomous variables.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("valueRange", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2348,6 +2382,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Textual description of certainty.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -2389,6 +2424,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Footnotes and/or explanatory notes.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2416,6 +2452,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Aspect of certainty being rated.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=60)]
       [Binding("EvidenceCertaintyType")]
       [DataMember]
@@ -2443,6 +2480,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Assessment or judgement of the aspect.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("rating", Order=70)]
       [Binding("EvidenceCertaintyRating")]
       [DataMember]
@@ -2470,6 +2508,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual or group who did the rating.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("rater", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? RaterElement
@@ -2511,6 +2550,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A domain or subdomain of certainty.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("subcomponent", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2706,6 +2746,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this evidence, represented as a globally unique URI.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -2747,6 +2788,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the summary.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2774,6 +2816,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of this summary.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -2815,9 +2858,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to compare versions.
     /// </summary>
-    [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
+    [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
     {
@@ -2843,6 +2886,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this summary (machine friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -2884,6 +2928,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this summary (human friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -2925,10 +2970,10 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Citation for this evidence.
     /// </summary>
-    [FhirElement("citeAs", Order=150, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [FhirElement("citeAs", Order=150, Choice=ChoiceType.DatatypeChoice)]
     [References("Citation")]
-    [ChoiceTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Markdown))]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Markdown))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? CiteAs
     {
@@ -2954,8 +2999,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2998,6 +3044,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -3039,6 +3086,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -3080,6 +3128,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the summary was approved by publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -3121,6 +3170,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the summary was last reviewed by the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -3162,6 +3212,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher/steward (organization or individual).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=210, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -3203,6 +3254,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3230,6 +3282,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3257,6 +3310,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("editor", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3284,6 +3338,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reviewer", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3311,6 +3366,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("endorser", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3338,6 +3394,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3365,6 +3422,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this Evidence is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=280, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -3406,6 +3464,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyright", Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -3447,6 +3506,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Copyright holder and year(s).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyrightLabel", Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CopyrightLabelElement
@@ -3488,6 +3548,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link or citation to artifact associated with the summary.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3515,6 +3576,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of the particular summary.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", Order=320)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -3556,6 +3618,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Declarative description of the Evidence.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("assertion", Order=330)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? AssertionElement
@@ -3597,6 +3660,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Footnotes and/or explanatory notes.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3624,6 +3688,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Evidence variable such as population, exposure, or outcome.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("variableDefinition", Order=350)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -3651,6 +3716,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The method to combine studies.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("synthesisType", Order=360)]
     [Binding("SynthesisType")]
     [DataMember]
@@ -3678,6 +3744,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The design of the study that produced this evidence.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("studyDesign", Order=370)]
     [Binding("StudyDesign")]
     [Cardinality(Min=0,Max=-1)]
@@ -3706,6 +3773,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Values and parameters for a single statistic.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("statistic", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3733,6 +3801,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Certainty or quality of the evidence.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("certainty", Order=390)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

@@ -94,6 +94,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this formulary item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -121,6 +122,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Codes that identify this formulary item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=100)]
     [Binding("FormularyItemFormalRepresentation")]
     [DataMember]
@@ -148,8 +150,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | entered-in-error | inactive.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("FormularyItemStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FormularyItem.FormularyItemStatusCodes>? StatusElement
