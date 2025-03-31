@@ -406,7 +406,9 @@ public class BaseFhirJsonDeserializer
         }
         else if (reader.TokenType == JsonTokenType.StartArray)
         {
-            var primitiveType = getFhirTypeForToken(peekType(ref reader));
+            var peeked = peekTypeNested(ref reader);
+            
+            var primitiveType = getFhirTypeForToken(peeked);
             
             propertyValueMapping ??= _inspector.FindClassMapping(primitiveType!)!;
 
@@ -456,6 +458,17 @@ public class BaseFhirJsonDeserializer
         }
 
         return reader.TokenType;
+    }
+    
+    private static JsonTokenType peekTypeNested(ref Utf8JsonReader reader)
+    {
+        var peekCopy = reader;
+        while (peekCopy.TokenType is JsonTokenType.StartArray or JsonTokenType.Null)
+        {
+            peekCopy.Read();
+        }
+
+        return peekCopy.TokenType;
     }
     
     private static Type getFhirTypeForToken(JsonTokenType tokenType)
@@ -617,6 +630,13 @@ public class BaseFhirJsonDeserializer
                 // don't read any new data into the primitive here
                 reader.Read();
             }
+            else if(reader.TokenType == JsonTokenType.StartArray)
+            {
+                onlyNulls = false;
+                delayedValidations.SetPropertyIndex(propertyName, existingList.Count - 1);
+                
+                _ = deserializeFhirPrimitiveList(existingList, propertyName, propertyValueMapping, ref reader, delayedValidations, state);
+            }
             else
             {
                 existingList[elementIndex] ??= propertyValueMapping.Factory();
@@ -664,15 +684,14 @@ public class BaseFhirJsonDeserializer
         if (propertyName[0] != '_')
         {
             // No underscore, dealing with the 'value' property here.
-            var primitiveValueProperty = propertyValueMapping.PrimitiveValueProperty ??
-                                         throw new InvalidOperationException($"All subclasses of {nameof(PrimitiveType)} should have a property representing the value element, " +
-                                                                             $"but {propertyValueMapping.Name} has not. " + reader.GenerateLocationMessage());
+            // DynamicPrimitive doesn't have PrimitiveValueProperty, but it's also not 100% necessary
+            var primitiveImplementingType = propertyValueMapping.PrimitiveValueProperty?.ImplementingType;
 
             try
             {
                 state.Path.EnterElement("value", 0, true);
 
-                var (result, error) = DeserializePrimitiveValue(ref reader, primitiveValueProperty.ImplementingType, state.Path);
+                var (result, error) = DeserializePrimitiveValue(ref reader, primitiveImplementingType, state.Path);
 
                 if (error is not null)
                     state.Errors.Add(error);
@@ -751,7 +770,7 @@ public class BaseFhirJsonDeserializer
     /// <returns>A value without an error if the data could be parsed to the required type, and a value with an error if the
     /// value could not be parsed - in which case the value returned is the raw value coming in from the reader.</returns>
     /// <remarks>Upon completion, the reader will be positioned on the token after the primitive.</remarks>
-    internal (object?, FhirJsonException?) DeserializePrimitiveValue(ref Utf8JsonReader reader, Type valuePropertyType,
+    internal (object?, FhirJsonException?) DeserializePrimitiveValue(ref Utf8JsonReader reader, Type? valuePropertyType,
         PathStack pathStack)
     {
         // Check for unexpected non-value types.
@@ -792,7 +811,7 @@ public class BaseFhirJsonDeserializer
     /// This function tries to map from the json-format "generic" number to the kind of numeric type defined in the POCO.
     /// </summary>
     /// <remarks>Reader must be positioned on a number token. This function will not move the reader to the next token.</remarks>
-    private static object tryGetMatchingNumber(ref Utf8JsonReader reader, Type implementingType)
+    private static object tryGetMatchingNumber(ref Utf8JsonReader reader, Type? implementingType)
     {
         if (reader.TokenType != JsonTokenType.Number)
             throw new InvalidOperationException($"Cannot read a numeric when reader is on a {reader.TokenType}. " +
