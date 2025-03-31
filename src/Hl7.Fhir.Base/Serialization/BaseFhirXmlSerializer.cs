@@ -95,7 +95,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
             .EnumerateElements()
             .Concat(element is PrimitiveType { ObjectValue: {} ptValue } ? [KeyValuePair.Create("value", ptValue)] : [])
             .Select(m => (m, mapping: mapping?.FindMappedElementByName(m.Key)))
-            .OrderBy(p => p.mapping?.SerializationHint != XmlRepresentation.XmlAttr);
+            .OrderBy(p => (p.mapping?.SerializationHint != XmlRepresentation.XmlAttr) || (p.m.Value is Base b && b.Annotation<XmlRepresentationAnnotation>()?.Value != XmlRepresentation.XmlAttr));
 
         foreach (var ((mKey, mValue), propertyMapping) in orderedMembers)
         {
@@ -104,8 +104,8 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
 
             var serializeValue = mValue!;
 
-            if (propertyMapping?.SerializationHint == XmlRepresentation.XmlAttr &&
-                serializeValue is PrimitiveType primitive)
+            if (serializeValue is PrimitiveType primitive && 
+                (propertyMapping?.SerializationHint ?? primitive.Annotation<XmlRepresentationAnnotation>()?.Value) == XmlRepresentation.XmlAttr)
             {
                 // If this is a FHIR primitive element marked as XmlAttr,
                 // take the primitive's value (e.g. Extension.url, Element.id)

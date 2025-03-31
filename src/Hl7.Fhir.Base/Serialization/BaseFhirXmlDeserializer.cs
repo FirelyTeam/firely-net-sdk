@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
@@ -329,7 +330,14 @@ public class BaseFhirXmlDeserializer
 
         var primitive = (mapping!.Factory() as Base)!;
 
-        DeserializeElementInto(primitive, mapping, reader, state);
+        // primitive with value in content
+        if (reader.NodeType == XmlNodeType.Text && string.IsNullOrEmpty(propertyName))
+        {
+            propertyName = "value";
+            primitive = new DynamicPrimitive() { ObjectValue = reader.ReadString().Trim() };
+        }
+        else
+            DeserializeElementInto(primitive, mapping, reader, state);
         
         // if we have primitive rather than datatype, convert it to primitive
         if(primitive.TryGetValue("value", out _))
@@ -375,6 +383,8 @@ public class BaseFhirXmlDeserializer
             int i => new Integer(i),
             _ => new DynamicPrimitive() { ObjectValue = val }
         };
+        
+        baseVal.AddAnnotation(new XmlRepresentationAnnotation(XmlRepresentation.XmlAttr));
       
         setPropertyWithRepeating(target, attrName, inspector.FindClassMapping(typeof(DynamicPrimitive))!, baseVal);
     }
