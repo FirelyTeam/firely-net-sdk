@@ -507,6 +507,9 @@ public class FhirJsonDeserializationTests
 
             assertErrors(dfe.Exceptions, [
                 COVE.LITERAL_INVALID_CODE,
+                ERR.DUPLICATE_ARRAY_CODE,
+                ERR.DUPLICATE_ARRAY_CODE,
+                ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE,               
                 // ERR.UNKNOWN_PROPERTY_FOUND_CODE, // resourceType at the non-root level - overflow
                 // ERR.UNKNOWN_RESOURCE_TYPE_CODE, // resourceType: PatientX - dynamic
                 ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE, // resourceType: Meta - dynamic

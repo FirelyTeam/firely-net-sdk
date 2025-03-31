@@ -1,5 +1,13 @@
 {
   "resourceType": "Patient",
+  "unknownElement": {
+    "valued": {
+      "data": [
+        true,
+        null
+      ]
+    }
+  },
   "id": "pat1-with-errors",
   "meta": {
     "lastUpdated": "not a valid instant"
@@ -10,6 +18,54 @@
     "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div>"
   },
   "contained": [
+    {
+      "resourceType": "MultiLevelArrayPrimitive",
+      "active": [
+        null,
+        true
+      ],
+      "id": "1"
+    },
+    {
+      "resourceType": "MultiLevelArrayPrimitiveNoNull",
+      "active": [
+        true,
+        false
+      ],
+      "id": "1"
+    },
+    {
+      "resourceType": "MultiLevelArrayWithComplex",
+      "active": [
+        {},
+        {
+          "value": [
+            {
+              "versionId": "2"
+            }
+          ]
+        }
+      ],
+      "id": "1"
+    },
+    {
+      "resourceType": "MultiLevelArrayWithComplexNoNull",
+      "active": [
+        {
+          "value": [
+            {
+              "versionId": "2"
+            }
+          ]
+        },
+        {
+          "value": [
+            true
+          ]
+        }
+      ],
+      "id": "1"
+    },
     {
       "resourceType": "PatientX",
       "id": "1"

@@ -2,9 +2,12 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Tests;
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -16,6 +19,48 @@ namespace Hl7.Fhir.Support.Poco.Tests
     [TestClass]
     public class FhirXmlDeserializationTests
     {
+        private static void assertErrors(IEnumerable<CodedException> actual, string[] expected)
+        {
+            if (expected.Length == 0 && !actual.Any())
+                return;
+
+            string why =
+                $"Should be the same: actual [{string.Join(",", actual.Select(a => a.ErrorCode))}] and expected [{string.Join(";", expected)}]";
+            Console.WriteLine("Messages: " + string.Join(", ", actual.Select(a => a.Message)));
+            actual.Count().Should().Be(expected.Length, because: why);
+            _ = actual.Zip(expected, (a, e) => a.ErrorCode.Should().Be(e, because: why)).ToList();
+            Console.WriteLine($"Found {string.Join(", ", actual.Select(a => a.Message))}");
+        }
+        
+        [TestMethod]
+        public void TestRecovery()
+        {
+            var filename = Path.Combine("TestData", "fp-test-patient-errors.xml");
+            var jsonInput = File.ReadAllText(filename);
+            var serializer = getTestDeserializer(new DeserializerSettings());
+    
+            try
+            {
+                var actual = serializer.Deserialize<Patient>(jsonInput);
+                Assert.Fail("Should have encountered errors.");
+            }
+            catch (DeserializationFailedException dfe)
+            {
+                Console.WriteLine(dfe.Message);
+                var recoveredActual = FhirXmlSerializer.Default.SerializeToString(dfe.PartialResult);
+                                
+                Console.WriteLine(recoveredActual);
+                assertErrors(dfe.Exceptions, [
+                    ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, ERR.INVALID_DUPLICATE_PROPERTY_CODE, ERR.INCORRECT_ELEMENT_NAMESPACE_CODE, ERR.INCORRECT_ELEMENT_NAMESPACE_CODE, ERR.INCORRECT_ELEMENT_NAMESPACE_CODE, ERR.INVALID_DUPLICATE_PROPERTY_CODE, COVE.LITERAL_INVALID_CODE
+                ]);
+                
+                var recoveredFilename = Path.Combine("TestData", "fp-test-patient-errors-recovered.xml");
+                var recoveredExpected = File.ReadAllText(recoveredFilename);
+                
+                XmlAssert.AreSame("fp-test-patient-xml-errors/recovery", recoveredExpected, recoveredActual);
+            }
+        }
+        
         [DataTestMethod]
         [DataRow("<active value =\"true\"/>", typeof(FhirBoolean), true, null)]
         [DataRow("<multipleBirthInteger value =\"1\"/>", typeof(Integer), 1, null)]
