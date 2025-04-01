@@ -68,6 +68,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Starting time with inclusive boundary.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("start", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? StartElement
@@ -109,6 +110,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// End time with inclusive boundary, if not ongoing.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("end", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? EndElement

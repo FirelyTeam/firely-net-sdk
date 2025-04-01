@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Boolean-valued expression.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("condition", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Expression? Condition
@@ -109,6 +110,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the charge item definition is expected to be used.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("effectivePeriod", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -135,6 +137,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to / quotation of the external source of the group of properties.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("relatedArtifact", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.RelatedArtifact? RelatedArtifact
@@ -288,6 +291,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Conditions under which the priceComponent is applicable.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("applicability", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -315,6 +319,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Components of total line item price.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("priceComponent", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -434,6 +439,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this charge item definition, represented as a URI (globally unique).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -475,6 +481,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the charge item definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -502,6 +509,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the charge item definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -543,8 +551,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to compare versions.
     /// </summary>
-    [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
@@ -571,6 +579,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this charge item definition (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -612,6 +621,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this charge item definition (human friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -653,6 +663,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Underlying externally-defined charge item definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("derivedFromUri", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -698,6 +709,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A larger definition of which this particular definition is a component or step.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("partOf", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -743,6 +755,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Completed or terminated request(s) whose function is taken by this new request.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("replaces", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -788,8 +801,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=180, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -832,6 +846,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=190, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -873,6 +888,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=200, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -914,6 +930,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher/steward (organization or individual).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=210, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -955,6 +972,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -982,6 +1000,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the charge item definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1023,6 +1042,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1050,6 +1070,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for charge item definition (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1078,6 +1099,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this charge item definition is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=260, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -1119,6 +1141,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyright", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -1160,6 +1183,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Copyright holder and year(s).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyrightLabel", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CopyrightLabelElement
@@ -1201,6 +1225,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the charge item definition was approved by publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -1242,6 +1267,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the charge item definition was last reviewed by the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -1283,6 +1309,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Billing code or product type this definition applies to.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=310)]
     [Binding("ChargeItemDefinitionCode")]
     [DataMember]
@@ -1310,8 +1337,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instances this definition applies to.
     /// </summary>
-    [FhirElement("instance", Order=320)]
     [CLSCompliant(false)]
+    [FhirElement("instance", Order=320)]
     [References("Medication","Substance","Device","DeviceDefinition","ActivityDefinition","PlanDefinition","HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1339,6 +1366,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether or not the billing code is applicable.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("applicability", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1366,6 +1394,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Group of properties which are applicable under the same conditions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("propertyGroup", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

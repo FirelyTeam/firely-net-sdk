@@ -94,6 +94,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -121,8 +122,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("FlagStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -165,6 +167,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical, administrative, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
     [Binding("FlagCategory")]
     [DataMember]
@@ -192,6 +195,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded or textual message to display to user.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=120, FiveWs="what")]
     [Binding("FlagCode")]
     [Cardinality(Min=1,Max=1)]
@@ -220,8 +224,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/What is flag about?.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [References("Patient","Location","Group","Organization","Practitioner","PlanDefinition","Medication","Procedure")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -249,6 +253,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period when flag is active.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=140, FiveWs="context")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -275,8 +280,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Alert relevant during encounter.
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=150, FiveWs="context")]
     [CLSCompliant(false)]
+    [FhirElement("encounter", InSummary=true, Order=150, FiveWs="context")]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -303,8 +308,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Flag creator.
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=160, FiveWs="who.author")]
     [CLSCompliant(false)]
+    [FhirElement("author", InSummary=true, Order=160, FiveWs="who.author")]
     [References("Device","Organization","Patient","Practitioner")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author

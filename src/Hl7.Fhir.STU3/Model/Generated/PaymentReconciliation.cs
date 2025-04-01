@@ -82,6 +82,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type code.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("PaymentType")]
       [Cardinality(Min=1,Max=1)]
@@ -110,8 +111,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Claim.
       /// </summary>
-      [FhirElement("request", Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("request", Order=50)]
       [References("Resource")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Request
@@ -138,8 +139,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Claim Response.
       /// </summary>
-      [FhirElement("response", Order=60)]
       [CLSCompliant(false)]
+      [FhirElement("response", Order=60)]
       [References("Resource")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Response
@@ -166,8 +167,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization which submitted the claim.
       /// </summary>
-      [FhirElement("submitter", Order=70)]
       [CLSCompliant(false)]
+      [FhirElement("submitter", Order=70)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Submitter
@@ -194,8 +195,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization which is receiving the payment.
       /// </summary>
-      [FhirElement("payee", Order=80, FiveWs="who.focus")]
       [CLSCompliant(false)]
+      [FhirElement("payee", Order=80, FiveWs="who.focus")]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Payee
@@ -222,6 +223,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Invoice date.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("date", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Date? DateElement
@@ -263,6 +265,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Amount being paid.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("amount", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Money? Amount
@@ -492,6 +495,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// display | print | printoper.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("NoteType")]
       [DataMember]
@@ -519,6 +523,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Comment on the processing.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("text", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextElement
@@ -652,6 +657,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -679,8 +685,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PaymentReconciliationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
@@ -722,6 +729,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period covered.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", Order=110, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -748,6 +756,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("created", Order=120, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -789,8 +798,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurer.
     /// </summary>
-    [FhirElement("organization", Order=130, FiveWs="who.source")]
     [CLSCompliant(false)]
+    [FhirElement("organization", Order=130, FiveWs="who.source")]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Organization
@@ -817,8 +826,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Claim reference.
     /// </summary>
-    [FhirElement("request", Order=140, FiveWs="why")]
     [CLSCompliant(false)]
+    [FhirElement("request", Order=140, FiveWs="why")]
     [References("ProcessRequest")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Request
@@ -845,6 +854,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// complete | error | partial.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("outcome", Order=150)]
     [Binding("RemittanceOutcome")]
     [DataMember]
@@ -872,6 +882,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Disposition Message.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("disposition", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DispositionElement
@@ -913,8 +924,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner.
     /// </summary>
-    [FhirElement("requestProvider", Order=170)]
     [CLSCompliant(false)]
+    [FhirElement("requestProvider", Order=170)]
     [References("Practitioner")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? RequestProvider
@@ -941,8 +952,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization.
     /// </summary>
-    [FhirElement("requestOrganization", Order=180)]
     [CLSCompliant(false)]
+    [FhirElement("requestOrganization", Order=180)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? RequestOrganization
@@ -969,6 +980,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// List of settlements.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("detail", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -996,6 +1008,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Printed Form Identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("form", Order=200)]
     [Binding("Forms")]
     [DataMember]
@@ -1023,6 +1036,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Total amount of Payment.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("total", Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.Money? Total
@@ -1049,6 +1063,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Processing comments.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("processNote", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

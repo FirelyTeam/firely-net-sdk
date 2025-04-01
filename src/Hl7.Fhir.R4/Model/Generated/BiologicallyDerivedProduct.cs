@@ -171,8 +171,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual performing collection.
       /// </summary>
-      [FhirElement("collector", Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("collector", Order=40)]
       [References("Practitioner","PractitionerRole")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Collector
@@ -199,8 +199,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who is product from.
       /// </summary>
-      [FhirElement("source", Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("source", Order=50)]
       [References("Patient","Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Source
@@ -227,8 +227,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time of product collection.
       /// </summary>
-      [FhirElement("collected", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("collected", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Collected
@@ -382,6 +382,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of of processing.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -423,6 +424,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Procesing code.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("procedure", Order=50)]
       [Binding("BiologicallyDerivedProductProcedure")]
       [DataMember]
@@ -450,8 +452,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Substance added during processing.
       /// </summary>
-      [FhirElement("additive", Order=60)]
       [CLSCompliant(false)]
+      [FhirElement("additive", Order=60)]
       [References("Substance")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Additive
@@ -478,8 +480,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time of processing.
       /// </summary>
-      [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Time
@@ -652,6 +654,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of manipulation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -693,8 +696,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time of manipulation.
       /// </summary>
-      [FhirElement("time", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("time", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Time
@@ -826,6 +829,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of storage.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -867,6 +871,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Storage temperature.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("temperature", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? TemperatureElement
@@ -908,8 +913,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// farenheit | celsius | kelvin.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("scale", Order=60)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("BiologicallyDerivedProductStorageScale")]
       [DataMember]
       public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale>? ScaleElement
@@ -951,6 +957,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Storage timeperiod.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("duration", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Duration
@@ -1107,6 +1114,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External ids for this item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1134,8 +1142,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// organ | tissue | fluid | cells | biologicalAgent.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("productCategory", Order=100)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("BiologicallyDerivedProductCategory")]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory>? ProductCategoryElement
@@ -1177,6 +1186,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What this biologically derived product is.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("productCode", Order=110)]
     [Binding("BiologicallyDerivedProductCode")]
     [DataMember]
@@ -1204,8 +1214,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// available | unavailable.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", Order=120)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("BiologicallyDerivedProductStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus>? StatusElement
@@ -1247,8 +1258,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Procedure request.
     /// </summary>
-    [FhirElement("request", Order=130)]
     [CLSCompliant(false)]
+    [FhirElement("request", Order=130)]
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1276,6 +1287,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The amount of this biologically derived product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("quantity", Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Integer? QuantityElement
@@ -1317,8 +1329,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// BiologicallyDerivedProduct parent.
     /// </summary>
-    [FhirElement("parent", Order=150)]
     [CLSCompliant(false)]
+    [FhirElement("parent", Order=150)]
     [References("BiologicallyDerivedProduct")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1346,6 +1358,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How this product was collected.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("collection", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent? Collection
@@ -1372,6 +1385,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Any processing of the product during collection.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("processing", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1399,6 +1413,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Any manipulation of product post-collection.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("manipulation", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.BiologicallyDerivedProduct.ManipulationComponent? Manipulation
@@ -1425,6 +1440,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Product storage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("storage", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

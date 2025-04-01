@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Version specific identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("versionId", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Id? VersionIdElement
@@ -107,6 +108,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the resource version last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lastUpdated", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Instant? LastUpdatedElement
@@ -151,6 +153,7 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R4, do not use when working with older releases.
     /// </remarks>
+    [CLSCompliant(false)]
     [FhirElement("source", InSummary=true, Order=50, Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? SourceElement
@@ -195,14 +198,10 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirUri in STU3, Hl7.Fhir.Model.Canonical starting from R4.
     /// </remarks>
-    [FhirElement("profile", InSummary=true, Order=60)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
-    // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
-    // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
-    // [AllowedTypes(typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
-    [DeclaredType(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
-    [DeclaredType(typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
+    [FhirElement("profile", InSummary=true, Order=60)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.PrimitiveType> ProfileElement
@@ -265,6 +264,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Security Labels applied to this resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("security", InSummary=true, Order=70)]
     [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
@@ -293,6 +293,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Tags applied to this resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("tag", InSummary=true, Order=80)]
     [Binding("Tags")]
     [Cardinality(Min=0,Max=-1)]

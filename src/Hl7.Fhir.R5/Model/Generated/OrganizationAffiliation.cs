@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifiers that are specific to this role.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -90,6 +91,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this organization affiliation record is in active use.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -131,6 +133,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The period during which the participatingOrganization is affiliated with the primary organization.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=110, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -157,8 +160,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization where the role is available.
     /// </summary>
-    [FhirElement("organization", InSummary=true, Order=120)]
     [CLSCompliant(false)]
+    [FhirElement("organization", InSummary=true, Order=120)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Organization
@@ -185,8 +188,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that provides/performs the role (e.g. providing services or is a member of).
     /// </summary>
-    [FhirElement("participatingOrganization", InSummary=true, Order=130)]
     [CLSCompliant(false)]
+    [FhirElement("participatingOrganization", InSummary=true, Order=130)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ParticipatingOrganization
@@ -213,8 +216,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined).
     /// </summary>
-    [FhirElement("network", InSummary=true, Order=140)]
     [CLSCompliant(false)]
+    [FhirElement("network", InSummary=true, Order=140)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -242,6 +245,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of the role the participatingOrganization plays.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=150)]
     [Binding("OrganizationAffiliation")]
     [Cardinality(Min=0,Max=-1)]
@@ -270,6 +274,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific specialty of the participatingOrganization in the context of the role.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("specialty", InSummary=true, Order=160)]
     [Binding("OrganizationSpecialty")]
     [Cardinality(Min=0,Max=-1)]
@@ -298,8 +303,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The location(s) at which the role occurs.
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=170, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
+    [FhirElement("location", InSummary=true, Order=170, FiveWs="FiveWs.where[x]")]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -327,8 +332,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare services provided through the role.
     /// </summary>
-    [FhirElement("healthcareService", Order=180)]
     [CLSCompliant(false)]
+    [FhirElement("healthcareService", Order=180)]
     [References("HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -356,6 +361,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Official contact details at the participatingOrganization relevant to this Affiliation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -383,8 +389,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Technical endpoints providing access to services operated for this role.
     /// </summary>
-    [FhirElement("endpoint", Order=200)]
     [CLSCompliant(false)]
+    [FhirElement("endpoint", Order=200)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

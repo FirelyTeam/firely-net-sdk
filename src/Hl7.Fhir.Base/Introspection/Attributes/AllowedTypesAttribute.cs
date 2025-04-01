@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Introspection;
 /// Validates the type of a property against the allowed type choices.
 /// </summary>
 [CLSCompliant(false)]
-[AttributeUsage(AttributeTargets.Property)]
+[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
 public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAttribute
 {
     /// <summary>

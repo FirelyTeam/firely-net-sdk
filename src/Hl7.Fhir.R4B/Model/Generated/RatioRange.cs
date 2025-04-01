@@ -67,6 +67,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Low Numerator limit.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lowNumerator", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? LowNumerator
@@ -93,6 +94,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// High Numerator limit.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("highNumerator", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? HighNumerator
@@ -119,6 +121,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Denominator value.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("denominator", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Denominator

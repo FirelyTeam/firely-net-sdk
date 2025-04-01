@@ -225,6 +225,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How many times to repeat.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("repetitions", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? RepetitionsElement
@@ -266,6 +267,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When fulfillment sought.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("period", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -292,8 +294,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For whom is fulfillment sought?.
       /// </summary>
-      [FhirElement("recipient", Order=60)]
       [CLSCompliant(false)]
+      [FhirElement("recipient", Order=60)]
       [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Group","Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -448,6 +450,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for the input.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("TaskInputParameterType")]
       [Cardinality(Min=1,Max=1)]
@@ -476,8 +479,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Content to use in performing the task.
       /// </summary>
-      [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ContactDetail),typeof(Hl7.Fhir.Model.Contributor),typeof(Hl7.Fhir.Model.DataRequirement),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.ParameterDefinition),typeof(Hl7.Fhir.Model.RelatedArtifact),typeof(Hl7.Fhir.Model.TriggerDefinition),typeof(Hl7.Fhir.Model.UsageContext),typeof(Hl7.Fhir.Model.Dosage),typeof(Hl7.Fhir.Model.Meta))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -613,6 +616,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for output.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("TaskOutputParameterType")]
       [Cardinality(Min=1,Max=1)]
@@ -641,8 +645,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Result of output.
       /// </summary>
-      [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ContactDetail),typeof(Hl7.Fhir.Model.Contributor),typeof(Hl7.Fhir.Model.DataRequirement),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.ParameterDefinition),typeof(Hl7.Fhir.Model.RelatedArtifact),typeof(Hl7.Fhir.Model.TriggerDefinition),typeof(Hl7.Fhir.Model.UsageContext),typeof(Hl7.Fhir.Model.Dosage),typeof(Hl7.Fhir.Model.Meta))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -762,6 +766,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Task Instance Identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -789,6 +794,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Formal definition of task.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? InstantiatesCanonicalElement
@@ -830,6 +836,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Formal definition of task.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? InstantiatesUriElement
@@ -871,8 +878,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled by this task.
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=120)]
     [CLSCompliant(false)]
+    [FhirElement("basedOn", InSummary=true, Order=120)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -900,6 +907,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Requisition or grouper id.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("groupIdentifier", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? GroupIdentifier
@@ -926,8 +934,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composite task.
     /// </summary>
-    [FhirElement("partOf", InSummary=true, Order=140)]
     [CLSCompliant(false)]
+    [FhirElement("partOf", InSummary=true, Order=140)]
     [References("Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -955,8 +963,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | requested | received | accepted | +.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("TaskStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -999,6 +1008,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("statusReason", InSummary=true, Order=160)]
     [Binding("TaskStatusReason")]
     [DataMember]
@@ -1026,6 +1036,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. "Specimen collected", "IV prepped".
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("businessStatus", InSummary=true, Order=170)]
     [Binding("TaskBusinessStatus")]
     [DataMember]
@@ -1053,8 +1064,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("intent", InSummary=true, Order=180, FiveWs="FiveWs.class")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("TaskIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1097,8 +1109,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("priority", Order=190, FiveWs="FiveWs.grade")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("TaskPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement
@@ -1140,6 +1153,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Task Type.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=200, FiveWs="FiveWs.what[x]")]
     [Binding("TaskCode")]
     [DataMember]
@@ -1167,6 +1181,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human-readable explanation of task.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -1208,8 +1223,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What task is acting on.
     /// </summary>
-    [FhirElement("focus", InSummary=true, Order=220, FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
+    [FhirElement("focus", InSummary=true, Order=220, FiveWs="FiveWs.what[x]")]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Focus
@@ -1236,8 +1251,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Beneficiary of the Task.
     /// </summary>
-    [FhirElement("for", InSummary=true, Order=230, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("for", InSummary=true, Order=230, FiveWs="FiveWs.subject")]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? For
@@ -1264,8 +1279,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare event during which this task originated.
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=240, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
+    [FhirElement("encounter", InSummary=true, Order=240, FiveWs="FiveWs.context")]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -1292,6 +1307,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Start and end time of execution.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("executionPeriod", InSummary=true, Order=250, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period? ExecutionPeriod
@@ -1318,6 +1334,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Task Creation Date.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("authoredOn", Order=260, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? AuthoredOnElement
@@ -1359,6 +1376,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Task Last Modified Date.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lastModified", InSummary=true, Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? LastModifiedElement
@@ -1400,8 +1418,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is asking for task to be done.
     /// </summary>
-    [FhirElement("requester", InSummary=true, Order=280, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
+    [FhirElement("requester", InSummary=true, Order=280, FiveWs="FiveWs.author")]
     [References("Device","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Requester
@@ -1428,6 +1446,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Requested performer.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("performerType", Order=290, FiveWs="FiveWs.actor")]
     [Binding("TaskPerformerType")]
     [Cardinality(Min=0,Max=-1)]
@@ -1456,8 +1475,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible individual.
     /// </summary>
-    [FhirElement("owner", InSummary=true, Order=300, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
+    [FhirElement("owner", InSummary=true, Order=300, FiveWs="FiveWs.actor")]
     [References("Practitioner","PractitionerRole","Organization","CareTeam","HealthcareService","Patient","Device","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Owner
@@ -1484,8 +1503,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where task occurs.
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=310, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
+    [FhirElement("location", InSummary=true, Order=310, FiveWs="FiveWs.where[x]")]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -1512,6 +1531,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why task is needed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reasonCode", Order=320, FiveWs="FiveWs.why[x]")]
     [Binding("TaskReason")]
     [DataMember]
@@ -1539,8 +1559,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why task is needed.
     /// </summary>
-    [FhirElement("reasonReference", Order=330, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
+    [FhirElement("reasonReference", Order=330, FiveWs="FiveWs.why[x]")]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ReasonReference
@@ -1567,8 +1587,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated insurance coverage.
     /// </summary>
-    [FhirElement("insurance", Order=340)]
     [CLSCompliant(false)]
+    [FhirElement("insurance", Order=340)]
     [References("Coverage","ClaimResponse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1596,6 +1616,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the task.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1623,8 +1644,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Key events in history of the Task.
     /// </summary>
-    [FhirElement("relevantHistory", Order=360)]
     [CLSCompliant(false)]
+    [FhirElement("relevantHistory", Order=360)]
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1652,6 +1673,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Constraints on fulfillment tasks.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("restriction", Order=370)]
     [DataMember]
     public Hl7.Fhir.Model.Task.RestrictionComponent? Restriction
@@ -1678,6 +1700,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information used to perform task.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("input", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1705,6 +1728,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information produced as part of task.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("output", Order=390)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

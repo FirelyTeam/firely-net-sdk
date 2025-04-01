@@ -122,6 +122,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of involvement.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("role", InSummary=true, Order=40)]
       [Binding("CareTeamParticipantRole")]
       [Cardinality(Min=0,Max=-1)]
@@ -150,8 +151,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who is involved.
       /// </summary>
-      [FhirElement("member", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
+      [FhirElement("member", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Organization","CareTeam")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Member
@@ -178,8 +179,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization of the practitioner.
       /// </summary>
-      [FhirElement("onBehalfOf", InSummary=true, Order=60)]
       [CLSCompliant(false)]
+      [FhirElement("onBehalfOf", InSummary=true, Order=60)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? OnBehalfOf
@@ -206,6 +207,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time period of participant.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("period", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -362,6 +364,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this team.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -389,8 +392,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | active | suspended | inactive | entered-in-error.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("CareTeamStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CareTeam.CareTeamStatus>? StatusElement
@@ -432,6 +436,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of team.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("CareTeamCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -460,6 +465,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the team, such as crisis assessment team.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -501,8 +507,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who care team is for.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [References("Patient","Group")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -529,8 +535,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of.
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=140, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
+    [FhirElement("encounter", InSummary=true, Order=140, FiveWs="FiveWs.context")]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -557,6 +563,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period team covers.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=150, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -583,6 +590,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Members of the team.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("participant", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -610,6 +618,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the care team exists.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reasonCode", Order=170, FiveWs="FiveWs.why[x]")]
     [Binding("CareTeamReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -638,8 +647,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the care team exists.
     /// </summary>
-    [FhirElement("reasonReference", Order=180, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
+    [FhirElement("reasonReference", Order=180, FiveWs="FiveWs.why[x]")]
     [References("Condition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -667,8 +676,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization responsible for the care team.
     /// </summary>
-    [FhirElement("managingOrganization", InSummary=true, Order=190)]
     [CLSCompliant(false)]
+    [FhirElement("managingOrganization", InSummary=true, Order=190)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -696,6 +705,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the care team (that applies to all members).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("telecom", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -723,6 +733,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the CareTeam.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

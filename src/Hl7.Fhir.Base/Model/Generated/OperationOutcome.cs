@@ -331,9 +331,10 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// fatal | error | warning | information | success.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("severity", InSummary=true, IsModifier=true, Order=40)]
       [FhirElement("severity", InSummary=true, Order=40, Since=FhirRelease.R4)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("IssueSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -376,8 +377,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Error or warning code.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("IssueType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -420,6 +422,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional details about the error.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("details", InSummary=true, Order=60)]
       [Binding("IssueDetails")]
       [DataMember]
@@ -447,6 +450,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional diagnostic information about the issue.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("diagnostics", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DiagnosticsElement
@@ -488,6 +492,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Deprecated: Path of element(s) related to issue.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("location", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -533,6 +538,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIRPath of element(s) related to issue.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("expression", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -746,6 +752,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A single issue associated with the action.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("issue", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]

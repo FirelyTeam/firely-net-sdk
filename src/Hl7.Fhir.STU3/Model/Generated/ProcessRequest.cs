@@ -116,6 +116,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Service instance.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("sequenceLinkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -231,6 +232,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -258,8 +260,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ProcessRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
@@ -301,8 +304,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// cancel | poll | reprocess | status.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("action", Order=110, FiveWs="class")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ActionList")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ProcessRequest.ActionList>? ActionElement
@@ -344,8 +348,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party which is the target of the request.
     /// </summary>
-    [FhirElement("target", Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
+    [FhirElement("target", Order=120, FiveWs="who.focus")]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Target
@@ -372,6 +376,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("created", Order=130, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -413,8 +418,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner.
     /// </summary>
-    [FhirElement("provider", Order=140, FiveWs="who.source")]
     [CLSCompliant(false)]
+    [FhirElement("provider", Order=140, FiveWs="who.source")]
     [References("Practitioner")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Provider
@@ -441,8 +446,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization.
     /// </summary>
-    [FhirElement("organization", Order=150, FiveWs="who.source")]
     [CLSCompliant(false)]
+    [FhirElement("organization", Order=150, FiveWs="who.source")]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Organization
@@ -469,8 +474,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the Request resource.
     /// </summary>
-    [FhirElement("request", Order=160)]
     [CLSCompliant(false)]
+    [FhirElement("request", Order=160)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Request
@@ -497,8 +502,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the Response resource.
     /// </summary>
-    [FhirElement("response", Order=170)]
     [CLSCompliant(false)]
+    [FhirElement("response", Order=170)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Response
@@ -525,6 +530,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Remove history.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("nullify", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? NullifyElement
@@ -566,6 +572,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference number/string.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reference", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ReferenceElement
@@ -607,6 +614,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Items to re-adjudicate.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("item", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -634,6 +642,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource type(s) to include.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("include", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -679,6 +688,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource type(s) to exclude.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("exclude", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -724,6 +734,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Selection period.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Extensions that cannot be ignored even if unrecognized.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("modifierExtension", InSummary=true, IsModifier=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

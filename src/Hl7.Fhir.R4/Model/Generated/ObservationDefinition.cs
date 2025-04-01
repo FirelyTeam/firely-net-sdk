@@ -187,6 +187,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Customary unit for quantitative results.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("customaryUnit", Order=40)]
       [Binding("ObservationUnit")]
       [DataMember]
@@ -214,6 +215,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// SI unit for quantitative results.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("unit", Order=50)]
       [Binding("ObservationUnit")]
       [DataMember]
@@ -241,6 +243,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// SI to Customary unit conversion factor.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("conversionFactor", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? ConversionFactorElement
@@ -282,6 +285,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Decimal precision of observation quantitative results.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("decimalPrecision", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? DecimalPrecisionElement
@@ -469,8 +473,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// reference | critical | absolute.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("category", Order=40)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ObservationRangeCategory")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>? CategoryElement
@@ -512,6 +517,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The interval itself, for continuous or ordinal observations.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("range", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Range? Range
@@ -538,6 +544,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Range context qualifier.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("context", Order=60)]
       [Binding("ObservationRangeMeaning")]
       [DataMember]
@@ -565,6 +572,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Targetted population of the range.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("appliesTo", Order=70)]
       [Binding("ObservationRangeAppliesTo")]
       [Cardinality(Min=0,Max=-1)]
@@ -593,8 +601,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// male | female | other | unknown.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("gender", Order=80)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("AdministrativeGender")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement
@@ -636,6 +645,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable age range, if relevant.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("age", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Range? Age
@@ -662,6 +672,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable gestational age range, if relevant.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("gestationalAge", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Range? GestationalAge
@@ -688,6 +699,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Condition associated with the reference range.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("condition", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ConditionElement
@@ -935,6 +947,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Category of observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -963,6 +976,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of observation (code / type).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
     [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
@@ -991,6 +1005,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this ObservationDefinition instance.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1018,8 +1033,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("permittedDataType", Order=120)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ObservationDataType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1065,6 +1081,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Multiple results allowed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("multipleResultsAllowed", Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? MultipleResultsAllowedElement
@@ -1106,6 +1123,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Method used to produce the observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("method", Order=140)]
     [Binding("ObservationMethod")]
     [DataMember]
@@ -1133,6 +1151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Preferred report name.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("preferredReportName", Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PreferredReportNameElement
@@ -1174,6 +1193,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Characteristics of quantitative results.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("quantitativeDetails", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent? QuantitativeDetails
@@ -1200,6 +1220,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Qualified range for continuous and ordinal observation results.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("qualifiedInterval", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1227,8 +1248,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Value set of valid coded values for the observations conforming to this ObservationDefinition.
     /// </summary>
-    [FhirElement("validCodedValueSet", Order=180)]
     [CLSCompliant(false)]
+    [FhirElement("validCodedValueSet", Order=180)]
     [References("ValueSet")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ValidCodedValueSet
@@ -1255,8 +1276,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Value set of normal coded values for the observations conforming to this ObservationDefinition.
     /// </summary>
-    [FhirElement("normalCodedValueSet", Order=190)]
     [CLSCompliant(false)]
+    [FhirElement("normalCodedValueSet", Order=190)]
     [References("ValueSet")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? NormalCodedValueSet
@@ -1283,8 +1304,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Value set of abnormal coded values for the observations conforming to this ObservationDefinition.
     /// </summary>
-    [FhirElement("abnormalCodedValueSet", Order=200)]
     [CLSCompliant(false)]
+    [FhirElement("abnormalCodedValueSet", Order=200)]
     [References("ValueSet")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? AbnormalCodedValueSet
@@ -1311,8 +1332,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Value set of critical coded values for the observations conforming to this ObservationDefinition.
     /// </summary>
-    [FhirElement("criticalCodedValueSet", Order=210)]
     [CLSCompliant(false)]
+    [FhirElement("criticalCodedValueSet", Order=210)]
     [References("ValueSet")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? CriticalCodedValueSet

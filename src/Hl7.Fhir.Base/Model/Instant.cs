@@ -43,8 +43,9 @@ namespace Hl7.Fhir.Model;
 
 public partial class Instant
 {
+    [CLSCompliant(false)]
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(typeof(P.DateTime))]
+    [AllowedTypes(typeof(P.DateTime))]
     [DataMember]
     public DateTimeOffset? Value
     {

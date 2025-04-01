@@ -166,6 +166,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific group from Measure.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("linkId", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? LinkIdElement
@@ -207,6 +208,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Meaning of the group.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=50)]
       [Binding("MeasureGroupExample")]
       [DataMember]
@@ -234,8 +236,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What individual(s) the report is for.
       /// </summary>
-      [FhirElement("subject", InSummary=true, Order=60, FiveWs="FiveWs.subject")]
       [CLSCompliant(false)]
+      [FhirElement("subject", InSummary=true, Order=60, FiveWs="FiveWs.subject")]
       [References("CareTeam","Device","Group","HealthcareService","Location","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Subject
@@ -262,6 +264,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The populations in the group.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("population", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -289,8 +292,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What score this group achieved.
       /// </summary>
-      [FhirElement("measureScore", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("measureScore", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? MeasureScore
@@ -317,6 +320,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Stratification results.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("stratifier", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -528,6 +532,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific population from Measure.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("linkId", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? LinkIdElement
@@ -569,6 +574,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=50)]
       [Binding("MeasurePopulation")]
       [DataMember]
@@ -596,6 +602,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Size of the population.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("count", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? CountElement
@@ -637,8 +644,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For subject-list reports, the subject results in this population.
       /// </summary>
-      [FhirElement("subjectResults", Order=70)]
       [CLSCompliant(false)]
+      [FhirElement("subjectResults", Order=70)]
       [References("List")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? SubjectResults
@@ -665,8 +672,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For subject-list reports, a subject result in this population.
       /// </summary>
-      [FhirElement("subjectReport", Order=80)]
       [CLSCompliant(false)]
+      [FhirElement("subjectReport", Order=80)]
       [References("MeasureReport")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -694,8 +701,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What individual(s) in the population.
       /// </summary>
-      [FhirElement("subjects", Order=90, FiveWs="FiveWs.subject")]
       [CLSCompliant(false)]
+      [FhirElement("subjects", Order=90, FiveWs="FiveWs.subject")]
       [References("Group")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Subjects
@@ -906,6 +913,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific stratifier from Measure.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("linkId", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? LinkIdElement
@@ -947,6 +955,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What stratifier of the group.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", Order=50)]
       [Binding("MeasureStratifierExample")]
       [DataMember]
@@ -974,6 +983,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Stratum results, one for each unique value, or set of values, in the stratifier, or stratifier components.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("stratum", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1128,9 +1138,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The stratum value, e.g. male.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("MeasureReportStratifierValueExample")]
-      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -1157,6 +1167,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Stratifier component values.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("component", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1184,6 +1195,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Population results in this stratum.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("population", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1211,8 +1223,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What score this stratum achieved.
       /// </summary>
-      [FhirElement("measureScore", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("measureScore", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? MeasureScore
@@ -1385,6 +1397,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific stratifier component from Measure.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("linkId", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? LinkIdElement
@@ -1426,6 +1439,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What stratifier component of the group.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", Order=50)]
       [Binding("MeasureStratifierExample")]
       [Cardinality(Min=1,Max=1)]
@@ -1454,9 +1468,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The stratum component value, e.g. male.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("value", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [Binding("MeasureReportStratifierValueExample")]
-      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1611,6 +1625,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific population from Measure.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("linkId", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? LinkIdElement
@@ -1652,6 +1667,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", Order=50)]
       [Binding("MeasurePopulation")]
       [DataMember]
@@ -1679,6 +1695,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Size of the population.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("count", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? CountElement
@@ -1720,8 +1737,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For subject-list reports, the subject results in this population.
       /// </summary>
-      [FhirElement("subjectResults", Order=70)]
       [CLSCompliant(false)]
+      [FhirElement("subjectResults", Order=70)]
       [References("List")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? SubjectResults
@@ -1748,8 +1765,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For subject-list reports, a subject result in this population.
       /// </summary>
-      [FhirElement("subjectReport", Order=80)]
       [CLSCompliant(false)]
+      [FhirElement("subjectReport", Order=80)]
       [References("MeasureReport")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1777,8 +1794,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What individual(s) in the population.
       /// </summary>
-      [FhirElement("subjects", Order=90, FiveWs="FiveWs.subject")]
       [CLSCompliant(false)]
+      [FhirElement("subjects", Order=90, FiveWs="FiveWs.subject")]
       [References("Group")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Subjects
@@ -1973,6 +1990,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the MeasureReport.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2000,8 +2018,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// complete | pending | error.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("MeasureReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2044,8 +2063,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// individual | subject-list | summary | data-exchange.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("MeasureReportType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2088,8 +2108,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// incremental | snapshot.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("dataUpdateType", InSummary=true, IsModifier=true, Order=120)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("SubmitDataUpdateType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.SubmitDataUpdateType>? DataUpdateTypeElement
@@ -2131,6 +2152,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What measure was calculated.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("measure", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? MeasureElement
@@ -2172,8 +2194,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What individual(s) the report is for.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [References("CareTeam","Device","Group","HealthcareService","Location","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -2200,6 +2222,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the measure was calculated.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -2241,8 +2264,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is reporting the data.
     /// </summary>
-    [FhirElement("reporter", InSummary=true, Order=160, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
+    [FhirElement("reporter", InSummary=true, Order=160, FiveWs="FiveWs.source")]
     [References("Practitioner","PractitionerRole","Organization","Group")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Reporter
@@ -2269,8 +2292,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What vendor prepared the data.
     /// </summary>
-    [FhirElement("reportingVendor", Order=170)]
     [CLSCompliant(false)]
+    [FhirElement("reportingVendor", Order=170)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ReportingVendor
@@ -2297,8 +2320,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the reported data is from.
     /// </summary>
-    [FhirElement("location", Order=180)]
     [CLSCompliant(false)]
+    [FhirElement("location", Order=180)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -2325,6 +2348,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What period the report covers.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=190)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2352,8 +2376,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What parameters were provided to the report.
     /// </summary>
-    [FhirElement("inputParameters", Order=200)]
     [CLSCompliant(false)]
+    [FhirElement("inputParameters", Order=200)]
     [References("Parameters")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? InputParameters
@@ -2380,6 +2404,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What scoring method (e.g. proportion, ratio, continuous-variable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("scoring", InSummary=true, IsModifier=true, Order=210)]
     [Binding("MeasureScoring")]
     [DataMember]
@@ -2407,6 +2432,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// increase | decrease.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("improvementNotation", InSummary=true, IsModifier=true, Order=220)]
     [Binding("MeasureImprovementNotation")]
     [DataMember]
@@ -2434,6 +2460,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Measure results for each group.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("group", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2461,8 +2488,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information collected for the report.
     /// </summary>
-    [FhirElement("supplementalData", Order=240)]
     [CLSCompliant(false)]
+    [FhirElement("supplementalData", Order=240)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2490,8 +2517,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What data was used to calculate the measure score.
     /// </summary>
-    [FhirElement("evaluatedResource", Order=250)]
     [CLSCompliant(false)]
+    [FhirElement("evaluatedResource", Order=250)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

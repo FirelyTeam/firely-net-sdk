@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of name e.g. 'brand-name', 'functional-name', 'common-name'.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("nameType", InSummary=true, Order=40)]
       [Binding("NameType")]
       [Cardinality(Min=1,Max=1)]
@@ -141,8 +142,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The language used to express the item name.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("language", InSummary=true, Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("NameLanguage")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -185,6 +187,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The name or designation of the item.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -351,6 +354,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The role of the organization e.g. manufacturer, distributor, or other.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("role", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -378,8 +382,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An organization that is associated with the item.
       /// </summary>
-      [FhirElement("organization", Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("organization", Order=50)]
       [References("Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -515,8 +519,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The language that is used in the item description.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("language", Order=40)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ItemDescriptionLanguage")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CommonLanguages>? LanguageElement
@@ -558,6 +563,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Textual description of the item.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("description", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -704,6 +710,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of association between the device and the other item.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("associationType", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -731,8 +738,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The related item or product.
       /// </summary>
-      [FhirElement("relatedItem", InSummary=true, Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("relatedItem", InSummary=true, Order=50)]
       [References("InventoryItem","Medication","MedicationKnowledge","Device","DeviceDefinition","NutritionProduct","BiologicallyDerivedProduct")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -760,6 +767,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The quantity of the product in this product.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("quantity", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -914,6 +922,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The characteristic that is being defined.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("characteristicType", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -941,8 +950,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The value of the attribute.
       /// </summary>
-      [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1075,6 +1084,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The identifier for the physical instance, typically a serial number.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1102,6 +1112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The lot or batch number of the item.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("lotNumber", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? LotNumberElement
@@ -1143,6 +1154,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The expiry date or date and time for the product.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("expiry", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? ExpiryElement
@@ -1184,8 +1196,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The subject that the item is associated with.
       /// </summary>
-      [FhirElement("subject", Order=70)]
       [CLSCompliant(false)]
+      [FhirElement("subject", Order=70)]
       [References("Patient","Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Subject
@@ -1212,8 +1224,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The location that the item is associated with.
       /// </summary>
-      [FhirElement("location", Order=80)]
       [CLSCompliant(false)]
+      [FhirElement("location", Order=80)]
       [References("Location")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Location
@@ -1389,6 +1401,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for the inventory item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1416,8 +1429,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=100)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("InventoryItemStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1460,6 +1474,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Category or class of the item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1487,6 +1502,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code designating the specific type of item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1514,6 +1530,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The item name(s) - the brand name, or common name, functional name, generic name or others.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1541,6 +1558,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization(s) responsible for the product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("responsibleOrganization", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1568,6 +1586,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Descriptive characteristics of the item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.InventoryItem.DescriptionComponent? Description
@@ -1594,6 +1613,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The usage status like recalled, in use, discarded.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("inventoryStatus", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1621,6 +1641,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The base unit of measure - the unit in which the product is used or counted.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("baseUnit", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? BaseUnit
@@ -1647,6 +1668,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Net content or amount present in the item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("netContent", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? NetContent
@@ -1673,6 +1695,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Association with other items or products.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("association", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1700,6 +1723,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Characteristic of the item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("characteristic", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1727,6 +1751,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instances or occurrences of the product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("instance", Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.InventoryItem.InstanceComponent? Instance
@@ -1753,8 +1778,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link to a product resource used in clinical workflows.
     /// </summary>
-    [FhirElement("productReference", Order=220)]
     [CLSCompliant(false)]
+    [FhirElement("productReference", Order=220)]
     [References("Medication","Device","NutritionProduct","BiologicallyDerivedProduct")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ProductReference

@@ -44,9 +44,10 @@ namespace Hl7.Fhir.Model;
 
 public partial class Base64Binary
 {
+    [CLSCompliant(false)]
     [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlRepresentation.XmlAttr, InSummary = true,
         Order = 30)]
-    [DeclaredType(typeof(P.String))]
+    [AllowedTypes(typeof(P.String))]
     [DataMember]
     public byte[]? Value
     {

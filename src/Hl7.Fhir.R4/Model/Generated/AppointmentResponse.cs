@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -90,8 +91,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Appointment this response relates to.
     /// </summary>
-    [FhirElement("appointment", InSummary=true, Order=100)]
     [CLSCompliant(false)]
+    [FhirElement("appointment", InSummary=true, Order=100)]
     [References("Appointment")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -119,6 +120,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time from appointment, or requested new start time.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("start", Order=110, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? StartElement
@@ -160,6 +162,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time from appointment, or requested new end time.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("end", Order=120, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? EndElement
@@ -201,6 +204,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Role of participant in the appointment.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("participantType", InSummary=true, Order=130)]
     [Binding("ParticipantType")]
     [Cardinality(Min=0,Max=-1)]
@@ -229,8 +233,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person, Location, HealthcareService, or Device.
     /// </summary>
-    [FhirElement("actor", InSummary=true, Order=140, FiveWs="FiveWs.who")]
     [CLSCompliant(false)]
+    [FhirElement("actor", InSummary=true, Order=140, FiveWs="FiveWs.who")]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Actor
@@ -257,8 +261,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// accepted | declined | tentative | needs-action.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=150)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ParticipantStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -301,6 +306,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional comments.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("comment", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CommentElement

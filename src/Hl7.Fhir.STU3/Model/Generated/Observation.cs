@@ -130,6 +130,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Low Range, if relevant.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("low", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Low
@@ -156,6 +157,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// High Range, if relevant.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("high", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? High
@@ -182,6 +184,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference range qualifier.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=60)]
       [Binding("ObservationRangeMeaning")]
       [DataMember]
@@ -209,6 +212,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference range population.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("appliesTo", Order=70)]
       [Binding("ObservationRangeType")]
       [Cardinality(Min=0,Max=-1)]
@@ -237,6 +241,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable age range, if relevant.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("age", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Range? Age
@@ -263,6 +268,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text based reference range in an observation.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("text", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextElement
@@ -489,8 +495,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ObservationRelationshipType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>? TypeElement
@@ -532,8 +539,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Resource that is related to this one.
       /// </summary>
-      [FhirElement("target", Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("target", Order=50)]
       [References("Observation","QuestionnaireResponse","Sequence")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -670,6 +677,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of component observation (code / type).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40, FiveWs="what")]
       [Binding("ObservationCode")]
       [Cardinality(Min=1,Max=1)]
@@ -698,8 +706,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actual component result.
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -726,6 +734,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why the component result is missing.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("dataAbsentReason", Order=60)]
       [Binding("ObservationValueAbsentReason")]
       [DataMember]
@@ -753,6 +762,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// High, low, normal, etc.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("interpretation", Order=70)]
       [Binding("ObservationInterpretation")]
       [DataMember]
@@ -780,6 +790,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Provides guide for interpretation of component result.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("referenceRange", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -956,6 +967,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -983,8 +995,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fulfills plan, proposal or order.
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
+    [FhirElement("basedOn", InSummary=true, Order=100)]
     [References("CarePlan","DeviceRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ProcedureRequest","ReferralRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1012,8 +1024,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | preliminary | final | amended +.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ObservationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1056,6 +1069,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of  type of observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", Order=120, FiveWs="class")]
     [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -1084,6 +1098,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of observation (code / type).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
     [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
@@ -1112,8 +1127,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what this is about.
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
     [References("Patient","Group","Device","Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -1140,8 +1155,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare event during which this observation is made.
     /// </summary>
-    [FhirElement("context", Order=150, FiveWs="context")]
     [CLSCompliant(false)]
+    [FhirElement("context", Order=150, FiveWs="context")]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Context
@@ -1168,8 +1183,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinically relevant time/time-period for observation.
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
+    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Effective
@@ -1196,6 +1211,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time this was made available.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("issued", InSummary=true, Order=170, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? IssuedElement
@@ -1237,8 +1253,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is responsible for the observation.
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=180, FiveWs="who.actor")]
     [CLSCompliant(false)]
+    [FhirElement("performer", InSummary=true, Order=180, FiveWs="who.actor")]
     [References("Practitioner","Organization","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1266,8 +1282,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actual result.
     /// </summary>
-    [FhirElement("value", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [FhirElement("value", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Value
@@ -1294,6 +1310,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the result is missing.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("dataAbsentReason", Order=200)]
     [Binding("ObservationValueAbsentReason")]
     [DataMember]
@@ -1321,6 +1338,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// High, low, normal, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("interpretation", Order=210)]
     [Binding("ObservationInterpretation")]
     [DataMember]
@@ -1348,6 +1366,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments about result.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("comment", Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CommentElement
@@ -1389,6 +1408,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Observed body part.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("bodySite", Order=230)]
     [Binding("BodySite")]
     [DataMember]
@@ -1416,6 +1436,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How it was done.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("method", Order=240)]
     [Binding("ObservationMethod")]
     [DataMember]
@@ -1443,8 +1464,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specimen used for this observation.
     /// </summary>
-    [FhirElement("specimen", Order=250)]
     [CLSCompliant(false)]
+    [FhirElement("specimen", Order=250)]
     [References("Specimen")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Specimen
@@ -1471,8 +1492,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// (Measurement) Device.
     /// </summary>
-    [FhirElement("device", Order=260)]
     [CLSCompliant(false)]
+    [FhirElement("device", Order=260)]
     [References("Device","DeviceMetric")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Device
@@ -1499,6 +1520,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Provides guide for interpretation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("referenceRange", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1526,6 +1548,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource related to this observation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("related", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1553,6 +1576,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Component results.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("component", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

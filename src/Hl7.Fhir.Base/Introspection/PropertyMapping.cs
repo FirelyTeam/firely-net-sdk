@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remark>These are the defined (choice) types for this element as specified in the
         /// FHIR data definitions. It is derived from the actual property type,
-        /// or, if present, via a list of types in the [AllowedTypes] attribute. Finally,
+        /// or, if present, via a list of types in the [ChoiceTypes] attribute. Finally,
         /// it the property type does not represent FHIR metadata, it is overridden using
         /// the [DeclaredType] attribute.
         /// </remark>
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Introspection
         /// The <see cref="ClassMapping" /> that represents the type of this property.
         /// </summary>
         /// <remarks>This is effectively the ClassMapping for the <see cref="ImplementingType" /> unless a
-        /// <see cref="DeclaredTypeAttribute" /> specifies otherwise.</remarks>
+        /// <see cref="AllowedTypesAttribute" /> specifies otherwise.</remarks>
         public ClassMapping PropertyTypeMapping { get; private set; }
 
         /// <summary>
@@ -201,24 +201,21 @@ namespace Hl7.Fhir.Introspection
             if (isCollection) implementingType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
             if (ReflectionHelper.IsNullableType(implementingType)) implementingType = ReflectionHelper.GetNullableArgument(implementingType);
 
-            // Determine the .NET type that represents the FHIR type for this element.
-            // This is normally just the ImplementingType itself, but can be overridden
-            // with the [DeclaredType] attribute.
-            var declaredType = ClassMapping.GetAttribute<DeclaredTypeAttribute>(prop, release);
-            var fhirType = declaredType?.Type ??
-                (typeof(Enum).IsAssignableFrom(implementingType) ? typeof(Enum) : implementingType);
+            var fhirType = (typeof(Enum).IsAssignableFrom(implementingType) ? typeof(Enum) : implementingType);
 
-            if (!ClassMapping.TryGetMappingForType(fhirType, release, out var propertyTypeMapping))
-                throw new InvalidOperationException($"Property {prop.Name} in class {prop.DeclaringType!.Name} is of type " +
-                    $"{fhirType}, for which a classmapping cannot be found.");
-
-            // The [AllowedTypes] attribute can specify a set of allowed types for this element.
+            // The [ChoiceTypes] attribute can specify a set of allowed types for this element.
             // If this is a choice element, then take this list as the declared list of FHIR types,
             // otherwise assume this is the implementing FHIR type above
-            var allowedTypes = elementAttr.Choice != ChoiceType.None ? ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release) : null;
+            var overridingTypes = ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release);
 
-            var fhirTypes = allowedTypes?.Types?.Any() == true ?
-                allowedTypes.Types : [fhirType];
+            var fhirTypes = overridingTypes?.Types.Any() == true ?
+                overridingTypes.Types : [fhirType];
+            
+            var mappingType = fhirTypes.Length == 1 ? fhirTypes[0] : fhirType;
+            
+            if (!ClassMapping.TryGetMappingForType(mappingType, release, out var propertyTypeMapping))
+                throw new InvalidOperationException($"Property {prop.Name} in class {prop.DeclaringType!.Name} is of type " +
+                                                    $"{fhirType}, for which a classmapping cannot be found.");
 
             var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
 

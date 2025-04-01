@@ -150,6 +150,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Chromosome containing genetic finding.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("chromosome", InSummary=true, Order=40)]
       [Binding("chromosome-human")]
       [DataMember]
@@ -177,6 +178,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The Genome Build used for reference, following GRCh build versions e.g. 'GRCh 37'.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("genomeBuild", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? GenomeBuildElement
@@ -218,6 +220,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference identifier.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("referenceSeqId", InSummary=true, Order=60)]
       [Binding("sequenceReference")]
       [DataMember]
@@ -245,8 +248,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A Pointer to another Sequence entity as reference sequence.
       /// </summary>
-      [FhirElement("referenceSeqPointer", InSummary=true, Order=70)]
       [CLSCompliant(false)]
+      [FhirElement("referenceSeqPointer", InSummary=true, Order=70)]
       [References("Sequence")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? ReferenceSeqPointer
@@ -273,6 +276,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A string to represent reference sequence.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("referenceSeqString", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ReferenceSeqStringElement
@@ -314,6 +318,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Directionality of DNA ( +1/-1).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("strand", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? StrandElement
@@ -355,6 +360,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Start position of the window on the  reference sequence.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("windowStart", InSummary=true, Order=100)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -397,6 +403,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// End position of the window on the reference sequence.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("windowEnd", InSummary=true, Order=110)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -661,6 +668,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Start position of the variant on the  reference sequence.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("start", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? StartElement
@@ -702,6 +710,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// End position of the variant on the reference sequence.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("end", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? EndElement
@@ -743,6 +752,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Allele that was observed.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("observedAllele", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ObservedAlleleElement
@@ -784,6 +794,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Allele in the reference sequence.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("referenceAllele", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ReferenceAlleleElement
@@ -825,6 +836,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Extended CIGAR string for aligning the sequence with reference bases.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("cigar", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CigarElement
@@ -866,8 +878,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to observed variant information.
       /// </summary>
-      [FhirElement("variantPointer", InSummary=true, Order=90)]
       [CLSCompliant(false)]
+      [FhirElement("variantPointer", InSummary=true, Order=90)]
       [References("Observation")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? VariantPointer
@@ -1078,8 +1090,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// indel | snp | unknown.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("qualityType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1122,6 +1135,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Standard sequence for comparison.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("standardSequence", InSummary=true, Order=50)]
       [Binding("qualityStandardSequence")]
       [DataMember]
@@ -1149,6 +1163,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Start position of the sequence.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("start", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? StartElement
@@ -1190,6 +1205,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// End position of the sequence.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("end", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? EndElement
@@ -1231,6 +1247,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Quality score for the comparison.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("score", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Score
@@ -1257,6 +1274,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Method to get quality.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("method", InSummary=true, Order=90)]
       [Binding("qualityMethod")]
       [DataMember]
@@ -1284,6 +1302,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// True positives from the perspective of the truth data.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("truthTP", InSummary=true, Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? TruthTPElement
@@ -1325,6 +1344,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// True positives from the perspective of the query data.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("queryTP", InSummary=true, Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? QueryTPElement
@@ -1366,6 +1386,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// False negatives.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("truthFN", InSummary=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? TruthFNElement
@@ -1407,6 +1428,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// False positives.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("queryFP", InSummary=true, Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? QueryFPElement
@@ -1448,6 +1470,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// False positives where the non-REF alleles in the Truth and Query Call Sets match.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("gtFP", InSummary=true, Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? GtFPElement
@@ -1489,6 +1512,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Precision of comparison.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("precision", InSummary=true, Order=150)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? PrecisionElement
@@ -1530,6 +1554,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recall of comparison.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("recall", InSummary=true, Order=160)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? RecallElement
@@ -1571,6 +1596,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// F-score.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("fScore", InSummary=true, Order=170)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? FScoreElement
@@ -1948,8 +1974,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// directlink | openapi | login | oauth | other.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("repositoryType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1992,6 +2019,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// URI of the repository.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("url", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -2033,6 +2061,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Repository's name.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -2074,6 +2103,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Id of the dataset that used to call for dataset in repository.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("datasetId", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DatasetIdElement
@@ -2115,6 +2145,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Id of the variantset that used to call for variantset in repository.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("variantsetId", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? VariantsetIdElement
@@ -2156,6 +2187,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Id of the read.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("readsetId", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ReadsetIdElement
@@ -2365,6 +2397,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique ID for this particular sequence. This is a FHIR-defined id.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2392,6 +2425,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// aa | dna | rna.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=100)]
     [Binding("sequenceType")]
     [DataMember]
@@ -2434,6 +2468,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("coordinateSystem", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2476,8 +2511,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what this is about.
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=120)]
     [CLSCompliant(false)]
+    [FhirElement("patient", InSummary=true, Order=120)]
     [References("Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Patient
@@ -2504,8 +2539,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specimen used for sequencing.
     /// </summary>
-    [FhirElement("specimen", InSummary=true, Order=130)]
     [CLSCompliant(false)]
+    [FhirElement("specimen", InSummary=true, Order=130)]
     [References("Specimen")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Specimen
@@ -2532,8 +2567,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The method for sequencing.
     /// </summary>
-    [FhirElement("device", InSummary=true, Order=140)]
     [CLSCompliant(false)]
+    [FhirElement("device", InSummary=true, Order=140)]
     [References("Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Device
@@ -2560,8 +2595,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who should be responsible for test result.
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=150)]
     [CLSCompliant(false)]
+    [FhirElement("performer", InSummary=true, Order=150)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Performer
@@ -2588,6 +2623,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The number of copies of the seqeunce of interest.  (RNASeq).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("quantity", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Quantity
@@ -2614,6 +2650,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A sequence used as reference.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("referenceSeq", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.Sequence.ReferenceSeqComponent? ReferenceSeq
@@ -2640,6 +2677,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Variant in sequence.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("variant", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2667,6 +2705,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Sequence that was observed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("observedSeq", InSummary=true, Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ObservedSeqElement
@@ -2708,6 +2747,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An set of value as quality of sequence.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("quality", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2735,6 +2775,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Average number of reads representing a given nucleotide in the reconstructed sequence.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("readCoverage", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.Integer? ReadCoverageElement
@@ -2776,6 +2817,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External repository which contains detailed report related with observedSeq in this resource.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("repository", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2803,8 +2845,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Pointer to next atomic sequence.
     /// </summary>
-    [FhirElement("pointer", InSummary=true, Order=230)]
     [CLSCompliant(false)]
+    [FhirElement("pointer", InSummary=true, Order=230)]
     [References("Sequence")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

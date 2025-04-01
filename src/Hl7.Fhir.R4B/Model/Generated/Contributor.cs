@@ -100,8 +100,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// author | editor | reviewer | endorser.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=30)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ContributorType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -144,6 +145,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who contributed the content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -186,6 +188,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details of the contributor.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this service definition (globally unique).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -107,6 +108,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the service definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -134,6 +136,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the service definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -175,6 +178,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this service definition (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -216,6 +220,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this service definition (human friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -257,8 +262,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -301,6 +307,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -342,6 +349,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -383,6 +391,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=170, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -424,6 +433,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the service definition.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -465,6 +475,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this service definition is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=190, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -506,6 +517,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the clinical usage of the module.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("usage", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? UsageElement
@@ -547,6 +559,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the service definition was approved by publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -588,6 +601,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the service definition was last reviewed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -629,6 +643,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the service definition is expected to be used.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -655,6 +670,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context the content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -682,6 +698,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for service definition (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -710,6 +727,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("topic", Order=260)]
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
@@ -738,6 +756,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A content contributor.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contributor", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -765,6 +784,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -792,6 +812,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyright", Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -833,6 +854,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -860,6 +882,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// "when" the module should be invoked.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("trigger", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -887,6 +910,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What data is used by the module.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("dataRequirement", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -914,8 +938,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Operation to invoke.
     /// </summary>
-    [FhirElement("operationDefinition", Order=330)]
     [CLSCompliant(false)]
+    [FhirElement("operationDefinition", Order=330)]
     [References("OperationDefinition")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? OperationDefinition

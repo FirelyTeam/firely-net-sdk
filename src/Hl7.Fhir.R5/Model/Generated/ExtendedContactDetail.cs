@@ -67,6 +67,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of contact.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", InSummary=true, Order=30)]
     [Binding("Purpose")]
     [DataMember]
@@ -94,6 +95,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of an individual to contact.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -121,6 +123,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details (e.g.phone/fax/url).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("telecom", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -148,6 +151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Address for the contact.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("address", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.Address? Address
@@ -174,8 +178,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This contact detail is handled/monitored by a specific organization.
     /// </summary>
-    [FhirElement("organization", InSummary=true, Order=70)]
     [CLSCompliant(false)]
+    [FhirElement("organization", InSummary=true, Order=70)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Organization
@@ -202,6 +206,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period that this contact was valid for usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period

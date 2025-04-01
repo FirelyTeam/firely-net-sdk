@@ -124,6 +124,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What the agents role was.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("role", InSummary=true, Order=40)]
       [Binding("ProvenanceAgentRole")]
       [Cardinality(Min=0,Max=-1)]
@@ -152,8 +153,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who participated.
       /// </summary>
-      [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="who.actor")]
       [CLSCompliant(false)]
+      [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="who.actor")]
       [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -182,8 +183,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who the agent is representing.
       /// </summary>
-      [FhirElement("onBehalfOf", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("onBehalfOf", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -211,6 +212,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of relationship between agents.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("relatedAgentType", Order=70)]
       [Binding("RelatedAgentType")]
       [DataMember]
@@ -384,8 +386,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// derivation | revision | quotation | source | removal.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("role", InSummary=true, Order=40)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ProvenanceEntityRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -428,8 +431,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identity of entity.
       /// </summary>
-      [FhirElement("what", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("what", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Identifier))]
       [Cardinality(Min=1,Max=1)]
@@ -458,6 +461,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Entity is attributed to this agent.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("agent", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -596,8 +600,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target Reference(s) (usually version specific).
     /// </summary>
-    [FhirElement("target", InSummary=true, Order=90, FiveWs="what")]
     [CLSCompliant(false)]
+    [FhirElement("target", InSummary=true, Order=90, FiveWs="what")]
     [References("Resource")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -625,6 +629,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity occurred.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("period", Order=100, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -651,6 +656,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity was recorded / updated.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("recorded", InSummary=true, Order=110, FiveWs="when.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -693,6 +699,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Policy or plan the activity was defined by.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("policy", Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -738,8 +745,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the activity occurred, if relevant.
     /// </summary>
-    [FhirElement("location", Order=130, FiveWs="where")]
     [CLSCompliant(false)]
+    [FhirElement("location", Order=130, FiveWs="where")]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -766,6 +773,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason the activity is occurring.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reason", Order=140, FiveWs="why")]
     [Binding("ProvenanceReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -794,6 +802,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Activity that occurred.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("activity", Order=150, FiveWs="why")]
     [Binding("ProvenanceActivity")]
     [DataMember]
@@ -821,6 +830,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actor involved.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("agent", Order=160, FiveWs="who")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -848,6 +858,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An entity used in this activity.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("entity", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -875,6 +886,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Signature on target.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("signature", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

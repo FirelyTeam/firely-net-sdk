@@ -257,8 +257,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Defines how the part works.
       /// </summary>
-      [FhirElement("definition", Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("definition", Order=40)]
       [References("SearchParameter")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -286,6 +286,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Subexpression relative to main expression.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("expression", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -420,6 +421,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this search parameter (globally unique).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -462,6 +464,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the search parameter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=100, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -503,6 +506,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this search parameter (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -545,8 +549,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -589,6 +594,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -630,6 +636,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -671,6 +678,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=150, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -712,6 +720,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -739,6 +748,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context the content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -766,6 +776,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for search parameter (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=180)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -794,6 +805,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this search parameter is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=190, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -835,6 +847,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code used in URL.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=200)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -877,8 +890,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The resource type(s) this search parameter applies to.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("base", InSummary=true, Order=210)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ResourceType")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -924,8 +938,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// number | date | string | token | reference | composite | quantity | uri.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=220)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("SearchParamType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -968,6 +983,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Original Definition for the search parameter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("derivedFrom", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? DerivedFromElement
@@ -1009,6 +1025,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the search parameter.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=240)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1051,6 +1068,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIRPath expression that extracts the values.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("expression", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ExpressionElement
@@ -1092,6 +1110,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// XPath that extracts the values.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("xpath", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? XpathElement
@@ -1133,8 +1152,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// normal | phonetic | nearby | distance | other.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("xpathUsage", Order=270)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("XPathUsageType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType>? XpathUsageElement
@@ -1176,8 +1196,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Types of resource (if a resource reference).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("target", Order=280)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1223,8 +1244,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// eq | ne | gt | lt | ge | le | sa | eb | ap.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("comparator", Order=290)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("SearchComparator")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1270,8 +1292,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// missing | exact | contains | not | text | in | not-in | below | above | type.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("modifier", Order=300)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("SearchModifierCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1317,6 +1340,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Chained names supported.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("chain", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1362,6 +1386,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For Composite resources to define the parts.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("component", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

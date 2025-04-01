@@ -372,6 +372,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Canonical URL for structure definition.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("url", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -414,8 +415,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// source | queried | target | produced.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("mode", InSummary=true, Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("StructureMapModelMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -458,6 +460,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name for type in this map.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("alias", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? AliasElement
@@ -499,6 +502,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Documentation on use of structure.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("documentation", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DocumentationElement
@@ -686,6 +690,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human-readable label.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -728,6 +733,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Another group that this group adds rules to.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("extends", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Id? ExtendsElement
@@ -769,8 +775,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// none | types | type-and-types.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("typeMode", InSummary=true, Order=60)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("StructureMapGroupTypeMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -813,6 +820,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional description/explaination for group.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("documentation", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DocumentationElement
@@ -854,6 +862,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Named instance provided when invoking the map.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("input", InSummary=true, Order=80)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -881,6 +890,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Transform Rule from source to target.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("rule", InSummary=true, Order=90)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -1093,6 +1103,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name for this instance of data.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1135,6 +1146,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type for this instance of data.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TypeElement
@@ -1176,8 +1188,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// source | target.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("mode", InSummary=true, Order=60)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("StructureMapInputMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1220,6 +1233,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Documentation for this instance of data.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("documentation", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DocumentationElement
@@ -1404,6 +1418,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of the rule for internal references.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1446,6 +1461,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Source inputs to the mapping.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("source", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -1473,6 +1489,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Content to create because of this mapping rule.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("target", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1500,6 +1517,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Rules contained in this rule.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("rule", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1527,6 +1545,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Which other rules to apply in the context of this rule.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("dependent", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1554,6 +1573,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Documentation for this instance of data.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("documentation", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DocumentationElement
@@ -1776,6 +1796,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type or variable this rule applies to.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("context", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1818,6 +1839,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specified minimum cardinality.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("min", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? MinElement
@@ -1859,6 +1881,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specified maximum cardinality (number or *).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("max", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MaxElement
@@ -1900,6 +1923,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Rule only applies if source has this type.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TypeElement
@@ -1941,8 +1965,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Default value if no value exists.
       /// </summary>
-      [FhirElement("defaultValue", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("defaultValue", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? DefaultValue
@@ -1969,6 +1993,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Optional field for this source.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("element", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ElementElement
@@ -2010,8 +2035,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// first | not_first | last | not_last | only_one.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("listMode", InSummary=true, Order=100)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("StructureMapSourceListMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapSourceListMode>? ListModeElement
@@ -2053,6 +2079,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Named context for field, if a field is specified.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("variable", InSummary=true, Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Id? VariableElement
@@ -2094,6 +2121,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIRPath expression  - must be true or the rule does not apply.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("condition", InSummary=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ConditionElement
@@ -2135,6 +2163,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIRPath expression  - must be true or the mapping engine throws an error instead of completing.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("check", InSummary=true, Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CheckElement
@@ -2433,6 +2462,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type or variable this rule applies to.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("context", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Id? ContextElement
@@ -2474,8 +2504,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// type | variable.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("contextType", InSummary=true, Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("StructureMapContextType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapContextType>? ContextTypeElement
@@ -2517,6 +2548,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Field to create in the context.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("element", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ElementElement
@@ -2558,6 +2590,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Named context for field, if desired, and a field is specified.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("variable", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Id? VariableElement
@@ -2599,8 +2632,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// first | share | last | collate.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("listMode", InSummary=true, Order=80)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("StructureMapTargetListMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2646,6 +2680,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Internal rule reference for shared list items.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("listRuleId", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Id? ListRuleIdElement
@@ -2687,8 +2722,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// create | copy +.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("transform", InSummary=true, Order=100)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("StructureMapTransform")]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapTransform>? TransformElement
@@ -2730,6 +2766,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Parameters to the transform.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("parameter", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2976,8 +3013,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Parameter value - variable or literal.
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3091,6 +3128,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of a rule or group to apply.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3133,6 +3171,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Variable to pass to the rule or group.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("variable", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -3270,6 +3309,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this structure map (globally unique).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3312,6 +3352,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the structure map.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3339,6 +3380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the structure map.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -3380,6 +3422,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this structure map (computer friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3422,6 +3465,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this structure map (human friendly).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -3463,8 +3507,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3507,6 +3552,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -3548,6 +3594,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -3589,6 +3636,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=170, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -3630,6 +3678,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3657,6 +3706,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the structure map.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -3698,6 +3748,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context the content is intended to support.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3725,6 +3776,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for structure map (if applicable).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -3753,6 +3805,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this structure map is defined.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("purpose", Order=220, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -3794,6 +3847,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("copyright", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -3835,6 +3889,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Structure Definition used by this map.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("structure", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3862,6 +3917,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other maps used by this map (canonical URLs).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("import", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3907,6 +3963,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Named sections for reader convenience.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("group", InSummary=true, Order=260)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]

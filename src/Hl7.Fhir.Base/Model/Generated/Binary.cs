@@ -70,6 +70,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// MimeType of the binary content.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contentType", InSummary=true, Order=50)]
     [Binding("MimeType")]
     [Cardinality(Min=1,Max=1)]
@@ -113,8 +114,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies another resource to use as proxy when enforcing access control.
     /// </summary>
-    [FhirElement("securityContext", InSummary=true, Order=60)]
     [CLSCompliant(false)]
+    [FhirElement("securityContext", InSummary=true, Order=60)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? SecurityContext
@@ -144,6 +145,7 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element is replaced by 'Binary.data' since R4. Do not use this element 'content' with R4 and newer releases.
     /// </remarks>
+    [CLSCompliant(false)]
     [FhirElement("content", Order=70)]
     [NotMapped(Since=FhirRelease.R4)]
     [DataMember]
@@ -189,6 +191,7 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R4, do not use when working with older releases.
     /// </remarks>
+    [CLSCompliant(false)]
     [FhirElement("data", Order=70, Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? DataElement

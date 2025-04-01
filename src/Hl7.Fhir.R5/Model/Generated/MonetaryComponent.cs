@@ -109,8 +109,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// base | surcharge | deduction | discount | tax | informational.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=30)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("PriceComponentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -153,6 +154,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Codes may be used to differentiate between kinds of taxes, surcharges, discounts etc.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=40)]
     [Binding("PriceComponentCode")]
     [DataMember]
@@ -180,6 +182,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Factor used for calculating this component.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("factor", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? FactorElement
@@ -221,6 +224,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Explicit value amount to be used.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("amount", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.Money? Amount

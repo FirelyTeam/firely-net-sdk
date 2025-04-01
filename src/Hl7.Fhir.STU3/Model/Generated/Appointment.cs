@@ -165,6 +165,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Role of participant in the appointment.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("ParticipantType")]
       [Cardinality(Min=0,Max=-1)]
@@ -193,8 +194,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Person, Location/HealthcareService or Device.
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50, FiveWs="who")]
       [CLSCompliant(false)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="who")]
       [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Actor
@@ -221,8 +222,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// required | optional | information-only.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("required", InSummary=true, Order=60)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ParticipantRequired")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Appointment.ParticipantRequired>? RequiredElement
@@ -264,8 +266,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// accepted | declined | tentative | needs-action.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("status", Order=70)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("ParticipationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -438,6 +441,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -465,8 +469,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AppointmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -509,6 +514,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A broad categorisation of the service that is to be performed during this appointment.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("serviceCategory", InSummary=true, Order=110)]
     [Binding("service-category")]
     [DataMember]
@@ -536,6 +542,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specific service that is to be performed during this appointment.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("serviceType", InSummary=true, Order=120)]
     [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
@@ -564,6 +571,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("specialty", InSummary=true, Order=130, FiveWs="class")]
     [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
@@ -592,6 +600,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The style of appointment or patient that has been booked in the slot (not service type).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("appointmentType", InSummary=true, Order=140)]
     [Binding("appointment-type")]
     [DataMember]
@@ -619,6 +628,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason this appointment is scheduled.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reason", InSummary=true, Order=150)]
     [Binding("ApptReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -647,8 +657,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason the appointment is to takes place (resource).
     /// </summary>
-    [FhirElement("indication", Order=160)]
     [CLSCompliant(false)]
+    [FhirElement("indication", Order=160)]
     [References("Condition","Procedure")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -676,6 +686,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used to make informed decisions if needing to re-prioritize.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("priority", Order=170, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? PriorityElement
@@ -717,6 +728,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Shown on a subject line in a meeting request, or appointment list.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -758,8 +770,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information to support the appointment.
     /// </summary>
-    [FhirElement("supportingInformation", Order=190, FiveWs="context")]
     [CLSCompliant(false)]
+    [FhirElement("supportingInformation", Order=190, FiveWs="context")]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -787,6 +799,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When appointment is to take place.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("start", InSummary=true, Order=200, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? StartElement
@@ -828,6 +841,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When appointment is to conclude.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("end", InSummary=true, Order=210, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? EndElement
@@ -869,6 +883,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Can be less than start/end (e.g. estimate).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("minutesDuration", Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? MinutesDurationElement
@@ -910,8 +925,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The slots that this appointment is filling.
     /// </summary>
-    [FhirElement("slot", Order=230)]
     [CLSCompliant(false)]
+    [FhirElement("slot", Order=230)]
     [References("Slot")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -939,6 +954,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date that this appointment was initially created.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("created", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -980,6 +996,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional comments.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("comment", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CommentElement
@@ -1021,8 +1038,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The ReferralRequest provided as information to allocate to the Encounter.
     /// </summary>
-    [FhirElement("incomingReferral", Order=260)]
     [CLSCompliant(false)]
+    [FhirElement("incomingReferral", Order=260)]
     [References("ReferralRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1050,6 +1067,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Participants involved in appointment.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("participant", Order=270)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1077,6 +1095,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Potential date/time interval(s) requested to allocate the appointment within.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("requestedPeriod", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Bodysite identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -93,6 +94,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this body site record is in active use.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -134,6 +136,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Named anatomical location.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=110, FiveWs="what")]
     [Binding("BodySite")]
     [DataMember]
@@ -161,6 +164,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Modification to location code.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("qualifier", Order=120, FiveWs="what")]
     [Binding("BodySiteQualifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -189,6 +193,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Anatomical location description.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=130, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -230,6 +235,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Attached images.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("image", Order=140, FiveWs="what")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -257,8 +263,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this is about.
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=150, FiveWs="who.focus")]
     [CLSCompliant(false)]
+    [FhirElement("patient", InSummary=true, Order=150, FiveWs="who.focus")]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

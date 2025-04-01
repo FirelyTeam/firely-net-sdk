@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Introspection
 
         internal static IEnumerable<T> GetAttributes<T>(MemberInfo t, FhirRelease version) where T : FhirModelAttribute
         {
-            return ReflectionHelper.GetAttributes<T>(t).Where(isRelevant);
+            return ReflectionHelper.GetAttributes<T>(t).Where(isRelevant).OrderBy(att => att.Since);
 
             bool isRelevant(FhirModelAttribute a) => a.AppliesToRelease(version);
         }

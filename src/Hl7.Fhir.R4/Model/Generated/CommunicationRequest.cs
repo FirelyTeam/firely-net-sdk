@@ -82,8 +82,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Message part content.
       /// </summary>
-      [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -185,6 +185,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -212,8 +213,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fulfills plan or proposal.
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
+    [FhirElement("basedOn", InSummary=true, Order=100)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -241,8 +242,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request(s) replaced by this request.
     /// </summary>
-    [FhirElement("replaces", InSummary=true, Order=110)]
     [CLSCompliant(false)]
+    [FhirElement("replaces", InSummary=true, Order=110)]
     [References("CommunicationRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -270,6 +271,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composite request this is part of.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("groupIdentifier", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? GroupIdentifier
@@ -296,8 +298,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("CommunicationRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -340,6 +343,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("statusReason", Order=140)]
     [Binding("CommunicationRequestStatusReason")]
     [DataMember]
@@ -367,6 +371,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message category.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("category", Order=150, FiveWs="FiveWs.class")]
     [Binding("CommunicationCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -395,8 +400,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("priority", InSummary=true, Order=160, FiveWs="FiveWs.grade")]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("CommunicationPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement
@@ -438,6 +444,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if request is prohibiting action.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? DoNotPerformElement
@@ -479,6 +486,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A channel of communication.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("medium", Order=180)]
     [Binding("CommunicationMedium")]
     [Cardinality(Min=0,Max=-1)]
@@ -507,8 +515,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Focus of message.
     /// </summary>
-    [FhirElement("subject", Order=190, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
+    [FhirElement("subject", Order=190, FiveWs="FiveWs.subject")]
     [References("Patient","Group")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -535,8 +543,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resources that pertain to this communication request.
     /// </summary>
-    [FhirElement("about", Order=200, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
+    [FhirElement("about", Order=200, FiveWs="FiveWs.context")]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -564,8 +572,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of.
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=210, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
+    [FhirElement("encounter", InSummary=true, Order=210, FiveWs="FiveWs.context")]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -592,6 +600,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message payload.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("payload", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -619,8 +628,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When scheduled.
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
     [CLSCompliant(false)]
+    [FhirElement("occurrence", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
@@ -647,6 +656,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When request transitioned to being actionable.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("authoredOn", InSummary=true, Order=240, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? AuthoredOnElement
@@ -688,8 +698,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what is requesting service.
     /// </summary>
-    [FhirElement("requester", InSummary=true, Order=250, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
+    [FhirElement("requester", InSummary=true, Order=250, FiveWs="FiveWs.author")]
     [References("Practitioner","PractitionerRole","Organization","Patient","RelatedPerson","Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Requester
@@ -716,8 +726,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message recipient.
     /// </summary>
-    [FhirElement("recipient", Order=260, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
+    [FhirElement("recipient", Order=260, FiveWs="FiveWs.actor")]
     [References("Device","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson","Group","CareTeam","HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -745,8 +755,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message sender.
     /// </summary>
-    [FhirElement("sender", InSummary=true, Order=270, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
+    [FhirElement("sender", InSummary=true, Order=270, FiveWs="FiveWs.actor")]
     [References("Device","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson","HealthcareService")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Sender
@@ -773,6 +783,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why is communication needed?.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("reasonCode", InSummary=true, Order=280, FiveWs="FiveWs.why[x]")]
     [Binding("CommunicationReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -801,8 +812,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why is communication needed?.
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=290, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
+    [FhirElement("reasonReference", InSummary=true, Order=290, FiveWs="FiveWs.why[x]")]
     [References("Condition","Observation","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -830,6 +841,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about communication request.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("note", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

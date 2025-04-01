@@ -79,6 +79,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Allows the contact to be classified, for example QPPV, Pharmacovigilance Enquiry Information.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("ProductContactType")]
       [DataMember]
@@ -106,8 +107,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A product specific contact, person (in a role), or an organization.
       /// </summary>
-      [FhirElement("contact", InSummary=true, Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("contact", InSummary=true, Order=50)]
       [References("Organization","PractitionerRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -240,6 +241,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The full product name.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("productName", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -282,6 +284,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of product name, such as rINN, BAN, Proprietary, Non-Proprietary.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("ProductNameType")]
       [DataMember]
@@ -309,6 +312,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coding words or phrases of the name.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("part", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -336,6 +340,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Country and jurisdiction where the name applies.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("usage", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -506,6 +511,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A fragment of a product name.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("part", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -548,6 +554,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifying type for this part of the name (e.g. strength part).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("ProductNamePartType")]
       [Cardinality(Min=1,Max=1)]
@@ -684,6 +691,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Country code for where this name applies.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("country", InSummary=true, Order=40)]
       [Binding("Country")]
       [Cardinality(Min=1,Max=1)]
@@ -712,6 +720,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Jurisdiction code for where this name applies.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("jurisdiction", InSummary=true, Order=50)]
       [Binding("Jurisdiction")]
       [DataMember]
@@ -739,6 +748,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Language code for this name.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("language", InSummary=true, Order=60)]
       [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
@@ -894,6 +904,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to another product, e.g. for linking authorised to investigational product.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("product", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -921,6 +932,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of relationship, for instance branded to generic or virtual to actual product.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("ProductCrossReferenceType")]
       [DataMember]
@@ -1056,6 +1068,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of manufacturing operation e.g. manufacturing itself, re-packaging.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference? Type
@@ -1082,6 +1095,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date range of applicability.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("effectiveDate", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Period? EffectiveDate
@@ -1108,8 +1122,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The organization responsible for the particular process, e.g. the manufacturer or importer.
       /// </summary>
-      [FhirElement("organization", InSummary=true, Order=60)]
       [CLSCompliant(false)]
+      [FhirElement("organization", InSummary=true, Order=60)]
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1137,6 +1151,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specifies whether this process is considered proprietary or confidential.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("confidentialityIndicator", InSummary=true, Order=70)]
       [Binding("ProductConfidentiality")]
       [DataMember]
@@ -1310,6 +1325,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A code expressing the type of characteristic.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("ProductCharacteristic")]
       [Cardinality(Min=1,Max=1)]
@@ -1338,8 +1354,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A value for the characteristic.
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -1458,6 +1474,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this product. Could be an MPID.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1485,6 +1502,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Regulatory type, e.g. Investigational or Authorized.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=100)]
     [Binding("MedicinalProductType")]
     [DataMember]
@@ -1512,6 +1530,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this medicine applies to human or veterinary uses.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("domain", InSummary=true, Order=110)]
     [Binding("MedicinalProductType")]
     [DataMember]
@@ -1539,6 +1558,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A business identifier relating to a specific version of the product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -1580,6 +1600,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The status within the lifecycle of this product record.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
     [Binding("PublicationStatus")]
     [DataMember]
@@ -1607,6 +1628,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date at which the given status became applicable.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("statusDate", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? StatusDateElement
@@ -1648,6 +1670,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General description of this product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1689,6 +1712,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The dose form for a single part product, or combined form of a multiple part product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("combinedPharmaceuticalDoseForm", InSummary=true, Order=160)]
     [Binding("CombinedDoseForm")]
     [DataMember]
@@ -1716,6 +1740,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The path by which the product is taken into or makes contact with the body.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("route", InSummary=true, Order=170)]
     [Binding("SNOMEDCTRouteCodes")]
     [Cardinality(Min=0,Max=-1)]
@@ -1744,6 +1769,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of indication(s) for this product, used when structured indications are not required.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("indication", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? IndicationElement
@@ -1785,6 +1811,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The legal status of supply of the medicinal product as classified by the regulator.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("legalStatusOfSupply", InSummary=true, Order=190)]
     [Binding("LegalStatusOfSupply")]
     [DataMember]
@@ -1812,6 +1839,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the Medicinal Product is subject to additional monitoring for regulatory reasons.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("additionalMonitoringIndicator", InSummary=true, Order=200)]
     [Binding("AdditionalMonitoring")]
     [DataMember]
@@ -1839,6 +1867,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the Medicinal Product is subject to special measures for regulatory reasons.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("specialMeasures", InSummary=true, Order=210)]
     [Binding("SpecialMeasures")]
     [Cardinality(Min=0,Max=-1)]
@@ -1867,6 +1896,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If authorised for use in children.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("pediatricUseIndicator", InSummary=true, Order=220)]
     [Binding("PediatricUse")]
     [DataMember]
@@ -1894,6 +1924,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Allows the product to be classified by various systems.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("classification", InSummary=true, Order=230)]
     [Binding("ProductClassification")]
     [Cardinality(Min=0,Max=-1)]
@@ -1922,6 +1953,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Marketing status of the medicinal product, in contrast to marketing authorization.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("marketingStatus", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1949,6 +1981,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Package type for the product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("packagedMedicinalProduct", InSummary=true, Order=250)]
     [Binding("MedicinalProductPackageType")]
     [Cardinality(Min=0,Max=-1)]
@@ -1977,8 +2010,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Types of medicinal manufactured items and/or devices that this product consists of, such as tablets, capsule, or syringes.
     /// </summary>
-    [FhirElement("comprisedOf", InSummary=true, Order=260)]
     [CLSCompliant(false)]
+    [FhirElement("comprisedOf", InSummary=true, Order=260)]
     [References("ManufacturedItemDefinition","DeviceDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2006,6 +2039,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The ingredients of this medicinal product - when not detailed in other resources.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("ingredient", InSummary=true, Order=270)]
     [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
@@ -2034,6 +2068,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Any component of the drug product which is not the chemical entity defined as the drug substance, or an excipient in the drug product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("impurity", InSummary=true, Order=280)]
     [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
@@ -2062,8 +2097,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation about the medicinal product.
     /// </summary>
-    [FhirElement("attachedDocument", InSummary=true, Order=290)]
     [CLSCompliant(false)]
+    [FhirElement("attachedDocument", InSummary=true, Order=290)]
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2091,8 +2126,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A master file for the medicinal product (e.g. Pharmacovigilance System Master File).
     /// </summary>
-    [FhirElement("masterFile", InSummary=true, Order=300)]
     [CLSCompliant(false)]
+    [FhirElement("masterFile", InSummary=true, Order=300)]
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2120,6 +2155,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A product specific contact, person (in a role), or an organization.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2147,8 +2183,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical trials or studies that this product is involved in.
     /// </summary>
-    [FhirElement("clinicalTrial", InSummary=true, Order=320)]
     [CLSCompliant(false)]
+    [FhirElement("clinicalTrial", InSummary=true, Order=320)]
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2176,6 +2212,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A code that this product is known by, within some formal terminology.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=330)]
     [Binding("MedicationFormalRepresentation")]
     [Cardinality(Min=0,Max=-1)]
@@ -2204,6 +2241,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The product's name, including full name and possibly coded parts.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=340)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -2231,6 +2269,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to another product, e.g. for linking authorised to investigational product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("crossReference", InSummary=true, Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2258,6 +2297,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A manufacturing or administrative process for the medicinal product.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("operation", InSummary=true, Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2285,6 +2325,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Key product features such as "sugar free", "modified release".
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("characteristic", InSummary=true, Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

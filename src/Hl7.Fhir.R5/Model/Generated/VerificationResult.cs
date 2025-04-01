@@ -128,8 +128,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to the primary source.
       /// </summary>
-      [FhirElement("who", Order=40, FiveWs="FiveWs.who")]
       [CLSCompliant(false)]
+      [FhirElement("who", Order=40, FiveWs="FiveWs.who")]
       [References("Organization","Practitioner","PractitionerRole")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Who
@@ -156,6 +156,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of primary source (License Board; Primary Education; Continuing Education; Postal Service; Relationship owner; Registration Authority; legal source; issuing source; authoritative source).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("primary-source-type")]
       [Cardinality(Min=0,Max=-1)]
@@ -184,6 +185,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Method for exchanging information with the primary source.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("communicationMethod", InSummary=true, Order=60)]
       [Binding("communication-method")]
       [Cardinality(Min=0,Max=-1)]
@@ -212,6 +214,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// successful | failed | unknown.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("validationStatus", Order=70)]
       [Binding("validation-status")]
       [DataMember]
@@ -239,6 +242,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the target was validated against the primary source.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("validationDate", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? ValidationDateElement
@@ -280,6 +284,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// yes | no | undetermined.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("canPushUpdates", InSummary=true, Order=90)]
       [Binding("can-push-updates")]
       [DataMember]
@@ -307,6 +312,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// specific | any | source.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("pushTypeAvailable", Order=100)]
       [Binding("push-type-available")]
       [Cardinality(Min=0,Max=-1)]
@@ -535,8 +541,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The individual or organization attesting to information.
       /// </summary>
-      [FhirElement("who", InSummary=true, Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("who", InSummary=true, Order=40)]
       [References("Practitioner","PractitionerRole","Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Who
@@ -563,8 +569,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the who is asserting on behalf of another (organization or individual).
       /// </summary>
-      [FhirElement("onBehalfOf", InSummary=true, Order=50)]
       [CLSCompliant(false)]
+      [FhirElement("onBehalfOf", InSummary=true, Order=50)]
       [References("Organization","Practitioner","PractitionerRole")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? OnBehalfOf
@@ -591,6 +597,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The method by which attested information was submitted/retrieved.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("communicationMethod", InSummary=true, Order=60)]
       [Binding("communication-method")]
       [DataMember]
@@ -618,6 +625,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The date the information was attested to.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("date", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Date? DateElement
@@ -659,6 +667,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A digital identity certificate associated with the attestation source.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("sourceIdentityCertificate", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SourceIdentityCertificateElement
@@ -700,6 +709,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A digital identity certificate associated with the proxy entity submitting attested information on behalf of the attestation source.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("proxyIdentityCertificate", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ProxyIdentityCertificateElement
@@ -741,6 +751,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Proxy signature (digital or image).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("proxySignature", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Signature? ProxySignature
@@ -767,6 +778,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Attester signature (digital or image).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("sourceSignature", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Signature? SourceSignature
@@ -1012,8 +1024,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to the organization validating information.
       /// </summary>
-      [FhirElement("organization", Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("organization", Order=40)]
       [References("Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1041,6 +1053,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A digital identity certificate associated with the validator.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("identityCertificate", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? IdentityCertificateElement
@@ -1082,6 +1095,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Validator signature (digital or image).
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("attestationSignature", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Signature? AttestationSignature
@@ -1219,8 +1233,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A resource that was validated.
     /// </summary>
-    [FhirElement("target", InSummary=true, Order=90)]
     [CLSCompliant(false)]
+    [FhirElement("target", InSummary=true, Order=90)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1248,6 +1262,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The fhirpath location(s) within the resource that was validated.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("targetLocation", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1293,6 +1308,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// none | initial | periodic.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("need", InSummary=true, Order=110)]
     [Binding("need")]
     [DataMember]
@@ -1320,8 +1336,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// attested | validated | in-process | req-revalid | val-fail | reval-fail | entered-in-error.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=120)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("status")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1364,6 +1381,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the validation status was updated.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("statusDate", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? StatusDateElement
@@ -1405,6 +1423,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// nothing | primary | multiple.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("validationType", InSummary=true, Order=140)]
     [Binding("validation-type")]
     [DataMember]
@@ -1432,6 +1451,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The primary process by which the target is validated (edit check; value set; primary source; multiple sources; standalone; in context).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("validationProcess", InSummary=true, Order=150)]
     [Binding("validation-process")]
     [Cardinality(Min=0,Max=-1)]
@@ -1460,6 +1480,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Frequency of revalidation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("frequency", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Timing? Frequency
@@ -1486,6 +1507,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date/time validation was last completed (including failed validations).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("lastPerformed", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? LastPerformedElement
@@ -1527,6 +1549,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date when target is next validated, if appropriate.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("nextScheduled", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Date? NextScheduledElement
@@ -1568,6 +1591,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// fatal | warn | rec-only | none.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("failureAction", InSummary=true, Order=190)]
     [Binding("failure-action")]
     [DataMember]
@@ -1595,6 +1619,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the primary source(s) involved in validation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("primarySource", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1622,6 +1647,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the entity attesting to information.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("attestation", Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.VerificationResult.AttestationComponent? Attestation
@@ -1648,6 +1674,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the entity validating information.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("validator", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

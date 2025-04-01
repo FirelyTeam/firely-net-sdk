@@ -82,6 +82,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An identifier for this qualification for the practitioner.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -109,6 +110,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coded representation of the qualification.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("code", Order=50)]
       [Binding("Qualification")]
       [Cardinality(Min=1,Max=1)]
@@ -137,6 +139,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Period during which the qualification is valid.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("period", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -163,8 +166,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization that regulates and issues the qualification.
       /// </summary>
-      [FhirElement("issuer", Order=70)]
       [CLSCompliant(false)]
+      [FhirElement("issuer", Order=70)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Issuer
@@ -321,6 +324,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier for the person as this agent.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -348,6 +352,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this practitioner's record is in active use.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -389,6 +394,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The name(s) associated with the practitioner.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -416,6 +422,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the practitioner (that apply to all roles).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("telecom", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -443,6 +450,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Address(es) of the practitioner that are not role specific (typically home address).
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("address", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -470,8 +478,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("gender", InSummary=true, Order=140)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement
@@ -513,6 +522,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date  on which the practitioner was born.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("birthDate", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.Date? BirthDateElement
@@ -554,6 +564,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Image of the person.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("photo", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -581,6 +592,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Certification, licenses, or training pertaining to the provision of care.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("qualification", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -608,6 +620,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A language the practitioner can use in patient communication.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("communication", Order=180)]
     [Binding("Language")]
     [Cardinality(Min=0,Max=-1)]

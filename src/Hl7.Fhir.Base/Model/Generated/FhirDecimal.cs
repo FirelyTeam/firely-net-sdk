@@ -75,8 +75,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Primitive value of the element
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(typeof(SystemPrimitive.Decimal))]
+    [AllowedTypes(typeof(SystemPrimitive.Decimal))]
     [DataMember]
     public decimal? Value
     {

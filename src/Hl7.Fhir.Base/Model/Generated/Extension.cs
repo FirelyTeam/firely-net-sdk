@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// identifies the meaning of the extension.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("url", XmlSerialization = XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -108,6 +109,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Value of extension.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Value

@@ -116,6 +116,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The kind of relationship.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("relationship", Order=40)]
       [Binding("ContactRelationship")]
       [Cardinality(Min=0,Max=-1)]
@@ -144,6 +145,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A name associated with the contact person.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("name", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.HumanName? Name
@@ -170,6 +172,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A contact detail for the person.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("telecom", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -197,6 +200,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Address for the contact person.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("address", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Address? Address
@@ -223,8 +227,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// male | female | other | unknown.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("gender", Order=80)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("AdministrativeGender")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement
@@ -266,8 +271,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization that is associated with the contact.
       /// </summary>
-      [FhirElement("organization", Order=90)]
       [CLSCompliant(false)]
+      [FhirElement("organization", Order=90)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Organization
@@ -294,6 +299,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The period during which this contact person or organization is valid to be contacted relating to this patient.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("period", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -523,6 +529,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The language which can be used to communicate with the patient about his or her health.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("language", Order=40)]
       [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
@@ -551,6 +558,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Language preference indicator.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("preferred", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? PreferredElement
@@ -700,8 +708,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The other patient or related person resource that the link refers to.
       /// </summary>
-      [FhirElement("other", InSummary=true, Order=40)]
       [CLSCompliant(false)]
+      [FhirElement("other", InSummary=true, Order=40)]
       [References("Patient","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -729,8 +737,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// replaced-by | replaces | refer | seealso.
       /// </summary>
+      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
-      [DeclaredType(typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("LinkType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -865,6 +874,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier for this patient.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -892,6 +902,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this patient's record is in active use.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -933,6 +944,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name associated with the patient.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -960,6 +972,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the individual.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("telecom", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -987,8 +1000,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("gender", InSummary=true, Order=130)]
-    [DeclaredType(typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement
@@ -1030,6 +1044,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date of birth for the individual.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("birthDate", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Date? BirthDateElement
@@ -1071,8 +1086,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates if the individual is deceased or not.
     /// </summary>
-    [FhirElement("deceased", InSummary=true, IsModifier=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [FhirElement("deceased", InSummary=true, IsModifier=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Deceased
@@ -1099,6 +1114,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An address for the individual.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("address", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1126,6 +1142,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Marital (civil) status of a patient.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("maritalStatus", Order=170)]
     [Binding("MaritalStatus")]
     [DataMember]
@@ -1153,8 +1170,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether patient is part of a multiple birth.
     /// </summary>
-    [FhirElement("multipleBirth", Order=180, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [FhirElement("multipleBirth", Order=180, Choice=ChoiceType.DatatypeChoice)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? MultipleBirth
@@ -1181,6 +1198,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Image of the patient.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("photo", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1208,6 +1226,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact party (e.g. guardian, partner, friend) for the patient.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("contact", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1235,6 +1254,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A language which may be used to communicate with the patient about his or her health.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("communication", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1262,8 +1282,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient's nominated primary care provider.
     /// </summary>
-    [FhirElement("generalPractitioner", Order=220)]
     [CLSCompliant(false)]
+    [FhirElement("generalPractitioner", Order=220)]
     [References("Organization","Practitioner","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1291,8 +1311,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that is the custodian of the patient record.
     /// </summary>
-    [FhirElement("managingOrganization", InSummary=true, Order=230)]
     [CLSCompliant(false)]
+    [FhirElement("managingOrganization", InSummary=true, Order=230)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ManagingOrganization
@@ -1319,6 +1339,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link to a Patient or RelatedPerson resource that concerns the same actual individual.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("link", InSummary=true, IsModifier=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

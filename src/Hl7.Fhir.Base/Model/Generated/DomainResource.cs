@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Text summary of the resource, for human interpretation.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("text", Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Narrative? Text
@@ -87,8 +88,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contained, inline Resources.
     /// </summary>
-    [FhirElement("contained", Order=60, Choice=ChoiceType.ResourceChoice)]
     [CLSCompliant(false)]
+    [FhirElement("contained", Order=60, Choice=ChoiceType.ResourceChoice)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -116,6 +117,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional content defined by implementations.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("extension", Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -143,6 +145,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Extensions that cannot be ignored.
     /// </summary>
+    [CLSCompliant(false)]
     [FhirElement("modifierExtension", InSummary=true, IsModifier=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
