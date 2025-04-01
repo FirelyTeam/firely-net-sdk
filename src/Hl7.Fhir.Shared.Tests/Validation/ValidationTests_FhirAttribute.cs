@@ -10,13 +10,13 @@ using FluentAssertions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using InstanceDeserializationContext = Hl7.Fhir.Serialization.InstanceDeserializationContext;
 using Validator = System.ComponentModel.DataAnnotations.Validator;
 
 #nullable enable
@@ -30,37 +30,37 @@ public class ValidationTests_FhirAttribute
     
     private void assertInstanceValidationErrors(Base instance, params string?[] expectedErrorCodes)
     {
-        validator.ValidateObject(
-            instance, 
-            new InstanceDeserializationContext(
+        var errors = validator.ValidateObject(
+            instance,
+            ModelInfo.ModelInspector.FindClassMapping(instance.GetType()),
+            new PocoValidationContext(
+                instance,
+                ModelInfo.ModelInspector,
                 () => "",
                 0, 0,
-                ModelInfo.ModelInspector.FindClassMapping(instance.GetType())!,
                 NarrativeValidationKind.FhirXhtml
-            ), 
-            out var errors
+            )
         );
         if (expectedErrorCodes.All(error => error != null))
-            (errors).Select(e => e.ErrorCode).Should().BeEquivalentTo(expectedErrorCodes);
+            errors.Select(e => e.ErrorCode).Should().BeEquivalentTo(expectedErrorCodes);
     }
 
     private void assertPropertyValidationErrors(Base instance, string propNameToValidate, params string?[] expectedErrorCodes)
     {
-        validator.ValidateProperty(
-            instance[propNameToValidate], 
-            new PropertyDeserializationContext(
+        var errors = validator.ValidateProperty(
+            propNameToValidate,
+            instance[propNameToValidate],
+            ModelInfo.ModelInspector.FindClassMapping(instance.GetType())?.FindMappedElementByName(propNameToValidate),
+            new PocoValidationContext(
                 instance,
-                () => propNameToValidate,
-                propNameToValidate,
-                0, 
-                0,
-                ModelInfo.ModelInspector.FindClassMapping(instance.GetType())!.FindMappedElementByName(propNameToValidate),
+                ModelInfo.ModelInspector,
+                () => "",
+                0, 0,
                 NarrativeValidationKind.FhirXhtml
-            ), 
-            out var errors
+            )
         );
         if (expectedErrorCodes.All(error => error != null))
-            (errors).Select(e => e.ErrorCode).Should().BeEquivalentTo(expectedErrorCodes);
+            errors.Select(e => e.ErrorCode).Should().BeEquivalentTo(expectedErrorCodes);
     }
         
     [DataTestMethod]

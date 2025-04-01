@@ -11,6 +11,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -288,13 +289,14 @@ public class BaseFhirXmlDeserializer
 
         if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
         {
-            var context = new InstanceDeserializationContext(
+            var context = new PocoValidationContext(
+                target,
+                _inspector,
                 state.Path.GetInstancePath,
                 lineNumber, position,
-                mapping,
                 Settings.NarrativeValidation);
 
-            PocoDeserializationHelper.RunInstanceValidation(target, Settings.Validator, context, state.Errors);
+            state.Errors.Add(Settings.Validator.ValidateObject(target, mapping, context));
         }
 
         reader.ReadToContent(state);
@@ -334,15 +336,14 @@ public class BaseFhirXmlDeserializer
 
         if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
         {
-            var context = new PropertyDeserializationContext(
+            var context = new PocoValidationContext(
                 target,
+                _inspector,
                 state.Path.GetInstancePath, // should this path GetPath or this?
-                name,
                 lineNumber, position,
-                propMapping,
                 Settings.NarrativeValidation);
 
-            PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator, context, state.Errors);
+            state.Errors.Add(Settings.Validator.ValidateProperty(name, result, propMapping, context));
         }
 
         propMapping.SetValue(target, result);

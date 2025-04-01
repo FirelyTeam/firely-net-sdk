@@ -28,11 +28,13 @@ public record PocoValidationContext
         PathProducer = pathProducer;
         LineNumber = lineNumber;
         LinePosition = linePosition;
-        NarrativeValidation = narrativeValidation;
-      //  ModelInspector = modelInspector;
+        NarrativeValidation = narrativeValidation; 
+        ModelInspector = modelInspector;
     }
 
-  //  public ModelInspector ModelInspector { get; set; }
+    public ModelInspector ModelInspector { get; set; }
+
+    //  public ModelInspector ModelInspector { get; set; }
 
     /// <summary>
     /// In the context of property validation this is the POCO this property is an element of. In the context

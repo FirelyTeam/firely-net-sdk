@@ -56,7 +56,7 @@ public partial class PrimitiveType : P.IToSystemPrimitive
     }
 
     protected internal override IReadOnlyCollection<CodedValidationException> ValidateInvariants(PocoValidationContext validationContext) =>
-        ValidateObjectValue(validationContext) is { } result ? [result.AsResult(validationContext)] : [];
+        ValidateObjectValue(validationContext) is { } result ? [result] : [];
 
     /// <summary>
     /// Validates the JsonValue. Some subclasses will also, as a side-effect, update

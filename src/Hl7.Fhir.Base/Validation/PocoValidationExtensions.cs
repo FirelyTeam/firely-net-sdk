@@ -13,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 #nullable enable
 
@@ -28,10 +29,8 @@ public static class PocoValidationExtensions
     /// </summary>
     /// <param name="poco">The POCO to validate</param>
     /// <param name="inspector">The model metadata to use for validation.</param>
-    /// <param name="recurse">Whether to validate the object recursively, by also validating the contents of each property of the object.</param>
     /// <param name="narrativeValidation">The kind of narrative validation to perform when validating <see cref="XHtml"/>.</param>
-    /// <param name="validationResults">A collection to which any validation errors will be added.</param>
-    /// <remarks>If <paramref name="validationResults"/> is <c>null</c>, no errors will be returned.</remarks>
+    /// <param name="validator"></param>
     public static IReadOnlyCollection<CodedValidationException> Validate(
         this Base poco,
         NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml,
@@ -67,7 +66,7 @@ public static class PocoValidationExtensions
             errors.AddRange(validator.ValidateProperty(name, propValue, propMapping, childContext));
 
             if (!validationContext.ValidateObjectOnly)
-                errors.AddRange(doNestedValidation(childContext, name, propValue));
+                errors.AddRange(doNestedValidation(childContext, name, propValue, validator));
         }
 
         // Step 2: Validate the object itself.
@@ -76,30 +75,30 @@ public static class PocoValidationExtensions
         return errors;
     }
 
-    private static IReadOnlyCollection<CodedValidationException> doNestedValidation(PocoValidationContext context, string propName, object value)
+    private static IReadOnlyCollection<CodedValidationException> doNestedValidation(PocoValidationContext context, string propName, object value, IPocoValidator validator)
     {
         var errors = new List<CodedValidationException>();
 
         switch (value)
         {
-            case IList list:
+            case IList<Base> list:
                 {
                     foreach (var element in list)
                     {
-                        var result = doObjectValidation(element, inspector, context);
-                        if (result != ValidationResult.Success) return result;
+                        var result = doObjectValidation(element, context.ModelInspector, context, validator);
+                        if (result.Any()) return result;
                     }
 
                     break;
                 }
             case Base b:
                 {
-                    var nestedContext = parentValidationContext.IntoPath(b, propName);
-                    return IsValid(value, nestedContext);
+                    var nestedContext = context.IntoPath(propName);
+                    return doObjectValidation(b, context.ModelInspector, nestedContext, validator);
                 }
         }
 
-        return ValidationResult.Success;
+        return [];
     }
 
     internal static Func<string> IntoPath(this Func<string> parent, string propName) => () => $"{parent()}.{propName}";

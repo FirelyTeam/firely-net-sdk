@@ -56,9 +56,9 @@ public partial class XHtml
             _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
         };
 
-    internal static COVE? ValidateXmlLiteral(string xml, ValidationContext? context)
+    internal static COVE? ValidateXmlLiteral(string xml, PocoValidationContext? context)
     {
-        return context?.GetNarrativeValidationKind() switch
+        return context?.NarrativeValidation switch
         {
             null => null,
             NarrativeValidationKind.None => null,

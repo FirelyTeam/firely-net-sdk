@@ -584,22 +584,19 @@ public class FhirJsonDeserializationTests
         //     base.ValidateObjectValue(ref value, context, out reportedErrors);
         // }
 
-        public override void ValidateObject(Base instance, in InstanceDeserializationContext context,
-            out IReadOnlyCollection<COVE> reportedErrors)
-        {
+        public override IReadOnlyCollection<COVE> ValidateObject(Base instance, ClassMapping? classMapping, PocoValidationContext context){
             if (instance is FhirDateTime fdt)
             {
                 DateTimeSeenByInstanceValidator = fdt;
                 fdt.ObjectValue = "1972-11-30T12:00:00Z";
             }
 
-            base.ValidateObject(instance, context, out reportedErrors);
+            return base.ValidateObject(instance, classMapping, context);
         }
 
-        public override void ValidateProperty(object? propertyValue, in PropertyDeserializationContext context,
-            out IReadOnlyCollection<COVE> reportedErrors)
+        public override IReadOnlyCollection<COVE> ValidateProperty(string name, object? propertyValue, PropertyMapping? propertyMapping, PocoValidationContext context)
         {
-            base.ValidateProperty(propertyValue, context, out reportedErrors);
+            var reportedErrors = base.ValidateProperty(name, propertyValue, propertyMapping, context);
 
             if (context.PathProducer.Invoke() == "Patient.deceased")
             {
@@ -608,16 +605,10 @@ public class FhirJsonDeserializationTests
                 // Take note of what we got.
                 DateTimeSeenByPropertyValidator = fdt;
 
-                var validationContext = new ValidationContext(context.ObjectInstance)
-                    .SetValidateRecursively(false) // Don't go deeper - we've already validated the children because we're parsing bottom-up.
-                    .SetLocationProducer(context.PathProducer);
-
-                if (context.LinePosition is not null && context.LineNumber is not null)
-                    validationContext.SetPositionInfo(new PositionInfo((int)context.LineNumber,
-                        (int)context.LinePosition));
-
-                reportedErrors = [..reportedErrors, COVE.LITERAL_INVALID(validationContext, "Nothing wrong, really", "DateTime")];
+                return [..reportedErrors, COVE.LITERAL_INVALID(context, "Nothing wrong, really", "DateTime")];
             }
+
+            return reportedErrors;
         }
     }
 
