@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,13 @@ public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAtt
     }
 
     private IReadOnlyCollection<CodedValidationException> validateValue(object? item, PocoValidationContext context) =>
-        item is null || Types.Any(t => t.IsInstanceOfType(item))
-            ? []
-            : [COVE.CHOICE_TYPE_NOT_ALLOWED(context, ModelInspector.GetClassMappingForType(item.GetType())?.Name ?? item.GetType().Name)];
+        Types switch
+        {
+            { Length: > 1 } when item is not null && !Types.Contains(item.GetType()) =>
+                [COVE.CHOICE_TYPE_NOT_ALLOWED(context, COVE.fhirTypeNameForObject(item))],
+            { Length: 1 } when !Types[0].IsInstanceOfType(item) =>
+                [COVE.FromTypes(Types[0], item, context)],
+            _ => []
+        };
+
 }

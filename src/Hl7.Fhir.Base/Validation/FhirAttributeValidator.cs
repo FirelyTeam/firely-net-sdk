@@ -36,15 +36,6 @@ public class FhirAttributeValidator : IPocoValidator
         if (propertyMapping is null)
             return [CodedValidationException.UNKNOWN_ELEMENT(context, name)];
 
-        // TODO refactor this to the new logic (validation attrubute validation)
-        if (propertyMapping.Choice == ChoiceType.None &&
-            !propertyValue.IsValidValueForType(propertyMapping.FhirType.Single(), propertyMapping.IsCollection))
-        {
-            return runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context)
-                .Append(CodedValidationException.FromTypes(propertyMapping.NativeProperty.PropertyType, propertyValue, context))
-                .ToArray();
-        }
-
         return runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context);
     }
 
