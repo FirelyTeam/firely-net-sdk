@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Introspection
                 IsMandatoryElement = cardinalityAttr?.Min > 0,
                 IsPrimitive = isPrimitive,
                 RepresentsValueElement = isPrimitive && isPrimitiveValueElement(elementAttr, prop),
-                ValidationAttributes = ClassMapping.GetAttributes<ValidatingFhirModelAttribute>(prop, release).ToArray(),
+                ValidationAttributes = ClassMapping.GetValidatingAttributes(prop, release).ToArray(),
                 FiveWs = elementAttr.FiveWs,
                 BindingName = ClassMapping.GetAttribute<BindingAttribute>(prop, release)?.Name
             };

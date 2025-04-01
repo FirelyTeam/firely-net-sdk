@@ -38,7 +38,7 @@ public static class PocoValidationExtensions
     {
         inspector ??= ModelInspector.ForType(poco.GetType());
         validator ??= new FhirAttributeValidator();
-        var validationContext = buildContext(poco, null!, narrativeValidation);
+        var validationContext = buildContext(poco, inspector, narrativeValidation);
 
         return doObjectValidation(poco, inspector, validationContext, validator);
     }

@@ -270,6 +270,14 @@ namespace Hl7.Fhir.Introspection
             bool isRelevant(FhirModelAttribute a) => a.AppliesToRelease(version);
         }
 
+        internal static IEnumerable<ValidatingFhirModelAttribute> GetValidatingAttributes(MemberInfo t, FhirRelease version)
+        {
+            return GetAttributes<ValidatingFhirModelAttribute>(t, version)
+                .GroupBy(att => att.GetType())
+                .Select(g => g.LastOrDefault())
+                .OfType<ValidatingFhirModelAttribute>();
+        }
+
         #region IStructureDefinitionSummary members
         /// <inheritdoc />
         string IStructureDefinitionSummary.TypeName =>
