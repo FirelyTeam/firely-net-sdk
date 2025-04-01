@@ -310,12 +310,14 @@ public class BaseFhirJsonDeserializer
         {
             state.Path.EnterElement(name, reader.TokenType == JsonTokenType.StartArray ? 0 : null, propertyValueMapping?.IsPrimitive ?? isOnJsonPrimitiveType(ref reader));
             
-            result = deserializeJsonValue(existingValue, propertyName, ref reader, state, delayedValidations!, propertyValueMapping);
+            result = deserializeJsonValue(existingValue, propertyName, ref reader, state, delayedValidations!, propertyValueMapping, propertyMapping);
         }
         finally
         {
             state.Path.ExitElement();
         }
+        
+        target.SetValue(name, result);
         
         // Only do validation when no parse errors were encountered, otherwise we'll just
         // produce spurious messages.
@@ -350,8 +352,6 @@ public class BaseFhirJsonDeserializer
                 PocoDeserializationHelper.RunPropertyValidation(result, Settings.Validator!, deserializationContext, state.Errors);
         }
         
-        target.SetValue(name, result);
-        
         (string name, ClassMapping? propertyValueMapping) tryDetectNameAndMapping(string propertyName, PropertyMapping? propertyMapping, ClassMapping? propertyValueSuggestion)
         {
             // nothing to guess, we have information already
@@ -377,7 +377,7 @@ public class BaseFhirJsonDeserializer
         }
     }
 
-    private object? deserializeJsonValue(object? existingValue, string propertyName, ref Utf8JsonReader reader, FhirJsonPocoDeserializerState state, ObjectParsingState parsingState, ClassMapping? propertyValueSuggestion = null)
+    private object? deserializeJsonValue(object? existingValue, string propertyName, ref Utf8JsonReader reader, FhirJsonPocoDeserializerState state, ObjectParsingState parsingState, ClassMapping? propertyValueSuggestion = null, PropertyMapping? propertyMapping = null)
     {
         object? result = null;
 
@@ -409,9 +409,15 @@ public class BaseFhirJsonDeserializer
             var peeked = peekTypeNested(ref reader);
             
             var primitiveType = getFhirTypeForToken(peeked);
+
+            ClassMapping? listFactory = null;
+            if(propertyMapping?.ImplementingType is { } t)
+                listFactory = _inspector.FindClassMapping(t);
             
             propertyValueMapping ??= _inspector.FindClassMapping(primitiveType!)!;
-
+            
+            listFactory ??= propertyValueMapping;
+            
             IList primitiveList;
             if (existingValue is IList l)
             {
@@ -426,7 +432,7 @@ public class BaseFhirJsonDeserializer
             }
             else
             {
-                primitiveList = propertyValueMapping.ListFactory();
+                primitiveList = listFactory.ListFactory();
                 if(existingValue is not null)
                     primitiveList.Add(existingValue);
             }
