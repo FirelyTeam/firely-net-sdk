@@ -81,9 +81,9 @@ public static class PocoValidationExtensions
 
         switch (value)
         {
-            case IList<Base> list:
+            case IList list:
                 {
-                    foreach (var element in list)
+                    foreach (Base element in list.OfType<Base>())
                     {
                         var result = doObjectValidation(element, context.ModelInspector, context, validator);
                         if (result.Any()) return result;

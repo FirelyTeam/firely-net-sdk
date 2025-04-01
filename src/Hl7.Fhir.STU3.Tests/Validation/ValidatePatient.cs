@@ -12,6 +12,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace Hl7.Fhir.Tests.Validation
@@ -20,17 +21,17 @@ namespace Hl7.Fhir.Tests.Validation
     public class ValidatePatient
     {
         [TestMethod]
-        public void ValidateDemoPatient()
+        public void ValidatingRecursively_Should_EnterListsAppropriately()
         {
             var s = new StringReader(TestDataHelper.ReadTestData(@"TestPatient.xml"));
 
             var patient = new FhirXmlDeserializer().Deserialize<Patient>(XmlReader.Create(s));
             
-            foreach (var contained in patient.Contained) ((DomainResource)contained).Text = new Narrative() { Div = "<wrong />", Status = Narrative.NarrativeStatus.Generated };
+            foreach (var contained in patient.Contained.OfType<DomainResource>()) ((DomainResource)contained).Text = new Narrative() { Div = "<wrong />", Status = Narrative.NarrativeStatus.Generated };
 
             patient.Validate().Should().NotBeEmpty();
             
-            foreach (DomainResource contained in patient.Contained) contained.Text = null;
+            foreach (DomainResource contained in patient.Contained.OfType<DomainResource>()) contained.Text = null;
 
             // Try again
             patient.Validate().Should().BeEmpty();
