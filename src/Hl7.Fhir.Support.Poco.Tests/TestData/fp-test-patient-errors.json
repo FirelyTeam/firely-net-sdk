@@ -11,6 +11,39 @@
   },
   "contained": [
     {
+      "resourceType": "MultiLevelArrayPrimitive",
+      "id": "1",
+      "active": [ null, [ true ] ]
+    },
+    {
+      "resourceType": "MultiLevelArrayPrimitiveNoNull",
+      "id": "1",
+      "active": [ [ true, [ false ] ] ]
+    },
+    {
+      "resourceType": "MultiLevelArrayWithComplex",
+      "id": "1",
+      "active": [ null, 
+        [
+          {
+            "versionId": "2"
+          }
+        ]
+      ]
+    },
+    {
+      "resourceType": "MultiLevelArrayWithComplexNoNull",
+      "id": "1",
+      "active": [ 
+        [ 
+          {
+            "versionId": "2"
+          }
+        ],
+        [ true ]
+      ]
+    },
+    {
       "resourceType": "PatientX",
       "id": "1"
     },
@@ -334,5 +367,10 @@
   "link": [
     {
     }
-  ]
+  ],
+  "unknownElement": {
+    "valued": {
+      "data": [ true, null ]
+    }
+  }
 }
