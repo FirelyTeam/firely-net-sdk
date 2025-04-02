@@ -228,11 +228,8 @@ public class BaseFhirJsonDeserializer
         bool stayOnLastToken = false) where T : Base
     {
         if (reader.TokenType != JsonTokenType.StartObject)
-        {            
-            deserializePropertyInto(target, "value", ref reader, state, stayOnLastToken, new());
-            
-            return;
-        }
+            throw new InvalidOperationException($"deserializeObjectInto should only be called on JSON objects: " +
+                                                $"Current token is {reader.TokenType}.");
         
         reader.Read();
 
@@ -278,7 +275,7 @@ public class BaseFhirJsonDeserializer
 
         // Only run instance validation when deserialization yielded no errors
         // to avoid spurious error messages.
-        if (Settings.Validator is not null && kind != DeserializedObjectKind.FhirPrimitive && (Settings.ValidateOnFailedParse || state.Errors.Count == oldErrorCount))
+        if (Settings.Validator is not null)
         {
             var context = new PocoValidationContext(target, _inspector, state.Path.GetInstancePath, line,pos, Settings.NarrativeValidation);
             state.Errors.Add(Settings.Validator.ValidateObject(target, mapping, context));
@@ -321,7 +318,7 @@ public class BaseFhirJsonDeserializer
         
         // Only do validation when no parse errors were encountered, otherwise we'll just
         // produce spurious messages.
-        if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count) && propertyMapping is not null)
+        if (Settings.Validator is not null)
         {
             var deserializationContext = new PocoValidationContext(
                 target,
@@ -333,16 +330,16 @@ public class BaseFhirJsonDeserializer
 
             // If this is a FhirPrimitive, make sure we delay validation until we had the
             // chance to encounter both the `name` and `_name` property.
-            if (propertyValueSuggestion!.IsFhirPrimitive)
+            if (propertyValueMapping?.IsFhirPrimitive is true)
             {
-                var elementName = propertyMapping.Name;
+                var elementName = propertyMapping?.Name ?? name;
 
                 delayedValidations?.ScheduleDelayedValidation(
                     elementName + PROPERTY_VALIDATION_KEY_SUFFIX,
                     () =>
                     {
                         state.Path.EnterElement(elementName, null,
-                            propertyValueSuggestion.IsPrimitive);
+                            propertyValueMapping.IsPrimitive);
                         state.Errors.Add(Settings.Validator.ValidateProperty(elementName, result, propertyMapping,
                             deserializationContext));
                         state.Path.ExitElement();
@@ -680,7 +677,7 @@ public class BaseFhirJsonDeserializer
         string propertyName,
         ClassMapping propertyValueMapping,
         ref Utf8JsonReader reader,
-        ObjectParsingState? parsingState,
+        ObjectParsingState parsingState,
         FhirJsonPocoDeserializerState state
     )
     {
@@ -722,7 +719,12 @@ public class BaseFhirJsonDeserializer
             {
                 state.Errors.Add(ERR.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
             }
-            deserializeObjectInto(targetPrimitive, propertyValueMapping, ref reader, DeserializedObjectKind.FhirPrimitive, state, stayOnLastToken: false);
+
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                state.Errors.Add(ERR.EXPECTED_START_OF_OBJECT(ref reader, state.Path.GetInstancePath(), reader.TokenType));
+                deserializeJsonValue(targetPrimitive, propertyName, ref reader, state, parsingState, propertyValueMapping);
+            }
         }
 
         // Only do validation on this instance when no parse errors were encountered, otherwise we'll just
