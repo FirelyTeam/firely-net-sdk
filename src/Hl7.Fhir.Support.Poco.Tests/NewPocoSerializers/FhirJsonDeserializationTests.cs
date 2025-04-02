@@ -491,16 +491,17 @@ public class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false);
+    public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "TestData");
 
     [TestMethod]
     [Ignore]
-    public void OverwriteTestDataForRecoveryTest() => testRecovery(true);
+    public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "../../../TestData");
     
-    private void testRecovery(bool overwrite)
+    /// fileDir is a fix for the test framework only editing temp files.
+    private void testRecovery(bool overwrite, string fileDir)
     {
-        var patientFileName = Path.Combine("../../../TestData", "fp-test-patient-errors.json");
-        var errorsFileName = Path.Combine("../../../TestData", "fp-test-patient-errors-expected.txt");
+        var patientFileName = Path.Combine(fileDir, "fp-test-patient-errors.json");
+        var errorsFileName = Path.Combine(fileDir, "fp-test-patient-errors-expected.txt");
         var jsonInput = File.ReadAllText(patientFileName);
 
         var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
