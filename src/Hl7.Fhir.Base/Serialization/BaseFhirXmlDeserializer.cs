@@ -637,18 +637,18 @@ public class BaseFhirXmlDeserializer
         {
             // Handle atomic-types-as-primitives, Element.id, Extension.url etc.
             propMapping.SetValue(target, parsedValue);
-        }
-        
-        if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
-        {
-            var context = new PocoValidationContext(
-                target,
-                _inspector,
-                state.Path.GetInstancePath,
-                lineNumber, position,
-                Settings.NarrativeValidation);
+            
+            if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
+            {
+                var context = new PocoValidationContext(
+                    target,
+                    _inspector,
+                    state.Path.GetInstancePath,
+                    lineNumber, position,
+                    Settings.NarrativeValidation);
 
-            state.Errors.Add(Settings.Validator.ValidateProperty(elementName, target, propMapping, context));
+                state.Errors.Add(Settings.Validator.ValidateProperty(elementName, target, propMapping, context));
+            }
         }
     }
 
