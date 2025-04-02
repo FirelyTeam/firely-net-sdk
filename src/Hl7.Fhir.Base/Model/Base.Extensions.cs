@@ -65,4 +65,19 @@ public static partial class BaseExtensions
             };
         }
     }
+
+    internal static DynamicPrimitive ToDynamicPrimitive(this Base instance)
+    {
+        var primitive = new DynamicPrimitive();
+        
+        foreach(var element in instance.EnumerateElements())
+        {
+            if(element.Key == "value")
+                primitive.ObjectValue = element.Value;
+            else
+                primitive.SetValue(element.Key, element.Value);
+        }
+
+        return primitive;
+    }
 }

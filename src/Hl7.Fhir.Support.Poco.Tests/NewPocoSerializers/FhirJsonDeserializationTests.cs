@@ -33,7 +33,6 @@ public class FhirJsonDeserializationTests
 
     [DataTestMethod]
     [DataRow("OperationOutcome", null)]
-    [DataRow("OperationOutcomeX", ERR.UNKNOWN_RESOURCE_TYPE_CODE)]
     [DataRow("Meta", null)]
     [DataRow(4, ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE)]
     [DataRow(null, ERR.NO_RESOURCETYPE_PROPERTY_CODE)]
@@ -60,7 +59,8 @@ public class FhirJsonDeserializationTests
 
             var ps = new PathStack();
             ps.EnterElement("Patient", 0, false);
-            return BaseFhirJsonDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, ps);
+            var response = BaseFhirJsonDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, ps);
+            return (response.Item1, response.Item2);
         }
     }
 
@@ -584,6 +584,109 @@ public class FhirJsonDeserializationTests
         }
     }
 
+    [TestMethod]
+    public void JsonDeserializerSupportsParsingUnknownTypesAndProperties()
+    {
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.Base);
+
+        var dt = DateTimeOffset.UtcNow;
+        
+        Utf8JsonReader reader = constructReader(new { resourceType = "Unknown", id = "TestIdentifier", body = new[] { "Test" }, testBool = true, valueDateTime = dt, testDec = 123.4, testInt = 999});
+
+         parser.TryDeserializeResource(ref reader, out var obj, out var errors);
+
+        obj.Should().NotBeNull();
+        obj!.Id.Should().Be("TestIdentifier");
+        obj["body"].Should().BeEquivalentTo(new List<FhirString> { new("Test") });
+        obj["testBool"].Should().BeEquivalentTo(new DynamicPrimitive{ ObjectValue = true });
+        obj["testDec"].Should().BeEquivalentTo(new DynamicPrimitive{ ObjectValue = new decimal(123.4) });
+        obj["testInt"].Should().BeEquivalentTo(new DynamicPrimitive{ ObjectValue = 999});
+        obj["value"].Should().BeEquivalentTo(new FhirDateTime(dt));
+    }
+
+    [TestMethod]
+    public void JsonDeserializerSupportsUnknownPropertiesOnKnownTypes()
+    {
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
+
+        var dt = DateTimeOffset.UtcNow;
+        
+        Utf8JsonReader reader = constructReader(new 
+        {
+            resourceType = "Patient", 
+            id = "TestIdentifier",
+            active = new[] { true, false },
+            telecom = new{ system = "phone", value = "magicnumber"},
+            communication = "en",
+            name = "Test",
+        });
+
+        parser.TryDeserializeResource(ref reader, out var obj, out var errors);
+        obj.Should().NotBeNull();
+        obj!.TypeName.Should().Be("Patient");
+        obj.Id.Should().Be("TestIdentifier");
+        // array where primitive
+        obj["active"].Should().BeEquivalentTo(new[]{new FhirBoolean(true), new FhirBoolean(false)});
+        // primitive where array
+        obj["communication"].Should().BeEquivalentTo(new DynamicPrimitive{ ObjectValue = "en" });
+        // primitive when complex
+        obj["name"].Should().BeEquivalentTo(new DynamicPrimitive{ ObjectValue = "Test"});
+    }
+    
+    [TestMethod]
+    public void JsonDeserializerHandleUnexpectedObject()
+    {
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
+
+        var test = new
+        {
+            resourceType = "Observation",
+            status = new { value = "final" }, // Expected a primitive, got an object
+            code = new
+            {
+                text = "Heart Rate"
+            },
+            valueQuantity = new
+            {
+                value = new { amount = 72 }, // Expected a number, got an object
+                unit = "bpm"
+            }
+        };
+
+        Utf8JsonReader reader = constructReader(test);
+
+        parser.TryDeserializeResource(ref reader, out var obj, out var errors);
+        
+        obj.Should().NotBeNull();
+        obj!.TypeName.Should().Be("Observation");
+    }
+    
+    [TestMethod]
+    public void JsonDeserializerHandleContainedStuff()
+    {
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
+
+        var test = new
+        {
+            resourceType = "Patient",
+            id = "patient",
+            name = new []{ new { Family = "Doe", Given = new[] { "John" } } },
+            contained = new[]
+            {
+                new { resourceType = "Medication", id = "medication", code = "1234" }
+            }
+        };
+
+        Utf8JsonReader reader = constructReader(test);
+
+        parser.TryDeserializeResource(ref reader, out var obj, out var errors);
+        
+        obj.Should().NotBeNull();
+        obj!.TypeName.Should().Be("Patient");
+        (obj as Patient)!.Contained.Should().HaveCount(1).And.Subject.Should().Satisfy(x => x.TypeName == "Medication");
+    }
+
+    
     internal class CustomComplexValidator : FhirAttributeValidator
     {
         //public object? DateTimeSeenByObjectValueValidator;
