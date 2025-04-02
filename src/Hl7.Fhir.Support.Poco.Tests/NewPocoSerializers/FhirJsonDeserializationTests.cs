@@ -105,7 +105,7 @@ public class FhirJsonDeserializationTests
             var reader = constructReader(value);
             reader.Read();
 
-            return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, null!, ref reader, null, state);
+            return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, ref reader, null, state);
         }
 
         var result = test();

@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.birthDate.extension", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual(CodedValidationException.EXPECTED_ARRAY_NOT_OBJECT_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(CodedValidationException.PROPERTY_TYPE_MISMATCH_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }

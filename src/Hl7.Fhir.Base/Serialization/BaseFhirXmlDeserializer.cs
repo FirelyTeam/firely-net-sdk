@@ -631,15 +631,14 @@ public class BaseFhirXmlDeserializer
         
         if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
         {
-            var context = new PropertyDeserializationContext(
+            var context = new PocoValidationContext(
                 target,
-                state.Path, // should this path GetPath or this?
-                elementName,
+                _inspector,
+                state.Path.GetInstancePath,
                 lineNumber, position,
-                propMapping,
                 Settings.NarrativeValidation);
 
-            // PocoDeserializationHelper.RunPropertyValidation(target, Settings.Validator, context, state.Errors);
+            state.Errors.Add(Settings.Validator.ValidateProperty(elementName, target, propMapping, context));
         }
     }
 
