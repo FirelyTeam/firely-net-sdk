@@ -31,7 +31,7 @@ public class OverflowErrorTests
     private static void TestOnPrimitiveElement(object value, string? coveCode)
     {
         var pat = new Patient();
-        pat.SetValue("active", value);
+        pat["active"] = value;
 
         var act = () => pat.ActiveElement;
         if (coveCode is null)
