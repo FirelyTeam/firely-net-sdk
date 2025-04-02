@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
@@ -18,11 +19,14 @@ namespace Hl7.Fhir.ElementModel;
 
 public static partial class TypedElementExtensions
 {
+#if NETSTANDARD2_1
+    [Obsolete("ToScopedNode should only be used in combination with ToTypedElementLegacy. PocoNode should implement all functionality of ScopedNode with some additional benefits." +
+              "ToTypedElement().ToScopedNode() should in most cases be substituted with ToPocoNode()")]
+#else
+    [Experimental("SDK0002")]
+#endif
     public static ScopedNode ToScopedNode(this ITypedElement node) =>
         node as ScopedNode ?? new ScopedNode(node);
-
-    internal static IEnumerable<ScopedNode> ToScopedNodes(this IEnumerable<ITypedElement> nodes) => 
-        nodes.Select(n => n.ToScopedNode());
     
     public static ISourceNode ToSourceNode(this ITypedElement node) => new TypedElementToSourceNodeAdapter(node);
     
