@@ -6,11 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -143,9 +145,9 @@ public class CodedValidationException : ExtendedCodedException
 
     internal static COVE FromTypes(Type expected, object? actual, PocoValidationContext? context = null)
     {
-        string expectedFhirTypeName = typeof(Base).IsAssignableFrom(expected)
-            ? fhirTypeNameForSingleType(expected) ?? "unknown"
-            : "collection of " + (fhirTypeNameForRepeatingType(expected) ?? "unknown");
+        string expectedFhirTypeName = typeof(IList).IsAssignableFrom(expected)
+            ? "collection of " + (fhirTypeNameForRepeatingType(expected) ?? "unknown")
+            : fhirTypeNameForSingleType(expected) ?? "unknown";
 
         string actualFhirTypeName = fhirTypeNameForObject(actual);
         
@@ -156,17 +158,12 @@ public class CodedValidationException : ExtendedCodedException
         actual switch
         {
             Base b => b.TypeName,
-            IEnumerable<Base> bases => "collection of " + (bases.FirstOrDefault()?.TypeName ?? fhirTypeNameForRepeatingType(bases.GetType()) ?? "unknown"),
+            IList list => "collection of " + fhirTypeNameForRepeatingType(list.GetType()),
             null => "null",
             _ => actual.GetType().Name
         };
 
-    private static string? fhirTypeNameForSingleType(Type t) => t.GetCustomAttribute<FhirTypeAttribute>()?.Name;
+    private static string fhirTypeNameForSingleType(Type t) => t.GetCustomAttribute<FhirTypeAttribute>()?.Name ?? t.Name;
 
-    private static string? fhirTypeNameForRepeatingType(Type t) => fhirTypeNameForSingleType(ReflectionHelper.GetCollectionItemType(t));
-
-    internal CodedValidationResult AsResult(ValidationContext? context) =>
-        context?.MemberName is { } mn
-            ? new CodedValidationResult(this, memberNames: [mn])
-            : new CodedValidationResult(this);
+    private static string fhirTypeNameForRepeatingType(Type t) => fhirTypeNameForSingleType(ReflectionHelper.GetCollectionItemType(t));
 }
