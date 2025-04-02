@@ -40,7 +40,7 @@ public static class PocoValidationExtensions
         validator ??= new FhirAttributeValidator();
         var validationContext = buildContext(poco, inspector, narrativeValidation);
 
-        return doObjectValidation(poco, inspector, validationContext, validator);
+        return doObjectValidation(poco, validationContext, validator);
     }
 
     private static PocoValidationContext buildContext(Base instance, ModelInspector inspector, NarrativeValidationKind kind)
@@ -51,11 +51,11 @@ public static class PocoValidationExtensions
         string producer() => instance.TypeName;
     }
 
-    private static IReadOnlyCollection<CodedValidationException> doObjectValidation(Base value, ModelInspector inspector, PocoValidationContext validationContext, IPocoValidator validator)
+    private static IReadOnlyCollection<CodedValidationException> doObjectValidation(Base value, PocoValidationContext validationContext, IPocoValidator validator)
     {
         var errors = new List<CodedValidationException>();
 
-        var classMapping = inspector.FindClassMapping(value.GetType());
+        var classMapping = validationContext.ModelInspector.FindClassMapping(value.GetType());
         if (classMapping is null) return [];
 
         // Step 1: Validate the object properties.
@@ -85,7 +85,7 @@ public static class PocoValidationExtensions
                 {
                     foreach (Base element in list.OfType<Base>())
                     {
-                        var result = doObjectValidation(element, context.ModelInspector, context, validator);
+                        var result = doObjectValidation(element, context, validator);
                         if (result.Any()) return result;
                     }
 
@@ -93,8 +93,7 @@ public static class PocoValidationExtensions
                 }
             case Base b:
                 {
-                    var nestedContext = context.IntoPath(propName);
-                    return doObjectValidation(b, context.ModelInspector, nestedContext, validator);
+                    return doObjectValidation(b, context, validator);
                 }
         }
 

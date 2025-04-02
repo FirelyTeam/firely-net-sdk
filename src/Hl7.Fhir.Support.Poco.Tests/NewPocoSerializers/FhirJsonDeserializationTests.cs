@@ -491,16 +491,23 @@ public class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    public void TestRecovery()
+    public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false);
+
+    [TestMethod]
+    [Ignore]
+    public void OverwriteTestDataForRecoveryTest() => testRecovery(true);
+    
+    private void testRecovery(bool overwrite)
     {
-        var filename = Path.Combine("TestData", "fp-test-patient-errors.json");
-        var jsonInput = File.ReadAllText(filename);
+        var patientFileName = Path.Combine("../../../TestData", "fp-test-patient-errors.json");
+        var errorsFileName = Path.Combine("../../../TestData", "fp-test-patient-errors-expected.txt");
+        var jsonInput = File.ReadAllText(patientFileName);
 
         var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
         try
         {
-            var actual = JsonSerializer.Deserialize<Patient>(jsonInput, options);
+            var _ = JsonSerializer.Deserialize<Patient>(jsonInput, options);
             Assert.Fail("Should have encountered errors.");
         }
         catch (DeserializationFailedException dfe)
@@ -536,6 +543,15 @@ public class FhirJsonDeserializationTests
                 COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // deceasedBoolean should be a boolean not a string
                 COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // multipleBirthInteger should not be a float (3.14)
             ]);
+            
+            if (overwrite)
+            {
+                File.WriteAllLines(errorsFileName, dfe.Exceptions.Select(e => e.ToString()));
+            }
+            
+            var errorsExpected = File.ReadAllLines(errorsFileName);
+            var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
+            errorsExpected.Should().BeEquivalentTo(errorsActual);
 
             var recoveredFilename = Path.Combine("TestData", "fp-test-patient-errors-recovered.json");
             var recoveredExpected = File.ReadAllText(recoveredFilename);

@@ -72,7 +72,7 @@ public partial class XHtml
             malformedXmlError is not null
                 ? COVE.NARRATIVE_XML_IS_MALFORMED(context, malformedXmlError)
                 : invalidNarrativeErrors?.Any() == true
-                    ? COVE.NARRATIVE_XML_IS_INVALID(context, string.Concat(", ", invalidNarrativeErrors))
+                    ? COVE.NARRATIVE_XML_IS_INVALID(context, string.Join(", ", invalidNarrativeErrors))
                     : null;
     }
 
