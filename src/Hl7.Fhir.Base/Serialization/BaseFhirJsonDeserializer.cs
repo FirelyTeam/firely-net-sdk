@@ -708,9 +708,6 @@ public class BaseFhirJsonDeserializer
             state.Path.IncrementIndex();
         }
 
-        if (onlyNulls == true)
-            state.Errors.Add(ERR.PRIMITIVE_ARRAYS_ONLY_NULL(ref reader, state.Path.GetInstancePath()));
-
         //[EK 20221027] - According to the new R5 spec, these arrays need not be of the same size, and
         //we need to fill out missing elements with null values.
         //if (originalSize > 0 && elementIndex != originalSize)
