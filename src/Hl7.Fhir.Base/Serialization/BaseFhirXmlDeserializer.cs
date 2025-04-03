@@ -323,6 +323,7 @@ public class BaseFhirXmlDeserializer
 
     private void deserializeUnknownPropertyValue(Base target, XmlReader reader, FhirXmlPocoDeserializerState state)
     {
+        var oldErrors = state.Errors.Count;
         var (lineNumber, position) = reader.GenerateLineInfo();
         
         var (propertyName, choiceType) = tryDetectChoiceTypeFromName(reader.LocalName);
@@ -347,6 +348,18 @@ public class BaseFhirXmlDeserializer
         }
         
         setPropertyWithRepeating(target, propertyName, mapping, primitive);
+        
+        if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
+        {
+            var context = new PocoValidationContext(
+                target,
+                _inspector,
+                state.Path.GetInstancePath, // should this path GetPath or this?
+                lineNumber, position,
+                Settings.NarrativeValidation);
+
+            state.Errors.Add(Settings.Validator.ValidateProperty(propertyName, primitive, null, context));
+        }
         
         
         (string name, ClassMapping? choiceType) tryDetectChoiceTypeFromName(string propertyName)
