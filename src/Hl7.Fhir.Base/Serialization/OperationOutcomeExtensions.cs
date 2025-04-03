@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Serialization
                 case CodedValidationException.CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE: shortDisplay = "Contained resources cannot be nested"; break;
                 case CodedValidationException.INVALID_BASE64_VALUE_CODE: shortDisplay = "Invalid Base64 data"; break;
 
-                case FhirJsonException.EXPECTED_START_OF_OBJECT_CODE: shortDisplay = "Expected Object"; break;
+                // case FhirJsonException.EXPECTED_START_OF_OBJECT_CODE: shortDisplay = "Expected Object"; break;
                 case FhirJsonException.NO_RESOURCETYPE_PROPERTY_CODE: shortDisplay = "Missing ResourceType"; break;
                 case FhirJsonException.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE: shortDisplay = "Expected Object"; break;
                 case FhirJsonException.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE: shortDisplay = "Expected Primitive"; break;

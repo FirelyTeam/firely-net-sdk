@@ -27,15 +27,15 @@ namespace Hl7.Fhir.Serialization;
 /// </summary>
 public class FhirJsonException : ExtendedCodedException
 {
-    public const string EXPECTED_START_OF_OBJECT_CODE = "JSON101";
+    // public const string EXPECTED_START_OF_OBJECT_CODE = "JSON101";
     public const string RESOURCETYPE_SHOULD_BE_STRING_CODE = "JSON102";
     public const string NO_RESOURCETYPE_PROPERTY_CODE = "JSON103";
     public const string EXPECTED_PRIMITIVE_NOT_OBJECT_CODE = "JSON104";
     public const string EXPECTED_PRIMITIVE_NOT_ARRAY_CODE = "JSON105";
     public const string EXPECTED_PRIMITIVE_NOT_NULL_CODE = "JSON109";
     public const string EXPECTED_START_OF_ARRAY_CODE = "JSON111";
-    public const string USE_OF_UNDERSCORE_ILLEGAL_CODE = "JSON113";
-    public const string CHOICE_ELEMENT_HAS_NO_TYPE_CODE = "JSON114";
+    // public const string USE_OF_UNDERSCORE_ILLEGAL_CODE = "JSON113";
+    // public const string CHOICE_ELEMENT_HAS_NO_TYPE_CODE = "JSON114";
     public const string CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE = "JSON115";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "JSON116";
     public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "JSON117";
@@ -51,12 +51,12 @@ public class FhirJsonException : ExtendedCodedException
     // ==========================================
     // Unrecoverable Errors
     // ==========================================
-    internal static FhirJsonException EXPECTED_START_OF_OBJECT(ref Utf8JsonReader reader, string instancePath, JsonTokenType value) => Initialize(ref reader, instancePath, EXPECTED_START_OF_OBJECT_CODE, $"Expected start of object, but found {value}.", OO_Sev.Fatal, OO_Typ.Structure);
+    // internal static FhirJsonException EXPECTED_START_OF_OBJECT(ref Utf8JsonReader reader, string instancePath, JsonTokenType value) => Initialize(ref reader, instancePath, EXPECTED_START_OF_OBJECT_CODE, $"Expected start of object, but found {value}.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException RESOURCETYPE_SHOULD_BE_STRING(ref Utf8JsonReader reader, string instancePath, JsonTokenType value) => Initialize(ref reader, instancePath, RESOURCETYPE_SHOULD_BE_STRING_CODE, $"Property 'resourceType' should be a string, but found {value}.", OO_Sev.Fatal, OO_Typ.Value);
     internal static FhirJsonException NO_RESOURCETYPE_PROPERTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, NO_RESOURCETYPE_PROPERTY_CODE, "Resource has no 'resourceType' property.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException EXPECTED_PRIMITIVE_NOT_OBJECT(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, EXPECTED_PRIMITIVE_NOT_OBJECT_CODE, "Expected a primitive value, not a json object.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException EXPECTED_PRIMITIVE_NOT_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, "Expected a primitive value, not the start of an array.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirJsonException CHOICE_ELEMENT_HAS_NO_TYPE(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_HAS_NO_TYPE_CODE, $"Choice element '{propName}' is not suffixed with a type.", OO_Sev.Fatal, OO_Typ.Structure);
+    // internal static FhirJsonException CHOICE_ELEMENT_HAS_NO_TYPE(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_HAS_NO_TYPE_CODE, $"Choice element '{propName}' is not suffixed with a type.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException CHOICE_ELEMENT_HAS_UNKOWN_TYPE(ref Utf8JsonReader reader, string instancePath, string value, string typeValue) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, $"Choice element '{value}' is suffixed with an unrecognized type '{typeValue}'.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException UNKNOWN_RESOURCE_TYPE(ref Utf8JsonReader reader, string instancePath, string resourceType) => Initialize(ref reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{resourceType}' found in 'resourceType' property.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException RESOURCE_TYPE_NOT_A_RESOURCE(ref Utf8JsonReader reader, string instancePath, string name) => Initialize(ref reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{name}' in property 'resourceType' is not a type of resource.", OO_Sev.Fatal, OO_Typ.Structure);
@@ -82,7 +82,7 @@ public class FhirJsonException : ExtendedCodedException
     internal static FhirJsonException EXPECTED_START_OF_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, EXPECTED_START_OF_ARRAY_CODE, "Expected start of array.", OO_Sev.Error, OO_Typ.Structure);
 
     // We will just ignore the underscore and keep on parsing
-    internal static FhirJsonException USE_OF_UNDERSCORE_ILLEGAL(ref Utf8JsonReader reader, string instancePath, string propertyNameMapped, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_ILLEGAL_CODE, $"Element '{propertyNameMapped}' is not a FHIR primitive, so it should not use an underscore in the '{propertyName}' property.", OO_Sev.Warning, OO_Typ.Structure);
+    // internal static FhirJsonException USE_OF_UNDERSCORE_ILLEGAL(ref Utf8JsonReader reader, string instancePath, string propertyNameMapped, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_ILLEGAL_CODE, $"Element '{propertyNameMapped}' is not a FHIR primitive, so it should not use an underscore in the '{propertyName}' property.", OO_Sev.Warning, OO_Typ.Structure);
 
     // Empty objects and arrays can be ignored without discarding data
     internal static FhirJsonException OBJECTS_CANNOT_BE_EMPTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, OBJECTS_CANNOT_BE_EMPTY_CODE, "An object needs to have at least one property.", OO_Sev.Warning, OO_Typ.Structure);
@@ -101,7 +101,6 @@ public class FhirJsonException : ExtendedCodedException
         ..CodedValidationException.POCO_VALIDATION_ISSUES,
         EXPECTED_PRIMITIVE_NOT_NULL_CODE,
         EXPECTED_START_OF_ARRAY_CODE,
-        USE_OF_UNDERSCORE_ILLEGAL_CODE,
         OBJECTS_CANNOT_BE_EMPTY_CODE,
         ARRAYS_CANNOT_BE_EMPTY_CODE,
         PRIMITIVE_ARRAYS_ONLY_NULL_CODE,

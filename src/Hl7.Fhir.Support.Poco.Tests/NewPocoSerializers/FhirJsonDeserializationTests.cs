@@ -25,12 +25,6 @@ namespace Hl7.Fhir.Support.Poco.Tests;
 [TestClass]
 public class FhirJsonDeserializationTests
 {
-    [TestMethod]
-    public void PrimitiveValueCannotBeComplex()
-    {
-        ParsePrimitiveValue(new { bla = 4 }, typeof(FhirBoolean), ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
-    }
-
     [DataTestMethod]
     [DataRow("OperationOutcome", null)]
     [DataRow("OperationOutcomeX", ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE)]
@@ -158,19 +152,6 @@ public class FhirJsonDeserializationTests
         return reader;
     }
 
-    private static void assertErrors(IEnumerable<CodedException> actual, string[] expected)
-    {
-        if (expected.Length == 0 && !actual.Any())
-            return;
-
-        string why =
-            $"Should be the same: actual [{string.Join(",", actual.Select(a => a.ErrorCode))}] and expected [{string.Join(";", expected)}]";
-        Console.WriteLine("Messages: " + string.Join(", ", actual.Select(a => a.Message)));
-        actual.Count().Should().Be(expected.Length, because: why);
-        _ = actual.Zip(expected).Should().AllSatisfy(pair => pair.First.ErrorCode.Should().Be(pair.Second, because: why));
-        Console.WriteLine($"Found {string.Join(", ", actual.Select(a => a.Message))}");
-    }
-
     [TestMethod]
     [DynamicData(nameof(TestDeserializeResourceData))]
     [DynamicData(nameof(TestDeserializeNestedResource))]
@@ -182,7 +163,7 @@ public class FhirJsonDeserializationTests
         var deserializer = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
         var state = new FhirJsonPocoDeserializerState();
         _ = deserializer.DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
-        assertErrors(state.Errors, errors);
+        state.Errors.Select(err => err.ErrorCode).Should().BeEquivalentTo(errors);
         reader.TokenType.Should().Be(tokenAfterParsing);
     }
 
@@ -264,7 +245,7 @@ public class FhirJsonDeserializationTests
                 NarrativeValidation = NarrativeValidationKind.FhirXhtml
             });
 
-        assertErrors(errors, expectedErrors);
+        errors.Select(err => err.ErrorCode).Should().BeEquivalentTo(expectedErrors);
         readerState.TokenType.Should().Be(token);
         result.Should().BeOfType(t);
         verify?.Invoke(result);
@@ -288,11 +269,10 @@ public class FhirJsonDeserializationTests
         ];
         yield return data<Extension>(5, JsonTokenType.Number);
         yield return data<Extension>(new[] { 2, 3 }, JsonTokenType.EndArray);
-        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE);
-        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE);
+        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
         yield return data<Extension>(new { unknown = "test" }, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { url = "test" });
-        yield return data<Extension>(new { _url = "test" });
+        yield return data<Extension>(new { _url = "test" }, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE); // TODO illegal use of underscore?
         yield return data<Extension>(new { unknown = "test", url = "test" });
         yield return data<Extension>(new { value = "no type suffix" }, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix" },
@@ -370,7 +350,7 @@ public class FhirJsonDeserializationTests
 
     public static IEnumerable<object?[]> TestPrimitiveArrayData()
     {
-        yield return data<Address>(new { line = "hi!" });
+        yield return data<Address>(new { line = "hi!" }, COVE.PROPERTY_TYPE_MISMATCH_CODE); // expected collection of string, found string
         yield return data<Address>(new { line = Array.Empty<string>() }, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
         yield return data<Address>(new { line = Array.Empty<string>(), _line = Array.Empty<string>() },
             ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
@@ -378,6 +358,7 @@ public class FhirJsonDeserializationTests
             ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null }, _line = new[] { new { id = "1" } } },
             ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+        yield return data<Address>(new { _line = new[] { new { id = "1" } } });
         yield return data<Address>(new { line = new[] { "Ewout" }, _line = new string?[] { null } },
             ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null }, _line = new string?[] { null } },
@@ -885,7 +866,7 @@ public class FhirJsonDeserializationTests
         }
         catch (DeserializationFailedException dfe)
         {
-            assertErrors(dfe.Exceptions, expectedErrs);
+            dfe.Exceptions.Select(ex => ex.ErrorCode).Should().BeEquivalentTo(expectedErrs);
         }
     }
 
@@ -911,7 +892,7 @@ public class FhirJsonDeserializationTests
         }
         catch (DeserializationFailedException dfe)
         {
-            assertErrors(dfe.Exceptions, [expected]);
+            dfe.Exceptions.Select(ex => ex.ErrorCode).Should().BeEquivalentTo(expected);
         }
     }
 

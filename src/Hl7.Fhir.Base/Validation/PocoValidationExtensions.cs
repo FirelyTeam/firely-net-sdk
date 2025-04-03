@@ -100,7 +100,7 @@ public static class PocoValidationExtensions
         return [];
     }
 
-    internal static Func<string> IntoPath(this Func<string> parent, string propName) => () => $"{parent()}.{propName}";
+    internal static Func<string> IntoPath(this Func<string> parent, string propName) => () => (parent() is not "" && propName is not "") ? $"{parent()}.{propName}" : parent + propName;
     internal static PocoValidationContext IntoPath(this PocoValidationContext parent, string propName) =>
         parent with { PathProducer = parent.PathProducer.IntoPath(propName) };
 }

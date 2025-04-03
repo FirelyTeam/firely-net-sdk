@@ -34,7 +34,7 @@ public class FhirAttributeValidator : IPocoValidator
         PropertyMapping? propertyMapping,
         PocoValidationContext context)
     {
-        if (propertyMapping is null)
+        if (propertyMapping is null || propertyMapping.IsPrimitive)
             return [CodedValidationException.UNKNOWN_ELEMENT(context, name)];
 
         // if we have no allowed types attribute, we should still check against the implementing type, in case someone messed with the model (overflow)
