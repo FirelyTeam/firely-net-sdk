@@ -442,6 +442,8 @@ public class BaseFhirJsonDeserializer
         }
         else if (isOnJsonPrimitiveType(ref reader) && propertyName[0] == '_')
         {
+            state.Errors.Add(ERR.USE_OF_UNDERSCORE_ILLEGAL(ref reader, state.Path.GetInstancePath(), propertyMapping?.Name ?? propertyName.Substring(1), propertyName));
+            
             var (value, _) = DeserializePrimitiveValue(ref reader, null, state.Path);
 
             PrimitiveType primitive = value switch
@@ -584,7 +586,6 @@ public class BaseFhirJsonDeserializer
                 var ele = (Base)propertyValueMapping.Factory();
                 deserializePropertyInto(ele, "value", ref reader, state, new ObjectParsingState());
                 existingList.Add(ele);
-
             }
 
             state.Path.IncrementIndex();
