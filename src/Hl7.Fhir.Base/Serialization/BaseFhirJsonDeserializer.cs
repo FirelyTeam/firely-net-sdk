@@ -404,36 +404,30 @@ public class BaseFhirJsonDeserializer
         }
         else if (reader.TokenType == JsonTokenType.StartArray)
         {
-            var peeked = peekTypeNested(ref reader);
-            
-            var primitiveType = getFhirTypeForToken(peeked);
+            if (propertyValueMapping is null)
+            {
+                var peeked = peekTypeNested(ref reader);
 
+                var primitiveType = getFhirTypeForToken(peeked);
+
+                propertyValueMapping = _inspector.FindClassMapping(primitiveType)!;
+            }
+            
             ClassMapping? listFactory = null;
-            if(propertyMapping?.ImplementingType is { } t)
+            if (propertyMapping?.ImplementingType is { } t)
                 listFactory = _inspector.FindClassMapping(t);
-            
-            propertyValueMapping ??= _inspector.FindClassMapping(primitiveType!)!;
-            
+
             listFactory ??= propertyValueMapping;
             
             IList primitiveList;
-            if (existingValue is IList l)
-            {
-                primitiveList = l;
-                // if the list is already populated, a property with an identical key was encountered earlier
-                // or we're processing the fhirprimitive list, and it will be handled inside
-                if (primitiveList.Count > 0 && !propertyValueMapping.IsFhirPrimitive)
-                {
-                    state.Path.IncrementIndex(primitiveList.Count);
-                    state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
-                }
-            }
-            else
+            if (existingValue is not IList)
             {
                 primitiveList = listFactory.ListFactory();
-                if(existingValue is not null)
+                if (existingValue is not null)
                     primitiveList.Add(existingValue);
             }
+            else 
+                primitiveList = (IList)existingValue;
 
             if (propertyValueMapping.IsFhirPrimitive)
             {
@@ -448,20 +442,17 @@ public class BaseFhirJsonDeserializer
         }
         else if (isOnJsonPrimitiveType(ref reader) && propertyName[0] == '_')
         {
-            var inferType = _inspector.FindClassMapping(getFhirTypeForToken(reader.TokenType))!;
-            
-            // entering primitive, se ensure valuemapping is primitive as well
-            if (propertyValueMapping?.IsFhirPrimitive is false)
-                propertyValueMapping = inferType;
-            
-            propertyValueMapping ??= inferType;
+            var (value, _) = DeserializePrimitiveValue(ref reader, null, state.Path);
 
-            var primitive = (PrimitiveType)propertyValueMapping.Factory();
-            
-            var value = DeserializePrimitiveValue(ref reader, propertyValueMapping.NativeType, state.Path);
+            PrimitiveType primitive = value switch
+            {
+                int i => new Integer(i),
+                bool b => new FhirBoolean(b),
+                decimal d => new FhirDecimal(d),
+                string s => new FhirString(s),
+                _ => new DynamicPrimitive { ObjectValue = value }
+            };
 
-            primitive.ObjectValue = value;
-            
             return (primitive, null);
         }
         else
@@ -537,14 +528,12 @@ public class BaseFhirJsonDeserializer
     /// other situations (e.g. repeating Extension.url's, if they would ever exist).
     /// </summary>
     private IList deserializeNormalList(
-        IList? existingList,
+        IList existingList,
         ClassMapping propertyValueMapping,
         ref Utf8JsonReader reader,
-        FhirJsonPocoDeserializerState state)
+        FhirJsonPocoDeserializerState state,
+        bool nestedArray = false)
     {
-        // Create a list of the type of this property's value.
-        IList listInstance = existingList ?? propertyValueMapping.ListFactory();
-
         // if true, we have encountered a single value where we expected an array.
         // we need to recover by creating an array with that single value.
         bool oneshot = false;
@@ -562,13 +551,42 @@ public class BaseFhirJsonDeserializer
             if (reader.TokenType == JsonTokenType.EndArray)
                 state.Errors.Add(ERR.ARRAYS_CANNOT_BE_EMPTY(ref reader, state.Path.GetInstancePath()));
         }
+        
+        if (existingList.Count > 0)
+        {
+            state.Path.IncrementIndex(existingList.Count);
+            if(nestedArray)
+                state.Errors.Add(ERR.NESTED_ARRAY(ref reader, state.Path.GetInstancePath()));
+            else
+                state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
+        }
 
         // Can't make an iterator because of the ref readers struct, so need
         // to simply create a list by Adding(). Not the fastest approach :-(
         while (reader.TokenType != JsonTokenType.EndArray)
         {
-            var result = deserializeSingleValue(ref reader, propertyValueMapping, state);
-            listInstance.Add(result);
+            if (reader.TokenType == JsonTokenType.StartObject)
+            {
+                var result = deserializeSingleValue(ref reader, propertyValueMapping, state);
+                existingList.Add(result);
+            }
+            else if(reader.TokenType == JsonTokenType.Null)
+            {
+                existingList.Add(null);
+                reader.Read();
+            }
+            else if(reader.TokenType == JsonTokenType.StartArray)
+            {
+                _ = deserializeNormalList(existingList, propertyValueMapping, ref reader, state, true);
+            }
+            else
+            {
+                var ele = (Base)propertyValueMapping.Factory();
+                deserializePropertyInto(ele, "value", ref reader, state, new ObjectParsingState());
+                existingList.Add(ele);
+
+            }
+
             state.Path.IncrementIndex();
 
             if (oneshot) break;
@@ -577,7 +595,7 @@ public class BaseFhirJsonDeserializer
         // Read past end of array
         if (!oneshot) reader.Read();
 
-        return listInstance;
+        return existingList;
     }
 
     internal class ObjectParsingState
@@ -621,7 +639,8 @@ public class BaseFhirJsonDeserializer
         ClassMapping propertyValueMapping,
         ref Utf8JsonReader reader,
         ObjectParsingState delayedValidations,
-        FhirJsonPocoDeserializerState state
+        FhirJsonPocoDeserializerState state,
+        bool nestedArray = false
     )
     {
         // if true, we have encountered a single value where we expected an array.
@@ -651,7 +670,10 @@ public class BaseFhirJsonDeserializer
         if (elementIndex > 0)
         {
             state.Path.IncrementIndex(elementIndex);
-            state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
+            if(nestedArray)
+                state.Errors.Add(ERR.NESTED_ARRAY(ref reader, state.Path.GetInstancePath()));
+            else
+                state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
         }
 
         while (reader.TokenType != JsonTokenType.EndArray)
@@ -671,7 +693,7 @@ public class BaseFhirJsonDeserializer
                 onlyNulls = false;
                 delayedValidations.SetPropertyIndex(propertyName, existingList.Count - 1);
                 
-                _ = deserializeFhirPrimitiveList(existingList, propertyName, propertyValueMapping, ref reader, delayedValidations, state);
+                _ = deserializeFhirPrimitiveList(existingList, propertyName, propertyValueMapping, ref reader, delayedValidations, state, true);
             }
             else
             {
@@ -813,8 +835,7 @@ public class BaseFhirJsonDeserializer
     /// <returns>A value without an error if the data could be parsed to the required type, and a value with an error if the
     /// value could not be parsed - in which case the value returned is the raw value coming in from the reader.</returns>
     /// <remarks>Upon completion, the reader will be positioned on the token after the primitive.</remarks>
-    internal (object?, FhirJsonException?) DeserializePrimitiveValue(ref Utf8JsonReader reader, Type? valuePropertyType,
-        PathStack pathStack)
+    internal (object?, FhirJsonException?) DeserializePrimitiveValue(ref Utf8JsonReader reader,  Type? valuePropertyType, PathStack pathStack)
     {
         // Check for unexpected non-value types.
         if (reader.TokenType is JsonTokenType.StartObject or JsonTokenType.StartArray)

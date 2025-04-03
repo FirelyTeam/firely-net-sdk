@@ -46,6 +46,7 @@ public class FhirJsonException : ExtendedCodedException
     public const string PROPERTY_MAY_NOT_BE_EMPTY_CODE = "JSON127";
     public const string DUPLICATE_ARRAY_CODE = "JSON128";
     public const string DUPLICATE_PROPERTY_CODE = "JSON129";
+    public const string NESTED_ARRAY_CODE = "JSON130";
 
     // ==========================================
     // Unrecoverable Errors
@@ -74,6 +75,8 @@ public class FhirJsonException : ExtendedCodedException
     internal static FhirJsonException PROPERTY_MAY_NOT_BE_EMPTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, PROPERTY_MAY_NOT_BE_EMPTY_CODE, "Properties cannot be empty strings. Either they are absent, or they are present with at least one character of non-whitespace content.", OO_Sev.Warning, OO_Typ.Value);
 
     internal static FhirJsonException DUPLICATE_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, DUPLICATE_ARRAY_CODE, $"Duplicate array detected.", OO_Sev.Warning, OO_Typ.Value);
+    
+    internal static FhirJsonException NESTED_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, NESTED_ARRAY_CODE, "Nested array detected.", OO_Sev.Warning, OO_Typ.Value);
 
     // The parser will turn a non-array value into an array with a single element, so no data is lost.
     internal static FhirJsonException EXPECTED_START_OF_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, EXPECTED_START_OF_ARRAY_CODE, "Expected start of array.", OO_Sev.Error, OO_Typ.Structure);
