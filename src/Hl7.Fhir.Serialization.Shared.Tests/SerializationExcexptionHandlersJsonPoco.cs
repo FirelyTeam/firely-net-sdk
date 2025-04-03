@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual(1, oc.Issue.Count);
+                Assert.AreEqual(2, oc.Issue.Count);
             }
         }
         
@@ -466,11 +466,11 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.name[1]", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual(FhirJsonException.UNKNOWN_PROPERTY_FOUND_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(CodedValidationException.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Patient", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual(FhirJsonException.UNKNOWN_PROPERTY_FOUND_CODE, oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(CodedValidationException.UNKNOWN_ELEMENT_CODE, oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual(2, oc.Issue.Count);
             }
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
                 Assert.AreEqual(COVE.LITERAL_INVALID_CODE, oc.Issue[2].Details.Coding[0].Code);
 
-                Assert.AreEqual(10, oc.Issue.Count);
+                Assert.AreEqual(12, oc.Issue.Count);
             }
         }
     }

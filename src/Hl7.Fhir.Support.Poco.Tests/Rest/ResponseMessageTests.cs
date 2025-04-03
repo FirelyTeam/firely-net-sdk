@@ -210,9 +210,7 @@ namespace Hl7.Fhir.Test
             await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
 
             response = makeJsonMessage(json: """{"resourceType":"Patient","activex":4}""");
-            Type? issue = engine != POCOENGINE ? typeof(DeserializationFailedException) : null;
-            bool hasResource = engine == POCOENGINE;
-            await check(response, engine, expectedIssue: issue, hasResource: hasResource);
+            await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
         }
 
         [TestMethod]

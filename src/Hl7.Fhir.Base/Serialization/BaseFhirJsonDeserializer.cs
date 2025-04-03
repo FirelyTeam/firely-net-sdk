@@ -723,8 +723,11 @@ public class BaseFhirJsonDeserializer
             if (reader.TokenType != JsonTokenType.StartObject)
             {
                 state.Errors.Add(ERR.EXPECTED_START_OF_OBJECT(ref reader, state.Path.GetInstancePath(), reader.TokenType));
-                deserializeJsonValue(targetPrimitive, propertyName, ref reader, state, parsingState, propertyValueMapping);
+                //deserializeJsonValue(targetPrimitive, propertyName, ref reader, state, parsingState, propertyValueMapping);
+                throw new NotImplementedException();
             }
+            
+            deserializeObjectInto(targetPrimitive, propertyValueMapping, ref reader, DeserializedObjectKind.FhirPrimitive, state, stayOnLastToken: false);
         }
 
         // Only do validation on this instance when no parse errors were encountered, otherwise we'll just
@@ -927,7 +930,7 @@ public class BaseFhirJsonDeserializer
 
         // handled by the unknown type deserialization
         if (propertyMapping is null)
-            return (null, null, ERR.UNKNOWN_PROPERTY_FOUND(ref reader, path.GetInstancePath(), propertyName));
+            return (null, null, null);
 
         (ClassMapping? propertyValueMapping, FhirJsonException? error) = propertyMapping.Choice switch
         {

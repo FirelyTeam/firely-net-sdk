@@ -39,7 +39,7 @@ public class FhirJsonException : ExtendedCodedException
     public const string CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE = "JSON115";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "JSON116";
     public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "JSON117";
-    public const string UNKNOWN_PROPERTY_FOUND_CODE = "JSON118";
+    // public const string UNKNOWN_PROPERTY_FOUND_CODE = "JSON118";
     public const string OBJECTS_CANNOT_BE_EMPTY_CODE = "JSON120";
     public const string ARRAYS_CANNOT_BE_EMPTY_CODE = "JSON121";
     public const string PRIMITIVE_ARRAYS_ONLY_NULL_CODE = "JSON125";
@@ -59,7 +59,7 @@ public class FhirJsonException : ExtendedCodedException
     internal static FhirJsonException CHOICE_ELEMENT_HAS_UNKOWN_TYPE(ref Utf8JsonReader reader, string instancePath, string value, string typeValue) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, $"Choice element '{value}' is suffixed with an unrecognized type '{typeValue}'.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException UNKNOWN_RESOURCE_TYPE(ref Utf8JsonReader reader, string instancePath, string resourceType) => Initialize(ref reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{resourceType}' found in 'resourceType' property.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException RESOURCE_TYPE_NOT_A_RESOURCE(ref Utf8JsonReader reader, string instancePath, string name) => Initialize(ref reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{name}' in property 'resourceType' is not a type of resource.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirJsonException UNKNOWN_PROPERTY_FOUND(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, UNKNOWN_PROPERTY_FOUND_CODE, $"Encountered unrecognized element '{propName}'.", OO_Sev.Error, OO_Typ.Structure); // this could be ignored, so isn't fatal?
+    //internal static FhirJsonException UNKNOWN_PROPERTY_FOUND(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, UNKNOWN_PROPERTY_FOUND_CODE, $"Encountered unrecognized element '{propName}'.", OO_Sev.Error, OO_Typ.Structure); // this could be ignored, so isn't fatal?
 
     internal static FhirJsonException DUPLICATE_PROPERTY(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, DUPLICATE_PROPERTY_CODE, $"Encountered duplicate property '{propName}'.", OO_Sev.Fatal, OO_Typ.Structure);
 
@@ -116,7 +116,7 @@ public class FhirJsonException : ExtendedCodedException
     {
         CodedValidationException.INVALID_CODED_VALUE_CODE,
         CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE,
-        UNKNOWN_PROPERTY_FOUND_CODE
+        CodedValidationException.UNKNOWN_ELEMENT_CODE,
     };
 
     public FhirJsonException(string code, string message)

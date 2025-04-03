@@ -56,12 +56,12 @@ public class FhirSerializationEngineTests
     [TestMethod]
     [DataRow(CORRECTXML, null, null, null, DisplayName = "Correct XML")]
     [DataRow(PERMISSIVEXML, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Permissive XML")]
-    [DataRow(BWCOMPATIBLEXML, null, null, null, DisplayName = "Backwards-compatible XML")]
-    [DataRow(POCO_WRONGXML, null, null, null, DisplayName = "Wrong XML")]
+    [DataRow(BWCOMPATIBLEXML, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible XML")]
+    [DataRow(POCO_WRONGXML, POCO_EXPECTED_OBJECT, POCO_EXPECTED_OBJECT, POCO_EXPECTED_OBJECT, DisplayName = "Wrong XML")]
     [DataRow(CORRECTJSON, null, null, null, DisplayName = "Correct JSON")]
     [DataRow(PERMISSIVEJSON, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Permissive JSON")]
-    [DataRow(BWCOMPATIBLEJSON, null, null, null, DisplayName = "Backwards-compatible JSON")]
-    [DataRow(POCO_WRONGJSON, null, null, null, DisplayName = "Wrong JSON")]
+    [DataRow(BWCOMPATIBLEJSON, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible JSON")]
+    [DataRow(POCO_WRONGJSON, POCO_INCORRECT_REPEAT, POCO_INCORRECT_REPEAT, POCO_INCORRECT_REPEAT, DisplayName = "Wrong JSON")]
     public void TestParsingPoco(string data, string? permissive, string? strict, string? bw)
     {
         test(data, FhirSerializationEngineFactory.Recoverable(TESTINSPECTOR), permissive);

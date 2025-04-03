@@ -67,8 +67,7 @@ namespace Hl7.Fhir.Serialization
                 case FhirJsonException.NO_RESOURCETYPE_PROPERTY_CODE: shortDisplay = "Missing ResourceType"; break;
                 case FhirJsonException.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE: shortDisplay = "Expected Object"; break;
                 case FhirJsonException.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE: shortDisplay = "Expected Primitive"; break;
-                case FhirJsonException.UNKNOWN_RESOURCE_TYPE_CODE: shortDisplay = "Invalid ResourceType"; break;
-                case FhirJsonException.UNKNOWN_PROPERTY_FOUND_CODE: shortDisplay = "Unknown element"; break;
+                case FhirJsonException.UNKNOWN_RESOURCE_TYPE_CODE: shortDisplay = "Invalid ResourceType"; break; 
                 case FhirXmlException.EMPTY_ELEMENT_NAMESPACE_CODE: shortDisplay = "Empty Element Namespace"; break;
                 case FhirXmlException.UNKNOWN_RESOURCE_TYPE_CODE: shortDisplay = "Invalid ResourceType"; break;
                 case FhirXmlException.UNKNOWN_ELEMENT_CODE: shortDisplay = "Unknown element"; break;
