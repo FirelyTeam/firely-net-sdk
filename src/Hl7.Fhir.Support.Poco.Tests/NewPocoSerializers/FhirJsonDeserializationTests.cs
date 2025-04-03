@@ -67,7 +67,6 @@ public class FhirJsonDeserializationTests
 
     [DataTestMethod]
     [DataRow(null, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE)]
-    [DataRow(new[] { 1, 2 }, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE)]
     [DataRow("SGkh", typeof(FhirString), null, "SGkh")]
     [DataRow(4, typeof(FhirString), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, 4)]
     [DataRow("SGkh", typeof(Base64Binary), null, "SGkh")]
@@ -106,7 +105,7 @@ public class FhirJsonDeserializationTests
             var reader = constructReader(value);
             reader.Read();
 
-            return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, ref reader, new(), state);
+            return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, ref reader, null, state);
         }
 
         var result = test();

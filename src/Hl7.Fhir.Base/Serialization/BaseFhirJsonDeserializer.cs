@@ -709,7 +709,7 @@ public class BaseFhirJsonDeserializer
         string propertyName,
         ClassMapping propertyValueMapping,
         ref Utf8JsonReader reader,
-        ObjectParsingState parsingState,
+        ObjectParsingState? parsingState,
         FhirJsonPocoDeserializerState state
     )
     {
@@ -766,16 +766,23 @@ public class BaseFhirJsonDeserializer
         if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
         {
             var context = new PocoValidationContext(targetPrimitive, _inspector, state.Path.GetInstancePath, line, pos, Settings.NarrativeValidation);
-            var elementName = state.Path.GetLastPart();
-            parsingState.ScheduleDelayedValidation(
-                elementName + INSTANCE_VALIDATION_KEY_SUFFIX,
-                () =>
-                {
-                    state.Path.EnterElement(elementName, null,
-                        propertyValueMapping.IsPrimitive);
-                    state.Errors.Add(Settings.Validator.ValidateObject(targetPrimitive, propertyValueMapping, context));
-                    state.Path.ExitElement();
-                });
+            var elementName = propertyName;
+            if (parsingState is null)
+            {
+                state.Errors.Add(Settings.Validator.ValidateObject(targetPrimitive, propertyValueMapping, context));
+            }
+            else
+            {
+                parsingState.ScheduleDelayedValidation(
+                    elementName + INSTANCE_VALIDATION_KEY_SUFFIX,
+                    () =>
+                    {
+                        state.Path.EnterElement(elementName, null,
+                            propertyValueMapping.IsPrimitive);
+                        state.Errors.Add(Settings.Validator.ValidateObject(targetPrimitive, propertyValueMapping, context));
+                        state.Path.ExitElement();
+                    });
+            }
         }
 
         return targetPrimitive;
