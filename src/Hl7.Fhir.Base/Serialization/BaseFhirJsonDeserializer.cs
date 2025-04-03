@@ -703,7 +703,10 @@ public class BaseFhirJsonDeserializer
 
                 delayedValidations.SetPropertyIndex(propertyName, existingList.Count);
             }
-
+            
+            if(onlyNulls is true)
+                state.Errors.Add(ERR.PRIMITIVE_ARRAYS_ONLY_NULL(ref reader, state.Path.GetInstancePath()));
+            
             elementIndex += 1;
             state.Path.IncrementIndex();
         }

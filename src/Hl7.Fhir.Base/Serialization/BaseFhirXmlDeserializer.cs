@@ -647,7 +647,7 @@ public class BaseFhirXmlDeserializer
                     lineNumber, position,
                     Settings.NarrativeValidation);
 
-                state.Errors.Add(Settings.Validator.ValidateProperty(elementName, target, propMapping, context));
+                state.Errors.Add(Settings.Validator.ValidateProperty(elementName, parsedValue, propMapping, context));
             }
         }
     }
