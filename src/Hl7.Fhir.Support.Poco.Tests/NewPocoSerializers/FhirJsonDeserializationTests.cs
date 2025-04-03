@@ -250,11 +250,11 @@ public class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    // [DynamicData(nameof(TestPrimitiveArrayData), DynamicDataSourceType.Method)]
-    // [DynamicData(nameof(CatchesIncorrectlyStructuredComplexData), DynamicDataSourceType.Method)]
-    // [DynamicData(nameof(TestNormalArrayData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestPrimitiveArrayData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(CatchesIncorrectlyStructuredComplexData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestNormalArrayData), DynamicDataSourceType.Method)]
     [DynamicData(nameof(TestPrimitiveData), DynamicDataSourceType.Method)]
-    // [DynamicData(nameof(TestValidatePrimitiveData), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(TestValidatePrimitiveData), DynamicDataSourceType.Method)]
     public void TestData(Type t, object testObject, JsonTokenType token, Action<object?>? verify,
         params string[] expectedErrors)
     {
@@ -333,26 +333,26 @@ public class FhirJsonDeserializationTests
 
     public static IEnumerable<object?[]> TestPrimitiveData()
     {
-        // yield return data<ContactDetail>(new { name = new[] { "Ewout" } });
-        // yield return data<ContactDetail>(new { name = new { dummy = "Ewout" } });
-        // yield return data<ContactDetail>(new { _name = new[] { "Ewout" } });
+        yield return data<ContactDetail>(new { name = new[] { "Ewout" } });
+        yield return data<ContactDetail>(new { name = new { dummy = "Ewout" } });
+        yield return data<ContactDetail>(new { _name = new[] { "Ewout" } });
         yield return data<ContactDetail>(new { _name = "Ewout" });
-        // yield return data<ContactDetail>(new { name = "Ewout" }, checkName);
-        // yield return data<ContactDetail>(new { _name = new { id = "12345" } }, checkId);
-        // yield return data<ContactDetail>(new { _name = new { id = true } }, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
-        // yield return data<ContactDetail>(new { name = "Ewout", _name = new { id = "12345" } }, checkAll);
+        yield return data<ContactDetail>(new { name = "Ewout" }, checkName);
+        yield return data<ContactDetail>(new { _name = new { id = "12345" } }, checkId);
+        yield return data<ContactDetail>(new { _name = new { id = true } }, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
+        yield return data<ContactDetail>(new { name = "Ewout", _name = new { id = "12345" } }, checkAll);
 
-        // static void checkName(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.Value
-        //     .Should().Be("Ewout");
-        //
-        // static void checkId(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.ElementId
-        //     .Should().Be("12345");
-        //
-        // static void checkAll(object parsed)
-        // {
-        //     checkName(parsed);
-        //     checkId(parsed);
-        // }
+        static void checkName(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.Value
+            .Should().Be("Ewout");
+        
+        static void checkId(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.ElementId
+            .Should().Be("12345");
+        
+        static void checkAll(object parsed)
+        {
+            checkName(parsed);
+            checkId(parsed);
+        }
     }
 
     public static IEnumerable<object?[]> TestValidatePrimitiveData()
