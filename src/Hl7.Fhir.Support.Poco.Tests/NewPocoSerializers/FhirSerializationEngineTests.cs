@@ -46,7 +46,7 @@ public class FhirSerializationEngineTests
         test(data, FhirSerializationEngineFactory.Legacy.Ostrich(TESTINSPECTOR), null);  // there should never be an error ;-)
     }
 
-    private const string POCO_UNKNOWN_ELEMENT = "*Encountered unrecognized * 'activex'*";
+    private const string POCO_UNKNOWN_ELEMENT = "*Found unknown * 'activex'*";
     private const string POCO_INCORRECT_REPEAT = "*Expected a primitive value, not the start of an array.*";
     private const string POCO_EXPECTED_OBJECT = "*Expected start of object, but found Number*";
     private const string POCO_EMPTY_VALUE = "* cannot be empty*. Either they are absent*";

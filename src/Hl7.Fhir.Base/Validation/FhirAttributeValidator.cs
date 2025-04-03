@@ -13,6 +13,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation;
@@ -35,6 +36,18 @@ public class FhirAttributeValidator : IPocoValidator
     {
         if (propertyMapping is null)
             return [CodedValidationException.UNKNOWN_ELEMENT(context, name)];
+
+        // if we have no allowed types attribute, we should still check against the implementing type, in case someone messed with the model (overflow)
+        if (
+            !propertyMapping.ValidationAttributes.Any(attr => attr is AllowedTypesAttribute) && 
+            !propertyMapping.NativeProperty.PropertyType.IsInstanceOfType(propertyValue)
+        )
+        {
+            return [
+                CodedValidationException.FromTypes(propertyMapping.NativeProperty.PropertyType, propertyValue, context), 
+                ..runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context)
+            ];
+        }
 
         return runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context);
     }
