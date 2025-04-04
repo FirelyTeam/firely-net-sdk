@@ -55,6 +55,10 @@ namespace Hl7.Fhir.Serialization.Tests
                 OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
+                
+                Assert.AreEqual("Patient.active", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
+                Assert.AreEqual(FhirJsonException.DUPLICATE_PROPERTY_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -94,6 +98,14 @@ namespace Hl7.Fhir.Serialization.Tests
                 OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
+                
+                Assert.AreEqual("Patient.active", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
+                
+                Assert.AreEqual("Patient.active", oc.Issue[1].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[1].Severity);
+                Assert.AreEqual(FhirJsonException.DUPLICATE_PROPERTY_CODE, oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual(2, oc.Issue.Count);
             }
@@ -133,6 +145,10 @@ namespace Hl7.Fhir.Serialization.Tests
                 OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
+                
+                Assert.AreEqual("Patient.name[1]", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
+                Assert.AreEqual(FhirJsonException.DUPLICATE_ARRAY_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -166,6 +182,14 @@ namespace Hl7.Fhir.Serialization.Tests
                 OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
+                
+                Assert.AreEqual("Patient", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
+                
+                Assert.AreEqual("Patient", oc.Issue[1].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual(2, oc.Issue.Count);
             }
@@ -610,7 +634,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual("Parameters.parameter[1].value", oc.Issue[0].Expression.First());
+                Assert.AreEqual("Parameters.parameter[1].valueInteger", oc.Issue[0].Expression.First());
                 Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
 
@@ -651,7 +675,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual("Parameters.parameter[1].value", oc.Issue[0].Expression.First());
+                Assert.AreEqual("Parameters.parameter[1].valueBoolean", oc.Issue[0].Expression.First());
                 Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
 

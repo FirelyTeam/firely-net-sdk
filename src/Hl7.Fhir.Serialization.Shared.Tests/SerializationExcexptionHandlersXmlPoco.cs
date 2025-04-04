@@ -96,12 +96,12 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(ex.PartialResult);
 
                 Assert.AreEqual("Patient.active", oc.Issue[0].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
-                Assert.AreEqual("XML104", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Patient.active", oc.Issue[1].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[1].Severity);
-                Assert.AreEqual("XML104", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual(2, oc.Issue.Count);
 
@@ -188,7 +188,15 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
                 Assert.AreEqual("XML120", oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual(2, oc.Issue.Count);
+                Assert.AreEqual("Patient.name[1]", oc.Issue[2].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[2].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient", oc.Issue[3].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[3].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[3].Details.Coding[0].Code);
+
+                Assert.AreEqual(4, oc.Issue.Count);
 
                 patient["chicken"].Should().NotBeNull();
                 patient.Name[1]["turkey"].Should().NotBeNull();
@@ -482,11 +490,11 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputXml(ex.PartialResult);
 
-                Assert.AreEqual("Patient.name[0]", oc.Issue[1].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("XML109", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual("Patient", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
 
-                Assert.AreEqual(2, oc.Issue.Count);
+                Assert.AreEqual(1, oc.Issue.Count);
             }
         }
 
@@ -655,7 +663,39 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputXml(ex.PartialResult);
 
-                Assert.AreEqual(6, oc.Issue.Count);
+                Assert.AreEqual("Patient.active", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.birthDate", oc.Issue[1].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual(COVE.LITERAL_INVALID_CODE, oc.Issue[1].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.gender", oc.Issue[2].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
+                Assert.AreEqual(FhirXmlException.ELEMENT_OUT_OF_ORDER_CODE, oc.Issue[2].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.gender", oc.Issue[3].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[3].Severity);
+                Assert.AreEqual(COVE.INVALID_CODED_VALUE_CODE, oc.Issue[3].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient", oc.Issue[4].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[4].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[4].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.name[0]", oc.Issue[5].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[5].Severity);
+                Assert.AreEqual(FhirXmlException.ELEMENT_OUT_OF_ORDER_CODE, oc.Issue[5].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.name[0]", oc.Issue[6].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[6].Severity);
+                Assert.AreEqual(FhirXmlException.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, oc.Issue[6].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.name[0]", oc.Issue[7].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[7].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[7].Details.Coding[0].Code);
+                
+                Assert.AreEqual(8, oc.Issue.Count);
             }
         }
 
@@ -691,15 +731,23 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputXml(ex.PartialResult);
 
-                Assert.AreEqual("Patient.active", oc.Issue[0].Expression.First());
+                Assert.AreEqual("Patient.name[0]", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("XML109", oc.Issue[0].Details.Coding[0].Code);
-
-                Assert.AreEqual("Patient.name[1]", oc.Issue[1].Expression.First());
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
+                
+                Assert.AreEqual("Patient.active", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("XML116", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(FhirXmlException.ELEMENT_OUT_OF_ORDER_CODE, oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual(2, oc.Issue.Count);
+                Assert.AreEqual("Patient.name[1]", oc.Issue[2].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
+                Assert.AreEqual(FhirXmlException.ELEMENT_NOT_IN_SEQUENCE_CODE, oc.Issue[2].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.name[1]", oc.Issue[3].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[3].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[3].Details.Coding[0].Code);
+
+                Assert.AreEqual(4, oc.Issue.Count);
             }
         }
 

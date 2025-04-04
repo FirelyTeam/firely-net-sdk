@@ -724,10 +724,9 @@ public class BaseFhirXmlDeserializer
         var propertyMapping = parentMapping.FindMappedElementByName(propertyName)
                               ?? parentMapping.FindMappedElementByChoiceName(propertyName);
 
+        // handled by the unknown type deserialization
         if (propertyMapping is null)
-        {
-            return (null, null, ERR.UNKNOWN_ELEMENT(reader, path.GetInstancePath(), propertyName));
-        }
+            return (null, null, null);
 
         (ClassMapping? propertyValueMapping, FhirXmlException? error) = propertyMapping.Choice switch
         {
@@ -748,13 +747,14 @@ public class BaseFhirXmlDeserializer
             
             if(!string.IsNullOrEmpty(typeSuffix))
                 choiceMapping = inspector.FindClassMapping(typeSuffix);
-
-            choiceMapping ??= inspector.FindClassMapping(nameof(DynamicDataType));
             
-            if(choiceMapping is not null)
-                return (choiceMapping, null);
+            if(choiceMapping is null)
+            {
+                choiceMapping = inspector.FindClassMapping(nameof(DynamicDataType));
+                return (choiceMapping, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
+            }
             
-            return (null, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
+            return (choiceMapping, null);
         }
     }
 }
