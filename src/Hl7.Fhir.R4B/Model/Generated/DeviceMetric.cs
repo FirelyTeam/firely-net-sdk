@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4b.expansions@4.3.0, hl7.fhir.r4b.core@4.3.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -274,7 +273,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// unspecified | offset | gain | two-point.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("DeviceMetricCalibrationType")]
@@ -318,7 +316,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// not-calibrated | calibration-required | calibrated | unspecified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("state", InSummary=true, Order=50)]
       [AllowedTypes(typeof(Code))]
       [Binding("DeviceMetricCalibrationState")]
@@ -362,7 +359,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Describes the time last calibration has been performed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("time", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Instant? TimeElement
@@ -469,7 +465,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -515,7 +511,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -543,7 +538,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identity of metric, for example Heart Rate or PEEP Setting.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [Binding("MetricType")]
     [Cardinality(Min=1,Max=1)]
@@ -572,7 +566,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unit of Measure for the Metric.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("unit", InSummary=true, Order=110)]
     [Binding("MetricUnit")]
     [DataMember]
@@ -600,8 +593,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the link to the source Device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("source", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Source
@@ -628,8 +621,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the link to the parent Device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parent", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Parent
@@ -656,7 +649,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// on | off | standby | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("operationalStatus", InSummary=true, Order=140)]
     [AllowedTypes(typeof(Code))]
     [Binding("DeviceMetricOperationalStatus")]
@@ -700,7 +692,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// black | red | green | yellow | blue | magenta | cyan | white.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("color", InSummary=true, Order=150)]
     [AllowedTypes(typeof(Code))]
     [Binding("DeviceMetricColor")]
@@ -744,7 +735,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// measurement | setting | calculation | unspecified.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("DeviceMetricCategory")]
@@ -789,7 +779,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the measurement repetition time.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("measurementPeriod", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.Timing? MeasurementPeriod
@@ -816,7 +805,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the calibrations that have been performed or that are required to be performed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("calibration", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -981,7 +969,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -61,7 +60,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique id for inter-element referencing.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("id", XmlSerialization = XmlRepresentation.XmlAttr, Order=10)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ElementIdElement
@@ -103,7 +101,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional content defined by implementations.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("extension", Order=20)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -179,7 +176,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "id":

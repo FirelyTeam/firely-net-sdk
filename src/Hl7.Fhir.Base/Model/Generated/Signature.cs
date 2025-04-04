@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -70,7 +69,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Since R5 the cardinality is expanded to 0..* (previous it was 1..*).
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=30)]
     [Binding("SignatureType")]
     [Cardinality(Min=0,Max=-1)]
@@ -102,7 +100,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Since R5 the cardinality is expanded to 0..1 (previous it was 1..1).
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("when", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Instant? WhenElement
@@ -148,10 +145,10 @@ namespace Hl7.Fhir.Model
     /// Note 1: Since R4 the type of this element should be a fixed type (ResourceReference). For backwards compatibility it remains of type DataType.
     /// Note 2: Since R5 the cardinality is expanded to 0..1 (previous it was 1..1).
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("who", InSummary=true, Order=50, Choice = ChoiceType.DatatypeChoice)]
     [FhirElement("who", InSummary=true, Order=50, Since=FhirRelease.R4)]
     [AllowedTypes(typeof(ResourceReference), Since = FhirRelease.R4)]
+    [CLSCompliant(false)]
     [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri))]
@@ -183,10 +180,10 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Since R4 the type of this element should be a fixed type (ResourceReference). For backwards compatibility it remains of type DataType.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("onBehalfOf", InSummary=true, Order=60, Choice = ChoiceType.DatatypeChoice)]
     [FhirElement("onBehalfOf", InSummary=true, Order=60, Since=FhirRelease.R4)]
     [AllowedTypes(typeof(ResourceReference), Since = FhirRelease.R4)]
+    [CLSCompliant(false)]
     [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri))]
@@ -218,7 +215,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element is deprecated since R4, do not use with R4 and newer releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("contentType", InSummary=true, Order=70)]
     [NotMapped(Since=FhirRelease.R4)]
     [Binding("MimeType")]
@@ -265,7 +261,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R4, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("targetFormat", Order=70, Since=FhirRelease.R4)]
     [Binding("MimeType")]
     [DataMember]
@@ -311,7 +306,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R4, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("sigFormat", Order=80, Since=FhirRelease.R4)]
     [Binding("MimeType")]
     [DataMember]
@@ -357,7 +351,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element is replaced by 'Signature.data' since R4. Do not use this element 'blob' with R4 and newer releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("blob", Order=90)]
     [NotMapped(Since=FhirRelease.R4)]
     [DataMember]
@@ -403,7 +396,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R4, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("data", Order=90, Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? DataElement
@@ -570,7 +562,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "type":

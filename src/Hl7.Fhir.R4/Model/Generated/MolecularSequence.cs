@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -222,7 +221,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Chromosome containing genetic finding.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("chromosome", InSummary=true, Order=40)]
       [Binding("chromosome-human")]
       [DataMember]
@@ -250,7 +248,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The Genome Build used for reference, following GRCh build versions e.g. 'GRCh 37'.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("genomeBuild", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? GenomeBuildElement
@@ -292,7 +289,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// sense | antisense.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("orientation", InSummary=true, Order=60)]
       [AllowedTypes(typeof(Code))]
       [Binding("orientationType")]
@@ -336,7 +332,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("referenceSeqId", InSummary=true, Order=70)]
       [Binding("sequenceReference")]
       [DataMember]
@@ -364,8 +359,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A pointer to another MolecularSequence entity as reference sequence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("referenceSeqPointer", InSummary=true, Order=80)]
+      [CLSCompliant(false)]
       [References("MolecularSequence")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? ReferenceSeqPointer
@@ -392,7 +387,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A string to represent reference sequence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("referenceSeqString", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ReferenceSeqStringElement
@@ -434,7 +428,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// watson | crick.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("strand", InSummary=true, Order=100)]
       [AllowedTypes(typeof(Code))]
       [Binding("strandType")]
@@ -478,7 +471,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Start position of the window on the  reference sequence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("windowStart", InSummary=true, Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? WindowStartElement
@@ -520,7 +512,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// End position of the window on the reference sequence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("windowEnd", InSummary=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? WindowEndElement
@@ -687,7 +678,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "chromosome":
@@ -803,7 +794,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Start position of the variant on the  reference sequence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("start", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? StartElement
@@ -845,7 +835,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// End position of the variant on the reference sequence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("end", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? EndElement
@@ -887,7 +876,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Allele that was observed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("observedAllele", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ObservedAlleleElement
@@ -929,7 +917,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Allele in the reference sequence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("referenceAllele", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ReferenceAlleleElement
@@ -971,7 +958,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Extended CIGAR string for aligning the sequence with reference bases.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("cigar", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CigarElement
@@ -1013,8 +999,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to observed variant information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("variantPointer", InSummary=true, Order=90)]
+      [CLSCompliant(false)]
       [References("Observation")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? VariantPointer
@@ -1136,7 +1122,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "start":
@@ -1225,7 +1211,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// indel | snp | unknown.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("qualityType")]
@@ -1270,7 +1255,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Standard sequence for comparison.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("standardSequence", InSummary=true, Order=50)]
       [Binding("qualityStandardSequence")]
       [DataMember]
@@ -1298,7 +1282,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Start position of the sequence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("start", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? StartElement
@@ -1340,7 +1323,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// End position of the sequence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("end", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? EndElement
@@ -1382,7 +1364,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Quality score for the comparison.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("score", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Score
@@ -1409,7 +1390,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Method to get quality.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("method", InSummary=true, Order=90)]
       [Binding("qualityMethod")]
       [DataMember]
@@ -1437,7 +1417,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// True positives from the perspective of the truth data.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("truthTP", InSummary=true, Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? TruthTPElement
@@ -1479,7 +1458,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// True positives from the perspective of the query data.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("queryTP", InSummary=true, Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? QueryTPElement
@@ -1521,7 +1499,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// False negatives.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("truthFN", InSummary=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? TruthFNElement
@@ -1563,7 +1540,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// False positives.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("queryFP", InSummary=true, Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? QueryFPElement
@@ -1605,7 +1581,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// False positives where the non-REF alleles in the Truth and Query Call Sets match.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("gtFP", InSummary=true, Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? GtFPElement
@@ -1647,7 +1622,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Precision of comparison.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("precision", InSummary=true, Order=150)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? PrecisionElement
@@ -1689,7 +1663,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recall of comparison.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("recall", InSummary=true, Order=160)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? RecallElement
@@ -1731,7 +1704,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// F-score.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("fScore", InSummary=true, Order=170)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? FScoreElement
@@ -1773,7 +1745,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Receiver Operator Characteristic (ROC) Curve.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("roc", InSummary=true, Order=180)]
       [DataMember]
       public Hl7.Fhir.Model.MolecularSequence.RocComponent? Roc
@@ -1985,7 +1956,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -2155,7 +2126,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Genotype quality score.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("score", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2201,7 +2171,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Roc score true positive numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("numTP", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2247,7 +2216,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Roc score false positive numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("numFP", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2293,7 +2261,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Roc score false negative numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("numFN", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2339,7 +2306,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Precision of the GQ score.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("precision", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2385,7 +2351,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Sensitivity of the GQ score.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sensitivity", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2431,7 +2396,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FScore of the GQ score.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("fMeasure", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2582,7 +2546,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "score":
@@ -2680,7 +2644,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// directlink | openapi | login | oauth | other.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("repositoryType")]
@@ -2725,7 +2688,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// URI of the repository.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("url", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -2767,7 +2729,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Repository's name.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -2809,7 +2770,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Id of the dataset that used to call for dataset in repository.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("datasetId", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DatasetIdElement
@@ -2851,7 +2811,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Id of the variantset that used to call for variantset in repository.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("variantsetId", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? VariantsetIdElement
@@ -2893,7 +2852,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Id of the read.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("readsetId", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ReadsetIdElement
@@ -3030,7 +2988,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -3119,7 +3077,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Structural variant change type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("variantType", InSummary=true, Order=40)]
       [Binding("LOINC LL379-9 answerlist")]
       [DataMember]
@@ -3147,7 +3104,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Does the structural variant have base pair resolution breakpoints?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("exact", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ExactElement
@@ -3189,7 +3145,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Structural variant length.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("length", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? LengthElement
@@ -3231,7 +3186,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Structural variant outer.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("outer", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.MolecularSequence.OuterComponent? Outer
@@ -3258,7 +3212,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Structural variant inner.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("inner", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.MolecularSequence.InnerComponent? Inner
@@ -3370,7 +3323,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "variantType":
@@ -3447,7 +3400,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Structural variant outer start.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("start", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? StartElement
@@ -3489,7 +3441,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Structural variant outer end.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("end", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? EndElement
@@ -3586,7 +3537,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "start":
@@ -3636,7 +3587,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Structural variant inner start.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("start", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? StartElement
@@ -3678,7 +3628,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Structural variant inner end.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("end", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? EndElement
@@ -3775,7 +3724,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "start":
@@ -3812,7 +3761,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique ID for this particular sequence. This is a FHIR-defined id.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3840,7 +3788,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// aa | dna | rna.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=100)]
     [AllowedTypes(typeof(Code))]
     [Binding("sequenceType")]
@@ -3884,7 +3831,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Base number of coordinate system (0 for 0-based numbering or coordinates, inclusive start, exclusive end, 1 for 1-based numbering, inclusive start, inclusive end).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("coordinateSystem", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3927,8 +3873,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what this is about.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Patient
@@ -3955,8 +3901,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specimen used for sequencing.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("specimen", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("Specimen")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Specimen
@@ -3983,8 +3929,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The method for sequencing.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("device", InSummary=true, Order=140)]
+    [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Device
@@ -4011,8 +3957,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who should be responsible for test result.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performer", InSummary=true, Order=150)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Performer
@@ -4039,7 +3985,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The number of copies of the sequence of interest.  (RNASeq).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("quantity", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Quantity
@@ -4066,7 +4011,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A sequence used as reference.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("referenceSeq", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent? ReferenceSeq
@@ -4093,7 +4037,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Variant in sequence.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("variant", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4121,7 +4064,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Sequence that was observed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("observedSeq", InSummary=true, Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ObservedSeqElement
@@ -4163,7 +4105,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An set of value as quality of sequence.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("quality", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4191,7 +4132,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Average number of reads representing a given nucleotide in the reconstructed sequence.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("readCoverage", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.Integer? ReadCoverageElement
@@ -4233,7 +4173,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External repository which contains detailed report related with observedSeq in this resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("repository", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4261,8 +4200,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Pointer to next atomic sequence.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("pointer", InSummary=true, Order=230)]
+    [CLSCompliant(false)]
     [References("MolecularSequence")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4290,7 +4229,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Structural variant.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("structureVariant", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4515,7 +4453,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

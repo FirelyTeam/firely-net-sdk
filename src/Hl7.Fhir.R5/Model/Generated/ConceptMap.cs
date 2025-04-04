@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -243,7 +242,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies the property on the mappings, and when referred to in the $translate operation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -286,7 +284,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Formal identifier for the property.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("uri", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? UriElement
@@ -328,7 +325,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why the property is defined, and/or what it conveys.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -370,7 +366,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coding | string | integer | boolean | dateTime | decimal | code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=70)]
       [AllowedTypes(typeof(Code))]
       [Binding("PropertyType")]
@@ -415,7 +410,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The CodeSystem from which code values come.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("system", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? SystemElement
@@ -542,7 +536,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -623,7 +617,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies this additional attribute through this resource.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -666,7 +659,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Formal identifier for the data element referred to in this attribte.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("uri", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? UriElement
@@ -708,7 +700,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why the additional attribute is defined, and/or what the data element it refers to is.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -750,7 +741,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// code | Coding | string | boolean | Quantity.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=70)]
       [AllowedTypes(typeof(Code))]
       [Binding("ConceptMapmapAttributeType")]
@@ -870,7 +860,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -941,7 +931,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Source system where concepts to be mapped are defined.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("source", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? SourceElement
@@ -983,7 +972,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Target system that the concepts are to be mapped to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("target", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? TargetElement
@@ -1025,7 +1013,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Mappings for a concept from the source set.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("element", Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -1053,7 +1040,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What to do when there is no mapping target for the source concept and ConceptMap.group.element.noMap is not true.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unmapped", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.ConceptMap.UnmappedComponent? Unmapped
@@ -1155,7 +1141,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "source":
@@ -1227,7 +1213,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies element being mapped.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Code? CodeElement
@@ -1269,7 +1254,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Display for the code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("display", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DisplayElement
@@ -1311,7 +1295,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies the set of concepts being mapped.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("valueSet", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? ValueSetElement
@@ -1353,7 +1336,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// No mapping to a target concept for this source concept.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("noMap", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? NoMapElement
@@ -1395,7 +1377,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Concept in target system for element.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("target", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1508,7 +1489,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -1589,7 +1570,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that identifies the target element.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Code? CodeElement
@@ -1631,7 +1611,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Display for the code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("display", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DisplayElement
@@ -1673,7 +1652,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies the set of target concepts.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("valueSet", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? ValueSetElement
@@ -1715,7 +1693,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// related-to | equivalent | source-is-narrower-than-target | source-is-broader-than-target | not-related-to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("relationship", IsModifier=true, Order=70)]
       [AllowedTypes(typeof(Code))]
       [Binding("ConceptMapRelationship")]
@@ -1760,7 +1737,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of status/issues in mapping.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("comment", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CommentElement
@@ -1802,7 +1778,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Property value for the source -&gt; target mapping.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("property", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1830,7 +1805,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Other properties required for this mapping.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("dependsOn", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1858,7 +1832,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Other data elements that this mapping also produces.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("product", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2001,7 +1974,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -2108,7 +2081,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to ConceptMap.property.code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2151,8 +2123,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value of the property for this concept.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2235,7 +2207,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -2288,7 +2260,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A reference to a mapping attribute defined in ConceptMap.additionalAttribute.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("attribute", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2331,8 +2302,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value of the referenced data element.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -2359,7 +2330,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The mapping depends on a data element with a value from this value set.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("valueSet", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? ValueSetElement
@@ -2466,7 +2436,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "attribute":
@@ -2529,7 +2499,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// use-source-code | fixed | other-map.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("mode", Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("ConceptMapGroupUnmappedMode")]
@@ -2574,7 +2543,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Fixed code when mode = fixed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Code? CodeElement
@@ -2616,7 +2584,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Display for the code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("display", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DisplayElement
@@ -2658,7 +2625,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Fixed code set when mode = fixed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("valueSet", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? ValueSetElement
@@ -2700,7 +2666,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// related-to | equivalent | source-is-narrower-than-target | source-is-broader-than-target | not-related-to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("relationship", IsModifier=true, Order=80)]
       [AllowedTypes(typeof(Code))]
       [Binding("UnmappedConceptMapRelationship")]
@@ -2744,7 +2709,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// canonical reference to an additional ConceptMap to use for mapping if the source concept is unmapped.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("otherMap", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? OtherMapElement
@@ -2881,7 +2845,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "mode":
@@ -2954,7 +2918,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this concept map, represented as a URI (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -2996,7 +2959,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the concept map.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3024,7 +2986,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the concept map.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -3066,8 +3027,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to compare versions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
@@ -3094,7 +3055,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this concept map (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -3136,7 +3096,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this concept map (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -3178,7 +3137,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -3223,7 +3181,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -3265,7 +3222,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -3307,7 +3263,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher/steward (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=180, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -3349,7 +3304,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3377,7 +3331,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the concept map.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -3419,7 +3372,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3447,7 +3399,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for concept map (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -3476,7 +3427,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this concept map is defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("purpose", Order=230, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -3518,7 +3468,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -3560,7 +3509,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Copyright holder and year(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyrightLabel", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CopyrightLabelElement
@@ -3602,7 +3550,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the ConceptMap was approved by publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -3644,7 +3591,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the ConceptMap was last reviewed by the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -3686,7 +3632,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the ConceptMap is expected to be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -3713,7 +3658,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("topic", Order=290)]
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
@@ -3742,7 +3686,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the ConceptMap.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3770,7 +3713,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the ConceptMap.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("editor", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3798,7 +3740,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the ConceptMap.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reviewer", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3826,7 +3767,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the ConceptMap.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endorser", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3854,7 +3794,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3882,7 +3821,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional properties of the mapping.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("property", InSummary=true, Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3910,7 +3848,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of an additional attribute to act as a data source or target.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("additionalAttribute", InSummary=true, Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3938,8 +3875,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The source value set that contains the concepts that are being mapped.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sourceScope", InSummary=true, Order=370, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? SourceScope
@@ -3966,8 +3903,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The target value set which provides context for the mappings.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("targetScope", InSummary=true, Order=380, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? TargetScope
@@ -3994,7 +3931,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Same source and target systems.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("group", Order=390)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4369,7 +4305,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

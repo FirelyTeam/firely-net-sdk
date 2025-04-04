@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -107,7 +106,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// usual | official | temp | secondary | old (If known).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
     [AllowedTypes(typeof(Code))]
     [Binding("IdentifierUse")]
@@ -151,7 +149,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=40)]
     [Binding("IdentifierType")]
     [DataMember]
@@ -179,7 +176,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The namespace for the identifier value.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("system", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? SystemElement
@@ -221,7 +217,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The value that is unique.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("value", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ValueElement
@@ -263,7 +258,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period when id is/was valid for use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -290,8 +284,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that issued id (may be just text).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("assigner", InSummary=true, Order=80)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Assigner
@@ -413,7 +407,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "use":

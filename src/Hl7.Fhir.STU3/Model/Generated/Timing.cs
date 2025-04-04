@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -263,8 +262,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Length/Range of lengths, or (Start and/or end) limits.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("bounds", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Bounds
@@ -291,7 +290,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Number of times to repeat.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("count", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? CountElement
@@ -333,7 +331,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Maximum number of times to repeat.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("countMax", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? CountMaxElement
@@ -375,7 +372,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How long when it happens.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("duration", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? DurationElement
@@ -417,7 +413,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How long when it happens (Max).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("durationMax", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? DurationMaxElement
@@ -459,7 +454,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// s | min | h | d | wk | mo | a - unit of time (UCUM).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("durationUnit", InSummary=true, Order=80)]
       [AllowedTypes(typeof(Code))]
       [Binding("UnitsOfTime")]
@@ -503,7 +497,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Event occurs frequency times per period.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("frequency", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? FrequencyElement
@@ -545,7 +538,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Event occurs up to frequencyMax times per period.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("frequencyMax", InSummary=true, Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? FrequencyMaxElement
@@ -587,7 +579,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Event occurs frequency times per period.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", InSummary=true, Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? PeriodElement
@@ -629,7 +620,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Upper limit of period (3-4 hours).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("periodMax", InSummary=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? PeriodMaxElement
@@ -671,7 +661,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// s | min | h | d | wk | mo | a - unit of time (UCUM).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("periodUnit", InSummary=true, Order=130)]
       [AllowedTypes(typeof(Code))]
       [Binding("UnitsOfTime")]
@@ -715,7 +704,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("dayOfWeek", InSummary=true, Order=140)]
       [AllowedTypes(typeof(Code))]
       [Binding("DayOfWeek")]
@@ -763,7 +751,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time of day for action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("timeOfDay", InSummary=true, Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -809,7 +796,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Regular life events the event is tied to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("when", InSummary=true, Order=160)]
       [AllowedTypes(typeof(Code))]
       [Binding("EventTiming")]
@@ -857,7 +843,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Minutes from event (before or after).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("offset", InSummary=true, Order=170)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? OffsetElement
@@ -1084,7 +1069,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "bounds":
@@ -1238,7 +1223,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event occurs.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("event", InSummary=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1284,7 +1268,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event is to occur.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("repeat", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Timing.RepeatComponent? Repeat
@@ -1311,7 +1294,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// BID | TID | QID | AM | PM | QD | QOD | Q4H | Q6H +.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=50)]
     [Binding("TimingAbbreviation")]
     [DataMember]
@@ -1404,7 +1386,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "event":

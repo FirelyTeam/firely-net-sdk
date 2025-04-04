@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -110,7 +109,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A name/code for the set.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Binding("InvestigationGroupType")]
       [Cardinality(Min=1,Max=1)]
@@ -139,8 +137,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Record of a specific investigation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("item", Order=50)]
+      [CLSCompliant(false)]
       [References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport","RiskAssessment","ImagingStudy","Media")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -223,7 +221,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -276,7 +274,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What was found.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("itemCodeableConcept", Order=40)]
       [Binding("ConditionKind")]
       [DataMember]
@@ -304,8 +301,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What was found.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("itemReference", Order=50)]
+      [CLSCompliant(false)]
       [References("Condition","Observation","Media")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? ItemReference
@@ -332,7 +329,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Which investigations support finding.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("basis", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? BasisElement
@@ -439,7 +435,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "itemCodeableConcept":
@@ -485,7 +481,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -513,7 +508,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("ClinicalImpressionStatus")]
@@ -558,7 +552,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("statusReason", Order=110)]
     [Binding("ClinicalImpressionStatusReason")]
     [DataMember]
@@ -586,7 +579,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of assessment performed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Binding("ClinicalImpressionCode")]
     [DataMember]
@@ -614,7 +606,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why/how the assessment was performed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -656,8 +647,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient or group assessed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -685,8 +676,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -713,8 +704,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time of assessment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Effective
@@ -741,7 +732,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the assessment was documented.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -783,8 +773,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The clinician performing the assessment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("assessor", InSummary=true, Order=180, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Assessor
@@ -811,8 +801,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to last assessment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("previous", Order=190)]
+    [CLSCompliant(false)]
     [References("ClinicalImpression")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Previous
@@ -839,8 +829,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relevant impressions of patient state.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("problem", InSummary=true, Order=200, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("Condition","AllergyIntolerance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -868,7 +858,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// One or more sets of investigations (signs, symptoms, etc.).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("investigation", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -896,7 +885,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical Protocol followed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("protocol", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -942,7 +930,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Summary of the assessment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("summary", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SummaryElement
@@ -984,7 +971,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Possible or likely findings and diagnoses.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("finding", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1012,7 +998,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Estimate of likely outcome.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("prognosisCodeableConcept", Order=250)]
     [Binding("ClinicalImpressionPrognosis")]
     [Cardinality(Min=0,Max=-1)]
@@ -1041,8 +1026,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// RiskAssessment expressing likely outcome.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("prognosisReference", Order=260)]
+    [CLSCompliant(false)]
     [References("RiskAssessment")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1070,8 +1055,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information supporting the clinical impression.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supportingInfo", Order=270)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1099,7 +1084,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the ClinicalImpression.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1367,7 +1351,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

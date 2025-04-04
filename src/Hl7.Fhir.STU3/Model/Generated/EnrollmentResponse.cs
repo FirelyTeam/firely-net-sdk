@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -66,7 +65,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -94,7 +92,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [AllowedTypes(typeof(Code))]
     [Binding("EnrollmentResponseStatus")]
@@ -138,8 +135,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Claim reference.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("request", Order=110)]
+    [CLSCompliant(false)]
     [References("EnrollmentRequest")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Request
@@ -166,7 +163,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// complete | error | partial.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("outcome", Order=120)]
     [Binding("RemittanceOutcome")]
     [DataMember]
@@ -194,7 +190,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Disposition Message.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("disposition", Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DispositionElement
@@ -236,7 +231,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("created", Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -278,8 +272,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurer.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("organization", Order=150)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Organization
@@ -306,8 +300,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requestProvider", Order=160)]
+    [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? RequestProvider
@@ -334,8 +328,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requestOrganization", Order=170)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? RequestOrganization
@@ -489,7 +483,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

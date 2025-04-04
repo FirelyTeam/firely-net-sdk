@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4b.expansions@4.3.0, hl7.fhir.r4b.core@4.3.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -82,7 +81,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Device detail.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("ParameterCode")]
       [DataMember]
@@ -110,8 +108,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value of detail.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirBoolean))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -193,7 +191,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -230,7 +228,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Request identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -258,7 +255,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR protocol or definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -304,7 +300,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates external protocol or definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -350,8 +345,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What request fulfills.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -379,8 +374,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What request replaces.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("priorRequest", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -408,7 +403,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier of composite request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("groupIdentifier", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? GroupIdentifier
@@ -435,7 +429,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("DeviceRequestStatus")]
@@ -479,7 +472,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("RequestIntent")]
@@ -524,7 +516,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("priority", InSummary=true, Order=170, FiveWs="FiveWs.grade")]
     [AllowedTypes(typeof(Code))]
     [Binding("RequestPriority")]
@@ -568,9 +559,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Device requested.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [Binding("DeviceRequestCode")]
+    [CLSCompliant(false)]
     [References("Device")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [Cardinality(Min=1,Max=1)]
@@ -599,7 +590,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Device details.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parameter", Order=190, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -627,8 +617,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Focus of request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=200, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group","Location","Device")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -656,8 +646,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter motivating request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=210, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -684,8 +674,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Desired time or schedule for use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("occurrence", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
@@ -712,7 +702,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When recorded.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("authoredOn", InSummary=true, Order=230, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? AuthoredOnElement
@@ -754,8 +743,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what is requesting diagnostics.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requester", InSummary=true, Order=240, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Device","Practitioner","PractitionerRole","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Requester
@@ -782,7 +771,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Filler role.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performerType", InSummary=true, Order=250, FiveWs="FiveWs.actor")]
     [Binding("DeviceRequestParticipantRole")]
     [DataMember]
@@ -810,8 +798,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Requested Filler.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performer", InSummary=true, Order=260, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","CareTeam","HealthcareService","Patient","Device","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Performer
@@ -838,7 +826,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded Reason for request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonCode", InSummary=true, Order=270, FiveWs="FiveWs.why[x]")]
     [Binding("DeviceRequestReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -867,8 +854,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Linked Reason for request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonReference", InSummary=true, Order=280, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("Condition","Observation","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -896,8 +883,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated insurance coverage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("insurance", Order=290)]
+    [CLSCompliant(false)]
     [References("Coverage","ClaimResponse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -925,8 +912,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional clinical information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supportingInfo", Order=300)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -954,7 +941,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Notes or comments.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -982,8 +968,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request provenance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relevantHistory", Order=320)]
+    [CLSCompliant(false)]
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1288,7 +1274,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

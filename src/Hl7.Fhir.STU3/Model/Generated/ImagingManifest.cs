@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -83,7 +82,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Study instance UID.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -126,8 +124,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to ImagingStudy.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("imagingStudy", InSummary=true, Order=50)]
+      [CLSCompliant(false)]
       [References("ImagingStudy")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? ImagingStudy
@@ -154,8 +152,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Study access service endpoint.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("endpoint", InSummary=true, Order=60)]
+      [CLSCompliant(false)]
       [References("Endpoint")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -183,7 +181,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Series identity of the selected instances.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("series", InSummary=true, Order=70)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -286,7 +283,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "uid":
@@ -358,7 +355,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Series instance UID.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("uid", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -401,8 +397,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Series access endpoint.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("endpoint", InSummary=true, Order=50)]
+      [CLSCompliant(false)]
       [References("Endpoint")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -430,7 +426,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The selected instance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("instance", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -523,7 +518,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "uid":
@@ -586,7 +581,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// SOP class UID of instance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sopClass", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -629,7 +623,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Selected instance UID.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("uid", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -727,7 +720,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "sopClass":
@@ -764,7 +757,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// SOP Instance UID.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -791,8 +783,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient of the selected objects.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=100, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -820,7 +812,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time when the selection of instances was made.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("authoringTime", InSummary=true, Order=110, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? AuthoringTimeElement
@@ -862,8 +853,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Author (human or machine).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=120, FiveWs="who.author")]
+    [CLSCompliant(false)]
     [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author
@@ -890,7 +881,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description text.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -932,7 +922,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Study identity of the selected instances.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("study", InSummary=true, Order=140)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1057,7 +1046,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

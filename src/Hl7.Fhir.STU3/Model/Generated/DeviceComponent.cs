@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -159,7 +158,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type or kind of production specification, for example serial number or software revision.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("specType", InSummary=true, Order=40)]
       [Binding("DeviceSpecificationSpecType")]
       [DataMember]
@@ -187,7 +185,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Internal component unique identification.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("componentId", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? ComponentId
@@ -214,7 +211,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A printable string defining the component.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("productionSpec", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ProductionSpecElement
@@ -321,7 +317,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "specType":
@@ -367,7 +363,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance id assigned by the software stack.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -395,7 +390,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What kind of component it is.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=100, FiveWs="class")]
     [Binding("ComponentType")]
     [Cardinality(Min=1,Max=1)]
@@ -424,7 +418,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Recent system change timestamp.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastSystemChange", InSummary=true, Order=110, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? LastSystemChangeElement
@@ -466,8 +459,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Top-level device resource link.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("source", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Source
@@ -494,8 +487,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Parent resource link.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parent", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("DeviceComponent")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Parent
@@ -522,7 +515,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Current operational status of the component, for example On, Off or Standby.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("operationalStatus", InSummary=true, Order=140)]
     [Binding("DeviceComponentOperationalStatus")]
     [Cardinality(Min=0,Max=-1)]
@@ -551,7 +543,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Current supported parameter group.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parameterGroup", InSummary=true, Order=150)]
     [Binding("DeviceComponentParameterGroup")]
     [DataMember]
@@ -579,7 +570,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("measurementPrinciple", InSummary=true, Order=160)]
     [AllowedTypes(typeof(Code))]
     [Binding("MeasmntPrinciple")]
@@ -623,7 +613,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specification details such as Component Revisions, or Serial Numbers.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("productionSpecification", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -651,7 +640,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Language code for the human-readable text strings produced by the device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("languageCode", InSummary=true, Order=180)]
     [Binding("Language")]
     [DataMember]
@@ -816,7 +804,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

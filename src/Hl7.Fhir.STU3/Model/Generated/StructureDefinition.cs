@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -166,7 +165,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Internal id when this mapping is used.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identity", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -209,7 +207,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies what this mapping refers to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("uri", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? UriElement
@@ -251,7 +248,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Names what this mapping refers to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -293,7 +289,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Versions, Issues, Scope limitations etc.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("comment", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CommentElement
@@ -410,7 +405,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identity":
@@ -481,7 +476,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Definition of elements in the resource (if no StructureDefinition).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("element", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -554,7 +548,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "element":
@@ -598,7 +592,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Definition of elements in the resource (if no StructureDefinition).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("element", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -671,7 +664,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "element":
@@ -699,7 +692,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this structure definition (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -742,7 +734,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the structure definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -770,7 +761,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the structure definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -812,7 +802,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this structure definition (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -855,7 +844,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this structure definition (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -897,7 +885,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -942,7 +929,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -984,7 +970,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -1026,7 +1011,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=170, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -1068,7 +1052,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1096,7 +1079,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the structure definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1138,7 +1120,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1166,7 +1147,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for structure definition (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1195,7 +1175,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this structure definition is defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("purpose", Order=220, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -1237,7 +1216,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -1279,7 +1257,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Assist with indexing and finding.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("keyword", InSummary=true, Order=240)]
     [Binding("StructureDefinitionCode")]
     [Cardinality(Min=0,Max=-1)]
@@ -1308,7 +1285,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Version this StructureDefinition targets.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("fhirVersion", InSummary=true, Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.Id? FhirVersionElement
@@ -1350,7 +1326,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External specification that the content is mapped to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("mapping", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1378,7 +1353,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// primitive-type | complex-type | resource | logical.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("kind", InSummary=true, Order=270)]
     [AllowedTypes(typeof(Code))]
     [Binding("StructureDefinitionKind")]
@@ -1423,7 +1397,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the structure is abstract.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("abstract", InSummary=true, Order=280)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1466,7 +1439,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// resource | datatype | extension.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contextType", InSummary=true, Order=290)]
     [AllowedTypes(typeof(Code))]
     [Binding("ExtensionContext")]
@@ -1510,7 +1482,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the extension can be used in instances.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("context", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1556,7 +1527,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIRPath invariants - when the extension can be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contextInvariant", InSummary=true, Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1602,7 +1572,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type defined or constrained by this structure.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=320)]
     [Binding("FHIRDefinedTypeExt")]
     [Cardinality(Min=1,Max=1)]
@@ -1646,7 +1615,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition that this type is constrained/specialized from.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("baseDefinition", InSummary=true, Order=330)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? BaseDefinitionElement
@@ -1688,7 +1656,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// specialization | constraint - How relates to base definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("derivation", InSummary=true, Order=340)]
     [AllowedTypes(typeof(Code))]
     [Binding("TypeDerivationRule")]
@@ -1732,7 +1699,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Snapshot view of the structure.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("snapshot", Order=350)]
     [DataMember]
     public Hl7.Fhir.Model.StructureDefinition.SnapshotComponent? Snapshot
@@ -1759,7 +1725,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Differential view of the structure.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("differential", Order=360)]
     [DataMember]
     public Hl7.Fhir.Model.StructureDefinition.DifferentialComponent? Differential
@@ -2103,7 +2068,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

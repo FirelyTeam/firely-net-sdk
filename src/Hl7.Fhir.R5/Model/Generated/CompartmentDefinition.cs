@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -83,7 +82,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of resource type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("ResourceType")]
@@ -128,7 +126,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Search Parameter Name, or chained parameters.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("param", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -174,7 +171,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional documentation about the resource and compartment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("documentation", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DocumentationElement
@@ -216,7 +212,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Search Param for interpreting $everything.start.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("startParam", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? StartParamElement
@@ -258,7 +253,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Search Param for interpreting $everything.end.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("endParam", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? EndParamElement
@@ -385,7 +379,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -449,7 +443,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this compartment definition, represented as a URI (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -492,7 +485,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the compartment definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=100, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -534,8 +526,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to compare versions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("versionAlgorithm", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
@@ -562,7 +554,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this compartment definition (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -605,7 +596,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this compartment definition (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -647,7 +637,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -692,7 +681,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -734,7 +722,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -776,7 +763,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher/steward (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=170, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -818,7 +804,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -846,7 +831,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the compartment definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -888,7 +872,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -916,7 +899,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this compartment definition is defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("purpose", Order=210, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -958,7 +940,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient | Encounter | RelatedPerson | Practitioner | Device | EpisodeOfCare.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=220)]
     [AllowedTypes(typeof(Code))]
     [Binding("CompartmentType")]
@@ -1003,7 +984,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the search syntax is supported.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("search", InSummary=true, Order=230)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1046,7 +1026,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How a resource is related to the compartment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("resource", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1269,7 +1248,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

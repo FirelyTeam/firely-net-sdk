@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4b.expansions@4.3.0, hl7.fhir.r4b.core@4.3.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -66,7 +65,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -94,7 +92,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [AllowedTypes(typeof(Code))]
     [Binding("EnrollmentRequestStatus")]
@@ -138,7 +135,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("created", Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -180,8 +176,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("insurer", Order=120)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Insurer
@@ -208,8 +204,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("provider", Order=130, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Provider
@@ -236,8 +232,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject to be enrolled.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("candidate", Order=140, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Candidate
@@ -264,8 +260,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurance information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("coverage", Order=150)]
+    [CLSCompliant(false)]
     [References("Coverage")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Coverage
@@ -399,7 +395,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

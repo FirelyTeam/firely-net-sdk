@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4b.expansions@4.3.0, hl7.fhir.r4b.core@4.3.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -159,7 +158,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for study arm.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -202,7 +200,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Categorization of study arm.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Type
@@ -229,7 +226,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Short explanation of study path.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -336,7 +332,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "name":
@@ -398,7 +394,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for the objective.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -440,7 +435,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// primary | secondary | exploratory.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
       [Binding("ResearchStudyObjectiveType")]
       [DataMember]
@@ -523,7 +517,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "name":
@@ -560,7 +554,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -588,7 +581,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -630,8 +622,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Steps followed in executing study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("protocol", InSummary=true, Order=110)]
+    [CLSCompliant(false)]
     [References("PlanDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -659,8 +651,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of larger study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -688,7 +680,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("ResearchStudyStatus")]
@@ -733,7 +724,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("primaryPurposeType", InSummary=true, Order=140)]
     [Binding("ResearchStudyPrimaryPurposeType")]
     [DataMember]
@@ -761,7 +751,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("phase", InSummary=true, Order=150)]
     [Binding("ResearchStudyPhase")]
     [DataMember]
@@ -789,7 +778,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classifications for the study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=160)]
     [Binding("ResearchStudyCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -818,7 +806,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Drugs, devices, etc. under study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("focus", InSummary=true, Order=170, FiveWs="FiveWs.what[x]")]
     [Binding("ResearchStudyFocus")]
     [Cardinality(Min=0,Max=-1)]
@@ -847,7 +834,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition being studied.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("condition", InSummary=true, Order=180, FiveWs="FiveWs.what[x]")]
     [Binding("ConditionCode")]
     [Cardinality(Min=0,Max=-1)]
@@ -876,7 +862,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -904,7 +889,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// References and dependencies.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -932,7 +916,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used to search for the study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("keyword", InSummary=true, Order=210)]
     [Binding("ResearchStudyKeyword")]
     [Cardinality(Min=0,Max=-1)]
@@ -961,7 +944,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Geographic region(s) for study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("location", InSummary=true, Order=220)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -990,7 +972,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What this is study doing.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1032,8 +1013,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Inclusion &amp; exclusion criteria.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("enrollment", InSummary=true, Order=240, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Group")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1061,7 +1042,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the study began and ended.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=250, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -1088,8 +1068,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that initiates and is legally responsible for the study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sponsor", InSummary=true, Order=260, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Sponsor
@@ -1116,8 +1096,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Researcher who oversees multiple aspects of the study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("principalInvestigator", InSummary=true, Order=270, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? PrincipalInvestigator
@@ -1144,8 +1124,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Facility where study activities are conducted.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("site", InSummary=true, Order=280, FiveWs="FiveWs.where[x]")]
+    [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1173,7 +1153,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonStopped", InSummary=true, Order=290, FiveWs="FiveWs.why[x]")]
     [Binding("ResearchStudyReasonStopped")]
     [DataMember]
@@ -1201,7 +1180,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1229,7 +1207,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Defined path through the study for a subject.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("arm", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1257,7 +1234,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A goal for the study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("objective", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1562,7 +1538,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

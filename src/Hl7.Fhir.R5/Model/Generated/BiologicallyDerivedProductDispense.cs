@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -137,7 +136,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies the function of the performer during the dispense.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("BiologicallyDerivedProductDispensPerformerFunction")]
       [DataMember]
@@ -165,8 +163,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who performed the action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("actor", InSummary=true, Order=50)]
+      [CLSCompliant(false)]
       [References("Practitioner")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -249,7 +247,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "function":
@@ -286,7 +284,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this dispense.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -314,8 +311,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The order or request that this dispense is fulfilling.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", InSummary=true, Order=100)]
+    [CLSCompliant(false)]
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -343,8 +340,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Short description.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", InSummary=true, Order=110)]
+    [CLSCompliant(false)]
     [References("BiologicallyDerivedProductDispense")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -372,7 +369,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | allocated | issued | unfulfilled | returned | entered-in-error | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=120)]
     [AllowedTypes(typeof(Code))]
     [Binding("BiologicallyDerivedProductDispenseStatus")]
@@ -417,7 +413,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relationship between the donor and intended recipient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("originRelationshipType", InSummary=true, Order=130)]
     [Binding("BiologicallyDerivedProductDispenseOriginRelationship")]
     [DataMember]
@@ -445,8 +440,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The BiologicallyDerivedProduct that is dispensed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("product", InSummary=true, Order=140)]
+    [CLSCompliant(false)]
     [References("BiologicallyDerivedProduct")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -474,8 +469,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The intended recipient of the dispensed product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=150)]
+    [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -503,7 +498,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates the type of matching associated with the dispense.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("matchStatus", InSummary=true, Order=160)]
     [Binding("BiologicallyDerivedProductDispenseMatchStatus")]
     [DataMember]
@@ -531,7 +525,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates who or what performed an action.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performer", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -559,8 +552,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the dispense occurred.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("location", InSummary=true, Order=180)]
+    [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -587,7 +580,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Amount dispensed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("quantity", InSummary=true, Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Quantity
@@ -614,7 +606,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When product was selected/matched.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("preparedDate", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? PreparedDateElement
@@ -656,7 +647,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the product was dispatched.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("whenHandedOver", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? WhenHandedOverElement
@@ -698,8 +688,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the product was dispatched to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("destination", InSummary=true, Order=220)]
+    [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Destination
@@ -726,7 +716,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional notes.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -754,7 +743,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific instructions for use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("usageInstruction", InSummary=true, Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? UsageInstructionElement
@@ -993,7 +981,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

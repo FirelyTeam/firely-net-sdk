@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -125,7 +124,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=30)]
     [AllowedTypes(typeof(Code))]
     [Binding("RelatedArtifactType")]
@@ -170,7 +168,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Brief description of the related artifact.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("display", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DisplayElement
@@ -212,7 +209,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Bibliographic citation for the artifact.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("citation", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CitationElement
@@ -257,7 +253,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element is deprecated since R5, do not use with R5 and newer releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=60)]
     [NotMapped(Since=FhirRelease.R5)]
     [DataMember]
@@ -300,7 +295,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What document is being referenced.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("document", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Attachment? Document
@@ -327,8 +321,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What resource is being referenced.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("resource", InSummary=true, Order=80)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Resource
@@ -450,7 +444,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "type":

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -104,7 +103,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// triggers | is-replaced-by.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("relationtype", Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("CatalogEntryRelationType")]
@@ -149,8 +147,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The reference to the related item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("item", Order=50)]
+      [CLSCompliant(false)]
       [References("CatalogEntry")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -233,7 +231,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "relationtype":
@@ -270,7 +268,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier of the catalog item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -298,7 +295,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of item - medication, device, service, protocol or other.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Type
@@ -325,7 +321,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the entry represents an orderable item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("orderable", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -368,8 +363,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The item that is being defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("referencedItem", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Medication","Device","Organization","Practitioner","PractitionerRole","HealthcareService","ActivityDefinition","PlanDefinition","SpecimenDefinition","ObservationDefinition","Binary")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -397,7 +392,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Any additional identifier(s) for the catalog item, in the same granularity or concept.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("additionalIdentifier", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -425,7 +419,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification (category or class) of the item entry.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("classification", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -453,7 +446,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", Order=150)]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -497,7 +489,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The time period in which this catalog entry is expected to be active.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("validityPeriod", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Period? ValidityPeriod
@@ -524,7 +515,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date until which this catalog entry is expected to be active.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("validTo", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? ValidToElement
@@ -566,7 +556,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When was this catalog last updated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastUpdated", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? LastUpdatedElement
@@ -608,7 +597,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional characteristics of the catalog entry.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("additionalCharacteristic", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -636,7 +624,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional classification of the catalog entry.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("additionalClassification", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -664,7 +651,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An item that this catalog entry is related to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatedEntry", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -859,7 +845,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

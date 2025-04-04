@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -111,7 +110,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Status/Workflow information about this item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("flag", Order=40)]
       [Binding("ListItemFlag")]
       [DataMember]
@@ -139,7 +137,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If this item is actually marked as deleted.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("deleted", IsModifier=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? DeletedElement
@@ -181,7 +178,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When item added to list.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("date", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -223,8 +219,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actual entry.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("item", Order=70)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -327,7 +323,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "flag":
@@ -382,7 +378,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -410,7 +405,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | retired | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("ListStatus")]
@@ -455,7 +449,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// working | snapshot | changes.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("mode", InSummary=true, IsModifier=true, Order=110, FiveWs="class")]
     [AllowedTypes(typeof(Code))]
     [Binding("ListMode")]
@@ -500,7 +493,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Descriptive name for the list.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -542,7 +534,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What the purpose of this list is.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
     [Binding("ListPurpose")]
     [DataMember]
@@ -570,8 +561,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If all resources have the same subject.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient","Group","Device","Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -598,8 +589,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context in which list created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", Order=150, FiveWs="context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -626,7 +617,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the list was prepared.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -668,8 +658,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what defined the list contents (aka Author).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("source", InSummary=true, Order=170, FiveWs="who.author")]
+    [CLSCompliant(false)]
     [References("Practitioner","Patient","Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Source
@@ -696,7 +686,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What order the list has.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("orderedBy", Order=180)]
     [Binding("ListOrder")]
     [DataMember]
@@ -724,7 +713,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments about the list.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -752,7 +740,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Entries in the list.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("entry", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -780,7 +767,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why list is empty.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("emptyReason", Order=210)]
     [Binding("ListEmptyReason")]
     [DataMember]
@@ -975,7 +961,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

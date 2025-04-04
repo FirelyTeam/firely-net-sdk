@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -103,7 +102,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -131,7 +129,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A broad categorization of the service that is to be performed during this appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("serviceCategory", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
@@ -160,7 +157,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("serviceType", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
@@ -189,7 +185,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("specialty", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
@@ -218,7 +213,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The style of appointment or patient that may be booked in the slot (not service type).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("appointmentType", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [Binding("appointment-type")]
     [DataMember]
@@ -246,8 +240,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The schedule resource that this slot defines an interval of status information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("schedule", InSummary=true, Order=140)]
+    [CLSCompliant(false)]
     [References("Schedule")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -275,7 +269,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// busy | free | busy-unavailable | busy-tentative | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=150)]
     [AllowedTypes(typeof(Code))]
     [Binding("SlotStatus")]
@@ -320,7 +313,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time that the slot is to begin.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("start", InSummary=true, Order=160, FiveWs="FiveWs.planned")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -363,7 +355,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time that the slot is to conclude.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("end", InSummary=true, Order=170, FiveWs="FiveWs.planned")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -406,7 +397,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This slot has already been overbooked, appointments are unlikely to be accepted for this time.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("overbooked", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? OverbookedElement
@@ -448,7 +438,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments on the slot to describe any extended information. Such as custom constraints on the slot.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("comment", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CommentElement
@@ -637,7 +626,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

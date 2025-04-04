@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -94,7 +93,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -122,7 +120,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("FlagStatus")]
@@ -167,7 +164,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical, administrative, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
     [Binding("FlagCategory")]
     [DataMember]
@@ -195,7 +191,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded or textual message to display to user.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=120, FiveWs="what")]
     [Binding("FlagCode")]
     [Cardinality(Min=1,Max=1)]
@@ -224,8 +219,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/What is flag about?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient","Location","Group","Organization","Practitioner","PlanDefinition","Medication","Procedure")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -253,7 +248,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period when flag is active.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=140, FiveWs="context")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -280,8 +274,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Alert relevant during encounter.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=150, FiveWs="context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -308,8 +302,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Flag creator.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=160, FiveWs="who.author")]
+    [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author
@@ -453,7 +447,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

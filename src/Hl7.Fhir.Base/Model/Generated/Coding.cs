@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -66,7 +65,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identity of the terminology system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("system", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? SystemElement
@@ -108,7 +106,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Version of the system - if relevant.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -150,7 +147,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Symbol in syntax defined by the system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Code? CodeElement
@@ -192,7 +188,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Representation defined by the system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DisplayElement
@@ -234,7 +229,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this coding was chosen directly by the user.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("userSelected", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? UserSelectedElement
@@ -361,7 +355,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "system":

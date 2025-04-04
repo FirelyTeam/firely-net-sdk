@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -104,7 +103,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Primary or secondary specimen.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("isDerived", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? IsDerivedElement
@@ -146,7 +144,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of intended specimen.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=50, FiveWs="FiveWs.what[x]")]
       [Binding("IntendedSpecimenType")]
       [DataMember]
@@ -174,7 +171,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// preferred | alternate.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("preference", Order=60)]
       [AllowedTypes(typeof(Code))]
       [Binding("SpecimenContainedPreference")]
@@ -219,7 +215,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specimen's container.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("container", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.SpecimenDefinition.ContainerComponent? Container
@@ -246,7 +241,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Requirements for specimen delivery and special handling.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("requirement", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? RequirementElement
@@ -288,7 +282,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The usual time for retaining this kind of specimen.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("retentionTime", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Duration? RetentionTime
@@ -315,7 +308,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specimen for single use only.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("singleUse", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? SingleUseElement
@@ -357,7 +349,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Criterion specified for specimen rejection.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("rejectionCriterion", Order=110)]
       [Binding("RejectionCriterion")]
       [Cardinality(Min=0,Max=-1)]
@@ -386,7 +377,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specimen handling before testing.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("handling", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -414,7 +404,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where the specimen will be tested.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("testingDestination", Order=130)]
       [Binding("TestingDestination")]
       [Cardinality(Min=0,Max=-1)]
@@ -578,7 +567,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "isDerived":
@@ -700,7 +689,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The material type used for the container.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("material", Order=40)]
       [Binding("ContainerMaterial")]
       [DataMember]
@@ -728,7 +716,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Kind of container associated with the kind of specimen.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
       [Binding("ContainerType")]
       [DataMember]
@@ -756,7 +743,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Color of container cap.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("cap", Order=60)]
       [Binding("ContainerCap")]
       [DataMember]
@@ -784,7 +770,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The description of the kind of container.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -826,7 +811,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The capacity of this kind of container.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("capacity", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Capacity
@@ -853,8 +837,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Minimum volume.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("minimumVolume", Order=90, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? MinimumVolume
@@ -881,7 +865,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additive associated with container.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("additive", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -909,7 +892,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Special processing applied to the container for this specimen type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("preparation", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? PreparationElement
@@ -1066,7 +1048,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "material":
@@ -1173,9 +1155,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additive associated with container.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("additive", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("ContainerAdditive")]
+      [CLSCompliant(false)]
       [References("SubstanceDefinition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -1249,7 +1231,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "additive":
@@ -1293,7 +1275,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Qualifies the interval of temperature.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("temperatureQualifier", Order=40)]
       [Binding("HandlingConditionSet")]
       [DataMember]
@@ -1321,7 +1302,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Temperature range for these handling instructions.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("temperatureRange", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Range? TemperatureRange
@@ -1348,7 +1328,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Maximum preservation time.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("maxDuration", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Duration? MaxDuration
@@ -1375,7 +1354,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Preservation instruction.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("instruction", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? InstructionElement
@@ -1492,7 +1470,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "temperatureQualifier":
@@ -1547,7 +1525,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical canonical URL to reference this SpecimenDefinition (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -1589,7 +1566,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -1616,7 +1592,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the SpecimenDefinition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -1658,8 +1633,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to compare versions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
@@ -1686,7 +1661,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this {{title}} (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -1728,7 +1702,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this SpecimenDefinition (Human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -1770,7 +1743,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Based on FHIR definition of another SpecimenDefinition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("derivedFromCanonical", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1816,7 +1788,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Based on external definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("derivedFromUri", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1862,7 +1833,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=170)]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -1907,7 +1877,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this SpecimenDefinition is not for real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -1949,8 +1918,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of subject for specimen collection.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
@@ -1978,7 +1947,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date status first applied.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -2020,7 +1988,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The name of the individual or organization that published the SpecimenDefinition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -2062,7 +2029,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2090,7 +2056,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the SpecimenDefinition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -2132,7 +2097,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Content intends to support these contexts.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2160,7 +2124,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for this SpecimenDefinition (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -2189,7 +2152,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this SpecimenDefinition is defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("purpose", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -2231,7 +2193,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -2273,7 +2234,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Copyright holder and year(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyrightLabel", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CopyrightLabelElement
@@ -2315,7 +2275,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When SpecimenDefinition was approved by publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -2357,7 +2316,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date on which the asset content was last reviewed by the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -2399,7 +2357,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The effective date range for the SpecimenDefinition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=310)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -2426,7 +2383,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of material to collect.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("typeCollected", InSummary=true, Order=320)]
     [Binding("CollectedSpecimenType")]
     [DataMember]
@@ -2454,7 +2410,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient preparation for collection.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patientPreparation", InSummary=true, Order=330)]
     [Binding("PreparePatient")]
     [Cardinality(Min=0,Max=-1)]
@@ -2483,7 +2438,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time aspect for collection.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("timeAspect", InSummary=true, Order=340)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TimeAspectElement
@@ -2525,7 +2479,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specimen collection procedure.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("collection", InSummary=true, Order=350)]
     [Binding("SpecimenCollection")]
     [Cardinality(Min=0,Max=-1)]
@@ -2554,7 +2507,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specimen in container intended for testing by lab.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("typeTested", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2899,7 +2851,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

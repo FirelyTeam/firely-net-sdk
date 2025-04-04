@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -82,7 +81,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An identifier for the group.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("group", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? GroupElement
@@ -124,7 +122,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Display text for an identifier for the group.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("groupDisplay", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? GroupDisplayElement
@@ -166,7 +163,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An identifier for the subsection of the group.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subGroup", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SubGroupElement
@@ -208,7 +204,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Display text for the subsection of the group.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subGroupDisplay", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SubGroupDisplayElement
@@ -250,7 +245,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An identifier for the plan.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("plan", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PlanElement
@@ -292,7 +286,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Display text for the plan.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("planDisplay", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PlanDisplayElement
@@ -334,7 +327,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An identifier for the subsection of the plan.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subPlan", InSummary=true, Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SubPlanElement
@@ -376,7 +368,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Display text for the subsection of the plan.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subPlanDisplay", InSummary=true, Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SubPlanDisplayElement
@@ -418,7 +409,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An identifier for the class.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("class", InSummary=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ClassElement
@@ -460,7 +450,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Display text for the class.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("classDisplay", InSummary=true, Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ClassDisplayElement
@@ -502,7 +491,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An identifier for the subsection of the class.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subClass", InSummary=true, Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SubClassElement
@@ -544,7 +532,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Display text for the subsection of the subclass.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subClassDisplay", InSummary=true, Order=150)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SubClassDisplayElement
@@ -741,7 +728,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "group":
@@ -868,7 +855,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The primary coverage ID.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -896,7 +882,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("CoverageStatus")]
@@ -940,7 +925,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of coverage such as medical or accident.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [Binding("CoverageType")]
     [DataMember]
@@ -968,8 +952,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Owner of the policy.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("policyHolder", InSummary=true, Order=120, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? PolicyHolder
@@ -996,8 +980,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subscriber to the policy.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subscriber", InSummary=true, Order=130, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subscriber
@@ -1024,7 +1008,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ID assigned to the Subscriber.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subscriberId", InSummary=true, Order=140, FiveWs="who.focus")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SubscriberIdElement
@@ -1066,8 +1049,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Plan Beneficiary.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("beneficiary", InSummary=true, Order=150, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Beneficiary
@@ -1094,7 +1077,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Beneficiary relationship to the Subscriber.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relationship", Order=160)]
     [Binding("Relationship")]
     [DataMember]
@@ -1122,7 +1104,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coverage start and end dates.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=170, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -1149,8 +1130,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier for the plan or agreement issuer.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("payor", InSummary=true, Order=180, FiveWs="who.author")]
+    [CLSCompliant(false)]
     [References("Organization","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1178,7 +1159,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional coverage classifications.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("grouping", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Coverage.GroupComponent? Grouping
@@ -1205,7 +1185,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dependent number.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dependent", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DependentElement
@@ -1247,7 +1226,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The plan instance or sequence counter.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sequence", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SequenceElement
@@ -1289,7 +1267,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relative order of the coverage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("order", InSummary=true, Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? OrderElement
@@ -1331,7 +1308,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurer network.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("network", InSummary=true, Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NetworkElement
@@ -1373,8 +1349,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract details.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contract", Order=240)]
+    [CLSCompliant(false)]
     [References("Contract")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1599,7 +1575,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

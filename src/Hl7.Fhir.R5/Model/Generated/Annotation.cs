@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -67,8 +66,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Individual responsible for the annotation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Patient","RelatedPerson","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
@@ -96,7 +95,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the annotation was made.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("time", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? TimeElement
@@ -138,7 +136,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The annotation  - text content (as markdown).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("text", InSummary=true, Order=50)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -246,7 +243,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "author":

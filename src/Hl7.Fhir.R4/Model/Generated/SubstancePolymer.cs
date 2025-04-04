@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -76,7 +75,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("ratioType", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? RatioType
@@ -103,7 +101,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("startingMaterial", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -186,7 +183,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "ratioType":
@@ -236,7 +233,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("material", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Material
@@ -263,7 +259,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Type
@@ -290,7 +285,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("isDefining", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? IsDefiningElement
@@ -332,7 +326,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceAmount? Amount
@@ -434,7 +427,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "material":
@@ -502,7 +495,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("numberOfUnits", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? NumberOfUnitsElement
@@ -544,7 +536,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("averageMolecularFormula", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? AverageMolecularFormulaElement
@@ -586,7 +577,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("repeatUnitAmountType", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? RepeatUnitAmountType
@@ -613,7 +603,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("repeatUnit", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -716,7 +705,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "numberOfUnits":
@@ -784,7 +773,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("orientationOfPolymerisation", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? OrientationOfPolymerisation
@@ -811,7 +799,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("repeatUnit", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? RepeatUnitElement
@@ -853,7 +840,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceAmount? Amount
@@ -880,7 +866,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("degreeOfPolymerisation", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -908,7 +893,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("structuralRepresentation", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1021,7 +1005,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "orientationOfPolymerisation":
@@ -1098,7 +1082,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("degree", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Degree
@@ -1125,7 +1108,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceAmount? Amount
@@ -1207,7 +1189,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "degree":
@@ -1257,7 +1239,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Type
@@ -1284,7 +1265,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("representation", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? RepresentationElement
@@ -1326,7 +1306,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("attachment", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Attachment? Attachment
@@ -1418,7 +1397,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -1464,7 +1443,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("class", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Class
@@ -1491,7 +1469,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("geometry", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Geometry
@@ -1518,7 +1495,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copolymerConnectivity", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1546,7 +1522,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("modification", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1592,7 +1567,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("monomerSet", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1620,7 +1594,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("repeat", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1743,7 +1716,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "class":

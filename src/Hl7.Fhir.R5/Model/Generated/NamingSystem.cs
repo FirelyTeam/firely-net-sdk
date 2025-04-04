@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -157,7 +156,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// oid | uuid | uri | iri-stem | v2csmnemonic | other.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("NamingSystemIdentifierType")]
@@ -202,7 +200,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The unique identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.identifier")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -245,7 +242,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Is this the id that should be used for this type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("preferred", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? PreferredElement
@@ -287,7 +283,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Notes about identifier usage.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("comment", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CommentElement
@@ -329,7 +324,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When is identifier valid?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -356,7 +350,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether the identifier is authoritative.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("authoritative", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? AuthoritativeElement
@@ -493,7 +486,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -566,7 +559,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this naming system, represented as a URI (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -608,7 +600,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the naming system (business identifier).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -636,7 +627,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the naming system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -678,8 +668,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to compare versions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
@@ -706,7 +696,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this naming system (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=130)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -749,7 +738,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Title for this naming system (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -791,7 +779,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -836,7 +823,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// codesystem | identifier | root.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("kind", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("NamingSystemType")]
@@ -881,7 +867,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -923,7 +908,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -966,7 +950,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher/steward (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=190, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -1008,7 +991,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1036,7 +1018,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who maintains system namespace?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("responsible", Order=210, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ResponsibleElement
@@ -1078,7 +1059,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// e.g. driver,  provider,  patient, bank etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", Order=220)]
     [Binding("NamingSystemIdentifierSystemType")]
     [DataMember]
@@ -1106,7 +1086,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the naming system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1148,7 +1127,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1176,7 +1154,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for naming system (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1205,7 +1182,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this naming system is defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("purpose", Order=260, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -1247,7 +1223,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -1289,7 +1264,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Copyright holder and year(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyrightLabel", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CopyrightLabelElement
@@ -1331,7 +1305,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the NamingSystem was approved by publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -1373,7 +1346,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the NamingSystem was last reviewed by the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -1415,7 +1387,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the NamingSystem is expected to be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=310)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -1442,7 +1413,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("topic", Order=320)]
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
@@ -1471,7 +1441,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the CodeSystem.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1499,7 +1468,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the NamingSystem.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("editor", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1527,7 +1495,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the NamingSystem.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reviewer", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1555,7 +1522,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the NamingSystem.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endorser", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1583,7 +1549,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1611,7 +1576,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How/where is it used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("usage", Order=380)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? UsageElement
@@ -1653,7 +1617,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifiers used for system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("uniqueId", InSummary=true, Order=390)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -2028,7 +1991,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

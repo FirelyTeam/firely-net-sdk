@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -66,7 +65,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A human identifier for this person.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -94,7 +92,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this related person's record is in active use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -136,8 +133,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient this person is related to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=110)]
+    [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -165,7 +162,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The nature of the relationship.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relationship", InSummary=true, Order=120, FiveWs="class")]
     [Binding("PatientRelationshipType")]
     [DataMember]
@@ -193,7 +189,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name associated with the person.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -221,7 +216,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the person.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("telecom", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -249,7 +243,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("gender", InSummary=true, Order=150)]
     [AllowedTypes(typeof(Code))]
     [Binding("AdministrativeGender")]
@@ -293,7 +286,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date on which the related person was born.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("birthDate", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Date? BirthDateElement
@@ -335,7 +327,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Address where the related person can be contacted or visited.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("address", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -363,7 +354,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Image of the person.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("photo", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -391,7 +381,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period of time that this relationship is considered valid.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", Order=190, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -565,7 +554,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

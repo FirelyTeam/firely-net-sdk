@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4b.expansions@4.3.0, hl7.fhir.r4b.core@4.3.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -141,7 +140,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Characteristic.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("characteristic", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -169,7 +167,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Footnotes and/or explanatory notes.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -252,7 +249,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "characteristic":
@@ -302,7 +299,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Characteristic code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Binding("FocusCharacteristicCode")]
       [Cardinality(Min=1,Max=1)]
@@ -331,8 +327,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Characteristic value.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
       [Cardinality(Min=1,Max=1)]
@@ -361,7 +357,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Is used to express not the characteristic.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("exclude", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ExcludeElement
@@ -403,7 +398,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Timeframe for the characteristic.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -505,7 +499,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -577,7 +571,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// replaces | amends | appends | transforms | replacedWith | amendedWith | appendedWith | transformedWith.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("ReportRelationshipType")]
@@ -622,8 +615,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Target of the relationship.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("target", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("EvidenceReport")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -707,7 +700,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -760,7 +753,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for section (e.g. for ToC).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("title", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TitleElement
@@ -802,7 +794,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Classification of section (recommended).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("focus", Order=50)]
       [Binding("ReportSectionType")]
       [DataMember]
@@ -830,8 +821,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Classification of section by Resource.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("focusReference", Order=60)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? FocusReference
@@ -858,8 +849,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who and/or what authored the section.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("author", Order=70)]
+      [CLSCompliant(false)]
       [References("Person","Device","Group","Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -887,7 +878,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text summary of the section, for human interpretation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("text", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Narrative? Text
@@ -914,7 +904,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// working | snapshot | changes.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("mode", Order=90)]
       [AllowedTypes(typeof(Code))]
       [Binding("SectionMode")]
@@ -958,7 +947,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Order of section entries.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("orderedBy", Order=100)]
       [Binding("SectionEntryOrder")]
       [DataMember]
@@ -986,7 +974,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Extensible classifiers as content.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("entryClassifier", Order=110)]
       [Binding("EvidenceClassifier")]
       [Cardinality(Min=0,Max=-1)]
@@ -1015,8 +1002,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to resources as content.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("entryReference", Order=120)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1044,7 +1031,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Quantity as content.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("entryQuantity", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1072,7 +1058,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why the section is empty.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("emptyReason", Order=140)]
       [Binding("SectionEmptyReason")]
       [DataMember]
@@ -1100,7 +1085,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested Section.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("section", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1283,7 +1267,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "title":
@@ -1410,7 +1394,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this EvidenceReport, represented as a globally unique URI.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -1452,7 +1435,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -1497,7 +1479,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1525,7 +1506,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier for the evidence report.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=120, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1553,7 +1533,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifiers for articles that may relate to more than one evidence report.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatedIdentifier", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1581,8 +1560,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Citation for this report.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("citeAs", Order=140, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("Citation")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Markdown))]
     [DataMember]
@@ -1610,7 +1589,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of report.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", Order=150)]
     [Binding("EvidenceReportType")]
     [DataMember]
@@ -1638,7 +1616,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used for footnotes and annotations.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1666,7 +1643,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link, description or reference to artifact associated with the report.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1694,7 +1670,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Focus of the report.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=180)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1722,7 +1697,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=190, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -1764,7 +1738,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1792,7 +1765,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1820,7 +1792,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("editor", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1848,7 +1819,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reviewer", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1876,7 +1846,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endorser", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1904,7 +1873,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relationships to other compositions/documents.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatesTo", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1932,7 +1900,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composition is broken into sections.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("section", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2177,7 +2144,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

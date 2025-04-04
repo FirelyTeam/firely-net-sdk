@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -159,7 +158,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The regulatory grounds upon which this Permission builds.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("basis", InSummary=true, Order=40)]
       [Binding("ConsentRegulatoryBasis")]
       [Cardinality(Min=0,Max=-1)]
@@ -188,8 +186,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Justifing rational.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("evidence", InSummary=true, Order=50)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -272,7 +270,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "basis":
@@ -325,7 +323,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// deny | permit.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, IsModifier=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("PermissionProvisionType")]
@@ -369,7 +366,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The selection criteria to identify data that is within scope of this provision.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("data", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -397,7 +393,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A description or definition of which activities are allowed to be done on the data.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("activity", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -425,7 +420,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What limits apply to the use of the data.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("limit", InSummary=true, Order=70)]
       [Binding("PermissionUsageLimits")]
       [Cardinality(Min=0,Max=-1)]
@@ -529,7 +523,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -600,7 +594,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Explicit FHIR Resource references.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("resource", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -628,7 +621,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Security tag code on .meta.security.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("security", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -656,7 +648,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Timeframe encompasing data create/update.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -684,7 +675,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Expression identifying the data.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("expression", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Expression? Expression
@@ -786,7 +776,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "resource":
@@ -854,7 +844,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// instance | related | dependents | authoredby.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("meaning", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("ConsentDataMeaning")]
@@ -899,8 +888,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual data reference.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reference", InSummary=true, Order=50)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -983,7 +972,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "meaning":
@@ -1033,8 +1022,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Authorized actor(s).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("actor", InSummary=true, Order=40)]
+      [CLSCompliant(false)]
       [References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1062,7 +1051,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actions controlled by this rule.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("action", InSummary=true, Order=50)]
       [Binding("ProcessingActivityAction")]
       [Cardinality(Min=0,Max=-1)]
@@ -1091,7 +1079,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The purpose for which the permission is given.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("purpose", InSummary=true, Order=60)]
       [Binding("PurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
@@ -1185,7 +1172,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "actor":
@@ -1231,7 +1218,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | entered-in-error | draft | rejected.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=90)]
     [AllowedTypes(typeof(Code))]
     [Binding("PermissionStatus")]
@@ -1276,8 +1262,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The person or entity that asserts the permission.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("asserter", InSummary=true, Order=100)]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","RelatedPerson","HealthcareService")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Asserter
@@ -1304,7 +1290,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date that permission was asserted.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1350,7 +1335,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The period in which the permission is active.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("validity", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Validity
@@ -1377,7 +1361,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The asserted justification for using the data.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("justification", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.Permission.JustificationComponent? Justification
@@ -1404,7 +1387,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// deny-overrides | permit-overrides | ordered-deny-overrides | ordered-permit-overrides | deny-unless-permit | permit-unless-deny.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("combining", InSummary=true, IsModifier=true, Order=140)]
     [AllowedTypes(typeof(Code))]
     [Binding("PermissionCombining")]
@@ -1449,7 +1431,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Constraints to the Permission.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("rule", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1582,7 +1563,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "status":

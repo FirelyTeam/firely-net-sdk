@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -282,7 +281,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Content structure and use.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("ContractDefinitionType")]
       [Cardinality(Min=1,Max=1)]
@@ -311,7 +309,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Detailed Content Type Definition.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subType", Order=50)]
       [Binding("ContractDefinitionSubtype")]
       [DataMember]
@@ -339,8 +336,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Publisher Entity.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("publisher", Order=60)]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Publisher
@@ -367,7 +364,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When published.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("publicationDate", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? PublicationDateElement
@@ -409,7 +405,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("publicationStatus", Order=80)]
       [AllowedTypes(typeof(Code))]
       [Binding("ContractPublicationStatus")]
@@ -454,7 +449,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Publication Ownership.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("copyright", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -591,7 +585,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -680,7 +674,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Term Number.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -707,7 +700,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Term Issue Date Time.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("issued", InSummary=true, Order=50, FiveWs="FiveWs.recorded")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? IssuedElement
@@ -749,7 +741,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Term Effective Time.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("applies", InSummary=true, Order=60, FiveWs="FiveWs.done[x]")]
       [DataMember]
       public Hl7.Fhir.Model.Period? Applies
@@ -776,8 +767,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Term Concern.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("topic", Order=70, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -805,7 +796,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Term Type or Form.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=80, FiveWs="FiveWs.what[x]")]
       [Binding("ContractTermType")]
       [DataMember]
@@ -833,7 +823,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Term Type specific classification.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subType", Order=90, FiveWs="FiveWs.what[x]")]
       [Binding("ContractTermSubType")]
       [DataMember]
@@ -861,7 +850,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Term Statement.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("text", InSummary=true, Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextElement
@@ -903,7 +891,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Protection for the Term.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("securityLabel", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -931,7 +918,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Context of the Contract term.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("offer", Order=120)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -959,7 +945,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Term Asset List.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("asset", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -987,7 +972,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Entity being ascribed responsibility.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("action", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1015,7 +999,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested Contract Term Group.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("group", Order=150, FiveWs="FiveWs.what[x]")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1198,7 +1181,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -1341,7 +1324,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Link to Security Labels.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("number", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1387,7 +1369,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Confidentiality Protection.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("classification", Order=50)]
       [Binding("ContractSecurityClassification")]
       [Cardinality(Min=1,Max=1)]
@@ -1416,7 +1397,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable Policy.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("category", Order=60)]
       [Binding("ContractSecurityCategory")]
       [Cardinality(Min=0,Max=-1)]
@@ -1445,7 +1425,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Handling Instructions.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("control", Order=70)]
       [Binding("ContractSecurityControl")]
       [Cardinality(Min=0,Max=-1)]
@@ -1549,7 +1528,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "number":
@@ -1620,7 +1599,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Offer business ID.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1648,7 +1626,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Offer Recipient.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("party", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1676,8 +1653,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Negotiable offer asset.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("topic", InSummary=true, Order=60)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Topic
@@ -1704,7 +1681,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Offer Type or Form.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=70, FiveWs="FiveWs.what[x]")]
       [Binding("ContractTermType")]
       [DataMember]
@@ -1732,7 +1708,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Accepting party choice.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("decision", Order=80, FiveWs="FiveWs.what[x]")]
       [Binding("ContractDecisionType")]
       [DataMember]
@@ -1760,7 +1735,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How decision is conveyed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("decisionMode", Order=90)]
       [Binding("ContractDecisionMode")]
       [Cardinality(Min=0,Max=-1)]
@@ -1789,7 +1763,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Response to offer text.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("answer", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1817,7 +1790,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human readable offer text.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("text", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextElement
@@ -1859,7 +1831,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to text.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("linkId", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1905,7 +1876,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Offer restriction numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("securityLabelNumber", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2086,7 +2056,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -2208,8 +2178,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Referenced entity.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reference", Order=40)]
+      [CLSCompliant(false)]
       [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Device","Group","Organization")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -2237,7 +2207,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Participant engagement type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("role", Order=50)]
       [Binding("ContractPartyRole")]
       [Cardinality(Min=1,Max=1)]
@@ -2321,7 +2290,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "reference":
@@ -2371,8 +2340,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual answer response.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -2446,7 +2415,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "value":
@@ -2487,7 +2456,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Range of asset.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("scope", Order=40)]
       [Binding("ContractAssetScope")]
       [DataMember]
@@ -2515,7 +2483,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Asset category.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
       [Binding("ContractAssetType")]
       [Cardinality(Min=0,Max=-1)]
@@ -2544,8 +2511,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Associated entities.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("typeReference", Order=60)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2573,7 +2540,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Asset sub-category.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subtype", Order=70)]
       [Binding("ContractAssetSubtype")]
       [Cardinality(Min=0,Max=-1)]
@@ -2602,7 +2568,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Kinship of the asset.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("relationship", Order=80)]
       [Binding("ConsentContentClass")]
       [DataMember]
@@ -2630,7 +2595,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Circumstance of the asset.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("context", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2658,7 +2622,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Quality desctiption of asset.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("condition", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ConditionElement
@@ -2700,7 +2663,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Asset availability types.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("periodType", Order=110)]
       [Binding("AssetAvailabilityType")]
       [Cardinality(Min=0,Max=-1)]
@@ -2729,7 +2691,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time period of the asset.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2757,7 +2718,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time period.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("usePeriod", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2785,7 +2745,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Asset clause or question text.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("text", Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextElement
@@ -2827,7 +2786,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to asset text.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("linkId", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2873,7 +2831,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Response to assets.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("answer", Order=160)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2901,7 +2858,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Asset restriction numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("securityLabelNumber", Order=170)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2947,7 +2903,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item List.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("valuedItem", Order=180)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3160,7 +3115,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "scope":
@@ -3327,8 +3282,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Creator,custodian or owner.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reference", Order=40)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Reference
@@ -3355,7 +3310,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Codeable asset context.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=50)]
       [Binding("ContractAssetContext")]
       [Cardinality(Min=0,Max=-1)]
@@ -3384,7 +3338,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Context description.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("text", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextElement
@@ -3491,7 +3444,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "reference":
@@ -3550,8 +3503,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item Type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("entity", Order=40, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+      [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -3579,7 +3532,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item Number.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -3606,7 +3558,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item Effective Tiem.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("effectiveTime", Order=60, FiveWs="FiveWs.done[x]")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? EffectiveTimeElement
@@ -3648,7 +3599,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Count of Contract Valued Items.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=70, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -3675,7 +3625,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item fee, charge, or cost.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unitPrice", Order=80, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.Money? UnitPrice
@@ -3702,7 +3651,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item Price Scaling Factor.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("factor", Order=90, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? FactorElement
@@ -3744,7 +3692,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item Difficulty Scaling Factor.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("points", Order=100, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? PointsElement
@@ -3786,7 +3733,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Total Contract Valued Item Value.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("net", Order=110, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.Money? Net
@@ -3813,7 +3759,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Terms of valuation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("payment", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PaymentElement
@@ -3855,7 +3800,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When payment is due.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("paymentDate", Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? PaymentDateElement
@@ -3897,8 +3841,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who will make payment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("responsible", Order=140)]
+      [CLSCompliant(false)]
       [References("Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Responsible
@@ -3925,8 +3869,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who will receive payment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("recipient", Order=150)]
+      [CLSCompliant(false)]
       [References("Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Recipient
@@ -3953,7 +3897,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("linkId", Order=160)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3999,7 +3942,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Security Labels that define affected terms.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("securityLabelNumber", Order=170)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4220,7 +4162,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "entity":
@@ -4383,7 +4325,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// True if the term prohibits the  action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("doNotPerform", IsModifier=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? DoNotPerformElement
@@ -4425,7 +4366,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type or form of the action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
       [Binding("ContractAction")]
       [Cardinality(Min=1,Max=1)]
@@ -4454,7 +4394,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Entity of the action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subject", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4482,7 +4421,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Purpose for the Contract Term Action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("intent", Order=70, FiveWs="FiveWs.why[x]")]
       [Binding("ContractActionReason")]
       [Cardinality(Min=1,Max=1)]
@@ -4511,7 +4449,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("linkId", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4557,7 +4494,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// State of the action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("status", Order=90)]
       [Binding("ContractActionStatus")]
       [Cardinality(Min=1,Max=1)]
@@ -4586,8 +4522,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Episode associated with action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("context", Order=100)]
+      [CLSCompliant(false)]
       [References("Encounter","EpisodeOfCare")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Context
@@ -4614,7 +4550,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("contextLinkId", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4660,8 +4595,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When action happens.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("occurrence", Order=120, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Occurrence
@@ -4688,8 +4623,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who asked for action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("requester", Order=130)]
+      [CLSCompliant(false)]
       [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Device","Group","Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4717,7 +4652,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("requesterLinkId", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4763,7 +4697,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Kind of service performer.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("performerType", Order=150)]
       [Binding("ContractActionPerformerType")]
       [Cardinality(Min=0,Max=-1)]
@@ -4792,7 +4725,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Competency of the performer.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("performerRole", Order=160)]
       [Binding("ContractActionPerformerRole")]
       [DataMember]
@@ -4820,8 +4752,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actor that wil execute (or not) the action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("performer", Order=170)]
+      [CLSCompliant(false)]
       [References("RelatedPerson","Patient","Practitioner","PractitionerRole","CareTeam","Device","Substance","Organization","Location")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Performer
@@ -4848,7 +4780,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("performerLinkId", Order=180)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4894,7 +4825,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why is action (not) needed?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reasonCode", Order=190)]
       [Binding("ContractActionReason")]
       [Cardinality(Min=0,Max=-1)]
@@ -4923,8 +4853,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why is action (not) needed?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reasonReference", Order=200)]
+      [CLSCompliant(false)]
       [References("Condition","Observation","DiagnosticReport","DocumentReference","Questionnaire","QuestionnaireResponse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4952,7 +4882,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why action is to be performed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reason", Order=210)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4998,7 +4927,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reasonLinkId", Order=220)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5044,7 +4972,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Comments about the action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("note", Order=230)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5072,7 +4999,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Action restriction numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("securityLabelNumber", Order=240)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5363,7 +5289,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "doNotPerform":
@@ -5584,8 +5510,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Entity of the action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reference", Order=40)]
+      [CLSCompliant(false)]
       [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Device","Group","Organization")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -5613,7 +5539,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Role type of the agent.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("role", Order=50)]
       [Binding("ContractActorRole")]
       [DataMember]
@@ -5696,7 +5621,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "reference":
@@ -5751,7 +5676,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Signatory Role.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40, FiveWs="FiveWs.actor")]
       [Binding("ContractSignerType")]
       [Cardinality(Min=1,Max=1)]
@@ -5780,8 +5704,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Signatory Party.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("party", Order=50, FiveWs="FiveWs.author")]
+      [CLSCompliant(false)]
       [References("Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -5809,7 +5733,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Documentation Signature.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("signature", Order=60, FiveWs="FiveWs.author")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -5902,7 +5825,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -5964,8 +5887,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Easily comprehended representation of this Contract.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+      [CLSCompliant(false)]
       [References("Composition","DocumentReference","QuestionnaireResponse")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -6039,7 +5962,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "content":
@@ -6083,8 +6006,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Legal Text.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+      [CLSCompliant(false)]
       [References("Composition","DocumentReference","QuestionnaireResponse")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -6158,7 +6081,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "content":
@@ -6202,8 +6125,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Computable Contract Rules.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+      [CLSCompliant(false)]
       [References("DocumentReference")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -6277,7 +6200,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "content":
@@ -6305,7 +6228,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract number.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -6333,7 +6255,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Basal definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -6375,7 +6296,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business edition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -6417,7 +6337,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("ContractStatus")]
@@ -6461,7 +6380,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Negotiation status.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("legalState", Order=130)]
     [Binding("ContractLegalState")]
     [DataMember]
@@ -6489,8 +6407,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Source Contract Definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesCanonical", Order=140)]
+    [CLSCompliant(false)]
     [References("Contract")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? InstantiatesCanonical
@@ -6517,7 +6435,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Contract Definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesUri", Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? InstantiatesUriElement
@@ -6559,7 +6476,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Content derived from the basal information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contentDerivative", Order=160, FiveWs="FiveWs.what[x]")]
     [Binding("ContractContentDerivative")]
     [DataMember]
@@ -6587,7 +6503,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this Contract was issued.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("issued", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? IssuedElement
@@ -6629,7 +6544,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Effective time.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("applies", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Applies
@@ -6656,7 +6570,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract cessation cause.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("expirationType", Order=190)]
     [Binding("ContractExpiration")]
     [DataMember]
@@ -6684,8 +6597,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract Target Entity.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=200)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -6713,8 +6626,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Authority under which this Contract has standing.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("authority", Order=210)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -6742,8 +6655,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A sphere of control governed by an authoritative jurisdiction, organization, or person.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("domain", Order=220)]
+    [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -6771,8 +6684,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific Location.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("site", Order=230)]
+    [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -6800,7 +6713,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Computer friendly designation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -6842,7 +6754,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human Friendly name.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -6884,7 +6795,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subordinate Friendly name.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subtitle", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SubtitleElement
@@ -6926,7 +6836,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Acronym or short name.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("alias", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -6972,8 +6881,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Source of Contract.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", Order=280)]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author
@@ -7000,7 +6909,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Range of Legal Concerns.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("scope", Order=290)]
     [Binding("ContractScope")]
     [DataMember]
@@ -7028,8 +6936,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Focus of contract interest.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("topic", Order=300, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
@@ -7057,7 +6965,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Legal instrument category.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=310, FiveWs="FiveWs.what[x]")]
     [Binding("ContractType")]
     [DataMember]
@@ -7085,7 +6992,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subtype within the context of type.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subType", InSummary=true, Order=320, FiveWs="FiveWs.what[x]")]
     [Binding("ContractSubtype")]
     [Cardinality(Min=0,Max=-1)]
@@ -7114,7 +7020,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract precursor content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contentDefinition", Order=330)]
     [DataMember]
     public Hl7.Fhir.Model.Contract.ContentDefinitionComponent? ContentDefinition
@@ -7141,7 +7046,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract Term List.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("term", Order=340, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7169,8 +7073,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Extra Information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supportingInfo", Order=350)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7198,8 +7102,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Key event in Contract History.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relevantHistory", Order=360)]
+    [CLSCompliant(false)]
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7227,7 +7131,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract Signatory.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("signer", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7255,7 +7158,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract Friendly Language.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("friendly", Order=380, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7283,7 +7185,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract Legal Language.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("legal", Order=390, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7311,7 +7212,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Computable Contract Language.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("rule", Order=400, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -7339,8 +7239,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Binding Contract.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("legallyBinding", Order=410, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("Composition","DocumentReference","QuestionnaireResponse","Contract")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
@@ -7735,7 +7635,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

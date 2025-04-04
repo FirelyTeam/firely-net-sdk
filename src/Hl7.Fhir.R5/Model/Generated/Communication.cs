@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -82,8 +81,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Message part content.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
@@ -157,7 +156,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "content":
@@ -185,7 +184,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -213,7 +211,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR protocol or definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -259,7 +256,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates external protocol or definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -305,8 +301,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled by this communication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -334,8 +330,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of referenced event (e.g. Communication, Procedure).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -363,8 +359,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reply to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("inResponseTo", Order=140)]
+    [CLSCompliant(false)]
     [References("Communication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -392,7 +388,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("CommunicationStatus")]
@@ -437,7 +432,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("statusReason", InSummary=true, Order=160)]
     [Binding("CommunicationNotDoneReason")]
     [DataMember]
@@ -465,7 +459,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message category.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", Order=170, FiveWs="FiveWs.class")]
     [Binding("CommunicationCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -494,7 +487,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("priority", InSummary=true, Order=180, FiveWs="FiveWs.grade")]
     [AllowedTypes(typeof(Code))]
     [Binding("CommunicationPriority")]
@@ -538,7 +530,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A channel of communication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("medium", Order=190)]
     [Binding("CommunicationMedium")]
     [Cardinality(Min=0,Max=-1)]
@@ -567,8 +558,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Focus of message.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=200, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -595,7 +586,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of the purpose/content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("topic", Order=210, FiveWs="FiveWs.context")]
     [Binding("CommunicationTopic")]
     [DataMember]
@@ -623,8 +613,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resources that pertain to this communication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("about", Order=220, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -652,8 +642,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The Encounter during which this Communication was created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=230, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -680,7 +670,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When sent.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sent", Order=240, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? SentElement
@@ -722,7 +711,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When received.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("received", Order=250, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? ReceivedElement
@@ -764,8 +752,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the information is shared with.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recipient", Order=260, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("CareTeam","Device","Group","HealthcareService","Location","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson","Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -793,8 +781,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who shares the information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sender", Order=270, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson","HealthcareService","Endpoint","CareTeam")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Sender
@@ -821,7 +809,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indication for message.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reason", InSummary=true, Order=280, FiveWs="FiveWs.why[x]")]
     [Binding("CommunicationReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -850,7 +837,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message payload.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("payload", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -878,7 +864,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the communication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1163,7 +1148,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

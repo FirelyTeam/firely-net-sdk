@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -82,7 +81,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that represents the included structure.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("structure", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("BodySite")]
       [Cardinality(Min=1,Max=1)]
@@ -111,7 +109,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that represents the included structure laterality.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("laterality", Order=50, FiveWs="FiveWs.what[x]")]
       [Binding("BodyStructureQualifier")]
       [DataMember]
@@ -139,7 +136,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Landmark relative location.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("bodyLandmarkOrientation", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -167,8 +163,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Cartesian reference for structure.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("spatialReference", Order=70, FiveWs="FiveWs.where[x]")]
+      [CLSCompliant(false)]
       [References("ImagingSelection")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -196,7 +192,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that represents the included structure qualifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("qualifier", Order=80, FiveWs="FiveWs.what[x]")]
       [Binding("BodyStructureQualifier")]
       [Cardinality(Min=0,Max=-1)]
@@ -310,7 +305,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "structure":
@@ -390,7 +385,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Body ]andmark description.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("landmarkDescription", Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("bodyLandmarkOrientationLandmarkDescription")]
       [Cardinality(Min=0,Max=-1)]
@@ -419,7 +413,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Clockface orientation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("clockFacePosition", Order=50, FiveWs="FiveWs.what[x]")]
       [Binding("bodyLandmarkOrientationClockFacePosition")]
       [Cardinality(Min=0,Max=-1)]
@@ -448,7 +441,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Landmark relative location.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("distanceFromLandmark", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -476,7 +468,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Relative landmark surface orientation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("surfaceOrientation", Order=70, FiveWs="FiveWs.what[x]")]
       [Binding("bodyLandmarkOrientationSurfaceOrientation")]
       [Cardinality(Min=0,Max=-1)]
@@ -580,7 +571,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "landmarkDescription":
@@ -651,7 +642,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Measurement device.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("device", Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("DeviceType")]
       [Cardinality(Min=0,Max=-1)]
@@ -680,7 +670,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Measured distance from body landmark.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -763,7 +752,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "device":
@@ -800,7 +789,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Bodystructure identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -828,7 +816,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this record is in active use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -870,7 +857,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Structure.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("morphology", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [Binding("BodyStructureCode")]
     [DataMember]
@@ -898,7 +884,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Included anatomic location(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("includedStructure", Order=120)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -926,7 +911,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Excluded anatomic locations(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("excludedStructure", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -954,7 +938,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Text description.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -996,7 +979,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Attached images.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("image", Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1024,8 +1006,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this is about.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1170,7 +1152,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

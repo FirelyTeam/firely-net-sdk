@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -66,7 +65,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -94,7 +92,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
     [Binding("BasicResourceType")]
     [Cardinality(Min=1,Max=1)]
@@ -123,8 +120,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies the focus of this resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -151,7 +148,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("created", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Date? CreatedElement
@@ -193,8 +189,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=130, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Patient","RelatedPerson","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author
@@ -311,7 +307,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -66,8 +65,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The medication for which this is an indication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=90)]
+    [CLSCompliant(false)]
     [References("MedicinalProduct","Medication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -95,7 +94,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The symptom, condition or undesirable effect.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("symptomConditionEffect", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? SymptomConditionEffect
@@ -122,7 +120,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of the effect.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("classification", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Classification
@@ -149,7 +146,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The frequency of occurrence of the effect.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("frequencyOfOccurrence", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? FrequencyOfOccurrence
@@ -176,7 +172,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The population group to which this applies.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("population", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -289,7 +284,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "subject":

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -117,7 +116,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Condition suffered by relation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Binding("ConditionCode")]
       [Cardinality(Min=1,Max=1)]
@@ -146,7 +144,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// deceased | permanent disability | etc.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("outcome", Order=50)]
       [Binding("ConditionOutcome")]
       [DataMember]
@@ -174,8 +171,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When condition first manifested.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("onset", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Onset
@@ -202,7 +199,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Extra information about condition.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("note", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -305,7 +301,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -360,7 +356,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Id(s) for this record.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -388,8 +383,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates protocol or definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("definition", InSummary=true, Order=100)]
+    [CLSCompliant(false)]
     [References("PlanDefinition","Questionnaire")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -417,7 +412,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// partial | completed | entered-in-error | health-unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("FamilyHistoryStatus")]
@@ -462,7 +456,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The taking of a family member's history did not occur.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("notDone", InSummary=true, IsModifier=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? NotDoneElement
@@ -504,7 +497,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// subject-unknown | withheld | unable-to-obtain | deferred.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("notDoneReason", InSummary=true, Order=130)]
     [Binding("FamilyHistoryNotDoneReason")]
     [DataMember]
@@ -532,8 +524,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient history is about.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=140, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -561,7 +553,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When history was captured/updated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=150, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -603,7 +594,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The family member described.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -645,7 +635,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relationship to the subject.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relationship", InSummary=true, Order=170)]
     [Binding("FamilialRelationship")]
     [Cardinality(Min=1,Max=1)]
@@ -674,7 +663,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("gender", InSummary=true, Order=180)]
     [AllowedTypes(typeof(Code))]
     [Binding("AdministrativeGender")]
@@ -718,8 +706,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// (approximate) date of birth.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("born", Order=190, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Born
@@ -746,8 +734,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// (approximate) age.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("age", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Age
@@ -774,7 +762,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Age is estimated?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("estimatedAge", InSummary=true, IsModifier=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? EstimatedAgeElement
@@ -816,8 +803,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dead? How old/when?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("deceased", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Deceased
@@ -844,7 +831,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was family member history performed?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonCode", InSummary=true, Order=230, FiveWs="why")]
     [Binding("FamilyHistoryReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -873,8 +859,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was family member history performed?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonReference", InSummary=true, Order=240, FiveWs="why")]
+    [CLSCompliant(false)]
     [References("Condition","Observation","AllergyIntolerance","QuestionnaireResponse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -902,7 +888,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General note about related person.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -930,7 +915,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition that the related person had.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("condition", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1175,7 +1159,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

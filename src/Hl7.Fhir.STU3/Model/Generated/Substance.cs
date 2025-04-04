@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -107,7 +106,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier of the package/container.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -134,7 +132,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When no longer valid to use.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("expiry", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? ExpiryElement
@@ -176,7 +173,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Amount of substance in the package.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -268,7 +264,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -330,7 +326,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Optional amount (concentration).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Ratio? Quantity
@@ -357,9 +352,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A component of the substance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("substance", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("SubstanceIngredient")]
+      [CLSCompliant(false)]
       [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -443,7 +438,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "quantity":
@@ -480,7 +475,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -508,7 +502,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=100, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("FHIRSubstanceStatus")]
@@ -552,7 +545,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What class/type of substance this is.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
     [Binding("SubstanceCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -581,7 +573,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What substance this is.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=120, FiveWs="what")]
     [Binding("SubstanceCode")]
     [Cardinality(Min=1,Max=1)]
@@ -610,7 +601,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Textual description of the substance, comments.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -652,7 +642,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this describes a specific package/container of the substance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instance", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -680,7 +669,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composition information about the substance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("ingredient", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -815,7 +803,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

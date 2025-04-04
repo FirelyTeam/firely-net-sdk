@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -130,7 +129,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Kind of characteristic.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Binding("GroupCharacteristicKind")]
       [Cardinality(Min=1,Max=1)]
@@ -159,9 +157,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value held by characteristic.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("GroupCharacteristicValue")]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -189,7 +187,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Group includes or excludes.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("exclude", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -232,7 +229,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Period over which characteristic is tested.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -334,7 +330,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -405,8 +401,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to the group member.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("entity", Order=40)]
+      [CLSCompliant(false)]
       [References("Patient","Practitioner","PractitionerRole","Device","Medication","Substance","Group")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -434,7 +430,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Period member belonged to the group.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -461,7 +456,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If member is no longer in group.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("inactive", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? InactiveElement
@@ -568,7 +562,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "entity":
@@ -614,7 +608,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique id.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -642,7 +635,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this group's record is in active use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -684,7 +676,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// person | animal | practitioner | device | medication | substance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("GroupType")]
@@ -729,7 +720,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Descriptive or actual.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("actual", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -772,7 +762,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Group members.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("GroupKind")]
     [DataMember]
@@ -800,7 +789,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Label for Group.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -842,7 +830,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of members.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("quantity", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? QuantityElement
@@ -884,8 +871,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Entity that is the custodian of the Group's definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("managingEntity", InSummary=true, Order=160)]
+    [CLSCompliant(false)]
     [References("Organization","RelatedPerson","Practitioner","PractitionerRole")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ManagingEntity
@@ -912,7 +899,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Include / Exclude group members by Trait.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("characteristic", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -940,7 +926,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who or what is in group.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("member", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1108,7 +1093,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

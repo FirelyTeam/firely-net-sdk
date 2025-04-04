@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -76,7 +75,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Index of linear sequences of nucleic acids in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subunit", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? SubunitElement
@@ -118,7 +116,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actual nucleotide sequence notation from 5' to 3' end using standard single letter codes. In addition to the base sequence, sugar and type of phosphate or non-phosphate linkage should also be captured.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sequence", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SequenceElement
@@ -160,7 +157,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The length of the sequence shall be captured.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("length", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? LengthElement
@@ -202,7 +198,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// (TBC).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sequenceAttachment", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Attachment? SequenceAttachment
@@ -229,7 +224,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The nucleotide present at the 5’ terminal shall be specified based on a controlled vocabulary. Since the sequence is represented from the 5' to the 3' end, the 5’ prime nucleotide is the letter at the first position in the sequence. A separate representation would be redundant.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("fivePrime", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? FivePrime
@@ -256,7 +250,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The nucleotide present at the 3’ terminal shall be specified based on a controlled vocabulary. Since the sequence is represented from the 5' to the 3' end, the 5’ prime nucleotide is the letter at the last position in the sequence. A separate representation would be redundant.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("threePrime", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? ThreePrime
@@ -283,7 +276,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The linkages between sugar residues will also be captured.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("linkage", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -311,7 +303,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// 5.3.6.8.1 Sugar ID (Mandatory).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sugar", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -454,7 +445,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "subunit":
@@ -558,7 +549,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The entity that links the sugar residues together should also be captured for nearly all naturally occurring nucleic acid the linkage is a phosphate group. For many synthetic oligonucleotides phosphorothioate linkages are often seen. Linkage connectivity is assumed to be 3’-5’. If the linkage is either 3’-3’ or 5’-5’ this should be specified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("connectivity", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ConnectivityElement
@@ -600,7 +590,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Each linkage will be registered as a fragment and have an ID.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -627,7 +616,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Each linkage will be registered as a fragment and have at least one name. A single name shall be assigned to each linkage.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -669,7 +657,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Residues shall be captured as described in 5.3.6.8.3.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("residueSite", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ResidueSiteElement
@@ -786,7 +773,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "connectivity":
@@ -854,7 +841,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The Substance ID of the sugar or sugar-like component that make up the nucleotide.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -881,7 +867,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The name of the sugar or sugar-like component that make up the nucleotide.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -923,7 +908,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The residues that contain a given sugar will be captured. The order of given residues will be captured in the 5‘-3‘direction consistent with the base sequences listed above.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("residueSite", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ResidueSiteElement
@@ -1030,7 +1014,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -1076,7 +1060,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of the sequence shall be specified based on a controlled vocabulary.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sequenceType", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? SequenceType
@@ -1103,7 +1086,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The number of linear sequences of nucleotides linked through phosphodiester bonds shall be described. Subunits would be strands of nucleic acids that are tightly associated typically through Watson-Crick base pairing. NOTE: If not specified in the reference source, the assumption is that there is 1 subunit.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("numberOfSubunits", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.Integer? NumberOfSubunitsElement
@@ -1145,7 +1127,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The area of hybridisation shall be described if applicable for double stranded RNA or DNA. The number associated with the subunit followed by the number associated to the residue shall be specified in increasing order. The underscore “” shall be used as separator as follows: “Subunitnumber Residue”.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("areaOfHybridisation", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? AreaOfHybridisationElement
@@ -1187,7 +1168,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// (TBC).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("oligoNucleotideType", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? OligoNucleotideType
@@ -1214,7 +1194,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subunits are listed in order of decreasing length; sequences of the same length will be ordered by molecular weight; subunits that have identical sequences will be repeated multiple times.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subunit", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1327,7 +1306,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "sequenceType":

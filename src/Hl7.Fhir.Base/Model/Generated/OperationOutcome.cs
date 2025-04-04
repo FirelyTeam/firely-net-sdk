@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -331,7 +330,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// fatal | error | warning | information | success.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("severity", InSummary=true, IsModifier=true, Order=40)]
       [FhirElement("severity", InSummary=true, Order=40, Since=FhirRelease.R4)]
       [AllowedTypes(typeof(Code))]
@@ -377,7 +375,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Error or warning code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=50)]
       [AllowedTypes(typeof(Code))]
       [Binding("IssueType")]
@@ -422,7 +419,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional details about the error.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("details", InSummary=true, Order=60)]
       [Binding("IssueDetails")]
       [DataMember]
@@ -450,7 +446,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional diagnostic information about the issue.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("diagnostics", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DiagnosticsElement
@@ -492,7 +487,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Deprecated: Path of element(s) related to issue.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("location", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -538,7 +532,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIRPath of element(s) related to issue.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("expression", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -679,7 +672,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "severity":
@@ -752,7 +745,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A single issue associated with the action.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("issue", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -825,7 +817,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "issue":

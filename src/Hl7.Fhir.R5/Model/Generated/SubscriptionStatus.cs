@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -122,7 +121,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Sequencing index of this event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("eventNumber", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -165,7 +163,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The instant this event occurred.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("timestamp", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Instant? TimestampElement
@@ -207,8 +204,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to the primary resource or information of this event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("focus", Order=60)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Focus
@@ -235,8 +232,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// References related to the focus resource and/or context of this event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("additionalContext", Order=70)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -339,7 +336,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "eventNumber":
@@ -394,7 +391,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// requested | active | error | off | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=90, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("SubscriptionStatus")]
@@ -438,7 +434,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// handshake | heartbeat | event-notification | query-status | query-event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
     [AllowedTypes(typeof(Code))]
     [Binding("SubscriptionNotificationType")]
@@ -483,7 +478,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Events since the Subscription was created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("eventsSinceSubscriptionStart", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.Integer64? EventsSinceSubscriptionStartElement
@@ -525,7 +519,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detailed information about any events relevant to this notification.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("notificationEvent", Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -553,8 +546,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the Subscription responsible for this notification.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subscription", InSummary=true, Order=130, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("Subscription")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -582,7 +575,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the SubscriptionTopic this notification relates to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("topic", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? TopicElement
@@ -624,7 +616,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// List of errors on the subscription.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("error", InSummary=true, Order=150)]
     [Binding("SubscriptionError")]
     [Cardinality(Min=0,Max=-1)]
@@ -758,7 +749,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "status":

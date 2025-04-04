@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -63,7 +62,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dose form as manufactured and before any transformation into the pharmaceutical product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -91,7 +89,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The “real world” units in which the quantity of the manufactured item is described.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("unitOfPresentation", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? UnitOfPresentation
@@ -118,7 +115,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The quantity or "count number" of the manufactured item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("quantity", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -146,8 +142,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("manufacturer", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -175,8 +171,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Ingredient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("ingredient", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("MedicinalProductIngredient")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -204,7 +200,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dimensions, color etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("physicalCharacteristics", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.ProdCharacteristic? PhysicalCharacteristics
@@ -231,7 +226,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other codeable characteristics.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("otherCharacteristics", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -364,7 +358,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "manufacturedDoseForm":

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -146,7 +145,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who performed the dispense and what they did.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("function", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Function
@@ -173,8 +171,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual who was performing.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("actor", Order=50)]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","Patient","Device","RelatedPerson","CareTeam")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -257,7 +255,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "function":
@@ -294,7 +292,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this dispensation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -322,8 +319,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The order or request that this dispense is fulfilling.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", Order=100)]
+    [CLSCompliant(false)]
     [References("CarePlan","DeviceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -351,8 +348,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The bigger event that this dispense is a part of.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", Order=110)]
+    [CLSCompliant(false)]
     [References("Procedure")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -380,7 +377,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("DeviceDispenseStatus")]
@@ -425,7 +421,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why a dispense was or was not performed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("statusReason", Order=130)]
     [Binding("DeviceDispenseStatusReason")]
     [DataMember]
@@ -453,7 +448,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of device dispense.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -481,7 +475,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What device was supplied.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("device", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -509,8 +502,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the dispense is for.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -538,8 +531,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who collected the device or where the medication was delivered.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("receiver", Order=170)]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson","Location","PractitionerRole")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Receiver
@@ -566,8 +559,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter associated with event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", Order=180)]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -594,8 +587,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information that supports the dispensing of the device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supportingInformation", Order=190, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -623,7 +616,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who performed event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performer", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -651,8 +643,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the dispense occurred.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("location", Order=210)]
+    [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -679,7 +671,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Trial fill, partial fill, emergency fill, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Type
@@ -706,7 +697,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Amount dispensed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("quantity", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Quantity
@@ -733,7 +723,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When product was packaged and reviewed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("preparedDate", InSummary=true, Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? PreparedDateElement
@@ -775,7 +764,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When product was given out.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("whenHandedOver", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? WhenHandedOverElement
@@ -817,8 +805,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the device was sent or should be sent.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("destination", Order=260)]
+    [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Destination
@@ -845,7 +833,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the dispense.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -873,7 +860,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Full representation of the usage instructions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("usageInstruction", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? UsageInstructionElement
@@ -915,8 +901,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A list of relevant lifecycle events.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("eventHistory", Order=290)]
+    [CLSCompliant(false)]
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1191,7 +1177,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

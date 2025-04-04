@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -117,8 +116,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to the related claim.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("claim", Order=40)]
+      [CLSCompliant(false)]
       [References("Claim")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Claim
@@ -145,7 +144,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How the reference claim is related.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("relationship", Order=50)]
       [Binding("RelatedClaimRelationship")]
       [DataMember]
@@ -173,7 +171,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// File or case reference.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reference", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Reference
@@ -265,7 +262,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "claim":
@@ -328,7 +325,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Category of recipient.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("PayeeType")]
       [DataMember]
@@ -356,8 +352,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recipient reference.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("party", Order=50)]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","Patient","RelatedPerson")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Party
@@ -439,7 +435,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -492,7 +488,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Order of care team.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -535,8 +530,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Practitioner or organization.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("provider", Order=50, FiveWs="FiveWs.actor")]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -564,7 +559,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Indicator of the lead practitioner.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("responsible", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ResponsibleElement
@@ -606,7 +600,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Function within the team.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("role", Order=70)]
       [Binding("CareTeamRole")]
       [DataMember]
@@ -634,7 +627,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Practitioner credential or specialization.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("qualification", Order=80)]
       [Binding("ProviderQualification")]
       [DataMember]
@@ -747,7 +739,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "sequence":
@@ -828,7 +820,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Information instance identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -871,7 +862,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Classification of the supplied information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("category", Order=50)]
       [Binding("InformationCategory")]
       [Cardinality(Min=1,Max=1)]
@@ -900,7 +890,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=60)]
       [Binding("InformationCode")]
       [DataMember]
@@ -928,8 +917,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When it occurred.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("timing", Order=70, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Timing
@@ -956,8 +945,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Data to be provided.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=80, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -985,7 +974,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Explanation for the information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reason", Order=90)]
       [Binding("MissingReason")]
       [DataMember]
@@ -1108,7 +1096,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "sequence":
@@ -1197,7 +1185,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Diagnosis instance identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1240,9 +1227,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nature of illness or problem.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("diagnosis", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("ICD10")]
+      [CLSCompliant(false)]
       [References("Condition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -1271,7 +1258,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Timing or nature of the diagnosis.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=60)]
       [Binding("DiagnosisType")]
       [Cardinality(Min=0,Max=-1)]
@@ -1300,7 +1286,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Present on admission.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("onAdmission", Order=70)]
       [Binding("DiagnosisOnAdmission")]
       [DataMember]
@@ -1328,7 +1313,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Package billing code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("packageCode", Order=80)]
       [Binding("DiagnosisRelatedGroup")]
       [DataMember]
@@ -1441,7 +1425,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "sequence":
@@ -1521,7 +1505,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Procedure instance identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1564,7 +1547,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Category of Procedure.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
       [Binding("ProcedureType")]
       [Cardinality(Min=0,Max=-1)]
@@ -1593,7 +1575,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the procedure was performed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("date", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -1635,9 +1616,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific clinical procedure.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("procedure", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [Binding("ICD10_Procedures")]
+      [CLSCompliant(false)]
       [References("Procedure")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -1666,8 +1647,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Unique device identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("udi", Order=80)]
+      [CLSCompliant(false)]
       [References("Device")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1780,7 +1761,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "sequence":
@@ -1861,7 +1842,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coverage to be used for adjudication.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("focal", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1904,8 +1884,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Insurance information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("coverage", InSummary=true, Order=50)]
+      [CLSCompliant(false)]
       [References("Coverage")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1933,7 +1913,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Prior authorization reference number.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("preAuthRef", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2044,7 +2023,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "focal":
@@ -2106,7 +2085,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the incident occurred.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("date", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Date? DateElement
@@ -2148,7 +2126,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The nature of the accident.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
       [Binding("AccidentType")]
       [DataMember]
@@ -2176,8 +2153,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where the event occurred.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("location", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Location")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -2270,7 +2247,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "date":
@@ -2332,7 +2309,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Item instance identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2375,7 +2351,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable care team members.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("careTeamSequence", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2421,7 +2396,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable diagnoses.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("diagnosisSequence", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2467,7 +2441,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable procedures.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("procedureSequence", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2513,7 +2486,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable exception and supporting information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("informationSequence", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2559,7 +2531,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Revenue or cost center code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("revenue", Order=90)]
       [Binding("RevenueCenter")]
       [DataMember]
@@ -2587,7 +2558,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit classification.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("category", Order=100)]
       [Binding("BenefitCategory")]
       [DataMember]
@@ -2615,7 +2585,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Billing, service, product, or drug code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("productOrService", Order=110)]
       [Binding("ServiceProduct")]
       [Cardinality(Min=1,Max=1)]
@@ -2644,7 +2613,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Product or service billing modifiers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("modifier", Order=120)]
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
@@ -2673,7 +2641,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Program the product or service is provided under.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("programCode", Order=130)]
       [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
@@ -2702,8 +2669,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date or dates of service or product delivery.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("serviced", Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Serviced
@@ -2730,9 +2697,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Place of service or where product was supplied.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("location", Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.where[x]")]
       [Binding("ServicePlace")]
+      [CLSCompliant(false)]
       [References("Location")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -2760,7 +2727,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Count of products or services.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=160)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -2787,7 +2753,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Fee, charge or cost per item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unitPrice", Order=170)]
       [DataMember]
       public Hl7.Fhir.Model.Money? UnitPrice
@@ -2814,7 +2779,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Price scaling factor.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("factor", Order=180)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? FactorElement
@@ -2856,7 +2820,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Total item cost.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("net", Order=190)]
       [DataMember]
       public Hl7.Fhir.Model.Money? Net
@@ -2883,8 +2846,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Unique device identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("udi", Order=200)]
+      [CLSCompliant(false)]
       [References("Device")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2912,7 +2875,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Anatomical location.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("bodySite", Order=210)]
       [Binding("OralSites")]
       [DataMember]
@@ -2940,7 +2902,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Anatomical sub-location.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subSite", Order=220)]
       [Binding("Surface")]
       [Cardinality(Min=0,Max=-1)]
@@ -2969,8 +2930,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Encounters related to this billed item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("encounter", Order=230)]
+      [CLSCompliant(false)]
       [References("Encounter")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2998,7 +2959,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable note numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("noteNumber", Order=240)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3044,7 +3004,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Adjudication details.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("adjudication", Order=250)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3072,7 +3031,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional items.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("detail", Order=260)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3365,7 +3323,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "sequence":
@@ -3607,7 +3565,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of adjudication information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("category", Order=40)]
       [Binding("Adjudication")]
       [Cardinality(Min=1,Max=1)]
@@ -3636,7 +3593,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Explanation of adjudication outcome.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reason", Order=50)]
       [Binding("AdjudicationReason")]
       [DataMember]
@@ -3664,7 +3620,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Monetary amount.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Money? Amount
@@ -3691,7 +3646,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Non-monitary value.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? ValueElement
@@ -3808,7 +3762,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "category":
@@ -3879,7 +3833,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Product or service provided.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3922,7 +3875,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Revenue or cost center code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("revenue", Order=50)]
       [Binding("RevenueCenter")]
       [DataMember]
@@ -3950,7 +3902,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit classification.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("category", Order=60)]
       [Binding("BenefitCategory")]
       [DataMember]
@@ -3978,7 +3929,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Billing, service, product, or drug code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("productOrService", Order=70)]
       [Binding("ServiceProduct")]
       [Cardinality(Min=1,Max=1)]
@@ -4007,7 +3957,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Service/Product billing modifiers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("modifier", Order=80)]
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
@@ -4036,7 +3985,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Program the product or service is provided under.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("programCode", Order=90)]
       [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
@@ -4065,7 +4013,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Count of products or services.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -4092,7 +4039,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Fee, charge or cost per item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unitPrice", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Money? UnitPrice
@@ -4119,7 +4065,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Price scaling factor.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("factor", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? FactorElement
@@ -4161,7 +4106,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Total item cost.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("net", Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.Money? Net
@@ -4188,8 +4132,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Unique device identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("udi", Order=140)]
+      [CLSCompliant(false)]
       [References("Device")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4217,7 +4161,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable note numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("noteNumber", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4263,7 +4206,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Detail level adjudication details.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("adjudication", Order=160)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4291,7 +4233,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional items.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subDetail", Order=170)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4494,7 +4435,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "sequence":
@@ -4655,7 +4596,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Product or service provided.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sequence", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -4698,7 +4638,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Revenue or cost center code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("revenue", Order=50)]
       [Binding("RevenueCenter")]
       [DataMember]
@@ -4726,7 +4665,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit classification.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("category", Order=60)]
       [Binding("BenefitCategory")]
       [DataMember]
@@ -4754,7 +4692,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Billing, service, product, or drug code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("productOrService", Order=70)]
       [Binding("ServiceProduct")]
       [Cardinality(Min=1,Max=1)]
@@ -4783,7 +4720,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Service/Product billing modifiers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("modifier", Order=80)]
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
@@ -4812,7 +4748,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Program the product or service is provided under.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("programCode", Order=90)]
       [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
@@ -4841,7 +4776,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Count of products or services.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -4868,7 +4802,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Fee, charge or cost per item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unitPrice", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Money? UnitPrice
@@ -4895,7 +4828,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Price scaling factor.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("factor", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? FactorElement
@@ -4937,7 +4869,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Total item cost.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("net", Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.Money? Net
@@ -4964,8 +4895,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Unique device identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("udi", Order=140)]
+      [CLSCompliant(false)]
       [References("Device")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -4993,7 +4924,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable note numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("noteNumber", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5039,7 +4969,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Subdetail level adjudication details.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("adjudication", Order=160)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5232,7 +5161,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "sequence":
@@ -5384,7 +5313,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Item sequence number.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("itemSequence", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5430,7 +5358,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Detail sequence number.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("detailSequence", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5476,7 +5403,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Subdetail sequence number.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subDetailSequence", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5522,8 +5448,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Authorized providers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("provider", Order=70, FiveWs="FiveWs.source")]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5551,7 +5477,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Billing, service, product, or drug code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("productOrService", Order=80)]
       [Binding("ServiceProduct")]
       [Cardinality(Min=1,Max=1)]
@@ -5580,7 +5505,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Service/Product billing modifiers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("modifier", Order=90)]
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
@@ -5609,7 +5533,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Program the product or service is provided under.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("programCode", Order=100)]
       [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
@@ -5638,8 +5561,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date or dates of service or product delivery.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("serviced", Order=110, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Serviced
@@ -5666,9 +5589,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Place of service or where product was supplied.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("location", Order=120, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.where[x]")]
       [Binding("ServicePlace")]
+      [CLSCompliant(false)]
       [References("Location")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -5696,7 +5619,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Count of products or services.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -5723,7 +5645,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Fee, charge or cost per item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unitPrice", Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.Money? UnitPrice
@@ -5750,7 +5671,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Price scaling factor.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("factor", Order=150)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? FactorElement
@@ -5792,7 +5712,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Total item cost.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("net", Order=160)]
       [DataMember]
       public Hl7.Fhir.Model.Money? Net
@@ -5819,7 +5738,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Anatomical location.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("bodySite", Order=170)]
       [Binding("OralSites")]
       [DataMember]
@@ -5847,7 +5765,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Anatomical sub-location.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subSite", Order=180)]
       [Binding("Surface")]
       [Cardinality(Min=0,Max=-1)]
@@ -5876,7 +5793,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable note numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("noteNumber", Order=190)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5922,7 +5838,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Added items adjudication.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("adjudication", Order=200)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -5950,7 +5865,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Insurer added line items.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("detail", Order=210)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -6193,7 +6107,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "itemSequence":
@@ -6390,7 +6304,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Billing, service, product, or drug code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("productOrService", Order=40)]
       [Binding("ServiceProduct")]
       [Cardinality(Min=1,Max=1)]
@@ -6419,7 +6332,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Service/Product billing modifiers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("modifier", Order=50)]
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
@@ -6448,7 +6360,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Count of products or services.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -6475,7 +6386,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Fee, charge or cost per item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unitPrice", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Money? UnitPrice
@@ -6502,7 +6412,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Price scaling factor.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("factor", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? FactorElement
@@ -6544,7 +6453,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Total item cost.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("net", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Money? Net
@@ -6571,7 +6479,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable note numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("noteNumber", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -6617,7 +6524,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Added items adjudication.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("adjudication", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -6645,7 +6551,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Insurer added line items.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("subDetail", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -6798,7 +6703,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "productOrService":
@@ -6914,7 +6819,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Billing, service, product, or drug code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("productOrService", Order=40)]
       [Binding("ServiceProduct")]
       [Cardinality(Min=1,Max=1)]
@@ -6943,7 +6847,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Service/Product billing modifiers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("modifier", Order=50)]
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
@@ -6972,7 +6875,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Count of products or services.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -6999,7 +6901,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Fee, charge or cost per item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unitPrice", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Money? UnitPrice
@@ -7026,7 +6927,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Price scaling factor.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("factor", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? FactorElement
@@ -7068,7 +6968,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Total item cost.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("net", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Money? Net
@@ -7095,7 +6994,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable note numbers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("noteNumber", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -7141,7 +7039,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Added items adjudication.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("adjudication", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -7284,7 +7181,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "productOrService":
@@ -7392,7 +7289,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of adjudication information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("category", InSummary=true, Order=40)]
       [Binding("Adjudication")]
       [Cardinality(Min=1,Max=1)]
@@ -7421,7 +7317,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Financial total for the category.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -7504,7 +7399,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "category":
@@ -7557,7 +7452,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Partial or complete payment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("PaymentType")]
       [DataMember]
@@ -7585,7 +7479,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Payment adjustment for non-claim issues.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("adjustment", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Money? Adjustment
@@ -7612,7 +7505,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Explanation for the variance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("adjustmentReason", Order=60)]
       [Binding("PaymentAdjustmentReason")]
       [DataMember]
@@ -7640,7 +7532,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Expected date of payment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("date", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Date? DateElement
@@ -7682,7 +7573,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Payable amount after adjustment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Money? Amount
@@ -7709,7 +7599,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Business identifier for the payment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -7831,7 +7720,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -7920,7 +7809,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Note instance identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("number", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? NumberElement
@@ -7962,7 +7850,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// display | print | printoper.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=50)]
       [AllowedTypes(typeof(Code))]
       [Binding("NoteType")]
@@ -8006,7 +7893,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Note explanatory text.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("text", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextElement
@@ -8048,7 +7934,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Language of the text.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("language", Order=70)]
       [Binding("Language")]
       [DataMember]
@@ -8151,7 +8036,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "number":
@@ -8219,7 +8104,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit classification.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("category", Order=40)]
       [Binding("BenefitCategory")]
       [Cardinality(Min=1,Max=1)]
@@ -8248,7 +8132,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Excluded from the plan.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("excluded", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ExcludedElement
@@ -8290,7 +8173,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Short name for the benefit.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -8332,7 +8214,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of the benefit or services covered.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -8374,7 +8255,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// In or out of network.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("network", Order=80)]
       [Binding("BenefitNetwork")]
       [DataMember]
@@ -8402,7 +8282,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual or family.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unit", Order=90)]
       [Binding("BenefitUnit")]
       [DataMember]
@@ -8430,7 +8309,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Annual or lifetime.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("term", Order=100)]
       [Binding("BenefitTerm")]
       [DataMember]
@@ -8458,7 +8336,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit Summary.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("financial", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -8601,7 +8478,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "category":
@@ -8708,7 +8585,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit classification.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("BenefitType")]
       [Cardinality(Min=1,Max=1)]
@@ -8737,8 +8613,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefits allowed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("allowed", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Money))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Allowed
@@ -8765,8 +8641,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefits used.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("used", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Money))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Used
@@ -8858,7 +8734,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -8904,7 +8780,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for the resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -8932,7 +8807,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("ExplanationOfBenefitStatus")]
@@ -8977,7 +8851,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Category or discipline.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("ClaimType")]
     [Cardinality(Min=1,Max=1)]
@@ -9006,7 +8879,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// More granular claim type.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subType", Order=120, FiveWs="FiveWs.class")]
     [Binding("ClaimSubType")]
     [DataMember]
@@ -9034,7 +8906,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// claim | preauthorization | predetermination.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("use", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("Use")]
@@ -9079,8 +8950,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The recipient of the products and services.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -9108,7 +8979,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relevant time frame for the claim.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("billablePeriod", InSummary=true, Order=150, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period? BillablePeriod
@@ -9135,7 +9005,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Response creation date.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("created", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -9178,8 +9047,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Author of the claim.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("enterer", Order=170, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Enterer
@@ -9206,8 +9075,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party responsible for reimbursement.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("insurer", InSummary=true, Order=180, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -9235,8 +9104,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party responsible for the claim.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("provider", InSummary=true, Order=190, FiveWs="FiveWs.source")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -9264,7 +9133,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Desired processing urgency.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("priority", Order=200)]
     [Binding("ProcessPriority")]
     [DataMember]
@@ -9292,7 +9160,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For whom to reserve funds.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("fundsReserveRequested", Order=210)]
     [Binding("FundsReserve")]
     [DataMember]
@@ -9320,7 +9187,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Funds reserved status.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("fundsReserve", Order=220)]
     [Binding("FundsReserve")]
     [DataMember]
@@ -9348,7 +9214,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Prior or corollary claims.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("related", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -9376,8 +9241,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Prescription authorizing services or products.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("prescription", Order=240)]
+    [CLSCompliant(false)]
     [References("MedicationRequest","VisionPrescription")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Prescription
@@ -9404,8 +9269,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Original prescription if superceded by fulfiller.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("originalPrescription", Order=250)]
+    [CLSCompliant(false)]
     [References("MedicationRequest")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? OriginalPrescription
@@ -9432,7 +9297,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Recipient of benefits payable.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("payee", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.ExplanationOfBenefit.PayeeComponent? Payee
@@ -9459,8 +9323,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Treatment Referral.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("referral", Order=270, FiveWs="FiveWs.cause")]
+    [CLSCompliant(false)]
     [References("ServiceRequest")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Referral
@@ -9487,8 +9351,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Servicing Facility.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("facility", Order=280, FiveWs="FiveWs.where[x]")]
+    [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Facility
@@ -9515,8 +9379,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Claim reference.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("claim", Order=290, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("Claim")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Claim
@@ -9543,8 +9407,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Claim response reference.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("claimResponse", Order=300)]
+    [CLSCompliant(false)]
     [References("ClaimResponse")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ClaimResponse
@@ -9571,7 +9435,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// queued | complete | error | partial.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("outcome", InSummary=true, Order=310)]
     [AllowedTypes(typeof(Code))]
     [Binding("RemittanceOutcome")]
@@ -9616,7 +9479,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Disposition Message.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("disposition", Order=320)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DispositionElement
@@ -9658,7 +9520,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Preauthorization reference.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("preAuthRef", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -9704,7 +9565,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Preauthorization in-effect period.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("preAuthRefPeriod", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -9732,7 +9592,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Care Team members.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("careTeam", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -9760,7 +9619,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supportingInfo", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -9788,7 +9646,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Pertinent diagnosis information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("diagnosis", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -9816,7 +9673,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical procedures performed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("procedure", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -9844,7 +9700,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Precedence (primary, secondary, etc.).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("precedence", Order=390)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? PrecedenceElement
@@ -9886,7 +9741,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient insurance information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("insurance", InSummary=true, Order=400)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -9914,7 +9768,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details of the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("accident", Order=410)]
     [DataMember]
     public Hl7.Fhir.Model.ExplanationOfBenefit.AccidentComponent? Accident
@@ -9941,7 +9794,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Product or service provided.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("item", Order=420)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -9969,7 +9821,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurer added line items.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("addItem", Order=430)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -9997,7 +9848,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Header-level adjudication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("adjudication", Order=440)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -10025,7 +9875,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Adjudication totals.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("total", InSummary=true, Order=450)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -10053,7 +9902,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Payment Details.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("payment", Order=460)]
     [DataMember]
     public Hl7.Fhir.Model.ExplanationOfBenefit.PaymentComponent? Payment
@@ -10080,7 +9928,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Printed form identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("formCode", Order=470)]
     [Binding("Forms")]
     [DataMember]
@@ -10108,7 +9955,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Printed reference or actual form.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("form", Order=480)]
     [DataMember]
     public Hl7.Fhir.Model.Attachment? Form
@@ -10135,7 +9981,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Note concerning adjudication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("processNote", Order=490)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -10163,7 +10008,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the benefits are applicable.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("benefitPeriod", Order=500)]
     [DataMember]
     public Hl7.Fhir.Model.Period? BenefitPeriod
@@ -10190,7 +10034,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Balance by Benefit Category.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("benefitBalance", Order=510)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -10688,7 +10531,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

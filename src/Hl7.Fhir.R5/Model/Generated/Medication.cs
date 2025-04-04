@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -111,7 +110,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The ingredient (substance or medication) that the ingredient.strength relates to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("item", Order=40)]
       [Binding("MedicationFormalRepresentation")]
       [Cardinality(Min=1,Max=1)]
@@ -140,7 +138,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Active ingredient indicator.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("isActive", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? IsActiveElement
@@ -182,9 +179,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Quantity of ingredient present.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("strength", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [Binding("MedicationIngredientStrength")]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Strength
@@ -276,7 +273,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "item":
@@ -338,7 +335,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier assigned to batch.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("lotNumber", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? LotNumberElement
@@ -380,7 +376,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When batch will expire.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("expirationDate", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? ExpirationDateElement
@@ -477,7 +472,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "lotNumber":
@@ -514,7 +509,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this medication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -542,7 +536,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Codes that identify this medication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [Binding("MedicationFormalRepresentation")]
     [DataMember]
@@ -570,7 +563,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
     [AllowedTypes(typeof(Code))]
     [Binding("MedicationStatus")]
@@ -614,8 +606,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that has authorization to market medication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("marketingAuthorizationHolder", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? MarketingAuthorizationHolder
@@ -642,7 +634,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// powder | tablets | capsule +.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("doseForm", Order=130)]
     [Binding("MedicationForm")]
     [DataMember]
@@ -670,7 +661,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the specified product code does not infer a package size, this is the specific amount of drug in the product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("totalVolume", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? TotalVolume
@@ -697,7 +687,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Active or inactive ingredient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("ingredient", Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -725,7 +714,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details about packaged medications.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("batch", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Medication.BatchComponent? Batch
@@ -752,8 +740,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Knowledge about this medication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("definition", Order=170)]
+    [CLSCompliant(false)]
     [References("MedicationKnowledge")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Definition
@@ -907,7 +895,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

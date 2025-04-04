@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -107,7 +106,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Numerical value (with implicit precision).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("value", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? ValueElement
@@ -149,7 +147,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// &lt; | &lt;= | &gt;= | &gt; | ad - how to understand the value.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("comparator", InSummary=true, IsModifier=true, Order=40)]
     [AllowedTypes(typeof(Code))]
     [Binding("QuantityComparator")]
@@ -193,7 +190,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unit representation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("unit", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? UnitElement
@@ -235,7 +231,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// System that defines coded unit form.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("system", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? SystemElement
@@ -277,7 +272,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded form of the unit.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Code? CodeElement
@@ -404,7 +398,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "value":

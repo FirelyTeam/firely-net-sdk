@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -148,7 +147,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The parameter whose value is being tracked.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("measure", InSummary=true, Order=40)]
       [Binding("GoalTargetMeasure")]
       [DataMember]
@@ -176,9 +174,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The target value to be achieved.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("detail", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [Binding("GoalTargetDetail")]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Ratio))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Detail
@@ -205,8 +203,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reach goal on or before.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("due", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Due
@@ -298,7 +296,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "measure":
@@ -344,7 +342,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this goal.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -372,7 +369,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lifecycleStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("GoalLifecycleStatus")]
@@ -417,7 +413,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | improving | worsening | no-change | achieved | sustaining | not-achieved | no-progress | not-attainable.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("achievementStatus", InSummary=true, Order=110)]
     [Binding("GoalAchievementStatus")]
     [DataMember]
@@ -445,7 +440,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Treatment, dietary, behavioral, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("GoalCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -474,7 +468,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// After meeting the goal, ongoing activity is needed to sustain the goal objective.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("continuous", Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ContinuousElement
@@ -516,7 +509,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// high-priority | medium-priority | low-priority.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("priority", InSummary=true, Order=140, FiveWs="FiveWs.grade")]
     [Binding("GoalPriority")]
     [DataMember]
@@ -544,7 +536,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code or text describing goal.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Binding("GoalDescription")]
     [Cardinality(Min=1,Max=1)]
@@ -573,8 +564,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this goal is intended for.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group","Organization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -602,9 +593,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When goal pursuit begins.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("start", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
     [Binding("GoalStartEvent")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Start
@@ -631,7 +622,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target outcome for the goal.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("target", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -659,7 +649,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When goal status took effect.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("statusDate", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Date? StatusDateElement
@@ -701,7 +690,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("statusReason", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? StatusReasonElement
@@ -743,8 +731,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who's responsible for creating Goal?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("source", InSummary=true, Order=210, FiveWs="FiveWs.source")]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","CareTeam")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Source
@@ -771,8 +759,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Issues addressed by this goal.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("addresses", Order=220, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("Condition","Observation","MedicationStatement","MedicationRequest","NutritionOrder","ServiceRequest","RiskAssessment","Procedure")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -800,7 +788,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments about the goal.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -828,7 +815,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What result was achieved regarding the goal?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("outcome", Order=240)]
     [Binding("GoalOutcome")]
     [Cardinality(Min=0,Max=-1)]
@@ -1054,7 +1040,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

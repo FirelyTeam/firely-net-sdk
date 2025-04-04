@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -3047,7 +3046,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Role of participant in the appointment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("ParticipantType")]
       [Cardinality(Min=0,Max=-1)]
@@ -3076,7 +3074,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Participation period of the actor.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -3103,8 +3100,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The individual, device, location, or service participating in the appointment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("actor", InSummary=true, Order=60, FiveWs="FiveWs.who")]
+      [CLSCompliant(false)]
       [References("Patient","Group","Practitioner","PractitionerRole","CareTeam","RelatedPerson","Device","HealthcareService","Location")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Actor
@@ -3131,7 +3128,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The participant is required to attend (optional when false).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("required", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? RequiredElement
@@ -3173,7 +3169,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// accepted | declined | tentative | needs-action.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("status", InSummary=true, Order=80)]
       [AllowedTypes(typeof(Code))]
       [Binding("ParticipationStatus")]
@@ -3303,7 +3298,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -3383,7 +3378,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The timezone of the occurrences.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("timezone", Order=40)]
       [Binding("IANATimezone")]
       [DataMember]
@@ -3411,7 +3405,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The frequency of the recurrence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("recurrenceType", Order=50)]
       [Binding("AppointmentRecurrenceType")]
       [Cardinality(Min=1,Max=1)]
@@ -3440,7 +3433,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The date when the recurrence should end.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("lastOccurrenceDate", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Date? LastOccurrenceDateElement
@@ -3482,7 +3474,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The number of planned occurrences.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("occurrenceCount", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? OccurrenceCountElement
@@ -3524,7 +3515,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific dates for a recurring set of appointments (no template).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("occurrenceDate", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3570,7 +3560,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Information about weekly recurring appointments.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("weeklyTemplate", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Appointment.WeeklyTemplateComponent? WeeklyTemplate
@@ -3597,7 +3586,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Information about monthly recurring appointments.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("monthlyTemplate", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Appointment.MonthlyTemplateComponent? MonthlyTemplate
@@ -3624,7 +3612,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Information about yearly recurring appointments.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("yearlyTemplate", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Appointment.YearlyTemplateComponent? YearlyTemplate
@@ -3651,7 +3638,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Any dates that should be excluded from the series.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("excludingDate", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3697,7 +3683,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Any recurrence IDs that should be excluded from the recurrence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("excludingRecurrenceId", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3878,7 +3863,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "timezone":
@@ -4000,7 +3985,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs on Mondays.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("monday", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? MondayElement
@@ -4042,7 +4026,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs on Tuesday.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("tuesday", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? TuesdayElement
@@ -4084,7 +4067,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs on Wednesday.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("wednesday", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? WednesdayElement
@@ -4126,7 +4108,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs on Thursday.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("thursday", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ThursdayElement
@@ -4168,7 +4149,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs on Friday.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("friday", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? FridayElement
@@ -4210,7 +4190,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs on Saturday.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("saturday", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? SaturdayElement
@@ -4252,7 +4231,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs on Sunday.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sunday", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? SundayElement
@@ -4294,7 +4272,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs every nth week.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("weekInterval", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? WeekIntervalElement
@@ -4451,7 +4428,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "monday":
@@ -4555,7 +4532,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs on a specific day of the month.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("dayOfMonth", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? DayOfMonthElement
@@ -4597,7 +4573,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Indicates which week of the month the appointment should occur.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("nthWeekOfMonth", Order=50)]
       [Binding("WeekOfMonth")]
       [DataMember]
@@ -4625,7 +4600,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Indicates which day of the week the appointment should occur.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("dayOfWeek", Order=60)]
       [Binding("DaysOfWeek")]
       [DataMember]
@@ -4653,7 +4627,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs every nth month.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("monthInterval", Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -4771,7 +4744,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "dayOfMonth":
@@ -4839,7 +4812,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recurs every nth year.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("yearInterval", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -4927,7 +4899,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "yearInterval":
@@ -4955,7 +4927,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4983,7 +4954,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("AppointmentStatus")]
@@ -5028,7 +4998,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The coded reason for the appointment being cancelled.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("cancellationReason", InSummary=true, Order=110)]
     [Binding("cancellation-reason")]
     [DataMember]
@@ -5056,7 +5025,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification when becoming an encounter.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("class", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("EncounterClass")]
     [Cardinality(Min=0,Max=-1)]
@@ -5085,7 +5053,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A broad categorization of the service that is to be performed during this appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("serviceCategory", InSummary=true, Order=130)]
     [Binding("service-category")]
     [Cardinality(Min=0,Max=-1)]
@@ -5114,7 +5081,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specific service that is to be performed during this appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("serviceType", InSummary=true, Order=140)]
     [Binding("service-type")]
     [Cardinality(Min=0,Max=-1)]
@@ -5143,7 +5109,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("specialty", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [Binding("specialty")]
     [Cardinality(Min=0,Max=-1)]
@@ -5172,7 +5137,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The style of appointment or patient that has been booked in the slot (not service type).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("appointmentType", InSummary=true, Order=160)]
     [Binding("appointment-type")]
     [DataMember]
@@ -5200,7 +5164,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason this appointment is scheduled.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reason", InSummary=true, Order=170)]
     [Binding("ApptReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -5229,7 +5192,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used to make informed decisions if needing to re-prioritize.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("priority", Order=180, FiveWs="FiveWs.class")]
     [Binding("Priority")]
     [DataMember]
@@ -5257,7 +5219,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Shown on a subject line in a meeting request, or appointment list.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -5299,8 +5260,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Appointment replaced by this Appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("replaces", Order=200, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Appointment")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -5328,7 +5289,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Connection details of a virtual service (e.g. conference call).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("virtualService", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -5356,8 +5316,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information to support the appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supportingInformation", Order=220, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -5385,8 +5345,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The previous appointment in a series.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("previousAppointment", Order=230, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Appointment")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? PreviousAppointment
@@ -5413,8 +5373,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The originating appointment in a recurring set of appointments.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("originatingAppointment", Order=240, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Appointment")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? OriginatingAppointment
@@ -5441,7 +5401,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When appointment is to take place.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("start", InSummary=true, Order=250, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? StartElement
@@ -5483,7 +5442,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When appointment is to conclude.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("end", InSummary=true, Order=260, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? EndElement
@@ -5525,7 +5483,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Can be less than start/end (e.g. estimate).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("minutesDuration", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? MinutesDurationElement
@@ -5567,7 +5524,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Potential date/time interval(s) requested to allocate the appointment within.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requestedPeriod", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -5595,8 +5551,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The slots that this appointment is filling.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("slot", Order=290)]
+    [CLSCompliant(false)]
     [References("Slot")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -5624,8 +5580,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The set of accounts that may be used for billing for this Appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("account", Order=300)]
+    [CLSCompliant(false)]
     [References("Account")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -5653,7 +5609,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date that this appointment was initially created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("created", Order=310)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -5695,7 +5650,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the appointment was cancelled.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("cancellationDate", Order=320)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CancellationDateElement
@@ -5737,7 +5691,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional comments.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -5765,7 +5718,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detailed information and instructions for the patient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patientInstruction", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -5793,8 +5745,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The request this appointment is allocated to assess.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", Order=350)]
+    [CLSCompliant(false)]
     [References("CarePlan","DeviceRequest","MedicationRequest","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -5822,8 +5774,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient or group associated with the appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=360, FiveWs="FiveWs.who")]
+    [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -5850,7 +5802,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Participants involved in appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participant", Order=370)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -5878,7 +5829,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The sequence number in the recurrence.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recurrenceId", Order=380)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? RecurrenceIdElement
@@ -5920,7 +5870,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates that this appointment varies from a recurrence pattern.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("occurrenceChanged", Order=390)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? OccurrenceChangedElement
@@ -5962,7 +5911,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details of the recurrence pattern/template used to generate occurrences.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recurrenceTemplate", Order=400)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -6347,7 +6295,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

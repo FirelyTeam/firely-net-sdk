@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -182,7 +181,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether the event succeeded or failed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("AuditEventOutcome")]
       [Cardinality(Min=1,Max=1)]
@@ -211,7 +209,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional outcome detail.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("detail", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
       [Binding("AuditEventOutcomeDetail")]
       [Cardinality(Min=0,Max=-1)]
@@ -295,7 +292,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -351,7 +348,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How agent participated.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40, FiveWs="FiveWs.who")]
       [Binding("AuditAgentType")]
       [DataMember]
@@ -379,7 +375,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Agent role in the event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("role", Order=50, FiveWs="FiveWs.who")]
       [Binding("AuditAgentRole")]
       [Cardinality(Min=0,Max=-1)]
@@ -408,8 +403,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier of who.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("who", InSummary=true, Order=60, FiveWs="FiveWs.who")]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -437,7 +432,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether user is initiator.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("requestor", InSummary=true, Order=70, FiveWs="FiveWs.who")]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? RequestorElement
@@ -479,8 +473,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The agent location when the event occurred.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("location", Order=80, FiveWs="FiveWs.where[x]")]
+      [CLSCompliant(false)]
       [References("Location")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Location
@@ -507,7 +501,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Policy that authorized the agent participation in the event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("policy", Order=90, FiveWs="FiveWs.why[x]")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -553,8 +546,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// This agent network location for the activity.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("network", Order=100, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.where[x]")]
+      [CLSCompliant(false)]
       [References("Endpoint")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
@@ -582,7 +575,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Allowable authorization for this agent.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("authorization", Order=110, FiveWs="FiveWs.why[x]")]
       [Binding("AuditPurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
@@ -726,7 +718,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -834,8 +826,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Logical source location within the enterprise.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("site", Order=40, FiveWs="FiveWs.witness")]
+      [CLSCompliant(false)]
       [References("Location")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Site
@@ -862,8 +854,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The identity of source detecting the event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("observer", InSummary=true, Order=50, FiveWs="FiveWs.witness")]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -891,7 +883,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of source where event originated.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=60, FiveWs="FiveWs.witness")]
       [Binding("AuditEventSourceType")]
       [Cardinality(Min=0,Max=-1)]
@@ -985,7 +976,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "site":
@@ -1048,8 +1039,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific instance of resource.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("what", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
+      [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? What
@@ -1076,7 +1067,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What role the entity played.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("role", Order=50, FiveWs="FiveWs.context")]
       [Binding("AuditEventEntityRole")]
       [DataMember]
@@ -1104,7 +1094,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Security labels on the entity.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("securityLabel", Order=60, FiveWs="FiveWs.context")]
       [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
@@ -1133,7 +1122,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Query parameters.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("query", InSummary=true, Order=70, FiveWs="FiveWs.context")]
       [DataMember]
       public Hl7.Fhir.Model.Base64Binary? QueryElement
@@ -1175,7 +1163,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional Information about the entity.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("detail", Order=80, FiveWs="FiveWs.context")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1203,7 +1190,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Entity is attributed to this agent.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("agent", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1326,7 +1312,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "what":
@@ -1415,7 +1401,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of the property.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40, FiveWs="FiveWs.context")]
       [Binding("AuditEventDetailType")]
       [Cardinality(Min=1,Max=1)]
@@ -1444,8 +1429,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Property value.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.context")]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Base64Binary))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1528,7 +1513,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -1565,7 +1550,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type/identifier of event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=90, FiveWs="FiveWs.what[x]")]
     [Binding("AuditEventType")]
     [Cardinality(Min=0,Max=-1)]
@@ -1594,7 +1578,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific type of event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
     [Binding("AuditEventSubType")]
     [Cardinality(Min=1,Max=1)]
@@ -1623,7 +1606,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of action performed during the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("action", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [AllowedTypes(typeof(Code))]
     [Binding("AuditEventAction")]
@@ -1667,7 +1649,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// emergency | alert | critical | error | warning | notice | informational | debug.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("severity", InSummary=true, Order=120)]
     [AllowedTypes(typeof(Code))]
     [Binding("AuditEventSeverity")]
@@ -1711,8 +1692,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity occurred.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("occurred", Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurred
@@ -1739,7 +1720,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time when the event was recorded.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recorded", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1782,7 +1762,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the event succeeded or failed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("outcome", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.AuditEvent.OutcomeComponent? Outcome
@@ -1809,7 +1788,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Authorization related to the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("authorization", InSummary=true, Order=160, FiveWs="FiveWs.why[x]")]
     [Binding("AuditPurposeOfUse")]
     [Cardinality(Min=0,Max=-1)]
@@ -1838,8 +1816,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Workflow authorization within which this event occurred.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", Order=170, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("CarePlan","DeviceRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ServiceRequest","Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1867,8 +1845,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient is the subject of the data used/created/updated/deleted during the activity.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", Order=180, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Patient
@@ -1895,8 +1873,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter within which this event occurred or which the event is tightly associated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", Order=190, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -1923,7 +1901,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actor involved in the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("agent", InSummary=true, Order=200, FiveWs="FiveWs.who")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1951,7 +1928,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Audit Event Reporter.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("source", InSummary=true, Order=210, FiveWs="FiveWs.witness")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1979,7 +1955,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Data or objects used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("entity", InSummary=true, Order=220, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2182,7 +2157,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "category":

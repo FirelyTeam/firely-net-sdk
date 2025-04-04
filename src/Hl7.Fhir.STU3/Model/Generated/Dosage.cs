@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -66,7 +65,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The order of the dosage instructions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sequence", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Integer? SequenceElement
@@ -108,7 +106,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Free text dosage instructions e.g. SIG.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("text", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TextElement
@@ -150,7 +147,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supplemental instruction - e.g. "with meals".
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("additionalInstruction", InSummary=true, Order=50)]
     [Binding("AdditionalInstruction")]
     [Cardinality(Min=0,Max=-1)]
@@ -179,7 +175,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient or consumer oriented instructions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patientInstruction", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PatientInstructionElement
@@ -221,7 +216,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When medication should be administered.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("timing", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Timing? Timing
@@ -248,9 +242,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Take "as needed" (for x).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("asNeeded", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
     [Binding("MedicationAsNeededReason")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? AsNeeded
@@ -277,7 +271,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Body site to administer to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("site", InSummary=true, Order=90)]
     [Binding("MedicationAdministrationSite")]
     [DataMember]
@@ -305,7 +298,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How drug should enter body.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("route", InSummary=true, Order=100)]
     [Binding("RouteOfAdministration")]
     [DataMember]
@@ -333,7 +325,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Technique for administering medication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("method", InSummary=true, Order=110)]
     [Binding("MedicationAdministrationMethod")]
     [DataMember]
@@ -361,8 +352,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Amount of medication per dose.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dose", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Dose
@@ -389,7 +380,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Upper limit on medication per unit of time.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("maxDosePerPeriod", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.Ratio? MaxDosePerPeriod
@@ -416,7 +406,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Upper limit on medication per administration.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("maxDosePerAdministration", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? MaxDosePerAdministration
@@ -443,7 +432,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Upper limit on medication per lifetime of the patient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("maxDosePerLifetime", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? MaxDosePerLifetime
@@ -470,8 +458,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Amount of medication per unit of time.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("rate", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Rate
@@ -673,7 +661,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "sequence":

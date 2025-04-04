@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -76,7 +75,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Captures the type of ratio to the entire polymer, e.g. Monomer/Polymer ratio, SRU/Polymer Ratio.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("ratioType", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? RatioType
@@ -103,7 +101,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The starting materials - monomer(s) used in the synthesis of the polymer.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("startingMaterial", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -186,7 +183,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "ratioType":
@@ -236,7 +233,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of substance for this starting material.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Code
@@ -263,7 +259,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Substance high level category, e.g. chemical substance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("category", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Category
@@ -290,7 +285,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used to specify whether the attribute described is a defining element for the unique identification of the polymer.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("isDefining", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? IsDefiningElement
@@ -332,7 +326,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A percentage.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Amount
@@ -434,7 +427,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -502,7 +495,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A representation of an (average) molecular formula from a polymer.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("averageMolecularFormula", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? AverageMolecularFormulaElement
@@ -544,7 +536,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How the quantitative amount of Structural Repeat Units is captured (e.g. Exact, Numeric, Average).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("repeatUnitAmountType", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? RepeatUnitAmountType
@@ -571,7 +562,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An SRU - Structural Repeat Unit.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("repeatUnit", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -664,7 +654,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "averageMolecularFormula":
@@ -723,7 +713,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Structural repeat units are essential elements for defining polymers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unit", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? UnitElement
@@ -765,7 +754,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The orientation of the polymerisation, e.g. head-tail, head-head, random.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("orientation", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Orientation
@@ -792,7 +780,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Number of repeats of this unit.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? AmountElement
@@ -834,7 +821,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applies to homopolymer and block co-polymers where the degree of polymerisation within a block can be described.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("degreeOfPolymerisation", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -862,7 +848,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A graphical structure for this SRU.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("structuralRepresentation", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -975,7 +960,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "unit":
@@ -1052,7 +1037,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of the degree of polymerisation shall be described, e.g. SRU/Polymer Ratio.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Type
@@ -1079,7 +1063,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An average amount of polymerisation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("average", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? AverageElement
@@ -1121,7 +1104,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A low expected limit of the amount.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("low", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? LowElement
@@ -1163,7 +1145,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A high expected limit of the amount.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("high", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? HighElement
@@ -1280,7 +1261,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -1348,7 +1329,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of structure (e.g. Full, Partial, Representative).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Type
@@ -1375,7 +1355,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The structural representation as text string in a standard format e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("representation", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? RepresentationElement
@@ -1417,7 +1396,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The format of the representation e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("format", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Format
@@ -1444,7 +1422,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An attached file with the structural representation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("attachment", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Attachment? Attachment
@@ -1546,7 +1523,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -1601,7 +1578,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A business idenfier for this polymer, but typically this is handled by a SubstanceDefinition identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -1628,7 +1604,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Overall type of the polymer.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("class", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Class
@@ -1655,7 +1630,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Polymer geometry, e.g. linear, branched, cross-linked, network or dendritic.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("geometry", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Geometry
@@ -1682,7 +1656,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Descrtibes the copolymer sequence type (polymer connectivity).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copolymerConnectivity", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1710,7 +1683,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo - this is intended to connect to a repeating full modification structure, also used by Protein and Nucleic Acid . String is just a placeholder.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("modification", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ModificationElement
@@ -1752,7 +1724,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("monomerSet", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1780,7 +1751,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifies and quantifies the repeated units and their configuration.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("repeat", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1915,7 +1885,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

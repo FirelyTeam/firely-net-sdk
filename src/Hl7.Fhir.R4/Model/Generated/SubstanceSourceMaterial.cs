@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -76,7 +75,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// This element is capturing information about the fraction of a plant part, or human plasma for fractionation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("fraction", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? FractionElement
@@ -118,7 +116,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific type of the material constituting the component. For Herbal preparations the particulars of the extracts (liquid/dry) is described in Specified Substance Group 1.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("materialType", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? MaterialType
@@ -200,7 +197,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "fraction":
@@ -250,7 +247,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The family of an organism shall be specified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("family", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Family
@@ -277,7 +273,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The genus of an organism shall be specified; refers to the Latin epithet of the genus element of the plant/animal scientific name; it is present in names for genera, species and infraspecies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("genus", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Genus
@@ -304,7 +299,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The species of an organism shall be specified; refers to the Latin epithet of the species of the plant/animal; it is present in names for species and infraspecies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("species", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Species
@@ -331,7 +325,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The Intraspecific type of an organism shall be specified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("intraspecificType", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? IntraspecificType
@@ -358,7 +351,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The intraspecific description of an organism shall be specified based on a controlled vocabulary. For Influenza Vaccine, the intraspecific description shall contain the syntax of the antigen in line with the WHO convention.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("intraspecificDescription", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? IntraspecificDescriptionElement
@@ -400,7 +392,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// 4.9.13.6.1 Author type (Conditional).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("author", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -428,7 +419,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// 4.9.13.8.1 Hybrid species maternal organism ID (Optional).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("hybrid", InSummary=true, Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent? Hybrid
@@ -455,7 +445,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// 4.9.13.7.1 Kingdom (Conditional).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("organismGeneral", InSummary=true, Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent? OrganismGeneral
@@ -597,7 +586,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "family":
@@ -701,7 +690,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of author of an organism species shall be specified. The parenthetical author of an organism species refers to the first author who published the plant/animal name (of any rank). The primary author of an organism species refers to the first author(s), who validly published the plant/animal name.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("authorType", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? AuthorType
@@ -728,7 +716,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The author of an organism species shall be specified. The author year of an organism shall also be specified when applicable; refers to the year in which the first author(s) published the infraspecific plant/animal name (of any rank).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("authorDescription", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? AuthorDescriptionElement
@@ -825,7 +812,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "authorType":
@@ -875,7 +862,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The identifier of the maternal species constituting the hybrid organism shall be specified based on a controlled vocabulary. For plants, the parents aren’t always known, and it is unlikely that it will be known which is maternal and which is paternal.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("maternalOrganismId", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MaternalOrganismIdElement
@@ -917,7 +903,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The name of the maternal species constituting the hybrid organism shall be specified. For plants, the parents aren’t always known, and it is unlikely that it will be known which is maternal and which is paternal.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("maternalOrganismName", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MaternalOrganismNameElement
@@ -959,7 +944,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The identifier of the paternal species constituting the hybrid organism shall be specified based on a controlled vocabulary.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("paternalOrganismId", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PaternalOrganismIdElement
@@ -1001,7 +985,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The name of the paternal species constituting the hybrid organism shall be specified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("paternalOrganismName", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PaternalOrganismNameElement
@@ -1043,7 +1026,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The hybrid type of an organism shall be specified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("hybridType", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? HybridType
@@ -1155,7 +1137,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "maternalOrganismId":
@@ -1232,7 +1214,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The kingdom of an organism shall be specified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("kingdom", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Kingdom
@@ -1259,7 +1240,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The phylum of an organism shall be specified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("phylum", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Phylum
@@ -1286,7 +1266,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The class of an organism shall be specified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("class", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Class
@@ -1313,7 +1292,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The order of an organism shall be specified,.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("order", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Order
@@ -1415,7 +1393,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "kingdom":
@@ -1483,7 +1461,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Entity of anatomical origin of source material within an organism.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("part", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Part
@@ -1510,7 +1487,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The detailed anatomic location when the part can be extracted from different anatomical locations of the organism. Multiple alternative locations may apply.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("partLocation", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? PartLocation
@@ -1592,7 +1568,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "part":
@@ -1629,7 +1605,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General high level classification of the source material specific to the origin of the material.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sourceMaterialClass", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? SourceMaterialClass
@@ -1656,7 +1631,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of the source material shall be specified based on a controlled vocabulary. For vaccines, this subclause refers to the class of infectious agent.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sourceMaterialType", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? SourceMaterialType
@@ -1683,7 +1657,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The state of the source material when extracted.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sourceMaterialState", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? SourceMaterialState
@@ -1710,7 +1683,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The unique identifier associated with the source material parent organism shall be specified.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("organismId", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? OrganismId
@@ -1737,7 +1709,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The organism accepted Scientific name shall be provided based on the organism taxonomy.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("organismName", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? OrganismNameElement
@@ -1779,7 +1750,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The parent of the herbal drug Ginkgo biloba, Leaf is the substance ID of the substance (fresh) of Ginkgo biloba L. or Ginkgo biloba L. (Whole plant).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parentSubstanceId", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1807,7 +1777,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The parent substance of the Herbal Drug, or Herbal preparation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parentSubstanceName", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1853,7 +1822,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The country where the plant material is harvested or the countries where the plasma is sourced from as laid down in accordance with the Plasma Master File. For “Plasma-derived substances” the attribute country of origin provides information about the countries used for the manufacturing of the Cryopoor plama or Crioprecipitate.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("countryOfOrigin", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1881,7 +1849,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The place/region where the plant is harvested or the places/regions where the animal source material has its habitat.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("geographicalLocation", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1927,7 +1894,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Stage of life for animals, plants, insects and microorganisms. This information shall be provided only when the substance is significantly different in these stages (e.g. foetal bovine serum).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("developmentStage", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? DevelopmentStage
@@ -1954,7 +1920,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Many complex materials are fractions of parts of plants, animals, or minerals. Fraction elements are often necessary to define both Substances and Specified Group 1 Substances. For substances derived from Plants, fraction information will be captured at the Substance information level ( . Oils, Juices and Exudates). Additional information for Extracts, such as extraction solvent composition, will be captured at the Specified Substance Group 1 information level. For plasma-derived products fraction information will be captured at the Substance and the Specified Substance Group 1 levels.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("fractionDescription", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1982,7 +1947,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This subclause describes the organism which the substance is derived from. For vaccines, the parent organism shall be specified based on these subclause elements. As an example, full taxonomy will be described for the Substance Name: ., Leaf.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("organism", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent? Organism
@@ -2009,7 +1973,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// To do.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partDescription", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2202,7 +2165,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "sourceMaterialClass":

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4b.expansions@4.3.0, hl7.fhir.r4b.core@4.3.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -145,7 +144,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// oid | uuid | uri | other.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("NamingSystemIdentifierType")]
@@ -190,7 +188,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The unique identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.identifier")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -233,7 +230,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Is this the id that should be used for this type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("preferred", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? PreferredElement
@@ -275,7 +271,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Notes about identifier usage.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("comment", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CommentElement
@@ -317,7 +312,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When is identifier valid?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -429,7 +423,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -493,7 +487,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this naming system (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -536,7 +529,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -581,7 +573,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// codesystem | identifier | root.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("kind", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("NamingSystemType")]
@@ -626,7 +617,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -669,7 +659,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=130, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -711,7 +700,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -739,7 +727,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who maintains system namespace?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("responsible", Order=150, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ResponsibleElement
@@ -781,7 +768,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// e.g. driver,  provider,  patient, bank etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", Order=160)]
     [Binding("IdentifierType")]
     [DataMember]
@@ -809,7 +795,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the naming system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -851,7 +836,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -879,7 +863,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for naming system (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=190)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -908,7 +891,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How/where is it used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("usage", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? UsageElement
@@ -950,7 +932,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifiers used for system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("uniqueId", InSummary=true, Order=210)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1143,7 +1124,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "name":

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -158,7 +157,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// phone | fax | email | pager | url | sms | other.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("system", InSummary=true, Order=30)]
     [AllowedTypes(typeof(Code))]
     [Binding("ContactPointSystem")]
@@ -202,7 +200,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual contact point details.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("value", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ValueElement
@@ -244,7 +241,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// home | work | temp | old | mobile - purpose of this contact point.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("use", InSummary=true, IsModifier=true, Order=50)]
     [AllowedTypes(typeof(Code))]
     [Binding("ContactPointUse")]
@@ -288,7 +284,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specify preferred order of use (1 = highest).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("rank", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? RankElement
@@ -330,7 +325,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period when the contact point was/is in use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -442,7 +436,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "system":

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -134,7 +133,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Item detail.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("ParameterCode")]
       [DataMember]
@@ -162,8 +160,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value of detail.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirBoolean))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -245,7 +243,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -282,7 +280,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for SupplyRequest.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -310,7 +307,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | suspended +.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("SupplyRequestStatus")]
@@ -354,8 +350,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What other request is fulfilled by this supply request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", InSummary=true, Order=110)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -383,7 +379,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The kind of supply (central, non-stock, etc.).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("SupplyRequestKind")]
     [DataMember]
@@ -411,7 +406,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("priority", InSummary=true, Order=130, FiveWs="FiveWs.grade")]
     [AllowedTypes(typeof(Code))]
     [Binding("RequestPriority")]
@@ -455,8 +449,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient for who the supply request is for.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("deliverFor", Order=140)]
+    [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? DeliverFor
@@ -483,7 +477,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Medication, Substance, or Device requested to be supplied.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("item", InSummary=true, Order=150)]
     [Binding("SupplyRequestItem")]
     [Cardinality(Min=1,Max=1)]
@@ -512,7 +505,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The requested amount of the item indicated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("quantity", InSummary=true, Order=160)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -540,7 +532,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Ordered item details.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parameter", Order=170, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -568,8 +559,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the request should be fulfilled.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("occurrence", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
@@ -596,7 +587,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the request was made.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("authoredOn", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? AuthoredOnElement
@@ -638,8 +628,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Individual making the request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requester", InSummary=true, Order=200, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","Patient","RelatedPerson","Device","CareTeam")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Requester
@@ -666,8 +656,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is intended to fulfill the request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supplier", InSummary=true, Order=210, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Organization","HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -695,7 +685,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The reason why the supply item was requested.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reason", Order=220, FiveWs="FiveWs.why[x]")]
     [Binding("SupplyRequestReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -724,8 +713,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The origin of the supply.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("deliverFrom", Order=230)]
+    [CLSCompliant(false)]
     [References("Organization","Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? DeliverFrom
@@ -752,8 +741,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The destination of the supply.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("deliverTo", Order=240)]
+    [CLSCompliant(false)]
     [References("Organization","Location","Patient","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? DeliverTo
@@ -977,7 +966,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

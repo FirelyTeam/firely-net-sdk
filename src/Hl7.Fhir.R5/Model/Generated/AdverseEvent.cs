@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -138,7 +137,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of involvement.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("AdverseEventParticipantFunction")]
       [DataMember]
@@ -166,8 +164,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who was involved in the adverse event or the potential adverse event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson","ResearchSubject")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -250,7 +248,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "function":
@@ -303,8 +301,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Refers to the specific entity that caused the adverse event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("instance", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Immunization","Procedure","Substance","Medication","MedicationAdministration","MedicationStatement","Device","BiologicallyDerivedProduct","ResearchStudy")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
@@ -333,7 +331,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Information on the possible cause of the event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("causality", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.AdverseEvent.CausalityComponent? Causality
@@ -415,7 +412,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "instance":
@@ -465,7 +462,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Method of evaluating the relatedness of the suspected entity to the event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("assessmentMethod", InSummary=true, Order=40)]
       [Binding("AdverseEventCausalityMethod")]
       [DataMember]
@@ -493,7 +489,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Result of the assessment regarding the relatedness of the suspected entity to the event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("entityRelatedness", InSummary=true, Order=50)]
       [Binding("AdverseEventCausalityAssessment")]
       [DataMember]
@@ -521,8 +516,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Author of the information on the possible cause of the event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("author", InSummary=true, Order=60)]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Patient","RelatedPerson","ResearchSubject")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Author
@@ -614,7 +609,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "assessmentMethod":
@@ -676,9 +671,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Item suspected to have increased the probability or severity of the adverse event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("AdverseEventContributingFactor")]
+      [CLSCompliant(false)]
       [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","Device","DeviceUsage","DocumentReference","MedicationAdministration","MedicationStatement")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
@@ -752,7 +747,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "item":
@@ -793,9 +788,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Action that contributed to avoiding the adverse event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("AdverseEventPreventiveAction")]
+      [CLSCompliant(false)]
       [References("Immunization","Procedure","DocumentReference","MedicationAdministration","MedicationRequest")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
@@ -869,7 +864,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "item":
@@ -913,9 +908,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Ameliorating action taken after the adverse event occured in order to reduce the extent of harm.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("AdverseEventMitigatingAction")]
+      [CLSCompliant(false)]
       [References("Procedure","DocumentReference","MedicationAdministration","MedicationRequest")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
@@ -989,7 +984,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "item":
@@ -1030,9 +1025,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Subject medical history or document relevant to this adverse event.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("AdverseEventSupportingInfo")]
+      [CLSCompliant(false)]
       [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","DocumentReference","MedicationAdministration","MedicationStatement","QuestionnaireResponse")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
@@ -1106,7 +1101,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "item":
@@ -1134,7 +1129,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1162,7 +1156,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | entered-in-error | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("AdverseEventStatus")]
@@ -1207,7 +1200,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// actual | potential.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("actuality", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("AdverseEventActuality")]
@@ -1252,7 +1244,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// wrong-patient | procedure-mishap | medication-mishap | device | unsafe-physical-environment | hospital-aquired-infection | wrong-body-site.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("AdverseEventCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -1281,7 +1272,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Event or incident that occurred or was averted.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("AdverseEventType")]
     [DataMember]
@@ -1309,8 +1299,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subject impacted by event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group","Practitioner","RelatedPerson","ResearchSubject")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1338,8 +1328,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The Encounter associated with the start of the AdverseEvent.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -1366,8 +1356,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event occurred.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
@@ -1394,7 +1384,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event was detected.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("detected", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DetectedElement
@@ -1436,7 +1425,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event was recorded.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recordedDate", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? RecordedDateElement
@@ -1478,8 +1466,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Effect on the subject due to this event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("resultingEffect", InSummary=true, Order=190)]
+    [CLSCompliant(false)]
     [References("Condition","Observation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1507,8 +1495,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Location where adverse event occurred.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("location", InSummary=true, Order=200)]
+    [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -1535,7 +1523,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Seriousness or gravity of the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("seriousness", InSummary=true, Order=210)]
     [Binding("AdverseEventSeriousness")]
     [DataMember]
@@ -1563,7 +1550,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of outcome from the adverse event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("outcome", InSummary=true, Order=220)]
     [Binding("AdverseEventOutcome")]
     [Cardinality(Min=0,Max=-1)]
@@ -1592,8 +1578,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who recorded the adverse event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recorder", InSummary=true, Order=230, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","ResearchSubject")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Recorder
@@ -1620,7 +1606,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who was involved in the adverse event or the potential adverse event and what they did.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participant", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1648,8 +1633,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Research study that the subject is enrolled in.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("study", InSummary=true, Order=250)]
+    [CLSCompliant(false)]
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1677,7 +1662,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Considered likely or probable or anticipated in the research study.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("expectedInResearchStudy", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExpectedInResearchStudyElement
@@ -1719,7 +1703,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The suspected agent causing the adverse event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("suspectEntity", InSummary=true, Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1747,7 +1730,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contributing factors suspected to have increased the probability or severity of the adverse event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contributingFactor", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1775,7 +1757,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Preventive actions that contributed to avoiding the adverse event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("preventiveAction", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1803,7 +1784,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Ameliorating actions taken after the adverse event occured in order to reduce the extent of harm.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("mitigatingAction", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1831,7 +1811,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting information relevant to the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supportingInfo", InSummary=true, Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1859,7 +1838,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comment on adverse event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", InSummary=true, Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2164,7 +2142,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -111,8 +110,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Triggering observation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("observation", InSummary=true, Order=40)]
+      [CLSCompliant(false)]
       [References("Observation")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -140,7 +139,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// reflex | repeat | re-run.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [AllowedTypes(typeof(Code))]
       [Binding("TriggeredByType")]
@@ -185,7 +183,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reason that the observation was triggered.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reason", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ReasonElement
@@ -292,7 +289,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "observation":
@@ -355,7 +352,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Low Range, if relevant.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("low", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Low
@@ -382,7 +378,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// High Range, if relevant.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("high", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? High
@@ -409,7 +404,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Normal value, if relevant.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("normalValue", Order=60)]
       [Binding("ObservationReferenceRangeNormalValue")]
       [DataMember]
@@ -437,7 +431,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference range qualifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=70)]
       [Binding("ObservationRangeMeaning")]
       [DataMember]
@@ -465,7 +458,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference range population.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("appliesTo", Order=80)]
       [Binding("ObservationRangeType")]
       [Cardinality(Min=0,Max=-1)]
@@ -494,7 +486,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Applicable age range, if relevant.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("age", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Range? Age
@@ -521,7 +512,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text based reference range in an observation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("text", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? TextElement
@@ -668,7 +658,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "low":
@@ -767,7 +757,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of component observation (code / type).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("ObservationCode")]
       [Cardinality(Min=1,Max=1)]
@@ -796,8 +785,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actual component result.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("MolecularSequence")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -825,7 +814,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why the component result is missing.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("dataAbsentReason", Order=60)]
       [Binding("ObservationValueAbsentReason")]
       [DataMember]
@@ -853,7 +841,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// High, low, normal, etc.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("interpretation", Order=70)]
       [Binding("ObservationInterpretation")]
       [Cardinality(Min=0,Max=-1)]
@@ -882,7 +869,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Provides guide for interpretation of component result.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("referenceRange", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -995,7 +981,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -1059,7 +1045,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for observation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1087,8 +1072,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR ObservationDefinition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiates", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("ObservationDefinition")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
@@ -1116,8 +1101,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fulfills plan, proposal or order.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", InSummary=true, Order=110)]
+    [CLSCompliant(false)]
     [References("CarePlan","DeviceRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1145,7 +1130,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Triggering observation(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("triggeredBy", Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1173,8 +1157,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of referenced event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("MedicationAdministration","MedicationDispense","MedicationStatement","Procedure","Immunization","ImagingStudy","GenomicStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1202,7 +1186,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | preliminary | final | amended +.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("ObservationStatus")]
@@ -1247,7 +1230,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of  type of observation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", Order=150, FiveWs="FiveWs.class")]
     [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -1276,7 +1258,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of observation (code / type).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=160, FiveWs="FiveWs.what[x]")]
     [Binding("ObservationCode")]
     [Cardinality(Min=1,Max=1)]
@@ -1305,8 +1286,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what the observation is about.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=170, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group","Device","Location","Organization","Procedure","Practitioner","Medication","Substance","BiologicallyDerivedProduct","NutritionProduct")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -1333,8 +1314,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What the observation is about, when it is not about the subject of record.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("focus", InSummary=true, Order=180, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1362,8 +1343,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare event during which this observation is made.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=190, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -1390,8 +1371,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinically relevant time/time-period for observation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("effective", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Instant))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Effective
@@ -1418,7 +1399,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time this version was made available.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("issued", InSummary=true, Order=210, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? IssuedElement
@@ -1460,8 +1440,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is responsible for the observation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performer", InSummary=true, Order=220, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1489,8 +1469,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actual result.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("value", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("MolecularSequence")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
@@ -1518,7 +1498,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the result is missing.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dataAbsentReason", Order=240)]
     [Binding("ObservationValueAbsentReason")]
     [DataMember]
@@ -1546,7 +1525,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// High, low, normal, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("interpretation", Order=250)]
     [Binding("ObservationInterpretation")]
     [Cardinality(Min=0,Max=-1)]
@@ -1575,7 +1553,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments about the observation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1603,7 +1580,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Observed body part.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("bodySite", Order=270)]
     [Binding("BodySite")]
     [DataMember]
@@ -1631,8 +1607,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Observed body structure.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("bodyStructure", Order=280)]
+    [CLSCompliant(false)]
     [References("BodyStructure")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? BodyStructure
@@ -1659,7 +1635,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How it was done.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("method", Order=290)]
     [Binding("ObservationMethod")]
     [DataMember]
@@ -1687,8 +1662,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specimen used for this observation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("specimen", Order=300)]
+    [CLSCompliant(false)]
     [References("Specimen","Group")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Specimen
@@ -1715,8 +1690,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A reference to the device that generates the measurements or the device settings for the device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("device", Order=310)]
+    [CLSCompliant(false)]
     [References("Device","DeviceMetric")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Device
@@ -1743,7 +1718,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Provides guide for interpretation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("referenceRange", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1771,8 +1745,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Related resource that belongs to the Observation group.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("hasMember", InSummary=true, Order=330)]
+    [CLSCompliant(false)]
     [References("Observation","QuestionnaireResponse","MolecularSequence")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1800,8 +1774,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Related resource from which the observation is made.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("derivedFrom", InSummary=true, Order=340)]
+    [CLSCompliant(false)]
     [References("DocumentReference","ImagingStudy","ImagingSelection","QuestionnaireResponse","Observation","MolecularSequence","GenomicStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1829,7 +1803,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Component results.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("component", InSummary=true, Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2164,7 +2137,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

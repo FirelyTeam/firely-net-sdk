@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -123,7 +122,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("PayloadType")]
       [Cardinality(Min=0,Max=-1)]
@@ -152,7 +150,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("mimeType", InSummary=true, Order=50)]
       [Binding("MimeType")]
       [Cardinality(Min=0,Max=-1)]
@@ -254,7 +251,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -291,7 +288,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies this endpoint across multiple systems.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -319,7 +315,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | suspended | error | off | entered-in-error | test.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("EndpointStatus")]
@@ -364,7 +359,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Protocol/Profile/Standard to be used with this endpoint connection.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("connectionType", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("endpoint-contype")]
     [Cardinality(Min=1,Max=-1)]
@@ -393,7 +387,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name that this endpoint can be identified by.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -435,7 +428,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional details about the endpoint that could be displayed as further information to identify the description beyond its name.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -477,7 +469,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of environment(s) exposed at this endpoint.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("environmentType", InSummary=true, Order=140)]
     [Binding("endpoint-environment-type")]
     [Cardinality(Min=0,Max=-1)]
@@ -506,8 +497,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that manages this endpoint (might not be the organization that exposes the endpoint).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("managingOrganization", InSummary=true, Order=150)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ManagingOrganization
@@ -534,7 +525,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for source (e.g. troubleshooting).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -562,7 +552,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Interval the endpoint is expected to be operational.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=170, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -589,7 +578,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Set of payloads that are provided by this endpoint.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("payload", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -617,7 +605,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The technical base address for connecting to this endpoint.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("address", InSummary=true, Order=190)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -660,7 +647,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Usage depends on the channel type.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("header", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -863,7 +849,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r3.expansions@3.0.2, hl7.fhir.r3.core@3.0.2
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -129,7 +128,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Internal id when this mapping is used.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identity", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -172,7 +170,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies what this mapping refers to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("uri", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? UriElement
@@ -214,7 +211,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Names what this mapping refers to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -256,7 +252,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Versions, issues, scope limitations, etc.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("comment", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CommentElement
@@ -373,7 +368,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identity":
@@ -428,7 +423,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this data element (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -470,7 +464,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the data element.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -498,7 +491,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the data element.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -540,7 +532,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -585,7 +576,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -627,7 +617,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -669,7 +658,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=150, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -711,7 +699,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this data element (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -753,7 +740,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this data element (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -795,7 +781,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -823,7 +808,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -851,7 +835,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for data element (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=200)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -880,7 +863,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -922,7 +904,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// comparable | fully-specified | equivalent | convertable | scaleable | flexible.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("stringency", InSummary=true, Order=220)]
     [AllowedTypes(typeof(Code))]
     [Binding("DataElementStringency")]
@@ -966,7 +947,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External specification mapped to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("mapping", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -994,7 +974,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of element.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("element", InSummary=true, Order=240)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1219,7 +1198,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

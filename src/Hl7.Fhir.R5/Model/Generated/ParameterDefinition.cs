@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -66,7 +65,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name used to access the parameter value.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Code? NameElement
@@ -108,7 +106,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in | out.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("use", InSummary=true, Order=40)]
     [AllowedTypes(typeof(Code))]
     [Binding("ParameterUse")]
@@ -153,7 +150,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Minimum cardinality.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("min", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Integer? MinElement
@@ -195,7 +191,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Maximum cardinality (a number of *).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("max", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? MaxElement
@@ -237,7 +232,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A brief description of the parameter.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("documentation", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DocumentationElement
@@ -279,7 +273,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What type of value.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=80)]
     [AllowedTypes(typeof(Code))]
     [Binding("FHIRTypes")]
@@ -324,7 +317,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What profile the value is expected to be.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("profile", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? ProfileElement
@@ -471,7 +463,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "name":

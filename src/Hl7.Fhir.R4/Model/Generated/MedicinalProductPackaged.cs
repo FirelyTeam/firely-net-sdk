@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r4.expansions@4.0.1, hl7.fhir.r4.core@4.0.1
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -76,7 +75,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A number appearing on the outer packaging of a specific batch.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("outerPackaging", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -104,7 +102,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A number appearing on the immediate packaging (and not the outer packaging).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("immediatePackaging", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? ImmediatePackaging
@@ -186,7 +183,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "outerPackaging":
@@ -236,7 +233,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Including possibly Data Carrier Identifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -264,7 +260,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The physical type of the container of the medicine.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -292,7 +287,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The quantity of this package in the medicinal product, at the current level of packaging. The outermost is always 1.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -320,7 +314,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Material type of the package item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("material", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -348,7 +341,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A possible alternate material for the packaging.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("alternateMaterial", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -376,8 +368,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A device accompanying a medicinal product.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("device", InSummary=true, Order=90)]
+      [CLSCompliant(false)]
       [References("DeviceDefinition")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -405,8 +397,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The manufactured item as contained in the packaged medicinal product.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("manufacturedItem", InSummary=true, Order=100)]
+      [CLSCompliant(false)]
       [References("MedicinalProductManufactured")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -434,7 +426,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Allows containers within containers.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("packageItem", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -462,7 +453,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Dimensions, color etc.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("physicalCharacteristics", InSummary=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.ProdCharacteristic? PhysicalCharacteristics
@@ -489,7 +479,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Other codeable characteristics.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("otherCharacteristics", InSummary=true, Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -517,7 +506,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Shelf Life and storage information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("shelfLifeStorage", InSummary=true, Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -545,8 +533,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Manufacturer of this Package Item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("manufacturer", InSummary=true, Order=150)]
+      [CLSCompliant(false)]
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -729,7 +717,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -856,7 +844,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -884,8 +871,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The product with this is a pack for.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=100)]
+    [CLSCompliant(false)]
     [References("MedicinalProduct")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -913,7 +900,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Textual description.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -955,7 +941,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The legal status of supply of the medicinal product as classified by the regulator.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("legalStatusOfSupply", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? LegalStatusOfSupply
@@ -982,7 +967,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Marketing information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("marketingStatus", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1010,8 +994,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of this Package Item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("marketingAuthorization", InSummary=true, Order=140)]
+    [CLSCompliant(false)]
     [References("MedicinalProductAuthorization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? MarketingAuthorization
@@ -1038,8 +1022,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of this Package Item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("manufacturer", InSummary=true, Order=150)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1067,7 +1051,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Batch numbering.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("batchIdentifier", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1095,7 +1078,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A packaging item, as a contained for medicine, possibly with other packaging items within.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("packageItem", InSummary=true, Order=170)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1250,7 +1232,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

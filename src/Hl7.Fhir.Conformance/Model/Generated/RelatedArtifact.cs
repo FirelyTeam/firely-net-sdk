@@ -2,7 +2,6 @@
 // Contents of: hl7.fhir.r5.expansions@5.0.0, hl7.fhir.r5.core@5.0.0
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -293,7 +292,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of | part-of | amends | amended-with | appends | appended-with | cites | cited-by | comments-on | comment-in | contains | contained-in | corrects | correction-in | replaces | replaced-with | retracts | retracted-by | signs | similar-to | supports | supported-with | transforms | transformed-into | transformed-with | documents | specification-of | created-with | cite-as.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=30)]
     [AllowedTypes(typeof(Code))]
     [Binding("RelatedArtifactType")]
@@ -341,7 +339,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("classifier", InSummary=true, Order=40, Since=FhirRelease.R5)]
     [Binding("RelatedArtifactClassifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -370,7 +367,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Short label.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("label", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? LabelElement
@@ -412,7 +408,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Brief description of the related artifact.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DisplayElement
@@ -454,7 +449,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Bibliographic citation for the artifact.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("citation", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CitationElement
@@ -499,7 +493,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element is deprecated since R5, do not use with R5 and newer releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=80)]
     [NotMapped(Since=FhirRelease.R5)]
     [DataMember]
@@ -542,7 +535,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What document is being referenced.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("document", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.Attachment? Document
@@ -569,7 +561,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What artifact is being referenced.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("resource", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? ResourceElement
@@ -614,8 +605,8 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("resourceReference", InSummary=true, Order=110, Since=FhirRelease.R5)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ResourceReference
@@ -645,7 +636,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("publicationStatus", InSummary=true, Order=120, Since=FhirRelease.R5)]
     [AllowedTypes(typeof(Code))]
     [Binding("RelatedArtifactPublicationStatus")]
@@ -692,7 +682,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("publicationDate", InSummary=true, Order=130, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Date? PublicationDateElement
@@ -879,7 +868,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "type":
