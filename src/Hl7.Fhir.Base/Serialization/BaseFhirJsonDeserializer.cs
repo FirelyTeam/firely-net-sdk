@@ -235,7 +235,6 @@ public class BaseFhirJsonDeserializer
 
         var empty = true;
         var objectParsingState = new ObjectParsingState();
-        var oldErrorCount = state.Errors.Count;
         var (line, pos) = reader.GetLocation();
 
         while (reader.TokenType != JsonTokenType.EndObject)
@@ -255,6 +254,8 @@ public class BaseFhirJsonDeserializer
             // Lookup the metadata for this property by its name to determine the expected type of the value
             var (propMapping, propValueMapping, error) = tryGetMappedElementMetadata(_inspector, mapping, ref reader, state.Path, currentPropertyName);
 
+            state.Errors.Add(error);
+            
             // move past property name
             reader.Read();
             
@@ -381,7 +382,7 @@ public class BaseFhirJsonDeserializer
 
         var propertyValueMapping = propertyValueSuggestion;
 
-        if (isOnFhirPrimitiveType(ref reader, propertyName) || isOnFhirPrimitiveObject(ref reader, propertyName))
+        if (isOnFhirPrimitiveType(ref reader, propertyName) || isOnFhirPrimitiveObject(ref reader, propertyName, propertyMapping))
         {
             var inferType = _inspector.FindClassMapping(getFhirTypeForToken(reader.TokenType))!;
             
@@ -519,9 +520,9 @@ public class BaseFhirJsonDeserializer
         return isOnJsonPrimitiveType(ref reader) && propertyName[0] != '_';
     }
     
-    private static bool isOnFhirPrimitiveObject(ref Utf8JsonReader reader, string propertyName)
+    private static bool isOnFhirPrimitiveObject(ref Utf8JsonReader reader, string propertyName, PropertyMapping? mapping)
     {
-        return propertyName[0] == '_' && reader.TokenType == JsonTokenType.StartObject;
+        return propertyName[0] == '_' && reader.TokenType == JsonTokenType.StartObject && mapping is not null;
     }
 
     /// <summary>
@@ -705,12 +706,12 @@ public class BaseFhirJsonDeserializer
                 delayedValidations.SetPropertyIndex(propertyName, existingList.Count);
             }
             
-            if(onlyNulls is true)
-                state.Errors.Add(ERR.PRIMITIVE_ARRAYS_ONLY_NULL(ref reader, state.Path.GetInstancePath()));
-            
             elementIndex += 1;
             state.Path.IncrementIndex();
         }
+            
+        if(onlyNulls is true)
+            state.Errors.Add(ERR.PRIMITIVE_ARRAYS_ONLY_NULL(ref reader, state.Path.GetInstancePath()));
 
         //[EK 20221027] - According to the new R5 spec, these arrays need not be of the same size, and
         //we need to fill out missing elements with null values.
@@ -912,20 +913,18 @@ public class BaseFhirJsonDeserializer
 
         // fall back to DynamicResource, if we can't find the resource requested
         // or if the resource type is not a resource to start with
-        if (resourceMapping?.IsResource != true)
+        if (resourceMapping is null || resourceMapping.IsResource != true)
         {
             // also report error
             if (resourceMapping is not null)
                 error = ERR.RESOURCE_TYPE_NOT_A_RESOURCE(ref reader, path.GetInstancePath(), resourceMapping.Name);
-
+            else if (resourceType is not null)
+                error = ERR.UNKNOWN_RESOURCE_TYPE(ref reader, path.GetInstancePath(), resourceType);
+            
             resourceMapping = inspector.FindClassMapping(nameof(DynamicResource));
         }
         
-        if(resourceMapping is not null)
-            return (resourceMapping, error, resourceType);
-        
-        // should never get to this point
-        return (null, resourceType is null ? error : ERR.UNKNOWN_RESOURCE_TYPE(ref reader, path.GetInstancePath(), resourceType), resourceType);
+        return (resourceMapping, error, resourceType);
     }
 
     private static (string?, FhirJsonException?) determineResourceType(ref Utf8JsonReader reader)
@@ -1006,12 +1005,14 @@ public class BaseFhirJsonDeserializer
             if(!string.IsNullOrEmpty(typeSuffix))
                 choiceMapping = inspector.FindClassMapping(typeSuffix);
             
-            choiceMapping ??= inspector.FindClassMapping(nameof(DynamicDataType));
+            if(choiceMapping is null)
+            {
+                choiceMapping = inspector.FindClassMapping(nameof(DynamicDataType));
+                return (choiceMapping, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(ref r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
+
+            }
             
-            if(choiceMapping is not null)
-                return (choiceMapping, null);
-            
-            return (null, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(ref r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
+            return (choiceMapping, null);
         }
     }
 }

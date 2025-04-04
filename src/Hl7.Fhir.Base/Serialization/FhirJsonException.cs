@@ -34,7 +34,7 @@ public class FhirJsonException : ExtendedCodedException
     public const string EXPECTED_PRIMITIVE_NOT_ARRAY_CODE = "JSON105";
     public const string EXPECTED_PRIMITIVE_NOT_NULL_CODE = "JSON109";
     public const string EXPECTED_START_OF_ARRAY_CODE = "JSON111";
-    // public const string USE_OF_UNDERSCORE_ILLEGAL_CODE = "JSON113";
+    public const string USE_OF_UNDERSCORE_ILLEGAL_CODE = "JSON113";
     // public const string CHOICE_ELEMENT_HAS_NO_TYPE_CODE = "JSON114";
     public const string CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE = "JSON115";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "JSON116";
@@ -82,7 +82,7 @@ public class FhirJsonException : ExtendedCodedException
     internal static FhirJsonException EXPECTED_START_OF_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, EXPECTED_START_OF_ARRAY_CODE, "Expected start of array.", OO_Sev.Error, OO_Typ.Structure);
 
     // We will just ignore the underscore and keep on parsing
-    // internal static FhirJsonException USE_OF_UNDERSCORE_ILLEGAL(ref Utf8JsonReader reader, string instancePath, string propertyNameMapped, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_ILLEGAL_CODE, $"Element '{propertyNameMapped}' is not a FHIR primitive, so it should not use an underscore in the '{propertyName}' property.", OO_Sev.Warning, OO_Typ.Structure);
+    internal static FhirJsonException USE_OF_UNDERSCORE_ILLEGAL(ref Utf8JsonReader reader, string instancePath, string propertyNameMapped, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_ILLEGAL_CODE, $"Element '{propertyNameMapped}' is not a FHIR primitive, so it should not use an underscore in the '{propertyName}' property.", OO_Sev.Warning, OO_Typ.Structure);
 
     // Empty objects and arrays can be ignored without discarding data
     internal static FhirJsonException OBJECTS_CANNOT_BE_EMPTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, OBJECTS_CANNOT_BE_EMPTY_CODE, "An object needs to have at least one property.", OO_Sev.Warning, OO_Typ.Structure);

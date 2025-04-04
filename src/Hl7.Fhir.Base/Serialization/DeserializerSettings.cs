@@ -75,7 +75,7 @@ public record DeserializerSettings
     {
         if(AllowUnrecognizedEnums) baseFilter = baseFilter.Ignore([CodedValidationException.INVALID_CODED_VALUE_CODE]);
         if (AcceptUnknownMembers) baseFilter = baseFilter.Ignore(
-            [FhirXmlException.UNKNOWN_ELEMENT_CODE, FhirXmlException.UNKNOWN_ATTRIBUTE_CODE]);
+            [CodedValidationException.UNKNOWN_ELEMENT_CODE]);
 
         return baseFilter;
     }
