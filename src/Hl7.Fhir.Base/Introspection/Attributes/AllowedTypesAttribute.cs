@@ -27,6 +27,8 @@ namespace Hl7.Fhir.Introspection;
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
 public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAttribute
 {
+    public AllowedTypesAttribute(Type type) : this([type]) { }
+
     /// <summary>
     /// The list of types that are allowed for the instance.
     /// </summary>
