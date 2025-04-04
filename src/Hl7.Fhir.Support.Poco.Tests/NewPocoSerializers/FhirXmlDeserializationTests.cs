@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                                 
                 Console.WriteLine(recoveredActual);
                 assertErrors(dfe.Exceptions, [
-                    ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, ERR.INVALID_DUPLICATE_PROPERTY_CODE, ERR.INCORRECT_ELEMENT_NAMESPACE_CODE, ERR.INCORRECT_ELEMENT_NAMESPACE_CODE, ERR.INCORRECT_ELEMENT_NAMESPACE_CODE, ERR.INVALID_DUPLICATE_PROPERTY_CODE, COVE.LITERAL_INVALID_CODE
+                    ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, ERR.INVALID_DUPLICATE_PROPERTY_CODE, ERR.INCORRECT_ELEMENT_NAMESPACE_CODE, ERR.INCORRECT_ELEMENT_NAMESPACE_CODE, ERR.INCORRECT_ELEMENT_NAMESPACE_CODE, COVE.UNKNOWN_ELEMENT_CODE, ERR.INVALID_DUPLICATE_PROPERTY_CODE, COVE.LITERAL_INVALID_CODE
                 ]);
                 
                 var recoveredFilename = Path.Combine("TestData", "fp-test-patient-errors-recovered.xml");
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             datatype.As<HumanName>().GivenElement[0].Value.Should().Be("foo");
             datatype.As<HumanName>().Family.Should().Be("oof");
 
-            state.Errors.Should().BeEmpty();
+            state.Errors.Select(x => x.ErrorCode).Should().BeEquivalentTo([COVE.UNKNOWN_ELEMENT_CODE]);
         }
 
         [TestMethod]

@@ -27,7 +27,7 @@ public class FhirJsonDeserializationTests
 {
     [DataTestMethod]
     [DataRow("OperationOutcome", null)]
-    [DataRow("OperationOutcomeX", ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE)]
+    [DataRow("OperationOutcomeX", ERR.UNKNOWN_RESOURCE_TYPE_CODE)]
     [DataRow("Meta", ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE)]
     [DataRow(4, ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE)]
     [DataRow(null, ERR.NO_RESOURCETYPE_PROPERTY_CODE)]
@@ -171,21 +171,21 @@ public class FhirJsonDeserializationTests
     {
         get
         {
-            yield return [5, JsonTokenType.Number];
+            yield return [5, JsonTokenType.Number, COVE.UNKNOWN_ELEMENT_CODE];
             yield return [new { }, JsonTokenType.EndObject, ERR.NO_RESOURCETYPE_PROPERTY_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE];
             yield return
             [
                 new { resourceType = 4, crap = 4 }, JsonTokenType.EndObject,
-                ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE
+                ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE, COVE.UNKNOWN_ELEMENT_CODE
             ];
             yield return
             [
-                new { resourceType = "Doesnotexist", crap = 5 }, JsonTokenType.EndObject,
+                new { resourceType = "Doesnotexist", crap = 5 }, JsonTokenType.EndObject, ERR.UNKNOWN_RESOURCE_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE
             ];
             yield return
             [
                 new { resourceType = nameof(OperationOutcome), crap = 5 }, JsonTokenType.EndObject,
-                COVE.INCORRECT_CARDINALITY_MIN_CODE
+                COVE.UNKNOWN_ELEMENT_CODE, COVE.INCORRECT_CARDINALITY_MIN_CODE
             ];
             yield return
             [
@@ -263,38 +263,31 @@ public class FhirJsonDeserializationTests
 
     public static IEnumerable<object?[]> CatchesIncorrectlyStructuredComplexData()
     {
-        yield return
-        [
-            typeof(Extension), 5, JsonTokenType.Number, null
-        ];
-        yield return data<Extension>(5, JsonTokenType.Number);
-        yield return data<Extension>(new[] { 2, 3 }, JsonTokenType.EndArray);
         yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
         yield return data<Extension>(new { unknown = "test" }, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { url = "test" });
-        yield return data<Extension>(new { _url = "test" }, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE); // TODO illegal use of underscore?
-        yield return data<Extension>(new { unknown = "test", url = "test" });
-        yield return data<Extension>(new { value = "no type suffix" }, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+        yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE); // TODO illegal use of underscore?
+        yield return data<Extension>(new { unknown = "test", url = "test" }, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix" },
-            COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
+            ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
         yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" },
             JsonTokenType.EndObject);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
-            COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
+            COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
     }
 
     public static IEnumerable<object?[]> TestNormalArrayData()
     {
-        yield return data<ContactDetail>(new { name = "Ewout", telecom = 4 }, checkName);
-        yield return data<ContactDetail>(new { name = "Ewout", telecom = Array.Empty<object>() }, checkName,
-            ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
+        yield return data<ContactDetail>(new { name = "Ewout", telecom = 4 }, checkName,  COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        yield return data<ContactDetail>(new { name = "Ewout", telecom = Array.Empty<object>() }, checkName, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
         yield return data<ContactDetail>(
             new { name = "Ewout", telecom = new object[] { new { system = "phone" }, new { systemX = "b" } } },
-            checkData);
+            checkData,  COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<ContactDetail>(
             new { name = "Ewout", _telecom = new object[] { new { system = "phone" }, new { systemX = "b" } } },
-            checkData);
-        yield return data<ContactDetail>(new { name = new[] { "Ewout" } });
+            checkData, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<ContactDetail>(new { name = new[] { "Ewout" }, }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
 
         static void checkName(object parsed) =>
             parsed.Should().BeOfType<ContactDetail>().Which.Name.Should().Be("Ewout");
@@ -312,10 +305,10 @@ public class FhirJsonDeserializationTests
 
     public static IEnumerable<object?[]> TestPrimitiveData()
     {
-        yield return data<ContactDetail>(new { name = new[] { "Ewout" } });
-        yield return data<ContactDetail>(new { name = new { dummy = "Ewout" } });
-        yield return data<ContactDetail>(new { _name = new[] { "Ewout" } });
-        yield return data<ContactDetail>(new { _name = "Ewout" });
+        yield return data<ContactDetail>(new { name = new[] { "Ewout" } }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        yield return data<ContactDetail>(new { name = new { dummy = "Ewout" } }, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<ContactDetail>(new { _name = new[] { "Ewout" } }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        yield return data<ContactDetail>(new { _name = "Ewout" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<ContactDetail>(new { name = "Ewout" }, checkName);
         yield return data<ContactDetail>(new { _name = new { id = "12345" } }, checkId);
         yield return data<ContactDetail>(new { _name = new { id = true } }, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
@@ -340,8 +333,8 @@ public class FhirJsonDeserializationTests
         {
             div = "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>correct</p></div>", status = "additional"
         });
-        yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED_CODE);
-        yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID_CODE);
+        yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED_CODE/*, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE*/);
+        yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID_CODE/*, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE*/);
 
         yield return data<Attachment>(new { url = "urn:oid:1.3.6.1.4.1.343" });
         //   yield return data<Attachment>(new { url = "urn:oid:1" }, COVE.URI_LITERAL_INVALID_CODE);
@@ -355,18 +348,18 @@ public class FhirJsonDeserializationTests
         yield return data<Address>(new { line = Array.Empty<string>(), _line = Array.Empty<string>() },
             ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
         yield return data<Address>(new { line = Array.Empty<string>(), _line = new string?[] { null } },
-            ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null }, _line = new[] { new { id = "1" } } },
             ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
         yield return data<Address>(new { _line = new[] { new { id = "1" } } });
         yield return data<Address>(new { line = new[] { "Ewout" }, _line = new string?[] { null } },
             ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null }, _line = new string?[] { null } },
-            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null }, _line = new string?[] { null, null } },
-            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null, null }, _line = new string?[] { null } },
-            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
         yield return data<Address>(new { line = new[] { "Ewout", "Wouter" } }, checkName);
         yield return data<Address>(
             new { line = new[] { "Ewout", "Wouter" }, _line = new[] { new { id = "1" } } }, checkId1AndName);

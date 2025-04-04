@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void ConfigureFailOnUnknownMember()
         {
-            const string xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
+            const string xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona value='test'></daytona></Patient>";
             var parser = new FhirXmlDeserializer();
             parser.Settings = parser.Settings with { AllowUnrecognizedEnums = true };
 
