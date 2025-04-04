@@ -78,9 +78,14 @@ namespace Hl7.Fhir.FhirPath
             return scan;
         }
 
-        private Func<string, ITypedElement>? _elementResolver;
+        private Func<string, ITypedElement?>? _elementResolver;
 
-        public Func<string, ITypedElement>? ElementResolver
+        /// <summary>
+        /// A function that is invoked when resolve() is called in the fhirpath expression.
+        /// Should return the ITypedElement for the given Id. Example: Patient/1234
+        /// Should returns null if the resource cannot be found.
+        /// </summary>
+        public Func<string, ITypedElement?>? ElementResolver
         {
             get { return _elementResolver; }
             set { _elementResolver = value; }
