@@ -27,4 +27,4 @@ Hl7.Fhir.Serialization.FhirJsonException: An array needs to have at least one el
 Hl7.Fhir.Serialization.FhirJsonException: Properties cannot be empty strings. Either they are absent, or they are present with at least one character of non-whitespace content. At Patient.managingOrganization.display, line 332, position 18.
 Hl7.Fhir.Serialization.FhirJsonException: An object needs to have at least one property. At Patient.link[0], line 337, position 4.
 Hl7.Fhir.Validation.CodedValidationException: string 'false' is not the right type of literal for a boolean. At Patient.deceased, line 278, position 29.
-Hl7.Fhir.Validation.CodedValidationException: decimal 3,14 is not the right type of literal for a integer. At Patient.multipleBirth, line 279, position 31.
+Hl7.Fhir.Validation.CodedValidationException: decimal 3.14 is not the right type of literal for a integer. At Patient.multipleBirth, line 279, position 31.

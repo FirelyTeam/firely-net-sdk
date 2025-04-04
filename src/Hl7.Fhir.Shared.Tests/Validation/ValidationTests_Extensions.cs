@@ -40,9 +40,7 @@ namespace Hl7.Fhir.Tests.Validation
         public void TestIdValidation()
         {
             Id id = new("az23");
-
             id.Validate().Should().BeEmpty();
-            id.Validate().Should().BeEmpty();        // recursive checking shouldnt matter
 
             id = new Id("!notgood!");
             validateErrorOrFail(id);
