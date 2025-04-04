@@ -30,7 +30,7 @@ public static class VersionedConversionExtensions
         => @base.ToTypedElementLegacy(ModelInfo.ModelInspector, rootName);
 
     /// <summary>
-    /// Creates an adapter which implements ITypedElement on top of a POCO instance, with explicit version-specific metadata.
+    /// Creates an adapter which implements ITypedElement on top of a POCO instance
     /// </summary>
     /// <param name="base">The POCO instance</param>
     /// <param name="rootName">The name you wish to have at the root of the tree. This will determine e.g. the root element name for serialization.
