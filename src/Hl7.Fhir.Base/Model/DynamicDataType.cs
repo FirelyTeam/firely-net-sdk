@@ -81,7 +81,7 @@ public class DynamicPrimitive : PrimitiveType, IDynamicType
 
     protected internal override Any? TryConvertToSystemTypeInternal() => null;
 
-    protected internal override COVE? ValidateObjectValue(ValidationContext? validationContext) =>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? validationContext) =>
         ObjectValue is string or bool or decimal or int
             ? null
             : COVE.INCORRECT_LITERAL_VALUE_TYPE(validationContext, ObjectValue, TypeName);

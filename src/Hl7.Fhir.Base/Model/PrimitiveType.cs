@@ -12,14 +12,13 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model;
 
-public partial class PrimitiveType : IValidatableObject, P.IToSystemPrimitive
+public partial class PrimitiveType : P.IToSystemPrimitive
 {
     /// <summary>
     /// The value of the primitive, stored as an object. Will generally contain the same value as the
@@ -56,17 +55,18 @@ public partial class PrimitiveType : IValidatableObject, P.IToSystemPrimitive
         return result is not null;
     }
 
-    IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext) =>
-        Validate(validationContext);
-
-    protected virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext) =>
-        ValidateObjectValue(validationContext) is { } result ? [result.AsResult(validationContext)] : [];
+    protected internal override IReadOnlyCollection<CodedValidationException> ValidateInvariants(
+        PocoValidationContext validationContext)
+    {
+        var baseResults = base.ValidateInvariants(validationContext);
+        return ValidateObjectValue(validationContext) is { } result ? [..baseResults, result] : baseResults;
+    }
 
     /// <summary>
     /// Validates the JsonValue. Some subclasses will also, as a side-effect, update
     /// their internal cache if parsing and validating is expensive.
     /// </summary>
-    protected internal abstract CodedValidationException? ValidateObjectValue(ValidationContext? validationContext);
+    protected internal abstract CodedValidationException? ValidateObjectValue(PocoValidationContext? validationContext);
 
     public bool HasValidValue() => ValidateObjectValue(null) is null;
 

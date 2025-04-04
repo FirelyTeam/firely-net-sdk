@@ -30,12 +30,13 @@
 
 */
 
+using Hl7.Fhir.Introspection;
 using System;
 
 namespace Hl7.Fhir.Utility
 {
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-    public sealed class EnumLiteralAttribute : Attribute
+    public sealed class EnumLiteralAttribute : FhirModelAttribute
     {
         private readonly string _literal;
         private readonly string? _system;
@@ -56,7 +57,7 @@ namespace Hl7.Fhir.Utility
     }
 
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-    public sealed class DescriptionAttribute : Attribute
+    public sealed class DescriptionAttribute : FhirModelAttribute
     {
         private readonly string _description;
 

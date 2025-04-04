@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
     /// phone | fax | email | pager | url | sms | other.
     /// </summary>
     [FhirElement("system", InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ContactPointSystem")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>? SystemElement
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
     /// home | work | temp | old | mobile - purpose of this contact point.
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=50)]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("ContactPointUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>? UseElement
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "system":

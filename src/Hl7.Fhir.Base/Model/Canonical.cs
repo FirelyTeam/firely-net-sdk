@@ -30,6 +30,7 @@
 using P = Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 using COVE=Hl7.Fhir.Validation.CodedValidationException;
@@ -98,7 +99,7 @@ public partial class Canonical
     /// <summary>
     /// Validates the JsonValue.
     /// </summary>
-    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
         ObjectValue switch
         {
             null => null,

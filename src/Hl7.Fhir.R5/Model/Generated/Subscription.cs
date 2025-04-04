@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
       /// eq | ne | gt | lt | ge | le | sa | eb | ap.
       /// </summary>
       [FhirElement("comparator", Order=60)]
-      [DeclaredType(Type = typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("SearchComparator")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchComparator>? ComparatorElement
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
       /// missing | exact | contains | not | text | in | not-in | below | above | type | identifier | of-type | code-text | text-advanced | iterate.
       /// </summary>
       [FhirElement("modifier", Order=70)]
-      [DeclaredType(Type = typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("SearchModifierCode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchModifierCode>? ModifierElement
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "resourceType":
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "name":
@@ -733,7 +733,7 @@ namespace Hl7.Fhir.Model
     /// requested | active | error | off | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("SubscriptionStatusCodes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1203,7 +1203,7 @@ namespace Hl7.Fhir.Model
     /// empty | id-only | full-resource.
     /// </summary>
     [FhirElement("content", InSummary=true, Order=240)]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("SubscriptionPayloadContent")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>? ContentElement
@@ -1493,7 +1493,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

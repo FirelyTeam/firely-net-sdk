@@ -31,6 +31,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
@@ -44,7 +45,7 @@ public partial class Id
     /// <summary>
     /// Validates the JsonValue and updates the internal cached Date value.
     /// </summary>
-    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
         ObjectValue switch
         {
             null => null,

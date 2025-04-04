@@ -6,43 +6,47 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 
 #nullable enable
 
-namespace Hl7.Fhir.Validation;
+namespace Hl7.Fhir.Introspection;
 
 /// <summary>
 /// Validates the type of a property against the allowed type choices.
 /// </summary>
 [CLSCompliant(false)]
-[AttributeUsage(AttributeTargets.Property)]
-public class AllowedTypesAttribute(params Type[] types) : VersionedValidationAttribute
+[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAttribute
 {
+    public AllowedTypesAttribute(Type type) : this([type]) { }
+
     /// <summary>
     /// The list of types that are allowed for the instance.
     /// </summary>
     public Type[] Types { get; set; } = types;
 
     /// <inheritdoc />
-    protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+    public override IReadOnlyCollection<CodedValidationException> Validate(object? value, PocoValidationContext validationContext)
     {
-        if (value is null) return ValidationResult.Success;
+        if (value is null) return [];
 
-        var result = ValidationResult.Success;
+        IReadOnlyCollection<CodedValidationException> result = [];
 
         if (value is IReadOnlyCollection<Base> list)
         {
             foreach (var item in list)
             {
                 result = validateValue(item, validationContext);
-                if (result != ValidationResult.Success) break;
+                if (result.Any()) break;
             }
         }
         else
@@ -53,14 +57,14 @@ public class AllowedTypesAttribute(params Type[] types) : VersionedValidationAtt
         return result;
     }
 
-    private ValidationResult? validateValue(object? item, ValidationContext context) =>
-        item is null || IsAllowedType(item.GetType())
-            ? ValidationResult.Success
-            : COVE.CHOICE_TYPE_NOT_ALLOWED(context, ModelInspector.GetClassMappingForType(item.GetType())?.Name ?? item.GetType().Name)
-                .AsResult(context);
+    private IReadOnlyCollection<CodedValidationException> validateValue(object? item, PocoValidationContext context) =>
+        Types switch
+        {
+            { Length: > 1 } when item is not null && !Types.Contains(item.GetType()) =>
+                [COVE.CHOICE_TYPE_NOT_ALLOWED(context, COVE.fhirTypeNameForObject(item))],
+            { Length: 1 } when !Types[0].IsInstanceOfType(item) =>
+                [COVE.FromTypes(Types[0], item, context)],
+            _ => []
+        };
 
-    /// <summary>
-    /// Determine whether the given type is allowed according to this attribute.
-    /// </summary>
-    public bool IsAllowedType(Type t) => Types.Any(type => type.IsAssignableFrom(t));
 }

@@ -31,6 +31,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -42,8 +43,9 @@ namespace Hl7.Fhir.Model;
 
 public partial class Instant
 {
+    [CLSCompliant(false)]
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(P.DateTime))]
+    [AllowedTypes(typeof(P.DateTime))]
     [DataMember]
     public DateTimeOffset? Value
     {
@@ -85,7 +87,7 @@ public partial class Instant
     /// <summary>
     /// Validates the JsonValue and updates the internal cached CQL DateTime value.
     /// </summary>
-    protected internal override COVE? ValidateObjectValue(ValidationContext? context)
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
         if (_parsedValue is not null || base.ObjectValue is null) return null;
 

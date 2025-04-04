@@ -30,12 +30,13 @@
 
 #nullable enable
 
+using Hl7.Fhir.Introspection;
 using System;
 
 namespace Hl7.Fhir.Utility
 {
     [AttributeUsage(AttributeTargets.Enum, Inherited = false, AllowMultiple = false)]
-    public sealed class FhirEnumerationAttribute : Attribute
+    public sealed class FhirEnumerationAttribute : FhirModelAttribute
     {
         private readonly string _bindingName;
 

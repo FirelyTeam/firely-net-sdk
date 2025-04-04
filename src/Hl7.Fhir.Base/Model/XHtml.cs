@@ -48,7 +48,7 @@ public partial class XHtml
     /// <summary>
     /// Validates the JsonValue.
     /// </summary>
-    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
         ObjectValue switch
         {
             null => null,
@@ -56,9 +56,9 @@ public partial class XHtml
             _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
         };
 
-    internal static COVE? ValidateXmlLiteral(string xml, ValidationContext? context)
+    internal static COVE? ValidateXmlLiteral(string xml, PocoValidationContext? context)
     {
-        return context?.GetNarrativeValidationKind() switch
+        return context?.NarrativeValidation switch
         {
             null => null,
             NarrativeValidationKind.None => null,
@@ -72,7 +72,7 @@ public partial class XHtml
             malformedXmlError is not null
                 ? COVE.NARRATIVE_XML_IS_MALFORMED(context, malformedXmlError)
                 : invalidNarrativeErrors?.Any() == true
-                    ? COVE.NARRATIVE_XML_IS_INVALID(context, string.Concat(", ", invalidNarrativeErrors))
+                    ? COVE.NARRATIVE_XML_IS_INVALID(context, string.Join(", ", invalidNarrativeErrors))
                     : null;
     }
 

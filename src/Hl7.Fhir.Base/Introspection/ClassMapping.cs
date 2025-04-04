@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Introspection
             }
 
             // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
-            if (GetAttribute<FhirTypeAttribute>(type, release) is not { } typeAttribute) return false;
+            if (ReflectionHelper.GetAttribute<FhirTypeAttribute>(type) is not { } typeAttribute) return false;
 
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Introspection
                 IsBackboneType = typeAttribute.IsBackboneType,
                 IsBindable = typeof(ICoded).IsAssignableFrom(type),
                 Canonical = typeAttribute.Canonical,
-                ValidationAttributes = GetAttributes<ValidationAttribute>(type, release).ToArray(),
+                ValidationAttributes = GetAttributes<ValidatingFhirModelAttribute>(type, release).ToArray(),
             };
 
             return true;
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Introspection
         /// The collection of zero or more <see cref="ValidationAttribute"/> (or subclasses) declared
         /// on this class.
         /// </summary>
-        public ValidationAttribute[] ValidationAttributes { get; private set; } = Array.Empty<ValidationAttribute>();
+        public ValidatingFhirModelAttribute[] ValidationAttributes { get; private set; } = [];
 
         /// <summary>
         /// Holds a reference to a property that represents the value of a FHIR Primitive. This
@@ -261,13 +261,21 @@ namespace Hl7.Fhir.Introspection
             }
         }
 
-        internal static T? GetAttribute<T>(MemberInfo t, FhirRelease version) where T : Attribute => GetAttributes<T>(t, version).LastOrDefault();
+        internal static T? GetAttribute<T>(MemberInfo t, FhirRelease version) where T : FhirModelAttribute => GetAttributes<T>(t, version).LastOrDefault();
 
-        internal static IEnumerable<T> GetAttributes<T>(MemberInfo t, FhirRelease version) where T : Attribute
+        internal static IEnumerable<T> GetAttributes<T>(MemberInfo t, FhirRelease version) where T : FhirModelAttribute
         {
-            return ReflectionHelper.GetAttributes<T>(t).Where(isRelevant);
+            return ReflectionHelper.GetAttributes<T>(t).Where(isRelevant).OrderBy(att => att.Since);
 
-            bool isRelevant(Attribute a) => a is not IFhirVersionDependent vd || a.AppliesToRelease(version);
+            bool isRelevant(FhirModelAttribute a) => a.AppliesToRelease(version);
+        }
+
+        internal static IEnumerable<ValidatingFhirModelAttribute> GetValidatingAttributes(MemberInfo t, FhirRelease version)
+        {
+            return GetAttributes<ValidatingFhirModelAttribute>(t, version)
+                .GroupBy(att => att.GetType())
+                .Select(g => g.LastOrDefault())
+                .OfType<ValidatingFhirModelAttribute>();
         }
 
         #region IStructureDefinitionSummary members

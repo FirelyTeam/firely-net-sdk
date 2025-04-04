@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
       /// mild | moderate | severe (of event as a whole).
       /// </summary>
       [FhirElement("severity", Order=80)]
-      [DeclaredType(Type = typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("AllergyIntoleranceSeverity")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>? SeverityElement
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "substance":
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
     /// active | inactive | resolved.
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AllergyIntoleranceClinicalStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus>? ClinicalStatusElement
@@ -749,7 +749,7 @@ namespace Hl7.Fhir.Model
     /// unconfirmed | confirmed | refuted | entered-in-error.
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AllergyIntoleranceVerificationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
     /// allergy | intolerance - Underlying mechanism (if known).
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="class")]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AllergyIntoleranceType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>? TypeElement
@@ -836,7 +836,7 @@ namespace Hl7.Fhir.Model
     /// food | medication | environment | biologic.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=130, FiveWs="class")]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AllergyIntoleranceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
     /// low | high | unable-to-assess.
     /// </summary>
     [FhirElement("criticality", InSummary=true, Order=140, FiveWs="grade")]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AllergyIntoleranceCriticality")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>? CriticalityElement
@@ -1388,7 +1388,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

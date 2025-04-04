@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
       /// s | min | h | d | wk | mo | a - unit of time (UCUM).
       /// </summary>
       [FhirElement("durationUnit", InSummary=true, Order=80)]
-      [DeclaredType(Type = typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("UnitsOfTime")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime>? DurationUnitElement
@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model
       /// s | min | h | d | wk | mo | a - unit of time (UCUM).
       /// </summary>
       [FhirElement("periodUnit", InSummary=true, Order=130)]
-      [DeclaredType(Type = typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("UnitsOfTime")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime>? PeriodUnitElement
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
       /// mon | tue | wed | thu | fri | sat | sun.
       /// </summary>
       [FhirElement("dayOfWeek", InSummary=true, Order=140)]
-      [DeclaredType(Type = typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("DayOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
       /// Regular life events the event is tied to.
       /// </summary>
       [FhirElement("when", InSummary=true, Order=160)]
-      [DeclaredType(Type = typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("EventTiming")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1070,7 +1070,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "bounds":
@@ -1387,7 +1387,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "event":

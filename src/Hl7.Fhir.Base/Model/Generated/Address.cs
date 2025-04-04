@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
     /// home | work | temp | old | billing - purpose of this address.
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AddressUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressUse>? UseElement
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     /// postal | physical | both.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=40)]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("AddressType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressType>? TypeElement
@@ -674,7 +674,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "use":

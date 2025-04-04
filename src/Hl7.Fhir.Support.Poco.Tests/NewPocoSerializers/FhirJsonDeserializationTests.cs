@@ -167,7 +167,7 @@ public class FhirJsonDeserializationTests
             $"Should be the same: actual [{string.Join(",", actual.Select(a => a.ErrorCode))}] and expected [{string.Join(";", expected)}]";
         Console.WriteLine("Messages: " + string.Join(", ", actual.Select(a => a.Message)));
         actual.Count().Should().Be(expected.Length, because: why);
-        _ = actual.Zip(expected, (a, e) => a.ErrorCode.Should().Be(e, because: why)).ToList();
+        _ = actual.Zip(expected).Should().AllSatisfy(pair => pair.First.ErrorCode.Should().Be(pair.Second, because: why));
         Console.WriteLine($"Found {string.Join(", ", actual.Select(a => a.Message))}");
     }
 
@@ -491,16 +491,24 @@ public class FhirJsonDeserializationTests
     }
 
     [TestMethod]
-    public void TestRecovery()
+    public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "TestData");
+
+    [TestMethod]
+    [Ignore]
+    public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "TestData");
+    
+    /// fileDir is a fix for the test framework only editing temp files.
+    private void testRecovery(bool overwrite, string fileDir)
     {
-        var filename = Path.Combine("TestData", "fp-test-patient-errors.json");
-        var jsonInput = File.ReadAllText(filename);
+        var patientFileName = Path.Combine(fileDir, "fp-test-patient-errors.json");
+        var errorsFileName = Path.Combine(fileDir, "fp-test-patient-errors-expected.txt");
+        var jsonInput = File.ReadAllText(patientFileName);
 
         var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
         try
         {
-            var actual = JsonSerializer.Deserialize<Patient>(jsonInput, options);
+            _ = JsonSerializer.Deserialize<Patient>(jsonInput, options);
             Assert.Fail("Should have encountered errors.");
         }
         catch (DeserializationFailedException dfe)
@@ -536,6 +544,15 @@ public class FhirJsonDeserializationTests
                 COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // deceasedBoolean should be a boolean not a string
                 COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // multipleBirthInteger should not be a float (3.14)
             ]);
+            
+            if (overwrite)
+            {
+                File.WriteAllLines(errorsFileName, dfe.Exceptions.Select(e => e.ToString()));
+            }
+            
+            var errorsExpected = File.ReadAllLines(errorsFileName);
+            var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
+            errorsExpected.Should().BeEquivalentTo(errorsActual);
 
             var recoveredFilename = Path.Combine("TestData", "fp-test-patient-errors-recovered.json");
             var recoveredExpected = File.ReadAllText(recoveredFilename);
@@ -567,7 +584,7 @@ public class FhirJsonDeserializationTests
         }
     }
 
-    internal class CustomComplexValidator : DataAnnotationDeserialzationValidator
+    internal class CustomComplexValidator : FhirAttributeValidator
     {
         //public object? DateTimeSeenByObjectValueValidator;
         public FhirDateTime? DateTimeSeenByInstanceValidator;
@@ -584,41 +601,32 @@ public class FhirJsonDeserializationTests
         //     base.ValidateObjectValue(ref value, context, out reportedErrors);
         // }
 
-        public override void ValidateInstance(Base instance, in InstanceDeserializationContext context,
-            out COVE[]? reportedErrors)
-        {
+        public override IReadOnlyCollection<COVE> ValidateObject(Base instance, ClassMapping? classMapping, PocoValidationContext context){
             if (instance is FhirDateTime fdt)
             {
                 DateTimeSeenByInstanceValidator = fdt;
                 fdt.ObjectValue = "1972-11-30T12:00:00Z";
             }
 
-            base.ValidateInstance(instance, context, out reportedErrors);
+            return base.ValidateObject(instance, classMapping, context);
         }
 
-        public override void ValidateProperty(object? propertyValue, in PropertyDeserializationContext context,
-            out COVE[]? reportedErrors)
+        public override IReadOnlyCollection<COVE> ValidateProperty(string name, object? propertyValue, PropertyMapping? propertyMapping, PocoValidationContext context)
         {
-            base.ValidateProperty(propertyValue, context, out reportedErrors);
+            var reportedErrors = base.ValidateProperty(name, propertyValue, propertyMapping, context);
 
-            if (context.Path == "Patient.deceased")
+            if (context.PathProducer.Invoke() == "Patient.deceased")
             {
                 var fdt = propertyValue.Should().BeOfType<FhirDateTime>().Subject;
 
                 // Take note of what we got.
                 DateTimeSeenByPropertyValidator = fdt;
 
-                var validationContext = new ValidationContext(context.ObjectInstance)
-                    .SetValidateRecursively(
-                        false) // Don't go deeper - we've already validated the children because we're parsing bottom-up.
-                    .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
-                    .SetLocationProducer(context.PathStack.GetInstancePath);
-                reportedErrors = [..reportedErrors ?? [], COVE.LITERAL_INVALID(validationContext, "Nothing wrong, really", "DateTime")];
+                return [..reportedErrors, COVE.LITERAL_INVALID(context, "Nothing wrong, really", "DateTime")];
             }
+
+            return reportedErrors;
         }
-
-
-
     }
 
     [TestMethod]

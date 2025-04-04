@@ -201,8 +201,8 @@ namespace Hl7.Fhir.Model
     // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
     // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
     // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
-    [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
-    [DeclaredType(Type = typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.PrimitiveType? UrlElement
     {
@@ -267,8 +267,8 @@ namespace Hl7.Fhir.Model
     // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
     // [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
     // [AllowedTypes(typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
-    [DeclaredType(Type = typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
-    [DeclaredType(Type = typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.PrimitiveType? SizeElement
     {
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "contentType":

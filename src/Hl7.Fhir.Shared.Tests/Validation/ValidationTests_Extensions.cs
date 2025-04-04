@@ -10,24 +10,37 @@ using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Validator = System.ComponentModel.DataAnnotations.Validator;
 
 namespace Hl7.Fhir.Tests.Validation
 {
     [TestClass]
-    public class ValidationTests
+    public class ValidationTests_Extensions
     {
+        [TestMethod]
+        public void Will_validate_recursively()
+        {
+            var organization = new Organization
+            {
+                Text = new Narrative { Div = "<wrong />", Status = Narrative.NarrativeStatus.Generated }
+            };
+
+            var patient = new Patient();
+            patient.Contained.Add(organization);
+            
+            patient.Validate().Should().NotBeEmpty();
+            
+            organization.Text = null;
+
+            // Try again
+            patient.Validate().Should().BeEmpty();
+        }
+
         [TestMethod]
         public void TestIdValidation()
         {
             Id id = new("az23");
-
-            id.Validate();
-            id.Validate(true);        // recursive checking shouldnt matter
+            id.Validate().Should().BeEmpty();
 
             id = new Id("!notgood!");
             validateErrorOrFail(id);
@@ -45,7 +58,7 @@ namespace Hl7.Fhir.Tests.Validation
             HumanName hn = HumanName.ForFamily("Kramer");
             hn.ElementId = "This/may:contain.all$kinds%of@characters_now";
 
-            hn.Validate();
+            hn.Validate().Should().BeEmpty();
         }
 
         [TestMethod]
@@ -60,22 +73,14 @@ namespace Hl7.Fhir.Tests.Validation
 
             p.Meta.Tag.Add(new Coding("http://system", "  illegal    _  code "));
 
-            Assert.IsFalse(p.TryValidate(recurse: true));
+            p.Validate().Should().NotBeEmpty();
         }
 
         private static void validateErrorOrFail(Base instance, bool recurse = false, string membername = null)
         {
-            try
-            {
-                // should throw error
-                instance.Validate(recurse);
-                Assert.Fail();
-            }
-            catch (ValidationException ve)
-            {
-                if (membername != null)
-                    Assert.IsTrue(ve.ValidationResult.MemberNames.Contains(membername));
-            }
+            instance.Validate().Should().NotBeEmpty();
+            if (membername != null)
+                instance.Validate().Should().Contain(err => err.InstancePath.EndsWith(membername));
         }
 
         [TestMethod]
@@ -88,21 +93,19 @@ namespace Hl7.Fhir.Tests.Validation
             var oidWithZero = "urn:oid:1.2.0.3.4";
 
             FhirUri uri = new(oidUrl);
-            Validator.ValidateObject(uri, new ValidationContext(uri), true);
+            uri.Validate().Should().BeEmpty(); // should not throw
 
             uri = new FhirUri(illOidUrl);
             validateErrorOrFail(uri);
 
             uri = new FhirUri(uuidUrl);
-            Validator.ValidateObject(uri, new ValidationContext(uri), true);
+            uri.Validate().Should().BeEmpty(); // should not throw
 
             uri = new FhirUri(illUuidUrl);
             validateErrorOrFail(uri);
 
             uri = new FhirUri(oidWithZero);
-            Validator.ValidateObject(uri, new ValidationContext(uri), true);
-
-            Assert.IsTrue(Uri.Equals(new Uri("http://nu.nl"), new Uri("http://nu.nl")));
+            uri.Validate().Should().BeEmpty();
         }
 
 
@@ -114,7 +117,7 @@ namespace Hl7.Fhir.Tests.Validation
             {
                 Deceased = new FhirBoolean(true)
             };
-            p.Validate();
+            p.Validate().Should().BeEmpty();
 
             // Deceased can either be boolean or dateTime, not FhirUri
             p.Deceased = new FhirUri();
@@ -141,7 +144,7 @@ namespace Hl7.Fhir.Tests.Validation
 
             issue.Code = OperationOutcome.IssueType.Forbidden;
 
-            oo.Validate(true);
+            oo.Validate().Should().BeEmpty();
         }
 
         [TestMethod]
@@ -171,7 +174,6 @@ namespace Hl7.Fhir.Tests.Validation
             };
 
             validateErrorOrFail(pr, true);
-            pr.Validate();
         }
 
         [TestMethod]
@@ -191,15 +193,14 @@ namespace Hl7.Fhir.Tests.Validation
         {
             // First create an incomplete Observation (status and code not supplied)
             var obs = new Observation();
-            validateErrorOrFail(obs, membername: "StatusElement");
+            validateErrorOrFail(obs, membername: "status");
             validateErrorOrFail(obs, true);  // recursive checking shouldn't matter
 
             obs.Status = ObservationStatus.Final;
             obs.Code = new CodeableConcept("http://snomed.info/sct", "27113001", "Body weight");
 
             // Now, it should work
-            obs.Validate();
-            obs.Validate(true);  // recursive checking shouldnt matter
+            obs.Validate().Should().BeEmpty();
 
             // Hide an incorrect datetime deep into the Observation
             FhirDateTime dt = new()
@@ -209,11 +210,8 @@ namespace Hl7.Fhir.Tests.Validation
 
             obs.Effective = new Period() { StartElement = dt };
 
-            // When we do not validate recursively, we should still be ok
-            obs.Validate();
-
             // When we recurse, this should fail
-            validateErrorOrFail(obs, true, membername: "Value");
+            validateErrorOrFail(obs, true, membername: "start");
         }
 
 #if !NETSTANDARD1_6
@@ -224,7 +222,7 @@ namespace Hl7.Fhir.Tests.Validation
             {
                 Text = new Narrative() { Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should be valid</p></div>", Status = Narrative.NarrativeStatus.Generated }
             };
-            p.Validate(true);
+            p.Validate().Should().BeEmpty();
 
             p.Text.Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should not be valid<p></div>";
             validateErrorOrFail(p, true);
@@ -235,36 +233,41 @@ namespace Hl7.Fhir.Tests.Validation
 #endif
 
         [TestMethod]
-        public void TestBinaryContentCardinalityValidation()
+        public void Test_Is_Aware_Of_Version_Differences()
         {
             var bin = new Binary
             {
                 ContentType = "text/plain",
+#if STU3
                 Content = [0, 1, 2, 3],
+#else
                 Data = [0, 1, 2, 3]
+#endif
             };
 
-            var validation = () => bin.Validate();
-            validation.Should().NotThrow<ValidationException>();
-
+            bin.Validate(inspector: ModelInfo.ModelInspector).Should().BeEmpty();
 
             //We removed  the cardinality validation for the Content property for issue #2821
             bin = new Binary
             {
                 ContentType = "text/plain",
-                Data = [0, 1, 2, 3]
             };
 
-            validation = () => bin.Validate();
-            validation.Should().NotThrow<ValidationException>();
+            bin.Validate(inspector: ModelInfo.ModelInspector).Should().BeEmpty();
 
             bin = new Binary
             {
+                ContentType = "text/plain",
+
+                // Used R4 element in R3 and vice versa
+#if STU3
                 Data = [0, 1, 2, 3]
+#else
+                Content = [0, 1, 2, 3],
+#endif
             };
 
-            validation = () => bin.Validate();
-            validation.Should().Throw<ValidationException>();
+            bin.Validate(inspector: ModelInfo.ModelInspector).Should().NotBeEmpty();
         }
     }
 }

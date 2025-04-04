@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
     /// Primitive value of the element
     /// </summary>
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(SystemPrimitive.String))]
+    [AllowedTypes(typeof(SystemPrimitive.String))]
     [DataMember]
     public string? Value
     {

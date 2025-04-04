@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("who", InSummary=true, Order=50, Choice = ChoiceType.DatatypeChoice)]
     [FhirElement("who", InSummary=true, Order=50, Since=FhirRelease.R4)]
-    [DeclaredType(Type = typeof(ResourceReference), Since = FhirRelease.R4)]
+    [AllowedTypes(typeof(ResourceReference), Since = FhirRelease.R4)]
     [CLSCompliant(false)]
     [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
     /// </remarks>
     [FhirElement("onBehalfOf", InSummary=true, Order=60, Choice = ChoiceType.DatatypeChoice)]
     [FhirElement("onBehalfOf", InSummary=true, Order=60, Since=FhirRelease.R4)]
-    [DeclaredType(Type = typeof(ResourceReference), Since = FhirRelease.R4)]
+    [AllowedTypes(typeof(ResourceReference), Since = FhirRelease.R4)]
     [CLSCompliant(false)]
     [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "type":

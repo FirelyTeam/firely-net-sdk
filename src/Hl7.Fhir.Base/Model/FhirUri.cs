@@ -30,6 +30,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -48,7 +49,7 @@ public partial class FhirUri : ICoded
     /// <summary>
     /// Validates the JsonValue.
     /// </summary>
-    protected internal override COVE? ValidateObjectValue(ValidationContext? context) =>
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
         ObjectValue switch
         {
             null => null,

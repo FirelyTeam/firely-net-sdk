@@ -27,7 +27,7 @@ public record DeserializerSettings
     /// If set, this validator is invoked before the value is set in the object under construction to validate
     /// and possibly alter the value. Setting this property to <c>null</c> will disable validation completely.
     /// </summary>
-    public IDeserializationValidator? Validator { get; init; } = DataAnnotationDeserialzationValidator.Default;
+    public IPocoValidator? Validator { get; init; } = FhirAttributeValidator.Default;
 
     /// <summary>
     /// Specifies a filter that can be used to filter out exceptions that are not considered fatal. The filter

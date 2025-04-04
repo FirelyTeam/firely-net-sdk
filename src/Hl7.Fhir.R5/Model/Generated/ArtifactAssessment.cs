@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
       /// comment | classifier | rating | container | response | change-request.
       /// </summary>
       [FhirElement("informationType", Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [AllowedTypes(typeof(Code))]
       [Binding("InformationType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType>? InformationTypeElement
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "informationType":
@@ -1134,7 +1134,7 @@ namespace Hl7.Fhir.Model
     /// submitted | triaged | waiting-for-input | resolved-no-change | resolved-change-required | deferred | duplicate | applied | published | entered-in-error.
     /// </summary>
     [FhirElement("workflowStatus", InSummary=true, Order=180)]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("WorkflowStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus>? WorkflowStatusElement
@@ -1177,7 +1177,7 @@ namespace Hl7.Fhir.Model
     /// unresolved | not-persuasive | persuasive | persuasive-with-modification | not-persuasive-with-modification.
     /// </summary>
     [FhirElement("disposition", InSummary=true, Order=190)]
-    [DeclaredType(Type = typeof(Code))]
+    [AllowedTypes(typeof(Code))]
     [Binding("Disposition")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition>? DispositionElement
@@ -1366,7 +1366,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

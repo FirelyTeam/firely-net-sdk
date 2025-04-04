@@ -28,26 +28,25 @@
 
 */
 
-namespace Hl7.Fhir.Introspection
+namespace Hl7.Fhir.Introspection;
+
+/// <summary>
+/// The kind of choice an element in FHIR provides.
+/// </summary>
+public enum ChoiceType
 {
     /// <summary>
-    /// The kind of choice an element in FHIR provides.
+    /// Not a choice element, element can only contain instances of the exact type of the element.
     /// </summary>
-    public enum ChoiceType
-    {
-        /// <summary>
-        /// Not a choice element, element can only contain instances of the exact type of the element.
-        /// </summary>
-        None,
+    None,
 
-        /// <summary>
-        /// Element can contain a resource of any type.
-        /// </summary>
-        ResourceChoice,
+    /// <summary>
+    /// Element can contain a resource of any type.
+    /// </summary>
+    ResourceChoice,
 
-        /// <summary>
-        /// Element can contain instances of a specified list of types.
-        /// </summary>
-        DatatypeChoice
-    }
+    /// <summary>
+    /// Element can contain instances of a specified list of types.
+    /// </summary>
+    DatatypeChoice
 }

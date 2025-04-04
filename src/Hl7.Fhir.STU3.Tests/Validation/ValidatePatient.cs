@@ -6,13 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 namespace Hl7.Fhir.Tests.Validation
@@ -21,31 +21,24 @@ namespace Hl7.Fhir.Tests.Validation
     public class ValidatePatient
     {
         [TestMethod]
-        public void ValidateDemoPatient()
+        public void ValidatingRecursively_Should_EnterListsAppropriately()
         {
             var s = new StringReader(TestDataHelper.ReadTestData(@"TestPatient.xml"));
 
             var patient = new FhirXmlDeserializer().Deserialize<Patient>(XmlReader.Create(s));
+            
+            foreach (var contained in patient.Contained.OfType<DomainResource>()) ((DomainResource)contained).Text = new Narrative() { Div = "<wrong />", Status = Narrative.NarrativeStatus.Generated };
 
-            ICollection<ValidationResult> results = new List<ValidationResult>();
-
-            foreach (var contained in patient.Contained) ((DomainResource)contained).Text = new Narrative() { Div = "<wrong />", Status = Narrative.NarrativeStatus.Generated };
-
-            Assert.IsFalse(patient.TryValidate(results, true));
-            Assert.IsTrue(results.Count > 0);
-
-            results.Clear();
-            foreach (DomainResource contained in patient.Contained) contained.Text = null;
+            patient.Validate().Should().NotBeEmpty();
+            
+            foreach (DomainResource contained in patient.Contained.OfType<DomainResource>()) contained.Text = null;
 
             // Try again
-            Assert.IsTrue(patient.TryValidate(results, true));
+            patient.Validate().Should().BeEmpty();
 
             patient.Identifier[0].System = "urn:oid:crap really not valid";
 
-            results = new List<ValidationResult>();
-
-            Assert.IsFalse(patient.TryValidate(results, true));
-            Assert.IsTrue(results.Count > 0);
+            patient.Validate().Should().NotBeEmpty();
         }
     }
 }

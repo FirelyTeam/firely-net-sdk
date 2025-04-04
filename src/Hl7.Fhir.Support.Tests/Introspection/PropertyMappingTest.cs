@@ -130,7 +130,7 @@ public class ModelInspectorMembersTest
     public class TypeWithCodeOfT
     {
         [FhirElement("type1")]
-        [DeclaredType(Type = typeof(FhirString))]
+        [AllowedTypes(typeof(FhirString))]
         public Code<SomeEnum> Type1 { get; set; }
     }
 

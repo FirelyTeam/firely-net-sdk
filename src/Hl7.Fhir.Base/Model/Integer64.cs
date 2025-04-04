@@ -32,6 +32,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -44,8 +45,9 @@ namespace Hl7.Fhir.Model;
 
 public partial class Integer64
 {
+    [CLSCompliant(false)]
     [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
-    [DeclaredType(Type = typeof(P.Long))]
+    [AllowedTypes(typeof(P.Long))]
     [DataMember]
     public long? Value
     {
@@ -71,7 +73,7 @@ public partial class Integer64
     /// <summary>
     /// Validates the JsonValue and updates the internal cached long value.
     /// </summary>
-    protected internal override COVE? ValidateObjectValue(ValidationContext? context)
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
         if (_parsedValue is not null || base.ObjectValue is null) return null;
 

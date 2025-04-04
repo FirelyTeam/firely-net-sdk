@@ -31,6 +31,7 @@
 #nullable enable
 
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -93,7 +94,7 @@ public partial class FhirDateTime
     /// <summary>
     /// Validates the JsonValue and updates the internal cached DateTime value.
     /// </summary>
-    protected internal override COVE? ValidateObjectValue(ValidationContext? context)
+    protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
         if (_parsedValue is not null || base.ObjectValue is null) return null;
 
