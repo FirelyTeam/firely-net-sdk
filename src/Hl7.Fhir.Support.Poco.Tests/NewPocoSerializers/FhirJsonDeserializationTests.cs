@@ -171,7 +171,6 @@ public class FhirJsonDeserializationTests
     {
         get
         {
-            yield return [5, JsonTokenType.Number, COVE.UNKNOWN_ELEMENT_CODE];
             yield return [new { }, JsonTokenType.EndObject, ERR.NO_RESOURCETYPE_PROPERTY_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE];
             yield return
             [

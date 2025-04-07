@@ -127,13 +127,8 @@ public class BaseFhirJsonDeserializer
     internal Resource? DeserializeResourceInternal(ref Utf8JsonReader reader, FhirJsonPocoDeserializerState state, bool stayOnLastToken)
     {
         if (reader.TokenType != JsonTokenType.StartObject)
-        {
-            var target = (_inspector.FindClassMapping(typeof(DynamicResource))?.Factory() as Resource)!;
-            
-            deserializePropertyInto(target, "value", ref reader, state, new(), stayOnLastToken);
-            
-            return target;
-        }
+            throw new InvalidOperationException($"DeserializeResourceInternal should only be called on JSON objects: " +
+                                                $"Current token is {reader.TokenType}.");
 
         var (resourceMapping, error, resourceType) = DetermineClassMappingFromInstance(ref reader, _inspector, state.Path);
 
