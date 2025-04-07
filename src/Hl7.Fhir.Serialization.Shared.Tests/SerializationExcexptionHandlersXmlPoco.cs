@@ -85,8 +85,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var p = SerializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
-                // no longer complain about unknown elements
-                //Assert.Fail("Expected to throw parsing");
+                Assert.Fail("Expected to throw parsing");
             }
             catch (DeserializationFailedException ex)
             {
@@ -481,7 +480,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 var p = SerializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 // no longer complain about unknown items
-                //Assert.Fail("Expected to throw parsing");
+                Assert.Fail("Expected to throw parsing");
             }
             catch (DeserializationFailedException ex)
             {

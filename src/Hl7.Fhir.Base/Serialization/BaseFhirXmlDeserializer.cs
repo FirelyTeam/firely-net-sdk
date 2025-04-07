@@ -255,7 +255,7 @@ public class BaseFhirXmlDeserializer
             {
                 var (propMapping, propValueMapping, error) = tryGetMappedElementMetadata(_inspector, mapping, reader, state.Path, reader.LocalName);
 
-                if (error is not null)
+                if (propMapping is null || error is not null)
                 {
                     // we don't know this property: Try to parse anyway and throw it into dynamic and overflow
                     deserializeUnknownPropertyValue(target, reader, state);
@@ -268,11 +268,9 @@ public class BaseFhirXmlDeserializer
                     continue;
                 }
 
-                bool validNamespace = true;
-                if (propMapping is not null)
-                    validNamespace = validateNameSpace(reader, state, propMapping);
+                bool validNamespace = validateNameSpace(reader, state, propMapping);
 
-                if (error is null && propMapping is not null && validNamespace)
+                if (error is null && validNamespace)
                 {
                     state.Path.EnterElement(propMapping.Name, !propMapping.IsCollection ? null : 0, propMapping.IsPrimitive);
                     var (order, _) = checkOrder(reader, state, highestOrder, propMapping);
@@ -384,6 +382,7 @@ public class BaseFhirXmlDeserializer
 
     private void parseUnknownAttributeValue(ModelInspector inspector, XmlReader reader, FhirXmlPocoDeserializerState state, Base target)
     {
+        var (lineNumber, position) = reader.GenerateLineInfo();
         var attrName = reader.LocalName;
         var type = reader.ValueType;
         var trimmedVal = reader.Value.Trim();

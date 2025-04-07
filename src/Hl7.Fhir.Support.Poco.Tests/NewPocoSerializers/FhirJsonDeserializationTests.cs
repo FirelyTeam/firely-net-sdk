@@ -442,7 +442,7 @@ public class FhirJsonDeserializationTests
         try
         {
             deserializer.Deserialize<ContactDetail>(ref reader);
-            // Assert.Fail();
+            Assert.Fail();
         }
         catch (DeserializationFailedException)
         {
