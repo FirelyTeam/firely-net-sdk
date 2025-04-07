@@ -11,18 +11,28 @@
   },
   "contained": [
     {
-      "resourceType": "MultiLevelArrayPrimitive",
-      "id": "1",
+      "resourceType": "Patient",
+      "id": "PrimitiveArrayContainsComplex",
+      "active": [ {"value": true}, true ]
+    },
+    {
+      "resourceType": "Patient",
+      "id": "ComplexArrayContainsPrimitive",
+      "name": ["John", {"family": "Doe"}]
+    },
+    {
+      "resourceType": "Patient",
+      "id": "MultiLevelArrayPrimitive",
       "active": [ null, [ true ] ]
     },
     {
-      "resourceType": "MultiLevelArrayPrimitiveNoNull",
-      "id": "1",
+      "resourceType": "Patient",
+      "id": "MultiLevelArrayPrimitiveNoNull",
       "active": [ [ true, [ false ] ] ]
     },
     {
-      "resourceType": "MultiLevelArrayWithComplex",
-      "id": "1",
+      "resourceType": "Patient",
+      "id": "MultiLevelArrayWithComplex",
       "active": [ null, 
         [
           {
@@ -32,8 +42,8 @@
       ]
     },
     {
-      "resourceType": "MultiLevelArrayWithComplexNoNull",
-      "id": "1",
+      "resourceType": "Patient",
+      "id": "MultiLevelArrayWithComplexNoNull",
       "active": [ 
         [ 
           {

@@ -394,6 +394,7 @@ public class BaseFhirXmlDeserializer
             bool b => new FhirBoolean(b),
             string v => new FhirString(v),
             int i => new Integer(i),
+            decimal d => new FhirDecimal(d),
             _ => new DynamicPrimitive() { ObjectValue = val }
         };
         

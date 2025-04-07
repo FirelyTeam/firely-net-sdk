@@ -176,6 +176,17 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
                 SerializePrimitiveValue(value.ObjectValue, writer, requiredType);
             }
+            else if(value is not null && value.EnumerateElements().Any() && !value.HasElements)
+            {
+                if (!wroteStartArray)
+                {
+                    wroteStartArray = true;
+                    writeStartArray(elementName, numNullsMissed, writer);
+                }
+                
+                // serialize overflow
+                serializeInternal(value, writer, filter);
+            }
             else
             {
                 if (wroteStartArray)

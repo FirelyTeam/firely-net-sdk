@@ -476,7 +476,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var p = serializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
-                // Assert.Fail("Expected to throw parsing");
+                Assert.Fail("Expected to throw parsing");
             }
             catch (DeserializationFailedException ex)
             {
@@ -814,7 +814,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var p = serializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
-                // Assert.Fail("Expected to throw parsing");
+                Assert.Fail("Expected to throw parsing");
             }
             catch (DeserializationFailedException ex)
             {
@@ -830,6 +830,71 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(1, oc.Issue.Count);
             }
         }
+        
+        [TestMethod]
+        public void JsonComplexThenPrimitiveArray()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                             {
+                               "resourceType": "Patient",
+                               "id": "pat1",
+                               "active": [ { "value": true }, true ],
+                             }
+                             """;
+            try
+            {
+                var p = serializeResource<Patient>(rawData);
+                DebugDump.OutputJson(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputJson(ex.PartialResult);
+
+                Assert.AreEqual("Patient.active[0]", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.active", oc.Issue[1].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual(COVE.PROPERTY_TYPE_MISMATCH_CODE, oc.Issue[1].Details.Coding[0].Code);
+
+                Assert.AreEqual(2, oc.Issue.Count);
+            }
+        }
+        
+        [TestMethod]
+        public void JsonPrimitiveThenComplexArray()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                             {
+                               "resourceType": "Patient",
+                               "id": "pat1",
+                               "name": [ "John", { "family": "Doe" } ],
+                             }
+                             """;
+            try
+            {
+                var p = serializeResource<Patient>(rawData);
+                DebugDump.OutputJson(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputJson(ex.PartialResult);
+
+                Assert.AreEqual(1, oc.Issue.Count);
+            }
+        }
+
 
         [TestMethod]
         public void JsonInvalidExtensionNonObjectInArray()
@@ -855,7 +920,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var p = serializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
-                // Assert.Fail("Expected to throw parsing");
+                Assert.Fail("Expected to throw parsing");
             }
             catch (DeserializationFailedException ex)
             {
@@ -864,9 +929,9 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual("Patient.birthDate.extension[0]", oc.Issue[0].Expression.First());
+                Assert.AreEqual("Patient.birthDate", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.PROPERTY_TYPE_MISMATCH_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -991,14 +1056,14 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[0].Details.Coding[0].Code);
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("Patient.name[0].given[1].extension[1]", oc.Issue[0].Expression.First());
-                
-                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[1].Details.Coding[0].Code);
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("Patient.name[0].given[1].extension[2].url", oc.Issue[1].Expression.First());
+                Assert.AreEqual("Patient.name[0].given[1].extension[2].url", oc.Issue[0].Expression.First());
 
+                Assert.AreEqual(COVE.PROPERTY_TYPE_MISMATCH_CODE, oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual("Patient.name[0].given[1]", oc.Issue[1].Expression.First());
+                
                 Assert.AreEqual(COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, oc.Issue[2].Details.Coding[0].Code);
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
                 Assert.AreEqual("Patient.name[0].given[1].id", oc.Issue[2].Expression.First());

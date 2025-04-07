@@ -9,6 +9,7 @@
 #nullable enable
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -79,5 +80,35 @@ public static partial class BaseExtensions
         }
 
         return primitive;
+    }
+
+    internal static DynamicDataType ToDynamicDataType(this Base instance)
+    {
+        var dt = new DynamicDataType() { DynamicTypeName = instance.TypeName };
+        
+        foreach(var element in instance.EnumerateElements())
+        {
+            dt.SetValue(element.Key, element.Value);
+        }
+
+        if (instance is PrimitiveType primitive)
+            dt.SetValue("value", primitive);
+
+        return dt;
+    }
+
+    internal static IList ToDynamicDataType(this IList list)
+    {
+        var entries = new List<DynamicDataType>();
+        
+        foreach(object? element in list)
+        {
+            if(element is Base b)
+            {
+                entries.Add(b.ToDynamicDataType());
+            }
+        }
+
+        return entries;
     }
 }
