@@ -393,7 +393,7 @@ public class BaseFhirJsonDeserializer
         }
         else if (reader.TokenType == JsonTokenType.StartObject)
         {
-            propertyValueMapping ??= _inspector.FindClassMapping(nameof(DynamicDataType))!;         
+            propertyValueMapping ??= ClassMapping.DynamicDataType;         
             
             if(existingValue is Base)
                 state.Errors.Add(ERR.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
@@ -911,8 +911,8 @@ public class BaseFhirJsonDeserializer
                 error = ERR.RESOURCE_TYPE_NOT_A_RESOURCE(ref reader, path.GetInstancePath(), resourceMapping.Name);
             else if (resourceType is not null)
                 error = ERR.UNKNOWN_RESOURCE_TYPE(ref reader, path.GetInstancePath(), resourceType);
-            
-            resourceMapping = inspector.FindClassMapping(nameof(DynamicResource));
+
+            resourceMapping = ClassMapping.DynamicResource;
         }
         
         return (resourceMapping, error, resourceType);
@@ -998,7 +998,7 @@ public class BaseFhirJsonDeserializer
             
             if(choiceMapping is null)
             {
-                choiceMapping = inspector.FindClassMapping(nameof(DynamicDataType));
+                choiceMapping = ClassMapping.DynamicDataType;
                 return (choiceMapping, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(ref r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
 
             }

@@ -388,6 +388,10 @@ namespace Hl7.Fhir.Introspection
 
         private static ClassMapping buildNetPrimitiveClassMapping(Type t, FhirRelease release) =>
             new("Net." + t.FullName, t, release) { IsPrimitive = true };
+
+        internal static ClassMapping DynamicResource => new(typeof(DynamicResource).FullName!, typeof(DynamicResource), (FhirRelease)int.MaxValue);
+        internal static ClassMapping DynamicPrimitive => new(typeof(DynamicPrimitive).FullName!, typeof(DynamicPrimitive), (FhirRelease)int.MaxValue);
+        internal static ClassMapping DynamicDataType => new(typeof(DynamicDataType).FullName!, typeof(DynamicDataType), (FhirRelease)int.MaxValue);
     }
 }
 

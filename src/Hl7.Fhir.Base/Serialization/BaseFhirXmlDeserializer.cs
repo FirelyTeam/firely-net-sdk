@@ -326,7 +326,7 @@ public class BaseFhirXmlDeserializer
         
         var (propertyName, choiceType) = tryDetectChoiceTypeFromName(reader.LocalName);
 
-        var mapping = choiceType ?? _inspector.FindClassMapping(nameof(DynamicDataType));
+        var mapping = choiceType ?? ClassMapping.DynamicDataType;
 
         var primitive = (mapping!.Factory() as Base)!;
 
@@ -400,7 +400,7 @@ public class BaseFhirXmlDeserializer
         
         baseVal.AddAnnotation(new XmlRepresentationAnnotation(XmlRepresentation.XmlAttr));
       
-        setPropertyWithRepeating(target, attrName, inspector.FindClassMapping(typeof(DynamicPrimitive))!, baseVal);
+        setPropertyWithRepeating(target, attrName, ClassMapping.DynamicPrimitive, baseVal);
     }
 
     private static (int highestOrder, bool incorrectOrder) checkOrder(XmlReader reader, FhirXmlPocoDeserializerState state, int highestOrder, PropertyMapping propMapping)
@@ -700,11 +700,10 @@ public class BaseFhirXmlDeserializer
     {
         var resourceMapping = inspector.FindClassMapping(reader.LocalName);
 
-        resourceMapping ??= inspector.FindClassMapping(nameof(DynamicResource));
-
-        return resourceMapping is not null ?
-            (new(resourceMapping, null)) :
-            (new(null, ERR.UNKNOWN_RESOURCE_TYPE(reader, path.GetInstancePath(), reader.LocalName)));
+        if(resourceMapping is not null)
+            return (resourceMapping, null);
+        
+        return (ClassMapping.DynamicResource, ERR.UNKNOWN_RESOURCE_TYPE(reader, path.GetInstancePath(), reader.LocalName));
     }
 
     /// <summary>
@@ -750,7 +749,7 @@ public class BaseFhirXmlDeserializer
             
             if(choiceMapping is null)
             {
-                choiceMapping = inspector.FindClassMapping(nameof(DynamicDataType));
+                choiceMapping = ClassMapping.DynamicDataType;
                 return (choiceMapping, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
             }
             
