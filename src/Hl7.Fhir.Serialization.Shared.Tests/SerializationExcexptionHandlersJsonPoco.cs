@@ -866,7 +866,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Patient.birthDate.extension[0]", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual(COVE.PROPERTY_TYPE_MISMATCH_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
             }
@@ -933,7 +933,7 @@ namespace Hl7.Fhir.Serialization.Tests
                       "given": [ "Rita", true ],
                       "_given": [ null, { "id": "e2" }]
                     }
-                    ]
+                  ]
                 }
                 """;
             // This feels like a breaking case and should be fatal if there are more than 1 name/_name
@@ -973,7 +973,7 @@ namespace Hl7.Fhir.Serialization.Tests
                       "given":[ "Jane", "John" ],
                       "_given":[null, { "id": true, "extension": [{"url": "http://expal"}, "string", {"valueString":"str"}] }]
                     }
-                    ]
+                  ]
                 }
                 """;
             // This feels like a breaking case and should be fatal if there are more than 1 name/_name

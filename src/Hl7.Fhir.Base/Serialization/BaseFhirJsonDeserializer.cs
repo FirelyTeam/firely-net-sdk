@@ -276,7 +276,7 @@ public class BaseFhirJsonDeserializer
 
         // Only run instance validation when deserialization yielded no errors
         // to avoid spurious error messages.
-        if (Settings.Validator is not null)
+        if (Settings.Validator is not null && kind != DeserializedObjectKind.FhirPrimitive)
         {
             var context = new PocoValidationContext(target, _inspector, state.Path.GetInstancePath, line,pos, Settings.NarrativeValidation);
             state.Errors.Add(Settings.Validator.ValidateObject(target, mapping, context));
@@ -585,7 +585,8 @@ public class BaseFhirJsonDeserializer
             else
             {
                 var ele = (Base)propertyValueMapping.Factory();
-                deserializePropertyInto(ele, "value", ref reader, state, new ObjectParsingState());
+                var name = $"{state.Path.GetLastPart()}[{existingList.Count}]";
+                deserializePropertyInto(ele, name, ref reader, state, new ObjectParsingState());
                 existingList.Add(ele);
             }
 
@@ -797,11 +798,12 @@ public class BaseFhirJsonDeserializer
             }
             else
             {
+                var trimName = elementName.TrimStart('_');
                 parsingState.ScheduleDelayedValidation(
-                    elementName + INSTANCE_VALIDATION_KEY_SUFFIX,
+                    trimName + INSTANCE_VALIDATION_KEY_SUFFIX,
                     () =>
                     {
-                        state.Path.EnterElement(elementName, null,
+                        state.Path.EnterElement(trimName, null,
                             propertyValueMapping.IsPrimitive);
                         state.Errors.Add(Settings.Validator.ValidateObject(targetPrimitive, propertyValueMapping, context));
                         state.Path.ExitElement();
