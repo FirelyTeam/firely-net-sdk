@@ -69,7 +69,7 @@ public static partial class BaseExtensions
 
     internal static DynamicPrimitive ToDynamicPrimitive(this Base instance)
     {
-        var primitive = new DynamicPrimitive();
+        var primitive = new DynamicPrimitive { DynamicTypeName = instance.TypeName};
         
         foreach(var element in instance.EnumerateElements())
         {
@@ -84,7 +84,7 @@ public static partial class BaseExtensions
 
     internal static DynamicDataType ToDynamicDataType(this Base instance)
     {
-        var dt = new DynamicDataType() { DynamicTypeName = instance.TypeName };
+        var dt = new DynamicDataType { DynamicTypeName = instance.TypeName };
         
         foreach(var element in instance.EnumerateElements())
         {

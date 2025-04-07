@@ -21,10 +21,14 @@
     {
       "resourceType": "Patient",
       "active": [
+        null,
+        true
+      ],
+      "_active": [
         {
           "value": true
         },
-        true
+        null
       ],
       "id": "PrimitiveArrayContainsComplex"
     },
@@ -58,7 +62,7 @@
     },
     {
       "resourceType": "Patient",
-      "active": [
+      "_active": [
         null,
         {
           "versionId": "2"
@@ -69,10 +73,14 @@
     {
       "resourceType": "Patient",
       "active": [
+        null,
+        true
+      ],
+      "_active": [
         {
           "versionId": "2"
         },
-        true
+        null
       ],
       "id": "MultiLevelArrayWithComplexNoNull"
     },
@@ -140,7 +148,7 @@
       "birthDate": "1973-05-31",
       "address": [
         {
-          "use": {
+          "_use": {
             "incorrect": "should have been a simple string"
           },
           "line": [

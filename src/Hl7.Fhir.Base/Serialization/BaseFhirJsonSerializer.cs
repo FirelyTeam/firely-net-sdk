@@ -176,17 +176,6 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
                 SerializePrimitiveValue(value.ObjectValue, writer, requiredType);
             }
-            else if(value is not null && value.EnumerateElements().Any() && !value.HasElements)
-            {
-                if (!wroteStartArray)
-                {
-                    wroteStartArray = true;
-                    writeStartArray(elementName, numNullsMissed, writer);
-                }
-                
-                // serialize overflow
-                serializeInternal(value, writer, filter);
-            }
             else
             {
                 if (wroteStartArray)
@@ -207,7 +196,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
         foreach (var value in values)
         {
-            if (value?.HasElements == true)
+            if (value?.EnumerateElements().Any() == true)
             {
                 if (!wroteStartArray)
                 {
@@ -253,16 +242,8 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             writer.WritePropertyName(elementName);
             SerializePrimitiveValue(value.ObjectValue, writer, requiredType);
         }
-        // Since the object is not null, try overflow, but only if no extension data defined
-        else if(value.EnumerateElements().Any() && !value.HasElements)
-        {
-            // Write a property with 'elementName'
-            writer.WritePropertyName(elementName);
-            // serialize overflow
-            serializeInternal(value, writer, filter);
-        }
 
-        if (!value.HasElements) return;
+        if (!value.EnumerateElements().Any()) return;
 
         // Write a property with '_elementName'
         writer.WritePropertyName("_" + elementName);
