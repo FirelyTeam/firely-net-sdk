@@ -184,13 +184,13 @@ public class BaseFhirXmlDeserializer
         }
     }
 
-    private static bool validateNameSpace(XmlReader reader, FhirXmlPocoDeserializerState state, PropertyMapping? propMapping)
+    private static void validateNameSpace(XmlReader reader, FhirXmlPocoDeserializerState state, PropertyMapping? propMapping)
     {
         if (string.IsNullOrEmpty(reader.NamespaceURI))
         {
             state.Errors.Add(ERR.EMPTY_ELEMENT_NAMESPACE(reader, state.Path.GetInstancePath(), reader.LocalName));
         }
-        else if (propMapping?.SerializationHint == Specification.XmlRepresentation.XHtml)
+        else if (propMapping?.SerializationHint == XmlRepresentation.XHtml)
         {
             if (reader.NamespaceURI != XmlNs.XHTML)
             {
@@ -200,9 +200,7 @@ public class BaseFhirXmlDeserializer
         else if (reader.NamespaceURI != XmlNs.FHIR)
         {
             state.Errors.Add(ERR.INCORRECT_ELEMENT_NAMESPACE(reader, state.Path.GetInstancePath(), reader.LocalName, reader.NamespaceURI));
-            return false; // the only case we want to NOT process the content for anyway
         }
-        return true;
     }
 
     internal Base DeserializeElementInternal(Type targetType, XmlReader reader, FhirXmlPocoDeserializerState state)
@@ -253,9 +251,15 @@ public class BaseFhirXmlDeserializer
             int highestOrder = 0;
             while (reader.NodeType != XmlNodeType.EndElement)
             {
-                var (propMapping, propValueMapping, error) = tryGetMappedElementMetadata(_inspector, mapping, reader, state.Path, reader.LocalName);
+                var (propMapping, propValueMapping) = tryGetMappedElementMetadata(_inspector, mapping, reader, reader.LocalName);
 
-                if (error is not null)
+                // If this resulted in an unknown type, set its name
+                {
+                       state.Errors.Add(ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(reader, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
+
+                }
+
+                if (propMapping is null)
                 {
                     // we don't know this property: Try to parse anyway and throw it into dynamic and overflow
                     deserializeUnknownPropertyValue(target, reader, state);
@@ -268,35 +272,19 @@ public class BaseFhirXmlDeserializer
                     continue;
                 }
 
-                bool validNamespace = true;
-                if (propMapping is not null)
-                    validNamespace = validateNameSpace(reader, state, propMapping);
+                validateNameSpace(reader, state, propMapping);
 
-                if (error is null && propMapping is not null && validNamespace)
+                state.Path.EnterElement(propMapping.Name, !propMapping.IsCollection ? null : 0, propMapping.IsPrimitive);
+                var (order, _) = checkOrder(reader, state, highestOrder, propMapping);
+                highestOrder = order;
+
+                try
                 {
-                    state.Path.EnterElement(propMapping.Name, !propMapping.IsCollection ? null : 0, propMapping.IsPrimitive);
-                    var (order, _) = checkOrder(reader, state, highestOrder, propMapping);
-                    highestOrder = order;
-
-                    try
-                    {
-                        deserializePropertyValue(target, reader, state, oldErrors, propMapping, propValueMapping);
-                    }
-                    finally
-                    {
-                        state.Path.ExitElement();
-                    }
+                    deserializePropertyValue(target, reader, state, oldErrors, propMapping, propValueMapping);
                 }
-                else
+                finally
                 {
-                    // we don't know this property: error is already thrown in "tryGetMappedElementMetadata(_inspector, mapping, reader, name)";
-                    // So skip processing this node
-                    reader.Skip();
-                    // And continue to skip while the node is something we don't care about such as whitespace
-                    while (reader.ShouldSkipNodeType(state))
-                    {
-                        reader.Skip();
-                    }
+                    state.Path.ExitElement();
                 }
             }
         }
@@ -547,7 +535,7 @@ public class BaseFhirXmlDeserializer
             // now we should be at the closing element of the resource container (e.g. </contained>). We should check that and maybe fix that.)
             if (reader.Depth != depth && reader.NodeType != XmlNodeType.EndElement)
             {
-                state.Errors.Add(ERR.UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath(),
+                state.Errors.Add(ERR.DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath(),
                     reader.LocalName));
 
                 // skip until we're back at the closing of the </contained>
@@ -714,34 +702,29 @@ public class BaseFhirXmlDeserializer
     /// <remarks>In case the name is a choice type, the type suffix will be used to determine the returned
     /// <see cref="ClassMapping"/>, otherwise the <see cref="PropertyMapping.ImplementingType"/> is used.
     /// </remarks>
-    private static (PropertyMapping? propMapping, ClassMapping? propValueMapping, FhirXmlException? error) tryGetMappedElementMetadata(
+    private static (PropertyMapping? propMapping, ClassMapping? propValueMapping) tryGetMappedElementMetadata(
         ModelInspector inspector,
         ClassMapping parentMapping,
         XmlReader reader,
-        PathStack path,
         string propertyName)
     {
         var propertyMapping = parentMapping.FindMappedElementByName(propertyName)
                               ?? parentMapping.FindMappedElementByChoiceName(propertyName);
 
         if (propertyMapping is null)
-        {
-            return (null, null, ERR.UNKNOWN_ELEMENT(reader, path.GetInstancePath(), propertyName));
-        }
+            return (null, null);
 
-        (ClassMapping? propertyValueMapping, FhirXmlException? error) = propertyMapping.Choice switch
+        ClassMapping propertyValueMapping = propertyMapping.Choice switch
         {
             ChoiceType.None or ChoiceType.ResourceChoice =>
-                inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) is { } m
-                    ? (m, null)
-                    : throw new InvalidOperationException($"Encountered property type {propertyMapping.ImplementingType} for which no mapping was found in the model assemblies. " + reader.GenerateLocationMessage()),
-            ChoiceType.DatatypeChoice => getChoiceClassMapping(reader),
+                inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) ?? throw new InvalidOperationException($"Encountered property type {propertyMapping.ImplementingType} for which no mapping was found in the model assemblies. " + reader.GenerateLocationMessage()),
+            ChoiceType.DatatypeChoice => getChoiceClassMapping(),
             _ => throw new NotImplementedException("Unknown choice type in property mapping. " + reader.GenerateLocationMessage())
         };
 
-        return (propertyMapping, propertyValueMapping, error);
+        return (propertyMapping, propertyValueMapping);
 
-        (ClassMapping?, FhirXmlException?) getChoiceClassMapping(XmlReader r)
+        ClassMapping getChoiceClassMapping()
         {
             ClassMapping? choiceMapping = null;
             string typeSuffix = propertyName[propertyMapping.Name.Length..];
@@ -749,12 +732,7 @@ public class BaseFhirXmlDeserializer
             if(!string.IsNullOrEmpty(typeSuffix))
                 choiceMapping = inspector.FindClassMapping(typeSuffix);
 
-            choiceMapping ??= inspector.FindClassMapping(nameof(DynamicDataType));
-            
-            if(choiceMapping is not null)
-                return (choiceMapping, null);
-            
-            return (null, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
+            return choiceMapping ?? inspector.FindClassMapping(nameof(DynamicDataType))!;
         }
     }
 }

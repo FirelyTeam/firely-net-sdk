@@ -51,17 +51,11 @@ public class FhirJsonException : ExtendedCodedException
     // ==========================================
     // Unrecoverable Errors
     // ==========================================
-    // internal static FhirJsonException EXPECTED_START_OF_OBJECT(ref Utf8JsonReader reader, string instancePath, JsonTokenType value) => Initialize(ref reader, instancePath, EXPECTED_START_OF_OBJECT_CODE, $"Expected start of object, but found {value}.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException RESOURCETYPE_SHOULD_BE_STRING(ref Utf8JsonReader reader, string instancePath, JsonTokenType value) => Initialize(ref reader, instancePath, RESOURCETYPE_SHOULD_BE_STRING_CODE, $"Property 'resourceType' should be a string, but found {value}.", OO_Sev.Fatal, OO_Typ.Value);
     internal static FhirJsonException NO_RESOURCETYPE_PROPERTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, NO_RESOURCETYPE_PROPERTY_CODE, "Resource has no 'resourceType' property.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirJsonException EXPECTED_PRIMITIVE_NOT_OBJECT(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, EXPECTED_PRIMITIVE_NOT_OBJECT_CODE, "Expected a primitive value, not a json object.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirJsonException EXPECTED_PRIMITIVE_NOT_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, "Expected a primitive value, not the start of an array.", OO_Sev.Fatal, OO_Typ.Structure);
-    // internal static FhirJsonException CHOICE_ELEMENT_HAS_NO_TYPE(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_HAS_NO_TYPE_CODE, $"Choice element '{propName}' is not suffixed with a type.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException CHOICE_ELEMENT_HAS_UNKOWN_TYPE(ref Utf8JsonReader reader, string instancePath, string value, string typeValue) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, $"Choice element '{value}' is suffixed with an unrecognized type '{typeValue}'.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException UNKNOWN_RESOURCE_TYPE(ref Utf8JsonReader reader, string instancePath, string resourceType) => Initialize(ref reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{resourceType}' found in 'resourceType' property.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException RESOURCE_TYPE_NOT_A_RESOURCE(ref Utf8JsonReader reader, string instancePath, string name) => Initialize(ref reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{name}' in property 'resourceType' is not a type of resource.", OO_Sev.Fatal, OO_Typ.Structure);
-    //internal static FhirJsonException UNKNOWN_PROPERTY_FOUND(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, UNKNOWN_PROPERTY_FOUND_CODE, $"Encountered unrecognized element '{propName}'.", OO_Sev.Error, OO_Typ.Structure); // this could be ignored, so isn't fatal?
-
     internal static FhirJsonException DUPLICATE_PROPERTY(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, DUPLICATE_PROPERTY_CODE, $"Encountered duplicate property '{propName}'.", OO_Sev.Fatal, OO_Typ.Structure);
 
     // ==========================================
@@ -100,12 +94,14 @@ public class FhirJsonException : ExtendedCodedException
     [
         ..CodedValidationException.POCO_VALIDATION_ISSUES,
         EXPECTED_PRIMITIVE_NOT_NULL_CODE,
+        PROPERTY_MAY_NOT_BE_EMPTY_CODE,
+        DUPLICATE_ARRAY_CODE,
+        NESTED_ARRAY_CODE,
         EXPECTED_START_OF_ARRAY_CODE,
+        USE_OF_UNDERSCORE_ILLEGAL_CODE,
         OBJECTS_CANNOT_BE_EMPTY_CODE,
         ARRAYS_CANNOT_BE_EMPTY_CODE,
         PRIMITIVE_ARRAYS_ONLY_NULL_CODE,
-        PROPERTY_MAY_NOT_BE_EMPTY_CODE,
-        DUPLICATE_ARRAY_CODE
     ];
 #pragma warning restore CS0618 // Type or member is obsolete
 

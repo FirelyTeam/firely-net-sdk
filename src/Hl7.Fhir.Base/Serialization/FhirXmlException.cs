@@ -25,16 +25,16 @@ public class FhirXmlException : ExtendedCodedException
     public const string EMPTY_ELEMENT_NAMESPACE_CODE = "XML101";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "XML102";
     public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "XML103";
-    public const string UNKNOWN_ELEMENT_CODE = "XML104";
+    //public const string UNKNOWN_ELEMENT_CODE = "XML104";
     public const string CHOICE_ELEMENT_HAS_NO_TYPE_CODE = "XML105";
     public const string CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE = "XML106";
     public const string INCORRECT_XHTML_NAMESPACE_CODE = "XML107";
-    public const string UNKNOWN_ATTRIBUTE_CODE = "XML108";
+    //public const string UNKNOWN_ATTRIBUTE_CODE = "XML108";
     public const string ELEMENT_OUT_OF_ORDER_CODE = "XML109";
-    public const string UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE = "XML110";
+    public const string DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE = "XML110";
     public const string NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE = "XML111";
     public const string INCORRECT_ELEMENT_NAMESPACE_CODE = "XML112";
-    public const string UNALLOWED_NODE_TYPE_CODE = "XML113";
+    public const string DISALLOWED_NODE_TYPE_CODE = "XML113";
     public const string INCORRECT_ATTRIBUTE_NAMESPACE_CODE = "XML114";
     public const string ATTRIBUTE_HAS_EMPTY_VALUE_CODE = "XML115";
     public const string ELEMENT_NOT_IN_SEQUENCE_CODE = "XML116";
@@ -50,13 +50,10 @@ public class FhirXmlException : ExtendedCodedException
     // ==========================================
     internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root property.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE(XmlReader reader, string instancePath, string resourceType) => Initialize(reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{resourceType}' in property 'resourceType' is not a type of resource.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException UNKNOWN_ELEMENT(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, UNKNOWN_ELEMENT_CODE, $"Encountered unrecognized element '{elementName}'.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException CHOICE_ELEMENT_HAS_NO_TYPE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, CHOICE_ELEMENT_HAS_NO_TYPE_CODE, $"Choice element '{elementName}' is not suffixed with a type.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException CHOICE_ELEMENT_HAS_UNKOWN_TYPE(XmlReader reader, string instancePath, string elementName, string typeSuffix) => Initialize(reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeSuffix}'.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException UNKNOWN_ATTRIBUTE(XmlReader reader, string instancePath, string s0) => Initialize(reader, instancePath, UNKNOWN_ATTRIBUTE_CODE, $"Encountered unrecognized attribute '{s0}'.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string s0) => Initialize(reader, instancePath, UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE, $"Encountered unallowed content '{s0}' in the resource container. Only a single resource is allowed.", OO_Sev.Fatal, OO_Typ.Structure);
+    internal static FhirXmlException DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string s0) => Initialize(reader, instancePath, DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE, $"Encountered unallowed content '{s0}' in the resource container. Only a single resource is allowed.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, $"Element '{elementName}' has a contained resource and therefore should not have attributes.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException UNALLOWED_NODE_TYPE(XmlReader reader, string instancePath, string s0) => Initialize(reader, instancePath, UNALLOWED_NODE_TYPE_CODE, $"Xml node of type '{s0}' is unexpected at this point", OO_Sev.Fatal, OO_Typ.Structure);
+    internal static FhirXmlException DISALLOWED_NODE_TYPE(XmlReader reader, string instancePath, string s0) => Initialize(reader, instancePath, DISALLOWED_NODE_TYPE_CODE, $"Xml node of type '{s0}' is unexpected at this point", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException EXPECTED_OPENING_ELEMENT(XmlReader reader, string instancePath, string openElementName) => Initialize(reader, instancePath, EXPECTED_OPENING_ELEMENT_CODE, $"Expected opening element, but found {openElementName}.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException INVALID_DUPLICATE_PROPERTY(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, INVALID_DUPLICATE_PROPERTY_CODE, $"Element '{elementName}' is not permitted to repeat.", OO_Sev.Error, OO_Typ.Structure);
 
@@ -124,9 +121,8 @@ public class FhirXmlException : ExtendedCodedException
     internal static readonly string[] BACKWARDS_COMPATIBILITY_ALLOWED_ISSUES =
     [
         CodedValidationException.INVALID_CODED_VALUE_CODE,
-        UNKNOWN_ELEMENT_CODE,
+        CodedValidationException.UNKNOWN_ELEMENT_CODE,
         CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE,
-        UNKNOWN_ATTRIBUTE_CODE
     ];
 
     public FhirXmlException(string code, string message)

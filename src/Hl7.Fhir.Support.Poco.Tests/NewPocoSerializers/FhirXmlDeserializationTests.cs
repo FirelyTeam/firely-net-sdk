@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var state = new FhirXmlPocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 
-            state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE);
+            state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE);
 
             resource.Should().BeOfType<Patient>();
             resource.As<Patient>().Active.Value.Should().Be(true);

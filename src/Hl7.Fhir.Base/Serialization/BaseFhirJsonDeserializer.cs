@@ -837,19 +837,8 @@ public class BaseFhirJsonDeserializer
     /// <returns>A value without an error if the data could be parsed to the required type, and a value with an error if the
     /// value could not be parsed - in which case the value returned is the raw value coming in from the reader.</returns>
     /// <remarks>Upon completion, the reader will be positioned on the token after the primitive.</remarks>
-    internal (object?, FhirJsonException?) DeserializePrimitiveValue(ref Utf8JsonReader reader,  Type? valuePropertyType, PathStack pathStack)
+    internal (object?, ERR?) DeserializePrimitiveValue(ref Utf8JsonReader reader,  Type? valuePropertyType, PathStack pathStack)
     {
-        // Check for unexpected non-value types.
-        if (reader.TokenType is JsonTokenType.StartObject or JsonTokenType.StartArray)
-        {
-            var exception = reader.TokenType == JsonTokenType.StartObject
-                ? ERR.EXPECTED_PRIMITIVE_NOT_OBJECT(ref reader, pathStack.GetInstancePath())
-                : ERR.EXPECTED_PRIMITIVE_NOT_ARRAY(ref reader, pathStack.GetInstancePath());
-            reader.Recover();
-            return (null, exception);
-        }
-
-        // Check for value types
         (object? partial, ERR? error) result = reader.TokenType switch
         {
             JsonTokenType.Null => (null, ERR.EXPECTED_PRIMITIVE_NOT_NULL(ref reader, pathStack.GetInstancePath())),

@@ -49,7 +49,7 @@ public class CodedValidationException : ExtendedCodedException
     public const string UNKNOWN_ELEMENT_CODE = "PVAL128";
     
 
-    // A list of all issues mentioned above, to we can filter on them.
+    // A list of all issues mentioned above, so we can filter on them.
     internal static readonly HashSet<string> POCO_VALIDATION_ISSUES =
     [
         CHOICE_TYPE_NOT_ALLOWED_CODE,

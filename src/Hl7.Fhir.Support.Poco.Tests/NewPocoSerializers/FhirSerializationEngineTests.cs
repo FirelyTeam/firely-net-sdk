@@ -50,7 +50,7 @@ public class FhirSerializationEngineTests
     private const string POCO_INCORRECT_REPEAT = "*Expected a primitive value, not the start of an array.*";
     private const string POCO_EXPECTED_OBJECT = "*Expected start of object, but found Number*";
     private const string POCO_EMPTY_VALUE = "* cannot be empty*. Either they are absent*";
-    private const string POCO_WRONGXML = """{ "resourceType": "Patient", "contact": 5 }""";
+    private const string POCO_WRONGXML = """<Patient xmlns="http://hl7.org/fhir"><contained value="1i" /></Patient>""";
     private const string POCO_WRONGJSON = """{ "resourceType": "Patient", "active": [true,false] }""";
 
     [TestMethod]
