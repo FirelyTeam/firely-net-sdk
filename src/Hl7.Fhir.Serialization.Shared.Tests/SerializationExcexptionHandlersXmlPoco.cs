@@ -135,11 +135,11 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputXml(ex.PartialResult);
 
-                Assert.AreEqual("Patient.active", oc.Issue[0].Expression.First());
+                Assert.AreEqual("Patient.name[0]", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("XML121", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.UNKNOWN_ELEMENT_CODE, oc.Issue[0].Details.Coding[0].Code);
 
-                Assert.AreEqual(3, oc.Issue.Count);
+                Assert.AreEqual(1, oc.Issue.Count);
             }
         }
 

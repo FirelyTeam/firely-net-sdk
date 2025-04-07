@@ -323,12 +323,13 @@ public class BaseFhirXmlDeserializer
     {
         var oldErrors = state.Errors.Count;
         var (lineNumber, position) = reader.GenerateLineInfo();
-        
-        var (propertyName, choiceType) = tryDetectChoiceTypeFromName(reader.LocalName);
 
-        var mapping = choiceType ?? ClassMapping.DynamicDataType;
+        var propertyName = reader.LocalName;
+        // var (propertyName, choiceType) = tryDetectChoiceTypeFromName(reader.LocalName);
 
-        var primitive = (mapping!.Factory() as Base)!;
+        var mapping = ClassMapping.DynamicDataType;
+
+        var primitive = (mapping.Factory() as Base)!;
 
         // primitive with value in content
         if (reader.NodeType == XmlNodeType.Text && string.IsNullOrEmpty(propertyName))
@@ -360,24 +361,24 @@ public class BaseFhirXmlDeserializer
         }
         
         
-        (string name, ClassMapping? choiceType) tryDetectChoiceTypeFromName(string propertyName)
-        {
-            var span = propertyName.AsSpan();
-            for(int i = 0; i < span.Length; i++)
-            {
-                if (!char.IsUpper(span[i])) 
-                    continue;
-
-                var subSpan = span.Slice(i);
-                if (subSpan.IsEmpty)
-                    break;
-                
-                var choiceMapping = _inspector.FindClassMapping(subSpan.ToString());
-                if (choiceMapping is not null)
-                    return (span[..i].ToString(), choiceMapping);
-            }
-            return (propertyName, null);
-        }
+        // (string name, ClassMapping? choiceType) tryDetectChoiceTypeFromName(string propertyName)
+        // {
+        //     var span = propertyName.AsSpan();
+        //     for(int i = 0; i < span.Length; i++)
+        //     {
+        //         if (!char.IsUpper(span[i])) 
+        //             continue;
+        //
+        //         var subSpan = span.Slice(i);
+        //         if (subSpan.IsEmpty)
+        //             break;
+        //         
+        //         var choiceMapping = _inspector.FindClassMapping(subSpan.ToString());
+        //         if (choiceMapping is not null)
+        //             return (span[..i].ToString(), choiceMapping);
+        //     }
+        //     return (propertyName, null);
+        // }
     }
 
     private void parseUnknownAttributeValue(ModelInspector inspector, XmlReader reader, FhirXmlPocoDeserializerState state, Base target)
@@ -401,6 +402,18 @@ public class BaseFhirXmlDeserializer
         baseVal.AddAnnotation(new XmlRepresentationAnnotation(XmlRepresentation.XmlAttr));
       
         setPropertyWithRepeating(target, attrName, ClassMapping.DynamicPrimitive, baseVal);
+        
+        if (Settings.Validator is not null && Settings.ValidateOnFailedParse && target is not IDynamicType)
+        {
+            var context = new PocoValidationContext(
+                target,
+                _inspector,
+                state.Path.GetInstancePath, // should this path GetPath or this?
+                lineNumber, position,
+                Settings.NarrativeValidation);
+
+            state.Errors.Add(Settings.Validator.ValidateProperty(attrName, baseVal, null, context));
+        }
     }
 
     private static (int highestOrder, bool incorrectOrder) checkOrder(XmlReader reader, FhirXmlPocoDeserializerState state, int highestOrder, PropertyMapping propMapping)
@@ -599,7 +612,7 @@ public class BaseFhirXmlDeserializer
                         }
                         else
                         {   
-                            state.Path.EnterElement(elementName, 0, true);
+                            state.Path.EnterElement(reader.LocalName, 0, true);
                             try
                             {
                                 // handle unknown property
