@@ -215,7 +215,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// test-engine | client | server.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("TestReportParticipantType")]
@@ -260,7 +259,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The uri of the participant. An absolute URL is preferred.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("uri", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -303,7 +301,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The display name of the participant.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("display", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DisplayElement
@@ -410,7 +407,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -469,7 +466,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A setup operation or assert that was executed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -542,7 +538,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "action":
@@ -587,7 +583,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The operation to perform.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("operation", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.TestReport.OperationComponent? Operation
@@ -614,7 +609,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The assertion to perform.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("assert", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.TestReport.AssertComponent? Assert
@@ -696,7 +690,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "operation":
@@ -749,7 +743,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// pass | skip | fail | warning | error.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("result", Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("TestReportActionResult")]
@@ -794,7 +787,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A message associated with the result.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("message", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? MessageElement
@@ -836,7 +828,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A link to further details on the result.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("detail", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? DetailElement
@@ -943,7 +934,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "result":
@@ -1005,7 +996,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// pass | skip | fail | warning | error.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("result", Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("TestReportActionResult")]
@@ -1050,7 +1040,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A message associated with the result.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("message", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? MessageElement
@@ -1092,7 +1081,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A link to further details on the result.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("detail", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DetailElement
@@ -1134,7 +1122,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Links or references to the testing requirements.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("requirement", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1237,7 +1224,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "result":
@@ -1309,8 +1296,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Link or reference to the testing requirement.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("link", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Link
@@ -1382,7 +1369,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "link":
@@ -1423,7 +1410,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Tracking/logging name of this test.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -1465,7 +1451,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Tracking/reporting short description of the test.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -1507,7 +1492,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A test operation or assert that was performed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("action", Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -1600,7 +1584,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "name":
@@ -1663,7 +1647,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The operation performed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("operation", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.TestReport.OperationComponent? Operation
@@ -1690,7 +1673,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The assertion performed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("assert", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.TestReport.AssertComponent? Assert
@@ -1772,7 +1754,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "operation":
@@ -1825,7 +1807,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// One or more teardown operations performed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -1898,7 +1879,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "action":
@@ -1943,7 +1924,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The teardown operation performed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("operation", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2016,7 +1996,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "operation":
@@ -2044,7 +2024,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -2071,7 +2050,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Informal name of the executed TestReport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -2113,7 +2091,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// completed | in-progress | waiting | stopped | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("TestReportStatus")]
@@ -2158,7 +2135,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical URL to the  version-specific TestScript that was executed to produce this TestReport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("testScript", InSummary=true, Order=120)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2201,7 +2177,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// pass | fail | pending.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("result", InSummary=true, Order=130)]
     [AllowedTypes(typeof(Code))]
     [Binding("TestReportResult")]
@@ -2246,7 +2221,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The final score (percentage of tests passed) resulting from the execution of the TestScript.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("score", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? ScoreElement
@@ -2288,7 +2262,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the tester producing this report (Organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("tester", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TesterElement
@@ -2330,7 +2303,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the TestScript was executed and this TestReport was generated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("issued", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? IssuedElement
@@ -2372,7 +2344,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A participant in the test execution, either the execution engine, a client, or a server.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participant", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2400,7 +2371,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The results of the series of required setup operations before the tests were executed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("setup", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.TestReport.SetupComponent? Setup
@@ -2427,7 +2397,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A test executed from the test script.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("test", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2455,7 +2424,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The results of running the series of required clean up steps.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("teardown", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.TestReport.TeardownComponent? Teardown
@@ -2639,7 +2607,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

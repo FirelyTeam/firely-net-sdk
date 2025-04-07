@@ -83,7 +83,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of resource.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("ResourceType")]
@@ -128,8 +127,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Profile that must be adhered to by focus.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("profile", Order=50)]
+      [CLSCompliant(false)]
       [References("StructureDefinition")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Profile
@@ -156,7 +155,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Minimum number of focuses of this type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("min", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt? MinElement
@@ -198,7 +196,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Maximum number of focuses of this type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("max", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MaxElement
@@ -315,7 +312,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -387,8 +384,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to allowed message definition response.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("message", Order=40)]
+      [CLSCompliant(false)]
       [References("MessageDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -416,7 +413,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When should this response be used.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("situation", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? SituationElement
@@ -513,7 +509,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "message":
@@ -550,7 +546,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this message definition (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -592,7 +587,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the message definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -619,7 +613,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the message definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -661,7 +654,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this message definition (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -703,7 +695,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this message definition (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -745,7 +736,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -790,7 +780,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -832,7 +821,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -875,7 +863,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=170, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -917,7 +904,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -945,7 +931,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the message definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -987,7 +972,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1015,7 +999,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for message definition (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1044,7 +1027,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this message definition is defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("purpose", InSummary=true, Order=220, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -1086,7 +1068,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -1128,8 +1109,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition this one is based on.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("base", InSummary=true, Order=240)]
+    [CLSCompliant(false)]
     [References("MessageDefinition")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Base
@@ -1156,8 +1137,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Protocol/workflow this is part of.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parent", InSummary=true, Order=250)]
+    [CLSCompliant(false)]
     [References("ActivityDefinition","PlanDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1185,8 +1166,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Takes the place of.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("replaces", InSummary=true, Order=260)]
+    [CLSCompliant(false)]
     [References("MessageDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1214,7 +1195,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Event type.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("event", InSummary=true, Order=270)]
     [Binding("MessageEvent")]
     [Cardinality(Min=1,Max=1)]
@@ -1243,7 +1223,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Consequence | Currency | Notification.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=280)]
     [AllowedTypes(typeof(Code))]
     [Binding("MessageSignificanceCategory")]
@@ -1287,7 +1266,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource(s) that are the subject of the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("focus", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1315,7 +1293,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Is a response required?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("responseRequired", Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ResponseRequiredElement
@@ -1357,7 +1334,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responses to this message.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("allowedResponse", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1652,7 +1628,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

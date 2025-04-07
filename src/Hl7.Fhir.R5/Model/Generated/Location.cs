@@ -133,7 +133,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Longitude with WGS84 datum.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("longitude", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -176,7 +175,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Latitude with WGS84 datum.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("latitude", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -219,7 +217,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Altitude with WGS84 datum.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("altitude", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? AltitudeElement
@@ -326,7 +323,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "longitude":
@@ -372,7 +369,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique code or number identifying the location to its users.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -400,7 +396,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | suspended | inactive.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("LocationStatus")]
@@ -444,7 +439,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The operational status of the location (typically only for a bed/room).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("operationalStatus", InSummary=true, Order=110, FiveWs="FiveWs.status")]
     [Binding("OperationalStatus")]
     [DataMember]
@@ -472,7 +466,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the location as used by humans.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -514,7 +507,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A list of alternate names that the location is known as, or was known as, in the past.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("alias", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -560,7 +552,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional details about the location that could be displayed as further information to identify the location beyond its name.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -602,7 +593,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// instance | kind.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("mode", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("LocationMode")]
@@ -646,7 +636,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of function performed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [Binding("LocationType")]
     [Cardinality(Min=0,Max=-1)]
@@ -675,7 +664,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Official contact details for the location.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -703,7 +691,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Physical location.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("address", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Address? Address
@@ -730,7 +717,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Physical form of the location.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("form", InSummary=true, Order=190, FiveWs="FiveWs.class")]
     [Binding("LocationForm")]
     [DataMember]
@@ -758,7 +744,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The absolute geographic location.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("position", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Location.PositionComponent? Position
@@ -785,8 +770,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization responsible for provisioning and upkeep.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("managingOrganization", InSummary=true, Order=210)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ManagingOrganization
@@ -813,8 +798,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Another Location this one is physically a part of.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", Order=220)]
+    [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? PartOf
@@ -841,7 +826,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Collection of characteristics (attributes).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("characteristic", Order=230)]
     [Binding("LocationCharacteristic")]
     [Cardinality(Min=0,Max=-1)]
@@ -870,7 +854,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What days/times during a week is this location usually open (including exceptions).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("hoursOfOperation", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -898,7 +881,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Connection details of a virtual service (e.g. conference call).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("virtualService", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -926,8 +908,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Technical endpoints providing access to services operated for the location.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endpoint", Order=260)]
+    [CLSCompliant(false)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1172,7 +1154,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

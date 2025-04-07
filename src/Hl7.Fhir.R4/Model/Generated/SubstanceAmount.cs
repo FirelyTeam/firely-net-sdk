@@ -76,7 +76,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lower limit possible or expected.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("lowLimit", InSummary=true, Order=30)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? LowLimit
@@ -103,7 +102,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Upper limit possible or expected.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("highLimit", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? HighLimit
@@ -185,7 +183,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "lowLimit":
@@ -222,8 +220,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("amount", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Amount
@@ -250,7 +248,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Most elements that require a quantitative value will also have a field called amount type. Amount type should always be specified because the actual value of the amount is often dependent on it. EXAMPLE: In capturing the actual relative amounts of substances or molecular fragments it is essential to indicate whether the amount refers to a mole ratio or weight ratio. For any given element an effort should be made to use same the amount type for all related definitional elements.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("amountType", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? AmountType
@@ -277,7 +274,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A textual comment on a numeric value.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("amountText", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? AmountTextElement
@@ -319,7 +315,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference range of possible or expected values.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("referenceRange", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent? ReferenceRange
@@ -421,7 +416,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "amount":

@@ -138,7 +138,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What group of the measure.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -166,7 +165,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The populations in the group.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("population", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -194,7 +192,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What score this group achieved.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("measureScore", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? MeasureScoreElement
@@ -236,7 +233,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Stratification results.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("stratifier", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -339,7 +335,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -410,7 +406,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Population identifier as defined in the measure.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -437,7 +432,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-score.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=50)]
       [Binding("MeasurePopulation")]
       [DataMember]
@@ -465,7 +459,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Size of the population.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("count", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? CountElement
@@ -507,8 +500,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For patient-list reports, the patients in this population.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("patients", Order=70)]
+      [CLSCompliant(false)]
       [References("List")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Patients
@@ -610,7 +603,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -681,7 +674,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What stratifier of the group.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -708,7 +700,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Stratum results, one for each unique value in the stratifier.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("stratum", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -791,7 +782,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -844,7 +835,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The stratum value, e.g. male.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -887,7 +877,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Population results in this stratum.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("population", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -915,7 +904,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What score this stratum achieved.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("measureScore", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? MeasureScoreElement
@@ -1022,7 +1010,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "value":
@@ -1084,7 +1072,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Population identifier as defined in the measure.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -1111,7 +1098,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-score.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=50)]
       [Binding("MeasurePopulation")]
       [DataMember]
@@ -1139,7 +1125,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Size of the population.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("count", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? CountElement
@@ -1181,8 +1166,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For patient-list reports, the patients in this population.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("patients", Order=70)]
+      [CLSCompliant(false)]
       [References("List")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Patients
@@ -1284,7 +1269,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -1339,7 +1324,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the Report.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -1366,7 +1350,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// complete | pending | error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("MeasureReportStatus")]
@@ -1411,7 +1394,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// individual | patient-list | summary.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [AllowedTypes(typeof(Code))]
     [Binding("MeasureReportType")]
@@ -1456,8 +1438,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What measure was evaluated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("measure", InSummary=true, Order=120, FiveWs="what")]
+    [CLSCompliant(false)]
     [References("Measure")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1485,8 +1467,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What patient the report is for.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=130, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Patient
@@ -1513,7 +1495,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the report was generated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -1555,8 +1536,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is reporting the data.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reportingOrganization", InSummary=true, Order=150, FiveWs="who.source")]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ReportingOrganization
@@ -1583,7 +1564,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What period the report covers.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=160)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1611,7 +1591,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Measure results for each group.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("group", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1639,8 +1618,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What data was evaluated to produce the measure score.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("evaluatedResources", Order=180)]
+    [CLSCompliant(false)]
     [References("Bundle")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? EvaluatedResources
@@ -1804,7 +1783,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

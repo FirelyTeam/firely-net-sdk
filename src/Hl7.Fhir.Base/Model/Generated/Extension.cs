@@ -66,7 +66,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// identifies the meaning of the extension.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", XmlSerialization = XmlRepresentation.XmlAttr, InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -109,7 +108,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Value of extension.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Value
@@ -191,7 +189,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

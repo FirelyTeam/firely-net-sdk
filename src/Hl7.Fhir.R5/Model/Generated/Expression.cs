@@ -66,7 +66,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the condition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -108,7 +107,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Short name assigned to expression for reuse.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Code? NameElement
@@ -150,7 +148,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// text/cql | text/fhirpath | application/x-fhir-query | etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("language", InSummary=true, Order=50)]
     [Binding("ExpressionLanguage")]
     [DataMember]
@@ -193,7 +190,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Expression in specified language.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("expression", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ExpressionElement
@@ -235,7 +231,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the expression is found.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reference", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? ReferenceElement
@@ -362,7 +357,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "description":

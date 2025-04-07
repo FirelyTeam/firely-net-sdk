@@ -63,7 +63,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Type
@@ -90,8 +89,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Period
@@ -118,7 +117,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("specialPrecautionsForStorage", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -211,7 +209,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "type":

@@ -103,7 +103,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -131,8 +130,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Appointment this response relates to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("appointment", InSummary=true, Order=100)]
+    [CLSCompliant(false)]
     [References("Appointment")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -160,7 +159,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicator for a counter proposal.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("proposedNewTime", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ProposedNewTimeElement
@@ -202,7 +200,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time from appointment, or requested new start time.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("start", Order=120, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? StartElement
@@ -244,7 +241,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time from appointment, or requested new end time.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("end", Order=130, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? EndElement
@@ -286,7 +282,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Role of participant in the appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participantType", InSummary=true, Order=140)]
     [Binding("ParticipantType")]
     [Cardinality(Min=0,Max=-1)]
@@ -315,8 +310,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person(s), Location, HealthcareService, or Device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("actor", InSummary=true, Order=150, FiveWs="FiveWs.who")]
+    [CLSCompliant(false)]
     [References("Patient","Group","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Actor
@@ -343,7 +338,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// accepted | declined | tentative | needs-action | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=160)]
     [AllowedTypes(typeof(Code))]
     [Binding("ParticipantStatus")]
@@ -388,7 +382,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional comments.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("comment", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CommentElement
@@ -430,7 +423,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This response is for all occurrences in a recurring request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recurring", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? RecurringElement
@@ -472,7 +464,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Original date within a recurring request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("occurrenceDate", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Date? OccurrenceDateElement
@@ -514,7 +505,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The recurrence ID of the specific recurring request.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recurrenceId", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? RecurrenceIdElement
@@ -713,7 +703,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

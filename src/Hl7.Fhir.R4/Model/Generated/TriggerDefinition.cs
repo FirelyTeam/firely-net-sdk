@@ -125,7 +125,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=30)]
     [AllowedTypes(typeof(Code))]
     [Binding("TriggerType")]
@@ -170,7 +169,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name or URI that identifies the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -212,8 +210,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Timing of the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("timing", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("Schedule")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
@@ -241,7 +239,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Triggering data of the event (multiple = 'and').
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("data", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -269,7 +266,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the event triggers (boolean expression).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("condition", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Expression? Condition
@@ -381,7 +377,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "type":

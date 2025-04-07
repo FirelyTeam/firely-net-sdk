@@ -63,7 +63,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifiers that are specific to this role.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -91,7 +90,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this organization affiliation record is in active use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -133,7 +131,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The period during which the participatingOrganization is affiliated with the primary organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=110, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -160,8 +157,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization where the role is available.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("organization", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Organization
@@ -188,8 +185,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that provides/performs the role (e.g. providing services or is a member of).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participatingOrganization", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ParticipatingOrganization
@@ -216,8 +213,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Health insurance provider network in which the participatingOrganization provides the role's services (if defined) at the indicated locations (if defined).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("network", InSummary=true, Order=140)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -245,7 +242,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of the role the participatingOrganization plays.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=150)]
     [Binding("OrganizationAffiliation")]
     [Cardinality(Min=0,Max=-1)]
@@ -274,7 +270,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific specialty of the participatingOrganization in the context of the role.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("specialty", InSummary=true, Order=160)]
     [Binding("OrganizationSpecialty")]
     [Cardinality(Min=0,Max=-1)]
@@ -303,8 +298,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The location(s) at which the role occurs.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("location", InSummary=true, Order=170, FiveWs="FiveWs.where[x]")]
+    [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -332,8 +327,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare services provided through the role.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("healthcareService", Order=180)]
+    [CLSCompliant(false)]
     [References("HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -361,7 +356,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details at the participatingOrganization relevant to this Affiliation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("telecom", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -389,8 +383,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Technical endpoints providing access to services operated for this role.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endpoint", Order=200)]
+    [CLSCompliant(false)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -575,7 +569,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

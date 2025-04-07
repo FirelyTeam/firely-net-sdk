@@ -963,8 +963,12 @@ namespace Hl7.Fhir.Model
       /// <remarks>
       /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Code starting from R5.
       /// </remarks>
-      [CLSCompliant(false)]
       [FhirElement("relation", InSummary=true, Order=40)]
+      [CLSCompliant(false)]
+      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Code))]
+      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
+      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
+      // [AllowedTypes(typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
@@ -1023,7 +1027,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference details for the link.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("url", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1121,7 +1124,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "relation":
@@ -1174,7 +1177,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Links related to this entry.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("link", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1202,7 +1204,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// URI for resource (e.g. the absolute URL server address, URI for UUID/OID, etc.).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("fullUrl", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? FullUrlElement
@@ -1244,8 +1245,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A resource in the bundle.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
       public Hl7.Fhir.Model.Resource? Resource
@@ -1272,7 +1273,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Search related information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("search", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Bundle.SearchComponent? Search
@@ -1299,7 +1299,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional execution information (transaction/batch/history).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("request", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Bundle.RequestComponent? Request
@@ -1326,7 +1325,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Results of execution (transaction/batch/history).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("response", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Bundle.ResponseComponent? Response
@@ -1448,7 +1446,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "link":
@@ -1537,7 +1535,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// match | include - why this is in the result set.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("mode", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("SearchEntryMode")]
@@ -1581,7 +1578,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Search ranking (between 0 and 1).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("score", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? ScoreElement
@@ -1678,7 +1674,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "mode":
@@ -1731,7 +1727,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// GET | HEAD | POST | PUT | DELETE | PATCH.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("method", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("HTTPVerb")]
@@ -1776,7 +1771,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// URL for HTTP equivalent of this entry.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("url", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1819,7 +1813,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For managing cache validation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("ifNoneMatch", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? IfNoneMatchElement
@@ -1861,7 +1854,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For managing cache currency.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("ifModifiedSince", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Instant? IfModifiedSinceElement
@@ -1903,7 +1895,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For managing update contention.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("ifMatch", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? IfMatchElement
@@ -1945,7 +1936,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For conditional creates.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("ifNoneExist", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? IfNoneExistElement
@@ -2082,7 +2072,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "method":
@@ -2171,7 +2161,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Status response code (text optional).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("status", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2214,7 +2203,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The location (if the operation returns a location).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("location", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? LocationElement
@@ -2256,7 +2244,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The Etag for the resource (if relevant).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("etag", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? EtagElement
@@ -2298,7 +2285,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Server's date time modified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("lastModified", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Instant? LastModifiedElement
@@ -2340,8 +2326,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// OperationOutcome with hints and warnings (for batch/transaction).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("outcome", InSummary=true, Order=80, Choice=ChoiceType.ResourceChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
       public Hl7.Fhir.Model.Resource? Outcome
@@ -2453,7 +2439,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "status":
@@ -2517,7 +2503,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Persistent identifier for the bundle.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=50, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -2544,7 +2529,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=60, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("BundleType")]
@@ -2592,7 +2576,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R4, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("timestamp", InSummary=true, Order=70, FiveWs="FiveWs.init", Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.Instant? TimestampElement
@@ -2634,7 +2617,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If search, the total number of matches.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("total", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? TotalElement
@@ -2676,7 +2658,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Links related to this Bundle.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("link", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2704,7 +2685,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Entry in the bundle - will have a resource or information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("entry", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2732,7 +2712,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Digital Signature.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("signature", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.Signature? Signature
@@ -2762,8 +2741,8 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("issues", InSummary=true, Order=120, Choice=ChoiceType.ResourceChoice, Since=FhirRelease.R5)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
     [DataMember]
     public Hl7.Fhir.Model.Resource? Issues
@@ -2907,7 +2886,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

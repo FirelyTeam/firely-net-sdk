@@ -122,7 +122,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of involvement.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("role", InSummary=true, Order=40)]
       [Binding("CareTeamParticipantRole")]
       [Cardinality(Min=0,Max=-1)]
@@ -151,8 +150,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who is involved.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("member", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Organization","CareTeam")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Member
@@ -179,8 +178,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization of the practitioner.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("onBehalfOf", InSummary=true, Order=60)]
+      [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? OnBehalfOf
@@ -207,7 +206,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time period of participant.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -309,7 +307,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "role":
@@ -364,7 +362,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this team.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -392,7 +389,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | active | suspended | inactive | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("CareTeamStatus")]
@@ -436,7 +432,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of team.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("CareTeamCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -465,7 +460,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the team, such as crisis assessment team.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -507,8 +501,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who care team is for.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -535,8 +529,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=140, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -563,7 +557,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period team covers.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=150, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -590,7 +583,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Members of the team.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participant", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -618,7 +610,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the care team exists.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonCode", Order=170, FiveWs="FiveWs.why[x]")]
     [Binding("CareTeamReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -647,8 +638,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the care team exists.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonReference", Order=180, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("Condition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -676,8 +667,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization responsible for the care team.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("managingOrganization", InSummary=true, Order=190)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -705,7 +696,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the care team (that applies to all members).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("telecom", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -733,7 +723,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the CareTeam.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -928,7 +917,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

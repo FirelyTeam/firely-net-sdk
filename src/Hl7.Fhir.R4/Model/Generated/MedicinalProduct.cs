@@ -76,7 +76,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The full product name.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("productName", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -119,7 +118,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coding words or phrases of the name.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("namePart", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -147,7 +145,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Country where the name applies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("countryLanguage", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -240,7 +237,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "productName":
@@ -299,7 +296,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A fragment of a product name.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("part", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -342,7 +338,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Idenifying type for this part of the name (e.g. strength part).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -425,7 +420,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "part":
@@ -475,7 +470,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Country code for where this name applies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("country", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -503,7 +497,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Jurisdiction code for where this name applies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("jurisdiction", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Jurisdiction
@@ -530,7 +523,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Language code for this name.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("language", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -623,7 +615,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "country":
@@ -682,7 +674,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of manufacturing operation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("operationType", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? OperationType
@@ -709,7 +700,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Regulatory authorization reference number.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("authorisationReferenceNumber", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? AuthorisationReferenceNumber
@@ -736,7 +726,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Regulatory authorization date.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("effectiveDate", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? EffectiveDateElement
@@ -778,7 +767,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// To indicate if this proces is commercially confidential.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("confidentialityIndicator", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? ConfidentialityIndicator
@@ -805,8 +793,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The manufacturer or establishment associated with the process.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("manufacturer", InSummary=true, Order=80)]
+      [CLSCompliant(false)]
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -834,8 +822,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A regulator which oversees the operation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("regulator", InSummary=true, Order=90)]
+      [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Regulator
@@ -957,7 +945,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "operationType":
@@ -1043,7 +1031,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier for the designation, or procedure number.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1071,7 +1058,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of special designation, e.g. orphan drug, minor use.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Type
@@ -1098,7 +1084,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The intended use of the product, e.g. prevention, treatment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("intendedUse", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? IntendedUse
@@ -1125,8 +1110,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Condition for which the medicinal use applies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("indication", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("MedicinalProductIndication")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -1154,7 +1139,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For example granted, pending, expired or withdrawn.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("status", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Status
@@ -1181,7 +1165,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date when the designation was granted.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("date", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -1223,7 +1206,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Animal species for which this applies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("species", InSummary=true, Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Species
@@ -1355,7 +1337,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -1437,7 +1419,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this product. Could be an MPID.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1465,7 +1446,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Regulatory type, e.g. Investigational or Authorized.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Type
@@ -1492,7 +1472,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this medicine applies to human or veterinary uses.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("domain", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.Coding? Domain
@@ -1519,7 +1498,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The dose form for a single part product, or combined form of a multiple part product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("combinedPharmaceuticalDoseForm", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? CombinedPharmaceuticalDoseForm
@@ -1546,7 +1524,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The legal status of supply of the medicinal product as classified by the regulator.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("legalStatusOfSupply", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? LegalStatusOfSupply
@@ -1573,7 +1550,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the Medicinal Product is subject to additional monitoring for regulatory reasons.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("additionalMonitoringIndicator", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? AdditionalMonitoringIndicator
@@ -1600,7 +1576,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the Medicinal Product is subject to special measures for regulatory reasons.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("specialMeasures", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1646,7 +1621,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If authorised for use in children.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("paediatricUseIndicator", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? PaediatricUseIndicator
@@ -1673,7 +1647,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Allows the product to be classified by various systems.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("productClassification", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1701,7 +1674,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Marketing status of the medicinal product, in contrast to marketing authorizaton.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("marketingStatus", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1729,8 +1701,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Pharmaceutical aspects of product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("pharmaceuticalProduct", InSummary=true, Order=190)]
+    [CLSCompliant(false)]
     [References("MedicinalProductPharmaceutical")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1758,8 +1730,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Package representation for the product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("packagedMedicinalProduct", InSummary=true, Order=200)]
+    [CLSCompliant(false)]
     [References("MedicinalProductPackaged")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1787,8 +1759,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting documentation, typically for regulatory submission.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("attachedDocument", InSummary=true, Order=210)]
+    [CLSCompliant(false)]
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1816,8 +1788,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A master file for to the medicinal product (e.g. Pharmacovigilance System Master File).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("masterFile", InSummary=true, Order=220)]
+    [CLSCompliant(false)]
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1845,8 +1817,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A product specific contact, person (in a role), or an organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=230)]
+    [CLSCompliant(false)]
     [References("Organization","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1874,8 +1846,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical trials or studies that this product is involved in.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("clinicalTrial", InSummary=true, Order=240)]
+    [CLSCompliant(false)]
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1903,7 +1875,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The product's name, including full name and possibly coded parts.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=250)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1931,7 +1902,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to another product, e.g. for linking authorised to investigational product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("crossReference", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1959,7 +1929,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An operation applied to the product, for manufacturing or adminsitrative purpose.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("manufacturingBusinessOperation", InSummary=true, Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1987,7 +1956,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates if the medicinal product has an orphan designation for the treatment of a rare disease.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("specialDesignation", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2252,7 +2220,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

@@ -112,7 +112,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The identifier of the request associated with this response, if any.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requestIdentifier", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? RequestIdentifier
@@ -139,7 +138,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -167,8 +165,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What guidance was requested.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("module", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -196,7 +194,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// success | data-requested | data-required | in-progress | failure | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("GuidanceResponseStatus")]
@@ -241,8 +238,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient the request was performed for.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", Order=130, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -269,8 +266,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter during which the response was returned.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", Order=140, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -297,7 +294,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the guidance response was processed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("occurrenceDateTime", Order=150, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? OccurrenceDateTimeElement
@@ -339,8 +335,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Device returning the guidance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performer", Order=160, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Performer
@@ -367,7 +363,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why guidance is needed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonCode", Order=170, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -395,8 +390,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why guidance is needed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonReference", Order=180, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("Condition","Observation","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -424,7 +419,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional notes about the response.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -452,8 +446,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Messages resulting from the evaluation of the artifact or artifacts.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("evaluationMessage", Order=200)]
+    [CLSCompliant(false)]
     [References("OperationOutcome")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -481,8 +475,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The output parameters of the evaluation, if any.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("outputParameters", Order=210)]
+    [CLSCompliant(false)]
     [References("Parameters")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? OutputParameters
@@ -509,8 +503,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Proposed actions, if any.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("result", Order=220)]
+    [CLSCompliant(false)]
     [References("CarePlan","RequestGroup")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Result
@@ -537,7 +531,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional required data.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dataRequirement", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -755,7 +748,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "requestIdentifier":

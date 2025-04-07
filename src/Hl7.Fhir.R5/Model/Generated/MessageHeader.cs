@@ -111,8 +111,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actual destination address or Endpoint resource.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("endpoint", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Endpoint")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -140,7 +140,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of system.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -182,8 +181,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Particular delivery destination within the destination.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("target", InSummary=true, Order=60)]
+      [CLSCompliant(false)]
       [References("Device")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Target
@@ -210,8 +209,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Intended "real-world" recipient for the data.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("receiver", InSummary=true, Order=70, FiveWs="FiveWs.subject")]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Receiver
@@ -313,7 +312,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "endpoint":
@@ -384,8 +383,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actual source address or Endpoint resource.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("endpoint", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Endpoint")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -413,7 +412,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of system.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -455,7 +453,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of software running the system.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("software", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SoftwareElement
@@ -497,7 +494,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Version of software running.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("version", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? VersionElement
@@ -539,7 +535,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human contact for problems.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("contact", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.ContactPoint? Contact
@@ -651,7 +646,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "endpoint":
@@ -731,7 +726,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Bundle.identifier of original message.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -759,7 +753,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// ok | transient-error | fatal-error.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=50)]
       [AllowedTypes(typeof(Code))]
       [Binding("ResponseType")]
@@ -804,8 +797,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific list of hints/warnings/errors.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("details", InSummary=true, Order=60)]
+      [CLSCompliant(false)]
       [References("OperationOutcome")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Details
@@ -897,7 +890,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -943,9 +936,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Event code or link to EventDefinition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("event", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [Binding("MessageEvent")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Canonical))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -973,7 +966,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message destination application(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("destination", InSummary=true, Order=100, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1001,8 +993,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Real world sender of the message.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sender", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Device","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Sender
@@ -1029,8 +1021,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The source of the decision.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=120, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Device","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author
@@ -1057,7 +1049,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message source application.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("source", InSummary=true, Order=130, FiveWs="FiveWs.actor")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1085,8 +1076,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Final responsibility for event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("responsible", InSummary=true, Order=140, FiveWs="FiveWs.witness")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Responsible
@@ -1113,7 +1104,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Cause of event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reason", InSummary=true, Order=150, FiveWs="FiveWs.why[x]")]
     [Binding("EventReason")]
     [DataMember]
@@ -1141,7 +1131,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this is a reply to prior message.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("response", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.MessageHeader.ResponseComponent? Response
@@ -1168,8 +1157,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual content of the message.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("focus", InSummary=true, Order=170)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1197,7 +1186,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link to the definition for this message.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("definition", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? DefinitionElement
@@ -1374,7 +1362,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "event":

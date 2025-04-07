@@ -67,7 +67,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Low Numerator limit.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lowNumerator", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? LowNumerator
@@ -94,7 +93,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// High Numerator limit.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("highNumerator", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? HighNumerator
@@ -121,7 +119,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Denominator value.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("denominator", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Denominator
@@ -213,7 +210,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "lowNumerator":

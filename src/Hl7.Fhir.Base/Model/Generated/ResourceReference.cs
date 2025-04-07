@@ -66,7 +66,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Literal reference, Relative, internal or absolute URL.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reference", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ReferenceElement
@@ -111,7 +110,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R4, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=40, Since=FhirRelease.R4)]
     [Binding("FHIRResourceTypeExt")]
     [DataMember]
@@ -154,7 +152,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical reference, when literal reference is not known.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -181,7 +178,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Text alternative for the resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("display", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DisplayElement
@@ -298,7 +294,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "reference":

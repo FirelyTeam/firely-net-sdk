@@ -83,7 +83,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of oral diet or diet restrictions that describe what can be consumed orally.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("OralDiet")]
       [Cardinality(Min=0,Max=-1)]
@@ -112,7 +111,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Scheduling information for oral diets.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("schedule", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.NutritionOrder.OralDietScheduleComponent? Schedule
@@ -139,7 +137,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Required  nutrient modifications.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("nutrient", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -167,7 +164,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Required  texture modifications.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("texture", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -195,7 +191,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The required consistency of fluids and liquids provided to the patient.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("fluidConsistencyType", Order=80)]
       [Binding("FluidConsistencyType")]
       [Cardinality(Min=0,Max=-1)]
@@ -224,7 +219,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Instructions or additional information about the oral diet.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("instruction", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? InstructionElement
@@ -361,7 +355,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -450,7 +444,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Scheduled frequency of diet.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("timing", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -478,7 +471,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Take 'as needed'.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("asNeeded", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? AsNeededElement
@@ -520,7 +512,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Take 'as needed' for x.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("asNeededFor", Order=60)]
       [Binding("OralDietAsNeededReason")]
       [DataMember]
@@ -613,7 +604,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "timing":
@@ -675,7 +666,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of nutrient that is being modified.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("modifier", Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("NutrientModifier")]
       [DataMember]
@@ -703,7 +693,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Quantity of the specified nutrient.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Amount
@@ -785,7 +774,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "modifier":
@@ -838,7 +827,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code to indicate how to alter the texture of the foods, e.g. pureed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("modifier", Order=40)]
       [Binding("TextureModifier")]
       [DataMember]
@@ -866,7 +854,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Concepts that are used to identify an entity that is ingested for nutritional purposes.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("foodType", Order=50)]
       [Binding("TextureModifiedFoodType")]
       [DataMember]
@@ -949,7 +936,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "modifier":
@@ -1002,7 +989,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of supplement product requested.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("SupplementType")]
       [DataMember]
@@ -1030,7 +1016,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Product or brand name of the nutritional supplement.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("productName", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ProductNameElement
@@ -1072,7 +1057,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Scheduling information for supplements.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("schedule", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.NutritionOrder.SupplementScheduleComponent? Schedule
@@ -1099,7 +1083,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Amount of the nutritional supplement.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -1126,7 +1109,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Instructions or additional information about the oral supplement.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("instruction", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? InstructionElement
@@ -1253,7 +1235,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -1333,7 +1315,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Scheduled frequency of diet.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("timing", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1361,7 +1342,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Take 'as needed'.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("asNeeded", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? AsNeededElement
@@ -1403,7 +1383,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Take 'as needed' for x.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("asNeededFor", Order=60)]
       [Binding("SupplementAsNeededReason")]
       [DataMember]
@@ -1496,7 +1475,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "timing":
@@ -1558,7 +1537,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of enteral or infant formula.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("baseFormulaType", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("EnteralFormulaType")]
       [DataMember]
@@ -1586,7 +1564,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Product or brand name of the enteral or infant formula.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("baseFormulaProductName", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? BaseFormulaProductNameElement
@@ -1628,7 +1605,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Intended type of device for the administration.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("deliveryDevice", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1656,7 +1632,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Components to add to the feeding.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("additive", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1684,7 +1659,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Amount of energy per specified volume that is required.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("caloricDensity", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? CaloricDensity
@@ -1711,7 +1685,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How the formula should enter the patient's gastrointestinal tract.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("routeOfAdministration", Order=90)]
       [Binding("EnteralRouteOfAdministration")]
       [DataMember]
@@ -1739,7 +1712,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Formula feeding instruction as structured data.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("administration", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1767,7 +1739,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Upper limit on formula volume per unit of time.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("maxVolumeToDeliver", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? MaxVolumeToDeliver
@@ -1794,7 +1765,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Formula feeding instructions expressed as text.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("administrationInstruction", InSummary=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? AdministrationInstructionElement
@@ -1961,7 +1931,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "baseFormulaType":
@@ -2077,7 +2047,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of modular component to add to the feeding.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("EnteralFormulaAdditiveType")]
       [DataMember]
@@ -2105,7 +2074,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Product or brand name of the modular additive.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("productName", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ProductNameElement
@@ -2147,7 +2115,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Amount of additive to be given or mixed in.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -2239,7 +2206,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -2302,7 +2269,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Scheduling information for enteral formula products.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("schedule", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.NutritionOrder.EnteralFormulaScheduleComponent? Schedule
@@ -2329,7 +2295,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The volume of formula to provide.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -2356,8 +2321,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Speed with which the formula is provided per period of time.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("rate", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Rate
@@ -2449,7 +2414,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "schedule":
@@ -2511,7 +2476,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Scheduled frequency of enteral formula.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("timing", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2539,7 +2503,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Take 'as needed'.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("asNeeded", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? AsNeededElement
@@ -2581,7 +2544,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Take 'as needed' for x.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("asNeededFor", Order=60)]
       [Binding("EnteralFormulaAsNeededReason")]
       [DataMember]
@@ -2674,7 +2636,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "timing":
@@ -2720,7 +2682,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifiers assigned to this order.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2748,7 +2709,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR protocol or definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2794,7 +2754,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates external protocol or definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2840,7 +2799,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates protocol or definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiates", Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2886,8 +2844,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What this order fulfills.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", Order=130)]
+    [CLSCompliant(false)]
     [References("CarePlan","NutritionOrder","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2915,7 +2873,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composite Request ID.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("groupIdentifier", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? GroupIdentifier
@@ -2942,7 +2899,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("NutritionOrderStatus")]
@@ -2987,7 +2943,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("NutritiionOrderIntent")]
@@ -3032,7 +2987,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("priority", Order=170, FiveWs="FiveWs.grade")]
     [AllowedTypes(typeof(Code))]
     [Binding("NutritionOrderPriority")]
@@ -3076,8 +3030,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who requires the diet, formula or nutritional supplement.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=180, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3105,8 +3059,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The encounter associated with this nutrition order.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", Order=190, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -3133,8 +3087,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information to support fulfilling of the nutrition order.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supportingInformation", Order=200)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3162,7 +3116,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date and time the nutrition order was requested.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dateTime", InSummary=true, Order=210, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3205,8 +3158,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who ordered the diet, formula or nutritional supplement.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("orderer", InSummary=true, Order=220, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Orderer
@@ -3233,7 +3186,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is desired to perform the administration of what is being ordered.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performer", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3261,8 +3213,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// List of the patient's food and nutrition-related allergies and intolerances.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("allergyIntolerance", Order=240)]
+    [CLSCompliant(false)]
     [References("AllergyIntolerance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3290,7 +3242,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Order-specific modifier about the type of food that should be given.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("foodPreferenceModifier", Order=250)]
     [Binding("PatientDiet")]
     [Cardinality(Min=0,Max=-1)]
@@ -3319,7 +3270,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Order-specific modifier about the type of food that should not be given.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("excludeFoodModifier", Order=260)]
     [Binding("FoodType")]
     [Cardinality(Min=0,Max=-1)]
@@ -3348,7 +3298,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Capture when a food item is brought in by the patient and/or family.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("outsideFoodAllowed", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? OutsideFoodAllowedElement
@@ -3390,7 +3339,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Oral diet components.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("oralDiet", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.NutritionOrder.OralDietComponent? OralDiet
@@ -3417,7 +3365,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supplement components.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supplement", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3445,7 +3392,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Enteral formula components.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("enteralFormula", Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent? EnteralFormula
@@ -3472,7 +3418,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3767,7 +3712,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

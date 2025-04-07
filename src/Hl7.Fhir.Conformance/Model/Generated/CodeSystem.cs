@@ -169,7 +169,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that identifies the filter.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -212,7 +211,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How or why the filter is used.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -254,7 +252,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// = | is-a | descendent-of | is-not-a | regex | in | not-in | generalizes | child-of | descendent-leaf | exists.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("operator", InSummary=true, Order=60)]
       [AllowedTypes(typeof(Code))]
       [Binding("FilterOperator")]
@@ -302,7 +299,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What to use for the value.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -420,7 +416,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -492,7 +488,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies the property on the concepts, and when referred to in operations.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -535,7 +530,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Formal identifier for the property.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("uri", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? UriElement
@@ -577,7 +571,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why the property is defined, and/or what it conveys.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -619,7 +612,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// code | Coding | string | integer | boolean | dateTime | decimal.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=70)]
       [AllowedTypes(typeof(Code))]
       [Binding("PropertyType")]
@@ -739,7 +731,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -811,7 +803,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that identifies concept.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -854,7 +845,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text to display to the user.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("display", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DisplayElement
@@ -896,7 +886,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Formal definition.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("definition", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DefinitionElement
@@ -938,7 +927,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional representations for the concept.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("designation", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -966,7 +954,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Property value for the concept.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("property", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -994,7 +981,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Child Concepts (is-a/contains/categorizes).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("concept", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1117,7 +1103,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -1207,7 +1193,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human language of the designation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("language", Order=40)]
       [Binding("Language")]
       [DataMember]
@@ -1250,7 +1235,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Details how this designation would be used.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("use", Order=50)]
       [Binding("ConceptDesignationUse")]
       [DataMember]
@@ -1281,7 +1265,6 @@ namespace Hl7.Fhir.Model
       /// <remarks>
       /// Element was introduced in R5, do not use when working with older releases.
       /// </remarks>
-      [CLSCompliant(false)]
       [FhirElement("additionalUse", Order=60, Since=FhirRelease.R5)]
       [Binding("ConceptDesignationUse")]
       [Cardinality(Min=0,Max=-1)]
@@ -1310,7 +1293,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The text value for this designation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1428,7 +1410,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "language":
@@ -1499,7 +1481,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to CodeSystem.property.code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1542,8 +1523,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value of the property for this concept.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1626,7 +1607,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -1663,7 +1644,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this code system, represented as a URI (globally unique) (Coding.system).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -1705,7 +1685,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the code system (business identifier).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1733,7 +1712,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the code system (Coding.version).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -1778,8 +1756,8 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice, Since=FhirRelease.R5)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
@@ -1806,7 +1784,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this code system (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -1848,7 +1825,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this code system (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -1890,7 +1866,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -1935,7 +1910,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -1977,7 +1951,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -2019,7 +1992,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher/steward (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=180, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -2061,7 +2033,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2089,7 +2060,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the code system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -2131,7 +2101,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2159,7 +2128,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for code system (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -2188,7 +2156,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this code system is defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("purpose", Order=230, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -2230,7 +2197,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -2275,7 +2241,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("copyrightLabel", Order=250, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CopyrightLabelElement
@@ -2320,7 +2285,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=260, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -2365,7 +2329,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=270, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -2410,7 +2373,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=280, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -2440,7 +2402,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("topic", Order=290, Since=FhirRelease.R5)]
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
@@ -2472,7 +2433,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("author", Order=300, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2503,7 +2463,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("editor", Order=310, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2534,7 +2493,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("reviewer", Order=320, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2565,7 +2523,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("endorser", Order=330, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2596,7 +2553,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=340, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2624,7 +2580,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If code comparison is case sensitive.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("caseSensitive", InSummary=true, Order=350)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? CaseSensitiveElement
@@ -2666,7 +2621,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical reference to the value set with entire code system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("valueSet", InSummary=true, Order=360)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? ValueSetElement
@@ -2708,7 +2662,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// grouped-by | is-a | part-of | classified-with.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("hierarchyMeaning", InSummary=true, Order=370)]
     [AllowedTypes(typeof(Code))]
     [Binding("CodeSystemHierarchyMeaning")]
@@ -2752,7 +2705,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If code system defines a compositional grammar.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("compositional", InSummary=true, Order=380)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? CompositionalElement
@@ -2794,7 +2746,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If definitions are not stable.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("versionNeeded", InSummary=true, Order=390)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? VersionNeededElement
@@ -2836,7 +2787,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// not-present | example | fragment | complete | supplement.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("content", InSummary=true, Order=400)]
     [AllowedTypes(typeof(Code))]
     [Binding("CodeSystemContentMode")]
@@ -2881,7 +2831,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical URL of Code System this adds designations and properties to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supplements", InSummary=true, Order=410)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? SupplementsElement
@@ -2923,7 +2872,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Total concepts in the code system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("count", InSummary=true, Order=420)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? CountElement
@@ -2965,7 +2913,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Filter that can be used in a value set.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("filter", InSummary=true, Order=430)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2993,7 +2940,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information supplied about each concept.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("property", InSummary=true, Order=440)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3021,7 +2967,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Concepts in the code system.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("concept", Order=450)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3456,7 +3401,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

@@ -83,7 +83,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name from the definition.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -126,7 +125,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If parameter is a data type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -153,8 +151,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If parameter is a whole resource.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
       public Hl7.Fhir.Model.Resource? Resource
@@ -181,7 +179,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Named part of a multi-part parameter.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("part", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -284,7 +281,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "name":
@@ -339,7 +336,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Operation Parameter.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parameter", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -412,7 +408,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "parameter":

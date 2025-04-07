@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             if (left is object && right is object)
             {
-                // This is an exception: parameter.value can have all the types, but [ChoiceTypes] is not generated, because not all the types
+                // This is an exception: parameter.value can have all the types, but [AllowedTypes] is not generated, because not all the types
                 // are located in Common.
                 if (context == "Parameters.parameter.BackboneElement.value" || context == "Parameters.parameter.BackboneElement.part.BackboneElement.value")
                     return;

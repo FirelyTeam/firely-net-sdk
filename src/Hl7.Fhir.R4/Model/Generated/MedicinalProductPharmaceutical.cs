@@ -76,7 +76,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A coded characteristic.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -104,7 +103,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The status of characteristic e.g. assigned or pending.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("status", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Status
@@ -186,7 +184,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -236,7 +234,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coded expression for the route.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -264,7 +261,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The first dose (dose quantity) administered in humans can be specified, for a product under investigation, using a numerical value and its unit of measurement.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("firstDose", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? FirstDose
@@ -291,7 +287,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The maximum single dose that can be administered as per the protocol of a clinical trial can be specified using a numerical value and its unit of measurement.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("maxSingleDose", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? MaxSingleDose
@@ -318,7 +313,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The maximum dose per day (maximum dose quantity to be administered in any one 24-h period) that can be administered as per the protocol referenced in the clinical trial authorisation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("maxDosePerDay", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? MaxDosePerDay
@@ -345,7 +339,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The maximum dose per treatment period that can be administered as per the protocol referenced in the clinical trial authorisation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("maxDosePerTreatmentPeriod", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Ratio? MaxDosePerTreatmentPeriod
@@ -372,7 +365,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The maximum treatment period during which an Investigational Medicinal Product can be administered as per the protocol referenced in the clinical trial authorisation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("maxTreatmentPeriod", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Duration? MaxTreatmentPeriod
@@ -399,7 +391,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A species for which this route applies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("targetSpecies", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -532,7 +523,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -627,7 +618,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coded expression for the species.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -655,7 +645,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A species specific time during which consumption of animal product is not appropriate.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("withdrawalPeriod", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -738,7 +727,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -788,7 +777,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coded expression for the type of tissue for which the withdrawal period applues, e.g. meat, milk.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("tissue", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -816,7 +804,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A value for the time.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -844,7 +831,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Extra information about the withdrawal period.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("supportingInformation", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SupportingInformationElement
@@ -951,7 +937,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "tissue":
@@ -997,7 +983,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier for the pharmaceutical medicinal product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1025,7 +1010,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The administrable dose form, after necessary reconstitution.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("administrableDoseForm", InSummary=true, Order=100)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1053,7 +1037,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("unitOfPresentation", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? UnitOfPresentation
@@ -1080,8 +1063,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Ingredient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("ingredient", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("MedicinalProductIngredient")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1109,8 +1092,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Accompanying device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("device", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("DeviceDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1138,7 +1121,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Characteristics e.g. a products onset of action.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("characteristics", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1166,7 +1148,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The path by which the pharmaceutical product is taken into or makes contact with the body.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("routeOfAdministration", InSummary=true, Order=150)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1301,7 +1282,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

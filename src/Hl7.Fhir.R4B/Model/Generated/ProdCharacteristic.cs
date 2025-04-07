@@ -63,7 +63,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("height", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Height
@@ -90,7 +89,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("width", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Width
@@ -117,7 +115,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("depth", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Depth
@@ -144,7 +141,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("weight", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Weight
@@ -171,7 +167,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("nominalVolume", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? NominalVolume
@@ -198,7 +193,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("externalDiameter", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? ExternalDiameter
@@ -225,7 +219,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("shape", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ShapeElement
@@ -267,7 +260,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("color", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -313,7 +305,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the imprint can be specified as text.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("imprint", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -359,7 +350,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("image", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -387,7 +377,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("scoring", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Scoring
@@ -559,7 +548,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "height":

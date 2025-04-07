@@ -124,7 +124,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific item from Questionnaire.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("linkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -167,7 +166,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// ElementDefinition - details for the item.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("definition", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? DefinitionElement
@@ -209,7 +207,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name for group or question text.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("text", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextElement
@@ -251,7 +248,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The response(s) to the question.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("answer", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -279,7 +275,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested questionnaire response items.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("item", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -392,7 +387,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "linkId":
@@ -473,9 +468,9 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Single-valued answer to the question.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [Binding("QuestionnaireAnswer")]
+      [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -503,7 +498,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested groups and questions.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("item", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -586,7 +580,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "value":
@@ -623,7 +617,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique id for this set of answers.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -650,8 +643,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled by this QuestionnaireResponse.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", InSummary=true, Order=100)]
+    [CLSCompliant(false)]
     [References("CarePlan","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -679,8 +672,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of this action.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", InSummary=true, Order=110)]
+    [CLSCompliant(false)]
     [References("Observation","Procedure")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -708,7 +701,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Form being answered.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("questionnaire", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? QuestionnaireElement
@@ -750,7 +742,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | amended | entered-in-error | stopped.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("QuestionnaireResponseStatus")]
@@ -795,8 +786,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the questions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -823,8 +814,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -851,7 +842,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date the answers were gathered.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("authored", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? AuthoredElement
@@ -893,8 +883,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person who received and recorded the answers.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=170, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Device","Practitioner","PractitionerRole","Patient","RelatedPerson","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author
@@ -921,8 +911,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The person who answered the questions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("source", InSummary=true, Order=180, FiveWs="FiveWs.source")]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Source
@@ -949,7 +939,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Groups and questions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("item", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1124,7 +1113,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

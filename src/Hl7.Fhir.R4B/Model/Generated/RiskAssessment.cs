@@ -83,7 +83,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Possible outcome for the subject.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("outcome", Order=40)]
       [Binding("RiskAssessmentOutcome")]
       [DataMember]
@@ -111,8 +110,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Likelihood of specified outcome.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("probability", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Probability
@@ -139,7 +138,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Likelihood of specified outcome as a qualitative value.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("qualitativeRisk", Order=60)]
       [Binding("RiskAssessmentProbability")]
       [DataMember]
@@ -167,7 +165,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Relative likelihood.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("relativeRisk", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? RelativeRiskElement
@@ -209,8 +206,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Timeframe or age range.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("when", Order=80, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? When
@@ -237,7 +234,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Explanation of prediction.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("rationale", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? RationaleElement
@@ -374,7 +370,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "outcome":
@@ -447,7 +443,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier for the assessment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -475,8 +470,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled by this assessment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", Order=100)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? BasedOn
@@ -503,8 +498,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of this occurrence.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parent", Order=110)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Parent
@@ -531,7 +526,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | preliminary | final | amended +.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=120, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("RiskAssessmentStatus")]
@@ -576,7 +570,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Evaluation mechanism.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("method", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [Binding("RiskAssessmentMethod")]
     [DataMember]
@@ -604,7 +597,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of assessment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Code
@@ -631,8 +623,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what does assessment apply to?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -660,8 +652,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where was assessment performed?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=160, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -688,8 +680,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When was assessment made?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
@@ -716,8 +708,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition assessed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("condition", InSummary=true, Order=180)]
+    [CLSCompliant(false)]
     [References("Condition")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Condition
@@ -744,8 +736,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who did assessment?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performer", InSummary=true, Order=190, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Performer
@@ -772,7 +764,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the assessment was necessary?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonCode", Order=200, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -800,8 +791,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the assessment was necessary?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonReference", Order=210, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("Condition","Observation","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -829,8 +820,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information used in assessment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basis", Order=220)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -858,7 +849,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Outcome predicted.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("prediction", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -886,7 +876,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to reduce risk.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("mitigation", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? MitigationElement
@@ -928,7 +917,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments on the risk assessment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1163,7 +1151,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

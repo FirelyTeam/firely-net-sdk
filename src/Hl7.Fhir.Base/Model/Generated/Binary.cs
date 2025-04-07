@@ -70,7 +70,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// MimeType of the binary content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contentType", InSummary=true, Order=50)]
     [Binding("MimeType")]
     [Cardinality(Min=1,Max=1)]
@@ -114,8 +113,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies another resource to use as proxy when enforcing access control.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("securityContext", InSummary=true, Order=60)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? SecurityContext
@@ -145,7 +144,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element is replaced by 'Binary.data' since R4. Do not use this element 'content' with R4 and newer releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("content", Order=70)]
     [NotMapped(Since=FhirRelease.R4)]
     [DataMember]
@@ -191,7 +189,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R4, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("data", Order=70, Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? DataElement
@@ -308,7 +305,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "contentType":

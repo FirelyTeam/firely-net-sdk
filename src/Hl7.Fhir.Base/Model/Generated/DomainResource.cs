@@ -61,7 +61,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Text summary of the resource, for human interpretation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("text", Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Narrative? Text
@@ -88,8 +87,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contained, inline Resources.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contained", Order=60, Choice=ChoiceType.ResourceChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -117,7 +116,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional content defined by implementations.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("extension", Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -145,7 +143,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Extensions that cannot be ignored.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("modifierExtension", InSummary=true, IsModifier=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -241,7 +238,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "text":

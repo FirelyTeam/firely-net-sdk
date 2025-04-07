@@ -81,8 +81,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual performing collection.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("collector", Order=40)]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Collector
@@ -109,8 +109,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The patient who underwent the medical procedure to collect the product or the organization that facilitated the collection.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("source", Order=50)]
+      [CLSCompliant(false)]
       [References("Patient","Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Source
@@ -137,8 +137,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time of product collection.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("collected", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Collected
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "collector":
@@ -292,7 +292,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that specifies the property.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("BiologicallyDerivedProductPropertyTypeCodes")]
       [Cardinality(Min=1,Max=1)]
@@ -321,8 +320,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Property values.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -405,7 +404,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -442,7 +441,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// organ | tissue | fluid | cells | biologicalAgent.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("productCategory", Order=90)]
     [Binding("BiologicallyDerivedProductCategory")]
     [DataMember]
@@ -470,7 +468,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A code that identifies the kind of this biologically derived product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("productCode", Order=100)]
     [Binding("BiologicallyDerivedProductCodes")]
     [DataMember]
@@ -498,8 +495,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The parent biologically-derived product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("parent", Order=110)]
+    [CLSCompliant(false)]
     [References("BiologicallyDerivedProduct")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -527,8 +524,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request to obtain and/or infuse this product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("request", Order=120)]
+    [CLSCompliant(false)]
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -556,7 +553,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=130, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -584,7 +580,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier that supports traceability to the event during which material in this product from one or more biological entities was obtained or pooled.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("biologicalSourceEvent", InSummary=true, Order=140, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? BiologicalSourceEvent
@@ -611,8 +606,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Processing facilities responsible for the labeling and distribution of this biologically derived product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("processingFacility", Order=150)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -640,7 +635,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A unique identifier for an aliquot of a product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("division", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DivisionElement
@@ -682,7 +676,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// available | unavailable.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("productStatus", Order=170)]
     [Binding("BiologicallyDerivedProductStatus")]
     [DataMember]
@@ -710,7 +703,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date, and where relevant time, of expiration.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("expirationDate", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? ExpirationDateElement
@@ -752,7 +744,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How this product was collected.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("collection", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent? Collection
@@ -779,7 +770,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Product storage temperature requirements.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("storageTempRequirements", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Range? StorageTempRequirements
@@ -806,7 +796,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A property that is specific to this BiologicallyDerviedProduct instance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("property", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1001,7 +990,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "productCategory":

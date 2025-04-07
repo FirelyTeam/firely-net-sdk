@@ -79,7 +79,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of food or fluid product.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("FoodType")]
       [Cardinality(Min=1,Max=1)]
@@ -108,7 +107,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that identifies the food or fluid product that was consumed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("nutritionProduct", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
       [Binding("FoodProduct")]
       [Cardinality(Min=1,Max=1)]
@@ -137,7 +135,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Scheduled frequency of consumption.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("schedule", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Timing? Schedule
@@ -164,7 +161,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Quantity of the specified food.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Amount
@@ -191,7 +187,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Rate at which enteral feeding was administered.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("rate", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Rate
@@ -218,7 +213,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Flag to indicate if the food or fluid item was refused or otherwise not consumed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("notConsumed", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? NotConsumedElement
@@ -260,7 +254,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reason food or fluid was not consumed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("notConsumedReason", Order=100)]
       [Binding("NotConsumedReason")]
       [DataMember]
@@ -393,7 +386,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -492,7 +485,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Total nutrient consumed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("nutrient", Order=40)]
       [Binding("NutrientType")]
       [Cardinality(Min=1,Max=1)]
@@ -521,7 +513,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Total amount of nutrient consumed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -604,7 +595,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "nutrient":
@@ -657,7 +648,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of performer.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("function", Order=40)]
       [Binding("NutritionPerformerType")]
       [DataMember]
@@ -685,8 +675,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who performed the intake.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("actor", Order=50)]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -769,7 +759,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "function":
@@ -806,7 +796,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -834,7 +823,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR protocol or definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesCanonical", Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -880,7 +868,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates external protocol or definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesUri", Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -926,8 +913,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fulfils plan, proposal or order.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("NutritionOrder","CarePlan","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -955,8 +942,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of referenced event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("NutritionIntake","Procedure","Observation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -984,7 +971,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("NutritionIntakeStatus")]
@@ -1029,7 +1015,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("statusReason", Order=150)]
     [Binding("NutritionIntakeStatusReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -1058,7 +1043,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code representing an overall type of nutrition intake.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [Binding("NutritionIntakeCategory")]
     [DataMember]
@@ -1086,8 +1070,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is/was consuming the food or fluid.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=170, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1115,8 +1099,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter associated with NutritionIntake.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=180)]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -1143,8 +1127,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date/time or interval when the food or fluid is/was consumed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("occurrence", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
@@ -1171,7 +1155,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the intake was recorded.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recorded", InSummary=true, Order=200, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? RecordedElement
@@ -1213,8 +1196,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person or organization that provided the information about the consumption of this food or fluid.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reported", Order=210, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.source")]
+    [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
@@ -1242,7 +1225,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What food or fluid product or item was consumed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("consumedItem", Order=220)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1270,7 +1252,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Total nutrient for the whole meal, product, serving.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("ingredientLabel", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1298,7 +1279,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who was performed in the intake.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performer", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1326,8 +1306,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the intake occurred.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("location", Order=250)]
+    [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -1354,8 +1334,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional supporting information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("derivedFrom", Order=260)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1383,7 +1363,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for why the food or fluid is /was consumed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reason", Order=270, FiveWs="FiveWs.why[x]")]
     [Binding("IntakeReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -1412,7 +1391,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Further information about the consumption.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1677,7 +1655,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

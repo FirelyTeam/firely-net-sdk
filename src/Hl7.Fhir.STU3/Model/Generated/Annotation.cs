@@ -67,8 +67,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Individual responsible for the annotation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("Practitioner","Patient","RelatedPerson")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
@@ -96,7 +96,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the annotation was made.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("time", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? TimeElement
@@ -138,7 +137,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The annotation  - text content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("text", Order=50)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -246,7 +244,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "author":

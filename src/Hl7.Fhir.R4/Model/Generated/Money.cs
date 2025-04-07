@@ -1165,7 +1165,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Numerical value (with implicit precision).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("value", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? ValueElement
@@ -1207,7 +1206,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ISO 4217 Currency Code.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("currency", InSummary=true, Order=40)]
     [AllowedTypes(typeof(Code))]
     [Binding("CurrencyCode")]
@@ -1306,7 +1304,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "value":

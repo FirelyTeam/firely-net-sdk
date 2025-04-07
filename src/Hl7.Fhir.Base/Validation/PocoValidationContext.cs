@@ -32,9 +32,10 @@ public record PocoValidationContext
         ModelInspector = modelInspector;
     }
 
+    /// <summary>
+    /// The ModelInspector from which we will get the model information use while doing validation.
+    /// </summary>
     public ModelInspector ModelInspector { get; set; }
-
-    //  public ModelInspector ModelInspector { get; set; }
 
     /// <summary>
     /// In the context of property validation this is the POCO this property is an element of. In the context

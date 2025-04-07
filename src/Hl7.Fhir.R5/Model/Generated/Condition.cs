@@ -180,7 +180,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of involvement.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("function", InSummary=true, Order=40)]
       [Binding("ConditionParticipantFunction")]
       [DataMember]
@@ -208,8 +207,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who or what participated in the activities related to the condition.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.who")]
+      [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Patient","RelatedPerson","Device","Organization","CareTeam")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -292,7 +291,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "function":
@@ -345,7 +344,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Simple summary (disease specific).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("summary", Order=40)]
       [Binding("ConditionStage")]
       [DataMember]
@@ -373,8 +371,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Formal record of assessment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("assessment", Order=50)]
+      [CLSCompliant(false)]
       [References("ClinicalImpression","DiagnosticReport","Observation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -402,7 +400,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Kind of staging.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=60)]
       [Binding("ConditionStageType")]
       [DataMember]
@@ -495,7 +492,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "summary":
@@ -541,7 +538,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this condition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -569,7 +565,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | recurrence | relapse | inactive | remission | resolved | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [Binding("ConditionClinicalStatus")]
     [Cardinality(Min=1,Max=1)]
@@ -598,7 +593,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// unconfirmed | provisional | differential | confirmed | refuted | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [Binding("ConditionVerificationStatus")]
     [DataMember]
@@ -626,7 +620,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// problem-list-item | encounter-diagnosis.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", Order=120, FiveWs="FiveWs.class")]
     [Binding("ConditionCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -655,7 +648,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subjective severity of condition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("severity", Order=130, FiveWs="FiveWs.grade")]
     [Binding("ConditionSeverity")]
     [DataMember]
@@ -683,7 +675,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identification of the condition, problem or diagnosis.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [Binding("ConditionKind")]
     [DataMember]
@@ -711,7 +702,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Anatomical location, if relevant.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("bodySite", InSummary=true, Order=150)]
     [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
@@ -740,8 +730,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who has the condition?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -769,8 +759,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The Encounter during which this Condition was created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=170, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -797,8 +787,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Estimated or actual date,  date-time, or age.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("onset", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.init")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Onset
@@ -825,8 +815,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When in resolution/remission.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("abatement", Order=190, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Abatement
@@ -853,7 +843,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date condition was first recorded.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recordedDate", InSummary=true, Order=200, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? RecordedDateElement
@@ -895,7 +884,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who or what participated in the activities related to the condition and how they were involved.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participant", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -923,7 +911,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Stage/grade, usually assessed formally.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("stage", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -951,7 +938,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting evidence for the verification status.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("evidence", InSummary=true, Order=230)]
     [Binding("ManifestationOrSymptom")]
     [Cardinality(Min=0,Max=-1)]
@@ -980,7 +966,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information about the Condition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1205,7 +1190,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

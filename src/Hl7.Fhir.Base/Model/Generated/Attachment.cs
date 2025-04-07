@@ -67,7 +67,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Mime type of the content, with charset etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contentType", InSummary=true, Order=30)]
     [Binding("MimeType")]
     [DataMember]
@@ -110,7 +109,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human language of the content (BCP-47).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("language", InSummary=true, Order=40)]
     [Binding("Language")]
     [DataMember]
@@ -153,7 +151,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Data inline, base64ed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("data", Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? DataElement
@@ -198,8 +195,12 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirUri in STU3, Hl7.Fhir.Model.FhirUrl starting from R4.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=60)]
+    [CLSCompliant(false)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl))]
+    // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl), Since = FhirRelease.R4)]
     [DataMember]
@@ -260,8 +261,12 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.UnsignedInt in STU3, R4 and R4B, Hl7.Fhir.Model.Integer64 starting from R5.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("size", InSummary=true, Order=70)]
+    [CLSCompliant(false)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Integer64))]
+    // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
+    // [AllowedTypes(typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt), Since = FhirRelease.STU3)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Integer64), Since = FhirRelease.R5)]
     [DataMember]
@@ -319,7 +324,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Hash of the data (sha-1, base64ed).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("hash", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary? HashElement
@@ -361,7 +365,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Label to display in place of the data.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -403,7 +406,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date attachment was first created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("creation", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreationElement
@@ -448,7 +450,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("height", Order=110, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? HeightElement
@@ -493,7 +494,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("width", Order=120, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? WidthElement
@@ -538,7 +538,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("frames", Order=130, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? FramesElement
@@ -583,7 +582,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("duration", Order=140, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal? DurationElement
@@ -628,7 +626,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("pages", Order=150, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? PagesElement
@@ -835,7 +832,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "contentType":

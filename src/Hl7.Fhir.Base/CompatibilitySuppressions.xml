@@ -416,6 +416,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Hl7.Fhir.Validation.ValidationContextExtensions</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Hl7.Fhir.ElementModel.ElementNodeExtensions</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
@@ -823,6 +830,13 @@
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Hl7.Fhir.Validation.ValidateEnumCodeAttribute</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Hl7.Fhir.Validation.ValidationContextExtensions</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -2790,20 +2804,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Utility.SerializationUtil.WriteXmlToStringAsync(System.Func{System.Xml.XmlWriter,System.Threading.Tasks.Task},System.Boolean,System.Boolean)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Validation.ValidationContextExtensions.GetLocation(System.ComponentModel.DataAnnotations.ValidationContext)</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Validation.ValidationContextExtensions.SetLocation(System.ComponentModel.DataAnnotations.ValidationContext,System.String)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -4946,20 +4946,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Utility.SerializationUtil.WriteXmlToStringAsync(System.Func{System.Xml.XmlWriter,System.Threading.Tasks.Task},System.Boolean,System.Boolean)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Validation.ValidationContextExtensions.GetLocation(System.ComponentModel.DataAnnotations.ValidationContext)</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Validation.ValidationContextExtensions.SetLocation(System.ComponentModel.DataAnnotations.ValidationContext,System.String)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

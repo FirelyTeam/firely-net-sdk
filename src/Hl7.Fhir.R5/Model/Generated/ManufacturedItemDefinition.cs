@@ -76,7 +76,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A code expressing the type of characteristic.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("SNOMEDCTCharacteristicCodes")]
       [Cardinality(Min=1,Max=1)]
@@ -105,8 +104,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A value for the characteristic.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Binary")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -189,7 +188,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -239,7 +238,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Defining type of the component e.g. shell, layer, ink.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -267,7 +265,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The function of this component within the item e.g. delivers active ingredient, masks taste.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("function", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -295,7 +292,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The measurable amount of total quantity of all substances in the component, expressable in different ways (e.g. by mass or volume).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -323,7 +319,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A reference to a constituent of the manufactured item as a whole, linked here so that its component location within the item can be indicated. This not where the item's ingredient are primarily stated (for which see Ingredient.for or ManufacturedItemDefinition.ingredient).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("constituent", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -351,7 +346,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// General characteristics of this component.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("property", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -379,7 +373,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A component that this component contains or is made from.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("component", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -502,7 +495,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -588,7 +581,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The measurable amount of the substance, expressable in different ways (e.g. by mass or volume).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -616,7 +608,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The physical location of the constituent/ingredient within the component.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("location", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -644,7 +635,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The function of this constituent within the component e.g. binder.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("function", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -672,7 +662,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The ingredient that is the constituent of the given component.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("hasIngredient", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -775,7 +764,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "amount":
@@ -830,7 +819,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -858,7 +846,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -903,7 +890,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A descriptive name applied to this item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -945,7 +931,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dose form as manufactured (before any necessary transformation).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("manufacturedDoseForm", InSummary=true, Order=120)]
     [Binding("ManufacturedDoseForm")]
     [Cardinality(Min=1,Max=1)]
@@ -974,7 +959,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The “real-world” units in which the quantity of the item is described.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("unitOfPresentation", InSummary=true, Order=130)]
     [Binding("UnitOfPresentation")]
     [DataMember]
@@ -1002,8 +986,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of the item, one of several possible.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("manufacturer", InSummary=true, Order=140)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1031,7 +1015,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("marketingStatus", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1059,7 +1042,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The ingredients of this manufactured item. Only needed if these are not specified by incoming references from the Ingredient resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("ingredient", InSummary=true, Order=160)]
     [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
@@ -1088,7 +1070,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General characteristics of this item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("property", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1116,7 +1097,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Physical parts of the manufactured item, that it is intrisically made from. This is distinct from the ingredients that are part of its chemical makeup.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("component", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1281,7 +1261,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":
