@@ -1430,7 +1430,6 @@ namespace Hl7.Fhir.Model
       /// instance | related | dependents | authoredby.
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1622,7 +1621,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | inactive | not-done | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ConsentState")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2071,7 +2069,6 @@ namespace Hl7.Fhir.Model
     /// deny | permit.
     /// </summary>
     [FhirElement("decision", InSummary=true, IsModifier=true, Order=250)]
-    [AllowedTypes(typeof(Code))]
     [Binding("ConsentProvisionType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ConsentProvisionType>? DecisionElement

@@ -195,7 +195,6 @@ namespace Hl7.Fhir.Model
       /// default | check | override.
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("SystemVersionProcessingMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1433,7 +1432,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -772,7 +772,6 @@ namespace Hl7.Fhir.Model
       /// eq | gt | lt | ge | le | sa | eb.
       /// </summary>
       [FhirElement("comparator", InSummary=true, Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ValueFilterComparator")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator>? ComparatorElement
@@ -1032,7 +1031,6 @@ namespace Hl7.Fhir.Model
       /// ascending | descending.
       /// </summary>
       [FhirElement("direction", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("SortDirection")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1168,7 +1166,6 @@ namespace Hl7.Fhir.Model
     /// The type of the required data.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
-    [AllowedTypes(typeof(Code))]
     [Binding("FHIRTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

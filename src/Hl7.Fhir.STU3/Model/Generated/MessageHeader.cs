@@ -748,7 +748,6 @@ namespace Hl7.Fhir.Model
       /// ok | transient-error | fatal-error.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ResponseType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

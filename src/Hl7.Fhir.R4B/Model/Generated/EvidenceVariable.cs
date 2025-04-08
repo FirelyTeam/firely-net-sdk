@@ -300,7 +300,6 @@ namespace Hl7.Fhir.Model
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median.
       /// </summary>
       [FhirElement("groupMeasure", Order=100)]
-      [AllowedTypes(typeof(Code))]
       [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode>? GroupMeasureElement
@@ -1246,7 +1245,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1670,7 +1668,6 @@ namespace Hl7.Fhir.Model
     /// intersection | union.
     /// </summary>
     [FhirElement("characteristicCombination", Order=290)]
-    [AllowedTypes(typeof(Code))]
     [Binding("CharacteristicCombination")]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationCode>? CharacteristicCombinationElement
@@ -1740,7 +1737,6 @@ namespace Hl7.Fhir.Model
     /// continuous | dichotomous | ordinal | polychotomous.
     /// </summary>
     [FhirElement("handling", InSummary=true, Order=310)]
-    [AllowedTypes(typeof(Code))]
     [Binding("EvidenceVariableHandling")]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariableHandling>? HandlingElement

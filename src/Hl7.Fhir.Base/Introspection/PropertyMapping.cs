@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
@@ -16,6 +17,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using P=Hl7.Fhir.ElementModel.Types;
 
 #nullable enable
 
@@ -192,50 +194,84 @@ namespace Hl7.Fhir.Introspection
             // FHIR repeating elements. If we would allow this, we'd also have stuff like `string` and binary
             // data as repeating element, and would need to exclude these exceptions on a case by case basis.
             // This is pretty ugly, so we prefer to not support arrays - you should use lists instead.
-            bool isCollection = ReflectionHelper.IsTypedList(prop.PropertyType) && !prop.PropertyType.IsArray;
+            _ = ReflectionHelper.TryGetRepeatingElementType(prop.PropertyType, out var collectionItemType);
 
             var cardinalityAttr = ClassMapping.GetAttribute<CardinalityAttribute>(prop, release);
 
             // Get to the actual (native) type representing this element
             var implementingType = prop.PropertyType;
-            if (isCollection) implementingType = ReflectionHelper.GetCollectionItemType(prop.PropertyType);
-            if (ReflectionHelper.IsNullableType(implementingType)) implementingType = ReflectionHelper.GetNullableArgument(implementingType);
-
-            var fhirType = (typeof(Enum).IsAssignableFrom(implementingType) ? typeof(Enum) : implementingType);
+            if (collectionItemType is not null) implementingType = collectionItemType!;
+            if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
 
             // The [AllowedTypes] attribute can specify a set of allowed types for this element.
             // If this is a choice element, then take this list as the declared list of FHIR types,
             // otherwise assume this is the implementing FHIR type above
-            var overridingTypes = ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release);
+            var overridingTypes = ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release)?.Types;
+            Type mappingType = determineMappingType(overridingTypes, implementingType, elementAttr, declaringClass.Name);
 
-            var fhirTypes = overridingTypes?.Types.Any() == true ?
-                overridingTypes.Types : [fhirType];
-            
-            var mappingType = fhirTypes.Length == 1 ? fhirTypes[0] : fhirType;
-            
             if (!ClassMapping.TryGetMappingForType(mappingType, release, out var propertyTypeMapping))
                 throw new InvalidOperationException($"Property {prop.Name} in class {prop.DeclaringType!.Name} is of type " +
-                                                    $"{fhirType}, for which a classmapping cannot be found.");
+                                                    $"{mappingType}, for which a classmapping cannot be found.");
 
+            // FhirTypes is either the explicitly listed types in the [AllowedTypes] attribute, or the
+            // mappingType we have determined before.
+            var fhirTypes = overridingTypes ?? [mappingType];
             var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
 
-            result = new PropertyMapping(elementAttr.Name, declaringClass, prop, implementingType, propertyTypeMapping!, fhirTypes, release)
+            result = new PropertyMapping(elementAttr.Name, declaringClass, prop, implementingType, propertyTypeMapping, fhirTypes, release)
             {
                 InSummary = elementAttr.InSummary,
                 IsModifier = elementAttr.IsModifier,
                 Choice = elementAttr.Choice,
                 SerializationHint = elementAttr.XmlSerialization,
                 Order = elementAttr.Order,
-                IsCollection = isCollection,
+                IsCollection = collectionItemType is not null,
                 IsMandatoryElement = cardinalityAttr?.Min > 0,
                 IsPrimitive = isPrimitive,
-                RepresentsValueElement = isPrimitive && isPrimitiveValueElement(elementAttr, prop),
+                RepresentsValueElement = elementAttr.IsPrimitiveValue,
                 ValidationAttributes = ClassMapping.GetValidatingAttributes(prop, release).ToArray(),
                 FiveWs = elementAttr.FiveWs,
                 BindingName = ClassMapping.GetAttribute<BindingAttribute>(prop, release)?.Name
             };
 
             return true;
+        }
+
+        private static Type determineMappingType(Type[]? overridingTypes, Type implementingType, FhirElementAttribute felem, string parentTypeName)
+        {
+            // There are a few cases where AllowedTypes is used to specify the "correct" concrete FhirType to
+            // use when ImplementingType is not the right type to base the mapping on:
+            // * For elements that use DataType and have a specific AllowedType per version (e.g. Signature.who)
+            // * For the value element of Primitives, that need to be mapped to CQL types.
+            if (overridingTypes?.Length == 1)
+                return overridingTypes[0];
+
+            // The special "value" properties of primitive types are mapped to the CQL types.
+            if (isAllowedNativeTypeForDataTypeValue(implementingType) && felem.IsPrimitiveValue)
+            {
+                return parentTypeName switch
+                {
+                    "boolean" => typeof(P.Boolean),
+                    "integer" or "unsignedInt" or "positiveInt" => typeof(P.Integer),
+                    "integer64" => typeof(P.Long),
+                    "time" => typeof(P.Time),
+                    "date" => typeof(P.Date),
+                    "instant" or "datetime" => typeof(P.DateTime),
+                    "decimal" => typeof(P.Decimal),
+                    _ => typeof(P.String)
+                };
+            }
+
+            // For all enums, we use the single mapping for Enum
+            if (typeof(Enum).IsAssignableFrom(implementingType))
+                return typeof(Enum);
+
+            // For all Code<T>, we use the mapping for Coding
+            if (implementingType.IsConstructedGenericType && implementingType.GetGenericTypeDefinition() == typeof(Code<>))
+                return typeof(Code);
+
+            // Otherwise, we simply use the mapping for the actual implementing type.
+            return implementingType;
         }
 
         /// <summary>
@@ -255,27 +291,11 @@ namespace Hl7.Fhir.Introspection
             return ImplementingType;
         }
 
-        private static bool isPrimitiveValueElement(FhirElementAttribute valueElementAttr, PropertyInfo prop)
-        {
-            var isValueElement = valueElementAttr.IsPrimitiveValue;
-
-            return !isValueElement || isAllowedNativeTypeForDataTypeValue(prop.PropertyType)
-                ? isValueElement
-                : throw Error.Argument(nameof(prop), "Property {0} is marked for use as a primitive element value, but its .NET type ({1}) " +
-                    "is not supported by the serializer.".FormatWith(buildQualifiedPropName(prop), prop.PropertyType.Name));
-        }
-
         private static string buildQualifiedPropName(PropertyInfo p)
             => $"{p.DeclaringType?.Name ?? throw Error.ArgumentNull(nameof(p.DeclaringType))}.{p.Name}";
 
-        private static bool isAllowedNativeTypeForDataTypeValue(Type type)
-        {
-            // Special case, allow Nullable<enum>
-            if (ReflectionHelper.IsNullableType(type))
-                type = ReflectionHelper.GetNullableArgument(type);
-
-            return type.IsEnum() || ClassMapping.SupportedDotNetPrimitiveTypes.Contains(type);
-        }
+        private static bool isAllowedNativeTypeForDataTypeValue(Type type) =>
+            type.IsEnum || ClassMapping.SupportedDotNetPrimitiveTypes.Contains(type);
 
         /// <summary>
         /// Given an instance of the parent class, gets the value for this property.
@@ -331,44 +351,33 @@ namespace Hl7.Fhir.Introspection
 
         private ITypeSerializationInfo[] buildTypes()
         {
-            var elementTypeMapping = PropertyTypeMapping;
+            if (PropertyTypeMapping!.IsBackboneType)
+                return [PropertyTypeMapping];
 
-            if (elementTypeMapping!.IsBackboneType)
-            {
-                var info = elementTypeMapping;
-                return [info];
-            }
-            else if (IsPrimitive)
+            if (IsPrimitive)
             {
                 throw new NotSupportedException(
                     $"Encountered unexpected primitive type {Name} for ITypedElement.InstanceType.");
             }
-            else
-            {
-                var names = FhirType.Select(getFhirTypeName);
-                return names.Select(n => (ITypeSerializationInfo)new PocoTypeReferenceInfo(n)).ToArray();
-            }
+
+            var names = FhirType.Select(getFhirTypeName);
+            return names.Select(n => (ITypeSerializationInfo)new PocoTypeReferenceInfo(n)).ToArray();
 
             string getFhirTypeName(Type ft)
             {
                 // The special case where the mapping name is a backbone element name can safely
                 // be ignored here, since that is handled by the first case in the if statement above.
                 return ClassMapping.TryGetMappingForType(ft, Release, out var tm)
-                    ? ((IStructureDefinitionSummary)tm!).TypeName
+                    ? ((IStructureDefinitionSummary)tm).TypeName
                     : throw new NotSupportedException($"Type '{ft.Name}' is listed as an allowed type for property " +
                         $"'{buildQualifiedPropName(NativeProperty)}', but it does not seem to" +
                         $"be a valid FHIR type POCO.");
             }
         }
 
-        private struct PocoTypeReferenceInfo : IStructureDefinitionReference
+        private readonly struct PocoTypeReferenceInfo(string canonical) : IStructureDefinitionReference
         {
-            public PocoTypeReferenceInfo(string canonical)
-            {
-                ReferredType = canonical;
-            }
-
-            public string ReferredType { get; }
+            public string ReferredType { get; } = canonical;
         }
 
         #endregion

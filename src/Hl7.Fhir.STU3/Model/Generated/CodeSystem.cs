@@ -280,7 +280,6 @@ namespace Hl7.Fhir.Model
       /// Operators that can be used with filter.
       /// </summary>
       [FhirElement("operator", InSummary=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("FilterOperator")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -639,7 +638,6 @@ namespace Hl7.Fhir.Model
       /// code | Coding | string | integer | boolean | dateTime.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
-      [AllowedTypes(typeof(Code))]
       [Binding("PropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1810,7 +1808,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2264,7 +2261,6 @@ namespace Hl7.Fhir.Model
     /// grouped-by | is-a | part-of | classified-with.
     /// </summary>
     [FhirElement("hierarchyMeaning", InSummary=true, Order=260)]
-    [AllowedTypes(typeof(Code))]
     [Binding("CodeSystemHierarchyMeaning")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning>? HierarchyMeaningElement
@@ -2389,7 +2385,6 @@ namespace Hl7.Fhir.Model
     /// not-present | example | fragment | complete.
     /// </summary>
     [FhirElement("content", InSummary=true, Order=290)]
-    [AllowedTypes(typeof(Code))]
     [Binding("CodeSystemContentMode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

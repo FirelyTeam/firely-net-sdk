@@ -122,7 +122,6 @@ namespace Hl7.Fhir.Model
       /// person | system.
       /// </summary>
       [FhirElement("type", Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ExampleScenarioActorType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3177,7 +3176,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

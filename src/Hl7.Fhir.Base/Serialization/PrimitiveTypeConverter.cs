@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Serialization
             if (typeof(BigInteger) == to)
                 return BigInteger.Parse(value);
 
-            if (to.IsEnum())
+            if (to.IsEnum)
             {
                 var result = EnumUtility.ParseLiteral(value, to);
                 if (result == null)

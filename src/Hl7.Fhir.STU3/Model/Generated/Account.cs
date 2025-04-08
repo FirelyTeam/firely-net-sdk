@@ -525,7 +525,6 @@ namespace Hl7.Fhir.Model
     /// active | inactive | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("AccountStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Account.AccountStatus>? StatusElement

@@ -84,7 +84,6 @@ namespace Hl7.Fhir.Model
       /// Name of resource type.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -450,7 +449,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -781,7 +779,6 @@ namespace Hl7.Fhir.Model
     /// Patient | Encounter | RelatedPerson | Practitioner | Device.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=210)]
-    [AllowedTypes(typeof(Code))]
     [Binding("CompartmentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
