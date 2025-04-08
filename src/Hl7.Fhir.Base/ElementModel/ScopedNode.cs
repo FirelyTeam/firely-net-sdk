@@ -6,8 +6,10 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
+using Hl7.FhirPath;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -211,16 +213,31 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// When this node is the root of a Bundle, retrieves the bundled resources in its Bundle.entry.
         /// </summary>
-        public IEnumerable<BundledResource> BundledResources()
+        internal IEnumerable<BundledResource> BundledResources()
         {
             if (_cache.BundledResources != null) return _cache.BundledResources;
             
             if (InstanceType == "Bundle")
             {
-                var referenceEntryPairs = from e in this.Children("entry")
-                    let fullUrl = e.Children("fullUrl").FirstOrDefault()?.Value as string
-                    let resource = e.Children("resource").FirstOrDefault() as ScopedNode
-                    select new KeyValuePair<string, ScopedNode>(fullUrl, resource);
+                var referenceEntryPairs = new List<KeyValuePair<string, ScopedNode>>();
+                var versionedEntries = Current.Children("entry").Where(entry => entry.Children("resource").Children("meta").Children("versionId").Any());
+                foreach (var versionedResourceGroup in versionedEntries.GroupBy(entry => entry.Children("fullUrl").First().Value as string))
+                {
+                    referenceEntryPairs.Add(new (versionedResourceGroup.Key!, versionedResourceGroup.First().Children("resource").First().ToScopedNode()));
+                    referenceEntryPairs.AddRange(
+                        versionedResourceGroup.Select(
+                            entry => new KeyValuePair<string, ScopedNode>(
+                                (versionedResourceGroup.Key + "/_history/" + entry.Children("resource").Children("meta").Children("versionId").First().Value), 
+                                entry.Children("resource").Single().ToScopedNode()
+                            )
+                        )
+                    );
+                }
+                var unversionedEntries = Current.Children("entry").Where(entry => !entry.Children("resource").Children("meta").Children("versionId").Any());
+                referenceEntryPairs.AddRange(unversionedEntries.Select(entry => new KeyValuePair<string, ScopedNode>(
+                    (entry.Children("fullUrl").First().Value as string)!, 
+                    entry.Children("resource").First().ToScopedNode()
+                )));
                 _cache.BundledResources = new ReferencedResourceCache(referenceEntryPairs);
             }
                     

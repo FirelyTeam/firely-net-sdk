@@ -4,6 +4,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -222,6 +223,44 @@ namespace Hl7.Fhir.ElementModel.Tests
                 lastUrlResolved = url;
                 return null;
             }
+        }
+
+        [TestMethod]
+        public void TestVersionedReferenceResolution()
+        {
+            var b = new Bundle()
+            {
+                Entry = new List<Bundle.EntryComponent>
+                {
+                    new() { FullUrl = "Patient/lol", Resource = new Patient{Id = "a", Meta = new Meta(){VersionId = "1"}}},
+                    new() { FullUrl = "Patient/lol", Resource = new Patient{Id = "b", Meta = new Meta(){VersionId = "2"}}},
+                    new() { FullUrl = "exampleReferencingVersionedResource", Resource = new Patient
+                    {
+                        Link = [
+                            new ()
+                            {
+                                Other = new ResourceReference("Patient/lol/_history/2")
+                            }
+                        ]
+                    }},
+                    new() { FullUrl = "exampleReferencingUnversionedResource", Resource = new Patient
+                    {
+                        Link = [
+                            new ()
+                            {
+                                Other = new ResourceReference("Patient/lol")
+                            }
+                        ]
+                    }}
+                }
+            };
+
+            var node = b.ToTypedElement().ToScopedNode();
+            var bundled = node.BundledResources();
+            Assert.AreEqual(5, bundled.Count()); // one extra (a fake version agnostic version)
+            
+            Assert.AreEqual("Bundle.entry[1].resource[0]", node.Children("entry").Children("resource").Children("link").Children("other").First().Resolve()!.Location);
+            Assert.AreEqual("Bundle.entry[0].resource[0]", node.Children("entry").Children("resource").Children("link").Children("other").Skip(1).First().Resolve()!.Location);
         }
 
         [TestMethod]

@@ -18,10 +18,9 @@ internal class ReferencedResourceCache : IEnumerable<ScopedNode.BundledResource>
         foreach (var item in items)
         {
             if (item.Key is not null)
-                _items.Add(item.Key, item.Value);
-            else 
+                _items[item.Key] = item.Value;
+            else
                 _unreferenceableItems.Add(item.Value);
-                
         }
     }
     
