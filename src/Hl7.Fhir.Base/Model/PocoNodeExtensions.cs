@@ -1,5 +1,5 @@
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Hl7.Fhir.ElementModel;
+namespace Hl7.Fhir.Model;
 
 #nullable enable
 
