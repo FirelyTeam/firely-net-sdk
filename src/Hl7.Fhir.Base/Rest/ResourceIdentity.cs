@@ -466,13 +466,12 @@ namespace Hl7.Fhir.Rest
         /// Find out whether one ResourceIdentity references another ResourceIdentity
         /// </summary>
         /// <param name="reference"></param>
-        /// <param name="strict"></param>
         /// <returns></returns>
-        public bool IsTargetOf(ResourceIdentity reference, bool strict = false)
+        public bool IsTargetOf(ResourceIdentity reference)
         {
-            if (reference.BaseUri != null && BaseUri != null && BaseUri != reference.BaseUri) 
+            if (reference.BaseUri != null && BaseUri != reference.BaseUri) 
                 return false;
-            if((strict || reference.ResourceType != null) && ResourceType != reference.ResourceType) 
+            if(reference.ResourceType != null && ResourceType != reference.ResourceType) 
                 return false;
             if (Id != reference.Id) 
                 return false;

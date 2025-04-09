@@ -20,7 +20,7 @@ public static class PocoNodeExtensions
         result = node?.Poco is Bundle b
             ? node
                 .Child<PocoListNode>("entry")
-                ?.FirstOrDefault<Bundle.EntryComponent>(entry => entry.Resource?.ResourceIdentity(fullUrl: entry.FullUrl)?.IsTargetOf(identity, true) is true)
+                ?.FirstOrDefault<Bundle.EntryComponent>(entry => entry.Resource?.ResourceIdentity(fullUrl: entry.FullUrl)?.IsTargetOf(identity) is true)
                 ?.Child<PocoNode>("resource")
             : null;
         return result is not null;
@@ -46,11 +46,13 @@ public static class PocoNodeExtensions
     /// <returns>t</returns>
     internal static bool TryResolveLocalReference(this PocoNode? node, ResourceIdentity identity, [NotNullWhen(true)] out PocoNode? result)
     {
+        result = null;
+        
         for(var scan = node; scan is not null; scan = scan.Parent)
         {
             if (scan.Poco is Bundle) // if we do not find it in the closest bundle, the reference is invalid
             {
-                return scan.tryResolveBundleEntry(identity, out result);
+                return !identity.IsLocal && scan.tryResolveBundleEntry(identity, out result);
             }
             
             if (scan.Poco is DomainResource && scan.tryResolveContainedEntry(identity, out result)) 
