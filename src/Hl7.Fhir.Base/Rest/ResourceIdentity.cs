@@ -466,25 +466,19 @@ namespace Hl7.Fhir.Rest
         /// Find out whether one ResourceIdentity references another ResourceIdentity
         /// </summary>
         /// <param name="reference"></param>
+        /// <param name="strict"></param>
         /// <returns></returns>
-        public bool IsTargetOf(ResourceIdentity reference)
+        public bool IsTargetOf(ResourceIdentity reference, bool strict = false)
         {
-            if (reference.BaseUri != null)
-            {
-                //TODO: According to the spec, this comparison should ignore http/https
-                //(see http.html#2.1.0.1, under the header 'identity')
-                if (BaseUri != reference.BaseUri) return false;
-            }
-
-            if (ResourceType != reference.ResourceType) return false;
-            if (Id != reference.Id) return false;
-
-            if (reference.VersionId != null)
-            {
-                if (VersionId != reference.VersionId) return false;
-            }
-
-            return true;
+            if (reference.BaseUri != null && BaseUri != null && BaseUri != reference.BaseUri) 
+                return false;
+            if((strict || reference.ResourceType != null) && ResourceType != reference.ResourceType) 
+                return false;
+            if (Id != reference.Id) 
+                return false;
+            if (reference.VersionId == null) 
+                return true;
+            return VersionId == reference.VersionId;
         }
 
         public bool IsTargetOf(string reference)
