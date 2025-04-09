@@ -192,7 +192,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How many times to repeat.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("repetitions", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? RepetitionsElement
@@ -234,7 +233,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When fulfillment sought.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -261,8 +259,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For whom is fulfillment sought?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("recipient", Order=60)]
+      [CLSCompliant(false)]
       [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Group","Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -355,7 +353,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "repetitions":
@@ -417,7 +415,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for the input.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("TransportInputParameterType")]
       [Cardinality(Min=1,Max=1)]
@@ -446,8 +443,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Content to use in performing the transport.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Integer64),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.CodeableReference),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ContactDetail),typeof(Hl7.Fhir.Model.DataRequirement),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.ParameterDefinition),typeof(Hl7.Fhir.Model.RelatedArtifact),typeof(Hl7.Fhir.Model.TriggerDefinition),typeof(Hl7.Fhir.Model.UsageContext),typeof(Hl7.Fhir.Model.Availability),typeof(Hl7.Fhir.Model.ExtendedContactDetail),typeof(Hl7.Fhir.Model.Dosage),typeof(Hl7.Fhir.Model.Meta))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -530,7 +527,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -583,7 +580,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for output.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("TransportOutputParameterType")]
       [Cardinality(Min=1,Max=1)]
@@ -612,8 +608,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Result of output.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Integer64),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.CodeableReference),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ContactDetail),typeof(Hl7.Fhir.Model.DataRequirement),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.ParameterDefinition),typeof(Hl7.Fhir.Model.RelatedArtifact),typeof(Hl7.Fhir.Model.TriggerDefinition),typeof(Hl7.Fhir.Model.UsageContext),typeof(Hl7.Fhir.Model.Availability),typeof(Hl7.Fhir.Model.ExtendedContactDetail),typeof(Hl7.Fhir.Model.Dosage),typeof(Hl7.Fhir.Model.Meta))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -696,7 +692,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -733,7 +729,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -761,7 +756,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Formal definition of transport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? InstantiatesCanonicalElement
@@ -803,7 +797,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Formal definition of transport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? InstantiatesUriElement
@@ -845,8 +838,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled by this transport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -874,7 +867,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Requisition or grouper id.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("groupIdentifier", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? GroupIdentifier
@@ -901,8 +893,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of referenced event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", InSummary=true, Order=140)]
+    [CLSCompliant(false)]
     [References("Transport")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -930,7 +922,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | abandoned | cancelled | planned | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
     [AllowedTypes(typeof(Code))]
     [Binding("TransportStatus")]
@@ -974,7 +965,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("statusReason", InSummary=true, Order=160)]
     [Binding("TransportStatusReason")]
     [DataMember]
@@ -1002,7 +992,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("intent", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [AllowedTypes(typeof(Code))]
     [Binding("TransportIntent")]
@@ -1047,7 +1036,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("priority", Order=180, FiveWs="FiveWs.grade")]
     [AllowedTypes(typeof(Code))]
     [Binding("TransportPriority")]
@@ -1091,7 +1079,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Transport Type.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=190, FiveWs="FiveWs.what[x]")]
     [Binding("TransportCode")]
     [DataMember]
@@ -1119,7 +1106,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human-readable explanation of transport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -1161,8 +1147,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What transport is acting on.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("focus", InSummary=true, Order=210, FiveWs="FiveWs.what[x]")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Focus
@@ -1189,8 +1175,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Beneficiary of the Transport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("for", InSummary=true, Order=220, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? For
@@ -1217,8 +1203,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare event during which this transport originated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=230, FiveWs="FiveWs.context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -1245,7 +1231,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Completion time of the event (the occurrence).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("completionTime", InSummary=true, Order=240, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CompletionTimeElement
@@ -1287,7 +1272,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Transport Creation Date.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("authoredOn", Order=250, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? AuthoredOnElement
@@ -1329,7 +1313,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Transport Last Modified Date.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastModified", InSummary=true, Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? LastModifiedElement
@@ -1371,8 +1354,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is asking for transport to be done.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requester", InSummary=true, Order=270, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Requester
@@ -1399,7 +1382,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Requested performer.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("performerType", Order=280, FiveWs="FiveWs.actor")]
     [Binding("TransportPerformerType")]
     [Cardinality(Min=0,Max=-1)]
@@ -1428,8 +1410,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible individual.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("owner", InSummary=true, Order=290, FiveWs="FiveWs.actor")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","CareTeam","HealthcareService","Patient","Device","RelatedPerson")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Owner
@@ -1456,8 +1438,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where transport occurs.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("location", InSummary=true, Order=300, FiveWs="FiveWs.where[x]")]
+    [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Location
@@ -1484,8 +1466,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated insurance coverage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("insurance", Order=310)]
+    [CLSCompliant(false)]
     [References("Coverage","ClaimResponse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1513,7 +1495,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the transport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1541,8 +1522,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Key events in history of the Transport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relevantHistory", Order=330)]
+    [CLSCompliant(false)]
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1570,7 +1551,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Constraints on fulfillment transports.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("restriction", Order=340)]
     [DataMember]
     public Hl7.Fhir.Model.Transport.RestrictionComponent? Restriction
@@ -1597,7 +1577,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information used to perform transport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("input", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1625,7 +1604,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information produced as part of transport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("output", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1653,8 +1631,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The desired location.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requestedLocation", InSummary=true, Order=370, FiveWs="FiveWs.where[x]")]
+    [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1682,8 +1660,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The entity current location.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("currentLocation", InSummary=true, Order=380, FiveWs="FiveWs.where[x]")]
+    [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1711,7 +1689,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why transport is needed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reason", Order=390, FiveWs="FiveWs.why[x]")]
     [Binding("TransportReason")]
     [DataMember]
@@ -1739,8 +1716,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Parent (or preceding) transport.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("history", Order=400, FiveWs="FiveWs.why[x]")]
+    [CLSCompliant(false)]
     [References("Transport")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? History
@@ -2124,7 +2101,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

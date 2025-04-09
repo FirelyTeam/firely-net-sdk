@@ -138,7 +138,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Product to be supplied.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("product", Order=40)]
       [Binding("VisionProduct")]
       [DataMember]
@@ -166,7 +165,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// right | left.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("eye", Order=50)]
       [AllowedTypes(typeof(Code))]
       [Binding("VisionEyes")]
@@ -210,7 +208,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lens sphere.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sphere", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? SphereElement
@@ -252,7 +249,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lens cylinder.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("cylinder", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? CylinderElement
@@ -294,7 +290,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lens axis.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("axis", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? AxisElement
@@ -336,7 +331,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lens prism.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("prism", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? PrismElement
@@ -378,7 +372,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// up | down | in | out.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("base", Order=100)]
       [AllowedTypes(typeof(Code))]
       [Binding("VisionBase")]
@@ -422,7 +415,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lens add.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("add", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? AddElement
@@ -464,7 +456,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contact lens power.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("power", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? PowerElement
@@ -506,7 +497,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contact lens back curvature.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("backCurve", Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? BackCurveElement
@@ -548,7 +538,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contact lens diameter.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("diameter", Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal? DiameterElement
@@ -590,7 +579,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lens wear duration.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("duration", Order=150)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Duration
@@ -617,7 +605,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Color required.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("color", Order=160)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ColorElement
@@ -659,7 +646,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Brand required.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("brand", Order=170)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? BrandElement
@@ -701,7 +687,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Notes for coatings.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("note", Order=180)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -914,7 +899,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "product":
@@ -1068,7 +1053,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1096,7 +1080,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("VisionStatus")]
@@ -1140,8 +1123,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who prescription is for.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", Order=110, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Patient
@@ -1168,8 +1151,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Created during encounter / admission / stay.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", Order=120, FiveWs="context")]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -1196,7 +1179,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When prescription was authorized.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dateWritten", Order=130, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateWrittenElement
@@ -1238,8 +1220,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authorizes the vision product.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("prescriber", Order=140, FiveWs="who.author")]
+    [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Prescriber
@@ -1266,8 +1248,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason or indication for writing the prescription.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reason", Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="why")]
+    [CLSCompliant(false)]
     [References("Condition")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
@@ -1295,7 +1277,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Vision supply authorization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dispense", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1440,7 +1421,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

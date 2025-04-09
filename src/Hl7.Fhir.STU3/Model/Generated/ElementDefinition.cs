@@ -269,7 +269,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Element values that are used to distinguish the slices.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("discriminator", InSummary=true, Order=30)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -297,7 +296,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text description of how slicing works (or not).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -339,7 +337,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If elements must be in same order as slices.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("ordered", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? OrderedElement
@@ -381,7 +378,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// closed | open | openAtEnd.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("rules", InSummary=true, Order=60)]
       [AllowedTypes(typeof(Code))]
       [Binding("SlicingRules")]
@@ -501,7 +497,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "discriminator":
@@ -573,7 +569,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// value | exists | pattern | type | profile.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=30)]
       [AllowedTypes(typeof(Code))]
       [Binding("DiscriminatorType")]
@@ -618,7 +613,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Path to element value.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("path", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -716,7 +710,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -770,7 +764,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Path that identifies the base element.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("path", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -813,7 +806,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Min cardinality of the base element.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("min", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -856,7 +848,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Max cardinality of the base element.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("max", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -964,7 +955,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "path":
@@ -1027,7 +1018,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Data type or Resource (reference to definition).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=30)]
       [Binding("FHIRDefinedTypeExt")]
       [Cardinality(Min=1,Max=1)]
@@ -1071,7 +1061,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Profile (StructureDefinition) to apply (or IG).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("profile", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? ProfileElement
@@ -1113,7 +1102,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Profile (StructureDefinition) to apply to reference target (or IG).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("targetProfile", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? TargetProfileElement
@@ -1155,7 +1143,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// contained | referenced | bundled - how aggregated.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("aggregation", InSummary=true, Order=60)]
       [AllowedTypes(typeof(Code))]
       [Binding("AggregationMode")]
@@ -1203,7 +1190,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// either | independent | specific.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("versioning", InSummary=true, Order=70)]
       [AllowedTypes(typeof(Code))]
       [Binding("ReferenceVersionRules")]
@@ -1332,7 +1318,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -1413,7 +1399,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Describes the purpose of this example.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("label", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1456,8 +1441,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value of Example (one of allowed types).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1540,7 +1525,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "label":
@@ -1594,7 +1579,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Target of 'condition' reference above.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("key", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1637,7 +1621,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why this constraint is necessary or appropriate.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("requirements", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? RequirementsElement
@@ -1679,7 +1662,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// error | warning.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("severity", InSummary=true, Order=50)]
       [AllowedTypes(typeof(Code))]
       [Binding("ConstraintSeverity")]
@@ -1724,7 +1706,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human description of constraint.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("human", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1767,7 +1748,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIRPath expression of constraint.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("expression", InSummary=true, Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1813,7 +1793,6 @@ namespace Hl7.Fhir.Model
       /// <remarks>
       /// Element is deprecated since R5, do not use with R5 and newer releases.
       /// </remarks>
-      [CLSCompliant(false)]
       [FhirElement("xpath", InSummary=true, Order=80)]
       [NotMapped(Since=FhirRelease.R5)]
       [DataMember]
@@ -1856,7 +1835,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to original source of constraint.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("source", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri? SourceElement
@@ -2003,7 +1981,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "key":
@@ -2102,7 +2080,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// required | extensible | preferred | example.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("strength", InSummary=true, Order=30)]
       [AllowedTypes(typeof(Code))]
       [Binding("BindingStrength")]
@@ -2147,7 +2124,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human explanation of the value set.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -2189,8 +2165,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Source of value set.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("valueSet", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("ValueSet")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
@@ -2283,7 +2259,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "strength":
@@ -2346,7 +2322,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to mapping declaration.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identity", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2389,7 +2364,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Computable language of mapping.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("language", InSummary=true, Order=40)]
       [Binding("MimeType")]
       [DataMember]
@@ -2432,7 +2406,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Details of the mapping.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("map", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2475,7 +2448,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Comments about the mapping or its use.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("comment", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? CommentElement
@@ -2592,7 +2564,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identity":
@@ -2647,7 +2619,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Path of the element in the hierarchy of elements.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("path", InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2690,7 +2661,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// xmlAttr | xmlText | typeAttr | cdaText | xhtml.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("representation", InSummary=true, Order=40)]
     [AllowedTypes(typeof(Code))]
     [Binding("PropertyRepresentation")]
@@ -2738,7 +2708,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this particular element (in a set of slices).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sliceName", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SliceNameElement
@@ -2780,7 +2749,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for element to display with or prompt for element.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("label", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? LabelElement
@@ -2822,7 +2790,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Corresponding codes in terminologies.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=70)]
     [Binding("ElementDefinitionCode")]
     [Cardinality(Min=0,Max=-1)]
@@ -2851,7 +2818,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This element is sliced - slices follow.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("slicing", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.ElementDefinition.SlicingComponent? Slicing
@@ -2878,7 +2844,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Concise definition for space-constrained presentation.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("short", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ShortElement
@@ -2920,7 +2885,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Full formal definition as narrative text.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("definition", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DefinitionElement
@@ -2962,7 +2926,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments about the use of this element.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("comment", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CommentElement
@@ -3004,7 +2967,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this resource has been created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requirements", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? RequirementsElement
@@ -3046,7 +3008,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other names.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("alias", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3092,7 +3053,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Minimum Cardinality.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("min", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? MinElement
@@ -3134,7 +3094,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Maximum Cardinality (a number or *).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("max", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? MaxElement
@@ -3176,7 +3135,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Base definition information for tools.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("base", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.ElementDefinition.BaseComponent? Base
@@ -3203,7 +3161,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to definition of content for the element.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contentReference", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? ContentReferenceElement
@@ -3245,7 +3202,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Data type and Profile for this element.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3273,8 +3229,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specified value if missing from instance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("defaultValue", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? DefaultValue
@@ -3301,7 +3257,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Implicit meaning when this element is missing.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("meaningWhenMissing", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? MeaningWhenMissingElement
@@ -3343,7 +3298,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What the order of the elements means.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("orderMeaning", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? OrderMeaningElement
@@ -3385,8 +3339,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Value must be exactly this.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("fixed", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Fixed
@@ -3413,8 +3367,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Value must have at least these property values.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("pattern", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Meta))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Pattern
@@ -3441,7 +3395,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Example value (as defined for type).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("example", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3469,8 +3422,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Minimum Allowed Value (for some types).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("minValue", InSummary=true, Order=250, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Quantity))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? MinValue
@@ -3497,8 +3450,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Maximum Allowed Value (for some types).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("maxValue", InSummary=true, Order=260, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.Quantity))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? MaxValue
@@ -3525,7 +3478,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Max length for strings.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("maxLength", InSummary=true, Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Integer? MaxLengthElement
@@ -3567,7 +3519,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to invariant about presence.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("condition", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3613,7 +3564,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition that must evaluate to true.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("constraint", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3641,7 +3591,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If the element must supported.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("mustSupport", InSummary=true, Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? MustSupportElement
@@ -3683,7 +3632,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this modifies the meaning of other elements.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("isModifier", InSummary=true, Order=310)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? IsModifierElement
@@ -3725,7 +3673,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Include when _summary = true?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("isSummary", InSummary=true, Order=320)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? IsSummaryElement
@@ -3767,7 +3714,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ValueSet details if this is coded.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("binding", InSummary=true, Order=330)]
     [DataMember]
     public Hl7.Fhir.Model.ElementDefinition.ElementDefinitionBindingComponent? Binding
@@ -3794,7 +3740,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Map element to another set of definitions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("mapping", InSummary=true, Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4177,7 +4122,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "path":

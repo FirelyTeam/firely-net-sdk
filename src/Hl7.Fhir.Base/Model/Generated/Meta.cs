@@ -66,7 +66,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Version specific identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("versionId", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Id? VersionIdElement
@@ -108,7 +107,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the resource version last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastUpdated", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Instant? LastUpdatedElement
@@ -153,7 +151,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// Element was introduced in R4, do not use when working with older releases.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("source", InSummary=true, Order=50, Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? SourceElement
@@ -198,7 +195,6 @@ namespace Hl7.Fhir.Model
     /// <remarks>
     /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirUri in STU3, Hl7.Fhir.Model.Canonical starting from R4.
     /// </remarks>
-    [CLSCompliant(false)]
     [FhirElement("profile", InSummary=true, Order=60)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), Since = FhirRelease.STU3)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Canonical), Since = FhirRelease.R4)]
@@ -264,7 +260,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Security Labels applied to this resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("security", InSummary=true, Order=70)]
     [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
@@ -293,7 +288,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Tags applied to this resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("tag", InSummary=true, Order=80)]
     [Binding("Tags")]
     [Cardinality(Min=0,Max=-1)]
@@ -417,7 +411,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "versionId":

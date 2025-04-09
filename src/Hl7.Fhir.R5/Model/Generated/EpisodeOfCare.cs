@@ -134,7 +134,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("status", Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("EpisodeOfCareStatus")]
@@ -179,7 +178,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Duration the EpisodeOfCare was in the specified status.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -262,7 +260,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "status":
@@ -318,7 +316,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What the reason value should be used for/as.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("use", InSummary=true, Order=40)]
       [Binding("reason-use")]
       [DataMember]
@@ -346,7 +343,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Medical reason to be addressed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
       [Binding("reason-code")]
       [Cardinality(Min=0,Max=-1)]
@@ -430,7 +426,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "use":
@@ -484,7 +480,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The medical condition that was addressed during the episode of care.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("condition", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Binding("condition-code")]
       [Cardinality(Min=0,Max=-1)]
@@ -513,7 +508,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("use", InSummary=true, Order=50)]
       [Binding("DiagnosisUse")]
       [DataMember]
@@ -596,7 +590,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "condition":
@@ -633,7 +627,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier(s) relevant for this EpisodeOfCare.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -661,7 +654,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("EpisodeOfCareStatus")]
@@ -706,7 +698,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Past list of status codes (the current status may be included to cover the start date of the status).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("statusHistory", Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -734,7 +725,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type/class  - e.g. specialist referral, disease management.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("EpisodeOfCareType")]
     [Cardinality(Min=0,Max=-1)]
@@ -763,7 +753,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The list of medical reasons that are expected to be addressed during the episode of care.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reason", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -791,7 +780,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The list of medical conditions that were addressed during the episode of care.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("diagnosis", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -819,8 +807,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient who is the focus of this episode of care.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -848,8 +836,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that assumes responsibility for care coordination.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("managingOrganization", InSummary=true, Order=160)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ManagingOrganization
@@ -876,7 +864,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Interval during responsibility is assumed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=170, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -903,8 +890,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Originating Referral Request(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("referralRequest", Order=180)]
+    [CLSCompliant(false)]
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -932,8 +919,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Care manager/care coordinator for the patient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("careManager", Order=190)]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? CareManager
@@ -960,8 +947,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other practitioners facilitating this episode of care.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("careTeam", Order=200)]
+    [CLSCompliant(false)]
     [References("CareTeam")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -989,8 +976,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The set of accounts that may be used for billing for this EpisodeOfCare.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("account", Order=210)]
+    [CLSCompliant(false)]
     [References("Account")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1185,7 +1172,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

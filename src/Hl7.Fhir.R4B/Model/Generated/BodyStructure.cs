@@ -66,7 +66,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Bodystructure identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -94,7 +93,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this record is in active use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -136,7 +134,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Structure.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("morphology", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [Binding("BodyStructureCode")]
     [DataMember]
@@ -164,7 +161,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Body site.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("location", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Binding("BodySite")]
     [DataMember]
@@ -192,7 +188,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Body site modifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("locationQualifier", Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("BodyStructureQualifier")]
     [Cardinality(Min=0,Max=-1)]
@@ -221,7 +216,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Text description.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -263,7 +257,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Attached images.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("image", Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -291,8 +284,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this is about.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -437,7 +430,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

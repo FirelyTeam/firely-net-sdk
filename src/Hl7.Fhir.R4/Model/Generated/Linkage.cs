@@ -110,7 +110,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// source | alternate | historical.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("LinkageType")]
@@ -155,8 +154,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Resource being linked.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("resource", InSummary=true, Order=50)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -239,7 +238,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -276,7 +275,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this linkage assertion is active or not.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, Order=90, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -318,8 +316,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is responsible for linkages.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=100, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Author
@@ -346,7 +344,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Item to be linked.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("item", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -439,7 +436,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "active":

@@ -76,7 +76,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Role that the moiety is playing.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("role", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Role
@@ -103,7 +102,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier by which this moiety substance is known.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -130,7 +128,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Textual name for this moiety substance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? NameElement
@@ -172,7 +169,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Stereochemistry type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("stereochemistry", InSummary=true, Order=70)]
       [Binding("SubstanceStereochemistry")]
       [DataMember]
@@ -200,7 +196,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Optical activity type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("opticalActivity", InSummary=true, Order=80)]
       [Binding("SubstanceOpticalActivity")]
       [DataMember]
@@ -228,7 +223,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Molecular formula for this moiety (e.g. with the Hill system).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("molecularFormula", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MolecularFormulaElement
@@ -270,8 +264,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Quantitative value for this moiety.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Amount
@@ -298,7 +292,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The measurement type of the quantitative value.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("measurementType", InSummary=true, Order=110)]
       [Binding("SubstanceAmountType")]
       [DataMember]
@@ -441,7 +434,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "role":
@@ -545,7 +538,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A code expressing the type of property.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("SNOMEDCTCharacteristicCodes")]
       [Cardinality(Min=1,Max=1)]
@@ -574,8 +566,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A value for the property.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -657,7 +649,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -710,7 +702,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The method by which the weight was determined.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("method", InSummary=true, Order=40)]
       [Binding("SubstanceWeightMethod")]
       [DataMember]
@@ -738,7 +729,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of molecular weight e.g. exact, average, weight average.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("SubstanceWeightType")]
       [DataMember]
@@ -766,7 +756,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Used to capture quantitative values for a variety of elements.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -859,7 +848,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "method":
@@ -918,7 +907,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Stereochemistry type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("stereochemistry", InSummary=true, Order=40)]
       [Binding("SubstanceStereochemistry")]
       [DataMember]
@@ -946,7 +934,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Optical activity type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("opticalActivity", InSummary=true, Order=50)]
       [Binding("SubstanceOpticalActivity")]
       [DataMember]
@@ -974,7 +961,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Molecular formula (e.g. using the Hill system).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("molecularFormula", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MolecularFormulaElement
@@ -1016,7 +1002,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specified per moiety according to the Hill system.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("molecularFormulaByMoiety", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MolecularFormulaByMoietyElement
@@ -1058,7 +1043,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The molecular weight or weight range.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("molecularWeight", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent? MolecularWeight
@@ -1085,7 +1069,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The method used to find the structure e.g. X-ray, NMR.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("technique", InSummary=true, Order=90)]
       [Binding("SubstanceStructureTechnique")]
       [Cardinality(Min=0,Max=-1)]
@@ -1114,8 +1097,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Source of information for the structure.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sourceDocument", InSummary=true, Order=100)]
+      [CLSCompliant(false)]
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1143,7 +1126,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A depiction of the structure or characterization of the substance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("representation", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1286,7 +1268,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "stereochemistry":
@@ -1390,7 +1372,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The kind of structural representation (e.g. full, partial).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("SubstanceRepresentationType")]
       [DataMember]
@@ -1418,7 +1399,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The structural representation or characterization as a text string in a standard format.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("representation", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? RepresentationElement
@@ -1460,7 +1440,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The format of the representation e.g. InChI, SMILES, MOLFILE (note: not the physical file format).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("format", InSummary=true, Order=60)]
       [Binding("SubstanceRepresentationFormat")]
       [DataMember]
@@ -1488,8 +1467,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An attachment with the structural representation e.g. a structure graphic or AnIML file.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("document", InSummary=true, Order=70)]
+      [CLSCompliant(false)]
       [References("DocumentReference")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Document
@@ -1591,7 +1570,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -1659,7 +1638,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Code
@@ -1686,7 +1664,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Status of the code assignment, for example 'provisional', 'approved'.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("status", InSummary=true, Order=50)]
       [Binding("PublicationStatus")]
       [DataMember]
@@ -1714,7 +1691,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The date at which the code status was changed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("statusDate", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? StatusDateElement
@@ -1756,7 +1732,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Any comment can be provided in this field.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("note", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1784,8 +1759,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Supporting literature.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("source", InSummary=true, Order=80)]
+      [CLSCompliant(false)]
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1898,7 +1873,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -1975,7 +1950,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual name.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2018,7 +1992,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name type e.g. 'systematic',  'scientific, 'brand'.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("SubstanceNameType")]
       [DataMember]
@@ -2046,7 +2019,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The status of the name e.g. 'current', 'proposed'.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("status", InSummary=true, Order=60)]
       [Binding("PublicationStatus")]
       [DataMember]
@@ -2074,7 +2046,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If this is the preferred name for this substance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("preferred", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? PreferredElement
@@ -2116,7 +2087,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human language that the name is written in.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("language", InSummary=true, Order=80)]
       [Binding("Language")]
       [Cardinality(Min=0,Max=-1)]
@@ -2145,7 +2115,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The use context of this name e.g. as an active ingredient or as a food colour additive.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("domain", InSummary=true, Order=90)]
       [Binding("SubstanceNameDomain")]
       [Cardinality(Min=0,Max=-1)]
@@ -2174,7 +2143,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The jurisdiction where this name applies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("jurisdiction", InSummary=true, Order=100)]
       [Binding("Jurisdiction")]
       [Cardinality(Min=0,Max=-1)]
@@ -2203,7 +2171,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A synonym of this particular name, by which the substance is also known.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("synonym", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2231,7 +2198,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A translation for this name into another human language.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("translation", InSummary=true, Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2259,7 +2225,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Details of the official nature of this name.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("official", InSummary=true, Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2287,8 +2252,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Supporting literature.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("source", InSummary=true, Order=140)]
+      [CLSCompliant(false)]
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2461,7 +2426,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "name":
@@ -2592,7 +2557,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Which authority uses this official name.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("authority", InSummary=true, Order=40)]
       [Binding("SubstanceNameAuthority")]
       [DataMember]
@@ -2620,7 +2584,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The status of the official name, for example 'draft', 'active'.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("status", InSummary=true, Order=50)]
       [Binding("PublicationStatus")]
       [DataMember]
@@ -2648,7 +2611,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date of official name change.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("date", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -2755,7 +2717,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "authority":
@@ -2817,8 +2779,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A pointer to another substance, as a resource or a representational code.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("substanceDefinition", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("SubstanceDefinition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [DataMember]
@@ -2846,7 +2808,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For example "salt to parent", "active moiety".
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [Binding("SubstanceRelationshipType")]
       [Cardinality(Min=1,Max=1)]
@@ -2875,7 +2836,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For example where an enzyme strongly bonds with a particular substance, this is a defining relationship for that enzyme, out of several possible relationships.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("isDefining", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? IsDefiningElement
@@ -2917,8 +2877,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A numeric factor for the relationship, e.g. that a substance salt has some percentage of active substance in relation to some other.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("amount", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Amount
@@ -2945,7 +2905,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For use when the numeric has an uncertain range.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("ratioHighLimitAmount", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Ratio? RatioHighLimitAmount
@@ -2972,7 +2931,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An operator for the amount, for example "average", "approximately", "less than".
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("comparator", InSummary=true, Order=90)]
       [Binding("SubstanceAmountType")]
       [DataMember]
@@ -3000,8 +2958,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Supporting literature.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("source", InSummary=true, Order=100)]
+      [CLSCompliant(false)]
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3134,7 +3092,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "substanceDefinition":
@@ -3232,7 +3190,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Classification of the origin of the raw material. e.g. cat hair is an Animal source type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [Binding("SourceMaterialType")]
       [DataMember]
@@ -3260,7 +3217,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The genus of an organism e.g. the Latin epithet of the plant/animal scientific name.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("genus", InSummary=true, Order=50)]
       [Binding("SourceMaterialGenus")]
       [DataMember]
@@ -3288,7 +3244,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The species of an organism e.g. the Latin epithet of the species of the plant/animal.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("species", InSummary=true, Order=60)]
       [Binding("SourceMaterialSpecies")]
       [DataMember]
@@ -3316,7 +3271,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An anatomical origin of the source material within an organism.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("part", InSummary=true, Order=70)]
       [Binding("SourceMaterialPart")]
       [DataMember]
@@ -3344,7 +3298,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The country or countries where the material is harvested.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("countryOfOrigin", InSummary=true, Order=80)]
       [Binding("Country")]
       [Cardinality(Min=0,Max=-1)]
@@ -3458,7 +3411,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -3522,7 +3475,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier by which this substance is known.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3550,7 +3502,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A business level version identifier of the substance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -3592,7 +3543,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Status of substance within the catalogue e.g. active, retired.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, Order=110)]
     [Binding("PublicationStatus")]
     [DataMember]
@@ -3620,7 +3570,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A categorization, high level e.g. polymer or nucleic acid, or food, chemical, biological, or lower e.g. polymer linear or branch chain, or type of impurity.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("classification", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3648,7 +3597,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If the substance applies to human or veterinary use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("domain", InSummary=true, Order=130)]
     [Binding("MedicinalProductType")]
     [DataMember]
@@ -3676,7 +3624,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The quality standard, established benchmark, to which substance complies (e.g. USP/NF, BP).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("grade", InSummary=true, Order=140)]
     [Binding("SubstanceGrade")]
     [Cardinality(Min=0,Max=-1)]
@@ -3705,7 +3652,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Textual description of the substance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -3747,8 +3693,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting literature.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("informationSource", InSummary=true, Order=160)]
+    [CLSCompliant(false)]
     [References("Citation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3776,7 +3722,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Textual comment about the substance's catalogue or registry record.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3804,8 +3749,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The entity that creates, makes, produces or fabricates the substance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("manufacturer", InSummary=true, Order=180)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3833,8 +3778,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An entity that is the source for the substance. It may be different from the manufacturer.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("supplier", InSummary=true, Order=190)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3862,7 +3807,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Moiety, for structural modifications.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("moiety", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3890,7 +3834,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General specifications for this substance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("property", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3918,7 +3861,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The molecular weight or weight range.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("molecularWeight", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -3946,7 +3888,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Structural information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("structure", InSummary=true, Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.SubstanceDefinition.StructureComponent? Structure
@@ -3973,7 +3914,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Codes associated with the substance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4001,7 +3941,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Names applicable to this substance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4029,7 +3968,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A link between this substance and another.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relationship", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -4057,7 +3995,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Material or taxonomic/anatomical source.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sourceMaterial", InSummary=true, Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.SubstanceDefinition.SourceMaterialComponent? SourceMaterial
@@ -4311,7 +4248,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

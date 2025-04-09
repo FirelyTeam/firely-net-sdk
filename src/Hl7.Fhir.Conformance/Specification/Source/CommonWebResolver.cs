@@ -66,8 +66,10 @@ namespace Hl7.Fhir.Specification.Source
 
             try
             {
-                var resultResource = TaskHelper.Await(() => client.ReadAsync<Resource>(id))
-                                     ?? throw new InvalidOperationException("FhirClient.ReadAsync returned null, which was unexpected.");
+                var resultResource = TaskHelper.Await(() => client.ReadAsync<Resource>(id));
+                if (resultResource is null)
+                    return ResolverException.NotFound(client.LastResult?.Outcome as OperationOutcome);
+                
                 resultResource.SetOrigin(uri);
                 LastError = null;
                 return resultResource;

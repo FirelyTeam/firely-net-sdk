@@ -84,7 +84,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Natural language description of the characteristic.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -126,8 +125,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What code or expression defines members?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("definition", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [References("Group")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.DataRequirement),typeof(Hl7.Fhir.Model.TriggerDefinition))]
       [Cardinality(Min=1,Max=1)]
@@ -156,7 +155,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What code/value pairs define members?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("usageContext", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -184,7 +182,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether the characteristic includes or excludes members.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("exclude", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ExcludeElement
@@ -226,8 +223,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What time period do participants cover.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("participantEffective", Order=80, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Timing))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? ParticipantEffective
@@ -254,7 +251,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Observation time from study start.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("timeFromStart", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Duration? TimeFromStart
@@ -281,7 +277,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("groupMeasure", Order=100)]
       [AllowedTypes(typeof(Code))]
       [Binding("GroupMeasure")]
@@ -430,7 +425,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "description":
@@ -512,7 +507,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this evidence variable, represented as a URI (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -554,7 +548,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the evidence variable.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -582,7 +575,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the evidence variable.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -624,7 +616,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this evidence variable (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -666,7 +657,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this evidence variable (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -708,7 +698,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Title for use in informal contexts.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("shortTitle", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ShortTitleElement
@@ -750,7 +739,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subordinate title of the EvidenceVariable.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subtitle", Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SubtitleElement
@@ -792,7 +780,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -837,7 +824,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -879,7 +865,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=180, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -921,7 +906,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -949,7 +933,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the evidence variable.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -991,7 +974,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used for footnotes or explanatory notes.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1019,7 +1001,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1047,7 +1028,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for evidence variable (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=230)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1076,7 +1056,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -1118,7 +1097,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the evidence variable was approved by publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -1160,7 +1138,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the evidence variable was last reviewed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -1202,7 +1179,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the evidence variable is expected to be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -1229,7 +1205,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The category of the EvidenceVariable, such as Education, Treatment, Assessment, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("topic", Order=280)]
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
@@ -1258,7 +1233,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1286,7 +1260,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("editor", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1314,7 +1287,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reviewer", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1342,7 +1314,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endorser", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1370,7 +1341,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1398,7 +1368,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// dichotomous | continuous | descriptive.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=340)]
     [AllowedTypes(typeof(Code))]
     [Binding("EvidenceVariableType")]
@@ -1442,7 +1411,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What defines the members of the evidence element.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("characteristic", InSummary=true, Order=350)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1777,7 +1745,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

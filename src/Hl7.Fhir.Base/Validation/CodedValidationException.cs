@@ -15,6 +15,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
@@ -104,7 +105,7 @@ public class CodedValidationException : ExtendedCodedException
             null => "null",
             string s => $"string '{s}'",
             int i => $"integer {i}",
-            decimal d => $"decimal {d}",
+            decimal d => $"decimal {PrimitiveTypeConverter.ConvertTo<string>(d)}",
             bool b => $"boolean {b}",
             _ => $"value '{PrimitiveTypeConverter.ConvertTo<string>(v)}' of type '{v.GetType()}'"
         };
@@ -163,7 +164,8 @@ public class CodedValidationException : ExtendedCodedException
             _ => actual.GetType().Name
         };
 
-    private static string fhirTypeNameForSingleType(Type t) => t.GetCustomAttribute<FhirTypeAttribute>()?.Name ?? t.Name;
+    private static string fhirTypeNameForSingleType(Type t) =>
+        t.GetCustomAttribute<FhirTypeAttribute>()?.Name ?? t.Name;
 
     private static string fhirTypeNameForRepeatingType(Type t) => fhirTypeNameForSingleType(ReflectionHelper.GetCollectionItemType(t));
 }

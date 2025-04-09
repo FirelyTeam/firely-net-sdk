@@ -82,7 +82,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of contact.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("purpose", Order=40)]
       [Binding("ContactPartyType")]
       [DataMember]
@@ -110,7 +109,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A name associated with the contact.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.HumanName? Name
@@ -137,7 +135,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contact details (telephone, email, etc.)  for a contact.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("telecom", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -165,7 +162,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Visiting or postal addresses for the contact.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("address", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Address? Address
@@ -267,7 +263,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "purpose":
@@ -322,7 +318,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies this organization  across multiple systems.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -350,7 +345,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the organization's record is still in active use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -392,7 +386,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [Binding("OrganizationType")]
     [Cardinality(Min=0,Max=-1)]
@@ -421,7 +414,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name used for the organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -463,7 +455,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A list of alternate names that the organization is known as, or was known as in the past.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("alias", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -509,7 +500,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("telecom", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -537,7 +527,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An address for the organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("address", Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -565,8 +554,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The organization of which this organization forms a part.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", InSummary=true, Order=160)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? PartOf
@@ -593,7 +582,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact for the organization for a certain purpose.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -621,8 +609,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Technical endpoints providing access to services operated for the organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endpoint", Order=180)]
+    [CLSCompliant(false)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -787,7 +775,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

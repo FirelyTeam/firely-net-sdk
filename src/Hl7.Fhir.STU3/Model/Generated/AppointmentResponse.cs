@@ -63,7 +63,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -91,8 +90,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Appointment this response relates to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("appointment", InSummary=true, Order=100)]
+    [CLSCompliant(false)]
     [References("Appointment")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -120,7 +119,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time from appointment, or requested new start time.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("start", Order=110, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? StartElement
@@ -162,7 +160,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time from appointment, or requested new end time.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("end", Order=120, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? EndElement
@@ -204,7 +201,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Role of participant in the appointment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participantType", InSummary=true, Order=130)]
     [Binding("ParticipantType")]
     [Cardinality(Min=0,Max=-1)]
@@ -233,8 +229,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person, Location/HealthcareService or Device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("actor", InSummary=true, Order=140, FiveWs="who")]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Actor
@@ -261,7 +257,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=150)]
     [AllowedTypes(typeof(Code))]
     [Binding("ParticipantStatus")]
@@ -306,7 +301,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional comments.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("comment", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CommentElement
@@ -465,7 +459,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

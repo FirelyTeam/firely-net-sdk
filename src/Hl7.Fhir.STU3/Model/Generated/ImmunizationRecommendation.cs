@@ -79,7 +79,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date recommendation created.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("date", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -122,7 +121,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Vaccine recommendation applies to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("vaccineCode", InSummary=true, Order=50)]
       [Binding("VaccineCode")]
       [DataMember]
@@ -150,7 +148,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Disease to be immunized against.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("targetDisease", InSummary=true, Order=60)]
       [Binding("TargetDisease")]
       [DataMember]
@@ -178,7 +175,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recommended dose number.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("doseNumber", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? DoseNumberElement
@@ -220,7 +216,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Vaccine administration status.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("forecastStatus", InSummary=true, Order=80)]
       [Binding("ImmunizationRecommendationStatus")]
       [Cardinality(Min=1,Max=1)]
@@ -249,7 +244,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Dates governing proposed immunization.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("dateCriterion", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -277,7 +271,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Protocol used by recommendation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("protocol", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.ImmunizationRecommendation.ProtocolComponent? Protocol
@@ -304,8 +297,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Past immunizations supporting recommendation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("supportingImmunization", Order=110)]
+      [CLSCompliant(false)]
       [References("Immunization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -333,8 +326,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Patient observations supporting recommendation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("supportingPatientInformation", Order=120)]
+      [CLSCompliant(false)]
       [References("Observation","AllergyIntolerance")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -487,7 +480,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "date":
@@ -603,7 +596,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of date.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=40)]
       [Binding("ImmunizationRecommendationDateCriterion")]
       [Cardinality(Min=1,Max=1)]
@@ -632,7 +624,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Recommended date.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -730,7 +721,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -783,7 +774,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Dose number within sequence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("doseSequence", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt? DoseSequenceElement
@@ -825,7 +815,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Protocol details.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -867,8 +856,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who is responsible for protocol.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("authority", Order=60)]
+      [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Authority
@@ -895,7 +884,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of vaccination series.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("series", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SeriesElement
@@ -1012,7 +1000,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "doseSequence":
@@ -1067,7 +1055,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1095,8 +1082,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this profile is for.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("patient", InSummary=true, Order=100, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1124,7 +1111,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Vaccine administration recommendations.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recommendation", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1219,7 +1205,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

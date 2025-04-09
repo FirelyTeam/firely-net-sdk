@@ -82,7 +82,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of the dependency criterium.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -124,7 +123,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Link to predecessor test plans.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("predecessor", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Predecessor
@@ -206,7 +204,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "description":
@@ -259,7 +257,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Sequence of test case in the test plan.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("sequence", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Integer? SequenceElement
@@ -301,7 +298,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The scope or artifact covered by the case.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("scope", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -329,7 +325,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Required criteria to execute the test case.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("dependency", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -357,7 +352,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual test to be executed.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("testRun", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -385,7 +379,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The test data used in the test case.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("testData", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -413,7 +406,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Test assertions or expectations.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("assertion", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -536,7 +528,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "sequence":
@@ -625,7 +617,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of the criteria.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -667,7 +658,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Link to predecessor test plans.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("predecessor", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Predecessor
@@ -749,7 +739,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "description":
@@ -799,7 +789,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The narrative description of the tests.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("narrative", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? NarrativeElement
@@ -841,7 +830,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The test cases in a structured language e.g. gherkin, Postman, or FHIR TestScript.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("script", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.TestPlan.ScriptComponent? Script
@@ -923,7 +911,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "narrative":
@@ -973,7 +961,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The language for the test cases e.g. 'gherkin', 'testscript'.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("language", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Language
@@ -1000,8 +987,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual content of the cases - references to TestScripts or externally defined content.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("source", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Source
@@ -1083,7 +1070,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "language":
@@ -1133,7 +1120,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of test data description, e.g. 'synthea'.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1161,7 +1147,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual test resources when they exist.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("content", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Content
@@ -1188,8 +1173,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to a definition of test resources - narrative or structured e.g. synthetic data generation, etc.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("source", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Source
@@ -1281,7 +1266,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -1343,7 +1328,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Assertion type - for example 'informative' or 'required' .
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1371,7 +1355,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The focus or object of the assertion.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("object", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1399,7 +1382,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual result assertion.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("result", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1492,7 +1474,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -1538,7 +1520,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this test plan, represented as a URI (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -1580,7 +1561,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier identifier for the test plan.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1608,7 +1588,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the test plan.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -1650,8 +1629,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to compare versions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
@@ -1678,7 +1657,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this test plan (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -1720,7 +1698,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this test plan (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -1762,7 +1739,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -1807,7 +1783,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -1849,7 +1824,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -1891,7 +1865,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher/steward (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=180, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -1933,7 +1906,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1961,7 +1933,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the test plan.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -2003,7 +1974,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2031,7 +2001,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction where the test plan applies (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=220)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -2060,7 +2029,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this test plan is defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("purpose", Order=230, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -2102,7 +2070,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -2144,7 +2111,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Copyright holder and year(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyrightLabel", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CopyrightLabelElement
@@ -2186,7 +2152,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The category of the Test Plan - can be acceptance, unit, performance.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", Order=260)]
     [Binding("TestPlanCategory")]
     [Cardinality(Min=0,Max=-1)]
@@ -2215,7 +2180,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What is being tested with this Test Plan - a conformance resource, or narrative criteria, or an external reference.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("scope", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2243,7 +2207,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A description of test tools to be used in the test plan - narrative for now.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("testTools", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? TestToolsElement
@@ -2285,7 +2248,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The required criteria to execute the test plan - e.g. preconditions, previous tests.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dependency", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2313,7 +2275,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The threshold or criteria for the test plan to be considered successfully executed - narrative.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("exitCriteria", Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? ExitCriteriaElement
@@ -2355,7 +2316,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The test cases that constitute this plan.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("testCase", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2650,7 +2610,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

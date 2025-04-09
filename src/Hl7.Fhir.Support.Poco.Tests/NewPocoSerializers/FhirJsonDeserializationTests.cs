@@ -171,7 +171,6 @@ public class FhirJsonDeserializationTests
     {
         get
         {
-            yield return [5, JsonTokenType.Number, COVE.UNKNOWN_ELEMENT_CODE];
             yield return [new { }, JsonTokenType.EndObject, ERR.NO_RESOURCETYPE_PROPERTY_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE];
             yield return
             [
@@ -266,7 +265,7 @@ public class FhirJsonDeserializationTests
         yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
         yield return data<Extension>(new { unknown = "test" }, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { url = "test" });
-        yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE); // TODO illegal use of underscore?
+        yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { unknown = "test", url = "test" }, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix" },
@@ -274,7 +273,7 @@ public class FhirJsonDeserializationTests
         yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" },
             JsonTokenType.EndObject);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
-            COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+            ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
     }
 
     public static IEnumerable<object?[]> TestNormalArrayData()
@@ -333,8 +332,9 @@ public class FhirJsonDeserializationTests
         {
             div = "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>correct</p></div>", status = "additional"
         });
-        yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED_CODE/*, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE*/);
-        yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID_CODE/*, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE*/);
+        yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+        yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+        yield return data<Narrative>(new { div = "<puinhoop />", status = "generated" }, COVE.NARRATIVE_XML_IS_INVALID_CODE);
 
         yield return data<Attachment>(new { url = "urn:oid:1.3.6.1.4.1.343" });
         //   yield return data<Attachment>(new { url = "urn:oid:1" }, COVE.URI_LITERAL_INVALID_CODE);
@@ -441,7 +441,7 @@ public class FhirJsonDeserializationTests
         try
         {
             deserializer.Deserialize<ContactDetail>(ref reader);
-            // Assert.Fail();
+            Assert.Fail();
         }
         catch (DeserializationFailedException)
         {
@@ -474,10 +474,12 @@ public class FhirJsonDeserializationTests
         var jsonInput = File.ReadAllText(patientFileName);
 
         var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+        if (overwrite)
+            options = options.Pretty();
 
         try
         {
-            var _ = JsonSerializer.Deserialize<Patient>(jsonInput, options);
+            _ = JsonSerializer.Deserialize<Patient>(jsonInput, options);
             Assert.Fail("Should have encountered errors.");
         }
         catch (DeserializationFailedException dfe)
@@ -495,7 +497,10 @@ public class FhirJsonDeserializationTests
             var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
             errorsActual.Should().BeEquivalentTo(errorsExpected);
 
-            var recoveredFilename = Path.Combine("TestData", "fp-test-patient-errors-recovered.json");
+            var recoveredFilename = Path.Combine(fileDir, "fp-test-patient-errors-recovered.json");
+            if(overwrite)
+                File.WriteAllText(recoveredFilename, recoveredActual);
+            
             var recoveredExpected = File.ReadAllText(recoveredFilename);
 
             List<string> errors = new();

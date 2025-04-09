@@ -104,7 +104,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A code-valued attribute to filter on.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("path", InSummary=true, Order=30)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PathElement
@@ -146,7 +145,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A coded (token) parameter to search on.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("searchParam", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SearchParamElement
@@ -188,7 +186,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Valueset for the filter.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("valueSet", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? ValueSetElement
@@ -230,7 +227,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What code is expected.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -333,7 +329,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "path":
@@ -404,7 +400,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A date-valued attribute to filter on.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("path", InSummary=true, Order=30)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? PathElement
@@ -446,7 +441,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A date valued parameter to search on.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("searchParam", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? SearchParamElement
@@ -488,8 +482,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The value of the filter, as a Period, DateTime, or Duration value.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Value
@@ -581,7 +575,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "path":
@@ -644,7 +638,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The name of the attribute to perform the sort.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("path", InSummary=true, Order=30)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -687,7 +680,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// ascending | descending.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("direction", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("SortDirection")]
@@ -787,7 +779,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "path":
@@ -824,7 +816,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of the required data.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=30)]
     [AllowedTypes(typeof(Code))]
     [Binding("FHIRAllTypes")]
@@ -869,7 +860,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The profile of the required data.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("profile", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -915,9 +905,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
     [Binding("SubjectType")]
+    [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
@@ -945,7 +935,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates specific structure elements that are referenced by the knowledge module.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("mustSupport", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -991,7 +980,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What codes are expected.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("codeFilter", InSummary=true, Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1019,7 +1007,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What dates/date ranges are expected.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dateFilter", InSummary=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1047,7 +1034,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of results.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("limit", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? LimitElement
@@ -1089,7 +1075,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Order of the results.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("sort", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1232,7 +1217,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "type":

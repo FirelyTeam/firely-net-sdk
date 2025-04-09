@@ -112,7 +112,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of adherence.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [Binding("MedicationStatementAdherence")]
       [Cardinality(Min=1,Max=1)]
@@ -141,7 +140,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Details of the reason for the current use of the medication.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("reason", Order=50)]
       [Binding("MedicationStatementStatusReason")]
       [DataMember]
@@ -224,7 +222,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -261,7 +259,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -289,8 +286,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of referenced event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", Order=100)]
+    [CLSCompliant(false)]
     [References("Procedure","MedicationStatement")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -318,7 +315,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// recorded | entered-in-error | draft.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("MedicationStatementStatus")]
@@ -363,7 +359,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of medication statement.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("MedicationStatementAdministrationLocation")]
     [Cardinality(Min=0,Max=-1)]
@@ -392,7 +387,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What medication was taken.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("medication", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Binding("MedicationCode")]
     [Cardinality(Min=1,Max=1)]
@@ -421,8 +415,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is/was taking  the medication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -450,8 +444,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter associated with MedicationStatement.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("encounter", InSummary=true, Order=150)]
+    [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Encounter
@@ -478,8 +472,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date/time or interval when the medication is/was/will be taken.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Effective
@@ -506,7 +500,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the usage was asserted?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dateAsserted", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateAssertedElement
@@ -548,8 +541,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person or organization that provided the information about the taking of this medication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("informationSource", Order=180, FiveWs="FiveWs.source")]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -577,8 +570,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link to information used to derive the MedicationStatement.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("derivedFrom", Order=190)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -606,7 +599,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for why the medication is being/was taken.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reason", Order=200, FiveWs="FiveWs.why[x]")]
     [Binding("MedicationReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -635,7 +627,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Further information about the usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -663,8 +654,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link to information relevant to the usage of a medication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatedClinicalInformation", Order=220)]
+    [CLSCompliant(false)]
     [References("Observation","Condition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -692,7 +683,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Full representation of the dosage instructions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("renderedDosageInstruction", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? RenderedDosageInstructionElement
@@ -734,7 +724,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details of how medication is/was taken or should be taken.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dosage", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -762,7 +751,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates whether the medication is or is not being consumed or administered.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("adherence", InSummary=true, Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.MedicationStatement.AdherenceComponent? Adherence
@@ -996,7 +984,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

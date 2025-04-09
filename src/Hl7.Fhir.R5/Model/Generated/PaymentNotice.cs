@@ -66,7 +66,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for the payment notice.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -94,7 +93,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PaymentNoticeStatus")]
@@ -139,8 +137,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request reference.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("request", Order=110, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Request
@@ -167,8 +165,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Response reference.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("response", Order=120, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Response
@@ -195,7 +193,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("created", InSummary=true, Order=130, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -238,8 +235,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reporter", Order=140, FiveWs="FiveWs.source")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Reporter
@@ -266,8 +263,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Payment reference.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("payment", InSummary=true, Order=150)]
+    [CLSCompliant(false)]
     [References("PaymentReconciliation")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Payment
@@ -294,7 +291,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Payment or clearing date.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("paymentDate", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Date? PaymentDateElement
@@ -336,8 +332,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party being paid.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("payee", Order=170)]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Payee
@@ -364,8 +360,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party being notified.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recipient", InSummary=true, Order=180)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -393,7 +389,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Monetary amount of the payment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("amount", InSummary=true, Order=190)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -421,7 +416,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Issued or cleared Status of the payment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("paymentStatus", Order=200)]
     [Binding("PaymentStatus")]
     [DataMember]
@@ -606,7 +600,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

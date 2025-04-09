@@ -19,52 +19,70 @@
   },
   "contained": [
     {
-      "resourceType": "MultiLevelArrayPrimitive",
+      "resourceType": "Patient",
       "active": [
         null,
         true
       ],
-      "id": "1"
+      "_active": [
+        {
+          "value": true
+        },
+        null
+      ],
+      "id": "PrimitiveArrayContainsComplex"
     },
     {
-      "resourceType": "MultiLevelArrayPrimitiveNoNull",
+      "resourceType": "Patient",
+      "name": [
+        {
+          "value": "John"
+        },
+        {
+          "family": "Doe"
+        }
+      ],
+      "id": "ComplexArrayContainsPrimitive"
+    },
+    {
+      "resourceType": "Patient",
+      "active": [
+        null,
+        true
+      ],
+      "id": "MultiLevelArrayPrimitive"
+    },
+    {
+      "resourceType": "Patient",
       "active": [
         true,
         false
       ],
-      "id": "1"
+      "id": "MultiLevelArrayPrimitiveNoNull"
     },
     {
-      "resourceType": "MultiLevelArrayWithComplex",
-      "active": [
-        {},
+      "resourceType": "Patient",
+      "_active": [
+        null,
         {
-          "value": [
-            {
-              "versionId": "2"
-            }
-          ]
+          "versionId": "2"
         }
       ],
-      "id": "1"
+      "id": "MultiLevelArrayWithComplex"
     },
     {
-      "resourceType": "MultiLevelArrayWithComplexNoNull",
+      "resourceType": "Patient",
       "active": [
+        null,
+        true
+      ],
+      "_active": [
         {
-          "value": [
-            {
-              "versionId": "2"
-            }
-          ]
+          "versionId": "2"
         },
-        {
-          "value": [
-            true
-          ]
-        }
+        null
       ],
-      "id": "1"
+      "id": "MultiLevelArrayWithComplexNoNull"
     },
     {
       "resourceType": "PatientX",
@@ -130,7 +148,7 @@
       "birthDate": "1973-05-31",
       "address": [
         {
-          "use": {
+          "_use": {
             "incorrect": "should have been a simple string"
           },
           "line": [
@@ -173,12 +191,12 @@
           ],
           "item": [
             {
-              "linkId": "1.1",
               "code": [
                 {
                   "value": true
                 }
               ],
+              "linkId": "1.1",
               "type": "display",
               "item": [
                 {
@@ -339,9 +357,7 @@
   "_gender": {
     "extension": [
       {
-        "url": {
-          "value": "http://example.org/StructureDefinition/extension-with-incorrect-url-prop"
-        },
+        "_url": "http://example.org/StructureDefinition/extension-with-incorrect-url-prop",
         "valueCode": "metrosexual"
       },
       {

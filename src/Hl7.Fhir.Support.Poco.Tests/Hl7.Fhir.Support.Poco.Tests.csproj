@@ -10,6 +10,9 @@
 		<Content Include="TestData\**\*.xml;TestData\**\*.json;TestData\testPackage.tgz">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="TestData\fp-test-patient-errors-expected.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>		

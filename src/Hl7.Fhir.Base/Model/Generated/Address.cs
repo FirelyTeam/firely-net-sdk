@@ -136,7 +136,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// home | work | temp | old | billing - purpose of this address.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
     [AllowedTypes(typeof(Code))]
     [Binding("AddressUse")]
@@ -180,7 +179,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// postal | physical | both.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=40)]
     [AllowedTypes(typeof(Code))]
     [Binding("AddressType")]
@@ -224,7 +222,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Text representation of the address.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("text", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TextElement
@@ -266,7 +263,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Street name, number, direction &amp; P.O. Box etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("line", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -312,7 +308,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of city, town etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("city", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CityElement
@@ -354,7 +349,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// District name (aka county).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("district", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DistrictElement
@@ -396,7 +390,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Sub-unit of country (abbreviations ok).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("state", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? StateElement
@@ -438,7 +431,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Postal code for area.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("postalCode", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PostalCodeElement
@@ -480,7 +472,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Country (e.g. may be ISO 3166 2 or 3 letter code).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("country", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CountryElement
@@ -522,7 +513,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period when address was/is in use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -684,7 +674,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "use":

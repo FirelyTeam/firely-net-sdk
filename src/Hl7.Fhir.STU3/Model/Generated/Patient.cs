@@ -116,7 +116,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The kind of relationship.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("relationship", Order=40)]
       [Binding("ContactRelationship")]
       [Cardinality(Min=0,Max=-1)]
@@ -145,7 +144,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A name associated with the contact person.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("name", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.HumanName? Name
@@ -172,7 +170,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A contact detail for the person.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("telecom", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -200,7 +197,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Address for the contact person.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("address", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Address? Address
@@ -227,7 +223,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// male | female | other | unknown.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("gender", Order=80)]
       [AllowedTypes(typeof(Code))]
       [Binding("AdministrativeGender")]
@@ -271,8 +266,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization that is associated with the contact.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("organization", Order=90)]
+      [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Organization
@@ -299,7 +294,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The period during which this contact person or organization is valid to be contacted relating to this patient.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -431,7 +425,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "relationship":
@@ -530,7 +524,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// E.g. Dog, Cow.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("species", InSummary=true, Order=40)]
       [Binding("AnimalSpecies")]
       [Cardinality(Min=1,Max=1)]
@@ -559,7 +552,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// E.g. Poodle, Angus.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("breed", InSummary=true, Order=50)]
       [Binding("AnimalBreed")]
       [DataMember]
@@ -587,7 +579,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// E.g. Neutered, Intact.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("genderStatus", InSummary=true, Order=60)]
       [Binding("AnimalGenderStatus")]
       [DataMember]
@@ -680,7 +671,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "species":
@@ -743,7 +734,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The language which can be used to communicate with the patient about his or her health.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("language", Order=40)]
       [Binding("Language")]
       [Cardinality(Min=1,Max=1)]
@@ -772,7 +762,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Language preference indicator.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("preferred", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? PreferredElement
@@ -869,7 +858,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "language":
@@ -924,8 +913,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The other patient or related person resource that the link refers to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("other", InSummary=true, Order=40)]
+      [CLSCompliant(false)]
       [References("Patient","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -953,7 +942,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// replaced-by | replaces | refer | seealso - type of link.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=50)]
       [AllowedTypes(typeof(Code))]
       [Binding("LinkType")]
@@ -1053,7 +1041,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "other":
@@ -1090,7 +1078,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier for this patient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1118,7 +1105,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this patient's record is in active use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -1160,7 +1146,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name associated with the patient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1188,7 +1173,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the individual.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("telecom", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1216,7 +1200,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("gender", InSummary=true, Order=130)]
     [AllowedTypes(typeof(Code))]
     [Binding("AdministrativeGender")]
@@ -1260,7 +1243,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date of birth for the individual.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("birthDate", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Date? BirthDateElement
@@ -1302,8 +1284,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates if the individual is deceased or not.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("deceased", InSummary=true, IsModifier=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Deceased
@@ -1330,7 +1312,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Addresses for the individual.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("address", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1358,7 +1339,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Marital (civil) status of a patient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("maritalStatus", Order=170)]
     [Binding("MaritalStatus")]
     [DataMember]
@@ -1386,8 +1366,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether patient is part of a multiple birth.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("multipleBirth", Order=180, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? MultipleBirth
@@ -1414,7 +1394,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Image of the patient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("photo", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1442,7 +1421,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact party (e.g. guardian, partner, friend) for the patient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1470,7 +1448,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This patient is known to be an animal (non-human).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("animal", InSummary=true, IsModifier=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.Patient.AnimalComponent? Animal
@@ -1497,7 +1474,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A list of Languages which may be used to communicate with the patient about his or her health.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("communication", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1525,8 +1501,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient's nominated primary care provider.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("generalPractitioner", Order=230)]
+    [CLSCompliant(false)]
     [References("Organization","Practitioner")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1554,8 +1530,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that is the custodian of the patient record.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("managingOrganization", InSummary=true, Order=240)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? ManagingOrganization
@@ -1582,7 +1558,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link to another patient resource that concerns the same actual person.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("link", InSummary=true, IsModifier=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1817,7 +1792,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

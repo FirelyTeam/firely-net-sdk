@@ -91,7 +91,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier(s) for the image.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -119,8 +118,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Procedure that caused this media to be created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("basedOn", InSummary=true, Order=100)]
+    [CLSCompliant(false)]
     [References("ProcedureRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -148,7 +147,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// photo | video | audio.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [AllowedTypes(typeof(Code))]
     [Binding("DigitalMediaType")]
@@ -193,7 +191,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of acquisition equipment/process.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subtype", InSummary=true, Order=120, FiveWs="class")]
     [Binding("DigitalMediaSubtype")]
     [DataMember]
@@ -221,7 +218,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Imaging view, e.g. Lateral or Antero-posterior.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("view", InSummary=true, Order=130, FiveWs="class")]
     [Binding("MediaView")]
     [DataMember]
@@ -249,8 +245,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/What this Media is a record of.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner","Group","Device","Specimen")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -277,8 +273,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter / Episode associated with media.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("context", InSummary=true, Order=150, FiveWs="context")]
+    [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Context
@@ -305,8 +301,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When Media was collected.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Occurrence
@@ -333,8 +329,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The person who generated the image.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("operator", InSummary=true, Order=170, FiveWs="who.actor")]
+    [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Operator
@@ -361,7 +357,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was event performed?.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reasonCode", InSummary=true, Order=180, FiveWs="why")]
     [Binding("MediaReason")]
     [Cardinality(Min=0,Max=-1)]
@@ -390,7 +385,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Body part in media.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("bodySite", InSummary=true, Order=190)]
     [Binding("BodySite")]
     [DataMember]
@@ -418,8 +412,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Observing Device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("device", InSummary=true, Order=200)]
+    [CLSCompliant(false)]
     [References("Device","DeviceMetric")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Device
@@ -446,7 +440,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Height of the image in pixels (photo/video).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("height", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? HeightElement
@@ -488,7 +481,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Width of the image in pixels (photo/video).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("width", InSummary=true, Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? WidthElement
@@ -530,7 +522,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of frames if &gt; 1 (photo).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("frames", InSummary=true, Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt? FramesElement
@@ -572,7 +563,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Length in seconds (audio / video).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("duration", InSummary=true, Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt? DurationElement
@@ -614,7 +604,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actual Media - reference or data.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("content", Order=250)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -642,7 +631,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the media.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("note", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -887,7 +875,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

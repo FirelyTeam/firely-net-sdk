@@ -83,7 +83,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An identifier for this qualification for the organization.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -111,7 +110,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coded representation of the qualification.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", Order=50)]
       [Binding("Qualification")]
       [Cardinality(Min=1,Max=1)]
@@ -140,7 +138,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Period during which the qualification is valid.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("period", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Period? Period
@@ -167,8 +164,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization that regulates and issues the qualification.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("issuer", Order=70)]
+      [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Issuer
@@ -270,7 +267,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -325,7 +322,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies this organization  across multiple systems.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -353,7 +349,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the organization's record is still in active use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -395,7 +390,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Binding("OrganizationType")]
     [Cardinality(Min=0,Max=-1)]
@@ -424,7 +418,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name used for the organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -466,7 +459,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A list of alternate names that the organization is known as, or was known as in the past.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("alias", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -512,7 +504,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional details about the Organization that could be displayed as further information to identify the Organization beyond its name.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -554,7 +545,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Official contact details for the Organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -582,8 +572,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The organization of which this organization forms a part.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("partOf", InSummary=true, Order=160)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? PartOf
@@ -610,8 +600,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Technical endpoints providing access to services operated for the organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endpoint", Order=170)]
+    [CLSCompliant(false)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -639,7 +629,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Qualifications, certifications, accreditations, licenses, training, etc. pertaining to the provision of care.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("qualification", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -804,7 +793,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

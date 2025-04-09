@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Specification.Source;
+#nullable enable
 
+namespace Hl7.Fhir.Specification.Source;
 /// <summary>
 /// Exception reporting issues during resolving in <see cref="IResourceResolver"/> and <see cref="IAsyncResourceResolver"/>.
 /// It is built on top of <see cref="CodedException"/> reporting errors as code and reacting to relevant issues appropriatelly.
@@ -61,7 +62,10 @@ public class ResolverException : CodedException
     }
 
     internal static ResolverException NotImplemented(Exception ex) => new(NOT_IMPLEMENTED, "Resolver does not implement the used Resolve method.", ex);
-    internal static ResolverException NotFound() => new(NOT_FOUND, "Resource could not be found.");
+    internal static ResolverException NotFound(OperationOutcome? issues = null) => new(NOT_FOUND, 
+        issues is null 
+            ? "Resource could not be found." 
+            : $"Resource could not be found. The operation outcome for this resource was: {issues}");
     internal static ResolverException MultiResolverNotFound(List<ResolverException> innerErrors)
     {
         var commaSeparatedErrors = string.Join(", ", innerErrors

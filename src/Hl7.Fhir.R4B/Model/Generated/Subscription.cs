@@ -122,7 +122,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// rest-hook | websocket | email | sms | message.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("SubscriptionChannelType")]
@@ -167,7 +166,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where the channel points to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("endpoint", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUrl? EndpointElement
@@ -209,7 +207,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// MIME type to send, or omit for no payload.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("payload", InSummary=true, Order=60)]
       [Binding("MimeType")]
       [DataMember]
@@ -252,7 +249,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Usage depends on the channel type.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("header", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -373,7 +369,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -428,7 +424,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// requested | active | error | off.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=90, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("SubscriptionStatus")]
@@ -473,7 +468,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for source (e.g. troubleshooting).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=100, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -501,7 +495,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When to automatically delete the subscription.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("end", InSummary=true, Order=110, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Instant? EndElement
@@ -543,7 +536,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of why this subscription was created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reason", InSummary=true, Order=120, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -586,7 +578,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Rule for server push.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("criteria", InSummary=true, Order=130)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -629,7 +620,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Latest error note.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("error", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ErrorElement
@@ -671,7 +661,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The channel on which to report matches to the criteria.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("channel", InSummary=true, Order=150)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -804,7 +793,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "status":

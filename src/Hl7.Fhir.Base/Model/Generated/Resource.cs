@@ -61,7 +61,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical id of this artifact.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("id", InSummary=true, Order=10)]
     [DataMember]
     public Hl7.Fhir.Model.Id? IdElement
@@ -103,7 +102,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Metadata about the resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("meta", InSummary=true, Order=20)]
     [DataMember]
     public Hl7.Fhir.Model.Meta? Meta
@@ -130,7 +128,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A set of rules under which this content was created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("implicitRules", InSummary=true, IsModifier=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? ImplicitRulesElement
@@ -172,7 +169,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Language of the resource content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("language", Order=40)]
     [Binding("Language")]
     [DataMember]
@@ -283,7 +279,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "id":

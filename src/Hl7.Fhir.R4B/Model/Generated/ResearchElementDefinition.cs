@@ -140,8 +140,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What code or expression defines members?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("definition", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.DataRequirement))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -169,7 +169,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What code/value pairs define members?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("usageContext", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -197,7 +196,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether the characteristic includes or excludes members.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("exclude", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? ExcludeElement
@@ -239,7 +237,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What unit is the outcome described in?.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("unitOfMeasure", Order=70)]
       [Binding("UCUMUnits")]
       [DataMember]
@@ -267,7 +264,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What time period does the study cover.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("studyEffectiveDescription", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? StudyEffectiveDescriptionElement
@@ -309,8 +305,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What time period does the study cover.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("studyEffective", Order=90, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Timing))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? StudyEffective
@@ -337,7 +333,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Observation time from study start.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("studyEffectiveTimeFromStart", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.Duration? StudyEffectiveTimeFromStart
@@ -364,7 +359,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("studyEffectiveGroupMeasure", Order=110)]
       [AllowedTypes(typeof(Code))]
       [Binding("GroupMeasure")]
@@ -408,7 +402,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What time period do participants cover.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("participantEffectiveDescription", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? ParticipantEffectiveDescriptionElement
@@ -450,8 +443,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What time period do participants cover.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("participantEffective", Order=130, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Timing))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? ParticipantEffective
@@ -478,7 +471,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Observation time from study start.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("participantEffectiveTimeFromStart", Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.Duration? ParticipantEffectiveTimeFromStart
@@ -505,7 +497,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("participantEffectiveGroupMeasure", Order=150)]
       [AllowedTypes(typeof(Code))]
       [Binding("GroupMeasure")]
@@ -704,7 +695,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "definition":
@@ -831,7 +822,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this research element definition, represented as a URI (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -873,7 +863,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the research element definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -901,7 +890,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the research element definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -943,7 +931,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this research element definition (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -985,7 +972,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this research element definition (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -1027,7 +1013,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Title for use in informal contexts.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("shortTitle", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? ShortTitleElement
@@ -1069,7 +1054,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subordinate title of the ResearchElementDefinition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subtitle", Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SubtitleElement
@@ -1111,7 +1095,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -1156,7 +1139,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -1198,9 +1180,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
     [Binding("SubjectType")]
+    [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
@@ -1228,7 +1210,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -1270,7 +1251,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=200, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -1312,7 +1292,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1340,7 +1319,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the research element definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1382,7 +1360,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used for footnotes or explanatory notes.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("comment", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1428,7 +1405,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1456,7 +1432,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for research element definition (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=250)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1485,7 +1460,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this research element definition is defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("purpose", Order=260, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -1527,7 +1501,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the clinical usage of the ResearchElementDefinition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("usage", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? UsageElement
@@ -1569,7 +1542,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -1611,7 +1583,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the research element definition was approved by publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -1653,7 +1624,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the research element definition was last reviewed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -1695,7 +1665,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the research element definition is expected to be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=310)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -1722,7 +1691,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The category of the ResearchElementDefinition, such as Education, Treatment, Assessment, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("topic", Order=320)]
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
@@ -1751,7 +1719,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1779,7 +1746,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("editor", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1807,7 +1773,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reviewer", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1835,7 +1800,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endorser", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1863,7 +1827,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1891,7 +1854,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logic used by the ResearchElementDefinition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("library", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1937,7 +1899,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// population | exposure | outcome.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=390)]
     [AllowedTypes(typeof(Code))]
     [Binding("ResearchElementType")]
@@ -1982,7 +1943,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// dichotomous | continuous | descriptive.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("variableType", Order=400)]
     [AllowedTypes(typeof(Code))]
     [Binding("VariableType")]
@@ -2026,7 +1986,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What defines the members of the research element.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("characteristic", InSummary=true, Order=410)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -2421,7 +2380,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

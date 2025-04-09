@@ -194,7 +194,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// careteam | device | group | healthcareservice | location | organization | patient | practitioner | practitionerrole | relatedperson.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("ActivityParticipantType")]
@@ -238,7 +237,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who or what can participate.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("typeCanonical", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical? TypeCanonicalElement
@@ -280,8 +278,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who or what can participate.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("typeReference", Order=60)]
+      [CLSCompliant(false)]
       [References("CareTeam","Device","DeviceDefinition","Endpoint","Group","HealthcareService","Location","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? TypeReference
@@ -308,7 +306,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// E.g. Nurse, Surgeon, Parent, etc.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("role", Order=70)]
       [Binding("ActivityParticipantRole")]
       [DataMember]
@@ -336,7 +333,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// E.g. Author, Reviewer, Witness, etc.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("function", Order=80)]
       [Binding("ActionParticipantFunction")]
       [DataMember]
@@ -449,7 +445,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -530,7 +526,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The path to the element to be set dynamically.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("path", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -573,7 +568,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An expression that provides the dynamic value for the customization.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("expression", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -656,7 +650,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "path":
@@ -693,7 +687,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this activity definition, represented as a URI (globally unique).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? UrlElement
@@ -735,7 +728,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the activity definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -763,7 +755,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the activity definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? VersionElement
@@ -805,8 +796,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to compare versions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.version")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? VersionAlgorithm
@@ -833,7 +824,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this activity definition (computer friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("name", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? NameElement
@@ -875,7 +865,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this activity definition (human friendly).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -917,7 +906,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subordinate title of the activity definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subtitle", Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? SubtitleElement
@@ -959,7 +947,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -1004,7 +991,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("experimental", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ExperimentalElement
@@ -1046,9 +1032,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of individual the activity definition is intended for.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
     [Binding("SubjectType")]
+    [CLSCompliant(false)]
     [References("Group","MedicinalProductDefinition","SubstanceDefinition","AdministrableProductDefinition","ManufacturedItemDefinition","PackagedProductDefinition")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical))]
     [DataMember]
@@ -1076,7 +1062,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -1118,7 +1103,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher/steward (organization or individual).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("publisher", InSummary=true, Order=200, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? PublisherElement
@@ -1160,7 +1144,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1188,7 +1171,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the activity definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? DescriptionElement
@@ -1230,7 +1212,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("useContext", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1258,7 +1239,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for activity definition (if applicable).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("jurisdiction", InSummary=true, Order=240)]
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1287,7 +1267,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this activity definition is defined.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("purpose", Order=250, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? PurposeElement
@@ -1329,7 +1308,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the clinical usage of the activity definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("usage", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? UsageElement
@@ -1371,7 +1349,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -1413,7 +1390,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Copyright holder and year(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyrightLabel", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? CopyrightLabelElement
@@ -1455,7 +1431,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity definition was approved by publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -1497,7 +1472,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity definition was last reviewed by the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -1539,7 +1513,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity definition is expected to be used.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("effectivePeriod", InSummary=true, Order=310)]
     [DataMember]
     public Hl7.Fhir.Model.Period? EffectivePeriod
@@ -1566,7 +1539,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("topic", Order=320)]
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
@@ -1595,7 +1567,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1623,7 +1594,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("editor", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1651,7 +1621,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("reviewer", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1679,7 +1648,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endorser", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1707,7 +1675,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("relatedArtifact", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1735,7 +1702,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logic used by the activity definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("library", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1781,7 +1747,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("kind", InSummary=true, Order=390)]
     [AllowedTypes(typeof(Code))]
     [Binding("ActivityDefinitionKind")]
@@ -1825,7 +1790,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What profile the resource needs to conform to.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("profile", Order=400)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? ProfileElement
@@ -1867,7 +1831,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detail type of activity.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=410)]
     [Binding("ActivityDefinitionType")]
     [DataMember]
@@ -1895,7 +1858,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("intent", Order=420)]
     [AllowedTypes(typeof(Code))]
     [Binding("RequestIntent")]
@@ -1939,7 +1901,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("priority", Order=430)]
     [AllowedTypes(typeof(Code))]
     [Binding("RequestPriority")]
@@ -1983,7 +1944,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if the activity should not be performed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=440)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? DoNotPerformElement
@@ -2025,8 +1985,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When activity is to occur.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("timing", Order=450, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Duration))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Timing
@@ -2053,9 +2013,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Preconditions for service.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("asNeeded", InSummary=true, Order=460, Choice=ChoiceType.DatatypeChoice)]
     [Binding("ProcedureAsNeededReason")]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? AsNeeded
@@ -2082,7 +2042,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where it should happen.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("location", Order=470)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference? Location
@@ -2109,7 +2068,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who should participate in the action.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("participant", Order=480)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2137,9 +2095,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What's administered/supplied.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("product", Order=490, Choice=ChoiceType.DatatypeChoice)]
     [Binding("ActivityProduct")]
+    [CLSCompliant(false)]
     [References("Medication","Ingredient","Substance","SubstanceDefinition")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
@@ -2167,7 +2125,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How much is administered/consumed/supplied.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("quantity", Order=500)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity? Quantity
@@ -2194,7 +2151,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detailed dosage instructions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dosage", Order=510)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2222,7 +2178,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What part of body to perform on.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("bodySite", Order=520)]
     [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
@@ -2251,7 +2206,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What specimens are required to perform this action.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("specimenRequirement", Order=530)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2297,7 +2251,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What observations are required to perform this action.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("observationRequirement", Order=540)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2343,7 +2296,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What observations must be produced by this action.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("observationResultRequirement", Order=550)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2389,7 +2341,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Transform to apply the template.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("transform", Order=560)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical? TransformElement
@@ -2431,7 +2382,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dynamic aspects of the definition.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("dynamicValue", Order=570)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -2986,7 +2936,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "url":

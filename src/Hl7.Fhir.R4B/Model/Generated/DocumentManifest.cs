@@ -83,7 +83,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifiers of things that are related.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("identifier", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier? Identifier
@@ -110,8 +109,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Related Resource.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("ref", Order=50)]
+      [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Ref
@@ -193,7 +192,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "identifier":
@@ -230,7 +229,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique Identifier for the set of documents.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("masterIdentifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? MasterIdentifier
@@ -257,7 +255,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other identifiers for the manifest.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -285,7 +282,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | superseded | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [AllowedTypes(typeof(Code))]
     [Binding("DocumentReferenceStatus")]
@@ -330,7 +326,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of document set.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Binding("v3Act")]
     [DataMember]
@@ -358,8 +353,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the set of documents.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner","Group","Device")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Subject
@@ -386,7 +381,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this document manifest created.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("created", Order=140, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -428,8 +422,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what authored the DocumentManifest.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("author", InSummary=true, Order=150, FiveWs="FiveWs.author")]
+    [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","Device","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -457,8 +451,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended to get notified about this set of documents.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("recipient", Order=160, FiveWs="FiveWs.cause")]
+    [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -486,7 +480,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The source system/application/software.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("source", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri? SourceElement
@@ -528,7 +521,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human-readable description (title).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("description", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DescriptionElement
@@ -570,8 +562,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Items in manifest.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("content", InSummary=true, Order=190)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -599,7 +591,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Related things.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("related", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -784,7 +775,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "masterIdentifier":

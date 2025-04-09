@@ -107,7 +107,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// allowed | possible | actual.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("role", InSummary=true, Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("IngredientManufacturerRole")]
@@ -151,8 +150,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An organization that manufactures this ingredient.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("manufacturer", InSummary=true, Order=50)]
+      [CLSCompliant(false)]
       [References("Organization")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -235,7 +234,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "role":
@@ -285,7 +284,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A code or full resource that represents the ingredient substance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("code", InSummary=true, Order=40)]
       [Binding("SNOMEDCTSubstanceCodes")]
       [Cardinality(Min=1,Max=1)]
@@ -314,7 +312,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The quantity of substance, per presentation, or per volume or mass, and type of quantity.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("strength", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -397,7 +394,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "code":
@@ -450,8 +447,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The quantity of substance in the unit of presentation.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("presentation", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Presentation
@@ -478,7 +475,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text of either the whole presentation strength or a part of it (rest being in Strength.presentation as a ratio).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("textPresentation", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextPresentationElement
@@ -520,8 +516,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The strength per unitary volume (or mass).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("concentration", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
       [DataMember]
       public Hl7.Fhir.Model.DataType? Concentration
@@ -548,7 +544,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text of either the whole concentration strength or a part of it (rest being in Strength.concentration as a ratio).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("textConcentration", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextConcentrationElement
@@ -590,7 +585,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A code that indicates if the strength is, for example, based on the ingredient substance as stated or on the substance base (when the ingredient is a salt).
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("basis", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept? Basis
@@ -617,7 +611,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When strength is measured at a particular point or distance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("measurementPoint", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MeasurementPointElement
@@ -659,7 +652,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where the strength range applies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("country", InSummary=true, Order=100)]
       [Binding("Country")]
       [Cardinality(Min=0,Max=-1)]
@@ -688,7 +680,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Strength expressed in terms of a reference substance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("referenceStrength", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -831,7 +822,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "presentation":
@@ -938,7 +929,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Relevant reference substance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("substance", InSummary=true, Order=40)]
       [Binding("SNOMEDCTSubstanceCodes")]
       [Cardinality(Min=1,Max=1)]
@@ -967,8 +957,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Strength expressed in terms of a reference substance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("strength", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange),typeof(Hl7.Fhir.Model.Quantity))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -996,7 +986,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When strength is measured at a particular point or distance.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("measurementPoint", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? MeasurementPointElement
@@ -1038,7 +1027,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where the strength range applies.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("country", InSummary=true, Order=70)]
       [Binding("Country")]
       [Cardinality(Min=0,Max=-1)]
@@ -1142,7 +1130,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "substance":
@@ -1197,7 +1185,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier or code by which the ingredient can be referenced.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier? Identifier
@@ -1224,7 +1211,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
@@ -1269,8 +1255,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The product which this ingredient is a constituent part of.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("for", InSummary=true, Order=110)]
+    [CLSCompliant(false)]
     [References("MedicinalProductDefinition","AdministrableProductDefinition","ManufacturedItemDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1298,7 +1284,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Purpose of the ingredient within the product, e.g. active, inactive.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("role", InSummary=true, Order=120)]
     [Binding("IngredientRole")]
     [Cardinality(Min=1,Max=1)]
@@ -1327,7 +1312,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Precise action within the drug product, e.g. antioxidant, alkalizing agent.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("function", InSummary=true, Order=130)]
     [Binding("IngredientFunction")]
     [Cardinality(Min=0,Max=-1)]
@@ -1356,7 +1340,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A classification of the ingredient according to where in the physical item it tends to be used, such the outer shell of a tablet, inner body or ink.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("group", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Group
@@ -1383,7 +1366,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If the ingredient is a known or suspected allergen.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("allergenicIndicator", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? AllergenicIndicatorElement
@@ -1425,7 +1407,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A place for providing any notes that are relevant to the component, e.g. removed during process, adjusted for loss on drying.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("comment", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CommentElement
@@ -1467,7 +1448,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An organization that manufactures this ingredient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("manufacturer", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1495,7 +1475,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The substance that comprises this ingredient.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("substance", InSummary=true, Order=180)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1660,7 +1639,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

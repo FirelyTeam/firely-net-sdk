@@ -66,7 +66,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifiers for a role/location.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -94,7 +93,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this practitioner role record is in active use.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("active", InSummary=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean? ActiveElement
@@ -136,7 +134,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The period during which the practitioner is authorized to perform in these role(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("period", InSummary=true, Order=110, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period? Period
@@ -163,8 +160,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Practitioner that provides services for the organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("practitioner", InSummary=true, Order=120)]
+    [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Practitioner
@@ -191,8 +188,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization where the roles are available.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("organization", InSummary=true, Order=130)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Organization
@@ -219,7 +216,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Roles which this practitioner may perform.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("code", InSummary=true, Order=140)]
     [Binding("PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
@@ -248,7 +244,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific specialty of the practitioner.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("specialty", InSummary=true, Order=150)]
     [Binding("PractitionerSpecialty")]
     [Cardinality(Min=0,Max=-1)]
@@ -277,8 +272,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Location(s) where the practitioner provides care.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("location", InSummary=true, Order=160, FiveWs="FiveWs.where[x]")]
+    [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -306,8 +301,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare services provided for this role's Organization/Location(s).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("healthcareService", Order=170)]
+    [CLSCompliant(false)]
     [References("HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -335,7 +330,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Official contact details relating to this PractitionerRole.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("contact", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -363,7 +357,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Collection of characteristics (attributes).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("characteristic", Order=190)]
     [Binding("ServiceCharacteristic")]
     [Cardinality(Min=0,Max=-1)]
@@ -392,7 +385,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A language the practitioner (in this role) can use in patient communication.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("communication", Order=200)]
     [Binding("Language")]
     [Cardinality(Min=0,Max=-1)]
@@ -421,7 +413,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Times the Practitioner is available at this location and/or healthcare service (including exceptions).
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("availability", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -449,8 +440,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Endpoints for interacting with the practitioner in this role.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("endpoint", Order=220)]
+    [CLSCompliant(false)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -655,7 +646,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

@@ -238,7 +238,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// comment | classifier | rating | container | response | change-request.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("informationType", Order=40)]
       [AllowedTypes(typeof(Code))]
       [Binding("InformationType")]
@@ -282,7 +281,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Brief summary of the content.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("summary", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown? SummaryElement
@@ -324,7 +322,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What type of content.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=60)]
       [Binding("EvidenceCertaintyType")]
       [DataMember]
@@ -352,7 +349,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Rating, classifier, or assessment.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("classifier", Order=70)]
       [Binding("EvidenceCertaintyRating")]
       [Cardinality(Min=0,Max=-1)]
@@ -381,7 +377,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Quantitative rating.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("quantity", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity? Quantity
@@ -408,8 +403,8 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who authored the content.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("author", Order=90)]
+      [CLSCompliant(false)]
       [References("Patient","Practitioner","PractitionerRole","Organization","Device")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference? Author
@@ -436,7 +431,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What the comment is directed to.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("path", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -482,7 +476,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional information.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("relatedArtifact", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -510,7 +503,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Acceptable to publicly share the resource content.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("freeToShare", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean? FreeToShareElement
@@ -552,7 +544,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contained content.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("component", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -715,7 +706,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "informationType":
@@ -824,7 +815,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the artifact assessment.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -852,7 +842,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A short title for the assessment for use in displaying and selecting.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("title", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? TitleElement
@@ -894,8 +883,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to cite the comment or rating.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("citeAs", Order=110, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("Citation")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Markdown))]
     [DataMember]
@@ -923,7 +912,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("date", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? DateElement
@@ -965,7 +953,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("copyright", Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown? CopyrightElement
@@ -1007,7 +994,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the artifact assessment was approved by publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("approvalDate", Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Date? ApprovalDateElement
@@ -1049,7 +1035,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the artifact assessment was last reviewed by the publisher.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("lastReviewDate", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.Date? LastReviewDateElement
@@ -1091,8 +1076,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The artifact assessed, commented upon or rated.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("artifact", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("Resource")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
@@ -1121,7 +1106,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comment, classifier, or rating content.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("content", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1149,7 +1133,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// submitted | triaged | waiting-for-input | resolved-no-change | resolved-change-required | deferred | duplicate | applied | published | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("workflowStatus", InSummary=true, Order=180)]
     [AllowedTypes(typeof(Code))]
     [Binding("WorkflowStatus")]
@@ -1193,7 +1176,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// unresolved | not-persuasive | persuasive | persuasive-with-modification | not-persuasive-with-modification.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("disposition", InSummary=true, Order=190)]
     [AllowedTypes(typeof(Code))]
     [Binding("Disposition")]
@@ -1384,7 +1366,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":

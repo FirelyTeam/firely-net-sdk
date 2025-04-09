@@ -66,8 +66,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The age of the specific population.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("age", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType? Age
@@ -94,7 +94,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The gender of the specific population.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("gender", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Gender
@@ -121,7 +120,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Race of the specific population.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("race", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? Race
@@ -148,7 +146,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The existing physiological conditions of the specific population to which this applies.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("physiologicalCondition", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept? PhysiologicalCondition
@@ -250,7 +247,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "age":

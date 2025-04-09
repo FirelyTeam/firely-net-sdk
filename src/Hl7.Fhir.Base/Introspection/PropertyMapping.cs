@@ -135,18 +135,18 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remark>These are the defined (choice) types for this element as specified in the
         /// FHIR data definitions. It is derived from the actual property type,
-        /// or, if present, via a list of types in the [ChoiceTypes] attribute. Finally,
+        /// or, if present, via a list of types in the [AllowedTypes] attribute. Finally,
         /// it the property type does not represent FHIR metadata, it is overridden using
         /// the [DeclaredType] attribute.
         /// </remark>
-        public Type[] FhirType { get; private set; }
+        public Type[] FhirType { get; }
 
         /// <summary>
         /// The <see cref="ClassMapping" /> that represents the type of this property.
         /// </summary>
         /// <remarks>This is effectively the ClassMapping for the <see cref="ImplementingType" /> unless a
         /// <see cref="AllowedTypesAttribute" /> specifies otherwise.</remarks>
-        public ClassMapping PropertyTypeMapping { get; private set; }
+        public ClassMapping PropertyTypeMapping { get; }
 
         /// <summary>
         /// The collection of zero or more <see cref="ValidationAttribute"/> (or subclasses) declared
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Introspection
 
             var fhirType = (typeof(Enum).IsAssignableFrom(implementingType) ? typeof(Enum) : implementingType);
 
-            // The [ChoiceTypes] attribute can specify a set of allowed types for this element.
+            // The [AllowedTypes] attribute can specify a set of allowed types for this element.
             // If this is a choice element, then take this list as the declared list of FHIR types,
             // otherwise assume this is the implementing FHIR type above
             var overridingTypes = ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release);

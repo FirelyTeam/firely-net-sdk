@@ -118,7 +118,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// named-event | periodic | data-added | data-modified | data-removed | data-accessed | data-access-ended.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("type", InSummary=true, Order=30)]
     [AllowedTypes(typeof(Code))]
     [Binding("TriggerType")]
@@ -163,7 +162,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Triggering event name.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("eventName", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? EventNameElement
@@ -205,8 +203,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Timing of the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("eventTiming", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+    [CLSCompliant(false)]
     [References("Schedule")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
@@ -234,7 +232,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Triggering data of the event.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("eventData", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.DataRequirement? EventData
@@ -336,7 +333,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "type":

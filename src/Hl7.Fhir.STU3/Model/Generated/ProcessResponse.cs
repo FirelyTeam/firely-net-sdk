@@ -82,7 +82,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// display | print | printoper.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("type", Order=40)]
       [Binding("NoteType")]
       [DataMember]
@@ -110,7 +109,6 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Comment on the processing.
       /// </summary>
-      [CLSCompliant(false)]
       [FhirElement("text", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString? TextElement
@@ -207,7 +205,7 @@ namespace Hl7.Fhir.Model
 
       public override Base SetValue(string key, object? value)
       {
-        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+        if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
         switch (key)
         {
           case "type":
@@ -244,7 +242,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -272,7 +269,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [AllowedTypes(typeof(Code))]
     [Binding("ProcessResponseStatus")]
@@ -316,7 +312,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("created", Order=110, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime? CreatedElement
@@ -358,8 +353,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Authoring Organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("organization", Order=120, FiveWs="who.source")]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Organization
@@ -386,8 +381,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request reference.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("request", Order=130, FiveWs="why")]
+    [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? Request
@@ -414,7 +409,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Processing outcome.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("outcome", Order=140)]
     [Binding("ProcessingOutcome")]
     [DataMember]
@@ -442,7 +436,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Disposition Message.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("disposition", Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString? DispositionElement
@@ -484,8 +477,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible Practitioner.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requestProvider", Order=160)]
+    [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? RequestProvider
@@ -512,8 +505,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("requestOrganization", Order=170)]
+    [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference? RequestOrganization
@@ -540,7 +533,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Printed Form Identifier.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("form", Order=180)]
     [Binding("Forms")]
     [DataMember]
@@ -568,7 +560,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Processing comments or additional requirements.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("processNote", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -596,7 +587,6 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Error code.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("error", Order=200)]
     [Binding("AdjudicationError")]
     [Cardinality(Min=0,Max=-1)]
@@ -625,8 +615,8 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request for additional information.
     /// </summary>
-    [CLSCompliant(false)]
     [FhirElement("communicationRequest", Order=210)]
+    [CLSCompliant(false)]
     [References("CommunicationRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -821,7 +811,7 @@ namespace Hl7.Fhir.Model
 
     public override Base SetValue(string key, object? value)
     {
-      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or IEnumerable<Base>", nameof(value));
+      if(value is not (null or Hl7.Fhir.Model.Base or IList)) throw new ArgumentException("Value must be a Base or a list of Base", nameof(value));
       switch (key)
       {
         case "identifier":
