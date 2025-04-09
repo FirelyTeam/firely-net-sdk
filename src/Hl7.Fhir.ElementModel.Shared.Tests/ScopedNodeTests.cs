@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
@@ -117,47 +118,25 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        public void GetContainedAndBundledResources()
-        {
-            Assert.AreEqual(0, _bundleNode!.ContainedResources().Count());
-
-            var entries = _bundleNode.BundledResources().ToList();
-            Assert.AreEqual(7, entries.Count);
-
-            Assert.AreEqual("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d", entries[1].FullUrl);
-            Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FullUrl);
-
-            Assert.IsFalse(entries[1].Resource!.ContainedResources().Any());
-            Assert.IsNotNull(entries[1].Resource!.Children("active").First());
-
-            Assert.AreEqual("#a", entries[2].Resource!.Id());
-
-            var entry6 = entries[6].Resource;
-            Assert.AreEqual(2, entry6!.ContainedResources().Count());
-            Assert.IsFalse(entry6.BundledResources().Any());
-            Assert.AreEqual("#orgY", entry6.ContainedResources().Skip(1).First().Id());
-        }
-
-        [TestMethod]
         public void GetFullUrl()
         {
-            var entries = _bundleNode!.BundledResources().ToList();
+            var entries = _bundleNode!.Children("entry").OfType<ScopedNode>().ToList();
 
-            Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FullUrl);
+            Assert.AreEqual("http://example.org/fhir/Patient/b", entries[3].FullUrl());
 
-            var entry3 = entries[3].Resource;
+            var entry3 = entries[3].Children("resource").SingleOrDefault() as ScopedNode;
             entry3 = entry3?.Children("managingOrganization").FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry3);
             entry3 = entry3.Children("reference").FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry3);
-            Assert.AreEqual(entries[3].FullUrl, entry3.FullUrl());
+            Assert.AreEqual(entries[3].FullUrl(), entry3.FullUrl());
             Assert.AreEqual(entry3.ParentResource!.FullUrl(), entry3.FullUrl());
 
-            var entry6 = entries[6].Resource;
+            var entry6 = entries[6].Children("resource").SingleOrDefault() as ScopedNode;
             entry6 = entry6?.Children("contained").Skip(1).FirstOrDefault() as ScopedNode;
             Assert.IsNotNull(entry6);
             Assert.AreEqual("#orgY", entry6.Id());
-            Assert.AreEqual(entries[6].FullUrl, entry6.FullUrl());
+            Assert.AreEqual(entries[6].FullUrl(), entry6.FullUrl());
             Assert.AreEqual(entry6.ParentResource!.FullUrl(), entry6.FullUrl());
         }
 

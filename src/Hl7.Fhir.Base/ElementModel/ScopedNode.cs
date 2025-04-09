@@ -219,7 +219,7 @@ namespace Hl7.Fhir.ElementModel
             
             if (InstanceType == "Bundle")
             {
-                var referenceEntryPairs = new List<KeyValuePair<string, ScopedNode>>();
+                var referenceEntryPairs = new List<KeyValuePair<string?, ScopedNode>>();
                 var versionedEntries = Current.Children("entry").Where(entry => entry.Children("resource").Children("meta").Children("versionId").Any());
                 foreach (var versionedResourceGroup in versionedEntries.GroupBy(entry => entry.Children("fullUrl").First().Value as string))
                 {
@@ -230,12 +230,12 @@ namespace Hl7.Fhir.ElementModel
                                 (versionedResourceGroup.Key + "/_history/" + entry.Children("resource").Children("meta").Children("versionId").First().Value), 
                                 entry.Children("resource").Single().ToScopedNode()
                             )
-                        )
+                        )!
                     );
                 }
                 var unversionedEntries = Current.Children("entry").Where(entry => !entry.Children("resource").Children("meta").Children("versionId").Any());
-                referenceEntryPairs.AddRange(unversionedEntries.Select(entry => new KeyValuePair<string, ScopedNode>(
-                    (entry.Children("fullUrl").First().Value as string)!, 
+                referenceEntryPairs.AddRange(unversionedEntries.Select(entry => new KeyValuePair<string?, ScopedNode>(
+                    (entry.Children("fullUrl").FirstOrDefault()?.Value as string), 
                     entry.Children("resource").First().ToScopedNode()
                 )));
                 _cache.BundledResources = new ReferencedResourceCache(referenceEntryPairs);
