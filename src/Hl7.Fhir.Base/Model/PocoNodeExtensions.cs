@@ -198,7 +198,7 @@ public static class PocoNodeExtensions
     
     internal static PocoNode? GetParentResource(this PocoNodeOrList node) => node.parents().FirstOrDefault(parentNode => parentNode is { Poco: Resource });
 
-    internal static string GetLocation(this PocoNode node) => ((ITypedElement)node).Location;
+    public static string GetLocation(this PocoNode node) => ((ITypedElement)node).Location;
     
     internal static string GetLocalLocation(this PocoNode node) =>
         node.Parent is null 
