@@ -114,7 +114,7 @@ namespace Hl7.Fhir.ElementModel
 
                     if (parent.Id() == identity.Id)
                         return parent;
-                    if (parent.ContainedResourcesWithId().ResolveReference(identity.Id) is { } resource) // safe cast but we cannot change the signature
+                    if (parent.ContainedResourcesWithId().ResolveReference(identity.Id ?? identity.ToString()) is { } resource) // safe cast but we cannot change the signature
                         return resource;
                 }
 
