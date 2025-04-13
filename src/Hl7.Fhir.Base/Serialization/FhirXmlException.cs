@@ -25,37 +25,32 @@ public class FhirXmlException : ExtendedCodedException
     public const string EMPTY_ELEMENT_NAMESPACE_CODE = "XML101";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "XML102";
     public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "XML103";
-    //public const string UNKNOWN_ELEMENT_CODE = "XML104";
-    public const string CHOICE_ELEMENT_HAS_NO_TYPE_CODE = "XML105";
+    public const string CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE = "XML105";
     public const string CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE = "XML106";
     public const string INCORRECT_XHTML_NAMESPACE_CODE = "XML107";
-    //public const string UNKNOWN_ATTRIBUTE_CODE = "XML108";
     public const string ELEMENT_OUT_OF_ORDER_CODE = "XML109";
     public const string DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE = "XML110";
     public const string NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE = "XML111";
     public const string INCORRECT_ELEMENT_NAMESPACE_CODE = "XML112";
     public const string DISALLOWED_NODE_TYPE_CODE = "XML113";
     public const string INCORRECT_ATTRIBUTE_NAMESPACE_CODE = "XML114";
-    public const string ATTRIBUTE_HAS_EMPTY_VALUE_CODE = "XML115";
     public const string ELEMENT_NOT_IN_SEQUENCE_CODE = "XML116";
     public const string SCHEMALOCATION_DISALLOWED_CODE = "XML117";
     public const string EXPECTED_OPENING_ELEMENT_CODE = "XML118";
     public const string ENCOUNTERED_DTD_REFERENCES_CODE = "XML119";
     public const string ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE = "XML120";
-    public const string INVALID_DUPLICATE_PROPERTY_CODE = "XML121";
     public const string EMPTY_RESOURCE_CONTAINER_CODE = "XML122";
+    public const string INVALID_TEXT_NODE_CODE = "XML123";
 
     // ==========================================
     // Unrecoverable Errors - when adding a new error, also add it to the appropriate error collections below.
     // ==========================================
     internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root property.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE(XmlReader reader, string instancePath, string resourceType) => Initialize(reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{resourceType}' in property 'resourceType' is not a type of resource.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException CHOICE_ELEMENT_HAS_UNKOWN_TYPE(XmlReader reader, string instancePath, string elementName, string typeSuffix) => Initialize(reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeSuffix}'.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string s0) => Initialize(reader, instancePath, DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE, $"Encountered unallowed content '{s0}' in the resource container. Only a single resource is allowed.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, $"Element '{elementName}' has a contained resource and therefore should not have attributes.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException DISALLOWED_NODE_TYPE(XmlReader reader, string instancePath, string s0) => Initialize(reader, instancePath, DISALLOWED_NODE_TYPE_CODE, $"Xml node of type '{s0}' is unexpected at this point", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException EXPECTED_OPENING_ELEMENT(XmlReader reader, string instancePath, string openElementName) => Initialize(reader, instancePath, EXPECTED_OPENING_ELEMENT_CODE, $"Expected opening element, but found {openElementName}.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException INVALID_DUPLICATE_PROPERTY(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, INVALID_DUPLICATE_PROPERTY_CODE, $"Element '{elementName}' is not permitted to repeat.", OO_Sev.Error, OO_Typ.Structure);
 
 
     // ==========================================
@@ -75,7 +70,6 @@ public class FhirXmlException : ExtendedCodedException
     internal static FhirXmlException ELEMENT_NOT_IN_SEQUENCE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_NOT_IN_SEQUENCE_CODE, $"Element '{elementName}' was found multiple times, but not in sequence.", OO_Sev.Error, OO_Typ.Structure);
 
     // Empty values will result in nulls, but no data is lost.
-    internal static FhirXmlException ATTRIBUTE_HAS_EMPTY_VALUE(XmlReader reader, string instancePath) => Initialize(reader, instancePath, ATTRIBUTE_HAS_EMPTY_VALUE_CODE, "Attributes cannot be empty. Either they are absent, or they are present with at least one character of non - whitespace content", OO_Sev.Error, OO_Typ.Value);
     internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, $"Element '{elementName}' must have child elements and / or a value attribute", OO_Sev.Error, OO_Typ.Structure);
     internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(string instancePath, int lineNumber, int position, string? locationMessage, string? localName)
     {
@@ -97,6 +91,14 @@ public class FhirXmlException : ExtendedCodedException
     /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
     /// </summary>
 
+    // Text nodes, we'll capture them as an element, no data loss.
+    internal static FhirXmlException INVALID_TEXT_NODE(XmlReader reader, string instancePath) => Initialize(reader, instancePath, INVALID_TEXT_NODE_CODE, $"Encountered a text-only node, which is not allowed in FHIR serialization.", OO_Sev.Error, OO_Typ.Structure);
+
+    // This will use a DynamicXXX, so no data loss.
+    internal static FhirXmlException CHOICE_ELEMENT_HAS_UNKOWN_TYPE(XmlReader reader, string instancePath, string elementName, string typeSuffix) => Initialize(reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeSuffix}'.", OO_Sev.Fatal, OO_Typ.Structure);
+    internal static FhirXmlException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(XmlReader reader, string instancePath) => Initialize(reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, "Choice element names should be suffixed by a type.", OO_Sev.Warning, OO_Typ.Structure);
+
+
     internal static readonly HashSet<string> RECOVERABLE_ISSUES =
     [
         ..CodedValidationException.POCO_VALIDATION_ISSUES,
@@ -106,11 +108,13 @@ public class FhirXmlException : ExtendedCodedException
         INCORRECT_ATTRIBUTE_NAMESPACE_CODE,
         ELEMENT_OUT_OF_ORDER_CODE,
         ELEMENT_NOT_IN_SEQUENCE_CODE,
-        ATTRIBUTE_HAS_EMPTY_VALUE_CODE,
         ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE,
         SCHEMALOCATION_DISALLOWED_CODE,
         ENCOUNTERED_DTD_REFERENCES_CODE,
-        EMPTY_RESOURCE_CONTAINER_CODE
+        EMPTY_RESOURCE_CONTAINER_CODE,
+        INVALID_TEXT_NODE_CODE,
+        CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE,
+        CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE
     ];
 
     /// <summary>
@@ -122,7 +126,7 @@ public class FhirXmlException : ExtendedCodedException
     [
         CodedValidationException.INVALID_CODED_VALUE_CODE,
         CodedValidationException.UNKNOWN_ELEMENT_CODE,
-        CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE,
+        CodedValidationException.CHOICE_TYPE_NOT_ALLOWED_CODE
     ];
 
     public FhirXmlException(string code, string message)

@@ -121,6 +121,9 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         if (base.ObjectValue is not string unparsed)
             return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.ObjectValue, this.TypeName);
 
+        if(string.IsNullOrWhiteSpace(unparsed))
+            return COVE.LITERAL_INVALID(context, unparsed,  this.TypeName);
+
         _parsedValue = doParse(unparsed);
         return _parsedValue is null ? COVE.INVALID_CODED_VALUE(context, unparsed, EnumUtility.GetName<T>()) : null;
     }

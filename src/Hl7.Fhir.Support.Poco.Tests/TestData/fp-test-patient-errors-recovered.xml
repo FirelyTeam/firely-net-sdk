@@ -1,23 +1,12 @@
-﻿<Patient xmlns="http://hl7.org/fhir">
+<Patient xmlns="http://hl7.org/fhir">
   <id value="pat1-with-errors" />
   <text>
     <status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div></text>
   <contained>
-    <PatientX />
-  </contained>
-  <contained>
-    <PatientId>
-      <id value="1" />
-    </PatientId>
-  </contained>
-  <contained>
-    <PatientRepeating>
-      <id value="1" />
-      <id value="1" />
-    </PatientRepeating>
-  </contained>
-  <contained>
-    <Patient />
+    <Patient>
+      <id value="WrongNamespaceAndDate" />
+      <birthDate value="February" />
+    </Patient>
   </contained>
   <contained>
     <Patient>
@@ -27,7 +16,9 @@
   </contained>
   <contained>
     <Patient>
-      <id value="PrimitiveValueInContent" />
+      <id>
+        <nodeText value="PrimitiveValueInContent" />
+      </id>
     </Patient>
   </contained>
   <contained>
@@ -77,18 +68,18 @@
       <id value="3141" />
       <text>
         <status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><pre>
-        Comorbidity? YES
-        Cardial Comorbidity? YES
-        Angina? YES
-        MI? NO
-        Vascular Comorbidity?
-        (no answers)
-        ...
-        Histopathology
-        Abdominal
-        pT category: 1a
-        ...
-      </pre></div></text>
+            Comorbidity? YES
+            Cardial Comorbidity? YES
+            Angina? YES
+            MI? NO
+            Vascular Comorbidity?
+            (no answers)
+            ...
+            Histopathology
+            Abdominal
+            pT category: 1a
+            ...
+          </pre></div></text>
       <status value="draft" />
       <date value="2012-01" />
       <subjectType value="Patient" />

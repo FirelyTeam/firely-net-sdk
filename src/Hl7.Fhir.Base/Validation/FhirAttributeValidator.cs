@@ -14,6 +14,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation;
@@ -36,6 +37,14 @@ public class FhirAttributeValidator : IPocoValidator
     {
         if (propertyMapping is null || propertyMapping.IsPrimitive)
             return [CodedValidationException.UNKNOWN_ELEMENT(context, name)];
+
+        // // For now, if we encounter a dynamic type instance with a name, this means we have a choice type
+        // // that is unknown. Choice types without a type suffix will result in a DynamicType without a name,
+        // // as will the contents of unknown properties and other error circumstances.
+        // if (propertyValue is IDynamicType { DynamicTypeName: not null } dt)
+        //     return [CodedValidationException.CHOICE_TYPE_NOT_ALLOWED(context, dt.DynamicTypeName)];
+        // if(propertyValue is IReadOnlyCollection<IDynamicType> dtCollection && dtCollection.FirstOrDefault() is { DynamicTypeName: not null } dte)
+        //     return [CodedValidationException.CHOICE_TYPE_NOT_ALLOWED(context, dte.DynamicTypeName)];
 
         // if we have no allowed types attribute, we should still check against the implementing type, in case someone messed with the model (overflow)
         if (

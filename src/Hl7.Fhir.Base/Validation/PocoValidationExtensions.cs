@@ -51,7 +51,7 @@ public static class PocoValidationExtensions
         string producer() => instance.TypeName;
     }
 
-    private static IReadOnlyCollection<CodedValidationException> doObjectValidation(Base value, PocoValidationContext validationContext, IPocoValidator validator)
+    private static List<CodedValidationException> doObjectValidation(Base value, PocoValidationContext validationContext, IPocoValidator validator)
     {
         var errors = new List<CodedValidationException>();
 

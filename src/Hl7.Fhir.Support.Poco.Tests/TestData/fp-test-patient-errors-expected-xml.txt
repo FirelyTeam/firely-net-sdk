@@ -1,0 +1,16 @@
+Hl7.Fhir.Serialization.FhirXmlException: Unknown type 'PatientX' found in root property. At Patient.contained[0], line 16, position 6.
+Hl7.Fhir.Serialization.FhirXmlException: Element 'PatientX' must have child elements and / or a value attribute At Patient.contained[0], line 16, position 6.
+Hl7.Fhir.Serialization.FhirXmlException: Data type 'Hl7.Fhir.Model.DynamicResource' in property 'resourceType' is not a type of resource. At Patient.contained[0], line 18, position 5.
+Hl7.Fhir.Serialization.FhirXmlException: Unknown type 'PatientId' found in root property. At Patient.contained[1], line 20, position 6.
+Hl7.Fhir.Serialization.FhirXmlException: Data type 'Hl7.Fhir.Model.DynamicResource' in property 'resourceType' is not a type of resource. At Patient.contained[1], line 23, position 5.
+Hl7.Fhir.Serialization.FhirXmlException: Unknown type 'PatientRepeating' found in root property. At Patient.contained[2], line 25, position 6.
+Hl7.Fhir.Serialization.FhirXmlException: Data type 'Hl7.Fhir.Model.DynamicResource' in property 'resourceType' is not a type of resource. At Patient.contained[2], line 29, position 5.
+Hl7.Fhir.Serialization.FhirXmlException: Element 'Patient' uses the namespace 'http://example.org/not-fhir', which is not allowed. At Patient.contained[3], line 31, position 6.
+Hl7.Fhir.Serialization.FhirXmlException: Element 'id' uses the namespace 'http://example.org/not-fhir', which is not allowed. At Patient.contained[3], line 32, position 8.
+Hl7.Fhir.Serialization.FhirXmlException: Element 'birthDate' uses the namespace 'http://example.org/not-fhir', which is not allowed. At Patient.contained[3], line 33, position 8.
+Hl7.Fhir.Validation.CodedValidationException: string 'February' is not a correct literal for a date. At Patient.contained[3].birthDate, line 33, position 8.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'value'. At Patient.contained[4].address[0], line 39, position 16.
+Hl7.Fhir.Serialization.FhirXmlException: Element '' has no namespace, expected the HL7 FHIR namespace (http://hl7.org/fhir) At Patient.contained[5].id, line 44, position 11.
+Hl7.Fhir.Serialization.FhirXmlException: Encountered a text-only node, which is not allowed in FHIR serialization. At Patient.contained[5].id, line 44, position 11.
+Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'nodeText'. At Patient.contained[5].id, line 44, position 11.
+Hl7.Fhir.Validation.CodedValidationException: string 'urn:oid:9.0.1.2.3.4.5.6.7' is not a correct literal for a uri. At Patient.identifier[1].system, line 243, position 6.

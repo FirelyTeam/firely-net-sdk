@@ -67,7 +67,7 @@ public class FhirJsonDeserializationTests
     [DataRow("hi!", typeof(Base64Binary), COVE.INVALID_BASE64_VALUE_CODE, "hi!")]
     [DataRow(4, typeof(Base64Binary), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, 4)]
     [DataRow("2007-04", typeof(FhirDateTime), null, "2007-04")]
-    [DataRow("", typeof(FhirDateTime), ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE, null)]
+    [DataRow("", typeof(FhirDateTime), COVE.LITERAL_INVALID_CODE, null)]
     [DataRow("2007-", typeof(FhirDateTime), COVE.LITERAL_INVALID_CODE, "2007-")]
     [DataRow(true, typeof(FhirDateTime), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, true)]
     [DataRow("female", typeof(Code), null, "female")]
@@ -88,7 +88,7 @@ public class FhirJsonDeserializationTests
     public void ParsePrimitiveValue(object value, Type targetType, string? errorcode,
         object? expectedObjectValue = null)
     {
-        var state = new FhirJsonPocoDeserializerState();
+        var state = new PocoDeserializerState();
 
         PrimitiveType test()
         {
@@ -161,7 +161,7 @@ public class FhirJsonDeserializationTests
         reader.Read();
 
         var deserializer = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
-        var state = new FhirJsonPocoDeserializerState();
+        var state = new PocoDeserializerState();
         _ = deserializer.DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
         state.Errors.Select(err => err.ErrorCode).Should().BeEquivalentTo(errors);
         reader.TokenType.Should().Be(tokenAfterParsing);
@@ -267,13 +267,13 @@ public class FhirJsonDeserializationTests
         yield return data<Extension>(new { url = "test" });
         yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { unknown = "test", url = "test" }, COVE.UNKNOWN_ELEMENT_CODE);
-        yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+        yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix" },
             ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
         yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" },
             JsonTokenType.EndObject);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
-            ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+           ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
     }
 
     public static IEnumerable<object?[]> TestNormalArrayData()
@@ -470,7 +470,7 @@ public class FhirJsonDeserializationTests
     private void testRecovery(bool overwrite, string fileDir)
     {
         var patientFileName = Path.Combine(fileDir, "fp-test-patient-errors.json");
-        var errorsFileName = Path.Combine(fileDir, "fp-test-patient-errors-expected.txt");
+        var errorsFileName = Path.Combine(fileDir, "fp-test-patient-errors-expected-json.txt");
         var jsonInput = File.ReadAllText(patientFileName);
 
         var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
@@ -487,14 +487,14 @@ public class FhirJsonDeserializationTests
             Console.WriteLine(dfe.Message);
             var recoveredActual = JsonSerializer.Serialize(dfe.PartialResult, options);
             Console.WriteLine(recoveredActual);
-            
+            var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
+
             if (overwrite)
             {
-                File.WriteAllLines(errorsFileName, dfe.Exceptions.Select(e => e.ToString()));
+                File.WriteAllLines(errorsFileName, errorsActual);
             }
             
             var errorsExpected = File.ReadAllLines(errorsFileName);
-            var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
             errorsActual.Should().BeEquivalentTo(errorsExpected);
 
             var recoveredFilename = Path.Combine(fileDir, "fp-test-patient-errors-recovered.json");
@@ -503,7 +503,7 @@ public class FhirJsonDeserializationTests
             
             var recoveredExpected = File.ReadAllText(recoveredFilename);
 
-            List<string> errors = new();
+            List<string> errors = [];
             JsonAssert.AreSame("fp-test-patient-json-errors/recovery", recoveredExpected, recoveredActual, errors);
             errors.Should().BeEmpty();
         }

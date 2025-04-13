@@ -12,16 +12,11 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializationExceptionHandlersXmlPoco
     {
-        private T SerializeResource<T>(string xml)
+        private static T deserializeResource<T>(string xml)
             where T : Resource
         {
             using var reader = SerializationUtil.XmlReaderFromXmlText(xml);
-            var settings = new DeserializerSettings()
-            {
-                ValidateOnFailedParse = true,
-                // Validator = null
-            };
-            var ds = new FhirXmlDeserializer(settings);
+            var ds = new FhirXmlDeserializer();
             return (T)ds.DeserializeResource(reader);
         }
         
@@ -42,7 +37,7 @@ namespace Hl7.Fhir.Serialization.Tests
                              """;
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -83,7 +78,7 @@ namespace Hl7.Fhir.Serialization.Tests
                              """;
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -124,7 +119,7 @@ namespace Hl7.Fhir.Serialization.Tests
                              """;
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -165,7 +160,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -177,11 +172,12 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(ex.PartialResult);
 
                 var patient = (ex.PartialResult as Patient)!;
-                Assert.AreEqual("Doe2", patient.Name[1].Family);
+                var familyFromOverlow = (List<FhirString>)patient.Name[1]["family"];
+                Assert.AreEqual("Doe3", familyFromOverlow[1].Value);
 
                 Assert.AreEqual("Patient.name[1]", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("XML112", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(FhirXmlException.INCORRECT_ELEMENT_NAMESPACE_CODE, oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Patient.name[1]", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
@@ -225,7 +221,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -270,7 +266,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -322,7 +318,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Observation>(rawData);
+                var p = deserializeResource<Observation>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -372,7 +368,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 """;
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -407,7 +403,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 """;
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -446,7 +442,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -477,7 +473,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 // no longer complain about unknown items
                 Assert.Fail("Expected to throw parsing");
@@ -514,7 +510,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -543,7 +539,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Observation>(rawData);
+                var p = deserializeResource<Observation>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -612,7 +608,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Observation>(xml);
+                var p = deserializeResource<Observation>(xml);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -651,7 +647,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -719,7 +715,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputXml(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -950,7 +946,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = deserializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }

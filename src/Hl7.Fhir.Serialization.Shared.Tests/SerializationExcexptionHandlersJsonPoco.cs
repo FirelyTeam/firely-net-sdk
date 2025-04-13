@@ -16,12 +16,7 @@ namespace Hl7.Fhir.Serialization.Tests
         private static T serializeResource<T>(string json)
             where T : Resource
         {
-            var settings = new FhirJsonConverterOptions()
-            {
-                // Validator = null
-                ValidateOnFailedParse = true
-            };
-            var ds = new FhirJsonDeserializer(settings);
+            var ds = new FhirJsonDeserializer();
             return (T)ds.DeserializeResource(json);
         }
         

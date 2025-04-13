@@ -38,7 +38,7 @@ internal static class XmlReaderExtensions
         return (xmlInfo.LineNumber, xmlInfo.LinePosition);
     }
 
-    internal static bool ReadToContent(this XmlReader reader, FhirXmlPocoDeserializerState state)
+    internal static bool ReadToContent(this XmlReader reader, PocoDeserializerState state)
     {
         if (reader.Read())
         {
@@ -50,21 +50,20 @@ internal static class XmlReaderExtensions
         }
         return false;
     }
-    internal static bool ShouldSkipNodeType(this XmlReader reader, FhirXmlPocoDeserializerState state)
+    internal static bool ShouldSkipNodeType(this XmlReader reader, PocoDeserializerState state)
     {
         var nodeType = reader.NodeType;
 
-        if (nodeType == XmlNodeType.Comment || nodeType == XmlNodeType.Whitespace || nodeType == XmlNodeType.XmlDeclaration || nodeType == XmlNodeType.SignificantWhitespace)
+        if (nodeType is XmlNodeType.Comment or XmlNodeType.Whitespace or XmlNodeType.XmlDeclaration or XmlNodeType.SignificantWhitespace)
             return true;
-        else if (nodeType == XmlNodeType.CDATA || nodeType == XmlNodeType.ProcessingInstruction || nodeType == XmlNodeType.DocumentType || nodeType == XmlNodeType.EntityReference)
+
+        if (nodeType is XmlNodeType.CDATA or XmlNodeType.ProcessingInstruction or XmlNodeType.DocumentType or XmlNodeType.EntityReference)
         {
             state.Errors.Add(ERR.DISALLOWED_NODE_TYPE(reader, state.Path.GetInstancePath(), nodeType.GetLiteral()));
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
 

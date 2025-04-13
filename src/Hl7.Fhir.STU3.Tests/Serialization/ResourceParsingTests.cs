@@ -313,8 +313,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var json = FhirJsonSerializer.SerializeToString(patient);
             Assert.IsFalse(FhirJsonDeserializer.STRICT.TryDeserializeResource(json, out var resource, out var errors));
 
-            errors.Count().Should().Be(2);
-            errors.Select(e => e.ErrorCode).Should().AllBe(FhirJsonException.PROPERTY_MAY_NOT_BE_EMPTY_CODE);
+            errors.Count().Should().Be(1);
+            errors.Select(e => e.ErrorCode).Should().AllBe(CodedValidationException.LITERAL_INVALID_CODE);
 
             var parsedPatient = resource as Patient;
 
