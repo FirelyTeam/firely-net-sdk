@@ -29,7 +29,7 @@ public class FhirXmlException : ExtendedCodedException
     public const string CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE = "XML106";
     public const string INCORRECT_XHTML_NAMESPACE_CODE = "XML107";
     public const string ELEMENT_OUT_OF_ORDER_CODE = "XML109";
-    public const string DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE = "XML110";
+    public const string MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER_CODE = "XML110";
     public const string NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE = "XML111";
     public const string INCORRECT_ELEMENT_NAMESPACE_CODE = "XML112";
     public const string DISALLOWED_NODE_TYPE_CODE = "XML113";
@@ -47,9 +47,9 @@ public class FhirXmlException : ExtendedCodedException
     // ==========================================
     // Unrecoverable Errors - when adding a new error, also add it to the appropriate error collections below.
     // ==========================================
-    internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root property.", OO_Sev.Fatal, OO_Typ.Structure);
+    internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root element.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE(XmlReader reader, string instancePath, string resourceType) => Initialize(reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Type '{resourceType}' found in root element is not a resource type.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE, $"Encountered unexpected element '{elementName}' in a resource container. Only a single resource is allowed.", OO_Sev.Fatal, OO_Typ.Structure);
+    internal static FhirXmlException MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER(XmlReader reader, string instancePath) => Initialize(reader, instancePath, MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER_CODE, $"Encountered multiple elements in a resource container. Only a single resource is allowed.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, $"Encountered unexpected attribute '{attributeName}' in a resource container. Only a single resource is allowed.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException DISALLOWED_NODE_TYPE(XmlReader reader, string instancePath, string nodeType) => Initialize(reader, instancePath, DISALLOWED_NODE_TYPE_CODE, $"Xml node of type '{nodeType}' is unexpected at this point", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException EXPECTED_OPENING_ELEMENT(XmlReader reader, string instancePath, string nodeType) => Initialize(reader, instancePath, EXPECTED_OPENING_ELEMENT_CODE, $"Expected opening element, but found {nodeType}.", OO_Sev.Fatal, OO_Typ.Structure);
@@ -69,7 +69,7 @@ public class FhirXmlException : ExtendedCodedException
     //internal static FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE(XmlReader reader, string instancePath, string trimmedValue, string typeName) => Initialize(reader, instancePath, VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, $"Literal string '{trimmedValue}' cannot be parsed as a '{typeName}'.", OO_Sev.Error, OO_Typ.Value);
 
     // An incorrect order does not mean we cannot parse the data safely
-    internal static FhirXmlException ELEMENT_OUT_OF_ORDER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_OUT_OF_ORDER_CODE, $"Element '{elementName}' is not in the correct order ", OO_Sev.Error, OO_Typ.Structure);
+    internal static FhirXmlException ELEMENT_OUT_OF_ORDER(XmlReader reader, string instancePath, string elementName, string after) => Initialize(reader, instancePath, ELEMENT_OUT_OF_ORDER_CODE, $"Element '{elementName}' is not in the correct order, should go before element '{after}'.", OO_Sev.Error, OO_Typ.Structure);
     internal static FhirXmlException ELEMENT_NOT_IN_SEQUENCE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_NOT_IN_SEQUENCE_CODE, $"Element '{elementName}' was found multiple times, but not in sequence.", OO_Sev.Error, OO_Typ.Structure);
 
     // Empty values will result in nulls, but no data is lost.

@@ -209,7 +209,6 @@ public class BaseFhirXmlDeserializer
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
         var hasValueAttribute = reader.GetAttribute("value") != null;
-        var name = reader.LocalName;
         bool hasChildElements = false;
 
         //check if on opening tag
@@ -226,7 +225,7 @@ public class BaseFhirXmlDeserializer
             //read the next object that has content
             reader.ReadToContent(state);
 
-            int highestOrder = 0;
+            PropertyMapping? highestOrder = null;
             while (reader.NodeType != XmlNodeType.EndElement)
             {
                 hasChildElements = true;
@@ -273,49 +272,18 @@ public class BaseFhirXmlDeserializer
         reader.ReadToContent(state);
     }
 
-    // private void deserializeUnknownPropertyValue(Base target, XmlReader reader, PocoDeserializerState state)
-    // {
-    //     var (lineNumber, position) = reader.GenerateLineInfo();
-    //     var elementName = reader.LocalName;
-    //
-    //     var mapping = ClassMapping.DynamicDataType;
-    //     var propertyValue = (Base)mapping.Factory();
-    //
-    //     DeserializeElementInto(propertyValue, mapping, reader, state);
-    //
-    //     // if we have primitive rather than datatype, convert it to primitive
-    //     if (propertyValue.TryGetValue("value", out _))
-    //     {
-    //         propertyValue = propertyValue.ToDynamicPrimitive();
-    //     }
-    //
-    //     setPropertyWithRepeating(target, elementName, mapping, propertyValue);
-    //
-    //     if (Settings.Validator is not null)
-    //     {
-    //         var context = new PocoValidationContext(
-    //             target,
-    //             _inspector,
-    //             state.Path.GetInstancePath, // should this path GetPath or this?
-    //             lineNumber, position,
-    //             Settings.NarrativeValidation);
-    //
-    //         state.Errors.Add(Settings.Validator.ValidateProperty(elementName, propertyValue, null, context));
-    //     }
-    // }
-
-    private static int checkOrder(XmlReader reader, PocoDeserializerState state, int highestOrder, PropertyMapping? propMapping)
+    private static PropertyMapping? checkOrder(XmlReader reader, PocoDeserializerState state, PropertyMapping? highestOrder, PropertyMapping? propMapping)
     {
         if (propMapping is null) return highestOrder;
 
         //check if element is in the correct order.
-        if (propMapping.Order >= highestOrder)
+        if (highestOrder is null || propMapping.Order >= highestOrder.Order)
         {
-            highestOrder = propMapping.Order;
+            highestOrder = propMapping;
         }
         else
         {
-            state.Errors.Add(ERR.ELEMENT_OUT_OF_ORDER(reader, state.Path.GetInstancePath(), reader.LocalName));
+            state.Errors.Add(ERR.ELEMENT_OUT_OF_ORDER(reader, state.Path.GetInstancePath(), propMapping.Name, highestOrder.Name));
         }
 
         return highestOrder;
@@ -344,7 +312,7 @@ public class BaseFhirXmlDeserializer
                 lineNumber, position,
                 Settings.NarrativeValidation);
 
-            state.Errors.Add(Settings.Validator.ValidateProperty(reader.LocalName, result, propMapping, context));
+            state.Errors.Add(Settings.Validator.ValidateProperty(elementName, result, propMapping, context));
         }
     }
 
@@ -361,7 +329,7 @@ public class BaseFhirXmlDeserializer
                 var list = propValueMapping.ListFactory();
 
                 list.Add(prop);
-                list.Add(result);
+                addToList(list, result);
 
                 result = list;
             }
@@ -398,13 +366,24 @@ public class BaseFhirXmlDeserializer
 
             if (newEntry is not null)
             {
-                targetList.Add(newEntry);
+                addToList(targetList, newEntry);
             }
 
             state.Path.IncrementIndex();
         }
 
         return targetList;
+    }
+
+    private static void addToList(IList target, object? oneOrMoreThings)
+    {
+        if (oneOrMoreThings is null) return;
+
+        if(oneOrMoreThings is Base)
+            target.Add(oneOrMoreThings);
+        else if(oneOrMoreThings is IEnumerable<Base> blist)
+            foreach(var thing in blist) target.Add(thing);
+        else throw new InvalidOperationException($"Cannot add something of type {oneOrMoreThings.GetType()}.");
     }
 
     private object? readSingleValue(ClassMapping propValueMapping, PropertyMapping? propMapping, XmlReader reader, PocoDeserializerState state)
@@ -430,10 +409,8 @@ public class BaseFhirXmlDeserializer
         return newDatatype;
     }
 
-    private object? deserializeResourceContainer(XmlReader reader, PocoDeserializerState state)
+    private List<Resource> deserializeResourceContainer(XmlReader reader, PocoDeserializerState state)
     {
-        var depth = reader.Depth;
-
         // we are currently at the resource container (e.g. <contained>)
         if (reader.HasAttributes)
         {
@@ -443,29 +420,27 @@ public class BaseFhirXmlDeserializer
         }
 
         // let's move to the actual resource
-        if(!reader.IsEmptyElement) reader.ReadToContent(state);
-        object? result;
+        List<Resource> result = [];
 
-        if (reader.IsEmptyElement || reader.NodeType == XmlNodeType.EndElement)
+        if(!reader.IsEmptyElement)
         {
-            state.Errors.Add(ERR.EMPTY_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath()));
-            result = null;
-        }
-        else
-        {
-            result = DeserializeResourceInternal(reader, state);
-            // now we should be at the closing element of the resource container (e.g. </contained>). We should check that and maybe fix that.)
-            if (reader.Depth != depth && reader.NodeType != XmlNodeType.EndElement)
+            reader.ReadToContent(state);
+
+            while (reader.NodeType != XmlNodeType.EndElement)
             {
-                state.Errors.Add(ERR.DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath(),
-                    reader.LocalName));
-
-                // skip until we're back at the closing of the </contained>
-                while (!(reader.Depth == depth && reader.NodeType == XmlNodeType.EndElement))
-                {
-                    reader.Read();
-                }
+                var containedResource = DeserializeResourceInternal(reader, state);
+                if(containedResource is not null) result.Add(containedResource);
             }
+        }
+
+        switch (result.Count)
+        {
+            case 0:
+                state.Errors.Add(ERR.EMPTY_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath()));
+                break;
+            case > 1:
+                state.Errors.Add(ERR.MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER(reader, state.Path.GetInstancePath()));
+                break;
         }
 
         //we move out of the container to the next element.

@@ -95,8 +95,8 @@ public class CodedValidationException : ExtendedCodedException
     internal static COVE PROPERTY_TYPE_MISMATCH(PocoValidationContext? context, string expected, string actual) =>
         Initialize(context, PROPERTY_TYPE_MISMATCH_CODE, $"Expected property to be of type '{expected}', but found type '{actual}'.", OO_Sev.Error, OO_Typ.Structure);
     
-    internal static COVE UNKNOWN_ELEMENT(PocoValidationContext? context, string elementName) =>
-        Initialize(context, UNKNOWN_ELEMENT_CODE, $"Found unknown element '{elementName}'.", OO_Sev.Error, OO_Typ.Unknown);
+    internal static COVE UNKNOWN_ELEMENT(PocoValidationContext? context, string elementName, string serializedForm = "element") =>
+        Initialize(context, UNKNOWN_ELEMENT_CODE, $"Found unknown {serializedForm} '{elementName}'.", OO_Sev.Error, OO_Typ.Unknown);
 
     private static string niceValue(object? v)
     {

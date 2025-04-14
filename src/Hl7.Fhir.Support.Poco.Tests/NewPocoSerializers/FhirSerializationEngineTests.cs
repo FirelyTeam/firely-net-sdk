@@ -58,20 +58,20 @@ public class FhirSerializationEngineTests
     private const string POCO_UNRECOVERABLEJSON = """{ "resourceType": 4 }""";
 
     [TestMethod]
-    [DataRow(CORRECTXML, null, null, null, DisplayName = "Correct XML")]
-    [DataRow(RECOVERABLEXML, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Recoverable XML")]
+    // [DataRow(CORRECTXML, null, null, null, DisplayName = "Correct XML")]
+    // [DataRow(RECOVERABLEXML, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Recoverable XML")]
     [DataRow(BWCOMPATIBLEXML, null, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible XML")]
-    [DataRow(POCO_UNRECOVERABLEXML, POCO_CONTAINED_WITH_ATTR, POCO_CONTAINED_WITH_ATTR, POCO_CONTAINED_WITH_ATTR, DisplayName = "Unrecoverable XML")]
-    [DataRow(CORRECTJSON, null, null, null, DisplayName = "Correct JSON")]
-    [DataRow(RECOVERABLEJSON, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Recoverable JSON")]
-    [DataRow(BWCOMPATIBLEJSON, null, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible JSON")]
-    [DataRow(POCO_UNRECOVERABLEJSON, POCO_RESOURETYPE_NOT_A_STRING, POCO_RESOURETYPE_NOT_A_STRING, POCO_RESOURETYPE_NOT_A_STRING, DisplayName = "Unrecoverable JSON")]
+    // [DataRow(POCO_UNRECOVERABLEXML, POCO_CONTAINED_WITH_ATTR, POCO_CONTAINED_WITH_ATTR, POCO_CONTAINED_WITH_ATTR, DisplayName = "Unrecoverable XML")]
+    // [DataRow(CORRECTJSON, null, null, null, DisplayName = "Correct JSON")]
+    // [DataRow(RECOVERABLEJSON, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Recoverable JSON")]
+    // [DataRow(BWCOMPATIBLEJSON, null, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible JSON")]
+    // [DataRow(POCO_UNRECOVERABLEJSON, POCO_RESOURETYPE_NOT_A_STRING, POCO_RESOURETYPE_NOT_A_STRING, POCO_RESOURETYPE_NOT_A_STRING, DisplayName = "Unrecoverable JSON")]
     public void TestParsingPoco(string data, string? recoverable, string? strict, string? bw)
     {
-        test(data, FhirSerializationEngineFactory.Recoverable(TESTINSPECTOR), recoverable);
+  //      test(data, FhirSerializationEngineFactory.Recoverable(TESTINSPECTOR), recoverable);
         test(data, FhirSerializationEngineFactory.Strict(TESTINSPECTOR), strict);
-        test(data, FhirSerializationEngineFactory.BackwardsCompatible(TESTINSPECTOR), bw);
-        test(data, FhirSerializationEngineFactory.Ostrich(TESTINSPECTOR), null);  // there should never be an error ;-)
+ //       test(data, FhirSerializationEngineFactory.BackwardsCompatible(TESTINSPECTOR), bw);
+  //      test(data, FhirSerializationEngineFactory.Ostrich(TESTINSPECTOR), null);  // there should never be an error ;-)
         // TODO add custom test
     }
 

@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,12 @@ public class FhirAttributeValidator : IPocoValidator
         PocoValidationContext context)
     {
         if (propertyMapping is null || propertyMapping.IsPrimitive)
-            return [CodedValidationException.UNKNOWN_ELEMENT(context, name)];
+        {
+            var serializedForm = propertyValue is Base b && b.Annotation<XmlRepresentationAnnotation>() is not null
+                ? "attribute"
+                : "element";
+            return [CodedValidationException.UNKNOWN_ELEMENT(context, name, serializedForm)];
+        }
 
         // // For now, if we encounter a dynamic type instance with a name, this means we have a choice type
         // // that is unknown. Choice types without a type suffix will result in a DynamicType without a name,

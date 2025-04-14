@@ -9,6 +9,8 @@
       <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
     </div>
   </text>
+  <contained />
+  <contained></contained>
   <contained>
     <PatientX>
     </PatientX>
@@ -16,11 +18,13 @@
   <contained containedAttribute="false">
     <Patient>
       <active value="true" />
+      <active value="false" /> <!-- repeats for now undetected -->
     </Patient>
     <Patient>
-      <active value="true" />
+      <active value="not-checked" />
     </Patient>
-    <anotherElement value="incontained" /> <!-- goes undetected -->
+    <anotherElement value="incontained" />
+    <Patient />
   </contained>
   <contained>
     <PatientId>
@@ -28,9 +32,9 @@
     </PatientId>
   </contained>
   <contained>
-    <Patient>
-      <id value="1" />
-      <id value="1" />
+    <Patient id="1">
+      <id value="2" />
+      <id value="3" />
       <name />
       <name></name>
     </Patient>
@@ -45,18 +49,59 @@
   <contained>
     <Patient>
       <id value="PrimitiveWhenComplex" />
+      <gender value="cat"/>
+      <active value="true">
+        <name value="false"/>
+        <data value="testData"/>
+      </active>
       <address value="123 Main St"/>
     </Patient>
   </contained>
   <contained>
-    <Patient>
+    <Patient no="yes">
       <id>
         PrimitiveValueInContent
       </id>
+      <name value="Doe"/>
       <unknown>
         More primitive value in content
       </unknown>
     </Patient>
+  </contained>
+  <contained>
+    <Observation>
+      <status value="final"/>
+      <code>
+        <text value="Decimal Testing Observation"/>
+      </code>
+      <component>
+        <code>
+          <text value="Component"/>
+        </code>
+        <valueQuantity>
+          <value value="10000000000000000"/>
+          <unit value="g"/>
+        </valueQuantity>
+      </component>
+      <component>
+        <code>
+          <text value="Component"/>
+        </code>
+        <valueQuantity>
+          <value value="1.00000000000000000e-24"/>
+          <unit value="g"/>
+        </valueQuantity>
+      </component>
+      <component>
+        <code>
+          <text value="Component"/>
+        </code>
+        <valueQuantity>
+          <value value="-1.00000000000000000e245"/>
+          <unit value="g"/>
+        </valueQuantity>
+      </component>
+    </Observation>
   </contained>
   <identifier>
     <use value="official"/>

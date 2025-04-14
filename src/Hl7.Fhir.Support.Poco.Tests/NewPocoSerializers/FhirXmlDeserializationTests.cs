@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "TestData");
 
         [TestMethod]
-     //   [Ignore]
+      //  [Ignore]
         public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "../../../TestData");
 
         private void testRecovery(bool overwrite, string fileDir)
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var state = new PocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 
-            state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.DISALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE);
+            state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER_CODE);
 
             resource.Should().BeOfType<Patient>();
             resource.As<Patient>().Active.Value.Should().Be(true);
