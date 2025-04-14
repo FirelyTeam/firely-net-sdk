@@ -51,6 +51,8 @@
       <id value="CorrectWithRepeating" />
       <active value="true" />
       <active value="true" />
+      <name />
+      <name></name>
     </Patient>
   </contained>
   <!-- comment on contained -->
@@ -243,8 +245,7 @@
     <system value="urn:oid:9.0.1.2.3.4.5.6.7"/>
     <value value="7654321"/>
   </identifier>
-  <identifier>
-    <use value="official"/>
+  <identifier use="official">
     <system value="http://some.other/system"/>
     <value value="11223344"/>
   </identifier>
@@ -262,6 +263,16 @@
   </telecom>
   <gender value="male">
     <extension url="http://example.org/StructureDefinition/real-gender">
+      <valueCode value="metrosexual" />
+    </extension>
+    <extension url="urn:oid:crap">
+      <valueCode value="metrosexual" />
+    </extension>
+    <extension url="http://then.nl" huh="hi!">
+      <valueCode value="metrosexual" />
+    </extension>
+    <extension>
+      <url value="http://nu.nl" />
       <valueCode value="metrosexual" />
     </extension>
   </gender>

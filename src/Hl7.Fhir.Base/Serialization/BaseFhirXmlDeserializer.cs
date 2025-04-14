@@ -218,8 +218,8 @@ public class BaseFhirXmlDeserializer
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
         var hasValueAttribute = reader.GetAttribute("value") != null;
-        var depth = reader.Depth;
         var name = reader.LocalName;
+        bool hasChildElements = false;
 
         //check if on opening tag
         if (reader.NodeType != XmlNodeType.Element)
@@ -233,17 +233,11 @@ public class BaseFhirXmlDeserializer
             //read the next object that has content
             reader.ReadToContent(state);
 
-            if (!(hasValueAttribute || (reader.Depth > depth)))
-            {
-                //previous element didn't have a value and the current value is not a child of the previous element.
-                //error is thrown with the location and the name of the previous element.
-                var locationMessage = XmlReaderExtensions.GenerateLocationMessage(lineNumber, position);
-                state.Errors.Add(ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN(state.Path.GetInstancePath(), lineNumber, position, locationMessage, name));
-            }
-
             int highestOrder = 0;
             while (reader.NodeType != XmlNodeType.EndElement)
             {
+                hasChildElements = true;
+
                 var (propMapping, propValueMapping) = getMappingsForElement(_inspector, mapping, reader.LocalName, state, reader);
 
                 validateNameSpace(reader, state, propMapping);
@@ -254,6 +248,9 @@ public class BaseFhirXmlDeserializer
                     deserializeUnknownPropertyValue(target, reader, state);
                     continue;
                 }
+
+                if(!(propMapping.SerializationHint is XmlRepresentation.None or XmlRepresentation.XmlElement or  XmlRepresentation.XHtml))
+                    state.Errors.Add(ERR.ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE(reader, state.Path.GetInstancePath(), reader.LocalName));
 
                 state.Path.EnterElement(propMapping.Name, !propMapping.IsCollection ? null : 0, propMapping.IsPrimitive);
                 highestOrder = checkOrder(reader, state, highestOrder, propMapping);
@@ -268,10 +265,13 @@ public class BaseFhirXmlDeserializer
                 }
             }
         }
-        else if (!hasValueAttribute)
+
+        if (!hasValueAttribute && !hasChildElements)
         {
-            //This empty element no children and no value attribute;
-            state.Errors.Add(ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN(reader, state.Path.GetInstancePath(), reader.LocalName));
+            //previous element didn't have a value and the current value is not a child of the previous element.
+            //error is thrown with the location and the name of the previous element.
+            var locationMessage = XmlReaderExtensions.GenerateLocationMessage(lineNumber, position);
+            state.Errors.Add(ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN(state.Path.GetInstancePath(), lineNumber, position, locationMessage, name));
         }
 
         if (Settings.Validator is not null)
@@ -327,41 +327,6 @@ public class BaseFhirXmlDeserializer
                 Settings.NarrativeValidation);
 
             state.Errors.Add(Settings.Validator.ValidateProperty(elementName, propertyValue, null, context));
-        }
-    }
-
-    private void parseUnknownAttributeValue(XmlReader reader, PocoDeserializerState state, Base target)
-    {
-        var (lineNumber, position) = reader.GenerateLineInfo();
-        var attrName = reader.LocalName;
-        var type = reader.ValueType;
-        var trimmedVal = reader.Value.Trim();
-        var val = parsePrimitiveValue(trimmedVal, type);
-        
-        var baseVal = val switch
-        {
-            Base obj => obj,
-            bool b => new FhirBoolean(b),
-            string v => new FhirString(v),
-            int i => new Integer(i),
-            decimal d => new FhirDecimal(d),
-            _ => new DynamicPrimitive { ObjectValue = val }
-        };
-        
-        baseVal.AddAnnotation(new XmlRepresentationAnnotation(XmlRepresentation.XmlAttr));
-      
-        setPropertyWithRepeating(target, attrName, ClassMapping.DynamicPrimitive, baseVal);
-        
-        if (Settings.Validator is not null && target is not IDynamicType)
-        {
-            var context = new PocoValidationContext(
-                target,
-                _inspector,
-                state.Path.GetInstancePath, // should this path GetPath or this?
-                lineNumber, position,
-                Settings.NarrativeValidation);
-
-            state.Errors.Add(Settings.Validator.ValidateProperty(attrName, baseVal, null, context));
         }
     }
 
@@ -543,34 +508,17 @@ public class BaseFhirXmlDeserializer
                 else
                 {
                     var propMapping = propValueMapping.FindMappedElementByName(reader.LocalName);
-                    if (propMapping is not null)
+
+                    state.Path.EnterElement(reader.LocalName, propMapping?.IsCollection == false ? null : 0, propMapping?.IsPrimitive ?? true);
+                    try
                     {
-                        state.Path.EnterElement(propMapping.Name, !propMapping.IsCollection ? null : 0, propMapping.IsPrimitive);
-                        try
-                        {
-                            readAttribute(target, propMapping, reader.LocalName, reader, state);
-                        }
-                        finally
-                        {
-                            state.Path.ExitElement();
-                        }
+                        readAttribute(target, propMapping, reader.LocalName, reader, state);
                     }
-                    else
+                    finally
                     {
-                        state.Path.EnterElement(reader.LocalName, 0, true);
-                        try
-                        {
-                            // handle unknown property
-                            parseUnknownAttributeValue(reader, state, target);
-                        }
-                        finally
-                        {
-                            state.Path.ExitElement();
-                        }
+                        state.Path.ExitElement();
                     }
                 }
-
-
             } while (reader.MoveToNextAttribute());
         }
         finally
@@ -581,49 +529,74 @@ public class BaseFhirXmlDeserializer
     }
 
     ///Parse current attribute value to set the value property of the target.
-    private void readAttribute(Base target, PropertyMapping propMapping, string elementName, XmlReader reader, PocoDeserializerState state)
+    private void readAttribute(Base target, PropertyMapping? propMapping, string attributeName, XmlReader reader, PocoDeserializerState state)
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
 
         if (!string.IsNullOrEmpty(reader.NamespaceURI) && reader.NamespaceURI != XmlNs.FHIR)
-            state.Errors.Add(ERR.INCORRECT_ATTRIBUTE_NAMESPACE(reader, state.Path.GetInstancePath(), reader.LocalName, elementName, reader.NamespaceURI));
+            state.Errors.Add(ERR.INCORRECT_ATTRIBUTE_NAMESPACE(reader, state.Path.GetInstancePath(), reader.LocalName, attributeName, reader.NamespaceURI));
 
         // "Implementers SHOULD trim leading and trailing whitespace before writing and SHOULD trim leading and
         // trailing whitespace when reading attribute values (for XML schema conformance)"
-        string trimmedValue = reader.Value.TrimEnd().TrimStart();
+        string trimmedValue = reader.Value.Trim();
 
-        var parsedValue = parsePrimitiveValue(trimmedValue, propMapping.ImplementingType);
+        var parsedValue = parsePrimitiveValue(trimmedValue, propMapping?.ImplementingType ?? typeof(string));
 
-        if (target is PrimitiveType primitive && propMapping.Name == "value")
+        if (target is PrimitiveType primitive && attributeName == "value")
         {
             primitive.ObjectValue = parsedValue;
+
+            // Validator should not be called on the primitive values, this will
+            // be handled by the Primitive's ValidateInstance.
         }
         else
         {
+            // We're in a situation where the target is not a primitive (often: Extension or Element),
+            // and we encounter an attribute representing an element on that complex (often: url, id).
+            // If this is a primitive, or not "url" or "id", the element will end up in the overflow.
+            // Note, you can set "Patient.active" this way using <Patient active=true>, we might want
+            // to prevent that.
+
+            if (propMapping is not null && propMapping.SerializationHint != XmlRepresentation.XmlAttr)
+                state.Errors.Add(ERR.ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT(reader, state.Path.GetInstancePath(), reader.LocalName));
+
+            var targetElementMapping = propMapping?.PropertyTypeMapping is { IsFhirPrimitive: true } ptm
+                ? ptm : _inspector.FindClassMapping(typeof(FhirString))!;
+            var targetElement = (PrimitiveType)targetElementMapping.Factory();
+
+            // If this is an unknown property, we have to keep track of the fact that it was serialized
+            // as an attribute.
+            if(propMapping is null)
+                targetElement.AddAnnotation(new XmlRepresentationAnnotation(XmlRepresentation.XmlAttr));
+
+            targetElement.ObjectValue = parsedValue;
+
             // Handle atomic-types-as-primitives, Element.id, Extension.url etc.
-            propMapping.SetValue(target, parsedValue);
-            
+            setPropertyWithRepeating(target, attributeName, targetElementMapping, targetElement);
+
             if (Settings.Validator is not null)
             {
                 var context = new PocoValidationContext(
+                    targetElement,
+                    _inspector,
+                    state.Path.GetInstancePath,
+                    lineNumber, position,
+                    Settings.NarrativeValidation);
+                state.Errors.Add(Settings.Validator.ValidateObject(targetElement, targetElementMapping, context));
+
+                context = new PocoValidationContext(
                     target,
                     _inspector,
                     state.Path.GetInstancePath,
                     lineNumber, position,
                     Settings.NarrativeValidation);
-
-                state.Errors.Add(Settings.Validator.ValidateProperty(elementName, parsedValue, propMapping, context));
+                state.Errors.Add(Settings.Validator.ValidateProperty(attributeName, parsedValue, propMapping, context));
             }
         }
     }
 
     private static object parsePrimitiveValue(string trimmedValue, Type implementingType)
     {
-        if (implementingType == typeof(FhirString))
-            return new FhirString(trimmedValue);
-        if (implementingType == typeof(FhirUri))
-            return new FhirUri(trimmedValue);
-
         // bool, int and decimal are the only three types that are used in ObjectValue (and the json serialization)
         if (implementingType == typeof(bool))
         {
@@ -641,6 +614,7 @@ public class BaseFhirXmlDeserializer
                 ? parsed.Value : trimmedValue;
         }
 
+        // Keep it unparsed, as a string.
         return trimmedValue;
     }
 

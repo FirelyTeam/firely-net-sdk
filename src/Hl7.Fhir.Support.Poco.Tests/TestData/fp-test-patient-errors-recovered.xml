@@ -26,6 +26,8 @@
       <active value="true" />
       <active value="true" />
       <id value="CorrectWithRepeating" />
+      <name />
+      <name />
     </Patient>
   </contained>
   <contained>
@@ -214,6 +216,15 @@
   </telecom>
   <gender value="male">
     <extension url="http://example.org/StructureDefinition/real-gender">
+      <valueCode value="metrosexual" />
+    </extension>
+    <extension url="urn:oid:crap">
+      <valueCode value="metrosexual" />
+    </extension>
+    <extension huh="hi!" url="http://then.nl">
+      <valueCode value="metrosexual" />
+    </extension>
+    <extension url="http://nu.nl">
       <valueCode value="metrosexual" />
     </extension>
   </gender>
