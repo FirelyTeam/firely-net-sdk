@@ -909,7 +909,6 @@ namespace Hl7.Fhir.Model
     /// active | inactive | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
-    [AllowedTypes(typeof(Code))]
     [Binding("MedicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Medication.MedicationStatus>? StatusElement

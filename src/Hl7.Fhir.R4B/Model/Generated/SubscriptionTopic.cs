@@ -317,7 +317,6 @@ namespace Hl7.Fhir.Model
       /// create | update | delete.
       /// </summary>
       [FhirElement("supportedInteraction", InSummary=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("MethodCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -637,7 +636,6 @@ namespace Hl7.Fhir.Model
       /// test-passes | test-fails.
       /// </summary>
       [FhirElement("resultForCreate", InSummary=true, Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("CriteriaNotExistsBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior>? ResultForCreateElement
@@ -721,7 +719,6 @@ namespace Hl7.Fhir.Model
       /// test-passes | test-fails.
       /// </summary>
       [FhirElement("resultForDelete", InSummary=true, Order=70)]
-      [AllowedTypes(typeof(Code))]
       [Binding("CriteriaNotExistsBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior>? ResultForDeleteElement
@@ -1375,7 +1372,6 @@ namespace Hl7.Fhir.Model
       /// = | eq | ne | gt | lt | ge | le | sa | eb | ap | above | below | in | not-in | of-type.
       /// </summary>
       [FhirElement("modifier", InSummary=true, Order=80)]
-      [AllowedTypes(typeof(Code))]
       [Binding("SubscriptionTopicFilterBySearchModifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2027,7 +2023,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

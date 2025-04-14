@@ -543,7 +543,6 @@ namespace Hl7.Fhir.Model
       /// mild | moderate | severe (of event as a whole).
       /// </summary>
       [FhirElement("severity", Order=80)]
-      [AllowedTypes(typeof(Code))]
       [Binding("AllergyIntoleranceSeverity")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>? SeverityElement
@@ -935,7 +934,6 @@ namespace Hl7.Fhir.Model
     /// food | medication | environment | biologic.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=130, FiveWs="FiveWs.class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("AllergyIntoleranceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -982,7 +980,6 @@ namespace Hl7.Fhir.Model
     /// low | high | unable-to-assess.
     /// </summary>
     [FhirElement("criticality", InSummary=true, Order=140, FiveWs="FiveWs.grade")]
-    [AllowedTypes(typeof(Code))]
     [Binding("AllergyIntoleranceCriticality")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>? CriticalityElement

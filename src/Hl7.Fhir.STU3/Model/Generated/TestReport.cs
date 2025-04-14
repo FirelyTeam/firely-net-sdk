@@ -216,7 +216,6 @@ namespace Hl7.Fhir.Model
       /// test-engine | client | server.
       /// </summary>
       [FhirElement("type", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("TestReportParticipantType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -744,7 +743,6 @@ namespace Hl7.Fhir.Model
       /// pass | skip | fail | warning | error.
       /// </summary>
       [FhirElement("result", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("TestReportActionResult")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -997,7 +995,6 @@ namespace Hl7.Fhir.Model
       /// pass | skip | fail | warning | error.
       /// </summary>
       [FhirElement("result", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("TestReportActionResult")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1928,7 +1925,6 @@ namespace Hl7.Fhir.Model
     /// completed | in-progress | waiting | stopped | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("TestReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2001,7 +1997,6 @@ namespace Hl7.Fhir.Model
     /// pass | fail | pending.
     /// </summary>
     [FhirElement("result", InSummary=true, Order=130)]
-    [AllowedTypes(typeof(Code))]
     [Binding("TestReportResult")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

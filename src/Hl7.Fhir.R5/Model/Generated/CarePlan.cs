@@ -521,7 +521,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("CarePlanStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -565,7 +564,6 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | order | option | directive.
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160)]
-    [AllowedTypes(typeof(Code))]
     [Binding("CarePlanIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

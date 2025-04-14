@@ -101,7 +101,6 @@ namespace Hl7.Fhir.Model
     /// author | editor | reviewer | endorser.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
-    [AllowedTypes(typeof(Code))]
     [Binding("ContributorType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

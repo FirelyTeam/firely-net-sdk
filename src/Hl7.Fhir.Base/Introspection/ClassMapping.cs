@@ -71,28 +71,27 @@ namespace Hl7.Fhir.Introspection
             // System.Reflection caching classes. I have not done that, but we do need the mappings for the
             // primitive .NET types used in the POCOs (for Element.id etc) too to make the code using the
             // classmappings more consistent in handling both FHIR and .NET datatypes.
-            if (SupportedDotNetPrimitiveTypes.Contains(type))
-            {
-                result = buildNetPrimitiveClassMapping(type, release);
-                return true;
-            }
+            // if (SupportedDotNetPrimitiveTypes.Contains(type))
+            // {
+            //     result = buildNetPrimitiveClassMapping(type, release);
+            //     return true;
+            // }
 
             result = null;
 
-            if (ReflectionHelper.IsOpenGenericTypeDefinition(type))
+            if (type.IsGenericTypeDefinition)
             {
                 Message.Info("Type {0} is marked as a FhirType and is an open generic type, which cannot be used directly to represent a FHIR datatype", type.Name);
                 return false;
             }
 
             // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
-            if (ReflectionHelper.GetAttribute<FhirTypeAttribute>(type) is not { } typeAttribute) return false;
+            if (type.GetCustomAttribute<FhirTypeAttribute>() is not { } typeAttribute) return false;
 
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
                 IsResource = type.CanBeTreatedAsType(typeof(Resource)),
-                EnumType = ReflectionHelper.IsClosedGenericType(type) &&
-                            ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)) ?
+                EnumType = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Code<>) ?
                             type.GenericTypeArguments[0] : null,
                 IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
                 IsBackboneType = typeAttribute.IsBackboneType,
@@ -265,7 +264,7 @@ namespace Hl7.Fhir.Introspection
 
         internal static IEnumerable<T> GetAttributes<T>(MemberInfo t, FhirRelease version) where T : FhirModelAttribute
         {
-            return ReflectionHelper.GetAttributes<T>(t).Where(isRelevant).OrderBy(att => att.Since);
+            return t.GetCustomAttributes<T>().Where(isRelevant).OrderBy(att => att.Since);
 
             bool isRelevant(FhirModelAttribute a) => a.AppliesToRelease(version);
         }
@@ -372,8 +371,8 @@ namespace Hl7.Fhir.Introspection
 
         // This is the list of .NET "primitive" types that can be used in the generated POCOs and that we
         // can generate ClassMappings for.
-        internal static Type[] SupportedDotNetPrimitiveTypes = new[]
-        {
+        internal static Type[] SupportedDotNetPrimitiveTypes =
+        [
             typeof(int), typeof(uint), typeof(long), typeof(ulong),
             typeof(float), typeof(double), typeof(decimal),
             typeof(string),
@@ -381,7 +380,7 @@ namespace Hl7.Fhir.Introspection
             typeof(DateTimeOffset),
             typeof(byte[]),
             typeof(Enum)
-        };
+        ];
 
         private static ClassMapping buildCqlClassMapping(Type t, FhirRelease release) =>
             new("System." + t.Name, t, release);

@@ -53,12 +53,6 @@ namespace Hl7.Fhir.Model;
 [System.Diagnostics.DebuggerDisplay(@"\{Value={Value}}")]
 public class Code<T> : Code, INullableValue<T> where T : struct, Enum
 {
-    static Code()
-    {
-        if (!typeof(T).IsEnum())
-            throw new ArgumentException("T must be an enumerated type");
-    }
-
     public override string TypeName => "code";
 
     public Code() : this(null) { }

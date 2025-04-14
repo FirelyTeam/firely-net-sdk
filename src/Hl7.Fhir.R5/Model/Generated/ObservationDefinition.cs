@@ -243,7 +243,6 @@ namespace Hl7.Fhir.Model
       /// male | female | other | unknown.
       /// </summary>
       [FhirElement("gender", Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("AdministrativeGender")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender>? GenderElement
@@ -379,7 +378,6 @@ namespace Hl7.Fhir.Model
       /// reference | critical | absolute.
       /// </summary>
       [FhirElement("rangeCategory", Order=100)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ObservationRangeCategory")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory>? RangeCategoryElement
@@ -938,7 +936,6 @@ namespace Hl7.Fhir.Model
       /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period.
       /// </summary>
       [FhirElement("permittedDataType", Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ObservationDataType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1388,7 +1385,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2108,7 +2104,6 @@ namespace Hl7.Fhir.Model
     /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period.
     /// </summary>
     [FhirElement("permittedDataType", Order=350)]
-    [AllowedTypes(typeof(Code))]
     [Binding("ObservationDataType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

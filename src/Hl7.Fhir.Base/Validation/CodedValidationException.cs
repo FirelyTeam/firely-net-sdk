@@ -150,12 +150,12 @@ public class CodedValidationException : ExtendedCodedException
             ? "collection of " + (fhirTypeNameForRepeatingType(expected) ?? "unknown")
             : fhirTypeNameForSingleType(expected) ?? "unknown";
 
-        string actualFhirTypeName = fhirTypeNameForObject(actual);
+        string actualFhirTypeName = FhirTypeNameForObject(actual);
         
         return PROPERTY_TYPE_MISMATCH(context, expectedFhirTypeName, actualFhirTypeName);
     }
 
-    internal static string fhirTypeNameForObject(object? actual) =>
+    internal static string FhirTypeNameForObject(object? actual) =>
         actual switch
         {
             Base b => b.TypeName,
@@ -167,5 +167,6 @@ public class CodedValidationException : ExtendedCodedException
     private static string fhirTypeNameForSingleType(Type t) =>
         t.GetCustomAttribute<FhirTypeAttribute>()?.Name ?? t.Name;
 
-    private static string fhirTypeNameForRepeatingType(Type t) => fhirTypeNameForSingleType(ReflectionHelper.GetCollectionItemType(t));
+    private static string fhirTypeNameForRepeatingType(Type t) =>
+        fhirTypeNameForSingleType(ReflectionHelper.GetRepeatingElementType(t));
 }

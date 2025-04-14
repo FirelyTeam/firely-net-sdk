@@ -217,7 +217,6 @@ namespace Hl7.Fhir.Model
       /// unspecified | offset | gain | two-point.
       /// </summary>
       [FhirElement("type", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("DeviceMetricCalibrationType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>? TypeElement
@@ -260,7 +259,6 @@ namespace Hl7.Fhir.Model
       /// not-calibrated | calibration-required | calibrated | unspecified.
       /// </summary>
       [FhirElement("state", Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("DeviceMetricCalibrationState")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>? StateElement
@@ -566,7 +564,6 @@ namespace Hl7.Fhir.Model
     /// on | off | standby | entered-in-error.
     /// </summary>
     [FhirElement("operationalStatus", InSummary=true, Order=130)]
-    [AllowedTypes(typeof(Code))]
     [Binding("DeviceMetricOperationalStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>? OperationalStatusElement
@@ -650,7 +647,6 @@ namespace Hl7.Fhir.Model
     /// measurement | setting | calculation | unspecified.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=150, FiveWs="FiveWs.class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("DeviceMetricCategory")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

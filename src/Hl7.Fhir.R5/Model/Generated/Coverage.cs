@@ -1081,7 +1081,6 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("CoverageStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1125,7 +1124,6 @@ namespace Hl7.Fhir.Model
     /// insurance | self-pay | other.
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=110)]
-    [AllowedTypes(typeof(Code))]
     [Binding("CoverageKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -4910,7 +4910,6 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ClaimStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -5009,7 +5008,6 @@ namespace Hl7.Fhir.Model
     /// claim | preauthorization | predetermination.
     /// </summary>
     [FhirElement("use", InSummary=true, Order=130, FiveWs="FiveWs.class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("Use")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

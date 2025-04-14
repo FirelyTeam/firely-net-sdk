@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Serialization
             if (typeof(FhirString) == to)
                 return new FhirString(value);
 
-            if (to.IsEnum())
+            if (to.IsEnum)
             {
                 var result = EnumUtility.ParseLiteral(value, to);
                 if (result == null)

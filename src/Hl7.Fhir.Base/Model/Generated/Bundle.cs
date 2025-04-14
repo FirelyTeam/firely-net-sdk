@@ -1241,8 +1241,6 @@ namespace Hl7.Fhir.Model
       /// A resource in the bundle.
       /// </summary>
       [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
-      [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
       public Hl7.Fhir.Model.Resource? Resource
       {
@@ -1531,7 +1529,6 @@ namespace Hl7.Fhir.Model
       /// match | include - why this is in the result set.
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("SearchEntryMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode>? ModeElement
@@ -1723,7 +1720,6 @@ namespace Hl7.Fhir.Model
       /// GET | HEAD | POST | PUT | DELETE | PATCH.
       /// </summary>
       [FhirElement("method", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("HTTPVerb")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2322,8 +2318,6 @@ namespace Hl7.Fhir.Model
       /// OperationOutcome with hints and warnings (for batch/transaction).
       /// </summary>
       [FhirElement("outcome", InSummary=true, Order=80, Choice=ChoiceType.ResourceChoice)]
-      [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
       public Hl7.Fhir.Model.Resource? Outcome
       {
@@ -2525,7 +2519,6 @@ namespace Hl7.Fhir.Model
     /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=60, FiveWs="FiveWs.class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("BundleType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2737,8 +2730,6 @@ namespace Hl7.Fhir.Model
     /// Element was introduced in R5, do not use when working with older releases.
     /// </remarks>
     [FhirElement("issues", InSummary=true, Order=120, Choice=ChoiceType.ResourceChoice, Since=FhirRelease.R5)]
-    [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
     [DataMember]
     public Hl7.Fhir.Model.Resource? Issues
     {

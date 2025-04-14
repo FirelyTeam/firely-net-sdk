@@ -148,7 +148,6 @@ namespace Hl7.Fhir.Model
       /// in | out.
       /// </summary>
       [FhirElement("use", Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("OperationParameterUse")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -317,7 +316,6 @@ namespace Hl7.Fhir.Model
       /// What type this parameter has.
       /// </summary>
       [FhirElement("type", Order=90)]
-      [AllowedTypes(typeof(Code))]
       [Binding("FHIRAllTypes")]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRAllTypes>? TypeElement
@@ -360,7 +358,6 @@ namespace Hl7.Fhir.Model
       /// number | date | string | token | reference | composite | quantity | uri.
       /// </summary>
       [FhirElement("searchType", Order=100)]
-      [AllowedTypes(typeof(Code))]
       [Binding("SearchParamType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchParamType>? SearchTypeElement
@@ -744,7 +741,6 @@ namespace Hl7.Fhir.Model
       /// required | extensible | preferred | example.
       /// </summary>
       [FhirElement("strength", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("BindingStrength")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1229,7 +1225,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1273,7 +1268,6 @@ namespace Hl7.Fhir.Model
     /// operation | query.
     /// </summary>
     [FhirElement("kind", Order=130, FiveWs="class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("OperationKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1756,7 +1750,6 @@ namespace Hl7.Fhir.Model
     /// Types this operation applies to.
     /// </summary>
     [FhirElement("resource", InSummary=true, Order=260)]
-    [AllowedTypes(typeof(Code))]
     [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

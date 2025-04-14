@@ -958,7 +958,6 @@ namespace Hl7.Fhir.Model
     /// active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("MedicationRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestStatus>? StatusElement
@@ -1001,7 +1000,6 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | order | instance-order.
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=140, FiveWs="class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("MedicationRequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1072,7 +1070,6 @@ namespace Hl7.Fhir.Model
     /// routine | urgent | stat | asap.
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=160, FiveWs="grade")]
-    [AllowedTypes(typeof(Code))]
     [Binding("MedicationRequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestPriority>? PriorityElement

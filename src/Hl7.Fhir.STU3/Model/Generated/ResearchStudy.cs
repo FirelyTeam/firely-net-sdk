@@ -476,7 +476,6 @@ namespace Hl7.Fhir.Model
     /// draft | in-progress | suspended | stopped | completed | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ResearchStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

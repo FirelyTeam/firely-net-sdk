@@ -378,7 +378,6 @@ namespace Hl7.Fhir.Model
     /// in-progress | completed | abandoned | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
-    [AllowedTypes(typeof(Code))]
     [Binding("SupplyDeliveryStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus>? StatusElement

@@ -549,7 +549,6 @@ namespace Hl7.Fhir.Model
       /// Type of resource this link refers to.
       /// </summary>
       [FhirElement("type", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -891,7 +890,6 @@ namespace Hl7.Fhir.Model
       /// condition | requirement.
       /// </summary>
       [FhirElement("use", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("GraphCompartmentUse")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -935,7 +933,6 @@ namespace Hl7.Fhir.Model
       /// Patient | Encounter | RelatedPerson | Practitioner | Device.
       /// </summary>
       [FhirElement("code", Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("CompartmentCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -979,7 +976,6 @@ namespace Hl7.Fhir.Model
       /// identical | matching | different | custom.
       /// </summary>
       [FhirElement("rule", Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("GraphCompartmentRule")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1378,7 +1374,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1709,7 +1704,6 @@ namespace Hl7.Fhir.Model
     /// Type of resource at which the graph starts.
     /// </summary>
     [FhirElement("start", InSummary=true, Order=210)]
-    [AllowedTypes(typeof(Code))]
     [Binding("ResourceType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

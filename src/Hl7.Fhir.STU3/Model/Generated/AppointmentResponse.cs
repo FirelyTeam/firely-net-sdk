@@ -258,7 +258,6 @@ namespace Hl7.Fhir.Model
     /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error.
     /// </summary>
     [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=150)]
-    [AllowedTypes(typeof(Code))]
     [Binding("ParticipantStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

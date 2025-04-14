@@ -310,7 +310,6 @@ namespace Hl7.Fhir.Model
       /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE.
       /// </summary>
       [FhirElement("availability", InSummary=true, Order=90)]
-      [AllowedTypes(typeof(Code))]
       [Binding("InstanceAvailability")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>? AvailabilityElement
@@ -1222,7 +1221,6 @@ namespace Hl7.Fhir.Model
     /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE.
     /// </summary>
     [FhirElement("availability", InSummary=true, Order=120, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("InstanceAvailability")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>? AvailabilityElement

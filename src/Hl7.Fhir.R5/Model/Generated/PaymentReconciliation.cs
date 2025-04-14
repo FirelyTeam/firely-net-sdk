@@ -804,7 +804,6 @@ namespace Hl7.Fhir.Model
       /// display | print | printoper.
       /// </summary>
       [FhirElement("type", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("NoteType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.NoteType>? TypeElement
@@ -1035,7 +1034,6 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PaymentReconciliationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1313,7 +1311,6 @@ namespace Hl7.Fhir.Model
     /// queued | complete | error | partial.
     /// </summary>
     [FhirElement("outcome", Order=200)]
-    [AllowedTypes(typeof(Code))]
     [Binding("PaymentOutcome")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PaymentReconciliation.PaymentOutcome>? OutcomeElement

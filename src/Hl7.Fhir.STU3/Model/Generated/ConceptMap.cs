@@ -902,7 +902,6 @@ namespace Hl7.Fhir.Model
       /// relatedto | equivalent | equal | wider | subsumes | narrower | specializes | inexact | unmatched | disjoint.
       /// </summary>
       [FhirElement("equivalence", IsModifier=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ConceptMapEquivalence")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>? EquivalenceElement
@@ -1537,7 +1536,6 @@ namespace Hl7.Fhir.Model
       /// provided | fixed | other-map.
       /// </summary>
       [FhirElement("mode", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ConceptMapGroupUnmappedMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2024,7 +2022,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

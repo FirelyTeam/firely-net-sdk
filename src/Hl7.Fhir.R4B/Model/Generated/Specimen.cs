@@ -1180,7 +1180,6 @@ namespace Hl7.Fhir.Model
     /// available | unavailable | unsatisfactory | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("SpecimenStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenStatus>? StatusElement

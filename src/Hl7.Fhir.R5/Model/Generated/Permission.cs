@@ -325,7 +325,6 @@ namespace Hl7.Fhir.Model
       /// deny | permit.
       /// </summary>
       [FhirElement("type", InSummary=true, IsModifier=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("PermissionProvisionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConsentProvisionType>? TypeElement
@@ -846,7 +845,6 @@ namespace Hl7.Fhir.Model
       /// instance | related | dependents | authoredby.
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1220,7 +1218,6 @@ namespace Hl7.Fhir.Model
     /// active | entered-in-error | draft | rejected.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90)]
-    [AllowedTypes(typeof(Code))]
     [Binding("PermissionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1389,7 +1386,6 @@ namespace Hl7.Fhir.Model
     /// deny-overrides | permit-overrides | ordered-deny-overrides | ordered-permit-overrides | deny-unless-permit | permit-unless-deny.
     /// </summary>
     [FhirElement("combining", InSummary=true, IsModifier=true, Order=140)]
-    [AllowedTypes(typeof(Code))]
     [Binding("PermissionCombining")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
