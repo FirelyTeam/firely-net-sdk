@@ -144,7 +144,7 @@ public class BaseFhirJsonDeserializer
 
         try
         {
-            state.Path.EnterResource(resourceMapping.Name);
+            state.Path.EnterResource(newResource.TypeName);
             int nErrorCount = state.Errors.Count;
             deserializeObjectInto(newResource, resourceMapping, ref reader, DeserializedObjectKind.Resource, state, stayOnLastToken);
 

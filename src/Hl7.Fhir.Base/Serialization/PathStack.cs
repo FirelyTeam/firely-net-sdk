@@ -107,12 +107,24 @@ namespace Hl7.Fhir.Serialization
         public void IncrementIndex(int items = 1)
         {
             var prevVal = _paths.Pop();
-            var name = prevVal.Substring(0, prevVal.IndexOf('['));
+            var bracketPos = prevVal.IndexOf('[');
+            var name = bracketPos >= 0 ? prevVal[..prevVal.IndexOf('[')] : prevVal;
 
             var val = _indexer.Pop() + items;
             _indexer.Push(val);
 
             _paths.Push($"{name}[{val}]");
+        }
+
+        public void SetIndex(int index)
+        {
+            var prevVal = _paths.Pop();
+            var name = prevVal.Substring(0, prevVal.IndexOf('['));
+
+            _ = _indexer.Pop();
+            _indexer.Push(index);
+
+            _paths.Push($"{name}[{index}]");
         }
 
         /// <summary>

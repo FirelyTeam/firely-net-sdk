@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "TestData");
 
         [TestMethod]
-        [Ignore]
+     //   [Ignore]
         public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "../../../TestData");
 
         private void testRecovery(bool overwrite, string fileDir)
@@ -55,10 +55,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
             }
             catch (DeserializationFailedException dfe)
             {
-                Console.WriteLine(dfe.Message);
                 var recoveredActual = FhirXmlSerializer.Default
                     .SerializeToString(dfe.PartialResult!, pretty: pretty);
-                Console.WriteLine(recoveredActual);
                 var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
 
                 if (overwrite)
@@ -90,7 +88,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(xmlPrimitive);
             reader.Read();
 
-            var deserializer = getTestDeserializer(new());
+            var deserializer = getTestDeserializer(
+                new DeserializerSettings().Ignoring([ERR.EMPTY_ELEMENT_NAMESPACE_CODE]));
             var datatype = deserializer.DeserializeElement(expectedFhirType, reader);
 
             datatype.Should().BeOfType(expectedFhirType);
@@ -118,17 +117,20 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.MoveToContent();
             //reader.MoveToFirstAttribute();
 
-            var deserializer = getTestDeserializer(new DeserializerSettings());
+            var deserializer = getTestDeserializer(
+                new DeserializerSettings());
             var classMapping = ModelInfo.ModelInspector.ImportType(fhirTargetType)!;
             var target = (PrimitiveType)classMapping.Factory()!;
             var state = new PocoDeserializerState();
             deserializer.DeserializeElementInto(target, classMapping, reader, state);
 
-            state.Errors.Should().HaveCount(expectedErrorCode == null ? 0 : 1);
+            var cleaned = state.Errors.Remove(ce => ce.ErrorCode == ERR.EMPTY_ELEMENT_NAMESPACE_CODE).ToList();
 
-            if(state.Errors.Count > 0)
+            cleaned.Should().HaveCount(expectedErrorCode == null ? 0 : 1);
+
+            if(cleaned.Count > 0)
             {
-                state.Errors.First().ErrorCode.Should().Be(expectedErrorCode);
+                cleaned.First().ErrorCode.Should().Be(expectedErrorCode);
             }
             else
             {

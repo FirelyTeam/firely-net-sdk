@@ -88,7 +88,7 @@ internal static class ReflectionHelper
     internal static IEnumerable<FieldInfo> FindEnumFields(Type t) =>
         t.GetTypeInfo().DeclaredFields.Where(a => a is { IsPublic: true, IsStatic: true });
 
-    public static bool IsRepeatingElement(object value, [NotNullWhen(true)] out ICollection? element)
+    public static bool IsRepeatingElement(object? value, [NotNullWhen(true)] out ICollection? element)
     {
         element = value as ICollection;
         return element is not null && !element.GetType().IsArray;

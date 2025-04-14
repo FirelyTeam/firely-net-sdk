@@ -63,6 +63,12 @@ internal static class XmlReaderExtensions
             return true;
         }
 
+        if (nodeType is XmlNodeType.Text)
+        {
+            state.Errors.Add(ERR.INVALID_TEXT_NODE(reader, state.Path.GetInstancePath()));
+            return true;
+        }
+
         return false;
     }
 
