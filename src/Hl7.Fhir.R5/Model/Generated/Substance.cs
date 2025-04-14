@@ -326,7 +326,6 @@ namespace Hl7.Fhir.Model
     /// active | inactive | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("FHIRSubstanceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Substance.FHIRSubstanceStatus>? StatusElement

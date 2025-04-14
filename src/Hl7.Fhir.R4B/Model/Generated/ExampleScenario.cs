@@ -141,7 +141,6 @@ namespace Hl7.Fhir.Model
       /// person | entity.
       /// </summary>
       [FhirElement("type", Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ExampleScenarioActorType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -452,7 +451,6 @@ namespace Hl7.Fhir.Model
       /// The type of the resource.
       /// </summary>
       [FhirElement("resourceType", Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("FHIRResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2823,7 +2821,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -396,7 +396,6 @@ namespace Hl7.Fhir.Model
     /// active | suspended | inactive.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("LocationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationStatus>? StatusElement
@@ -593,7 +592,6 @@ namespace Hl7.Fhir.Model
     /// instance | kind.
     /// </summary>
     [FhirElement("mode", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("LocationMode")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationMode>? ModeElement

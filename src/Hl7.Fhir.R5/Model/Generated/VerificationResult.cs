@@ -1321,7 +1321,6 @@ namespace Hl7.Fhir.Model
     /// attested | validated | in-process | req-revalid | val-fail | reval-fail | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
-    [AllowedTypes(typeof(Code))]
     [Binding("status")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

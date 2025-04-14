@@ -304,6 +304,13 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Hl7.Fhir.Utility.ReflectionHelper</Target>
+    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Hl7.Fhir.Utility.Result</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
@@ -718,6 +725,13 @@
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Hl7.Fhir.Utility.Ok`1</Target>
+    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
+    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
+    <IsBaselineSuppression>true</IsBaselineSuppression>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Hl7.Fhir.Utility.ReflectionHelper</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -2713,13 +2727,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Specification.Snapshot.SnapshotGeneratorExtensions.RemoveAllConstrainedByDiffExtensions``1(System.Collections.Generic.IEnumerable{``0})</Target>
-    <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Utility.ReflectionHelper.FindPublicProperties(System.Type)</Target>
     <Left>lib/net8.0/Hl7.Fhir.Base.dll</Left>
     <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
@@ -4855,13 +4862,6 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Hl7.Fhir.Specification.Snapshot.SnapshotGeneratorExtensions.RemoveAllConstrainedByDiffExtensions``1(System.Collections.Generic.IEnumerable{``0})</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Hl7.Fhir.Utility.ReflectionHelper.FindPublicProperties(System.Type)</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>

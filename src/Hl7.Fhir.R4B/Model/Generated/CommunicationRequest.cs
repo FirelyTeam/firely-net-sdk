@@ -297,7 +297,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("CommunicationRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -396,7 +395,6 @@ namespace Hl7.Fhir.Model
     /// routine | urgent | asap | stat.
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=160, FiveWs="FiveWs.grade")]
-    [AllowedTypes(typeof(Code))]
     [Binding("CommunicationPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement

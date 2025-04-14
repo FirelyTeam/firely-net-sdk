@@ -400,7 +400,6 @@ namespace Hl7.Fhir.Model
     /// planned | billable | not-billable | aborted | billed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ChargeItemStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

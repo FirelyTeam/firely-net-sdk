@@ -148,7 +148,6 @@ namespace Hl7.Fhir.Model
     /// photo | video | audio.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("DigitalMediaType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

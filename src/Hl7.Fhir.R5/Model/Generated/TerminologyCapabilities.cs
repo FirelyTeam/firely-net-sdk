@@ -562,7 +562,6 @@ namespace Hl7.Fhir.Model
       /// not-present | example | fragment | complete | supplement.
       /// </summary>
       [FhirElement("content", InSummary=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("CodeSystemContentMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -917,7 +916,6 @@ namespace Hl7.Fhir.Model
       /// Language Displays supported.
       /// </summary>
       [FhirElement("language", Order=70)]
-      [AllowedTypes(typeof(Code))]
       [Binding("Language")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2542,7 +2540,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2956,7 +2953,6 @@ namespace Hl7.Fhir.Model
     /// instance | capability | requirements.
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=260)]
-    [AllowedTypes(typeof(Code))]
     [Binding("CapabilityStatementKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3146,7 +3142,6 @@ namespace Hl7.Fhir.Model
     /// in-compose | in-expansion | in-compose-or-expansion.
     /// </summary>
     [FhirElement("codeSearch", Order=320)]
-    [AllowedTypes(typeof(Code))]
     [Binding("CodeSearchSupport")]
     [DataMember]
     public Code<Hl7.Fhir.Model.TerminologyCapabilities.CodeSearchSupport>? CodeSearchElement

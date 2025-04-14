@@ -2515,7 +2515,6 @@ namespace Hl7.Fhir.Model
       /// Type this profile applies to.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3230,7 +3229,6 @@ namespace Hl7.Fhir.Model
       /// Versions this applies to (if different to IG).
       /// </summary>
       [FhirElement("fhirVersion", Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("FHIRVersion")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3802,7 +3800,6 @@ namespace Hl7.Fhir.Model
       /// html | markdown | xml | generated.
       /// </summary>
       [FhirElement("generation", Order=70)]
-      [AllowedTypes(typeof(Code))]
       [Binding("GuidePageGeneration")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -5577,7 +5574,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -6032,7 +6028,6 @@ namespace Hl7.Fhir.Model
     /// SPDX license code for this IG (or not-open-source).
     /// </summary>
     [FhirElement("license", InSummary=true, Order=270)]
-    [AllowedTypes(typeof(Code))]
     [Binding("SPDXLicense")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense>? LicenseElement
@@ -6075,7 +6070,6 @@ namespace Hl7.Fhir.Model
     /// FHIR Version(s) this Implementation Guide targets.
     /// </summary>
     [FhirElement("fhirVersion", InSummary=true, Order=280)]
-    [AllowedTypes(typeof(Code))]
     [Binding("FHIRVersion")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]

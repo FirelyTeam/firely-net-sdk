@@ -108,7 +108,6 @@ namespace Hl7.Fhir.Model
     /// usual | official | temp | secondary | old (If known).
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
-    [AllowedTypes(typeof(Code))]
     [Binding("IdentifierUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Identifier.IdentifierUse>? UseElement

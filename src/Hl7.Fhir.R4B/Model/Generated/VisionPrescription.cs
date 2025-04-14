@@ -167,7 +167,6 @@ namespace Hl7.Fhir.Model
       /// right | left.
       /// </summary>
       [FhirElement("eye", InSummary=true, Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("VisionEyes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1038,7 +1037,6 @@ namespace Hl7.Fhir.Model
       /// up | down | in | out.
       /// </summary>
       [FhirElement("base", Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("VisionBase")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1201,7 +1199,6 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("VisionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

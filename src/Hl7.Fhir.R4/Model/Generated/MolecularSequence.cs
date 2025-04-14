@@ -291,7 +291,6 @@ namespace Hl7.Fhir.Model
       /// sense | antisense.
       /// </summary>
       [FhirElement("orientation", InSummary=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("orientationType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>? OrientationElement
@@ -430,7 +429,6 @@ namespace Hl7.Fhir.Model
       /// watson | crick.
       /// </summary>
       [FhirElement("strand", InSummary=true, Order=100)]
-      [AllowedTypes(typeof(Code))]
       [Binding("strandType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.StrandType>? StrandElement
@@ -1213,7 +1211,6 @@ namespace Hl7.Fhir.Model
       /// indel | snp | unknown.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("qualityType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2646,7 +2643,6 @@ namespace Hl7.Fhir.Model
       /// directlink | openapi | login | oauth | other.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("repositoryType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3790,7 +3786,6 @@ namespace Hl7.Fhir.Model
     /// aa | dna | rna.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
-    [AllowedTypes(typeof(Code))]
     [Binding("sequenceType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>? TypeElement

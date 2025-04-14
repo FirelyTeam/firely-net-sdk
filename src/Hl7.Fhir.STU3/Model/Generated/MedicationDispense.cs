@@ -608,7 +608,6 @@ namespace Hl7.Fhir.Model
     /// preparation | in-progress | on-hold | completed | entered-in-error | stopped.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("MedicationDispenseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus>? StatusElement

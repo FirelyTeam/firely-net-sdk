@@ -511,7 +511,6 @@ namespace Hl7.Fhir.Model
       /// base | surcharge | deduction | discount | tax | informational.
       /// </summary>
       [FhirElement("type", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("InvoicePriceComponentType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -805,7 +804,6 @@ namespace Hl7.Fhir.Model
     /// draft | issued | balanced | cancelled | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("InvoiceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

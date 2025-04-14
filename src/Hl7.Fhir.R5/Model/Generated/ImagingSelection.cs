@@ -754,7 +754,6 @@ namespace Hl7.Fhir.Model
       /// point | polyline | interpolated | circle | ellipse.
       /// </summary>
       [FhirElement("regionType", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ImagingSelection2DGraphicType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -951,7 +950,6 @@ namespace Hl7.Fhir.Model
       /// point | multipoint | polyline | polygon | ellipse | ellipsoid.
       /// </summary>
       [FhirElement("regionType", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ImagingSelection3DGraphicType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1159,7 +1157,6 @@ namespace Hl7.Fhir.Model
     /// available | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ImagingSelectionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

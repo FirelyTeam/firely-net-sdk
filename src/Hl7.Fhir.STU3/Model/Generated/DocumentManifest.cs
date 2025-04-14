@@ -402,7 +402,6 @@ namespace Hl7.Fhir.Model
     /// current | superseded | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("DocumentReferenceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

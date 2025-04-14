@@ -61,7 +61,7 @@ public class AllowedTypesAttribute(params Type[] types) : ValidatingFhirModelAtt
         Types switch
         {
             { Length: > 1 } when item is not null && !Types.Contains(item.GetType()) =>
-                [COVE.CHOICE_TYPE_NOT_ALLOWED(context, COVE.fhirTypeNameForObject(item))],
+                [COVE.CHOICE_TYPE_NOT_ALLOWED(context, COVE.FhirTypeNameForObject(item))],
             { Length: 1 } when !Types[0].IsInstanceOfType(item) =>
                 [COVE.FromTypes(Types[0], item, context)],
             _ => []

@@ -84,7 +84,6 @@ namespace Hl7.Fhir.Model
       /// replaces | transforms | signs | appends.
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("DocumentRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1022,7 +1021,6 @@ namespace Hl7.Fhir.Model
     /// current | superseded | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("DocumentReferenceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1066,7 +1064,6 @@ namespace Hl7.Fhir.Model
     /// preliminary | final | appended | amended | entered-in-error.
     /// </summary>
     [FhirElement("docStatus", InSummary=true, Order=120, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ReferredDocumentStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CompositionStatus>? DocStatusElement

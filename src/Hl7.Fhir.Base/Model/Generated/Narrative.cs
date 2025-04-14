@@ -101,7 +101,6 @@ namespace Hl7.Fhir.Model
     /// generated | extensions | additional | empty.
     /// </summary>
     [FhirElement("status", Order=30)]
-    [AllowedTypes(typeof(Code))]
     [Binding("NarrativeStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
