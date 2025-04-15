@@ -73,11 +73,8 @@ public class BaseFhirXmlDeserializer
         // If the stream has just been opened, move to the first token. (skip processing instructions, comments, whitespaces etc.)
         reader.MoveToContent();
 
-        if (reader.Settings?.DtdProcessing == DtdProcessing.Parse)
-        {
-            state.Errors.Add(ERR.ENCOUNTERED_DTD_REFERENCES(reader, state.Path.GetInstancePath()));
+        if (reader.Settings is not null && reader.Settings.DtdProcessing != DtdProcessing.Prohibit)
             reader.Settings.DtdProcessing = DtdProcessing.Prohibit;
-        }
 
         instance = DeserializeResourceInternal(reader, state);
         issues = Settings.ExceptionFilter is { } filter
@@ -100,11 +97,11 @@ public class BaseFhirXmlDeserializer
     {
         PocoDeserializerState state = new();
 
-        if (reader.Settings?.DtdProcessing == DtdProcessing.Parse)
-        {
-            state.Errors.Add(ERR.ENCOUNTERED_DTD_REFERENCES(reader, state.Path.GetInstancePath()));
+        // If the stream has just been opened, move to the first token. (skip processing instructions, comments, whitespaces etc.)
+        reader.MoveToContent();
+
+        if (reader.Settings is not null && reader.Settings.DtdProcessing != DtdProcessing.Prohibit)
             reader.Settings.DtdProcessing = DtdProcessing.Prohibit;
-        }
 
         instance = DeserializeElementInternal(targetType, reader, state);
         issues = Settings.ExceptionFilter is { } filter
@@ -116,29 +113,20 @@ public class BaseFhirXmlDeserializer
 
     internal Resource? DeserializeResourceInternal(XmlReader reader, PocoDeserializerState state)
     {
-        //check if we are actually on an opening element.
-        verifyOpeningElement(reader, state);
-
         var resourceMapping = determineClassMappingFromInstance(reader, _inspector, state);
 
         // If we have at least a mapping, let's try to continue
-        var newResource = (Base)resourceMapping.Factory();
-
-        // if we're on dynamic, the type is not recognized, so we should set dynamic to report it
-        if(newResource is DynamicResource dr)
-        {
-            dr.DynamicTypeName = reader.LocalName;
-        }
+        var newResource = resourceMapping.CreateInstance();
 
         try
         {
             state.Path.EnterResource(newResource.TypeName);
             int nErrorCount = state.Errors.Count;
-            DeserializeElementInto(newResource, resourceMapping, reader, state);
+            DeserializeElementInto(newResource, resourceMapping.Original, reader, state);
 
-            if (!resourceMapping.IsResource)
+            if (!resourceMapping.Original.IsResource)
             {
-                state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE(reader, state.Path.GetInstancePath(), resourceMapping.Name));
+                state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE(reader, state.Path.GetInstancePath(), resourceMapping.Original.Name));
                 return null;
             }
             else
@@ -157,20 +145,10 @@ public class BaseFhirXmlDeserializer
         }
     }
 
-    private static void verifyOpeningElement(XmlReader reader, PocoDeserializerState state)
+    private static void verifyOpeningElement(XmlReader reader)
     {
-        //If not skip all non-content and check again.
-        reader.MoveToContent();
         if (reader.NodeType != XmlNodeType.Element)
-        {
-            //if we are still not at an opening element, throw user-error.
-            state.Errors.Add(ERR.EXPECTED_OPENING_ELEMENT(reader, state.Path.GetInstancePath(), reader.NodeType.GetLiteral()));
-            //try to recover
-            while (reader.NodeType != XmlNodeType.Element && !reader.EOF)
-            {
-                reader.ReadToContent(state);
-            }
-        }
+            throw new InvalidOperationException($"Xml node of type '{reader.NodeType}' is unexpected at this point.");
     }
 
     private static void validateNameSpace(XmlReader reader, PocoDeserializerState state)
@@ -188,11 +166,8 @@ public class BaseFhirXmlDeserializer
     internal Base DeserializeElementInternal(Type targetType, XmlReader reader, PocoDeserializerState state)
     {
         var mapping = _inspector.FindOrImportClassMapping(targetType) ??
-                      throw new ArgumentException($"Type '{targetType}' could not be located and can " +
-                                                  $"therefore not be used for deserialization. " + reader.GenerateLocationMessage(), nameof(targetType));
-
-        //check if we are at an opening element.
-        verifyOpeningElement(reader, state);
+                      throw new ArgumentException($"Type '{targetType}' does not have the required FHIR metadata " +
+                                                  $"and therefore not be used for deserialization. ", nameof(targetType));
 
         // If we have at least a mapping, let's try to continue
         var newDatatype = (Base)mapping.Factory();
@@ -212,8 +187,7 @@ public class BaseFhirXmlDeserializer
         bool hasChildElements = false;
 
         //check if on opening tag
-        if (reader.NodeType != XmlNodeType.Element)
-            throw new InvalidOperationException($"Xml node of type '{reader.NodeType}' is unexpected at this point");
+        verifyOpeningElement(reader);
 
         validateNameSpace(reader, state);
 
@@ -222,7 +196,7 @@ public class BaseFhirXmlDeserializer
         //Empty elements have no children e.g. <foo value="bar/>)
         if (!reader.IsEmptyElement)
         {
-            //read the next object that has content
+            //read the next element child.
             reader.ReadToContent(state);
 
             PropertyMapping? highestOrder = null;
@@ -236,7 +210,7 @@ public class BaseFhirXmlDeserializer
                     state.Errors.Add(ERR.ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE(reader, state.Path.GetInstancePath(), reader.LocalName));
 
                 state.Path.EnterElement(propMapping?.Name ?? reader.LocalName,
-                    propMapping?.IsCollection == true ? 0 : null, propValueMapping.IsFhirPrimitive);
+                    propMapping?.IsCollection == true ? 0 : null, propValueMapping.Original.IsFhirPrimitive);
                 highestOrder = checkOrder(reader, state, highestOrder, propMapping);
 
                 try
@@ -269,6 +243,7 @@ public class BaseFhirXmlDeserializer
             state.Errors.Add(Settings.Validator.ValidateObject(target, mapping, context));
         }
 
+        // Read to next element (or closing of parent)
         reader.ReadToContent(state);
     }
 
@@ -289,19 +264,33 @@ public class BaseFhirXmlDeserializer
         return highestOrder;
     }
 
-    private void deserializeChildElement(Base target, XmlReader reader, PocoDeserializerState state, PropertyMapping? propMapping, ClassMapping? propValueMapping)
+    private void deserializeChildElement(Base target, XmlReader reader, PocoDeserializerState state,
+        PropertyMapping? propMapping, ClassMappingDynamic propValueMapping)
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
 
-        var elementName = propMapping?.Name ?? reader.LocalName;
-        var current = target.TryGetValue(elementName, out var element) ? element : null;
+        var elementName = reader.LocalName;
 
-        object? result = propMapping?.IsCollection == true || current is IEnumerable<Base>
-            ? readIntoList((IList?)current, propValueMapping!, propMapping, reader, state)
-            : readSingleValue(propValueMapping!, propMapping, reader, state);
+        // We know our POCOs will generate the correct, non-null list.
+        var targetList = propValueMapping.Original.ListFactory();
 
-        if(result is not null)
-            setPropertyWithRepeating(target, elementName, propValueMapping!, result);
+        // Read the element, and any of its direct neighbours into a list.
+        while (reader.LocalName == elementName && reader.NodeType != XmlNodeType.EndElement)
+        {
+            var newEntry = readSingleValue(propValueMapping, propMapping, reader, state);
+            addToList(targetList, newEntry);
+
+            if(propMapping?.IsCollection != false)
+                state.Path.IncrementIndex();
+        }
+
+        // If the element did not repeat, and is not a list, then it is a single item after all
+        object newElement = targetList.Count == 1 && propMapping?.IsCollection == false
+            ? targetList[0]!
+            : targetList;
+
+        var propName = propMapping?.Name ?? elementName;
+        var newPropValue = setPropertyWithRepeating(target, propName, propValueMapping.Original, newElement, state, reader);
 
         if (Settings.Validator is not null)
         {
@@ -312,29 +301,37 @@ public class BaseFhirXmlDeserializer
                 lineNumber, position,
                 Settings.NarrativeValidation);
 
-            state.Errors.Add(Settings.Validator.ValidateProperty(elementName, result, propMapping, context));
+            state.Errors.Add(Settings.Validator.ValidateProperty(elementName, newPropValue, propMapping, context));
         }
     }
 
     /// <summary>
     /// Set a property on the target object. If the property is already present, turn it into a collection.
     /// </summary>
-    private static void setPropertyWithRepeating(Base target, string name, ClassMapping propValueMapping, object? result)
+    private static object setPropertyWithRepeating(Base target, string name, ClassMapping propValueMapping,
+        object newValue, PocoDeserializerState state, XmlReader reader)
     {
+        object result = newValue;
+
         if(target.TryGetValue(name, out var prop))
         {
+            // The property was already set, this means we're finding an element that we saw before,
+            // but not consecutively.
+            state.Errors.Add(ERR.ELEMENT_NOT_IN_SEQUENCE(reader, state.Path.GetInstancePath(), name));
+
             // single into repeating, otherwise prop is already == result
-            if (prop is not IList)
+            if (prop is not IList l)
             {
-                var list = propValueMapping.ListFactory();
-
-                list.Add(prop);
-                addToList(list, result);
-
-                result = list;
+                l = propValueMapping.ListFactory();
+                l.Add(prop);
             }
+
+            addToList(l, newValue);
+            result = l;
         }
+
         target.SetValue(name, result);
+        return result;
     }
 
     private static XHtml readXhtml(XmlReader reader)
@@ -344,41 +341,8 @@ public class BaseFhirXmlDeserializer
         return new XHtml(xhtml);
     }
 
-    //Will create a new list, or adds encountered values to an already existing list (and reports a user error).
-    //When done, the reader will be at the next token after the last element of the list or end of the file.
-    private IList readIntoList(IList? targetList, ClassMapping propValueMapping, PropertyMapping? propMapping, XmlReader reader, PocoDeserializerState state)
+    private static void addToList(IList target, object oneOrMoreThings)
     {
-        // We know our POCOs will generate the correct, non-null list.
-        targetList ??= propValueMapping.ListFactory();
-
-        //There was already a list created previously -> User error!
-        if (targetList.Count > 0)
-        {
-            state.Path.IncrementIndex(targetList.Count);
-            state.Errors.Add(ERR.ELEMENT_NOT_IN_SEQUENCE(reader, state.Path.GetInstancePath(), reader.LocalName));
-        }
-
-        var name = reader.LocalName;
-
-        while (reader.LocalName == name && reader.NodeType != XmlNodeType.EndElement)
-        {
-            var newEntry = readSingleValue(propValueMapping, propMapping, reader, state);
-
-            if (newEntry is not null)
-            {
-                addToList(targetList, newEntry);
-            }
-
-            state.Path.IncrementIndex();
-        }
-
-        return targetList;
-    }
-
-    private static void addToList(IList target, object? oneOrMoreThings)
-    {
-        if (oneOrMoreThings is null) return;
-
         if(oneOrMoreThings is Base)
             target.Add(oneOrMoreThings);
         else if(oneOrMoreThings is IEnumerable<Base> blist)
@@ -386,7 +350,7 @@ public class BaseFhirXmlDeserializer
         else throw new InvalidOperationException($"Cannot add something of type {oneOrMoreThings.GetType()}.");
     }
 
-    private object? readSingleValue(ClassMapping propValueMapping, PropertyMapping? propMapping, XmlReader reader, PocoDeserializerState state)
+    private IReadOnlyCollection<Base> readSingleValue(ClassMappingDynamic propValueMapping, PropertyMapping? propMapping, XmlReader reader, PocoDeserializerState state)
     {
         if (propMapping?.Choice == ChoiceType.ResourceChoice)
         {
@@ -401,15 +365,15 @@ public class BaseFhirXmlDeserializer
                 state.Errors.Add(ERR.INCORRECT_XHTML_NAMESPACE(reader, state.Path.GetInstancePath()));
             }
 
-            return readXhtml(reader);
+            return [readXhtml(reader)];
         }
 
-        var newDatatype = (Base)propValueMapping.Factory();
-        DeserializeElementInto(newDatatype, propValueMapping, reader, state);
-        return newDatatype;
+        var newDatatype = propValueMapping.CreateInstance();
+        DeserializeElementInto(newDatatype, propValueMapping.Original, reader, state);
+        return [newDatatype];
     }
 
-    private List<Resource> deserializeResourceContainer(XmlReader reader, PocoDeserializerState state)
+    private IReadOnlyCollection<Resource> deserializeResourceContainer(XmlReader reader, PocoDeserializerState state)
     {
         // we are currently at the resource container (e.g. <contained>)
         if (reader.HasAttributes)
@@ -419,11 +383,11 @@ public class BaseFhirXmlDeserializer
             reader.MoveToElement();
         }
 
-        // let's move to the actual resource
         List<Resource> result = [];
 
         if(!reader.IsEmptyElement)
         {
+            // let's move to the actual resource
             reader.ReadToContent(state);
 
             while (reader.NodeType != XmlNodeType.EndElement)
@@ -532,7 +496,7 @@ public class BaseFhirXmlDeserializer
             targetElement.ObjectValue = parsedValue;
 
             // Handle atomic-types-as-primitives, Element.id, Extension.url etc.
-            setPropertyWithRepeating(target, attributeName, targetElementMapping, targetElement);
+            var newPropValue = setPropertyWithRepeating(target, attributeName, targetElementMapping, targetElement, state, reader);
 
             if (Settings.Validator is not null)
             {
@@ -550,7 +514,7 @@ public class BaseFhirXmlDeserializer
                     state.Path.GetInstancePath,
                     lineNumber, position,
                     Settings.NarrativeValidation);
-                state.Errors.Add(Settings.Validator.ValidateProperty(attributeName, targetElement, propMapping, context));
+                state.Errors.Add(Settings.Validator.ValidateProperty(attributeName, newPropValue, propMapping, context));
             }
         }
     }
@@ -582,14 +546,14 @@ public class BaseFhirXmlDeserializer
     /// Returns the <see cref="ClassMapping" /> for the object to be deserialized using the root property.
     /// </summary>
     /// <remarks>Assumes the reader is on the start of an object.</remarks>
-    private static ClassMapping determineClassMappingFromInstance(XmlReader reader, ModelInspector inspector, PocoDeserializerState state)
+    private static ClassMappingDynamic determineClassMappingFromInstance(XmlReader reader, ModelInspector inspector, PocoDeserializerState state)
     {
         var resourceMapping = inspector.FindClassMapping(reader.LocalName);
 
         if (resourceMapping is null)
             state.Errors.Add(ERR.UNKNOWN_RESOURCE_TYPE(reader, state.Path.GetInstancePath(), reader.LocalName));
 
-        return resourceMapping ?? ClassMapping.DynamicResource;
+        return new ClassMappingDynamic(resourceMapping ?? ClassMapping.DynamicResource, reader.LocalName);
     }
 
     /// <summary>
@@ -599,7 +563,7 @@ public class BaseFhirXmlDeserializer
     /// <remarks>In case the name is a choice type, the type suffix will be used to determine the returned
     /// <see cref="ClassMapping"/>, otherwise the <see cref="PropertyMapping.ImplementingType"/> is used.
     /// </remarks>
-    private static (PropertyMapping? propMapping, ClassMapping propValueMapping) getMappingsForElement(
+    private static (PropertyMapping? propMapping, ClassMappingDynamic propValueMapping) getMappingsForElement(
         ModelInspector inspector,
         ClassMapping parentMapping,
         string elementName,
@@ -612,41 +576,56 @@ public class BaseFhirXmlDeserializer
         if (propertyMapping is null)
         {
             return reader.GetAttribute("value") != null
-                ? (null, ClassMapping.DynamicPrimitive)
-                : (null, ClassMapping.DynamicDataType);
+                ? (null, new ClassMappingDynamic(ClassMapping.DynamicPrimitive, null))
+                : (null, new ClassMappingDynamic(ClassMapping.DynamicDataType, null));
         }
 
-        ClassMapping propertyValueMapping = propertyMapping.Choice switch
+        ClassMappingDynamic propertyValueMapping = propertyMapping.Choice switch
         {
             ChoiceType.None or ChoiceType.ResourceChoice =>
-                inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) ?? throw new InvalidOperationException($"Encountered property type {propertyMapping.GetInstantiableType()} for which no mapping was found in the model assemblies."),
+                new ClassMappingDynamic(inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) ?? throw new InvalidOperationException($"Encountered property type {propertyMapping.GetInstantiableType()} for which no mapping was found in the model assemblies."), null),
             ChoiceType.DatatypeChoice => getChoiceClassMapping(),
             _ => throw new NotSupportedException($"ChoiceType '{propertyMapping.Choice}' is not supported")
         };
 
         return (propertyMapping, propertyValueMapping);
 
-        ClassMapping getChoiceClassMapping()
+        ClassMappingDynamic getChoiceClassMapping()
         {
-            ClassMapping? choiceMapping = null;
+            ClassMappingDynamic choiceMapping;
             string typeSuffix = elementName[propertyMapping.Name.Length..];
 
             if (!string.IsNullOrEmpty(typeSuffix))
             {
-                choiceMapping = inspector.FindClassMapping(typeSuffix);
-                if (choiceMapping is null)
+                var foundChoiceMapping = inspector.FindClassMapping(typeSuffix);
+                if (foundChoiceMapping is null)
                 {
                     state.Errors.Add(ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(reader, state.Path.GetInstancePath(), propertyMapping.Name, typeSuffix));
-                    choiceMapping = ClassMapping.DynamicDataType;
+                    choiceMapping = new ClassMappingDynamic(ClassMapping.DynamicDataType, typeSuffix);
+                }
+                else
+                {
+                    choiceMapping = new ClassMappingDynamic(foundChoiceMapping, null);
                 }
             }
             else
             {
                 state.Errors.Add(ERR.CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(reader, state.Path.GetInstancePath()));
-                choiceMapping = ClassMapping.DynamicDataType;
+                choiceMapping = new ClassMappingDynamic(ClassMapping.DynamicDataType,null);
             }
 
             return choiceMapping;
         }
+    }
+}
+
+internal record ClassMappingDynamic(ClassMapping Original, string? DynamicName)
+{
+    public Base CreateInstance()
+    {
+        var result = (Base)Original.Factory();
+        if(result is IDynamicType dt) dt.DynamicTypeName = DynamicName;
+
+        return result;
     }
 }

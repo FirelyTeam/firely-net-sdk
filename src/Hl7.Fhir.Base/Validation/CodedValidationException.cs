@@ -35,7 +35,7 @@ public class CodedValidationException : ExtendedCodedException
     public const string INCORRECT_CARDINALITY_MIN_CODE = "PVAL102";
     public const string INCORRECT_CARDINALITY_MAX_CODE = "PVAL103";
     public const string REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE = "PVAL104";
-    public const string MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE = "PVAL105";
+    public const string MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE = "PVAL105";
     public const string NARRATIVE_XML_IS_MALFORMED_CODE = "PVAL114";
     public const string NARRATIVE_XML_IS_INVALID_CODE = "PVAL115";
     public const string INVALID_CODED_VALUE_CODE = "PVAL116";
@@ -57,7 +57,7 @@ public class CodedValidationException : ExtendedCodedException
         INCORRECT_CARDINALITY_MIN_CODE,
         INCORRECT_CARDINALITY_MAX_CODE,
         REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE,
-        MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE,
+        MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE,
         NARRATIVE_XML_IS_MALFORMED_CODE,
         NARRATIVE_XML_IS_INVALID_CODE,
         INVALID_CODED_VALUE_CODE,
@@ -76,7 +76,7 @@ public class CodedValidationException : ExtendedCodedException
     internal static COVE INCORRECT_CARDINALITY_MIN(PocoValidationContext context, int count, int Min) => Initialize(context, INCORRECT_CARDINALITY_MIN_CODE, $"Element has {count} elements, but minimum cardinality is {Min}.", OO_Sev.Error, OO_Typ.Required);
     internal static COVE INCORRECT_CARDINALITY_MAX(PocoValidationContext context, int count, int Max) => Initialize(context, INCORRECT_CARDINALITY_MAX_CODE, $"Element has {count} elements, but maximum cardinality is {Max}.", OO_Sev.Error, OO_Typ.BusinessRule);
     internal static COVE REPEATING_ELEMENT_CANNOT_CONTAIN_NULL(PocoValidationContext context) => Initialize(context, REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE, "Repeating elements should not contain a null value.", OO_Sev.Error, OO_Typ.Structure);
-    internal static COVE MANDATORY_ELEMENT_CANNOT_BE_NULL(PocoValidationContext context, string? memberName, int Min) => Initialize(context, MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, $"Element '{memberName}' with minimum cardinality {Min} cannot be null.", OO_Sev.Error, OO_Typ.Required);
+    internal static COVE MANDATORY_ELEMENT_MUST_BE_PRESENT(PocoValidationContext context, string? memberName, int Min) => Initialize(context, MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, $"Element '{memberName}' with minimum cardinality {Min} must be present.", OO_Sev.Error, OO_Typ.Required);
     internal static COVE NARRATIVE_XML_IS_MALFORMED(PocoValidationContext context, string? value) => Initialize(context, NARRATIVE_XML_IS_MALFORMED_CODE, $"Value is not well-formatted Xml: {value}", OO_Sev.Error, OO_Typ.Structure);
     internal static COVE NARRATIVE_XML_IS_INVALID(PocoValidationContext context, string value) => Initialize(context, NARRATIVE_XML_IS_INVALID_CODE, $"Value is not well-formed Xml adhering to the FHIR schema for Narrative: {value}", OO_Sev.Error, OO_Typ.Structure);
     internal static COVE INVALID_CODED_VALUE(PocoValidationContext? context, object? value, string name) => Initialize(context, INVALID_CODED_VALUE_CODE, $"Value '{value}' is not a correct code for valueset '{name}'.", OO_Sev.Error, OO_Typ.CodeInvalid);
@@ -93,7 +93,7 @@ public class CodedValidationException : ExtendedCodedException
         Initialize(context, UNSIGNED_INT_MUST_NOT_BE_NEGATIVE_CODE, $"Value {value} is negative, which is not allowed for an UnsignedInt.", OO_Sev.Error, OO_Typ.Value);
     
     internal static COVE PROPERTY_TYPE_MISMATCH(PocoValidationContext? context, string expected, string actual) =>
-        Initialize(context, PROPERTY_TYPE_MISMATCH_CODE, $"Expected property to be of type '{expected}', but found type '{actual}'.", OO_Sev.Error, OO_Typ.Structure);
+        Initialize(context, PROPERTY_TYPE_MISMATCH_CODE, $"Expected property to be a {expected}, but found a {actual}.", OO_Sev.Error, OO_Typ.Structure);
     
     internal static COVE UNKNOWN_ELEMENT(PocoValidationContext? context, string elementName, string serializedForm = "element") =>
         Initialize(context, UNKNOWN_ELEMENT_CODE, $"Found unknown {serializedForm} '{elementName}'.", OO_Sev.Error, OO_Typ.Unknown);
@@ -146,18 +146,28 @@ public class CodedValidationException : ExtendedCodedException
 
     internal static COVE FromTypes(Type expected, object? actual, PocoValidationContext? context = null)
     {
-        string expectedFhirTypeName = typeof(IList).IsAssignableFrom(expected)
-            ? "collection of " + (fhirTypeNameForRepeatingType(expected) ?? "unknown")
-            : fhirTypeNameForSingleType(expected) ?? "unknown";
+        bool expectedList = typeof(IList).IsAssignableFrom(expected);
+        bool actualList = actual is IList;
+
+        string expectedFhirTypeName = expectedList
+            ? "collection of " + (fhirTypeNameForRepeatingType(expected))
+            : fhirTypeNameForSingleType(expected);
 
         string actualFhirTypeName = FhirTypeNameForObject(actual);
-        
+
+        // Make contrast between list and non-list a bit bigger
+        if (expectedList && !actualList)
+            actualFhirTypeName = "single " + actualFhirTypeName;
+        if(actualList && !expectedList)
+            expectedFhirTypeName = "single " + expectedFhirTypeName;
+
         return PROPERTY_TYPE_MISMATCH(context, expectedFhirTypeName, actualFhirTypeName);
     }
 
     internal static string FhirTypeNameForObject(object? actual) =>
         actual switch
         {
+            IDynamicType { DynamicTypeName: null } => "unknown type",
             Base b => b.TypeName,
             IList list => "collection of " + fhirTypeNameForRepeatingType(list.GetType()),
             null => "null",

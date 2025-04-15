@@ -80,9 +80,7 @@ public class FhirAttributeValidator : IPocoValidator
             var cardinality = propMapping.ValidationAttributes.OfType<CardinalityAttribute>().SingleOrDefault();
             if (cardinality is not null && cardinality.Min > 0)
             {
-                // Note that some Value accessors (for Code<T>.Value for example) can throw, but there are
-                // no Cardinality constraints on those, so we don't have to worry about that now.
-                var propValue = propMapping.GetValue(instance);
+                var propValue = instance.TryGetValue(propMapping.Name, out var val) ? val : null;
 
                 if (propValue is null || ReflectionHelper.IsRepeatingElement(propValue, out var list) && list.Count == 0)
                 {

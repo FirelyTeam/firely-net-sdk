@@ -298,11 +298,11 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Observation.status", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual("Observation.code", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, oc.Issue[2].Details.Coding[0].Code);
 
                 Assert.AreEqual(3, oc.Issue.Count);
             }
@@ -358,12 +358,12 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual("Observation.status", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, oc.Issue[2].Details.Coding[0].Code);
                 Assert.IsTrue(oc.Issue[2].Details.Text.Contains("status"));
 
                 Assert.AreEqual("Observation.code", oc.Issue[3].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[3].Severity);
-                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[3].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, oc.Issue[3].Details.Coding[0].Code);
                 Assert.IsTrue(oc.Issue[3].Details.Text.Contains("code"));
 
                 Assert.AreEqual(4, oc.Issue.Count);
@@ -1051,7 +1051,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual(COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual(COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, oc.Issue[0].Details.Coding[0].Code);
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
                 Assert.AreEqual("Patient.name[0].given[1].extension[2].url", oc.Issue[0].Expression.First());
 

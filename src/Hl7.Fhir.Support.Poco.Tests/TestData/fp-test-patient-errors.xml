@@ -2,13 +2,6 @@
 <Patient xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://hl7.org/fhir ../../../Hl7.Fhir.Specification/data/fhir-all.xsd"
  xmlns="http://hl7.org/fhir">
-  <id value="pat1-with-errors"/>
-  <text>
-    <status value="generated"/>
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
-    </div>
-  </text>
   <contained />
   <contained></contained>
   <contained>
@@ -41,7 +34,6 @@
   </contained>
   <contained>
     <nf:Patient xmlns:nf="http://example.org/not-fhir" xmlns:cheat="http://nu.nl">
-      <id value="WrongNamespaceAndDate" />
       <active value="false" cheat:anotherAttribute="true" />
       <birthDate value="February"/>
     </nf:Patient>
@@ -63,14 +55,30 @@
         PrimitiveValueInContent
       </id>
       <name value="Doe"/>
+      Mixed content
       <unknown>
         More primitive value in content
       </unknown>
     </Patient>
   </contained>
   <contained>
+    <OperationOutcome>
+      <id value="shouldhaveissues" />
+    </OperationOutcome>
+  </contained>
+  <contained>
+    <Observation valueString="not here">
+      <status value="final" />
+      <code>
+        <text value="Decimal Testing Observation"/>
+      </code>
+      <valueUnknown>
+        <highest value="1234" />
+      </valueUnknown>
+    </Observation>
+  </contained>
+  <contained>
     <Observation>
-      <status value="final"/>
       <code>
         <text value="Decimal Testing Observation"/>
       </code>

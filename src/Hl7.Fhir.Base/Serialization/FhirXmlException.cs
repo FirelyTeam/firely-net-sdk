@@ -37,7 +37,6 @@ public class FhirXmlException : ExtendedCodedException
     public const string ELEMENT_NOT_IN_SEQUENCE_CODE = "XML116";
     public const string SCHEMALOCATION_DISALLOWED_CODE = "XML117";
     public const string EXPECTED_OPENING_ELEMENT_CODE = "XML118";
-    public const string ENCOUNTERED_DTD_REFERENCES_CODE = "XML119";
     public const string ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE = "XML120";
     public const string EMPTY_RESOURCE_CONTAINER_CODE = "XML122";
     public const string INVALID_TEXT_NODE_CODE = "XML123";
@@ -77,7 +76,6 @@ public class FhirXmlException : ExtendedCodedException
 
     // Xml paraphernalia that do not contain data so they can be safely skipped.
     internal static FhirXmlException SCHEMALOCATION_DISALLOWED(XmlReader reader, string instancePath) => Initialize(reader, instancePath, SCHEMALOCATION_DISALLOWED_CODE, "The 'schemaLocation' attribute is disallowed.", OO_Sev.Warning, OO_Typ.Structure);
-    internal static FhirXmlException ENCOUNTERED_DTD_REFERENCES(XmlReader reader, string instancePath) => Initialize(reader, instancePath, ENCOUNTERED_DTD_REFERENCES_CODE, "There SHALL be no DTD references in FHIR resources (because of the XXE security exploit)", OO_Sev.Warning, OO_Typ.Structure);
 
     // Empty resource containers are not allowed in FHIR, but there is no data loss.
     internal static FhirXmlException EMPTY_RESOURCE_CONTAINER(XmlReader reader, string instancePath) => Initialize(reader, instancePath, EMPTY_RESOURCE_CONTAINER_CODE, $"Encountered an empty resource container.", OO_Sev.Error, OO_Typ.Structure);
@@ -105,7 +103,6 @@ public class FhirXmlException : ExtendedCodedException
         ELEMENT_NOT_IN_SEQUENCE_CODE,
         ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE,
         SCHEMALOCATION_DISALLOWED_CODE,
-        ENCOUNTERED_DTD_REFERENCES_CODE,
         EMPTY_RESOURCE_CONTAINER_CODE,
         CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE,
         CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE

@@ -184,7 +184,7 @@ public class FhirJsonDeserializationTests
             yield return
             [
                 new { resourceType = nameof(OperationOutcome), crap = 5 }, JsonTokenType.EndObject,
-                COVE.UNKNOWN_ELEMENT_CODE, COVE.INCORRECT_CARDINALITY_MIN_CODE
+                COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE
             ];
             yield return
             [
@@ -262,18 +262,18 @@ public class FhirJsonDeserializationTests
 
     public static IEnumerable<object?[]> CatchesIncorrectlyStructuredComplexData()
     {
-        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
-        yield return data<Extension>(new { unknown = "test" }, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        yield return data<Extension>(new { unknown = "test" }, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { url = "test" });
-        yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { unknown = "test", url = "test" }, COVE.UNKNOWN_ELEMENT_CODE);
-        yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+        yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix" },
-            ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+            ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" },
             JsonTokenType.EndObject);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
-           ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+           ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
     }
 
     public static IEnumerable<object?[]> TestNormalArrayData()
@@ -332,8 +332,8 @@ public class FhirJsonDeserializationTests
         {
             div = "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>correct</p></div>", status = "additional"
         });
-        yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
-        yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID_CODE, COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+        yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Narrative>(new { div = "<puinhoop />", status = "generated" }, COVE.NARRATIVE_XML_IS_INVALID_CODE);
 
         yield return data<Attachment>(new { url = "urn:oid:1.3.6.1.4.1.343" });
@@ -631,20 +631,8 @@ public class FhirJsonDeserializationTests
     
     internal class CustomComplexValidator : FhirAttributeValidator
     {
-        //public object? DateTimeSeenByObjectValueValidator;
         public FhirDateTime? DateTimeSeenByInstanceValidator;
         public FhirDateTime? DateTimeSeenByPropertyValidator;
-
-        // public override void ValidateObjectValue(ref object? value, in ObjectValueDeserializationContext context,
-        //     out COVE[]? reportedErrors)
-        // {
-        //     DateTimeSeenByObjectValueValidator = value;
-        //
-        //     // Now change it, to whether the next step picks it up.
-        //     value = "1972-30-11T12:00:00Z";
-        //
-        //     base.ValidateObjectValue(ref value, context, out reportedErrors);
-        // }
 
         public override IReadOnlyCollection<COVE> ValidateObject(Base instance, ClassMapping? classMapping, PocoValidationContext context){
             if (instance is FhirDateTime fdt)

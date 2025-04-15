@@ -316,6 +316,20 @@ namespace Hl7.Fhir.Support.Poco.Tests
             resource.As<Patient>().Gender.Value.Should().Be(AdministrativeGender.Female);
         }
 
+        [TestMethod]
+        public void MandatoryElementsShouldBeDetected()
+        {
+            var content = "<Observation xmlns=\"http://hl7.org/fhir\"><issued value=\"2025-04-15T12:09:00Z\"/></Observation>";
+
+            var reader = constructReader(content);
+            reader.Read();
+
+            var deserializer = getTestDeserializer(new());
+            var success = deserializer.TryDeserializeResource(reader, out var resource, out var errors);
+            success.Should().BeFalse();
+
+            errors.Should().Contain(ce => ce.ErrorCode == CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        }
 
         [TestMethod]
         public void TryDeserializeContainedResource()
@@ -348,45 +362,6 @@ namespace Hl7.Fhir.Support.Poco.Tests
             resource.As<Patient>().Contained[0].As<Patient>().MultipleBirth.As<FhirBoolean>().Value.Should().Be(true);
             resource.As<Patient>().Contained[1].As<Patient>().Active.Value.Should().Be(true);
         }
-
-        [TestMethod]
-        public void TryDeserializeIncorrectContainedResource()
-        {
-            var content = "<Patient xmlns=\"http://hl7.org/fhir\">" +
-                             "<contained>" +
-                                "<Patient>" +
-                                    "<multipleBirthBoolean value = \"true\"/>" +
-                                "</Patient>" +
-                                "<Patient>" +
-                                    "<birthdate value = \"2020-01-01\"/>" +
-                                "</Patient>" +
-                              "</contained>" +
-                              "<contained>" +
-                                "<Patient>" +
-                                    "<active value = \"true\"/>" +
-                                "</Patient>" +
-                              "</contained>" +
-                              "<active value=\"true\"/>" +
-                              "<gender value=\"female\"/>" +
-                          "</Patient>";
-
-            var reader = constructReader(content);
-            reader.Read();
-
-            var deserializer = getTestDeserializer(new());
-            var state = new PocoDeserializerState();
-            var resource = deserializer.DeserializeResourceInternal(reader, state);
-
-            state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER_CODE);
-
-            resource.Should().BeOfType<Patient>();
-            resource.As<Patient>().Active.Value.Should().Be(true);
-            resource.As<Patient>().Gender.Value.Should().Be(AdministrativeGender.Female);
-            resource.As<Patient>().Contained.Should().HaveCount(2);
-            resource.As<Patient>().Contained[0].As<Patient>().MultipleBirth.As<FhirBoolean>().Value.Should().Be(true);
-            resource.As<Patient>().Contained[1].As<Patient>().Active.Value.Should().Be(true);
-        }
-
 
         [TestMethod]
         public void TryDeserializeComplexResource()
@@ -582,7 +557,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var xmlFileName = Path.Combine("TestData", "fp-test-patient.xml");
             var xml = File.ReadAllText(xmlFileName);
             var reader = constructReader(xml);
-            reader.Read();
+            reader.MoveToContent();
 
             var serializer = getTestDeserializer(new());
             var state = new PocoDeserializerState();

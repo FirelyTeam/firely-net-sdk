@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Serialization
                 case CodedValidationException.INCORRECT_CARDINALITY_MIN_CODE: shortDisplay = "Missing mandatory field"; break;
                 case CodedValidationException.INCORRECT_CARDINALITY_MAX_CODE: shortDisplay = "Exceeded max values"; break;
                 case CodedValidationException.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE: shortDisplay = "Cannot be null"; break;
-                case CodedValidationException.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE: shortDisplay = "Mandatory field cannot be null"; break;
+                case CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE: shortDisplay = "Mandatory field cannot be null"; break;
                 case CodedValidationException.LITERAL_INVALID_CODE: shortDisplay = "Invalid literal"; break;
                 case CodedValidationException.NARRATIVE_XML_IS_MALFORMED_CODE: shortDisplay = "Malformed narrative"; break;
                 case CodedValidationException.NARRATIVE_XML_IS_INVALID_CODE: shortDisplay = "Invalid narrative"; break;

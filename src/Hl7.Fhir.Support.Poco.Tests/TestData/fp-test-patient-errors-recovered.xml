@@ -1,7 +1,4 @@
 <Patient xmlns="http://hl7.org/fhir">
-  <id value="pat1-with-errors" />
-  <text>
-    <status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div></text>
   <contained>
     <PatientX />
   </contained>
@@ -38,7 +35,6 @@
   </contained>
   <contained>
     <Patient>
-      <id value="WrongNamespaceAndDate" />
       <active anotherAttribute="true" value="false" />
       <birthDate value="February" />
     </Patient>
@@ -62,8 +58,23 @@
     </Patient>
   </contained>
   <contained>
-    <Observation>
+    <OperationOutcome>
+      <id value="shouldhaveissues" />
+    </OperationOutcome>
+  </contained>
+  <contained>
+    <Observation valueString="not here">
       <status value="final" />
+      <code>
+        <text value="Decimal Testing Observation" />
+      </code>
+      <valueUnknown>
+        <highest value="1234" />
+      </valueUnknown>
+    </Observation>
+  </contained>
+  <contained>
+    <Observation>
       <code>
         <text value="Decimal Testing Observation" />
       </code>
