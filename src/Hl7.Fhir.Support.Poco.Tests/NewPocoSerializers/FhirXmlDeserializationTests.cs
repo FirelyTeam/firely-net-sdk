@@ -19,19 +19,6 @@ namespace Hl7.Fhir.Support.Poco.Tests
     [TestClass]
     public class FhirXmlDeserializationTests
     {
-        private static void assertErrors(IEnumerable<CodedException> actual, string[] expected)
-        {
-            if (expected.Length == 0 && !actual.Any())
-                return;
-
-            string why =
-                $"Should be the same: actual [{string.Join(",", actual.Select(a => a.ErrorCode))}] and expected [{string.Join(";", expected)}]";
-            Console.WriteLine("Messages: " + string.Join(", ", actual.Select(a => a.Message)));
-            actual.Count().Should().Be(expected.Length, because: why);
-            _ = actual.Zip(expected, (a, e) => a.ErrorCode.Should().Be(e, because: why)).ToList();
-            Console.WriteLine($"Found {string.Join(", ", actual.Select(a => a.Message))}");
-        }
-
         [TestMethod]
         public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "TestData");
 
@@ -188,6 +175,26 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         [TestMethod]
+        public void MakeSureVersionSpecificTypedPropertiesGetCreatedOk()
+        {
+            var pat = new Patient()
+            {
+                Meta = new Meta()
+                {
+                    VersionId = "1",
+                    ProfileElement = [new FhirUri("http://nu.nl")]
+                }
+            };
+
+            var content = pat.ToXml();
+            var pat2 = FhirXmlDeserializer.DEFAULT.DeserializeResource(content);
+
+            // If we deserialize the profile incorrectly due to AllowedTypes etc,
+            // it will end up in the overflow and this will crash.
+            pat2.Meta.Profile.Should().HaveCount(1);
+        }
+
+        [TestMethod]
         public void TryDeserializeResourceWithouthAValue()
         {
             var content = "<Patient xmlns=\"http://hl7.org/fhir\"></Patient>";
@@ -203,7 +210,6 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             resource.Should().BeOfType<Patient>();
         }
-
 
 
 

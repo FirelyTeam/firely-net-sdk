@@ -271,8 +271,10 @@ public class BaseFhirXmlDeserializer
 
         var elementName = reader.LocalName;
 
-        // We know our POCOs will generate the correct, non-null list.
-        var targetList = propValueMapping.Original.ListFactory();
+        var listFactory = propMapping is not null
+            ? _inspector.FindOrImportClassMapping(propMapping.ImplementingType)!
+            : propValueMapping.Original;
+        var targetList = listFactory.ListFactory();
 
         // Read the element, and any of its direct neighbours into a list.
         while (reader.LocalName == elementName && reader.NodeType != XmlNodeType.EndElement)

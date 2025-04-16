@@ -509,6 +509,26 @@ public class FhirJsonDeserializationTests
     }
 
     [TestMethod]
+    public void MakeSureVersionSpecificTypedPropertiesGetCreatedOk()
+    {
+        var pat = new Patient()
+        {
+            Meta = new Meta()
+            {
+                VersionId = "1",
+                ProfileElement = [new FhirUri("http://nu.nl")]
+            }
+        };
+
+        var content = pat.ToJson();
+        var pat2 = FhirJsonDeserializer.DEFAULT.DeserializeResource(content);
+
+        // If we deserialize the profile incorrectly due to AllowedTypes etc,
+        // it will end up in the overflow and this will crash.
+        pat2.Meta!.Profile.Should().HaveCount(1);
+    }
+
+    [TestMethod]
     public void TestBase64Parsing()
     {
         var attachment = deserializeAttachment(new FhirJsonConverterOptions());

@@ -89,14 +89,14 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
 
     private void serializeElement(Base element, XmlWriter writer, SerializationFilter? filter, ClassMapping? mapping)
     {
-        static bool IsAttribute(PropertyMapping? mapping, Base? value)
+        static bool attributeSorter(PropertyMapping? mapping, Base? value)
         {
             if (mapping?.SerializationHint == XmlRepresentation.XmlAttr)
-                return true;
+                return false;
             if (value?.Annotation<XmlRepresentationAnnotation>()?.Value == XmlRepresentation.XmlAttr)
-                return true;
+                return false;
 
-            return false;
+            return true;
         }
         // Make sure that elements with attributes are serialized first.
         // Add the special "value" attribute if this is a FhirPrimitive.
@@ -104,7 +104,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
             .EnumerateElements()
             .Concat(element is PrimitiveType { ObjectValue: {} ptValue } ? [KeyValuePair.Create("value", ptValue)] : [])
             .Select(m => (m, mapping: mapping?.FindMappedElementByName(m.Key)))
-            .OrderBy(p => !IsAttribute(p.mapping, p.m.Value as Base));
+            .OrderBy(p => attributeSorter(p.mapping, p.m.Value as Base));
 
         foreach (var ((mKey, mValue), propertyMapping) in orderedMembers)
         {

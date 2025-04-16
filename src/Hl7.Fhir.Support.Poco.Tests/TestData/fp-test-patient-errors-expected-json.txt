@@ -1,10 +1,8 @@
-Hl7.Fhir.Validation.CodedValidationException: Expected property to be a collection of Extension, but found a collection of unknown type. At Patient, line 3, position 17.
 Hl7.Fhir.Validation.CodedValidationException: string 'not a valid instant' is not a correct literal for a instant. At Patient.meta.lastUpdated, line 6, position 41.
 Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'resourceType'. At Patient.text, line 9, position 32.
 Hl7.Fhir.Validation.CodedValidationException: Value 'generatedY' is not a correct code for valueset 'NarrativeStatus'. At Patient.text.status, line 10, position 27.
 Hl7.Fhir.Validation.CodedValidationException: Found unknown element 'value'. At Patient.contained[0].active[0], line 17, position 33.
 Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[0].active, line 17, position 18.
-Hl7.Fhir.Validation.CodedValidationException: Expected property to be a collection of HumanName, but found a collection of unknown type. At Patient.contained[1], line 22, position 16.
 Hl7.Fhir.Serialization.FhirJsonException: Nested array detected. At Patient.contained[2].active[2], line 27, position 31.
 Hl7.Fhir.Validation.CodedValidationException: Expected property to be a single boolean, but found a collection of boolean. At Patient.contained[2].active, line 27, position 18.
 Hl7.Fhir.Serialization.FhirJsonException: Nested array detected. At Patient.contained[3].active[2], line 32, position 34.

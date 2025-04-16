@@ -1,10 +1,5 @@
 {
   "resourceType": "Patient",
-  "extension": [
-    {
-      "value": "try this"
-    }
-  ],
   "unknownElement": {
     "valued": {
       "data": [
@@ -39,6 +34,7 @@
     },
     {
       "resourceType": "Patient",
+      "id": "ComplexArrayContainsPrimitive",
       "name": [
         {
           "value": "John"
@@ -46,8 +42,7 @@
         {
           "family": "Doe"
         }
-      ],
-      "id": "ComplexArrayContainsPrimitive"
+      ]
     },
     {
       "resourceType": "Patient",
@@ -314,6 +309,11 @@
       "managingOrganization": {
         "reference": "Organization/hl7"
       }
+    }
+  ],
+  "extension": [
+    {
+      "valueString": "try this"
     }
   ],
   "identifier": [

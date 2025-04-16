@@ -381,7 +381,7 @@ public class BaseFhirJsonDeserializer
             }
 
             var listFactory = propertyMapping is not null
-                ? _inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType())!
+                ? _inspector.FindOrImportClassMapping(propertyMapping.ImplementingType)!
                 : propertyValueMapping.Original;
 
             IList primitiveList;
@@ -481,7 +481,7 @@ public class BaseFhirJsonDeserializer
             throw new InvalidOperationException($"deserializeNormalList should only be called on JSON array: " +
                                                 $"Current token is {reader.TokenType}.");
 
-        bool hasUnexpectedElements = false;
+     //   bool hasUnexpectedElements = false;
         
         // Read past start of array
         reader.Read();
@@ -521,7 +521,7 @@ public class BaseFhirJsonDeserializer
                 var elem = propertyValueMapping.CreateInstance();
                 deserializePropertyInto(elem, "value", ref reader, state, new(), forceDelayedValidation: true);
                 existingList.Add(elem);
-                hasUnexpectedElements = true;
+//                hasUnexpectedElements = true;
             }
 
             state.Path.IncrementIndex();
@@ -531,8 +531,8 @@ public class BaseFhirJsonDeserializer
         reader.Read();
         
         // encountered invalid data, convert whole list to List<DynamicDataType>
-        if(hasUnexpectedElements)
-            return existingList.ToDynamicDataType();
+    //    if(hasUnexpectedElements)
+    //        return existingList.ToDynamicDataType();
 
         return existingList;
     }
