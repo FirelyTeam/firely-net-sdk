@@ -174,8 +174,12 @@ public class CodedValidationException : ExtendedCodedException
             _ => actual.GetType().Name
         };
 
-    private static string fhirTypeNameForSingleType(Type t) =>
-        t.GetCustomAttribute<FhirTypeAttribute>()?.Name ?? t.Name;
+    private static string fhirTypeNameForSingleType(Type t)
+    {
+        return typeof(IDynamicType).IsAssignableFrom(t)
+            ? "unknown type"
+            : t.GetCustomAttribute<FhirTypeAttribute>()?.Name ?? t.Name;
+    }
 
     private static string fhirTypeNameForRepeatingType(Type t) =>
         fhirTypeNameForSingleType(ReflectionHelper.GetRepeatingElementType(t));

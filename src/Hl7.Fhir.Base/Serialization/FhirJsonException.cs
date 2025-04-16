@@ -45,10 +45,6 @@ public class FhirJsonException : ExtendedCodedException
     // ==========================================
     // Unrecoverable Errors
     // ==========================================
-    internal static FhirJsonException RESOURCETYPE_SHOULD_BE_STRING(ref Utf8JsonReader reader, string instancePath, JsonTokenType value) => Initialize(ref reader, instancePath, RESOURCETYPE_SHOULD_BE_STRING_CODE, $"Property 'resourceType' should be a string, but found token {value}.", OO_Sev.Fatal, OO_Typ.Value);
-    internal static FhirJsonException NO_RESOURCETYPE_PROPERTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, NO_RESOURCETYPE_PROPERTY_CODE, "Resource has no 'resourceType' property.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirJsonException UNKNOWN_RESOURCE_TYPE(ref Utf8JsonReader reader, string instancePath, string resourceType) => Initialize(ref reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{resourceType}' found in 'resourceType' property.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirJsonException RESOURCE_TYPE_NOT_A_RESOURCE(ref Utf8JsonReader reader, string instancePath, string name) => Initialize(ref reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{name}' in property 'resourceType' is not a type of resource.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException DUPLICATE_PROPERTY(ref Utf8JsonReader reader, string instancePath, string propName) => Initialize(ref reader, instancePath, DUPLICATE_PROPERTY_CODE, $"Encountered duplicate property '{propName}'.", OO_Sev.Fatal, OO_Typ.Structure);
 
     // ==========================================
@@ -76,6 +72,13 @@ public class FhirJsonException : ExtendedCodedException
     internal static FhirJsonException CHOICE_ELEMENT_HAS_UNKOWN_TYPE(ref Utf8JsonReader reader, string instancePath, string elementName, string typeValue) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeValue}'.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirJsonException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(ref Utf8JsonReader reader, string elementName, string instancePath) => Initialize(ref reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, $"Choice element '{elementName} should be suffixed by a type.", OO_Sev.Warning, OO_Typ.Structure);
 
+    // Will store the data as a DynamicResource
+    internal static FhirJsonException RESOURCETYPE_SHOULD_BE_STRING(ref Utf8JsonReader reader, string instancePath, JsonTokenType valueToken, string value) => Initialize(ref reader, instancePath, RESOURCETYPE_SHOULD_BE_STRING_CODE, $"Property 'resourceType' should be a string, but found token {valueToken} with value {value}.", OO_Sev.Fatal, OO_Typ.Value);
+    internal static FhirJsonException NO_RESOURCETYPE_PROPERTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, NO_RESOURCETYPE_PROPERTY_CODE, "Resource has no 'resourceType' property.", OO_Sev.Fatal, OO_Typ.Structure);
+    internal static FhirJsonException UNKNOWN_RESOURCE_TYPE(ref Utf8JsonReader reader, string instancePath, string resourceType) => Initialize(ref reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{resourceType}' found in 'resourceType' property.", OO_Sev.Fatal, OO_Typ.Structure);
+    internal static FhirJsonException RESOURCE_TYPE_NOT_A_RESOURCE(ref Utf8JsonReader reader, string instancePath, string name) => Initialize(ref reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{name}' in property 'resourceType' is not a type of resource.", OO_Sev.Fatal, OO_Typ.Structure);
+
+
     /// <summary>
     /// List of issues which do NOT lead to data loss. Recoverable issues mean that all data present in the parsed data could be retrieved and
     /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
@@ -92,8 +95,13 @@ public class FhirJsonException : ExtendedCodedException
         ARRAYS_CANNOT_BE_EMPTY_CODE,
         PRIMITIVE_ARRAYS_ONLY_NULL_CODE,
         CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE,
-        CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE
+        CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE,
+        RESOURCETYPE_SHOULD_BE_STRING_CODE,
+        NO_RESOURCETYPE_PROPERTY_CODE,
+        UNKNOWN_RESOURCE_TYPE_CODE,
+        RESOURCE_TYPE_NOT_A_RESOURCE_CODE,
     ];
+
 #pragma warning restore CS0618 // Type or member is obsolete
 
     /// <summary>

@@ -65,7 +65,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
         writer.WriteStartObject();
 
-        if (element is Resource r)
+        if (element is Resource r and not DynamicResource { DynamicTypeName: null })
             writer.WriteString("resourceType", r.TypeName);
 
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.

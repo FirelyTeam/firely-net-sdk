@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "TestData");
 
         [TestMethod]
-      //  [Ignore]
+        [Ignore]
         public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "../../../TestData");
 
         private void testRecovery(bool overwrite, string fileDir)

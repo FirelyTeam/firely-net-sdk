@@ -24,7 +24,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)StreamJsonResources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StreamXmlResources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SummaryTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SerializationExcexptionHandlersJsonPoco.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)TestData\all-xml-features.xml">

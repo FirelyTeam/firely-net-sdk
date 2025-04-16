@@ -42,7 +42,7 @@ public class FhirJsonDeserializationTests
         if (errorcode is null)
             result!.Name.Should().Be((string?)typename);
 
-        static (ClassMapping?, FhirJsonException?) test(object? typename)
+        static (ClassMapping?, CodedException?) test(object? typename)
         {
             var inspector = ModelInspector.ForAssembly(typeof(Resource).Assembly);
 
@@ -52,10 +52,11 @@ public class FhirJsonDeserializationTests
             var reader = new Utf8JsonReader(jsonBytes);
             reader.Read();
 
-            var ps = new PathStack();
-            ps.EnterElement("Patient", 0, false);
-            var response = BaseFhirJsonDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, ps);
-            return (response.Item1, response.Item2);
+            var state = new PocoDeserializerState();
+            state.Path.EnterElement("Patient", 0, false);
+            var response = BaseFhirJsonDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, state);
+
+            return (response.Original, state.Errors.SingleOrDefault());
         }
     }
 
@@ -94,7 +95,7 @@ public class FhirJsonDeserializationTests
         {
             var inspector = ModelInspector.ForType(typeof(Patient));
             var deserializer = new BaseFhirJsonDeserializer(inspector);
-            var mapping = inspector.ImportType(targetType)!;
+            var mapping = new ClassMappingDynamic(inspector.ImportType(targetType)!, null);
 
             var reader = constructReader(value);
             reader.Read();
@@ -484,9 +485,7 @@ public class FhirJsonDeserializationTests
         }
         catch (DeserializationFailedException dfe)
         {
-            Console.WriteLine(dfe.Message);
             var recoveredActual = JsonSerializer.Serialize(dfe.PartialResult, options);
-            Console.WriteLine(recoveredActual);
             var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
 
             if (overwrite)

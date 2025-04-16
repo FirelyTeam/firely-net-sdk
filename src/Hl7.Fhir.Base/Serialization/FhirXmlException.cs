@@ -46,13 +46,9 @@ public class FhirXmlException : ExtendedCodedException
     // ==========================================
     // Unrecoverable Errors - when adding a new error, also add it to the appropriate error collections below.
     // ==========================================
-    internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root element.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE(XmlReader reader, string instancePath, string resourceType) => Initialize(reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Type '{resourceType}' found in root element is not a resource type.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER(XmlReader reader, string instancePath) => Initialize(reader, instancePath, MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER_CODE, $"Encountered multiple elements in a resource container. Only a single resource is allowed.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, $"Encountered unexpected attribute '{attributeName}' in a resource container. Only a single resource is allowed.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException DISALLOWED_NODE_TYPE(XmlReader reader, string instancePath, string nodeType) => Initialize(reader, instancePath, DISALLOWED_NODE_TYPE_CODE, $"Xml node of type '{nodeType}' is unexpected at this point", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException EXPECTED_OPENING_ELEMENT(XmlReader reader, string instancePath, string nodeType) => Initialize(reader, instancePath, EXPECTED_OPENING_ELEMENT_CODE, $"Expected opening element, but found {nodeType}.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException INVALID_TEXT_NODE(XmlReader reader, string instancePath) => Initialize(reader, instancePath, INVALID_TEXT_NODE_CODE, $"Encountered a text-only node, which is not allowed in FHIR serialization.", OO_Sev.Error, OO_Typ.Structure);
 
 
     // ==========================================
@@ -92,6 +88,10 @@ public class FhirXmlException : ExtendedCodedException
     internal static FhirXmlException ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE_CODE, $"Element '{elementName}' should have been encoded as an attribute.", OO_Sev.Fatal, OO_Typ.Structure);
     internal static FhirXmlException ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT_CODE, $"Attribute '{attributeName}' should have been an element with a `value` property, not an attribute.", OO_Sev.Fatal, OO_Typ.Structure);
 
+    // Will store the data as a DynamicResource
+    internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root element.", OO_Sev.Fatal, OO_Typ.Structure);
+    internal static FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE(XmlReader reader, string instancePath, string resourceType) => Initialize(reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Type '{resourceType}' found in root element is not a resource type.", OO_Sev.Fatal, OO_Typ.Structure);
+
     internal static readonly HashSet<string> RECOVERABLE_ISSUES =
     [
         ..CodedValidationException.POCO_VALIDATION_ISSUES,
@@ -105,7 +105,9 @@ public class FhirXmlException : ExtendedCodedException
         SCHEMALOCATION_DISALLOWED_CODE,
         EMPTY_RESOURCE_CONTAINER_CODE,
         CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE,
-        CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE
+        CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE,
+        UNKNOWN_RESOURCE_TYPE_CODE,
+        RESOURCE_TYPE_NOT_A_RESOURCE_CODE
     ];
 
     /// <summary>

@@ -57,15 +57,9 @@ internal static class XmlReaderExtensions
         if (nodeType is XmlNodeType.Comment or XmlNodeType.Whitespace or XmlNodeType.XmlDeclaration or XmlNodeType.SignificantWhitespace)
             return true;
 
-        if (nodeType is XmlNodeType.CDATA or XmlNodeType.ProcessingInstruction or XmlNodeType.DocumentType or XmlNodeType.EntityReference)
+        if (nodeType is XmlNodeType.CDATA or XmlNodeType.ProcessingInstruction or XmlNodeType.DocumentType or XmlNodeType.EntityReference or XmlNodeType.Text)
         {
             state.Errors.Add(ERR.DISALLOWED_NODE_TYPE(reader, state.Path.GetInstancePath(), nodeType.GetLiteral()));
-            return true;
-        }
-
-        if (nodeType is XmlNodeType.Text)
-        {
-            state.Errors.Add(ERR.INVALID_TEXT_NODE(reader, state.Path.GetInstancePath()));
             return true;
         }
 

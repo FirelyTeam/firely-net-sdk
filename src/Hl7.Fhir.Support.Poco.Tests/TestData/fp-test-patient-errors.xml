@@ -11,7 +11,7 @@
   <contained containedAttribute="false">
     <Patient>
       <active value="true" />
-      <active value="false" /> <!-- repeats for now undetected -->
+      <active value="false" />
     </Patient>
     <Patient>
       <active value="not-checked" />
