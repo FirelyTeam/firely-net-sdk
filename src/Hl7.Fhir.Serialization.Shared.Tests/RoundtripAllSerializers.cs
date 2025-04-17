@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
@@ -8,6 +9,7 @@ using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -24,17 +26,30 @@ internal interface IRoundTripper
 
 internal class FhirXmlJsonParserRoundtripper() : IRoundTripper
 {
-    public string RoundTripXml(string original) =>
-        FhirXmlSerializer.Default.SerializeToString(
-            FhirJsonDeserializer.RECOVERABLE.Deserialize<Resource>(
-                FhirJsonSerializer.Default.SerializeToString(
-                    FhirXmlDeserializer.RECOVERABLE.Deserialize<Resource>(original))));
+    public string RoundTripXml(string original)
+    {
+        Resource instance = FhirXmlDeserializer.RECOVERABLE.Deserialize<Resource>(original);
+        instance.HasOverflow.Should().BeFalse();
 
-    public string RoundTripJson(string original) =>
-        FhirJsonSerializer.Default.SerializeToString(
-            FhirXmlDeserializer.RECOVERABLE.Deserialize<Resource>(
-                FhirXmlSerializer.Default.SerializeToString(
-                    FhirJsonDeserializer.RECOVERABLE.Deserialize<Resource>(original))));
+        Resource deserialize = FhirJsonDeserializer.RECOVERABLE.Deserialize<Resource>(
+            FhirJsonSerializer.Default.SerializeToString(
+                instance));
+        deserialize.HasOverflow.Should().BeFalse();
+
+        return FhirXmlSerializer.Default.SerializeToString(deserialize);
+    }
+
+    public string RoundTripJson(string original)
+    {
+        Resource instance = FhirJsonDeserializer.RECOVERABLE.Deserialize<Resource>(original);
+        instance.HasOverflow.Should().BeFalse();
+
+        Resource deserialize = FhirXmlDeserializer.RECOVERABLE.Deserialize<Resource>(
+            FhirXmlSerializer.Default.SerializeToString(instance));
+        deserialize.HasOverflow.Should().BeFalse();
+
+        return FhirJsonSerializer.Default.SerializeToString(deserialize);
+    }
 }
     
 internal class TypedElementBasedRoundtripper(IStructureDefinitionSummaryProvider provider) : IRoundTripper

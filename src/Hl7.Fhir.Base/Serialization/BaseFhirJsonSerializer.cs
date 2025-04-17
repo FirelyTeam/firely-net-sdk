@@ -65,7 +65,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
         writer.WriteStartObject();
 
-        if (element is Resource r)
+        if (element is Resource r and not DynamicResource { DynamicTypeName: null })
             writer.WriteString("resourceType", r.TypeName);
 
         // Only throw if we don't have a mapping where we are expected to: when this is a subclass of Base.
@@ -196,7 +196,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
         foreach (var value in values)
         {
-            if (value?.HasElements == true)
+            if (value?.EnumerateElements().Any() == true)
             {
                 if (!wroteStartArray)
                 {
@@ -243,7 +243,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
             SerializePrimitiveValue(value.ObjectValue, writer, requiredType);
         }
 
-        if (!value.HasElements) return;
+        if (!value.EnumerateElements().Any()) return;
 
         // Write a property with '_elementName'
         writer.WritePropertyName("_" + elementName);
@@ -263,7 +263,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     /// to be written that fit in .NET's <see cref="decimal"/> type, which may be less
     /// precision than required by the FHIR specification (http://hl7.org/fhir/json.html#primitive).
     /// </remarks>
-    protected virtual void SerializePrimitiveValue(object value, Utf8JsonWriter writer, Type? requiredType)
+    protected virtual void SerializePrimitiveValue(object? value, Utf8JsonWriter writer, Type? requiredType)
     {
         switch (value)
         {

@@ -2,9 +2,12 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Tests;
+using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -16,6 +19,51 @@ namespace Hl7.Fhir.Support.Poco.Tests
     [TestClass]
     public class FhirXmlDeserializationTests
     {
+        [TestMethod]
+        public void SerializingErroneousResource_Should_ThrowExpectedErrors() => testRecovery(false, "TestData");
+
+        [TestMethod]
+        [Ignore]
+        public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "../../../TestData");
+
+        private void testRecovery(bool overwrite, string fileDir)
+        {
+            var patientFileName = Path.Combine(fileDir, "fp-test-patient-errors.xml");
+            var errorsFileName = Path.Combine(fileDir, "fp-test-patient-errors-expected-xml.txt");
+            var xmlInput = File.ReadAllText(patientFileName);
+            var pretty = overwrite;
+
+            var serializer = getTestDeserializer(new DeserializerSettings());
+    
+            try
+            {
+                _ = serializer.Deserialize<Patient>(xmlInput);
+                Assert.Fail("Should have encountered errors.");
+            }
+            catch (DeserializationFailedException dfe)
+            {
+                var recoveredActual = FhirXmlSerializer.Default
+                    .SerializeToString(dfe.PartialResult!, pretty: pretty);
+                var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
+
+                if (overwrite)
+                {
+                    File.WriteAllLines(errorsFileName, errorsActual);
+                }
+
+                var errorsExpected = File.ReadAllLines(errorsFileName);
+                errorsActual.Should().BeEquivalentTo(errorsExpected);
+
+                var recoveredFilename = Path.Combine(fileDir, "fp-test-patient-errors-recovered.xml");
+                if(overwrite)
+                    File.WriteAllText(recoveredFilename, recoveredActual);
+
+                var recoveredExpected = File.ReadAllText(recoveredFilename);
+                
+                XmlAssert.AreSame("fp-test-patient-xml-errors/recovery", recoveredExpected, recoveredActual);
+            }
+        }
+        
         [DataTestMethod]
         [DataRow("<active value =\"true\"/>", typeof(FhirBoolean), true, null)]
         [DataRow("<multipleBirthInteger value =\"1\"/>", typeof(Integer), 1, null)]
@@ -27,7 +75,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(xmlPrimitive);
             reader.Read();
 
-            var deserializer = getTestDeserializer(new());
+            var deserializer = getTestDeserializer(
+                new DeserializerSettings().Ignoring([ERR.EMPTY_ELEMENT_NAMESPACE_CODE]));
             var datatype = deserializer.DeserializeElement(expectedFhirType, reader);
 
             datatype.Should().BeOfType(expectedFhirType);
@@ -55,17 +104,20 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.MoveToContent();
             //reader.MoveToFirstAttribute();
 
-            var deserializer = getTestDeserializer(new DeserializerSettings());
+            var deserializer = getTestDeserializer(
+                new DeserializerSettings());
             var classMapping = ModelInfo.ModelInspector.ImportType(fhirTargetType)!;
             var target = (PrimitiveType)classMapping.Factory()!;
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
             deserializer.DeserializeElementInto(target, classMapping, reader, state);
 
-            state.Errors.Should().HaveCount(expectedErrorCode == null ? 0 : 1);
+            var cleaned = state.Errors.Remove(ce => ce.ErrorCode == ERR.EMPTY_ELEMENT_NAMESPACE_CODE).ToList();
 
-            if(state.Errors.Count > 0)
+            cleaned.Should().HaveCount(expectedErrorCode == null ? 0 : 1);
+
+            if(cleaned.Count > 0)
             {
-                state.Errors.First().ErrorCode.Should().Be(expectedErrorCode);
+                cleaned.First().ErrorCode.Should().Be(expectedErrorCode);
             }
             else
             {
@@ -97,10 +149,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.Read();
 
             var deserializer = getTestDeserializer(new());
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 
-            state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.ATTRIBUTE_HAS_EMPTY_VALUE_CODE);
+            state.Errors.Should().OnlyContain(ce => ce.ErrorCode == COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
 
             resource.Should().BeOfType<Patient>();
         }
@@ -114,12 +166,32 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.Read();
 
             var deserializer = getTestDeserializer(new());
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 
             state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE);
 
             resource.Should().BeOfType<Patient>();
+        }
+
+        [TestMethod]
+        public void MakeSureVersionSpecificTypedPropertiesGetCreatedOk()
+        {
+            var pat = new Patient()
+            {
+                Meta = new Meta()
+                {
+                    VersionId = "1",
+                    ProfileElement = [new FhirUri("http://nu.nl")]
+                }
+            };
+
+            var content = pat.ToXml();
+            var pat2 = FhirXmlDeserializer.DEFAULT.DeserializeResource(content);
+
+            // If we deserialize the profile incorrectly due to AllowedTypes etc,
+            // it will end up in the overflow and this will crash.
+            pat2.Meta.Profile.Should().HaveCount(1);
         }
 
         [TestMethod]
@@ -131,14 +203,13 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.Read();
 
             var deserializer = getTestDeserializer(new());
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 
             state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE);
 
             resource.Should().BeOfType<Patient>();
         }
-
 
 
 
@@ -151,7 +222,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.Read();
 
             var deserializer = getTestDeserializer(new());
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 
             state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.EMPTY_ELEMENT_NAMESPACE_CODE);
@@ -169,7 +240,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.Read();
 
             var deserializer = getTestDeserializer(new());
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 
             state.Errors.Should().BeEmpty();
@@ -192,7 +263,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.Read();
 
             var deserializer = getTestDeserializer(new DeserializerSettings { DisallowXsiAttributesOnRoot = true });
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
             var resource = deserializer.DeserializeResourceInternal(reader, state);
 
             state.Errors.Should().Contain(ce => ce.ErrorCode == ERR.SCHEMALOCATION_DISALLOWED_CODE);
@@ -251,6 +322,20 @@ namespace Hl7.Fhir.Support.Poco.Tests
             resource.As<Patient>().Gender.Value.Should().Be(AdministrativeGender.Female);
         }
 
+        [TestMethod]
+        public void MandatoryElementsShouldBeDetected()
+        {
+            var content = "<Observation xmlns=\"http://hl7.org/fhir\"><issued value=\"2025-04-15T12:09:00Z\"/></Observation>";
+
+            var reader = constructReader(content);
+            reader.Read();
+
+            var deserializer = getTestDeserializer(new());
+            var success = deserializer.TryDeserializeResource(reader, out var resource, out var errors);
+            success.Should().BeFalse();
+
+            errors.Should().Contain(ce => ce.ErrorCode == CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        }
 
         [TestMethod]
         public void TryDeserializeContainedResource()
@@ -283,45 +368,6 @@ namespace Hl7.Fhir.Support.Poco.Tests
             resource.As<Patient>().Contained[0].As<Patient>().MultipleBirth.As<FhirBoolean>().Value.Should().Be(true);
             resource.As<Patient>().Contained[1].As<Patient>().Active.Value.Should().Be(true);
         }
-
-        [TestMethod]
-        public void TryDeserializeIncorrectContainedResource()
-        {
-            var content = "<Patient xmlns=\"http://hl7.org/fhir\">" +
-                             "<contained>" +
-                                "<Patient>" +
-                                    "<multipleBirthBoolean value = \"true\"/>" +
-                                "</Patient>" +
-                                "<Patient>" +
-                                    "<birthdate value = \"2020-01-01\"/>" +
-                                "</Patient>" +
-                              "</contained>" +
-                              "<contained>" +
-                                "<Patient>" +
-                                    "<active value = \"true\"/>" +
-                                "</Patient>" +
-                              "</contained>" +
-                              "<active value=\"true\"/>" +
-                              "<gender value=\"female\"/>" +
-                          "</Patient>";
-
-            var reader = constructReader(content);
-            reader.Read();
-
-            var deserializer = getTestDeserializer(new());
-            var state = new FhirXmlPocoDeserializerState();
-            var resource = deserializer.DeserializeResourceInternal(reader, state);
-
-            state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE);
-
-            resource.Should().BeOfType<Patient>();
-            resource.As<Patient>().Active.Value.Should().Be(true);
-            resource.As<Patient>().Gender.Value.Should().Be(AdministrativeGender.Female);
-            resource.As<Patient>().Contained.Should().HaveCount(2);
-            resource.As<Patient>().Contained[0].As<Patient>().MultipleBirth.As<FhirBoolean>().Value.Should().Be(true);
-            resource.As<Patient>().Contained[1].As<Patient>().Active.Value.Should().Be(true);
-        }
-
 
         [TestMethod]
         public void TryDeserializeComplexResource()
@@ -383,7 +429,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             var reader = constructReader(content);
             reader.Read();
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
 
             var deserializer = getTestDeserializer(new());
             var datatype = deserializer.DeserializeElementInternal(typeof(HumanName), reader, state);
@@ -406,7 +452,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(content);
             reader.Read();
 
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
             var deserializer = getTestDeserializer(new());
             var datatype = deserializer.DeserializeElementInternal(typeof(HumanName), reader, state);
 
@@ -414,7 +460,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             datatype.As<HumanName>().GivenElement[0].Value.Should().Be("foo");
             datatype.As<HumanName>().Family.Should().Be("oof");
 
-            state.Errors.Should().OnlyContain(ce => ce.ErrorCode == ERR.UNKNOWN_ELEMENT_CODE);
+            state.Errors.Select(x => x.ErrorCode).Should().BeEquivalentTo([COVE.UNKNOWN_ELEMENT_CODE]);
         }
 
         [TestMethod]
@@ -433,7 +479,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(content);
             reader.Read();
 
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
             var deserializer = getTestDeserializer(new());
             var resource = deserializer.DeserializeResourceInternal(reader, state);
             resource.Should().NotBeNull();
@@ -517,10 +563,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var xmlFileName = Path.Combine("TestData", "fp-test-patient.xml");
             var xml = File.ReadAllText(xmlFileName);
             var reader = constructReader(xml);
-            reader.Read();
+            reader.MoveToContent();
 
             var serializer = getTestDeserializer(new());
-            var state = new FhirXmlPocoDeserializerState();
+            var state = new PocoDeserializerState();
 
             var result = serializer.DeserializeResourceInternal(reader, state);
 

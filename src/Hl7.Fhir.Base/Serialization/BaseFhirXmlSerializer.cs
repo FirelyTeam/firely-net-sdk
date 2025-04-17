@@ -89,13 +89,22 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
 
     private void serializeElement(Base element, XmlWriter writer, SerializationFilter? filter, ClassMapping? mapping)
     {
+        static bool attributeSorter(PropertyMapping? mapping, Base? value)
+        {
+            if (mapping?.SerializationHint == XmlRepresentation.XmlAttr)
+                return false;
+            if (value?.Annotation<XmlRepresentationAnnotation>()?.Value == XmlRepresentation.XmlAttr)
+                return false;
+
+            return true;
+        }
         // Make sure that elements with attributes are serialized first.
         // Add the special "value" attribute if this is a FhirPrimitive.
         var orderedMembers = element
             .EnumerateElements()
             .Concat(element is PrimitiveType { ObjectValue: {} ptValue } ? [KeyValuePair.Create("value", ptValue)] : [])
             .Select(m => (m, mapping: mapping?.FindMappedElementByName(m.Key)))
-            .OrderBy(p => p.mapping?.SerializationHint != XmlRepresentation.XmlAttr);
+            .OrderBy(p => attributeSorter(p.mapping, p.m.Value as Base));
 
         foreach (var ((mKey, mValue), propertyMapping) in orderedMembers)
         {
@@ -104,8 +113,8 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
 
             var serializeValue = mValue!;
 
-            if (propertyMapping?.SerializationHint == XmlRepresentation.XmlAttr &&
-                serializeValue is PrimitiveType primitive)
+            if (serializeValue is PrimitiveType primitive && 
+                (propertyMapping?.SerializationHint ?? primitive.Annotation<XmlRepresentationAnnotation>()?.Value) == XmlRepresentation.XmlAttr)
             {
                 // If this is a FHIR primitive element marked as XmlAttr,
                 // take the primitive's value (e.g. Extension.url, Element.id)
@@ -142,6 +151,9 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
 
     private void serializeMemberValue(string elementName, object? value, XmlWriter writer, SerializationFilter? filter)
     {
+        try
+        {
+
         switch (value)
         {
             case null:
@@ -157,6 +169,12 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
             default:
                 SerializePrimitiveValue(elementName, value, writer);
                 break;
+        }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 

@@ -122,19 +122,19 @@ public class ValidationTests_LowLevelApi
     public void TestCardinality()
     {
         OperationOutcome oo = new();
-        assertInstanceValidationErrors(oo, CodedValidationException.INCORRECT_CARDINALITY_MIN_CODE);
+        assertInstanceValidationErrors(oo, CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
 
-        oo.Issue = new List<OperationOutcome.IssueComponent>();
-        assertInstanceValidationErrors(oo, CodedValidationException.INCORRECT_CARDINALITY_MIN_CODE);
+        oo.Issue = [];
+        assertInstanceValidationErrors(oo, CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
 
         var issue = new OperationOutcome.IssueComponent();
 
         oo.Issue.Add(issue); 
         assertInstanceValidationErrors(oo);
-        assertInstanceValidationErrors(oo.Issue.First(), CodedValidationException.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, CodedValidationException.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+        assertInstanceValidationErrors(oo.Issue.First(), CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
 
         issue.Severity = OperationOutcome.IssueSeverity.Information;
-        assertInstanceValidationErrors(oo.Issue.First(), CodedValidationException.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+        assertInstanceValidationErrors(oo.Issue.First(), CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
 
         issue.Code = OperationOutcome.IssueType.Forbidden;
         assertInstanceValidationErrors(oo.Issue.First());
@@ -188,7 +188,7 @@ public class ValidationTests_LowLevelApi
     {
         // First create an incomplete Observation (status and code not supplied)
         var obs = new Observation();
-        assertInstanceValidationErrors(obs, CodedValidationException.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, CodedValidationException.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+        assertInstanceValidationErrors(obs, CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
 
         obs.Status = ObservationStatus.Final;
         obs.Code = new CodeableConcept("http://snomed.info/sct", "27113001", "Body weight");
@@ -255,6 +255,6 @@ public class ValidationTests_LowLevelApi
             Data = [0, 1, 2, 3]
         };
 
-        assertInstanceValidationErrors(bin, CodedValidationException.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE);
+        assertInstanceValidationErrors(bin, CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
     }
 }

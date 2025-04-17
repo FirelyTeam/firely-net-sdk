@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Serialization
                 case CodedValidationException.INCORRECT_CARDINALITY_MIN_CODE: shortDisplay = "Missing mandatory field"; break;
                 case CodedValidationException.INCORRECT_CARDINALITY_MAX_CODE: shortDisplay = "Exceeded max values"; break;
                 case CodedValidationException.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE: shortDisplay = "Cannot be null"; break;
-                case CodedValidationException.MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE: shortDisplay = "Mandatory field cannot be null"; break;
+                case CodedValidationException.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE: shortDisplay = "Mandatory field cannot be null"; break;
                 case CodedValidationException.LITERAL_INVALID_CODE: shortDisplay = "Invalid literal"; break;
                 case CodedValidationException.NARRATIVE_XML_IS_MALFORMED_CODE: shortDisplay = "Malformed narrative"; break;
                 case CodedValidationException.NARRATIVE_XML_IS_INVALID_CODE: shortDisplay = "Invalid narrative"; break;
@@ -63,15 +63,11 @@ namespace Hl7.Fhir.Serialization
                 case CodedValidationException.CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE: shortDisplay = "Contained resources cannot be nested"; break;
                 case CodedValidationException.INVALID_BASE64_VALUE_CODE: shortDisplay = "Invalid Base64 data"; break;
 
-                case FhirJsonException.EXPECTED_START_OF_OBJECT_CODE: shortDisplay = "Expected Object"; break;
+                // case FhirJsonException.EXPECTED_START_OF_OBJECT_CODE: shortDisplay = "Expected Object"; break;
                 case FhirJsonException.NO_RESOURCETYPE_PROPERTY_CODE: shortDisplay = "Missing ResourceType"; break;
-                case FhirJsonException.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE: shortDisplay = "Expected Object"; break;
-                case FhirJsonException.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE: shortDisplay = "Expected Primitive"; break;
                 case FhirJsonException.UNKNOWN_RESOURCE_TYPE_CODE: shortDisplay = "Invalid ResourceType"; break;
-                case FhirJsonException.UNKNOWN_PROPERTY_FOUND_CODE: shortDisplay = "Unknown element"; break;
                 case FhirXmlException.EMPTY_ELEMENT_NAMESPACE_CODE: shortDisplay = "Empty Element Namespace"; break;
                 case FhirXmlException.UNKNOWN_RESOURCE_TYPE_CODE: shortDisplay = "Invalid ResourceType"; break;
-                case FhirXmlException.UNKNOWN_ELEMENT_CODE: shortDisplay = "Unknown element"; break;
                 case FhirXmlException.ELEMENT_OUT_OF_ORDER_CODE: shortDisplay = "XML element out of order"; break;
                 case FhirXmlException.INCORRECT_ELEMENT_NAMESPACE_CODE: shortDisplay = "Invalid element namespace"; break;
                 case FhirXmlException.INCORRECT_ATTRIBUTE_NAMESPACE_CODE: shortDisplay = "Invalid attribute namespace"; break;

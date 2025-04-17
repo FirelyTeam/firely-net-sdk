@@ -51,7 +51,7 @@ public static class PocoValidationExtensions
         string producer() => instance.TypeName;
     }
 
-    private static IReadOnlyCollection<CodedValidationException> doObjectValidation(Base value, PocoValidationContext validationContext, IPocoValidator validator)
+    private static List<CodedValidationException> doObjectValidation(Base value, PocoValidationContext validationContext, IPocoValidator validator)
     {
         var errors = new List<CodedValidationException>();
 
@@ -100,7 +100,7 @@ public static class PocoValidationExtensions
         return [];
     }
 
-    internal static Func<string> IntoPath(this Func<string> parent, string propName) => () => $"{parent()}.{propName}";
+    internal static Func<string> IntoPath(this Func<string> parent, string propName) => () => (parent() is not "" && propName is not "") ? $"{parent()}.{propName}" : parent + propName;
     internal static PocoValidationContext IntoPath(this PocoValidationContext parent, string propName) =>
         parent with { PathProducer = parent.PathProducer.IntoPath(propName) };
 }

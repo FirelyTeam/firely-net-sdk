@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void ConfigureFailOnUnknownMember()
         {
-            const string xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
+            const string xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona value='test'></daytona></Patient>";
             var parser = new FhirXmlDeserializer();
             parser.Settings = parser.Settings with { AllowUnrecognizedEnums = true };
 
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void ReturnsLineNumbersXml()
         {
-            var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /></Patient>";
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /><active value='true'/><active value='true'/></Patient>";
             var parser = new FhirXmlDeserializer();
 
             try
@@ -61,15 +61,20 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsFalse(fe.Message.Contains("pos -1"));
+                fe.Message.Should().Match("*, line *, position *");
             }
         }
 
         [TestMethod]
         public void ReturnsLineNumbersJson()
         {
-            var xml = "<Patient xmlns='http://hl7.org/fhir'><iDontExist value='piet' /></Patient>";
-            var parser = new FhirXmlDeserializer();
+            var xml = """
+                      {
+                          "resourceType": "Patient",
+                          "active": [{ "value": true }],
+                      }
+                      """;
+            var parser = new FhirJsonDeserializer();
 
             try
             {
@@ -78,7 +83,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
             catch (FormatException fe)
             {
-                Assert.IsFalse(fe.Message.Contains("pos -1"));
+                fe.Message.Should().Match("*, line *, position *");
             }
         }
 
@@ -308,8 +313,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var json = FhirJsonSerializer.SerializeToString(patient);
             Assert.IsFalse(FhirJsonDeserializer.STRICT.TryDeserializeResource(json, out var resource, out var errors));
 
-            errors.Count().Should().Be(2);
-            errors.Select(e => e.ErrorCode).Should().AllBe(FhirJsonException.PROPERTY_MAY_NOT_BE_EMPTY_CODE);
+            errors.Count().Should().Be(1);
+            errors.Select(e => e.ErrorCode).Should().AllBe(CodedValidationException.LITERAL_INVALID_CODE);
 
             var parsedPatient = resource as Patient;
 
