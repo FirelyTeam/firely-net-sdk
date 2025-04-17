@@ -221,7 +221,6 @@ namespace Hl7.Fhir.Model
     /// active | completed | entered-in-error | intended | stopped | on-hold | unknown | not-taken.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("MedicationStatementStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

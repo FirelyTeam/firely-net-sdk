@@ -259,7 +259,6 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ProcessRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
@@ -302,7 +301,6 @@ namespace Hl7.Fhir.Model
     /// cancel | poll | reprocess | status.
     /// </summary>
     [FhirElement("action", Order=110, FiveWs="class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ActionList")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ProcessRequest.ActionList>? ActionElement

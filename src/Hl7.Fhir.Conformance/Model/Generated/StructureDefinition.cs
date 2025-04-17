@@ -478,7 +478,6 @@ namespace Hl7.Fhir.Model
       /// fhirpath | element | extension.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ExtensionContextType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1112,7 +1111,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1556,7 +1554,6 @@ namespace Hl7.Fhir.Model
     /// FHIR Version this StructureDefinition targets.
     /// </summary>
     [FhirElement("fhirVersion", InSummary=true, Order=270)]
-    [AllowedTypes(typeof(Code))]
     [Binding("FHIRVersion")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRVersion>? FhirVersionElement
@@ -1626,7 +1623,6 @@ namespace Hl7.Fhir.Model
     /// primitive-type | complex-type | resource | logical.
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=290)]
-    [AllowedTypes(typeof(Code))]
     [Binding("StructureDefinitionKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1868,7 +1864,6 @@ namespace Hl7.Fhir.Model
     /// specialization | constraint - How relates to base definition.
     /// </summary>
     [FhirElement("derivation", InSummary=true, Order=350)]
-    [AllowedTypes(typeof(Code))]
     [Binding("TypeDerivationRule")]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule>? DerivationElement

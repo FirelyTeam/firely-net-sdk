@@ -200,7 +200,6 @@ namespace Hl7.Fhir.Model
       /// SHALL | SHOULD | MAY | SHOULD-NOT.
       /// </summary>
       [FhirElement("conformance", Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("??")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -994,7 +993,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

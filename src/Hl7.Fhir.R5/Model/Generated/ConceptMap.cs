@@ -368,7 +368,6 @@ namespace Hl7.Fhir.Model
       /// Coding | string | integer | boolean | dateTime | decimal | code.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
-      [AllowedTypes(typeof(Code))]
       [Binding("PropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -743,7 +742,6 @@ namespace Hl7.Fhir.Model
       /// code | Coding | string | boolean | Quantity.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ConceptMapmapAttributeType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1695,7 +1693,6 @@ namespace Hl7.Fhir.Model
       /// related-to | equivalent | source-is-narrower-than-target | source-is-broader-than-target | not-related-to.
       /// </summary>
       [FhirElement("relationship", IsModifier=true, Order=70)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ConceptMapRelationship")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2501,7 +2498,6 @@ namespace Hl7.Fhir.Model
       /// use-source-code | fixed | other-map.
       /// </summary>
       [FhirElement("mode", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ConceptMapGroupUnmappedMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2668,7 +2664,6 @@ namespace Hl7.Fhir.Model
       /// related-to | equivalent | source-is-narrower-than-target | source-is-broader-than-target | not-related-to.
       /// </summary>
       [FhirElement("relationship", IsModifier=true, Order=80)]
-      [AllowedTypes(typeof(Code))]
       [Binding("UnmappedConceptMapRelationship")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship>? RelationshipElement
@@ -3139,7 +3134,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

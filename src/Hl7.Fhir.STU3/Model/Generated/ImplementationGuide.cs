@@ -163,7 +163,6 @@ namespace Hl7.Fhir.Model
       /// reference | inclusion.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("GuideDependencyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1002,7 +1001,6 @@ namespace Hl7.Fhir.Model
       /// Type this profiles applies to.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1268,7 +1266,6 @@ namespace Hl7.Fhir.Model
       /// page | example | list | include | directory | dictionary | toc | resource.
       /// </summary>
       [FhirElement("kind", InSummary=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("GuidePageKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1312,7 +1309,6 @@ namespace Hl7.Fhir.Model
       /// Kind of resource to include in the list.
       /// </summary>
       [FhirElement("type", Order=70)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ResourceType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1785,7 +1781,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -1435,7 +1435,6 @@ namespace Hl7.Fhir.Model
     /// complete | pending | error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("MeasureReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1479,7 +1478,6 @@ namespace Hl7.Fhir.Model
     /// individual | subject-list | summary | data-collection.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("MeasureReportType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

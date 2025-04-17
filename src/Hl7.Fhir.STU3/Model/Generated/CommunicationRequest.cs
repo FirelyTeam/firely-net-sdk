@@ -462,7 +462,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | suspended | cancelled | completed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("CommunicationRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -534,7 +533,6 @@ namespace Hl7.Fhir.Model
     /// Message urgency.
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=150, FiveWs="grade")]
-    [AllowedTypes(typeof(Code))]
     [Binding("CommunicationPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement

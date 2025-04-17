@@ -183,7 +183,6 @@ namespace Hl7.Fhir.Model
     /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ResearchSubjectStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

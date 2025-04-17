@@ -94,7 +94,6 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
-    [AllowedTypes(typeof(Code))]
     [Binding("EnrollmentResponseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement
@@ -165,7 +164,6 @@ namespace Hl7.Fhir.Model
     /// queued | complete | error | partial.
     /// </summary>
     [FhirElement("outcome", Order=120)]
-    [AllowedTypes(typeof(Code))]
     [Binding("RemittanceOutcome")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RemittanceOutcome>? OutcomeElement

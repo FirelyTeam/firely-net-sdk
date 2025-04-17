@@ -1,16 +1,243 @@
 {
   "resourceType": "Patient",
+  "unknownElement": {
+    "valued": {
+      "data": [
+        true,
+        null
+      ]
+    }
+  },
   "id": "pat1-with-errors",
-  "meta": { "lastUpdated": "not a valid instant" },
+  "meta": {
+    "lastUpdated": "not a valid instant"
+  },
   "text": {
-    "status": "generated",
+    "resourceType": "Narrative",
+    "status": "generatedY",
     "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div>"
   },
   "contained": [
-    null,
-    null,
-    null,
-    null,
+    {
+      "resourceType": "Patient",
+      "active": [
+        null,
+        true
+      ],
+      "_active": [
+        {
+          "value": true
+        },
+        null
+      ],
+      "id": "PrimitiveArrayContainsComplex"
+    },
+    {
+      "resourceType": "Patient",
+      "id": "ComplexArrayContainsPrimitive",
+      "name": [
+        {
+          "value": "John"
+        },
+        {
+          "family": "Doe"
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "active": [
+        null,
+        true
+      ],
+      "id": "MultiLevelArrayPrimitive"
+    },
+    {
+      "resourceType": "Patient",
+      "active": [
+        true,
+        false
+      ],
+      "id": "MultiLevelArrayPrimitiveNoNull"
+    },
+    {
+      "resourceType": "Patient",
+      "_active": [
+        null,
+        {
+          "versionId": "2"
+        }
+      ],
+      "id": "MultiLevelArrayWithComplex"
+    },
+    {
+      "resourceType": "Patient",
+      "active": [
+        null,
+        true
+      ],
+      "_active": [
+        {
+          "versionId": "2"
+        },
+        null
+      ],
+      "id": "MultiLevelArrayWithComplexNoNull"
+    },
+    {
+      "resourceType": "PatientX",
+      "id": "1"
+    },
+    {
+      "resourceType": "Meta",
+      "versionId": "1"
+    },
+    {
+      "resourceType": "4",
+      "id": "1"
+    },
+    {
+      "id": "1"
+    },
+    {
+      "resourceType": "Patient",
+      "active": true,
+      "deceasedString": "yesterday"
+    },
+    {
+      "resourceType": "Patient",
+      "active": false,
+      "_active": {
+        "url": "http://example.com",
+        "id": "duped"
+      },
+      "name": [
+        {
+          "family": "Doe"
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "name": [
+        {
+          "family": "Doe"
+        },
+        {
+          "family": "Doe2"
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "test": false,
+      "_test": {
+        "id": "duped",
+        "extension": [
+          {
+            "url": "http://example.com"
+          }
+        ]
+      },
+      "id": "pat1"
+    },
+    {
+      "resourceType": "Observation",
+      "id": "decimal",
+      "status": "final",
+      "code": {
+        "text": "Decimal Testing Observation"
+      },
+      "component": [
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 1.0,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 1.00,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 1.0,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 0.00000000000000001,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": 10000000000000000,
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": "1.00000000000000000e-24",
+            "unit": "g"
+          }
+        },
+        {
+          "code": {
+            "text": "Component"
+          },
+          "valueQuantity": {
+            "value": "-1.00000000000000000e245",
+            "unit": "g"
+          }
+        }
+      ]
+    },
+    {
+      "resourceType": "Patient",
+      "id": "pat1",
+      "name": [
+        {
+          "given": [
+            "Jane",
+            "John",
+            "Rita",
+            true
+          ],
+          "_given": [
+            null,
+            {
+              "id": "e1"
+            },
+            null,
+            {
+              "id": "e2"
+            }
+          ]
+        }
+      ]
+    },
     {
       "resourceType": "Patient",
       "id": "1",
@@ -24,18 +251,27 @@
       "active": true,
       "name": [
         {
+          "given": "This should be an array",
+          "mother": "this does not exist",
           "id": "firstname",
           "use": "official",
-          "family": "Everywoman",
-          "given": [ "This should be an array" ]
+          "family": "Everywoman"
         },
         {
+          "family": [
+            "error: array is unexpected here"
+          ],
           "id": "anothername",
           "use": "usual",
-          "given": [ "Eveline", null ],
+          "given": [
+            "Eveline",
+            null
+          ],
           "_given": [
             null,
-            { "id": "a1" }
+            {
+              "id": "a1"
+            }
           ]
         }
       ],
@@ -50,147 +286,34 @@
       "birthDate": "1973-05-31",
       "address": [
         {
-          "line": [ "2222 Home Street", null ],
-          "_line": [
-            { "id": "bla" },
+          "_use": {
+            "incorrect": "should have been a simple string"
+          },
+          "line": [
+            "2222 Home Street",
             null
+          ],
+          "_line": [
+            {
+              "id": "bla"
+            },
+            null
+          ]
+        },
+        {
+          "line": [
+            "Wodanstraat"
           ]
         }
       ],
-      "managingOrganization": { "reference": "Organization/hl7" }
-    },
+      "managingOrganization": {
+        "reference": "Organization/hl7"
+      }
+    }
+  ],
+  "extension": [
     {
-      "resourceType": "Questionnaire",
-      "id": "3141",
-      "text": {
-        "status": "generatedY",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>\r\n            Comorbidity? YES\r\n            Cardial Comorbidity? YES\r\n            Angina? YES\r\n            MI? NO\r\n            Vascular Comorbidity?\r\n            (no answers)\r\n            ...\r\n            Histopathology\r\n            Abdominal\r\n            pT category: 1a\r\n            ...\r\n          </pre></div>"
-      },
-      "status": "draft",
-      "date": "2012-01",
-      "subjectType": [ "Patient" ],
-      "item": [
-        {
-          "linkId": "1",
-          "text": "Cancer Quality Forum Questionnaire 2012",
-          "type": "display",
-          "option": [
-            { "valueBoolean": true }
-          ],
-          "item": [
-            {
-              "linkId": "1.1",
-              "code": [ {} ],
-              "type": "display",
-              "item": [
-                {
-                  "linkId": "1.1.1",
-                  "code": [
-                    {
-                      "system": "http://example.org/system/code/questions",
-                      "code": "COMORB"
-                    }
-                  ],
-                  "type": "choice",
-                  "options": { "reference": "#yesno" },
-                  "item": [
-                    {
-                      "linkId": "1.1.1.1",
-                      "code": [
-                        {
-                          "system": "http://example.org/system/code/sections",
-                          "code": "CARDIAL"
-                        }
-                      ],
-                      "type": "display",
-                      "item": [
-                        {
-                          "linkId": "1.1.1.1.1",
-                          "code": [
-                            {
-                              "system": "http://example.org/system/code/questions",
-                              "code": "COMORBCAR"
-                            }
-                          ],
-                          "type": "choice",
-                          "options": { "reference": "#yesno" }
-                        },
-                        {
-                          "linkId": "1.1.1.1.2",
-                          "code": [
-                            {
-                              "system": "http://example.org/system/code/questions",
-                              "code": "COMCAR00",
-                              "display": "Angina Pectoris"
-                            },
-                            {
-                              "system": "http://snomed.info/sct",
-                              "code": "194828000",
-                              "display": "Angina (disorder)"
-                            }
-                          ],
-                          "type": "choice",
-                          "options": { "reference": "#yesno" }
-                        },
-                        {
-                          "linkId": "1.1.1.1.3",
-                          "code": [
-                            {
-                              "system": "http://snomed.info/sct",
-                              "code": "22298006",
-                              "display": "Myocardial infarction (disorder)"
-                            }
-                          ],
-                          "type": "choice",
-                          "options": { "reference": "#yesno" }
-                        }
-                      ]
-                    },
-                    {
-                      "linkId": "1.1.1.2",
-                      "code": [
-                        {
-                          "system": "http://example.org/system/code/sections",
-                          "code": "VASCULAR"
-                        }
-                      ],
-                      "type": "display"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "linkId": "1.2",
-              "code": [
-                {
-                  "system": "http://example.org/system/code/sections",
-                  "code": "HISTOPATHOLOGY"
-                }
-              ],
-              "type": "display",
-              "item": [
-                {
-                  "linkId": "1.2.1",
-                  "code": [
-                    {
-                      "system": "http://example.org/system/code/sections",
-                      "code": "ABDOMINAL"
-                    }
-                  ],
-                  "type": "display",
-                  "item": [
-                    {
-                      "linkId": "1.2.1.2",
-                      "type": "display"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      "valueString": "try this"
     }
   ],
   "identifier": [
@@ -215,7 +338,10 @@
     {
       "use": "official",
       "family": "Donald",
-      "given": [ "Duck", null ]
+      "given": [
+        "Duck",
+        null
+      ]
     }
   ],
   "telecom": [
@@ -230,14 +356,28 @@
   "_gender": {
     "extension": [
       {
+        "_url": "http://example.org/StructureDefinition/extension-with-incorrect-url-prop",
         "valueCode": "metrosexual"
       },
       {
         "url": "http://example.org/StructureDefinition/extension-with-number-as-code",
         "valueCode": 28
       },
-      { "url": "http://example.org/StructureDefinition/extension-without-type" },
-      { "url": "http://example.org/StructureDefinition/extension-with-unknown-type" }
+      {
+        "url": "http://example.org/StructureDefinition/extension-without-type",
+        "valueDecimal": 28
+      },
+      {
+        "url": "http://example.org/StructureDefinition/extension-with-unknown-type",
+        "valueSuperDecimal": 28
+      },
+      {
+        "url": "http://example.org/StructureDefinition/extension-with-unknown-cplx-type",
+        "valueSuperCrap": {
+          "temperature": 38.9,
+          "unit": "celcius"
+        }
+      }
     ]
   },
   "birthDate": "1974-12-25",
@@ -277,7 +417,13 @@
   ],
   "communication": [
     {
-      "language": { "coding": [ { "code": "nl-nl" } ] },
+      "language": {
+        "coding": [
+          {
+            "code": "nl-nl"
+          }
+        ]
+      },
       "preferred": true,
       "_preferred": {
         "extension": [
@@ -305,5 +451,7 @@
     "reference": "Organization/1",
     "display": ""
   },
-  "link": [ {} ]
+  "link": [
+    {}
+  ]
 }

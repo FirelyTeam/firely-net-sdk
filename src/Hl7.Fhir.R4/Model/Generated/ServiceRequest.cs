@@ -268,7 +268,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ServiceRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -312,7 +311,6 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option.
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ServiceRequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -384,7 +382,6 @@ namespace Hl7.Fhir.Model
     /// routine | urgent | asap | stat.
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=180, FiveWs="FiveWs.grade")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ServiceRequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement

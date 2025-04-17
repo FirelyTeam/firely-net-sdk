@@ -120,7 +120,6 @@ namespace Hl7.Fhir.Model
     /// usual | official | temp | nickname | anonymous | old | maiden.
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
-    [AllowedTypes(typeof(Code))]
     [Binding("NameUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.HumanName.NameUse>? UseElement

@@ -39,7 +39,7 @@ public class CardinalityAttribute : ValidatingFhirModelAttribute
     {
         if (value is null)
             return (Min == 0) ? [] :
-                [COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL(validationContext, validationContext.PathProducer(), Min)];
+                [COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT(validationContext, validationContext.PathProducer(), Min)];
 
         var count = 1;
 

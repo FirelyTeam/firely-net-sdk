@@ -78,9 +78,9 @@ public static class CodedExceptionFilters
     /// <summary>
     /// Will relax the pedicate to also return true for the given list of error codes.
     /// </summary>
-    public static Predicate<CodedException> Ignore(this Predicate<CodedException>? a, IEnumerable<string> toAccept)
+    public static Predicate<CodedException> Ignore(this Predicate<CodedException>? a, IEnumerable<string> toIgnore)
     {
-        var ignorer = toAccept.IsInList();
+        var ignorer = toIgnore.IsInList();
         return a is null ? ignorer : a.Or(ignorer);
     }
 

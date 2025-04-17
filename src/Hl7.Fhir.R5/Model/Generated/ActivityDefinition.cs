@@ -195,7 +195,6 @@ namespace Hl7.Fhir.Model
       /// careteam | device | group | healthcareservice | location | organization | patient | practitioner | practitionerrole | relatedperson.
       /// </summary>
       [FhirElement("type", Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ActivityParticipantType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType>? TypeElement
@@ -948,7 +947,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1748,7 +1746,6 @@ namespace Hl7.Fhir.Model
     /// Kind of resource.
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=390)]
-    [AllowedTypes(typeof(Code))]
     [Binding("ActivityDefinitionKind")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ActivityDefinition.RequestResourceTypes>? KindElement
@@ -1859,7 +1856,6 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option.
     /// </summary>
     [FhirElement("intent", Order=420)]
-    [AllowedTypes(typeof(Code))]
     [Binding("RequestIntent")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent>? IntentElement
@@ -1902,7 +1898,6 @@ namespace Hl7.Fhir.Model
     /// routine | urgent | asap | stat.
     /// </summary>
     [FhirElement("priority", Order=430)]
-    [AllowedTypes(typeof(Code))]
     [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority>? PriorityElement

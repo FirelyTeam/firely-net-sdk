@@ -371,7 +371,6 @@ namespace Hl7.Fhir.Model
     /// preparation | in-progress | allocated | issued | unfulfilled | returned | entered-in-error | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
-    [AllowedTypes(typeof(Code))]
     [Binding("BiologicallyDerivedProductDispenseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

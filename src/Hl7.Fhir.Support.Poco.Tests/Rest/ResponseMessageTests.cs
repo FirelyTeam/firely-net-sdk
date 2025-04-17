@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Test
             var response = makeJsonMessage(json: """{ "resourceType": "UnknownResource" }""");
             await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
 
-            response = makeJsonMessage(json: """{ "resourceType": "Patient", "activex": 4 }""");
+            response = makeJsonMessage(json: """{"resourceType":"Patient","activex":4}""");
             await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
         }
 
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Test
         public async Task TurnsNewParsingFailureIntoDFE()
         {
             var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
-            await assertIssue<DeserializationFailedException>(response, "*Unknown type 'Unknown' found in root property*", engine: POCOENGINE, suggestVersionOnParsingError: true, version: "1.0.0");
+            await assertIssue<DeserializationFailedException>(response, "*Element has no namespace*", engine: POCOENGINE, suggestVersionOnParsingError: true, version: "1.0.0");
         }
 
         [TestMethod]

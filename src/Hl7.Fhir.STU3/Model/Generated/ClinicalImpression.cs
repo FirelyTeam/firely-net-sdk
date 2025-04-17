@@ -467,7 +467,6 @@ namespace Hl7.Fhir.Model
     /// draft | completed | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ClinicalImpressionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

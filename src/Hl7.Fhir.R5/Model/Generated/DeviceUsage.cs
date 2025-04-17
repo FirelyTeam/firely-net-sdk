@@ -339,7 +339,6 @@ namespace Hl7.Fhir.Model
     /// active | completed | not-done | entered-in-error +.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("DeviceUsageStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
