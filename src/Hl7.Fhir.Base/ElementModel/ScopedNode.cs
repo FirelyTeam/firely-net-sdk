@@ -213,7 +213,7 @@ namespace Hl7.Fhir.ElementModel
         /// <summary>
         /// When this node is the root of a Bundle, retrieves the bundled resources in its Bundle.entry.
         /// </summary>
-        internal IEnumerable<BundledResource> BundledResources()
+        public IEnumerable<BundledResource> BundledResources()
         {
             if (_cache.BundledResources != null) return _cache.BundledResources;
             
