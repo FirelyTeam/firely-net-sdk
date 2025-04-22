@@ -290,8 +290,8 @@ public static class PocoNodeExtensions
         var parts = path.Split(['.', '[', ']'], StringSplitOptions.RemoveEmptyEntries);
 
         return parts.Aggregate<string, IEnumerable<PocoNode>>(node, (current, part) =>
-            Regex.IsMatch(part, @"^\d+$")
-                ? current.Skip(int.Parse(part)).First()
+            int.TryParse(part, out var index)
+                ? current.Skip(index).First()
                 : current.FlatChildren(part)
         );
     }
