@@ -12,11 +12,19 @@ namespace Hl7.Fhir.Model
         /// It is not stored, but reconstructed from the components of the resource
         /// </remarks>
         /// <returns></returns>
-        public static ResourceIdentity ResourceIdentity(this Resource r, string baseUrl = null)
+        public static ResourceIdentity ResourceIdentity(this Resource r, string baseUrl = null, string fullUrl = null)
         {
-            if (r.Id is null) return null;
+            ResourceIdentity result;
 
-            var result = Rest.ResourceIdentity.Build(r.TypeName, r.Id, r.VersionId);
+            if (fullUrl is not null)
+            {
+                result = r.VersionId == null ? new ResourceIdentity(fullUrl) : new ResourceIdentity(fullUrl).WithVersion(r.VersionId);
+            }
+            else if (r.Id is not null)
+            {
+                result = Rest.ResourceIdentity.Build(r.TypeName, r.Id, r.VersionId);
+            }
+            else return null;
 
             if (!string.IsNullOrEmpty(baseUrl))
                 return result.WithBase(baseUrl);

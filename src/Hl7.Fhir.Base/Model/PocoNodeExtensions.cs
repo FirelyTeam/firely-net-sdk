@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model;
 
@@ -14,24 +15,23 @@ namespace Hl7.Fhir.Model;
 
 public static class PocoNodeExtensions
 {
-    private static bool tryResolveBundleEntry(this PocoNode? node, string fullUrl, [NotNullWhen(true)] out PocoNode? result)
+    private static bool tryResolveBundleEntry(this PocoNode? node, ResourceIdentity identity, [NotNullWhen(true)] out PocoNode? result)
     {
-        result = node?.Poco is Bundle
+        result = node?.Poco is Bundle b
             ? node
                 .Child<PocoListNode>("entry")
-                ?.FirstOrDefault<Bundle.EntryComponent>(entry =>
-                    entry.FullUrl == fullUrl)
+                ?.FirstOrDefault<Bundle.EntryComponent>(entry => entry.Resource?.ResourceIdentity(fullUrl: entry.FullUrl)?.IsTargetOf(identity) is true)
                 ?.Child<PocoNode>("resource")
             : null;
         return result is not null;
     }
 
-    private static bool tryResolveContainedEntry(this PocoNode? node, string? id, [NotNullWhen(true)] out PocoNode? result)
+    private static bool tryResolveContainedEntry(this PocoNode? node, ResourceIdentity identity, [NotNullWhen(true)] out PocoNode? result)
     {
         result = node?.Poco is DomainResource
             ? node
                 .Child<PocoListNode>("contained")
-                ?.FirstOrDefault<Resource>(contained => $"#{contained.Id}" == id)
+                ?.FirstOrDefault<Resource>(contained => contained.ResourceIdentity().IsTargetOf(identity))
             : null;
         return result is not null;
     }
@@ -40,27 +40,29 @@ public static class PocoNodeExtensions
     /// Resolve a resource reference within the context of this node given a url (for bundles) or id (for contained).
     /// </summary>
     /// <param name="node">this node</param>
-    /// <param name="url">The relative URL to resolve.</param>
+    /// <param name="identity">the identity to resolve</param>
     /// <param name="result">Contains the referenced instance, or null if the operation failed</param>
     /// <remarks>Does not create a copy. The resolved resource will be part of the PocoNode-tree that was passed to this function</remarks>
     /// <returns>t</returns>
-    internal static bool TryResolveLocalReference(this PocoNode? node, string url, [NotNullWhen(true)] out PocoNode? result)
+    internal static bool TryResolveLocalReference(this PocoNode? node, ResourceIdentity identity, [NotNullWhen(true)] out PocoNode? result)
     {
+        result = null;
+        
         for(var scan = node; scan is not null; scan = scan.Parent)
         {
             if (scan.Poco is Bundle) // if we do not find it in the closest bundle, the reference is invalid
             {
-                return scan.tryResolveBundleEntry(url, out result);
+                return !identity.IsLocal && scan.tryResolveBundleEntry(identity, out result);
             }
             
-            if (scan.Poco is DomainResource && scan.tryResolveContainedEntry(url, out result)) 
+            if (scan.Poco is DomainResource && scan.tryResolveContainedEntry(identity, out result)) 
             {
                 // if we encounter a DomainResource, try to resolve the contained reference.
                 // If it fails, higher domain resources could still contain it!
                 return true;
             }
 
-            if (scan.Child<PrimitiveNode>("id")?.Value as string == url[1..])
+            if (scan.Child<PrimitiveNode>("id")?.Value is string s && s == identity.Id)
             {
                 // if we encounter a resource with the correct id, return it
                 result = scan;
@@ -128,7 +130,7 @@ public static class PocoNodeExtensions
         if(url == "#") return node.getContainer();
                 
         var identity = node.MakeAbsolute(new ResourceIdentity(url));
-        if (node.TryResolveLocalReference(identity.ToString(), out var localResult)) return localResult;
+        if (node.TryResolveLocalReference(identity, out var localResult)) return localResult;
 
         return externalResolver?.Invoke(url);
     }
@@ -276,6 +278,23 @@ public static class PocoNodeExtensions
     /// <returns></returns>
     public static PocoNode? FirstOrDefault<T>(this IEnumerable<PocoNode> node, Func<T, bool> predicate) where T : Base =>
         node.FirstOrDefault(n => n.Poco is T t && predicate(t));
+    
+    /// <summary>
+    /// Navigates to a child node or set of child nodes using a path. The path is a string that can contain dot-separated names and array indices, much like navigation in FhirPath.
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static IEnumerable<PocoNode> NavigateTo(this PocoNode node, string path)
+    {
+        var parts = path.Split(['.', '[', ']'], StringSplitOptions.RemoveEmptyEntries);
+
+        return parts.Aggregate<string, IEnumerable<PocoNode>>(node, (current, part) =>
+            int.TryParse(part, out var index)
+                ? current.Skip(index).First()
+                : current.FlatChildren(part)
+        );
+    }
     
     internal static PocoNode? FirstOrDefault<T>(this PocoListNode pln, Func<T, bool> predicate) where T : Base
     {
