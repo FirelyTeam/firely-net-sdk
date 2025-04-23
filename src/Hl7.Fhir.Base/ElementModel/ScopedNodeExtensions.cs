@@ -105,18 +105,16 @@ namespace Hl7.Fhir.ElementModel
 
             ScopedNode? locateLocalResource(ResourceIdentity identity)
             {
-                var url = identity.ToString();
-
                 foreach (var parent in scopedNode.ParentResources())
                 {
                     if (parent.InstanceType == FhirTypeConstants.BUNDLE)
                     {
-                        return ((ReferencedResourceCache)parent.BundledResources()).ResolveReference(url); // safe cast but we cannot change the signature
+                        return ((ReferencedResourceCache)parent.BundledResources()).ResolveReference(identity.ToString()); // safe cast but we cannot change the signature
                     }
 
-                    if (parent.Id() == url)
+                    if (parent.Id() == identity.Id)
                         return parent;
-                    if (parent.ContainedResourcesWithId().ResolveReference(url) is { } resource) // safe cast but we cannot change the signature
+                    if (parent.ContainedResourcesWithId().ResolveReference(identity.Id ?? identity.ToString()) is { } resource) // safe cast but we cannot change the signature
                         return resource;
                 }
 

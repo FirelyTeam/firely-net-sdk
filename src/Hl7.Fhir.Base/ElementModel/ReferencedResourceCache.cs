@@ -11,17 +11,16 @@ internal class ReferencedResourceCache : IEnumerable<ScopedNode.BundledResource>
     private Dictionary<string, ScopedNode> _items;
     private List<ScopedNode> _unreferenceableItems; // some resources may not have a reference, but are included nonetheless.
     
-    public ReferencedResourceCache(IEnumerable<KeyValuePair<string, ScopedNode>> items)
+    public ReferencedResourceCache(IEnumerable<KeyValuePair<string?, ScopedNode>> items)
     {
         _items = new Dictionary<string, ScopedNode>();
         _unreferenceableItems = [];
         foreach (var item in items)
         {
             if (item.Key is not null)
-                _items.Add(item.Key, item.Value);
-            else 
+                _items[item.Key] = item.Value;
+            else
                 _unreferenceableItems.Add(item.Value);
-                
         }
     }
     
