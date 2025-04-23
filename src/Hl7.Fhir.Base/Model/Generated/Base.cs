@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Model
       if (_annotations is not null)
         dest.annotations.AddRange(annotations);
 
-      if (Overflow.Any())
+      if (HasOverflow)
         Overflow.CopyToInternal(dest.Overflow);
     }
 

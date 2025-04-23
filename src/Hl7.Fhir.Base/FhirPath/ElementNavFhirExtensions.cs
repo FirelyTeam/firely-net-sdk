@@ -41,7 +41,7 @@ namespace Hl7.Fhir.FhirPath
         {
             t.Add("hasValue", (PocoNode f) => f.HasValue(), doNullProp: false);
             t.Add("resolve", (PocoNode f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
-            t.Add("resolve", (IEnumerable<PocoNode> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)), doNullProp: false);
+            t.Add("resolve", (IEnumerable<PocoNode> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)).OfType<PocoNode>(), doNullProp: false);
 
             t.Add("memberOf", (PocoNode input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
 

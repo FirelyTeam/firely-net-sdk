@@ -111,7 +111,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void TestResolve()
         {
-            PocoNode inner7 = (_bundleNode!.BundledResources().Skip(6).First().Child("resource")?.FlatChildren("managingOrganization").Single());
+            PocoNode inner7 = _bundleNode!.NavigateTo("entry[6].resource.managingOrganization").Single();
 
             Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/e")!.GetLocation());
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve("#orgY")!.GetLocation());
@@ -138,6 +138,44 @@ namespace Hl7.Fhir.ElementModel.Tests
                 lastUrlResolved = url;
                 return null;
             }
+        }
+        
+        [TestMethod]
+        public void TestVersionedReferenceResolution()
+        {
+            var b = new Bundle()
+            {
+                Entry = new List<Bundle.EntryComponent>
+                {
+                    new() { FullUrl = "Patient/lol", Resource = new Patient{Id = "a", Meta = new Meta(){VersionId = "1"}}},
+                    new() { FullUrl = "Patient/lol", Resource = new Patient{Id = "b", Meta = new Meta(){VersionId = "2"}}},
+                    new() { FullUrl = "exampleReferencingVersionedResource", Resource = new Patient
+                    {
+                        Link = [
+                            new ()
+                            {
+                                Other = new ResourceReference("Patient/lol/_history/2")
+                            }
+                        ]
+                    }},
+                    new() { FullUrl = "exampleReferencingUnversionedResource", Resource = new Patient
+                    {
+                        Link = [
+                            new ()
+                            {
+                                Other = new ResourceReference("Patient/lol")
+                            }
+                        ]
+                    }}
+                }
+            };
+
+            var node = b.ToPocoNode();
+            var bundled = node.BundledResources();
+            Assert.AreEqual(4, bundled.Count());
+            
+            Assert.AreEqual("Bundle.entry[1].resource[0]", node.NavigateTo("entry[2].resource.link.other").First().Resolve()!.GetLocation());
+            Assert.AreEqual("Bundle.entry[0].resource[0]", node.NavigateTo("entry[3].resource.link.other").First().Resolve()!.GetLocation());
         }
 
         
