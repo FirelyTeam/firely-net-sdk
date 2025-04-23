@@ -50,6 +50,11 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     private Dictionary<string, object>? _overflow = null;
 
     /// <summary>
+    /// Whether the object has any overflow elements.
+    /// </summary>
+    public bool HasOverflow => _overflow != null;
+
+    /// <summary>
     /// A dictionary containing all elements that are not explicitly defined in the class.
     /// </summary>
     protected Dictionary<string, object> Overflow =>

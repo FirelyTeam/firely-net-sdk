@@ -25,16 +25,10 @@ namespace Hl7.Fhir.Support.Poco.Tests;
 [TestClass]
 public class FhirJsonDeserializationTests
 {
-    [TestMethod]
-    public void PrimitiveValueCannotBeComplex()
-    {
-        ParsePrimitiveValue(new { bla = 4 }, typeof(FhirBoolean), ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
-    }
-
     [DataTestMethod]
     [DataRow("OperationOutcome", null)]
     [DataRow("OperationOutcomeX", ERR.UNKNOWN_RESOURCE_TYPE_CODE)]
-    [DataRow("Meta", null)]
+    [DataRow("Meta", ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE)]
     [DataRow(4, ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE)]
     [DataRow(null, ERR.NO_RESOURCETYPE_PROPERTY_CODE)]
     public void DeriveClassMapping(object? typename, string? errorcode)
@@ -48,7 +42,7 @@ public class FhirJsonDeserializationTests
         if (errorcode is null)
             result!.Name.Should().Be((string?)typename);
 
-        static (ClassMapping?, FhirJsonException?) test(object? typename)
+        static (ClassMapping?, CodedException?) test(object? typename)
         {
             var inspector = ModelInspector.ForAssembly(typeof(Resource).Assembly);
 
@@ -58,22 +52,23 @@ public class FhirJsonDeserializationTests
             var reader = new Utf8JsonReader(jsonBytes);
             reader.Read();
 
-            var ps = new PathStack();
-            ps.EnterElement("Patient", 0, false);
-            return BaseFhirJsonDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, ps);
+            var state = new PocoDeserializerState();
+            state.Path.EnterElement("Patient", 0, false);
+            var response = BaseFhirJsonDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, state);
+
+            return (response.Original, state.Errors.SingleOrDefault());
         }
     }
 
     [DataTestMethod]
     [DataRow(null, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE)]
-    [DataRow(new[] { 1, 2 }, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE)]
     [DataRow("SGkh", typeof(FhirString), null, "SGkh")]
     [DataRow(4, typeof(FhirString), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, 4)]
     [DataRow("SGkh", typeof(Base64Binary), null, "SGkh")]
     [DataRow("hi!", typeof(Base64Binary), COVE.INVALID_BASE64_VALUE_CODE, "hi!")]
     [DataRow(4, typeof(Base64Binary), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, 4)]
     [DataRow("2007-04", typeof(FhirDateTime), null, "2007-04")]
-    [DataRow("", typeof(FhirDateTime), ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE, null)]
+    [DataRow("", typeof(FhirDateTime), COVE.LITERAL_INVALID_CODE, null)]
     [DataRow("2007-", typeof(FhirDateTime), COVE.LITERAL_INVALID_CODE, "2007-")]
     [DataRow(true, typeof(FhirDateTime), COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, true)]
     [DataRow("female", typeof(Code), null, "female")]
@@ -94,18 +89,18 @@ public class FhirJsonDeserializationTests
     public void ParsePrimitiveValue(object value, Type targetType, string? errorcode,
         object? expectedObjectValue = null)
     {
-        var state = new FhirJsonPocoDeserializerState();
+        var state = new PocoDeserializerState();
 
         PrimitiveType test()
         {
             var inspector = ModelInspector.ForType(typeof(Patient));
             var deserializer = new BaseFhirJsonDeserializer(inspector);
-            var mapping = inspector.ImportType(targetType)!;
+            var mapping = new ClassMappingDynamic(inspector.ImportType(targetType)!, null);
 
             var reader = constructReader(value);
             reader.Read();
 
-            return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, null!, ref reader, null, state);
+            return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, ref reader, null, state);
         }
 
         var result = test();
@@ -158,19 +153,6 @@ public class FhirJsonDeserializationTests
         return reader;
     }
 
-    private static void assertErrors(IEnumerable<CodedException> actual, string[] expected)
-    {
-        if (expected.Length == 0 && !actual.Any())
-            return;
-
-        string why =
-            $"Should be the same: actual [{string.Join(",", actual.Select(a => a.ErrorCode))}] and expected [{string.Join(";", expected)}]";
-        Console.WriteLine("Messages: " + string.Join(", ", actual.Select(a => a.Message)));
-        actual.Count().Should().Be(expected.Length, because: why);
-        _ = actual.Zip(expected).Should().AllSatisfy(pair => pair.First.ErrorCode.Should().Be(pair.Second, because: why));
-        Console.WriteLine($"Found {string.Join(", ", actual.Select(a => a.Message))}");
-    }
-
     [TestMethod]
     [DynamicData(nameof(TestDeserializeResourceData))]
     [DynamicData(nameof(TestDeserializeNestedResource))]
@@ -180,9 +162,9 @@ public class FhirJsonDeserializationTests
         reader.Read();
 
         var deserializer = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
-        var state = new FhirJsonPocoDeserializerState();
+        var state = new PocoDeserializerState();
         _ = deserializer.DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
-        assertErrors(state.Errors, errors);
+        state.Errors.Select(err => err.ErrorCode).Should().BeEquivalentTo(errors);
         reader.TokenType.Should().Be(tokenAfterParsing);
     }
 
@@ -190,27 +172,25 @@ public class FhirJsonDeserializationTests
     {
         get
         {
-            yield return [5, JsonTokenType.Number, ERR.EXPECTED_START_OF_OBJECT_CODE];
-            yield return [new { }, JsonTokenType.EndObject, ERR.NO_RESOURCETYPE_PROPERTY_CODE];
+            yield return [new { }, JsonTokenType.EndObject, ERR.NO_RESOURCETYPE_PROPERTY_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE];
             yield return
             [
                 new { resourceType = 4, crap = 4 }, JsonTokenType.EndObject,
-                ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE
+                ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE, COVE.UNKNOWN_ELEMENT_CODE
             ];
             yield return
             [
-                new { resourceType = "Doesnotexist", crap = 5 }, JsonTokenType.EndObject,
-                ERR.UNKNOWN_RESOURCE_TYPE_CODE
+                new { resourceType = "Doesnotexist", crap = 5 }, JsonTokenType.EndObject, ERR.UNKNOWN_RESOURCE_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE
             ];
             yield return
             [
                 new { resourceType = nameof(OperationOutcome), crap = 5 }, JsonTokenType.EndObject,
-                ERR.UNKNOWN_PROPERTY_FOUND_CODE
+                COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE
             ];
             yield return
             [
-                new { resourceType = nameof(Meta) }, JsonTokenType.EndObject, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE,
-                ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE
+                new { resourceType = nameof(Meta) }, JsonTokenType.EndObject, 
+                ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE
             ];
             yield return
             [
@@ -265,7 +245,7 @@ public class FhirJsonDeserializationTests
                 NarrativeValidation = NarrativeValidationKind.FhirXhtml
             });
 
-        assertErrors(errors, expectedErrors);
+        errors.Select(err => err.ErrorCode).Should().BeEquivalentTo(expectedErrors);
         readerState.TokenType.Should().Be(token);
         result.Should().BeOfType(t);
         verify?.Invoke(result);
@@ -283,42 +263,31 @@ public class FhirJsonDeserializationTests
 
     public static IEnumerable<object?[]> CatchesIncorrectlyStructuredComplexData()
     {
-        yield return
-        [
-            typeof(Extension), 5, JsonTokenType.Number, null,
-            ERR.EXPECTED_START_OF_OBJECT_CODE
-        ];
-        yield return data<Extension>(5, JsonTokenType.Number, ERR.EXPECTED_START_OF_OBJECT_CODE);
-        yield return data<Extension>(new[] { 2, 3 }, JsonTokenType.EndArray, ERR.EXPECTED_START_OF_OBJECT_CODE);
-        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE);
-        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE);
-        yield return data<Extension>(new { unknown = "test" }, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
+        yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        yield return data<Extension>(new { unknown = "test" }, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<Extension>(new { url = "test" });
-        yield return data<Extension>(new { _url = "test" }, ERR.EXPECTED_START_OF_OBJECT_CODE);
-        yield return data<Extension>(new { unknown = "test", url = "test" },
-            ERR.UNKNOWN_PROPERTY_FOUND_CODE);
-        yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_HAS_NO_TYPE_CODE);
+        yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<Extension>(new { unknown = "test", url = "test" }, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix" },
-            ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE);
+            ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
         yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" },
             JsonTokenType.EndObject);
         yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
-            ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
+           ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, COVE.UNKNOWN_ELEMENT_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
     }
 
     public static IEnumerable<object?[]> TestNormalArrayData()
     {
-        yield return data<ContactDetail>(new { name = "Ewout", telecom = 4 }, checkName,
-            ERR.EXPECTED_START_OF_ARRAY_CODE, ERR.EXPECTED_START_OF_OBJECT_CODE);
-        yield return data<ContactDetail>(new { name = "Ewout", telecom = Array.Empty<object>() }, checkName,
-            ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
+        yield return data<ContactDetail>(new { name = "Ewout", telecom = 4 }, checkName,  COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        yield return data<ContactDetail>(new { name = "Ewout", telecom = Array.Empty<object>() }, checkName, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
         yield return data<ContactDetail>(
             new { name = "Ewout", telecom = new object[] { new { system = "phone" }, new { systemX = "b" } } },
-            checkData, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
+            checkData,  COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<ContactDetail>(
             new { name = "Ewout", _telecom = new object[] { new { system = "phone" }, new { systemX = "b" } } },
-            checkData, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
-        yield return data<ContactDetail>(new { name = new[] { "Ewout" } }, ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE);
+            checkData, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<ContactDetail>(new { name = new[] { "Ewout" }, }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
 
         static void checkName(object parsed) =>
             parsed.Should().BeOfType<ContactDetail>().Which.Name.Should().Be("Ewout");
@@ -330,17 +299,16 @@ public class FhirJsonDeserializationTests
             var parsed = parsedObject.Should().BeOfType<ContactDetail>().Subject;
             parsed.Telecom.Count.Should().Be(2);
             parsed.Telecom[0].System.Should().Be(ContactPoint.ContactPointSystem.Phone);
-            parsed.Telecom[1].EnumerateElements().Count().Should().Be(0);
+            parsed.Telecom[1].EnumerateElements().Count().Should().Be(1);
         }
     }
 
     public static IEnumerable<object?[]> TestPrimitiveData()
     {
-        yield return data<ContactDetail>(new { name = new[] { "Ewout" } }, ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE);
-        yield return data<ContactDetail>(new { name = new { dummy = "Ewout" } },
-            ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
-        yield return data<ContactDetail>(new { _name = new[] { "Ewout" } }, ERR.EXPECTED_START_OF_OBJECT_CODE);
-        yield return data<ContactDetail>(new { _name = "Ewout" }, ERR.EXPECTED_START_OF_OBJECT_CODE);
+        yield return data<ContactDetail>(new { name = new[] { "Ewout" } }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        yield return data<ContactDetail>(new { name = new { dummy = "Ewout" } }, COVE.UNKNOWN_ELEMENT_CODE);
+        yield return data<ContactDetail>(new { _name = new[] { "Ewout" } }, COVE.PROPERTY_TYPE_MISMATCH_CODE);
+        yield return data<ContactDetail>(new { _name = "Ewout" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, COVE.UNKNOWN_ELEMENT_CODE);
         yield return data<ContactDetail>(new { name = "Ewout" }, checkName);
         yield return data<ContactDetail>(new { _name = new { id = "12345" } }, checkId);
         yield return data<ContactDetail>(new { _name = new { id = true } }, COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
@@ -348,10 +316,10 @@ public class FhirJsonDeserializationTests
 
         static void checkName(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.Value
             .Should().Be("Ewout");
-
+        
         static void checkId(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement!.ElementId
             .Should().Be("12345");
-
+        
         static void checkAll(object parsed)
         {
             checkName(parsed);
@@ -365,8 +333,9 @@ public class FhirJsonDeserializationTests
         {
             div = "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>correct</p></div>", status = "additional"
         });
-        yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED_CODE);
-        yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID_CODE);
+        yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID_CODE, COVE.MANDATORY_ELEMENT_MUST_BE_PRESENT_CODE);
+        yield return data<Narrative>(new { div = "<puinhoop />", status = "generated" }, COVE.NARRATIVE_XML_IS_INVALID_CODE);
 
         yield return data<Attachment>(new { url = "urn:oid:1.3.6.1.4.1.343" });
         //   yield return data<Attachment>(new { url = "urn:oid:1" }, COVE.URI_LITERAL_INVALID_CODE);
@@ -375,22 +344,23 @@ public class FhirJsonDeserializationTests
 
     public static IEnumerable<object?[]> TestPrimitiveArrayData()
     {
-        yield return data<Address>(new { line = "hi!" }, ERR.EXPECTED_START_OF_ARRAY_CODE);
+        yield return data<Address>(new { line = "hi!" }, COVE.PROPERTY_TYPE_MISMATCH_CODE); // expected collection of string, found string
         yield return data<Address>(new { line = Array.Empty<string>() }, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
         yield return data<Address>(new { line = Array.Empty<string>(), _line = Array.Empty<string>() },
             ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
         yield return data<Address>(new { line = Array.Empty<string>(), _line = new string?[] { null } },
-            ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null }, _line = new[] { new { id = "1" } } },
             ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+        yield return data<Address>(new { _line = new[] { new { id = "1" } } });
         yield return data<Address>(new { line = new[] { "Ewout" }, _line = new string?[] { null } },
             ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null }, _line = new string?[] { null } },
-            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null }, _line = new string?[] { null, null } },
-            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
         yield return data<Address>(new { line = new string?[] { null, null }, _line = new string?[] { null } },
-            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
         yield return data<Address>(new { line = new[] { "Ewout", "Wouter" } }, checkName);
         yield return data<Address>(
             new { line = new[] { "Ewout", "Wouter" }, _line = new[] { new { id = "1" } } }, checkId1AndName);
@@ -495,16 +465,18 @@ public class FhirJsonDeserializationTests
 
     [TestMethod]
     [Ignore]
-    public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "TestData");
+    public void OverwriteTestDataForRecoveryTest() => testRecovery(true, "../../../TestData");
     
     /// fileDir is a fix for the test framework only editing temp files.
     private void testRecovery(bool overwrite, string fileDir)
     {
         var patientFileName = Path.Combine(fileDir, "fp-test-patient-errors.json");
-        var errorsFileName = Path.Combine(fileDir, "fp-test-patient-errors-expected.txt");
+        var errorsFileName = Path.Combine(fileDir, "fp-test-patient-errors-expected-json.txt");
         var jsonInput = File.ReadAllText(patientFileName);
 
         var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+        if (overwrite)
+            options = options.Pretty();
 
         try
         {
@@ -513,54 +485,47 @@ public class FhirJsonDeserializationTests
         }
         catch (DeserializationFailedException dfe)
         {
-            Console.WriteLine(dfe.Message);
             var recoveredActual = JsonSerializer.Serialize(dfe.PartialResult, options);
-            Console.WriteLine(recoveredActual);
+            var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
 
-            assertErrors(dfe.Exceptions, [
-                COVE.LITERAL_INVALID_CODE,
-                ERR.UNKNOWN_PROPERTY_FOUND_CODE, // resourceType at the non-root level
-                ERR.UNKNOWN_RESOURCE_TYPE_CODE, ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE,
-                ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE, ERR.NO_RESOURCETYPE_PROPERTY_CODE,
-                COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, ERR.EXPECTED_START_OF_ARRAY_CODE,
-                ERR.UNKNOWN_PROPERTY_FOUND_CODE, // mother is not a property of HumanName
-                ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, // family is not an array,
-                ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE, // telecom use cannot be null
-                ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE, // address.use is not an object
-                COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE, // address.line should not have a null at the same position in both arrays
-                COVE.INVALID_CODED_VALUE_CODE, // status 'generatedY'
-                ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, // Questionnaire._subjectType cannot be just null
-                COVE.CHOICE_TYPE_NOT_ALLOWED_CODE, // incorrect use of valueBoolean in option.
-                ERR.EXPECTED_START_OF_OBJECT_CODE, // item.code is a complex object, not a boolean
-                COVE.LITERAL_INVALID_CODE, // incorrect oid
-                COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE, // given cannot be a single array with just a null
-                COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // telecom.rank should be a number, not a boolean
-                ERR.EXPECTED_START_OF_OBJECT_CODE, // extension._url is an object (although not applicable)
-                COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // gender.extension.valueCode should be a string, not a number
-                ERR.CHOICE_ELEMENT_HAS_NO_TYPE_CODE, // extension.value is incorrect
-                ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, // extension.valueSuperDecimal is incorrect
-                COVE.INVALID_BASE64_VALUE_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE,
-                ERR.OBJECTS_CANNOT_BE_EMPTY_CODE,
-                COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // deceasedBoolean should be a boolean not a string
-                COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE, // multipleBirthInteger should not be a float (3.14)
-            ]);
-            
             if (overwrite)
             {
-                File.WriteAllLines(errorsFileName, dfe.Exceptions.Select(e => e.ToString()));
+                File.WriteAllLines(errorsFileName, errorsActual);
             }
             
             var errorsExpected = File.ReadAllLines(errorsFileName);
-            var errorsActual = dfe.Exceptions.Select(e => e.ToString()).ToArray();
-            errorsExpected.Should().BeEquivalentTo(errorsActual);
+            errorsActual.Should().BeEquivalentTo(errorsExpected);
 
-            var recoveredFilename = Path.Combine("TestData", "fp-test-patient-errors-recovered.json");
+            var recoveredFilename = Path.Combine(fileDir, "fp-test-patient-errors-recovered.json");
+            if(overwrite)
+                File.WriteAllText(recoveredFilename, recoveredActual);
+            
             var recoveredExpected = File.ReadAllText(recoveredFilename);
 
-            List<string> errors = new();
+            List<string> errors = [];
             JsonAssert.AreSame("fp-test-patient-json-errors/recovery", recoveredExpected, recoveredActual, errors);
             errors.Should().BeEmpty();
         }
+    }
+
+    [TestMethod]
+    public void MakeSureVersionSpecificTypedPropertiesGetCreatedOk()
+    {
+        var pat = new Patient()
+        {
+            Meta = new Meta()
+            {
+                VersionId = "1",
+                ProfileElement = [new FhirUri("http://nu.nl")]
+            }
+        };
+
+        var content = pat.ToJson();
+        var pat2 = FhirJsonDeserializer.DEFAULT.DeserializeResource(content);
+
+        // If we deserialize the profile incorrectly due to AllowedTypes etc,
+        // it will end up in the overflow and this will crash.
+        pat2.Meta!.Profile.Should().HaveCount(1);
     }
 
     [TestMethod]
@@ -584,22 +549,109 @@ public class FhirJsonDeserializationTests
         }
     }
 
+    [TestMethod]
+    public void JsonDeserializerSupportsParsingUnknownTypesAndProperties()
+    {
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.Base);
+
+        var dt = DateTimeOffset.UtcNow;
+        
+        Utf8JsonReader reader = constructReader(new { resourceType = "Unknown", id = "TestIdentifier", body = new[] { "Test" }, testBool = true, valueDateTime = dt, testDec = 123.4, testInt = 999});
+
+         parser.TryDeserializeResource(ref reader, out var obj, out var errors);
+
+        obj.Should().NotBeNull();
+        obj!.Id.Should().Be("TestIdentifier");
+        obj["body"].Should().BeEquivalentTo(new List<FhirString> { new("Test") });
+        obj["testBool"].Should().BeEquivalentTo(new FhirBoolean(true));
+        obj["testDec"].Should().BeEquivalentTo(new FhirDecimal(new decimal(123.4)));
+        obj["testInt"].Should().BeEquivalentTo(new FhirDecimal(999));
+        obj["valueDateTime"].Should().BeEquivalentTo(new FhirString(dt.ToFhirDateTime()));
+    }
+
+    [TestMethod]
+    public void JsonDeserializerSupportsUnknownPropertiesOnKnownTypes()
+    {
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
+
+        var dt = DateTimeOffset.UtcNow;
+        
+        Utf8JsonReader reader = constructReader(new 
+        {
+            resourceType = "Patient", 
+            id = "TestIdentifier",
+            active = new[] { true, false },
+            telecom = new{ system = "phone", value = "magicnumber"},
+            communication = "en",
+            name = "Test",
+        });
+
+        parser.TryDeserializeResource(ref reader, out var obj, out var errors);
+        obj.Should().NotBeNull();
+        obj!.TypeName.Should().Be("Patient");
+        obj.Id.Should().Be("TestIdentifier");
+        // array where primitive
+        obj["active"].Should().BeEquivalentTo(new[]{new FhirBoolean(true), new FhirBoolean(false)});
+        // primitive where array
+        obj["communication"].Should().BeEquivalentTo(new FhirString{ ObjectValue = "en" });
+        // primitive when complex
+        obj["name"].Should().BeEquivalentTo(new FhirString{ ObjectValue = "Test"});
+    }
+    
+    [TestMethod]
+    public void JsonDeserializerHandleUnexpectedObject()
+    {
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
+
+        var test = new
+        {
+            resourceType = "Patient",
+            active = new { value = true }, // Expected a primitive, got an object
+            valueQuantity = new
+            {
+                value = new { amount = 72 }, // Expected a number, got an object
+                unit = "bpm"
+            }
+        };
+
+        Utf8JsonReader reader = constructReader(test);
+
+        parser.TryDeserializeResource(ref reader, out var obj, out var errors);
+        
+        obj.Should().NotBeNull();
+        obj!.TypeName.Should().Be("Patient");
+    }
+    
+    [TestMethod]
+    public void JsonDeserializerHandleContainedStuff()
+    {
+        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
+
+        var test = new
+        {
+            resourceType = "Patient",
+            id = "patient",
+            name = new []{ new { Family = "Doe", Given = new[] { "John" } } },
+            contained = new[]
+            {
+                new { resourceType = "Medication", id = "medication", code = "1234" }
+            }
+        };
+
+        Utf8JsonReader reader = constructReader(test);
+
+        parser.TryDeserializeResource(ref reader, out var obj, out var errors);
+        
+        obj.Should().NotBeNull();
+        obj!.TypeName.Should().Be("Patient");
+        (obj as Patient)!.Contained.Should().HaveCount(1).And.Subject.Should().Satisfy(x => x.TypeName == "Medication");
+    }
+
+    
     internal class CustomComplexValidator : FhirAttributeValidator
     {
-        //public object? DateTimeSeenByObjectValueValidator;
         public FhirDateTime? DateTimeSeenByInstanceValidator;
         public FhirDateTime? DateTimeSeenByPropertyValidator;
-
-        // public override void ValidateObjectValue(ref object? value, in ObjectValueDeserializationContext context,
-        //     out COVE[]? reportedErrors)
-        // {
-        //     DateTimeSeenByObjectValueValidator = value;
-        //
-        //     // Now change it, to whether the next step picks it up.
-        //     value = "1972-30-11T12:00:00Z";
-        //
-        //     base.ValidateObjectValue(ref value, context, out reportedErrors);
-        // }
 
         public override IReadOnlyCollection<COVE> ValidateObject(Base instance, ClassMapping? classMapping, PocoValidationContext context){
             if (instance is FhirDateTime fdt)
@@ -819,7 +871,7 @@ public class FhirJsonDeserializationTests
         }
         catch (DeserializationFailedException dfe)
         {
-            assertErrors(dfe.Exceptions, expectedErrs);
+            dfe.Exceptions.Select(ex => ex.ErrorCode).Should().BeEquivalentTo(expectedErrs);
         }
     }
 
@@ -845,7 +897,7 @@ public class FhirJsonDeserializationTests
         }
         catch (DeserializationFailedException dfe)
         {
-            assertErrors(dfe.Exceptions, [expected]);
+            dfe.Exceptions.Select(ex => ex.ErrorCode).Should().BeEquivalentTo(expected);
         }
     }
 

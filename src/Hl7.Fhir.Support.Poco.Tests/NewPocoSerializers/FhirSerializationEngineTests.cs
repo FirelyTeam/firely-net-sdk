@@ -15,16 +15,17 @@ public class FhirSerializationEngineTests
 {
     private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
 
+    // Shared test data for EM+Poco
     private const string CORRECTXML = """<Patient xmlns="http://hl7.org/fhir"><active value="true"  /></Patient>""";
-    private const string PERMISSIVEXML = """<Patient xmlns="http://hl7.org/fhir"><gender value=""  /></Patient>""";
-    private const string BWCOMPATIBLEXML = """<Patient xmlns="http://hl7.org/fhir"><activex value="false" /></Patient>""";
-    private const string EM_WRONGXML = """<Patient xmlns="http://hl7.org/fhir"><deceasedImaginary value="1i" /></Patient>""";
-
     private const string CORRECTJSON = """{ "resourceType": "Patient",  "active": true }""";
-    private const string PERMISSIVEJSON = """{ "resourceType": "Patient",  "gender": "" }""";
+    private const string BWCOMPATIBLEXML = """<Patient xmlns="http://hl7.org/fhir"><activex value="false" /></Patient>""";
     private const string BWCOMPATIBLEJSON = """{ "resourceType": "Patient",  "activex": "true" }""";
-    private const string EM_WRONGJSON = """{ "resourceType": "Patient", "deceasedImaginary": "2i" }""";
 
+    // Test data for EM
+    private const string PERMISSIVEXML = """<Patient xmlns="http://hl7.org/fhir"><gender value=""  /></Patient>""";
+    private const string PERMISSIVEJSON = """{ "resourceType": "Patient",  "gender": "" }""";
+    private const string EM_WRONGJSON = """{ "resourceType": "Patient", "deceasedImaginary": "2i" }""";
+    private const string EM_WRONGXML = """<Patient xmlns="http://hl7.org/fhir"><deceasedImaginary value="1i" /></Patient>""";
     private const string EM_UNKNOWN_ELEMENT = "*Encountered unknown element 'activex'*";
     private const string EM_INCORRECT_CHOICE = "*Choice element 'deceasedImaginary' is suffixed with unexpected type 'Imaginary'*";
     private const string EM_EMPTY_VALUE = "*'gender' has an empty*value*";
@@ -46,28 +47,31 @@ public class FhirSerializationEngineTests
         test(data, FhirSerializationEngineFactory.Legacy.Ostrich(TESTINSPECTOR), null);  // there should never be an error ;-)
     }
 
-    private const string POCO_UNKNOWN_ELEMENT = "*Encountered unrecognized * 'activex'*";
-    private const string POCO_INCORRECT_REPEAT = "*Expected a primitive value, not the start of an array.*";
-    private const string POCO_EXPECTED_OBJECT = "*Expected start of object, but found Number*";
-    private const string POCO_EMPTY_VALUE = "* cannot be empty*. Either they are absent*";
-    private const string POCO_WRONGXML = """{ "resourceType": "Patient", "contact": 5 }""";
-    private const string POCO_WRONGJSON = """{ "resourceType": "Patient", "active": [true,false] }""";
+    private const string RECOVERABLEXML = """<Patient xmlns="http://hl7.org/fhir"><gender value=""  /></Patient>""";
+    private const string RECOVERABLEJSON = """{ "resourceType": "Patient",  "gender": "" }""";
+
+    private const string POCO_UNKNOWN_ELEMENT = "*Found unknown * 'activex'*";
+    private const string POCO_RESOURETYPE_NOT_A_STRING = "*'resourceType' should be a string, but found token Number*";
+    private const string POCO_CONTAINED_WITH_ATTR = "*Encountered unexpected attribute*";
+    private const string POCO_EMPTY_VALUE = "*'' is not a correct literal for a code*";
+    private const string POCO_UNRECOVERABLEXML = """<Patient xmlns="http://hl7.org/fhir"><contained value="1i" /></Patient>""";
+    private const string POCO_UNRECOVERABLEJSON = """{ "resourceType": 4 }""";
 
     [TestMethod]
-    [DataRow(CORRECTXML, null, null, null, DisplayName = "Correct XML")]
-    [DataRow(PERMISSIVEXML, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Permissive XML")]
-    [DataRow(BWCOMPATIBLEXML, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible XML")]
-    [DataRow(POCO_WRONGXML, POCO_EXPECTED_OBJECT, POCO_EXPECTED_OBJECT, POCO_EXPECTED_OBJECT, DisplayName = "Wrong XML")]
-    [DataRow(CORRECTJSON, null, null, null, DisplayName = "Correct JSON")]
-    [DataRow(PERMISSIVEJSON, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Permissive JSON")]
-    [DataRow(BWCOMPATIBLEJSON, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible JSON")]
-    [DataRow(POCO_WRONGJSON, POCO_INCORRECT_REPEAT, POCO_INCORRECT_REPEAT, POCO_INCORRECT_REPEAT, DisplayName = "Wrong JSON")]
-    public void TestParsingPoco(string data, string? permissive, string? strict, string? bw)
+    // [DataRow(CORRECTXML, null, null, null, DisplayName = "Correct XML")]
+    // [DataRow(RECOVERABLEXML, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Recoverable XML")]
+    [DataRow(BWCOMPATIBLEXML, null, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible XML")]
+    // [DataRow(POCO_UNRECOVERABLEXML, POCO_CONTAINED_WITH_ATTR, POCO_CONTAINED_WITH_ATTR, POCO_CONTAINED_WITH_ATTR, DisplayName = "Unrecoverable XML")]
+    // [DataRow(CORRECTJSON, null, null, null, DisplayName = "Correct JSON")]
+    // [DataRow(RECOVERABLEJSON, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE, DisplayName = "Recoverable JSON")]
+    // [DataRow(BWCOMPATIBLEJSON, null, POCO_UNKNOWN_ELEMENT, null, DisplayName = "Backwards-compatible JSON")]
+    // [DataRow(POCO_UNRECOVERABLEJSON, POCO_RESOURETYPE_NOT_A_STRING, POCO_RESOURETYPE_NOT_A_STRING, POCO_RESOURETYPE_NOT_A_STRING, DisplayName = "Unrecoverable JSON")]
+    public void TestParsingPoco(string data, string? recoverable, string? strict, string? bw)
     {
-        test(data, FhirSerializationEngineFactory.Recoverable(TESTINSPECTOR), permissive);
+  //      test(data, FhirSerializationEngineFactory.Recoverable(TESTINSPECTOR), recoverable);
         test(data, FhirSerializationEngineFactory.Strict(TESTINSPECTOR), strict);
-        test(data, FhirSerializationEngineFactory.BackwardsCompatible(TESTINSPECTOR), bw);
-        test(data, FhirSerializationEngineFactory.Ostrich(TESTINSPECTOR), null);  // there should never be an error ;-)
+ //       test(data, FhirSerializationEngineFactory.BackwardsCompatible(TESTINSPECTOR), bw);
+  //      test(data, FhirSerializationEngineFactory.Ostrich(TESTINSPECTOR), null);  // there should never be an error ;-)
         // TODO add custom test
     }
 

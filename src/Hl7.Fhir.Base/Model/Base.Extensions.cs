@@ -9,6 +9,7 @@
 #nullable enable
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -64,5 +65,50 @@ public static partial class BaseExtensions
                 _ => throw new InvalidOperationException($"Unexpected type in overflow: key {key} is of type {value.GetType()}, but either Base or IEnumerable<Base> was expected.")
             };
         }
+    }
+
+    // internal static DynamicPrimitive ToDynamicPrimitive(this Base instance)
+    // {
+    //     var primitive = new DynamicPrimitive { DynamicTypeName = instance.TypeName};
+    //
+    //     foreach(var element in instance.EnumerateElements())
+    //     {
+    //         if(element.Key == "value")
+    //             primitive.ObjectValue = element.Value;
+    //         else
+    //             primitive.SetValue(element.Key, element.Value);
+    //     }
+    //
+    //     return primitive;
+    // }
+
+    internal static DynamicDataType ToDynamicDataType(this Base instance)
+    {
+        var dt = new DynamicDataType { DynamicTypeName = instance.TypeName };
+        
+        foreach(var element in instance.EnumerateElements())
+        {
+            dt.SetValue(element.Key, element.Value);
+        }
+
+        if (instance is PrimitiveType primitive)
+            dt.SetValue("value", primitive);
+
+        return dt;
+    }
+
+    internal static IList ToDynamicDataType(this IList list)
+    {
+        var entries = new List<DynamicDataType>();
+        
+        foreach(object? element in list)
+        {
+            if(element is Base b)
+            {
+                entries.Add(b.ToDynamicDataType());
+            }
+        }
+
+        return entries;
     }
 }

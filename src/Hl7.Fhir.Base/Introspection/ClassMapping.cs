@@ -71,11 +71,11 @@ namespace Hl7.Fhir.Introspection
             // System.Reflection caching classes. I have not done that, but we do need the mappings for the
             // primitive .NET types used in the POCOs (for Element.id etc) too to make the code using the
             // classmappings more consistent in handling both FHIR and .NET datatypes.
-            // if (SupportedDotNetPrimitiveTypes.Contains(type))
-            // {
-            //     result = buildNetPrimitiveClassMapping(type, release);
-            //     return true;
-            // }
+            if (SupportedDotNetPrimitiveTypes.Contains(type))
+            {
+                result = buildNetPrimitiveClassMapping(type, release);
+                return true;
+            }
 
             result = null;
 
@@ -90,10 +90,8 @@ namespace Hl7.Fhir.Introspection
 
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
-                IsResource = type.CanBeTreatedAsType(typeof(Resource)),
                 EnumType = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Code<>) ?
                             type.GenericTypeArguments[0] : null,
-                IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
                 IsBackboneType = typeAttribute.IsBackboneType,
                 IsBindable = typeof(ICoded).IsAssignableFrom(type),
                 Canonical = typeAttribute.Canonical,
@@ -140,13 +138,13 @@ namespace Hl7.Fhir.Introspection
         /// <summary>
         /// Is <c>true</c> when this class represents a Resource datatype.
         /// </summary>
-        public bool IsResource { get; private set; } = false;
+        public bool IsResource => typeof(Resource).IsAssignableFrom(NativeType);
 
         /// <summary>
         /// Is <c>true</c> when this class represents a FHIR primitive
         /// </summary>
         /// <remarks>This is different from a .NET primitive, as FHIR primitives are complex types with a primitive value.</remarks>
-        public bool IsFhirPrimitive { get; private set; } = false;
+        public bool IsFhirPrimitive => typeof(PrimitiveType).IsAssignableFrom(NativeType);
 
         /// <summary>
         /// The element is of an atomic .NET type, not a FHIR generated POCO.
@@ -387,6 +385,10 @@ namespace Hl7.Fhir.Introspection
 
         private static ClassMapping buildNetPrimitiveClassMapping(Type t, FhirRelease release) =>
             new("Net." + t.FullName, t, release) { IsPrimitive = true };
+
+        internal static ClassMapping DynamicResource => new(typeof(DynamicResource).FullName!, typeof(DynamicResource), (FhirRelease)int.MaxValue);
+        internal static ClassMapping DynamicPrimitive => new(typeof(DynamicPrimitive).FullName!, typeof(DynamicPrimitive), (FhirRelease)int.MaxValue);
+        internal static ClassMapping DynamicDataType => new(typeof(DynamicDataType).FullName!, typeof(DynamicDataType), (FhirRelease)int.MaxValue);
     }
 }
 

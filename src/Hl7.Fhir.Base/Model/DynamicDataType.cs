@@ -1,6 +1,7 @@
 #nullable enable
 using Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -71,7 +72,15 @@ public class DynamicPrimitive : PrimitiveType, IDynamicType
     public string? DynamicTypeName { get; set; }
 
     public override string TypeName => DynamicTypeName ?? base.TypeName;
-    
+
+    // [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=1000)]
+    // [DataMember]
+    // public object? Value
+    // {
+    //     get => ObjectValue;
+    //     set { ObjectValue = value; OnPropertyChanged("Value"); }
+    // }
+
     protected internal override Base DeepCopyInternal()
     {
         var instance = new DynamicPrimitive { DynamicTypeName = DynamicTypeName };

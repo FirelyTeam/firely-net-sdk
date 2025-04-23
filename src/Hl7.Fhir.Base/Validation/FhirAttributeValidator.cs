@@ -10,9 +10,12 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation;
@@ -33,8 +36,33 @@ public class FhirAttributeValidator : IPocoValidator
         PropertyMapping? propertyMapping,
         PocoValidationContext context)
     {
-        if (propertyMapping is null)
-            return [CodedValidationException.UNKNOWN_ELEMENT(context, name)];
+        if (propertyMapping is null || propertyMapping.IsPrimitive)
+        {
+            var serializedForm = propertyValue is Base b && b.Annotation<XmlRepresentationAnnotation>() is not null
+                ? "attribute"
+                : "element";
+            return [CodedValidationException.UNKNOWN_ELEMENT(context, name, serializedForm)];
+        }
+
+        // // For now, if we encounter a dynamic type instance with a name, this means we have a choice type
+        // // that is unknown. Choice types without a type suffix will result in a DynamicType without a name,
+        // // as will the contents of unknown properties and other error circumstances.
+        // if (propertyValue is IDynamicType { DynamicTypeName: not null } dt)
+        //     return [CodedValidationException.CHOICE_TYPE_NOT_ALLOWED(context, dt.DynamicTypeName)];
+        // if(propertyValue is IReadOnlyCollection<IDynamicType> dtCollection && dtCollection.FirstOrDefault() is { DynamicTypeName: not null } dte)
+        //     return [CodedValidationException.CHOICE_TYPE_NOT_ALLOWED(context, dte.DynamicTypeName)];
+
+        // if we have no allowed types attribute, we should still check against the implementing type, in case someone messed with the model (overflow)
+        if (
+            !propertyMapping.ValidationAttributes.Any(attr => attr is AllowedTypesAttribute) && 
+            !propertyMapping.NativeProperty.PropertyType.IsInstanceOfType(propertyValue)
+        )
+        {
+            return [
+                CodedValidationException.FromTypes(propertyMapping.NativeProperty.PropertyType, propertyValue, context), 
+                ..runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context)
+            ];
+        }
 
         return runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context);
     }
@@ -52,9 +80,7 @@ public class FhirAttributeValidator : IPocoValidator
             var cardinality = propMapping.ValidationAttributes.OfType<CardinalityAttribute>().SingleOrDefault();
             if (cardinality is not null && cardinality.Min > 0)
             {
-                // Note that some Value accessors (for Code<T>.Value for example) can throw, but there are
-                // no Cardinality constraints on those, so we don't have to worry about that now.
-                var propValue = propMapping.GetValue(instance);
+                var propValue = instance.TryGetValue(propMapping.Name, out var val) ? val : null;
 
                 if (propValue is null || ReflectionHelper.IsRepeatingElement(propValue, out var list) && list.Count == 0)
                 {
