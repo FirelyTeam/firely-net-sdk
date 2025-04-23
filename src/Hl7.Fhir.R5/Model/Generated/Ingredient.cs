@@ -108,7 +108,6 @@ namespace Hl7.Fhir.Model
       /// allowed | possible | actual.
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("IngredientManufacturerRole")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Ingredient.IngredientManufacturerRole>? RoleElement
@@ -1212,7 +1211,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -881,7 +881,6 @@ namespace Hl7.Fhir.Model
       /// The type of network access point.
       /// </summary>
       [FhirElement("type", Order=50, FiveWs="FiveWs.where[x]")]
-      [AllowedTypes(typeof(Code))]
       [Binding("AuditEventAgentNetworkType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType>? TypeElement
@@ -2006,7 +2005,6 @@ namespace Hl7.Fhir.Model
     /// Type of action performed during the event.
     /// </summary>
     [FhirElement("action", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
-    [AllowedTypes(typeof(Code))]
     [Binding("AuditEventAction")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>? ActionElement
@@ -2117,7 +2115,6 @@ namespace Hl7.Fhir.Model
     /// Whether the event succeeded or failed.
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
-    [AllowedTypes(typeof(Code))]
     [Binding("AuditEventOutcome")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>? OutcomeElement

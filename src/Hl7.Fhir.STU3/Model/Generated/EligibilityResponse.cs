@@ -1159,7 +1159,6 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("EligibilityResponseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>? StatusElement

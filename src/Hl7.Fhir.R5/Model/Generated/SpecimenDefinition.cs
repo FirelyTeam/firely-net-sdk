@@ -173,7 +173,6 @@ namespace Hl7.Fhir.Model
       /// preferred | alternate.
       /// </summary>
       [FhirElement("preference", Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("SpecimenContainedPreference")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1835,7 +1834,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=170)]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

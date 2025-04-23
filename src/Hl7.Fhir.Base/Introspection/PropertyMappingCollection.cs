@@ -33,6 +33,7 @@ namespace Hl7.Fhir.Introspection
 
             ByName = byName;
             ByOrder = ByName.Values.OrderBy(pm => pm.Order).ToList();
+
             ChoiceProperties = ByOrder.Where(pm => pm.Choice == ChoiceType.DatatypeChoice).ToList();
         }
 

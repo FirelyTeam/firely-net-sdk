@@ -550,7 +550,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1006,7 +1005,6 @@ namespace Hl7.Fhir.Model
     /// The resource type(s) this search parameter applies to.
     /// </summary>
     [FhirElement("base", InSummary=true, Order=280)]
-    [AllowedTypes(typeof(Code))]
     [Binding("FHIRTypes")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -1053,7 +1051,6 @@ namespace Hl7.Fhir.Model
     /// number | date | string | token | reference | composite | quantity | uri | special.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=290)]
-    [AllowedTypes(typeof(Code))]
     [Binding("SearchParamType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1138,7 +1135,6 @@ namespace Hl7.Fhir.Model
     /// normal | phonetic | other.
     /// </summary>
     [FhirElement("processingMode", Order=310)]
-    [AllowedTypes(typeof(Code))]
     [Binding("SearchProcessingModeType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SearchParameter.SearchProcessingModeType>? ProcessingModeElement
@@ -1222,7 +1218,6 @@ namespace Hl7.Fhir.Model
     /// Types of resource (if a resource reference).
     /// </summary>
     [FhirElement("target", Order=330)]
-    [AllowedTypes(typeof(Code))]
     [Binding("FHIRTypes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1351,7 +1346,6 @@ namespace Hl7.Fhir.Model
     /// eq | ne | gt | lt | ge | le | sa | eb | ap.
     /// </summary>
     [FhirElement("comparator", Order=360)]
-    [AllowedTypes(typeof(Code))]
     [Binding("SearchComparator")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1398,7 +1392,6 @@ namespace Hl7.Fhir.Model
     /// missing | exact | contains | not | text | in | not-in | below | above | type | identifier | of-type | code-text | text-advanced | iterate.
     /// </summary>
     [FhirElement("modifier", Order=370)]
-    [AllowedTypes(typeof(Code))]
     [Binding("SearchModifierCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

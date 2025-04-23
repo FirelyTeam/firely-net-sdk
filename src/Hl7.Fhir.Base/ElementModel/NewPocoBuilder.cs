@@ -154,10 +154,6 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         return determineBestDynamicMappingForElement(node);
     }
 
-    private static readonly string DYNAMIC_RESOURCE_TYPE_NAME = new DynamicResource().TypeName;
-    private static readonly string DYNAMIC_DATATYPE_TYPE_NAME = new DynamicDataType().TypeName;
-    private static readonly string DYNAMIC_PRIMITIVE_TYPE_NAME = new DynamicPrimitive().TypeName;
-
     /// <summary>
     /// Determine the "best" dynamic type, based on the abstract type of a POCO property.
     /// </summary>
@@ -166,11 +162,11 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     private ClassMapping determineBestDynamicMappingForType(Type elementType)
     {
         if(typeof(Resource).IsAssignableFrom(elementType))
-            return getClassMapping(DYNAMIC_RESOURCE_TYPE_NAME);
+            return ClassMapping.DynamicResource;
         if(typeof(PrimitiveType).IsAssignableFrom(elementType))
-            return getClassMapping(DYNAMIC_PRIMITIVE_TYPE_NAME);
+            return ClassMapping.DynamicPrimitive;
         if(typeof(DataType).IsAssignableFrom(elementType))
-            return getClassMapping(DYNAMIC_DATATYPE_TYPE_NAME);
+            return ClassMapping.DynamicDataType;
 
         throw new NotSupportedException($"Cannot determine dynamic type for abstract type '{elementType.Name}'.");
     }
@@ -184,9 +180,9 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             return determineBestPrimitiveMapping();
 
         if (node.Annotation<IResourceTypeSupplier>() is not null || node.Definition?.IsResource is true)
-            return getClassMapping(DYNAMIC_RESOURCE_TYPE_NAME);
+            return ClassMapping.DynamicResource;
 
-        return getClassMapping(DYNAMIC_DATATYPE_TYPE_NAME);
+        return ClassMapping.DynamicDataType;
 
         // Instead of just picking a DynamicPrimitive, we can try to pick the best primitive type
         // based on the ITypedElement's value.
@@ -202,7 +198,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
                 int => getClassMapping<Integer>(),
                 long => getClassMapping<Integer64>(),
                 string => getClassMapping<FhirString>(),
-                _ => getClassMapping(DYNAMIC_PRIMITIVE_TYPE_NAME)
+                _ => ClassMapping.DynamicPrimitive
             };
         }
     }

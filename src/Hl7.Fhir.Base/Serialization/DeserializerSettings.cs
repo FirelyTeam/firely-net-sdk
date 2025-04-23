@@ -44,15 +44,6 @@ public record DeserializerSettings
     private readonly Predicate<CodedException>? _exceptionFilter;
 
     /// <summary>
-    /// Perform the parse time validation on the deserialized object even if parsing issues occurred.
-    /// </summary>
-    /// <remarks>
-    /// This is useful for "strict mode" single-pass validators and may result in spurious error messages
-    /// from validating incomplete content.
-    /// </remarks>
-    public bool ValidateOnFailedParse { get; init; } = false;
-
-    /// <summary>
     /// During parsing any contained resources (such as those in a bundle) that encounter some form of parse/validation exception
     /// will have a <c>List&lt;CodedException&gt;</c> of these exceptions added as an annotation to the child resource.
     /// </summary>
@@ -75,7 +66,7 @@ public record DeserializerSettings
     {
         if(AllowUnrecognizedEnums) baseFilter = baseFilter.Ignore([CodedValidationException.INVALID_CODED_VALUE_CODE]);
         if (AcceptUnknownMembers) baseFilter = baseFilter.Ignore(
-            [FhirXmlException.UNKNOWN_ELEMENT_CODE, FhirXmlException.UNKNOWN_ATTRIBUTE_CODE]);
+            [CodedValidationException.UNKNOWN_ELEMENT_CODE]);
 
         return baseFilter;
     }

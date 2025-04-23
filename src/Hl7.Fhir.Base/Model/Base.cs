@@ -50,6 +50,11 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     private Dictionary<string, object>? _overflow = null;
 
     /// <summary>
+    /// Whether the object has any overflow elements.
+    /// </summary>
+    public bool HasOverflow => _overflow?.Count > 0;
+
+    /// <summary>
     /// A dictionary containing all elements that are not explicitly defined in the class.
     /// </summary>
     protected Dictionary<string, object> Overflow =>
@@ -96,7 +101,7 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     /// must be compatible with the type of the property in the POCO, otherwise an <see cref="InvalidCastException"/> is thrown.</remarks>
     public virtual Base SetValue(string key, object? value)
     {
-        if (value is null)
+        if (value is null && HasOverflow)
             Overflow.Remove(key);
         else
         {
@@ -129,16 +134,20 @@ public abstract partial class Base : IAnnotatable, INotifyPropertyChanged
     /// <param name="value">Will be a <see cref="Base"/> or an <see cref="IReadOnlyList{T}"/> of <see cref="Base"/>.</param>
     /// <returns><c>true</c> if the given value was set in the POCO or present in the overflow dictionary, <c>false</c> otherwise.
     /// For lists, this means they should not be empty.</returns>
-    public virtual bool TryGetValue(string key, [NotNullWhen(true)] out object? value) =>
-        Overflow.TryGetValue(key, out value);
+    public virtual bool TryGetValue(string key, [NotNullWhen(true)] out object? value)
+    {
+        if (HasOverflow) return Overflow.TryGetValue(key, out value);
+
+        value = null;
+        return false;
+    }
 
     /// <summary>
     /// Enumerates all non-empty elements in the POCO and the overflow dictionary.
     /// </summary>
     /// <returns>A <see cref="KeyValuePair{TKey,TValue}" /> containing the key and the value, which is
     /// either a <see cref="Base"/> or an <see cref="IReadOnlyList{T}"/> of <see cref="Base"/>.</returns>
-    public virtual IEnumerable<KeyValuePair<string, object>> EnumerateElements() => Overflow;
-
+    public virtual IEnumerable<KeyValuePair<string, object>> EnumerateElements() => _overflow ?? [];
 
     /// <summary>
     /// Compare the children of this Base object with the children of another Base object using the specified comparer.

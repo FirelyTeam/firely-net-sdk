@@ -202,7 +202,6 @@ namespace Hl7.Fhir.Model
       /// causality1 | causality2.
       /// </summary>
       [FhirElement("causality", InSummary=true, Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("AdverseEventCausality")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality>? CausalityElement
@@ -609,7 +608,6 @@ namespace Hl7.Fhir.Model
     /// An adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=100, FiveWs="class")]
-    [AllowedTypes(typeof(Code))]
     [Binding("AdverseEventCategory")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory>? CategoryElement

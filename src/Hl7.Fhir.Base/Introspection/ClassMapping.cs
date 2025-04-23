@@ -79,22 +79,19 @@ namespace Hl7.Fhir.Introspection
 
             result = null;
 
-            if (ReflectionHelper.IsOpenGenericTypeDefinition(type))
+            if (type.IsGenericTypeDefinition)
             {
                 Message.Info("Type {0} is marked as a FhirType and is an open generic type, which cannot be used directly to represent a FHIR datatype", type.Name);
                 return false;
             }
 
             // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
-            if (ReflectionHelper.GetAttribute<FhirTypeAttribute>(type) is not { } typeAttribute) return false;
+            if (type.GetCustomAttribute<FhirTypeAttribute>() is not { } typeAttribute) return false;
 
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
-                IsResource = type.CanBeTreatedAsType(typeof(Resource)),
-                EnumType = ReflectionHelper.IsClosedGenericType(type) &&
-                            ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)) ?
+                EnumType = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Code<>) ?
                             type.GenericTypeArguments[0] : null,
-                IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
                 IsBackboneType = typeAttribute.IsBackboneType,
                 IsBindable = typeof(ICoded).IsAssignableFrom(type),
                 Canonical = typeAttribute.Canonical,
@@ -141,13 +138,13 @@ namespace Hl7.Fhir.Introspection
         /// <summary>
         /// Is <c>true</c> when this class represents a Resource datatype.
         /// </summary>
-        public bool IsResource { get; private set; } = false;
+        public bool IsResource => typeof(Resource).IsAssignableFrom(NativeType);
 
         /// <summary>
         /// Is <c>true</c> when this class represents a FHIR primitive
         /// </summary>
         /// <remarks>This is different from a .NET primitive, as FHIR primitives are complex types with a primitive value.</remarks>
-        public bool IsFhirPrimitive { get; private set; } = false;
+        public bool IsFhirPrimitive => typeof(PrimitiveType).IsAssignableFrom(NativeType);
 
         /// <summary>
         /// The element is of an atomic .NET type, not a FHIR generated POCO.
@@ -265,7 +262,7 @@ namespace Hl7.Fhir.Introspection
 
         internal static IEnumerable<T> GetAttributes<T>(MemberInfo t, FhirRelease version) where T : FhirModelAttribute
         {
-            return ReflectionHelper.GetAttributes<T>(t).Where(isRelevant).OrderBy(att => att.Since);
+            return t.GetCustomAttributes<T>().Where(isRelevant).OrderBy(att => att.Since);
 
             bool isRelevant(FhirModelAttribute a) => a.AppliesToRelease(version);
         }
@@ -372,8 +369,8 @@ namespace Hl7.Fhir.Introspection
 
         // This is the list of .NET "primitive" types that can be used in the generated POCOs and that we
         // can generate ClassMappings for.
-        internal static Type[] SupportedDotNetPrimitiveTypes = new[]
-        {
+        internal static Type[] SupportedDotNetPrimitiveTypes =
+        [
             typeof(int), typeof(uint), typeof(long), typeof(ulong),
             typeof(float), typeof(double), typeof(decimal),
             typeof(string),
@@ -381,13 +378,17 @@ namespace Hl7.Fhir.Introspection
             typeof(DateTimeOffset),
             typeof(byte[]),
             typeof(Enum)
-        };
+        ];
 
         private static ClassMapping buildCqlClassMapping(Type t, FhirRelease release) =>
             new("System." + t.Name, t, release);
 
         private static ClassMapping buildNetPrimitiveClassMapping(Type t, FhirRelease release) =>
             new("Net." + t.FullName, t, release) { IsPrimitive = true };
+
+        internal static ClassMapping DynamicResource => new(typeof(DynamicResource).FullName!, typeof(DynamicResource), (FhirRelease)int.MaxValue);
+        internal static ClassMapping DynamicPrimitive => new(typeof(DynamicPrimitive).FullName!, typeof(DynamicPrimitive), (FhirRelease)int.MaxValue);
+        internal static ClassMapping DynamicDataType => new(typeof(DynamicDataType).FullName!, typeof(DynamicDataType), (FhirRelease)int.MaxValue);
     }
 }
 

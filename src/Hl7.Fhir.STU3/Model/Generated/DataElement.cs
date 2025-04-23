@@ -534,7 +534,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -906,7 +905,6 @@ namespace Hl7.Fhir.Model
     /// comparable | fully-specified | equivalent | convertable | scaleable | flexible.
     /// </summary>
     [FhirElement("stringency", InSummary=true, Order=220)]
-    [AllowedTypes(typeof(Code))]
     [Binding("DataElementStringency")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DataElement.DataElementStringency>? StringencyElement

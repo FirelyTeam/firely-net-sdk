@@ -434,7 +434,6 @@ namespace Hl7.Fhir.Model
       /// closed | open | openAtEnd.
       /// </summary>
       [FhirElement("rules", InSummary=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("SlicingRules")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -625,7 +624,6 @@ namespace Hl7.Fhir.Model
       /// value | exists | type | profile | position.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=30)]
-      [AllowedTypes(typeof(Code))]
       [Binding("DiscriminatorType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1207,7 +1205,6 @@ namespace Hl7.Fhir.Model
       /// contained | referenced | bundled - how aggregated.
       /// </summary>
       [FhirElement("aggregation", InSummary=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("AggregationMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1254,7 +1251,6 @@ namespace Hl7.Fhir.Model
       /// either | independent | specific.
       /// </summary>
       [FhirElement("versioning", InSummary=true, Order=70)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ReferenceVersionRules")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules>? VersioningElement
@@ -1686,11 +1682,6 @@ namespace Hl7.Fhir.Model
       /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Markdown starting from R5.
       /// </remarks>
       [FhirElement("requirements", InSummary=true, Order=40)]
-      [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Markdown))]
-      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DataMember]
@@ -1749,7 +1740,6 @@ namespace Hl7.Fhir.Model
       /// error | warning.
       /// </summary>
       [FhirElement("severity", InSummary=true, Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ConstraintSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2229,7 +2219,6 @@ namespace Hl7.Fhir.Model
       /// required | extensible | preferred | example.
       /// </summary>
       [FhirElement("strength", InSummary=true, Order=30)]
-      [AllowedTypes(typeof(Code))]
       [Binding("BindingStrength")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2276,11 +2265,6 @@ namespace Hl7.Fhir.Model
       /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Markdown starting from R5.
       /// </remarks>
       [FhirElement("description", InSummary=true, Order=40)]
-      [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Markdown))]
-      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DataMember]
@@ -2559,7 +2543,6 @@ namespace Hl7.Fhir.Model
       /// Element was introduced in R5, do not use when working with older releases.
       /// </remarks>
       [FhirElement("purpose", InSummary=true, Order=30, Since=FhirRelease.R5)]
-      [AllowedTypes(typeof(Code))]
       [Binding("AdditionalBindingPurpose")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3124,11 +3107,6 @@ namespace Hl7.Fhir.Model
       /// The type of this element has changed over time. Make sure to use Hl7.Fhir.Model.FhirString in STU3, R4 and R4B, Hl7.Fhir.Model.Markdown starting from R5.
       /// </remarks>
       [FhirElement("comment", InSummary=true, Order=60)]
-      [CLSCompliant(false)]
-      [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Markdown))]
-      // Attribute validation is not sensitive to FHIR version, so the next, more precise validations, will not work yet.
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
-      // [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString), Since = FhirRelease.STU3)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Markdown), Since = FhirRelease.R5)]
       [DataMember]
@@ -3359,7 +3337,6 @@ namespace Hl7.Fhir.Model
     /// xmlAttr | xmlText | typeAttr | cdaText | xhtml.
     /// </summary>
     [FhirElement("representation", InSummary=true, Order=50)]
-    [AllowedTypes(typeof(Code))]
     [Binding("PropertyRepresentation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

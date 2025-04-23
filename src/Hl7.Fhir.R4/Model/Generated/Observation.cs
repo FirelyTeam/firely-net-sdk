@@ -816,7 +816,6 @@ namespace Hl7.Fhir.Model
     /// registered | preliminary | final | amended +.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ObservationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -77,7 +77,6 @@ namespace Hl7.Fhir.Model
       /// mon | tue | wed | thu | fri | sat | sun.
       /// </summary>
       [FhirElement("daysOfWeek", InSummary=true, Order=30)]
-      [AllowedTypes(typeof(Code))]
       [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]

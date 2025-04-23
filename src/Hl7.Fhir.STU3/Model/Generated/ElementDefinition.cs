@@ -379,7 +379,6 @@ namespace Hl7.Fhir.Model
       /// closed | open | openAtEnd.
       /// </summary>
       [FhirElement("rules", InSummary=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("SlicingRules")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -570,7 +569,6 @@ namespace Hl7.Fhir.Model
       /// value | exists | pattern | type | profile.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=30)]
-      [AllowedTypes(typeof(Code))]
       [Binding("DiscriminatorType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1144,7 +1142,6 @@ namespace Hl7.Fhir.Model
       /// contained | referenced | bundled - how aggregated.
       /// </summary>
       [FhirElement("aggregation", InSummary=true, Order=60)]
-      [AllowedTypes(typeof(Code))]
       [Binding("AggregationMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -1191,7 +1188,6 @@ namespace Hl7.Fhir.Model
       /// either | independent | specific.
       /// </summary>
       [FhirElement("versioning", InSummary=true, Order=70)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ReferenceVersionRules")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules>? VersioningElement
@@ -1663,7 +1659,6 @@ namespace Hl7.Fhir.Model
       /// error | warning.
       /// </summary>
       [FhirElement("severity", InSummary=true, Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ConstraintSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2081,7 +2076,6 @@ namespace Hl7.Fhir.Model
       /// required | extensible | preferred | example.
       /// </summary>
       [FhirElement("strength", InSummary=true, Order=30)]
-      [AllowedTypes(typeof(Code))]
       [Binding("BindingStrength")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2662,7 +2656,6 @@ namespace Hl7.Fhir.Model
     /// xmlAttr | xmlText | typeAttr | cdaText | xhtml.
     /// </summary>
     [FhirElement("representation", InSummary=true, Order=40)]
-    [AllowedTypes(typeof(Code))]
     [Binding("PropertyRepresentation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

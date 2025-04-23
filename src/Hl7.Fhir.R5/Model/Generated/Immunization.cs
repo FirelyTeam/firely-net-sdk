@@ -1060,7 +1060,6 @@ namespace Hl7.Fhir.Model
     /// completed | entered-in-error | not-done.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ImmunizationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

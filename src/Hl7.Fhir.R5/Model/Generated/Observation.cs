@@ -141,7 +141,6 @@ namespace Hl7.Fhir.Model
       /// reflex | repeat | re-run.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("TriggeredByType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1188,7 +1187,6 @@ namespace Hl7.Fhir.Model
     /// registered | preliminary | final | amended +.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ObservationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -407,7 +407,6 @@ namespace Hl7.Fhir.Model
       /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated.
       /// </summary>
       [FhirElement("publicationStatus", Order=80)]
-      [AllowedTypes(typeof(Code))]
       [Binding("ContractPublicationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -6339,7 +6338,6 @@ namespace Hl7.Fhir.Model
     /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("ContractStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes>? StatusElement

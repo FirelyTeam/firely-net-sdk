@@ -111,7 +111,6 @@ namespace Hl7.Fhir.Model
       /// source | alternate | historical.
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [AllowedTypes(typeof(Code))]
       [Binding("LinkageType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

@@ -463,7 +463,6 @@ namespace Hl7.Fhir.Model
       /// group | display | boolean | decimal | integer | date | dateTime +.
       /// </summary>
       [FhirElement("type", Order=90)]
-      [AllowedTypes(typeof(Code))]
       [Binding("QuestionnaireItemType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -534,7 +533,6 @@ namespace Hl7.Fhir.Model
       /// all | any.
       /// </summary>
       [FhirElement("enableBehavior", Order=110)]
-      [AllowedTypes(typeof(Code))]
       [Binding("EnableWhenBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.EnableWhenBehavior>? EnableBehaviorElement
@@ -1280,7 +1278,6 @@ namespace Hl7.Fhir.Model
       /// exists | = | != | &gt; | &lt; | &gt;= | &lt;=.
       /// </summary>
       [FhirElement("operator", Order=50)]
-      [AllowedTypes(typeof(Code))]
       [Binding("QuestionnaireItemOperator")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2004,7 +2001,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2089,7 +2085,6 @@ namespace Hl7.Fhir.Model
     /// Resource that can be subject of QuestionnaireResponse.
     /// </summary>
     [FhirElement("subjectType", InSummary=true, Order=170)]
-    [AllowedTypes(typeof(Code))]
     [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

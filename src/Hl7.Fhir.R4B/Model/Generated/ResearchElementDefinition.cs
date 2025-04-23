@@ -360,7 +360,6 @@ namespace Hl7.Fhir.Model
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median.
       /// </summary>
       [FhirElement("studyEffectiveGroupMeasure", Order=110)]
-      [AllowedTypes(typeof(Code))]
       [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode>? StudyEffectiveGroupMeasureElement
@@ -498,7 +497,6 @@ namespace Hl7.Fhir.Model
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median.
       /// </summary>
       [FhirElement("participantEffectiveGroupMeasure", Order=150)]
-      [AllowedTypes(typeof(Code))]
       [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode>? ParticipantEffectiveGroupMeasureElement
@@ -1096,7 +1094,6 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown.
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
-    [AllowedTypes(typeof(Code))]
     [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1900,7 +1897,6 @@ namespace Hl7.Fhir.Model
     /// population | exposure | outcome.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=390)]
-    [AllowedTypes(typeof(Code))]
     [Binding("ResearchElementType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1944,7 +1940,6 @@ namespace Hl7.Fhir.Model
     /// dichotomous | continuous | descriptive.
     /// </summary>
     [FhirElement("variableType", Order=400)]
-    [AllowedTypes(typeof(Code))]
     [Binding("VariableType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableTypeCode>? VariableTypeElement
