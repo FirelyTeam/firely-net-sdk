@@ -257,15 +257,15 @@ public class BaseFhirJsonDeserializer
         }
     }
     
-    private void deserializePropertyInto<T>(
-        T target,
+    private void deserializePropertyInto(
+        Base target,
         string propertyName,
         ref Utf8JsonReader reader,
         PocoDeserializerState state,
         ObjectParsingState delayedValidations,
         PropertyMapping? propertyMapping = null,
         ClassMappingDynamic? propertyValueSuggestion = null,
-        bool forceDelayedValidation = false) where T : Base
+        bool forceDelayedValidation = false)
     {
         object? result;
         var (line, pos) = reader.CurrentState.GetLocation();
@@ -286,8 +286,6 @@ public class BaseFhirJsonDeserializer
         
         target.SetValue(propertyMapping is null ? propertyName : name, result);
         
-        // Only do validation when no parse errors were encountered, otherwise we'll just
-        // produce spurious messages.
         if (Settings.Validator is not null)
         {
             var deserializationContext = new PocoValidationContext(
@@ -920,7 +918,7 @@ public class BaseFhirJsonDeserializer
                 var foundChoiceMapping = inspector.FindClassMapping(typeSuffix);
                 if (foundChoiceMapping is null)
                 {
-                    state.Errors.Add(ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(ref r, state.Path.GetInstancePath(),
+                    state.Errors.Add(ERR.CHOICE_ELEMENT_HAS_UNKNOWN_TYPE(ref r, state.Path.GetInstancePath(),
                         propertyMapping.Name, typeSuffix));
                     choiceMapping = new ClassMappingDynamic(ClassMapping.DynamicDataType, typeSuffix);
                 }

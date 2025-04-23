@@ -1,5 +1,6 @@
 #nullable enable
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,23 @@ namespace Hl7.Fhir.Serialization;
 public static class CodedExceptionFilters
 {
     /// <summary>
-    /// Creates a predicate that returns true if a <see cref="CodedException"/> is recoverable.
+    /// Creates a predicate that returns true if a <see cref="CodedException"/> is an issue with the json or xml syntax.
+    /// After parsing, these issues are not represented in the model. See <see cref="DeserializationMode.SyntaxOnly"/>.
+    /// </summary>
+    public static readonly Predicate<CodedException> IsSyntaxOnlyIssue =
+        ce => ce is ExtendedCodedException ece && ece.IssueType != OperationOutcome.IssueType.Structure;
+
+    /// <summary>
+    /// Creates a predicate that returns true if a <see cref="CodedException"/> is recoverable,
+    /// which means that all data is represented in the POCO, so there is no data loss.
+    /// See <see cref="DeserializationMode.Recoverable"/>.
     /// </summary>
     public static readonly Predicate<CodedException> IsRecoverableIssue =
-        // Note that CodedValidationExceptions are coming from property validation, and so are by definition
-        // recoverable, since the data was already safely in the POCO by that time.
-        ce => FhirJsonException.RECOVERABLE_ISSUES.Contains(ce.ErrorCode) ||
-              FhirXmlException.RECOVERABLE_ISSUES.Contains(ce.ErrorCode);
+        ce => ce is ExtendedCodedException ece && ece.IssueSeverity != OperationOutcome.IssueSeverity.Fatal;
 
     /// <summary>
     /// Creates a predicate that returns true if a <see cref="CodedException"/> signifies a backwards compatibility issue.
+    /// See <see cref="DeserializationMode.BackwardsCompatible"/>.
     /// </summary>
     public static readonly Predicate<CodedException> IsBackwardsCompatibilityIssue =
         ce => FhirJsonException.BACKWARDS_COMPATIBILITY_ALLOWED_ISSUES.Contains(ce.ErrorCode) ||

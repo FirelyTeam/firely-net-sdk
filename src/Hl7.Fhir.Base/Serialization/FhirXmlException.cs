@@ -9,18 +9,26 @@
 
 #nullable enable
 
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
-using System.Collections.Generic;
 using System.Xml;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
 
 namespace Hl7.Fhir.Serialization;
 
-public class FhirXmlException : ExtendedCodedException
+public class FhirXmlException(
+    string errorCode,
+    string baseMessage,
+    string? instancePath,
+    long? lineNumber,
+    long? position,
+    OO_Sev issueSeverity,
+    OO_Typ issueType = OO_Typ.Structure,
+    Exception? innerException = null)
+    : ExtendedCodedException(errorCode, baseMessage, instancePath, lineNumber, position, issueSeverity, issueType,
+        innerException)
 {
     public const string EMPTY_ELEMENT_NAMESPACE_CODE = "XML101";
     public const string UNKNOWN_RESOURCE_TYPE_CODE = "XML102";
@@ -44,71 +52,55 @@ public class FhirXmlException : ExtendedCodedException
     public const string ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT_CODE = "XML125";
 
     // ==========================================
-    // Unrecoverable Errors - when adding a new error, also add it to the appropriate error collections below.
+    // Structural errors - mistakes in the syntax which will be detected during parsing,
+    // but are not represented in the model.
     // ==========================================
-    internal static FhirXmlException MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER(XmlReader reader, string instancePath) => Initialize(reader, instancePath, MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER_CODE, $"Encountered multiple elements in a resource container. Only a single resource is allowed.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, $"Encountered unexpected attribute '{attributeName}' in a resource container. Only a single resource is allowed.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException DISALLOWED_NODE_TYPE(XmlReader reader, string instancePath, string nodeType) => Initialize(reader, instancePath, DISALLOWED_NODE_TYPE_CODE, $"Xml node of type '{nodeType}' is unexpected at this point", OO_Sev.Fatal, OO_Typ.Structure);
 
+    // Fatal errors - there is dataloss so processing should not continue.
+    internal static FhirXmlException MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER(XmlReader reader, string instancePath) => Initialize(reader, instancePath, MULTIPLE_ELEMENTS_IN_RESOURCE_CONTAINER_CODE, $"Encountered multiple elements in a resource container. Only a single resource is allowed.", OO_Sev.Fatal);
+    internal static FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, $"Encountered unexpected attribute '{attributeName}' in a resource container. Only a single resource is allowed.", OO_Sev.Fatal);
+    internal static FhirXmlException DISALLOWED_NODE_TYPE(XmlReader reader, string instancePath, string nodeType) => Initialize(reader, instancePath, DISALLOWED_NODE_TYPE_CODE, $"Xml node of type '{nodeType}' is unexpected at this point", OO_Sev.Fatal);
 
-    // ==========================================
-    // Recoverable Errors - when adding a new error, also add it to the appropriate error collections below.
-    // ==========================================
+    // Non Fatal errors - All data present in the parsed data could be retrieved and
+    // captured in the POCO model (maybe using overflow), even if the syntax or the data was not fully FHIR compliant.
+
     // Although the namespace is not correct, we continue as if it was.
-    internal static FhirXmlException EMPTY_ELEMENT_NAMESPACE(XmlReader reader, string instancePath) => Initialize(reader, instancePath, EMPTY_ELEMENT_NAMESPACE_CODE, $"Element has no namespace, expected the HL7 FHIR namespace ({XmlNs.FHIR})", OO_Sev.Error, OO_Typ.Structure);
-    internal static FhirXmlException INCORRECT_ELEMENT_NAMESPACE(XmlReader reader, string instancePath, string @namespace) => Initialize(reader, instancePath, INCORRECT_ELEMENT_NAMESPACE_CODE, $"Element uses the namespace '{@namespace}', which is not allowed.", OO_Sev.Error, OO_Typ.Structure);
-    internal static FhirXmlException INCORRECT_XHTML_NAMESPACE(XmlReader reader, string instancePath) => Initialize(reader, instancePath, INCORRECT_XHTML_NAMESPACE_CODE, $"Narrative has incorrect namespace. Namespace should be {XmlNs.XHTML}", OO_Sev.Error, OO_Typ.Structure);
-    internal static FhirXmlException INCORRECT_ATTRIBUTE_NAMESPACE(XmlReader reader, string instancePath, string namespaceUri) => Initialize(reader, instancePath, INCORRECT_ATTRIBUTE_NAMESPACE_CODE, $"Attribute uses namespace '{namespaceUri}', which is not allowed.", OO_Sev.Error, OO_Typ.Structure);
-
-    // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
-    //internal static FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE(XmlReader reader, string instancePath, string trimmedValue, string typeName) => Initialize(reader, instancePath, VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, $"Literal string '{trimmedValue}' cannot be parsed as a '{typeName}'.", OO_Sev.Error, OO_Typ.Value);
+    internal static FhirXmlException EMPTY_ELEMENT_NAMESPACE(XmlReader reader, string instancePath) => Initialize(reader, instancePath, EMPTY_ELEMENT_NAMESPACE_CODE, $"Element has no namespace, expected the HL7 FHIR namespace ({XmlNs.FHIR})", OO_Sev.Error);
+    internal static FhirXmlException INCORRECT_ELEMENT_NAMESPACE(XmlReader reader, string instancePath, string @namespace) => Initialize(reader, instancePath, INCORRECT_ELEMENT_NAMESPACE_CODE, $"Element uses the namespace '{@namespace}', which is not allowed.", OO_Sev.Error);
+    internal static FhirXmlException INCORRECT_XHTML_NAMESPACE(XmlReader reader, string instancePath) => Initialize(reader, instancePath, INCORRECT_XHTML_NAMESPACE_CODE, $"Narrative has incorrect namespace. Namespace should be {XmlNs.XHTML}", OO_Sev.Error);
+    internal static FhirXmlException INCORRECT_ATTRIBUTE_NAMESPACE(XmlReader reader, string instancePath, string namespaceUri) => Initialize(reader, instancePath, INCORRECT_ATTRIBUTE_NAMESPACE_CODE, $"Attribute uses namespace '{namespaceUri}', which is not allowed.", OO_Sev.Error);
 
     // An incorrect order does not mean we cannot parse the data safely
-    internal static FhirXmlException ELEMENT_OUT_OF_ORDER(XmlReader reader, string instancePath, string elementName, string after) => Initialize(reader, instancePath, ELEMENT_OUT_OF_ORDER_CODE, $"Element '{elementName}' is not in the correct order, should go before element '{after}'.", OO_Sev.Error, OO_Typ.Structure);
-    internal static FhirXmlException ELEMENT_NOT_IN_SEQUENCE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_NOT_IN_SEQUENCE_CODE, $"Element '{elementName}' was found multiple times, but not in sequence.", OO_Sev.Error, OO_Typ.Structure);
-
-    // Empty values will result in nulls, but no data is lost.
-    internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, $"Element '{elementName}' must have child elements and / or a value attribute", OO_Sev.Error, OO_Typ.Structure);
+    internal static FhirXmlException ELEMENT_OUT_OF_ORDER(XmlReader reader, string instancePath, string elementName, string after) => Initialize(reader, instancePath, ELEMENT_OUT_OF_ORDER_CODE, $"Element '{elementName}' is not in the correct order, should go before element '{after}'.", OO_Sev.Error);
+    internal static FhirXmlException ELEMENT_NOT_IN_SEQUENCE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_NOT_IN_SEQUENCE_CODE, $"Element '{elementName}' was found multiple times, but not in sequence.", OO_Sev.Error);
 
     // Xml paraphernalia that do not contain data so they can be safely skipped.
-    internal static FhirXmlException SCHEMALOCATION_DISALLOWED(XmlReader reader, string instancePath) => Initialize(reader, instancePath, SCHEMALOCATION_DISALLOWED_CODE, "The 'schemaLocation' attribute is disallowed.", OO_Sev.Warning, OO_Typ.Structure);
+    internal static FhirXmlException SCHEMALOCATION_DISALLOWED(XmlReader reader, string instancePath) => Initialize(reader, instancePath, SCHEMALOCATION_DISALLOWED_CODE, "The 'schemaLocation' attribute is disallowed.", OO_Sev.Warning);
 
     // Empty resource containers are not allowed in FHIR, but there is no data loss.
-    internal static FhirXmlException EMPTY_RESOURCE_CONTAINER(XmlReader reader, string instancePath) => Initialize(reader, instancePath, EMPTY_RESOURCE_CONTAINER_CODE, $"Encountered an empty resource container.", OO_Sev.Error, OO_Typ.Structure);
-    /// <summary>
-    /// List of issues which do NOT lead to data loss. Recoverable issues mean that all data present in the parsed data could be retrieved and
-    /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
-    /// </summary>
+    internal static FhirXmlException EMPTY_RESOURCE_CONTAINER(XmlReader reader, string instancePath) => Initialize(reader, instancePath, EMPTY_RESOURCE_CONTAINER_CODE, $"Encountered an empty resource container.", OO_Sev.Error);
 
     // This will use a DynamicXXX, so no data loss.
-    internal static FhirXmlException CHOICE_ELEMENT_HAS_UNKOWN_TYPE(XmlReader reader, string instancePath, string elementName, string typeSuffix) => Initialize(reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeSuffix}'.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(XmlReader reader, string instancePath) => Initialize(reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, "Choice element names should be suffixed by a type.", OO_Sev.Warning, OO_Typ.Structure);
+    internal static FhirXmlException CHOICE_ELEMENTS_MUST_HAVE_SUFFIX(XmlReader reader, string instancePath) => Initialize(reader, instancePath, CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE, "Choice element names should be suffixed by a type.", OO_Sev.Error);
 
     // We'll be capturing its content, even if it was incorrectly an attribute or element
-    internal static FhirXmlException ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE_CODE, $"Element '{elementName}' should have been encoded as an attribute.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT_CODE, $"Attribute '{attributeName}' should have been an element with a `value` property, not an attribute.", OO_Sev.Fatal, OO_Typ.Structure);
+    internal static FhirXmlException ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_SHOULD_HAVE_BEEN_AN_ATTRIBUTE_CODE, $"Element '{elementName}' should have been encoded as an attribute.", OO_Sev.Error);
+    internal static FhirXmlException ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT(XmlReader reader, string instancePath, string attributeName) => Initialize(reader, instancePath, ATTRIBUTE_SHOULD_HAVE_BEEN_AN_ELEMENT_CODE, $"Attribute '{attributeName}' should have been an element with a `value` property, not an attribute.", OO_Sev.Error);
+
+    // ==========================================
+    // Non-Structural errors - mistakes that are represented in the model and can be detected
+    // by subsequent validation steps.
+    // ==========================================
 
     // Will store the data as a DynamicResource
-    internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root element.", OO_Sev.Fatal, OO_Typ.Structure);
-    internal static FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE(XmlReader reader, string instancePath, string resourceType) => Initialize(reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Type '{resourceType}' found in root element is not a resource type.", OO_Sev.Fatal, OO_Typ.Structure);
+    internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root element.", OO_Sev.Error, OO_Typ.Value);
+    internal static FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE(XmlReader reader, string instancePath, string resourceType) => Initialize(reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Type '{resourceType}' found in root element is not a resource type.", OO_Sev.Error, OO_Typ.Value);
 
-    internal static readonly HashSet<string> RECOVERABLE_ISSUES =
-    [
-        ..CodedValidationException.POCO_VALIDATION_ISSUES,
-        EMPTY_ELEMENT_NAMESPACE_CODE,
-        INCORRECT_ELEMENT_NAMESPACE_CODE,
-        INCORRECT_XHTML_NAMESPACE_CODE,
-        INCORRECT_ATTRIBUTE_NAMESPACE_CODE,
-        ELEMENT_OUT_OF_ORDER_CODE,
-        ELEMENT_NOT_IN_SEQUENCE_CODE,
-        ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE,
-        SCHEMALOCATION_DISALLOWED_CODE,
-        EMPTY_RESOURCE_CONTAINER_CODE,
-        CHOICE_ELEMENT_MUST_HAVE_SUFFIX_CODE,
-        CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE,
-        UNKNOWN_RESOURCE_TYPE_CODE,
-        RESOURCE_TYPE_NOT_A_RESOURCE_CODE
-    ];
+    // Empty values will result in nulls, but no data is lost.
+    internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, $"Element '{elementName}' must have child elements and / or a value attribute", OO_Sev.Error, OO_Typ.Invariant);
+
+    // This will use a DynamicXXX, so no data loss.
+    internal static FhirXmlException CHOICE_ELEMENT_HAS_UNKOWN_TYPE(XmlReader reader, string instancePath, string elementName, string typeSuffix) => Initialize(reader, instancePath, CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, $"Choice element '{elementName}' is suffixed with an unrecognized type '{typeSuffix}'.", OO_Sev.Error, OO_Typ.Value);
 
     /// <summary>
     /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer
@@ -119,36 +111,14 @@ public class FhirXmlException : ExtendedCodedException
     [
         CodedValidationException.INVALID_CODED_VALUE_CODE,
         CodedValidationException.UNKNOWN_ELEMENT_CODE,
-        CodedValidationException.CHOICE_TYPE_NOT_ALLOWED_CODE
+        CodedValidationException.CHOICE_TYPE_NOT_ALLOWED_CODE,
+        UNKNOWN_RESOURCE_TYPE_CODE,
+        CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE,
     ];
 
-    public FhirXmlException(string code, string message)
-        : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown)
-    {
-        // Nothing
-    }
 
-    public FhirXmlException(string code, string message, Exception? innerException)
-        : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown, innerException)
-    {
-        // Nothing
-    }
-
-    public FhirXmlException(
-        string errorCode,
-        string baseMessage,
-        string? instancePath,
-        long? lineNumber,
-        long? position,
-        OperationOutcome.IssueSeverity issueSeverity,
-        OperationOutcome.IssueType issueType,
-        Exception? innerException = null) :
-        base(errorCode, baseMessage, instancePath, lineNumber, position, issueSeverity, issueType, innerException)
-    {
-        // Nothing
-    }
-
-    internal static FhirXmlException Initialize(XmlReader reader, string instancePath, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, FhirXmlException? innerException = null)
+    internal static FhirXmlException Initialize(XmlReader reader, string instancePath, string code,
+        string message, OO_Sev issueSeverity, OO_Typ issueType = OO_Typ.Structure, FhirXmlException? innerException = null)
     {
         var (lineNumber, position) = reader.GenerateLineInfo();
 
@@ -163,7 +133,7 @@ public class FhirXmlException : ExtendedCodedException
             innerException);
     }
 
-    public FhirXmlException? CloneWith(string baseMessage, OO_Sev issueSeverity, OO_Typ issueType) =>
+    public FhirXmlException CloneWith(string baseMessage, OO_Sev issueSeverity, OO_Typ issueType) =>
         new(ErrorCode, baseMessage, InstancePath, LineNumber, Position,
             issueSeverity, issueType);
 }

@@ -101,29 +101,34 @@ public record DeserializerSettings
     /// <param name="mode">The selected mode to use, see <see cref="DeserializationMode"/>.</param>
     /// <param name="nvk">How strict to validate the XHtml in FHIR Narrative. Only relevant in mode <see cref="DeserializationMode.Strict"/></param>
     public DeserializerSettings UsingMode(DeserializationMode mode,
-        NarrativeValidationKind nvk = NarrativeValidationKind.FhirXhtml) =>
+        NarrativeValidationKind? nvk = null) =>
         mode switch
         {
             DeserializationMode.Strict => this with
             {
                 ExceptionFilter = null, // No exceptions are ignored
-                NarrativeValidation = nvk
+                NarrativeValidation = nvk ?? NarrativeValidationKind.FhirXhtml
             },
             DeserializationMode.BackwardsCompatible => this with
             {
                 ExceptionFilter = CodedExceptionFilters.IsBackwardsCompatibilityIssue,
-                NarrativeValidation = NarrativeValidationKind.None
+                NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.Recoverable => this with
             {
                 ExceptionFilter = CodedExceptionFilters.IsRecoverableIssue,
-                NarrativeValidation = NarrativeValidationKind.None
+                NarrativeValidation = nvk ?? NarrativeValidationKind.None
+            },
+            DeserializationMode.SyntaxOnly => this with
+            {
+                ExceptionFilter = CodedExceptionFilters.IsSyntaxOnlyIssue,
+                NarrativeValidation = nvk ?? NarrativeValidationKind.None
             },
             DeserializationMode.Ostrich => this with
             {
                 Validator = null,   // Disable all validations, we don't care.
                 ExceptionFilter = _ => true,   // If there are still errors, ignore.
-                NarrativeValidation = NarrativeValidationKind.None   // We don't care about the narrative.
+                NarrativeValidation = nvk ?? NarrativeValidationKind.None   // We don't care about the narrative.
             },
             _ => throw Error.NotSupported("Unknown deserialization mode.")
         };
