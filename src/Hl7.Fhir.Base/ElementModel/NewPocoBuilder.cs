@@ -11,10 +11,12 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using ET = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel;
@@ -132,17 +134,27 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
             ? getClassMapping(propertyMapping.ImplementingType)
             : null;
 
+        // If we have a concrete instanceType, and it's not the same as the property type, we need to
+        // check if we have a mapping for it. If we do, we can use that.
+        // Note that this is not the same as the "best" mapping, which is determined below.
+        // We "purposefully" create the suboptimal mapping anyway so our instance type is preserved.
+        if (node.InstanceType is { } instanceType)
+        {
+            if (instanceType == propertyClassMapping?.GetTypeName() || (instanceType == "code" && propertyClassMapping?.IsCodeOfT is true)) 
+                return propertyClassMapping; // only case in which we return the propertyClassMapping.
+            if (inspector.FindClassMapping(instanceType) is { } mapping && typeof(Base).IsAssignableFrom(mapping.NativeType))
+                return mapping;
+        }
+        
         // Normal case, we have a property mapping, and it's not abstract, so we can use the actual
         // type used by the POCO. The "IsPrimitive" check is a bit of a hack, and is there to avoid
         // us coming up with .NET string mappings for Extension.url and Element.id. This can go when
         // we have solved https://github.com/FirelyTeam/firely-net-sdk/issues/2963.
-        if (propertyClassMapping is { NativeType.IsAbstract: false, IsPrimitive: false })
+        
+        // Note the else here, since we never want to return the propertyClassMapping if we have an
+        // instanceType which does not correspond to that mapping
+        else if (propertyClassMapping is { NativeType.IsAbstract: false, IsPrimitive: false })
             return propertyClassMapping;
-
-        // Otherwise, let's use the ITypedElement's instance type.
-        if (node.InstanceType is { } instanceType &&
-            inspector.FindClassMapping(instanceType) is { NativeType.IsAbstract: false } mapping && typeof(Base).IsAssignableFrom(mapping.NativeType))
-            return mapping;
 
         // No useable concrete type in the property, nor in the instance type, so we need to create
         // one of our dynamic flavours. If we do have an abstract type of the property, we can use that
@@ -216,12 +228,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
     private void setOrAddProperty(ITypedElement node, Base target,
         Base convertedValue, PropertyMapping? propertyMapping)
     {
-        // If this element *could* be repeating (either we don't know the definition, or it really is defined
-        // to be a collection, then check to see if there are already items present.
-        var couldBeCollection = (node.Definition is null && propertyMapping is null)
-                                || node.Definition?.IsCollection == true
-                                || propertyMapping?.IsCollection == true;
-        var existing = couldBeCollection && target.TryGetValue(node.Name, out var existingValue) ? existingValue : null;
+        var existing = target.TryGetValue(node.Name, out var existingValue) ? existingValue : null;
 
         // If there are, just add this new value.
         if (existing is IList list)
