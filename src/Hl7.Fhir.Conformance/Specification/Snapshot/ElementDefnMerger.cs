@@ -648,13 +648,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         result = (T)snap?.DeepCopy();
 
-                        var diffValue = diff.ObjectValue;
+                        var diffValue = diff.JsonValue;
                         if (allowAppend && diffValue is string diffText)
                         {
                             if (diffText.StartsWith("..."))
                             {
                                 //var prefix = snap != null ? snap.ObjectValue as string : null;
-                                var prefix = snap?.ObjectValue as string;
+                                var prefix = snap?.JsonValue as string;
                                 if (string.IsNullOrEmpty(prefix))
                                 {
                                     diffText = diffText.Substring(3);
@@ -665,11 +665,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 }
                             }
 
-                            result.ObjectValue = diffText;
+                            result.JsonValue = diffText;
                         }
                         else
                         {
-                            result.ObjectValue = diffValue;
+                            result.JsonValue = diffValue;
                         }
                         // Also merge element id and extensions on primitives
                         result.ElementId = mergeString(snap.ElementId, diff.ElementId);

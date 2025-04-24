@@ -62,7 +62,7 @@ public partial class Integer64
         set
         {
             _parsedValue = value;
-            base.ObjectValue = null;
+            base.JsonValue = null;
             OnPropertyChanged("Value");
         }
     }
@@ -75,15 +75,15 @@ public partial class Integer64
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
-        if (_parsedValue is not null || base.ObjectValue is null) return null;
+        if (_parsedValue is not null || base.JsonValue is null) return null;
 
         _parsedValue = null;
 
-        if (base.ObjectValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.ObjectValue, this.TypeName);
+        if (base.JsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
 
         _parsedValue = doParse(unparsed);
-        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.ObjectValue, this.TypeName) : null;
+        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.JsonValue, this.TypeName) : null;
     }
 
     private static long? doParse(string literal) =>
@@ -94,18 +94,18 @@ public partial class Integer64
     /// </summary>
     public static bool IsValidValue(string value) => doParse(value) is not null;
 
-    public override object? ObjectValue
+    public override object? JsonValue
     {
         get
         {
-            if (_parsedValue is not null && base.ObjectValue is null)
-                base.ObjectValue = XmlConvert.ToString(_parsedValue.Value);
+            if (_parsedValue is not null && base.JsonValue is null)
+                base.JsonValue = XmlConvert.ToString(_parsedValue.Value);
 
-            return base.ObjectValue;
+            return base.JsonValue;
         }
         set
         {
-            base.ObjectValue = value;
+            base.JsonValue = value;
             _parsedValue = null;
         }
     }

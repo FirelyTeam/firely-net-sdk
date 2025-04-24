@@ -118,7 +118,7 @@ public class FhirJsonDeserializationTests
         }
 
         if (expectedObjectValue is not null)
-            result.ObjectValue.Should().BeEquivalentTo(expectedObjectValue);
+            result.JsonValue.Should().BeEquivalentTo(expectedObjectValue);
     }
 
     private static (Base?, IReadOnlyCollection<CodedException>) deserializeComplex(Type objectType,
@@ -534,7 +534,7 @@ public class FhirJsonDeserializationTests
         var attachment = deserializeAttachment(new FhirJsonConverterOptions());
 
         // After parsing, the ObjectValue is supposed to be the base64 string
-        attachment.DataElement!.ObjectValue.Should().BeOfType<string>().And.Subject.Should().Be("SGkh");
+        attachment.DataElement!.JsonValue.Should().BeOfType<string>().And.Subject.Should().Be("SGkh");
 
         // Getting the Value should decode and return a byte[]
         Encoding.UTF8.GetString(attachment.Data!).Should().Be("Hi!");
@@ -593,9 +593,9 @@ public class FhirJsonDeserializationTests
         // array where primitive
         obj["active"].Should().BeEquivalentTo(new[]{new FhirBoolean(true), new FhirBoolean(false)});
         // primitive where array
-        obj["communication"].Should().BeEquivalentTo(new FhirString{ ObjectValue = "en" });
+        obj["communication"].Should().BeEquivalentTo(new FhirString{ JsonValue = "en" });
         // primitive when complex
-        obj["name"].Should().BeEquivalentTo(new FhirString{ ObjectValue = "Test"});
+        obj["name"].Should().BeEquivalentTo(new FhirString{ JsonValue = "Test"});
     }
     
     [TestMethod]
@@ -657,7 +657,7 @@ public class FhirJsonDeserializationTests
             if (instance is FhirDateTime fdt)
             {
                 DateTimeSeenByInstanceValidator = fdt;
-                fdt.ObjectValue = "1972-11-30T12:00:00Z";
+                fdt.JsonValue = "1972-11-30T12:00:00Z";
             }
 
             return base.ValidateObject(instance, classMapping, context);

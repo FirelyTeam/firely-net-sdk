@@ -73,13 +73,13 @@ public class DynamicPrimitive : PrimitiveType, IDynamicType
 
     public override string TypeName => DynamicTypeName ?? base.TypeName;
 
-    // [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=1000)]
-    // [DataMember]
-    // public object? Value
-    // {
-    //     get => ObjectValue;
-    //     set { ObjectValue = value; OnPropertyChanged("Value"); }
-    // }
+    [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlRepresentation.XmlAttr, InSummary=true, Order=1000)]
+    [DataMember]
+    public object? Value
+    {
+        get => JsonValue;
+        set { JsonValue = value; OnPropertyChanged("Value"); }
+    }
 
     protected internal override Base DeepCopyInternal()
     {
@@ -91,7 +91,7 @@ public class DynamicPrimitive : PrimitiveType, IDynamicType
     protected internal override Any? TryConvertToSystemTypeInternal() => null;
 
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? validationContext) =>
-        ObjectValue is string or bool or decimal or int
+        JsonValue is string or bool or decimal or int
             ? null
-            : COVE.INCORRECT_LITERAL_VALUE_TYPE(validationContext, ObjectValue, TypeName);
+            : COVE.INCORRECT_LITERAL_VALUE_TYPE(validationContext, JsonValue, TypeName);
 }

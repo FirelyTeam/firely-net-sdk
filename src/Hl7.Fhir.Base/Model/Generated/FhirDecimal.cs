@@ -79,8 +79,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public decimal? Value
     {
-      get { return ObjectValue is decimal or null ? (decimal?)ObjectValue : throw COVE.FromTypes(typeof(FhirDecimal), ObjectValue); }
-      set { ObjectValue = value; OnPropertyChanged("Value"); }
+      get { return JsonValue is decimal or null ? (decimal?)JsonValue : throw COVE.FromTypes(typeof(FhirDecimal), JsonValue); }
+      set { JsonValue = value; OnPropertyChanged("Value"); }
     }
 
     protected internal override Base DeepCopyInternal()

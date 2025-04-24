@@ -108,7 +108,7 @@ public static class PocoNodeExtensions
         {
             Canonical c => c.Value, // canonicals can be references
             ResourceReference r => r.Reference,
-            PrimitiveType {ObjectValue: string s} => s,
+            PrimitiveType {JsonValue: string s} => s,
             _ => throw new ArgumentException($"Error occurred during reference resolution: Parameter {nameof(node)} is not a reference.")
         };
 

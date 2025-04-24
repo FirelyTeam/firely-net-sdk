@@ -377,7 +377,8 @@ namespace Hl7.Fhir.Introspection
             typeof(bool),
             typeof(DateTimeOffset),
             typeof(byte[]),
-            typeof(Enum)
+            typeof(Enum),
+            typeof(object)
         ];
 
         private static ClassMapping buildCqlClassMapping(Type t, FhirRelease release) =>

@@ -63,10 +63,10 @@ public class TypedElementToPocoTests
     [DynamicData(nameof(PrimitiveTestData))]
     public void GuessesCorrectPrimitive(Type t, object dynamicValue, string objectValue)
     {
-        ITypedElement subject = PocoNodeOrList.Root(new DynamicPrimitive{ DynamicTypeName = "DoesNotExist", ObjectValue = dynamicValue });
+        ITypedElement subject = PocoNodeOrList.Root(new DynamicPrimitive{ DynamicTypeName = "DoesNotExist", JsonValue = dynamicValue });
         var poco = toPoco(subject);
         poco.Should().BeOfType(t);
-        (poco as PrimitiveType)!.ObjectValue.Should().Be(objectValue ?? dynamicValue);
+        (poco as PrimitiveType)!.JsonValue.Should().Be(objectValue ?? dynamicValue);
     }
 
     [TestMethod]
@@ -134,7 +134,7 @@ public class TypedElementToPocoTests
         var subject = new Patient();
 
         subject.SetValue("newField", new FhirString("hi"));
-        subject.SetValue("newDynamicField", new DynamicPrimitive() { ObjectValue = "hi3" });
+        subject.SetValue("newDynamicField", new DynamicPrimitive() { JsonValue = "hi3" });
         subject.SetValue("newListField", new List<FhirString> { new("hi1"), new("hi2") });
 
         var subjectRt = toPoco(subject);
@@ -142,7 +142,7 @@ public class TypedElementToPocoTests
         newField.Should().BeOfType<FhirString>().Which.Value.Should().Be("hi");
 
         subjectRt.TryGetValue("newDynamicField", out var newDynamicField).Should().BeTrue();
-        newDynamicField.Should().BeOfType<DynamicPrimitive>().Which.ObjectValue.Should().Be("hi3");
+        newDynamicField.Should().BeOfType<DynamicPrimitive>().Which.JsonValue.Should().Be("hi3");
 
         subjectRt.TryGetValue("newListField", out var newListField).Should().BeTrue();
         newListField.Should().BeOfType<List<FhirString>>().Which

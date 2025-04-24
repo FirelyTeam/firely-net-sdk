@@ -42,12 +42,12 @@ public partial class PositiveInt
 {
     /// Validates the JsonValue.
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
-        ObjectValue switch
+        JsonValue switch
         {
             null => null,
             > 0 => null,
             int i => COVE.POSITIVE_INT_MUST_BE_POSITIVE(context, i),
-            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
         };
 
     /// <summary>

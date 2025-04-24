@@ -33,7 +33,7 @@ public partial record PocoNode
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static PocoNode ForPrimitive<T>(object value) where T : PrimitiveType, new() => 
-        new PrimitiveNode(new T { ObjectValue = value }, null, null);
+        new PrimitiveNode(new T { JsonValue = value }, null, null);
     
     /// <summary>
     /// Constructs a PocoNode from a list of PrimitiveTypes
@@ -91,5 +91,5 @@ internal record PrimitiveListNode(IReadOnlyList<PrimitiveType> Primitives, PocoN
     public override IEnumerator<PocoNode> GetEnumerator() =>
         Primitives.Select((primitive, index) => new PrimitiveNode(primitive, ParentNode, index, Name)).GetEnumerator();
 
-    internal IEnumerable<object?> Values => Primitives.Select(p => p.ObjectValue);
+    internal IEnumerable<object?> Values => Primitives.Select(p => p.JsonValue);
 }

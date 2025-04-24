@@ -44,12 +44,12 @@ public partial class FhirString : ICoded
     /// Validates the JsonValue.
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
-        ObjectValue switch
+        JsonValue switch
         {
             null => null,
             string s when IsValidValue(s) => null,
             string s => COVE.LITERAL_INVALID(context, s, this.TypeName),
-            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
         };
 
     /// <summary>

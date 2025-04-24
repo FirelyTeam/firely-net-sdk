@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Tests.Serialization
             // Assume that we can happily read the patient gender when enums are enforced
             var p = pser.Deserialize<Patient>(json);
             Assert.IsNotNull(p.Gender);
-            Assert.AreEqual("male", p.GenderElement.ObjectValue);
+            Assert.AreEqual("male", p.GenderElement.JsonValue);
             Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
 
             // Verify that if we relax the restriction that everything still works
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Tests.Serialization
             p = pser.Deserialize<Patient>(json);
 
             Assert.IsNotNull(p.Gender);
-            Assert.AreEqual("male", p.GenderElement.ObjectValue);
+            Assert.AreEqual("male", p.GenderElement.JsonValue);
             Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
 
 
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Tests.Serialization
             pser.Settings = pser.Settings with { AllowUnrecognizedEnums = true };
             p = pser.Deserialize<Patient>(xml2);
             Assert.ThrowsException<CodedValidationException>(() => p.Gender);
-            Assert.AreEqual("superman", p.GenderElement.ObjectValue);
+            Assert.AreEqual("superman", p.GenderElement.JsonValue);
         }
 
         // This test doesn't work on netcore due to the

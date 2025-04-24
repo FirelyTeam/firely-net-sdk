@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         public void SerializesInvalidData()
         {
             var serializer = new BaseFhirXmlSerializer(ModelInfo.ModelInspector);
-            FhirBoolean b = new() { ObjectValue = "treu" };
+            FhirBoolean b = new() { JsonValue = "treu" };
             var xdoc = XDocument.Parse(SerializationUtil.WriteXmlToString(w => serializer.Serialize(b, w)));
             Assert.AreEqual("treu", xdoc.Root.Attribute(XName.Get("value")).Value);
 
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         public void SerializesSubtree()
         {
             var serializer = new BaseFhirXmlSerializer(ModelInfo.ModelInspector);
-            FhirBoolean b = new() { ObjectValue = "treu" };
+            FhirBoolean b = new() { JsonValue = "treu" };
 
             serializer.SerializeToString(b).Should().StartWith("<boolean");
             serializer.SerializeToString(b, rootName: "active").Should().StartWith("<active");

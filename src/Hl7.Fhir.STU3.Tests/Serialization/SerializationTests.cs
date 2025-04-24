@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(outp.Contains("\"male\""));
 
             // Pollute the data with an incorrect administrative gender
-            p.GenderElement.ObjectValue = "superman";
+            p.GenderElement.JsonValue = "superman";
 
             outp = FhirXmlSerializer.SerializeToString(p);
             Assert.IsFalse(outp.Contains("\"male\""));

@@ -21,16 +21,16 @@ public class InstantTests
     public void SetValueUpdatesRawValue()
     {
         var c = new Instant();
-        Assert.IsNull(c.ObjectValue);
+        Assert.IsNull(c.JsonValue);
         Assert.IsNull(c.Value);
 
         c = new Instant(DateTimeOffset.UnixEpoch);
-        Assert.AreEqual(ElementModel.Types.DateTime.FormatDateTimeOffset(DateTimeOffset.UnixEpoch), c.ObjectValue);
+        Assert.AreEqual(ElementModel.Types.DateTime.FormatDateTimeOffset(DateTimeOffset.UnixEpoch), c.JsonValue);
         Assert.AreEqual(DateTimeOffset.UnixEpoch, c.Value);
 
         var now = DateTimeOffset.Now;
         c.Value = now;
-        Assert.AreEqual(ElementModel.Types.DateTime.FormatDateTimeOffset(now), c.ObjectValue);
+        Assert.AreEqual(ElementModel.Types.DateTime.FormatDateTimeOffset(now), c.JsonValue);
         Assert.AreEqual(now, c.Value);
     }
 
@@ -38,17 +38,17 @@ public class InstantTests
     [TestMethod]
     public void SetRawValueUpdatesValue()
     {
-        var c = new Instant { ObjectValue = ElementModel.Types.DateTime.FormatDateTimeOffset(DateTimeOffset.UnixEpoch) };
+        var c = new Instant { JsonValue = ElementModel.Types.DateTime.FormatDateTimeOffset(DateTimeOffset.UnixEpoch) };
         Assert.AreEqual(DateTimeOffset.UnixEpoch, c.Value);
 
-        c.ObjectValue = null;
+        c.JsonValue = null;
         Assert.IsNull(c.Value);
 
-        c.ObjectValue = "nonsense";
+        c.JsonValue = "nonsense";
         Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 
-        c.ObjectValue = 314;
+        c.JsonValue = 314;
         Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
     }

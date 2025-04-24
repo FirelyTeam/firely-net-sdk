@@ -44,12 +44,12 @@ public partial class UnsignedInt
     /// Validates the JsonValue.
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
-        ObjectValue switch
+        JsonValue switch
         {
             null => null,
             >= 0 => null,
             int i => COVE.UNSIGNED_INT_MUST_NOT_BE_NEGATIVE(context, i),
-            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
         };
 
     /// <summary>

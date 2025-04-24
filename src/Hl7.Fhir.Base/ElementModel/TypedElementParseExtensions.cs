@@ -99,7 +99,7 @@ namespace Hl7.Fhir.ElementModel
 
             var comp = instance.Children("comparator").GetString();
             if (comp != null)
-                newQuantity.ComparatorElement = new Code<Quantity.QuantityComparator> { ObjectValue = comp };
+                newQuantity.ComparatorElement = new Code<Quantity.QuantityComparator> { JsonValue = comp };
 
             return newQuantity;
         }
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.ElementModel
 
         [Obsolete("WARNING! Intended for internal API usage exclusively")]
         internal static T ParsePrimitiveInternal<T>(this ITypedElement instance) where T : PrimitiveType, new()
-                    => new() { ObjectValue = instance.Value };
+                    => new() { JsonValue = instance.Value };
 
         #endregion
 

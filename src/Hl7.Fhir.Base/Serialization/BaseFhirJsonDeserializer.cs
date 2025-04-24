@@ -414,7 +414,7 @@ public class BaseFhirJsonDeserializer
                 bool b => new FhirBoolean(b),
                 decimal d => new FhirDecimal(d),
                 string s => new FhirString(s),
-                _ => new DynamicPrimitive { ObjectValue = value }
+                _ => new DynamicPrimitive { JsonValue = value }
             };
 
             return (primitive, null);
@@ -683,11 +683,11 @@ public class BaseFhirJsonDeserializer
                 var (result, error) = DeserializePrimitiveValue(ref reader, primitiveImplementingType, state.Path);
                 state.Errors.Add(error);
 
-                if (targetPrimitive.ObjectValue is not null)
+                if (targetPrimitive.JsonValue is not null)
                     state.Errors.Add(ERR.DUPLICATE_PROPERTY(ref reader, state.Path.GetInstancePath(), propertyName));
                 else
                     // Set the value, validation is done in the ObjectValidation of the PrimitiveType's.
-                    targetPrimitive.ObjectValue = result;
+                    targetPrimitive.JsonValue = result;
             }
             finally
             {

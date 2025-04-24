@@ -56,7 +56,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
                 convertTypedElementValue(value);
 
             if(newInstance is PrimitiveType pt)
-                pt.ObjectValue = objectValue;
+                pt.JsonValue = objectValue;
             else
                 raiseFormatError($"{node.Name} is a primitive of type {value.GetType()}, but the target POCO is a {newInstance.GetType()}, " +
                                  $"which is not FHIR primitive.", node.Location);
@@ -278,7 +278,7 @@ internal class NewPocoBuilder(ModelInspector inspector, PocoBuilderSettings? set
         // represented in the POCO as .NET primitives, not as FHIR datatypes, so we need to get the value out.
         try
         {
-            if (propertyMapping?.IsPrimitive == true && convertedValue is PrimitiveType { ObjectValue: { } value })
+            if (propertyMapping?.IsPrimitive == true && convertedValue is PrimitiveType { JsonValue: { } value })
                 target[node.Name] = value;
             else
                 target[node.Name] = convertedValue;
