@@ -60,7 +60,7 @@ public partial class Instant
         set
         {
             _parsedValue = value is null ? null : P.DateTime.FromDateTimeOffset(value.Value);
-            base.ObjectValue = null;
+            base.JsonValue = null;
             OnPropertyChanged("Value");
         }
     }
@@ -89,15 +89,15 @@ public partial class Instant
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
-        if (_parsedValue is not null || base.ObjectValue is null) return null;
+        if (_parsedValue is not null || base.JsonValue is null) return null;
 
         _parsedValue = null;
 
-        if (base.ObjectValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.ObjectValue, this.TypeName);
+        if (base.JsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
 
         _parsedValue = doParse(unparsed);
-        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.ObjectValue, this.TypeName) : null;
+        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.JsonValue, this.TypeName) : null;
     }
 
     private static P.DateTime? doParse(string literal) =>
@@ -108,18 +108,18 @@ public partial class Instant
     /// </summary>
     public static bool IsValidValue(string value) => doParse(value) is not null;
 
-    public override object? ObjectValue
+    public override object? JsonValue
     {
         get
         {
-            if (_parsedValue is not null && base.ObjectValue is null)
-                base.ObjectValue = _parsedValue.ToString();
+            if (_parsedValue is not null && base.JsonValue is null)
+                base.JsonValue = _parsedValue.ToString();
 
-            return base.ObjectValue;
+            return base.JsonValue;
         }
         set
         {
-            base.ObjectValue = value;
+            base.JsonValue = value;
             _parsedValue = null;
         }
     }

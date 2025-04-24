@@ -470,7 +470,7 @@ public class BaseFhirXmlDeserializer
 
         if (target is PrimitiveType primitive && attributeName == "value")
         {
-            primitive.ObjectValue = parsedValue;
+            primitive.JsonValue = parsedValue;
 
             // Validator should not be called on the primitive values, this will
             // be handled by the Primitive's ValidateInstance.
@@ -495,7 +495,7 @@ public class BaseFhirXmlDeserializer
             if(propMapping is null)
                 targetElement.AddAnnotation(new XmlRepresentationAnnotation(XmlRepresentation.XmlAttr));
 
-            targetElement.ObjectValue = parsedValue;
+            targetElement.JsonValue = parsedValue;
 
             // Handle atomic-types-as-primitives, Element.id, Extension.url etc.
             var newPropValue = setPropertyWithRepeating(target, attributeName, targetElementMapping, targetElement, state, reader);

@@ -21,15 +21,15 @@ public class Integer64Tests
     public void SetValueUpdatesRawValue()
     {
         var c = new Integer64();
-        Assert.IsNull(c.ObjectValue);
+        Assert.IsNull(c.JsonValue);
         Assert.IsNull(c.Value);
 
         c = new Integer64(3);
-        Assert.AreEqual("3", c.ObjectValue);
+        Assert.AreEqual("3", c.JsonValue);
         Assert.AreEqual(3, c.Value);
 
         c.Value = 5;
-        Assert.AreEqual("5", c.ObjectValue);
+        Assert.AreEqual("5", c.JsonValue);
         Assert.AreEqual(5, c.Value);
     }
 
@@ -37,17 +37,17 @@ public class Integer64Tests
     [TestMethod]
     public void SetRawValueUpdatesValue()
     {
-        var c = new Integer64 { ObjectValue = "7" };
+        var c = new Integer64 { JsonValue = "7" };
         Assert.AreEqual(7, c.Value);
 
-        c.ObjectValue = null;
+        c.JsonValue = null;
         Assert.IsNull(c.Value);
 
-        c.ObjectValue = "nonsense";
+        c.JsonValue = "nonsense";
         Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 
-        c.ObjectValue = 314;
+        c.JsonValue = 314;
         Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
     }

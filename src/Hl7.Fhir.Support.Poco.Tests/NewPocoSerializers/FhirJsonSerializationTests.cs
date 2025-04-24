@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
 
-            var b = new FhirBoolean() { ObjectValue = "treu" };
+            var b = new FhirBoolean() { JsonValue = "treu" };
             var pInvalid = new Patient { ActiveElement = b };
 
             var jdoc = JsonDocument.Parse(JsonSerializer.Serialize(pInvalid, options));

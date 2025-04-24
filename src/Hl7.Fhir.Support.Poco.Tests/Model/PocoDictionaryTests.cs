@@ -76,17 +76,17 @@ public class PocoDictionaryTests
         patient.AddExtension("http://nu.nl", new FhirBoolean(true));
 
         patient["active"].Should().BeOfType<FhirBoolean>().
-            Which.ObjectValue.Should().Be(true);
+            Which.JsonValue.Should().Be(true);
         patient["text"].Should().BeOfType<Narrative>()
             .Which["div"].Should().BeOfType<XHtml>()
-            .Which.ObjectValue.Should().Be("<div>hello</div>");
+            .Which.JsonValue.Should().Be("<div>hello</div>");
         patient["meta"].Should().BeOfType<Meta>()
             .Which["id"].Should().BeOfType<FhirString>()
-            .Which.ObjectValue.Should().Be("4");
+            .Which.JsonValue.Should().Be("4");
         var extension = patient["extension"].Should().BeOfType<List<Extension>>().Which.Should().ContainSingle().Subject;
         extension.Should().BeAssignableTo<Base>()
             .Which["url"].Should().BeOfType<FhirUri>()
-            .Which.ObjectValue.Should().Be("http://nu.nl");
+            .Which.JsonValue.Should().Be("http://nu.nl");
     }
 
     /// <summary>
@@ -98,11 +98,11 @@ public class PocoDictionaryTests
         var name = new HumanName();
         
         name["given"] = new FhirString("John");
-        name["given"].Should().BeOfType<FhirString>().Which.ObjectValue.Should().Be("John");
+        name["given"].Should().BeOfType<FhirString>().Which.JsonValue.Should().Be("John");
         name["given"] = new List<HumanName>([new HumanName()]);
         name["given"].Should().BeOfType<List<HumanName>>().Which.Should().ContainSingle().Which.Should().NotBeNull();
         name["given"] = new List<FhirString>([new FhirString("ji")]);
-        name["given"].Should().BeOfType<List<FhirString>>().Which.Should().ContainSingle().Which.ObjectValue.Should().Be("ji");
+        name["given"].Should().BeOfType<List<FhirString>>().Which.Should().ContainSingle().Which.JsonValue.Should().Be("ji");
         name["given"] = null!;
         var act = () => name["given"];
         act.Should().Throw<KeyNotFoundException>();

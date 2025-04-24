@@ -49,11 +49,11 @@ public partial class XHtml
     /// Validates the JsonValue.
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
-        ObjectValue switch
+        JsonValue switch
         {
             null => null,
             string xml => ValidateXmlLiteral(xml, context),
-            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
         };
 
     internal static COVE? ValidateXmlLiteral(string xml, PocoValidationContext? context)

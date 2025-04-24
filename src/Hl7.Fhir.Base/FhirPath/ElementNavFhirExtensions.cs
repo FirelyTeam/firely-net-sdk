@@ -89,7 +89,7 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="focus"></param>
         /// <returns></returns>
         public static bool HtmlChecks(this PocoNode focus) =>
-            focus is PrimitiveNode {Primitive: XHtml {ObjectValue: string xhtml}} && XHtml.IsValidNarrativeXhtml(xhtml, out _, out _);
+            focus is PrimitiveNode {Primitive: XHtml {JsonValue: string xhtml}} && XHtml.IsValidNarrativeXhtml(xhtml, out _, out _);
 
         public static IEnumerable<Base?> ToFhirValues(this IEnumerable<PocoNode> results)
         {

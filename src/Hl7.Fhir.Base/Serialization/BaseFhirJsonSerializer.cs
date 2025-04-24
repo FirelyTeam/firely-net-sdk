@@ -166,7 +166,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
 
         foreach (var value in values)
         {
-            if (value?.ObjectValue is not null)
+            if (value?.JsonValue is not null)
             {
                 if (!wroteStartArray)
                 {
@@ -174,7 +174,7 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
                     writeStartArray(elementName, numNullsMissed, writer);
                 }
 
-                SerializePrimitiveValue(value.ObjectValue, writer, requiredType);
+                SerializePrimitiveValue(value.JsonValue, writer, requiredType);
             }
             else
             {
@@ -236,11 +236,11 @@ public class BaseFhirJsonSerializer(ModelInspector inspector)
     {
         if (value is null) throw new ArgumentNullException(nameof(value));
 
-        if (value.ObjectValue is not null)
+        if (value.JsonValue is not null)
         {
             // Write a property with 'elementName'
             writer.WritePropertyName(elementName);
-            SerializePrimitiveValue(value.ObjectValue, writer, requiredType);
+            SerializePrimitiveValue(value.JsonValue, writer, requiredType);
         }
 
         if (!value.EnumerateElements().Any()) return;

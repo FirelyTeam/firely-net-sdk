@@ -76,8 +76,8 @@ namespace Hl7.Fhir.Model
     [DataMember]
     public int? Value
     {
-      get { return ObjectValue is int or null ? (int?)ObjectValue : throw COVE.FromTypes(typeof(PositiveInt), ObjectValue); }
-      set { ObjectValue = value; OnPropertyChanged("Value"); }
+      get { return JsonValue is int or null ? (int?)JsonValue : throw COVE.FromTypes(typeof(PositiveInt), JsonValue); }
+      set { JsonValue = value; OnPropertyChanged("Value"); }
     }
 
     protected internal override Base DeepCopyInternal()

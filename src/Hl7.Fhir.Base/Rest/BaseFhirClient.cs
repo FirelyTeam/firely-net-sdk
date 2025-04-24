@@ -1024,7 +1024,7 @@ public partial class BaseFhirClient : IDisposable
         if (capabilityStatement is null) return null;
 
         return capabilityStatement.TryGetValue("fhirVersion", out var value) &&
-               value is PrimitiveType { ObjectValue: string version }
+               value is PrimitiveType { JsonValue: string version }
             ? version
             : null;
     }

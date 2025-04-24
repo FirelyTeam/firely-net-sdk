@@ -22,40 +22,40 @@ public class Base64Tests
     public void SetValueUpdatesRawValue()
     {
         var c = new Base64Binary();
-        Assert.IsNull(c.ObjectValue);
+        Assert.IsNull(c.JsonValue);
         Assert.IsNull(c.Value);
 
         var bytes = "Hi!"u8.ToArray();
         c.Value = bytes;
-        c.ObjectValue.Should().Be("SGkh");
+        c.JsonValue.Should().Be("SGkh");
 
         c.Value = null;
-        c.ObjectValue.Should().BeNull();
+        c.JsonValue.Should().BeNull();
     }
 
 
     [TestMethod]
     public void SetRawValueUpdatesValue()
     {
-        var c = new Base64Binary { ObjectValue = "SGkh" };
+        var c = new Base64Binary { JsonValue = "SGkh" };
         Encoding.UTF8.GetString(c.Value).Should().Be("Hi!");
 
         // Value gets recomputed when we change it.
         // Since base64binary will only keep the parsed value or the original value,
         // try to see if both remain in sync.
-        c.ObjectValue = "dGhlcmU=";
+        c.JsonValue = "dGhlcmU=";
         Encoding.UTF8.GetString(c.Value).Should().Be("there");
-        c.ObjectValue.Should().Be("dGhlcmU=");
+        c.JsonValue.Should().Be("dGhlcmU=");
         Encoding.UTF8.GetString(c.Value).Should().Be("there");
 
-        c.ObjectValue = null;
+        c.JsonValue = null;
         c.Value.Should().BeNull();
 
-        c.ObjectValue = "Hoi";
+        c.JsonValue = "Hoi";
         Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 
-        c.ObjectValue = 314;
+        c.JsonValue = 314;
         Assert.ThrowsException<CodedValidationException>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
     }

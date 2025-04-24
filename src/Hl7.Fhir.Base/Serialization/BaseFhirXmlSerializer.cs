@@ -102,7 +102,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
         // Add the special "value" attribute if this is a FhirPrimitive.
         var orderedMembers = element
             .EnumerateElements()
-            .Concat(element is PrimitiveType { ObjectValue: {} ptValue } ? [KeyValuePair.Create("value", ptValue)] : [])
+            .Concat(element is PrimitiveType { JsonValue: {} ptValue } ? [KeyValuePair.Create("value", ptValue)] : [])
             .Select(m => (m, mapping: mapping?.FindMappedElementByName(m.Key)))
             .OrderBy(p => attributeSorter(p.mapping, p.m.Value as Base));
 
@@ -118,7 +118,7 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
             {
                 // If this is a FHIR primitive element marked as XmlAttr,
                 // take the primitive's value (e.g. Extension.url, Element.id)
-                serializeValue = primitive.ObjectValue!;
+                serializeValue = primitive.JsonValue!;
             }
 
             var elementName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?

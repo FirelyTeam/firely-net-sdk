@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Tests.Model
             dft.TryToTimeSpan(out dto2).Should().BeTrue();
             dto.Equals(dto2).Should().BeTrue();
 
-            dft.ObjectValue = "18:23:34";
+            dft.JsonValue = "18:23:34";
             dft.TryToTimeSpan(out dto).Should().BeTrue();
             dto.Minutes.Should().Be(23);
             dft.TryToTimeSpan(out dto2).Should().BeTrue();

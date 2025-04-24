@@ -62,26 +62,26 @@ public partial class Base64Binary
         set
         {
             _parsedValue = value;
-            base.ObjectValue = null;
+            base.JsonValue = null;
             OnPropertyChanged("Value");
         }
     }
 
-    public override object? ObjectValue
+    public override object? JsonValue
     {
         get
         {
-            if (_parsedValue is not null && base.ObjectValue is null)
+            if (_parsedValue is not null && base.JsonValue is null)
             {
-                base.ObjectValue = Convert.ToBase64String(_parsedValue);
+                base.JsonValue = Convert.ToBase64String(_parsedValue);
                 _parsedValue = null;    // Clear the parsed value to free up memory
             }
 
-            return base.ObjectValue;
+            return base.JsonValue;
         }
         set
         {
-            base.ObjectValue = value;
+            base.JsonValue = value;
             _parsedValue = null;
         }
     }
@@ -95,17 +95,17 @@ public partial class Base64Binary
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
-        if (_parsedValue is not null || base.ObjectValue is null) return null;
+        if (_parsedValue is not null || base.JsonValue is null) return null;
         _parsedValue = null;
 
-        if (base.ObjectValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName);
+        if (base.JsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName);
 
         _parsedValue = doParse(unparsed);
 
         // Clear the string value to free up memory if we have successfully parsed the value.
         if(_parsedValue is not null)
-            base.ObjectValue = null;
+            base.JsonValue = null;
 
         return _parsedValue is null ? COVE.INVALID_BASE64_VALUE(context, unparsed) : null;
     }
@@ -132,7 +132,7 @@ public partial class Base64Binary
     /// Constructs a Base64Binary instance from a string of base64-encoded data.
     /// </summary>
     public static Base64Binary FromBase64String(string base64Data) =>
-        new() { ObjectValue = base64Data };
+        new() { JsonValue = base64Data };
 
     /// <summary>
     /// Constructs a Base64Binary instance from a string of human-readable text.
@@ -152,7 +152,7 @@ public partial class Base64Binary
                                         throw new InvalidOperationException("Value is null.");
 
     protected internal override Any? TryConvertToSystemTypeInternal() =>
-        ObjectValue is string s
+        JsonValue is string s
         ? new P.String(s)
         : null;
 }

@@ -171,12 +171,12 @@ namespace Hl7.Fhir.ElementModel
         {
             get
             {
-                if (Current is not PrimitiveType { ObjectValue: not null } p) return null;
+                if (Current is not PrimitiveType { JsonValue: not null } p) return null;
 
-                if (p.ObjectValue == _lastCachedValue) return _value;
+                if (p.JsonValue == _lastCachedValue) return _value;
 
                 _value = ToITypedElementValue();
-                _lastCachedValue = p.ObjectValue;
+                _lastCachedValue = p.JsonValue;
                 return _value;
             }
         }
@@ -195,15 +195,15 @@ namespace Hl7.Fhir.ElementModel
                     Integer64 fint64 => fint64.Value,
                     PositiveInt pint => pint.Value,
                     UnsignedInt unsint => unsint.Value,
-                    Base64Binary { ObjectValue: { } b64 } => b64,
-                    PrimitiveType prim => prim.ObjectValue,
+                    Base64Binary { JsonValue: { } b64 } => b64,
+                    PrimitiveType prim => prim.JsonValue,
                     _ => null
                 };
             }
             catch (FormatException)
             {
                 // If it fails, just return the unparsed contents
-                return (Current as PrimitiveType)?.ObjectValue;
+                return (Current as PrimitiveType)?.JsonValue;
             }
         }
 

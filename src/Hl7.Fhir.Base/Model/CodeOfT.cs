@@ -65,18 +65,18 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
     [NonSerialized] // To prevent binary serialization from serializing this field
     private T? _parsedValue = null;
 
-    public override object? ObjectValue
+    public override object? JsonValue
     {
         get
         {
-            if (_parsedValue is not null && base.ObjectValue is null)
-                base.ObjectValue = _parsedValue.GetLiteral();
+            if (_parsedValue is not null && base.JsonValue is null)
+                base.JsonValue = _parsedValue.GetLiteral();
 
-            return base.ObjectValue;
+            return base.JsonValue;
         }
         set
         {
-            base.ObjectValue = value;
+            base.JsonValue = value;
             _parsedValue = null;
         }
     }
@@ -98,7 +98,7 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
         set
         {
             _parsedValue = value;
-            base.ObjectValue = null;
+            base.JsonValue = null;
             OnPropertyChanged("Value");
         }
     }
@@ -108,12 +108,12 @@ public class Code<T> : Code, INullableValue<T> where T : struct, Enum
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
-        if (_parsedValue is not null || base.ObjectValue is null) return null;
+        if (_parsedValue is not null || base.JsonValue is null) return null;
 
         _parsedValue = null;
 
-        if (base.ObjectValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.ObjectValue, this.TypeName);
+        if (base.JsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
 
         if(string.IsNullOrWhiteSpace(unparsed))
             return COVE.LITERAL_INVALID(context, unparsed,  this.TypeName);
