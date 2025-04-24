@@ -40,9 +40,16 @@ public static partial class FhirSerializationEngineFactory
 
     /// <summary>
     /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the new Poco-based parser and
-    /// serializers and is configured to allow errors that could occur when reading data from newer releases of FHIR.
-    /// Note that this parser may drop data that cannot be captured in the POCO model, such as new elements in future
-    /// FHIR releases.
+    /// uses <see cref="DeserializationMode.SyntaxOnly"/> mode.
+    /// </summary>
+    public static IFhirSerializationEngine SyntaxOnly(ModelInspector inspector,
+        FhirJsonConverterOptions? converterOptions = null,
+        DeserializerSettings? xmlSettings = null) =>
+        createEngine(inspector, converterOptions, xmlSettings, DeserializationMode.SyntaxOnly);
+
+    /// <summary>
+    /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the new Poco-based parser and
+    /// uses <see cref="DeserializationMode.BackwardsCompatible"/> mode.
     /// </summary>
     public static IFhirSerializationEngine BackwardsCompatible(ModelInspector inspector,
         FhirJsonConverterOptions? converterOptions = null,

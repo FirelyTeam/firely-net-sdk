@@ -25,8 +25,14 @@ public class FhirJsonDeserializer(DeserializerSettings? settings = null)
     /// <inheritdoc cref="FhirXmlDeserializer.STRICT" />
     public static readonly FhirJsonDeserializer STRICT = new(new DeserializerSettings().UsingMode(DeserializationMode.Strict));
 
+    /// <summary>
+    /// A parsers that only checks the FHIR Json syntax rules, but no content rules.
+    /// </summary>
+    public static readonly FhirJsonDeserializer SYNTAXONLY = new(new DeserializerSettings().UsingMode(DeserializationMode.SyntaxOnly));
+
     /// <inheritdoc cref="FhirXmlDeserializer.RECOVERABLE" />
     public static readonly FhirJsonDeserializer RECOVERABLE = new(new DeserializerSettings().UsingMode(DeserializationMode.Recoverable));
+
 
     /// <inheritdoc cref="FhirXmlDeserializer.BACKWARDSCOMPATIBLE" />
     public static readonly FhirJsonDeserializer BACKWARDSCOMPATIBLE = new(new DeserializerSettings().UsingMode(DeserializationMode.BackwardsCompatible));
