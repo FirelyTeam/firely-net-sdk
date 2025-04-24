@@ -1,20 +1,11 @@
 using FluentAssertions;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification;
-using Hl7.Fhir.Specification.Snapshot;
-using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
-namespace Hl7.Fhir.ElementModel.Tests
+namespace Hl7.Fhir.Model.Tests
 {
     [TestClass]
     public class ScopedNodeOnBaseTests
@@ -96,16 +87,16 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void TestContainedCanResolveToContainer()
         {
-            Assert.IsNull(PocoNodeExtensions.Resolve(_bundleNode!, "#"));
+            Assert.IsNull(_bundleNode!.Resolve("#"));
 
             var patient = _bundleNode!.BundledResources().Skip(6).First().Child("resource")?.First();
-            Assert.IsNull(PocoNodeExtensions.Resolve(patient, "#"));
+            Assert.IsNull(patient.Resolve("#"));
 
             var containedOrg = patient?.ContainedResources().First();
-            Assert.AreEqual("Patient", PocoNodeExtensions.Resolve(containedOrg, "#")!.Poco.TypeName);
+            Assert.AreEqual("Patient", containedOrg.Resolve("#")!.Poco.TypeName);
 
             var containedId = containedOrg?.Child("id")?.First();
-            Assert.AreEqual("Patient", PocoNodeExtensions.Resolve(containedId, "#")!.Poco.TypeName);
+            Assert.AreEqual("Patient", containedId.Resolve("#")!.Poco.TypeName);
         }
 
         [TestMethod]
@@ -113,24 +104,24 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             PocoNode inner7 = _bundleNode!.NavigateTo("entry[6].resource.managingOrganization").Single();
 
-            Assert.AreEqual("Bundle.entry[6].resource[0]", PocoNodeExtensions.Resolve(inner7, "http://example.org/fhir/Patient/e")!.GetLocation());
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", PocoNodeExtensions.Resolve(inner7, "#orgY")!.GetLocation());
-            Assert.AreEqual("Bundle.entry[6].resource[0]", PocoNodeExtensions.Resolve(inner7, "#e")!.GetLocation());
-            Assert.AreEqual("Bundle.entry[5].resource[0]", PocoNodeExtensions.Resolve(inner7, "http://example.org/fhir/Patient/d")!.GetLocation());
-            Assert.AreEqual("Bundle.entry[5].resource[0]", PocoNodeExtensions.Resolve(inner7, "Patient/d")!.GetLocation());
-            Assert.AreEqual("Bundle.entry[1].resource[0]", PocoNodeExtensions.Resolve(inner7, "urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d")!.GetLocation());
-            Assert.IsNull(PocoNodeExtensions.Resolve(inner7, "#d"));
-            Assert.IsNull(PocoNodeExtensions.Resolve(inner7, "http://nu.nl/3"));
+            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/e")!.GetLocation());
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve("#orgY")!.GetLocation());
+            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("#e")!.GetLocation());
+            Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/d")!.GetLocation());
+            Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("Patient/d")!.GetLocation());
+            Assert.AreEqual("Bundle.entry[1].resource[0]", inner7.Resolve("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d")!.GetLocation());
+            Assert.IsNull(inner7.Resolve("#d"));
+            Assert.IsNull(inner7.Resolve("http://nu.nl/3"));
 
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", PocoNodeExtensions.Resolve(inner7)!.GetLocation());
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve()!.GetLocation());
             Assert.IsTrue(inner7!.Child("reference") is not null);
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", PocoNodeExtensions.Resolve(inner7.Child("reference")!.First())!.GetLocation());
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Child("reference")!.First().Resolve()!.GetLocation());
 
             string lastUrlResolved = "";
 
-            Assert.IsNull(PocoNodeExtensions.Resolve(inner7, "#d", externalResolve));
+            Assert.IsNull(inner7.Resolve("#d", externalResolve));
             Assert.AreEqual("#d", lastUrlResolved);
-            Assert.IsNull(PocoNodeExtensions.Resolve(inner7, "http://nu.nl/3", externalResolve));
+            Assert.IsNull(inner7.Resolve("http://nu.nl/3", externalResolve));
             Assert.AreEqual("http://nu.nl/3", lastUrlResolved);
 
             PocoNode externalResolve(string url)
