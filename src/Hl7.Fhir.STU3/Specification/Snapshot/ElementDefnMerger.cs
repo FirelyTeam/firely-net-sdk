@@ -230,21 +230,21 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     var result = (T)diff.DeepCopy();
 
-                    if (allowAppend && diff.ObjectValue is string)
+                    if (allowAppend && diff.JsonValue is string)
                     {
-                        var diffText = diff.ObjectValue as string;
+                        var diffText = diff.JsonValue as string;
 
                         if (diffText.StartsWith("..."))
                         {
                             // [WMR 20160719] Handle snap == null
                             // diffText = (snap.ObjectValue as string) + "\r\n" + diffText.Substring(3);
-                            var prefix = snap != null ? snap.ObjectValue as string : null;
+                            var prefix = snap != null ? snap.JsonValue as string : null;
                             diffText = string.IsNullOrEmpty(prefix) ?
                                 diffText.Substring(3)
                                 : prefix + "\r\n" + diffText.Substring(3);
                         }
 
-                        result.ObjectValue = diffText;
+                        result.JsonValue = diffText;
                     }
                     // Also merge element id and extensions on primitives
                     // [Backported from R4] 

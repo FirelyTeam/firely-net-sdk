@@ -67,15 +67,15 @@ public partial class Time
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context)
     {
-        if (_parsedValue is not null || base.ObjectValue is null) return null;
+        if (_parsedValue is not null || base.JsonValue is null) return null;
 
         _parsedValue = null;
 
-        if (base.ObjectValue is not string unparsed)
-            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.ObjectValue, this.TypeName);
+        if (base.JsonValue is not string unparsed)
+            return COVE.INCORRECT_LITERAL_VALUE_TYPE(context, base.JsonValue, this.TypeName);
 
         _parsedValue = doParse(unparsed);
-        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.ObjectValue, this.TypeName) : null;
+        return _parsedValue is null ? COVE.LITERAL_INVALID(context, base.JsonValue, this.TypeName) : null;
     }
 
     private static P.Time? doParse(string value) =>
@@ -121,12 +121,12 @@ public partial class Time
 
     protected internal override P.Any? TryConvertToSystemTypeInternal() => TryToSystemTime(out var date) ? date : null;
 
-    public override object? ObjectValue
+    public override object? JsonValue
     {
-        get => base.ObjectValue;
+        get => base.JsonValue;
         set
         {
-            base.ObjectValue = value;
+            base.JsonValue = value;
             _parsedValue = null;
         }
     }

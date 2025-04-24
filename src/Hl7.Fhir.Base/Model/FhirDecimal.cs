@@ -44,10 +44,10 @@ public partial class FhirDecimal
     /// Validates the JsonValue.
     /// </summary>
     protected internal override COVE? ValidateObjectValue(PocoValidationContext? context) =>
-        ObjectValue switch
+        JsonValue switch
         {
             null or decimal => null,
-            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, ObjectValue, this.TypeName)
+            _ => COVE.INCORRECT_LITERAL_VALUE_TYPE(context, JsonValue, this.TypeName)
         };
 
     /// <summary>

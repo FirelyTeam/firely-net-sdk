@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var datatype = deserializer.DeserializeElement(expectedFhirType, reader);
 
             datatype.Should().BeOfType(expectedFhirType);
-            datatype.As<PrimitiveType>().ObjectValue.Should().Be(expectedValue);
+            datatype.As<PrimitiveType>().JsonValue.Should().Be(expectedValue);
         }
 
         [DataTestMethod]
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             }
             else
             {
-                target.ObjectValue.Should().Be(expectedValue);
+                target.JsonValue.Should().Be(expectedValue);
             }
         }
 

@@ -27,19 +27,19 @@ public class ValidatableObjectTests
         assertValid(c);
         c.Value.Should().Be(FilterOperator.DescendentOf);
 
-        c.ObjectValue = null;
+        c.JsonValue = null;
         assertValid(c);
         c.Value.Should().BeNull();
 
-        c.ObjectValue = FilterOperator.ChildOf.GetLiteral();
+        c.JsonValue = FilterOperator.ChildOf.GetLiteral();
         assertValid(c);
         c.Value.Should().Be(FilterOperator.ChildOf);
 
-        c.ObjectValue = "wrong";
+        c.JsonValue = "wrong";
         assertValid(c, errorCode: COVE.INVALID_CODED_VALUE_CODE);
         Assert.ThrowsExactly<COVE>(() => _ = c.Value);
 
-        c.ObjectValue = 4;
+        c.JsonValue = 4;
         assertValid(c, errorCode: COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE);
         Assert.ThrowsExactly<COVE>(() => _ = c.Value);
     }

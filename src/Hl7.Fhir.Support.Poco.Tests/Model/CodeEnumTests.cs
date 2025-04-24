@@ -22,15 +22,15 @@ public class CodeEnumTests
     public void SetValueUpdatesRawValue()
     {
         var c = new Code<AdministrativeGender>();
-        Assert.IsNull(c.ObjectValue);
+        Assert.IsNull(c.JsonValue);
         Assert.IsNull(c.Value);
 
         c = new Code<AdministrativeGender>(AdministrativeGender.Female);
-        Assert.AreEqual("female", c.ObjectValue);
+        Assert.AreEqual("female", c.JsonValue);
         Assert.AreEqual(AdministrativeGender.Female, c.Value);
 
         c.Value = AdministrativeGender.Unknown;
-        Assert.AreEqual("unknown", c.ObjectValue);
+        Assert.AreEqual("unknown", c.JsonValue);
         Assert.AreEqual(AdministrativeGender.Unknown, c.Value);
     }
 
@@ -38,20 +38,20 @@ public class CodeEnumTests
     [TestMethod]
     public void SetRawValueUpdatesValue()
     {
-        var c = new Code<AdministrativeGender>(AdministrativeGender.Female) { ObjectValue = "male" };
+        var c = new Code<AdministrativeGender>(AdministrativeGender.Female) { JsonValue = "male" };
         Assert.AreEqual(AdministrativeGender.Male, c.Value);
 
-        c.ObjectValue = "other";
+        c.JsonValue = "other";
         Assert.AreEqual(AdministrativeGender.Other, c.Value);
 
-        c.ObjectValue = null;
+        c.JsonValue = null;
         Assert.IsNull(c.Value);
 
-        c.ObjectValue = "maleX";
+        c.JsonValue = "maleX";
         Assert.ThrowsException<COVE>(() => c.Value);
         c.HasValidValue().Should().BeFalse();
 
-        c.ObjectValue = 314;
+        c.JsonValue = 314;
         Assert.ThrowsException<COVE>(() => c.Value).Message.Should().Contain("integer 314 is not the right type of literal for a code.");
         c.HasValidValue().Should().BeFalse();
     }

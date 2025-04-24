@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
         throw new ArgumentException("Can only copy to an object of the same type", "other");
 
       base.CopyToInternal(dest);
-      if (ObjectValue != null) dest.ObjectValue = ObjectValue;
+      if (JsonValue != null) dest.JsonValue = JsonValue;
     }
 
     public override bool CompareChildren(Base other, IEqualityComparer<Base> comparer)
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
       #pragma warning disable CS8604 // Possible null reference argument - netstd2.1 has a wrong nullable signature here
       #pragma warning restore CS8604 // Possible null reference argument.
 
-      return Equals(ObjectValue, otherT.ObjectValue);
+      return Equals(JsonValue, otherT.JsonValue);
 
     }
 

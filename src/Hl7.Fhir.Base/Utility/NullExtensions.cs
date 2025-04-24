@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Utility
             if (element == null) { return true; }
 
             var isEmpty = element is IValue<string> ss ? string.IsNullOrEmpty(ss.Value)
-                : element is not PrimitiveType pp || pp.ObjectValue == null;
+                : element is not PrimitiveType pp || pp.JsonValue == null;
 
             // Note: Children collection includes extensions
 #pragma warning disable CS0618 // Type or member is obsolete

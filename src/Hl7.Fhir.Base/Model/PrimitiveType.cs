@@ -20,31 +20,32 @@ namespace Hl7.Fhir.Model;
 
 public partial class PrimitiveType : P.IToSystemPrimitive
 {
-    /// <summary>
-    /// The value of the primitive, stored as an object. Will generally contain the same value as the
-    /// `Value` property and allows the user to retrieve a primitive value regardless of actual type.
-    /// </summary>
-    /// <remarks>Both <c>Value</c> and <c>ObjectValue</c> may contain invalid values according to the
-    /// primitive's official domain. E.g. <c>Value</c> is a <c>string</c> for <see cref="FhirDateTime"/>,
-    /// and may contain illegally formatted values. Additionally, the deserializers will use this property
-    /// to store the original serialized string form of the value in the wire format when a parsing error is
-    /// encountered.</remarks>
+    /// <inheritdoc cref="JsonValue"/>
+    [Obsolete("The underlying values used by ObjectValue for base64, instant and integer64 have changed, and these will now contain a string instead, to align with the FHIR Json specification for these types. We have renamed this property to JsonValue to reflect this.")]
+    public object? ObjectValue { get => JsonValue; set => JsonValue = value; }
 
-    public virtual object? ObjectValue { get; set; }
+    /// <summary>
+    /// The value of the primitive, as used in Json. This means a string, except for FhirBoolean (bool),
+    /// Integer/PositiveInt/UnsignedInt (int) and FhirDecimal (decimal).
+    /// </summary>
+    /// <remarks>JsonValue may contain incorrect data, as deserializers will use this property to store
+    /// the original serialized value as-is, and parsers will serialize this value as-is to allow for
+    /// roundtripping (as much as possible) of serialized forms.</remarks>
+    public virtual object? JsonValue { get; set; }
 
     /// <inheritdoc/>
     public override string? ToString()
     {
         // The primitive can exist without a value (when there is an extension present)
         // so we need to be able to handle when there is no extension present
-        return ObjectValue is null ? null : PrimitiveTypeConverter.ConvertTo<string>(ObjectValue);
+        return JsonValue is null ? null : PrimitiveTypeConverter.ConvertTo<string>(JsonValue);
     }
 
     /// <summary>
     /// Returns true if the primitive has any child elements (currently in FHIR this can
     /// be only the element id and zero or more extensions).
     /// </summary>
-    public bool HasElements => ElementIdElement?.ObjectValue is not null || Extension?.Any() == true;
+    public bool HasElements => ElementIdElement?.JsonValue is not null || Extension?.Any() == true;
 
     protected internal abstract P.Any? TryConvertToSystemTypeInternal();
 
@@ -84,14 +85,14 @@ public partial class PrimitiveType : P.IToSystemPrimitive
                 Integer64 fint64 => fint64.Value,
                 PositiveInt pint => pint.Value,
                 UnsignedInt unsint => unsint.Value,
-                Base64Binary { ObjectValue: { } b64 } => b64,
-                { } prim => prim.ObjectValue
+                Base64Binary { JsonValue: { } b64 } => b64,
+                { } prim => prim.JsonValue
             };
         }
         catch (FormatException)
         {
             // If it fails, just return the unparsed contents
-            return this.ObjectValue;
+            return this.JsonValue;
         }
     }
 }

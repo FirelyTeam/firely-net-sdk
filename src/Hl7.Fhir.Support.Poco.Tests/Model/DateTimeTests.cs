@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Tests.Model
             dft.TryToDateTimeOffset(out dto2).Should().BeTrue();
             dto.Equals(dto2).Should().BeTrue();
 
-            dft.ObjectValue = "2023-07-11T15:00:00Z";
+            dft.JsonValue = "2023-07-11T15:00:00Z";
             dft.TryToDateTimeOffset(out dto).Should().BeTrue();
             dto.Hour.Should().Be(15);
             dft.TryToDateTimeOffset(out dto2).Should().BeTrue();
