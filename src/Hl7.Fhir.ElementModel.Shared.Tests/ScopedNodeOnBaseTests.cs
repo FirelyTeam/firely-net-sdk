@@ -1,20 +1,11 @@
 using FluentAssertions;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification;
-using Hl7.Fhir.Specification.Snapshot;
-using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
-namespace Hl7.Fhir.ElementModel.Tests
+namespace Hl7.Fhir.Model.Tests
 {
     [TestClass]
     public class ScopedNodeOnBaseTests

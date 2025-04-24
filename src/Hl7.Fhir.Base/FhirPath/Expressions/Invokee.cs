@@ -9,11 +9,12 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.FhirPath.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.ElementModel.PocoNode>;
+using FocusCollection = System.Collections.Generic.IEnumerable<Hl7.Fhir.Model.PocoNode>;
 // ReSharper disable InconsistentNaming
 
 namespace Hl7.FhirPath.Expressions;

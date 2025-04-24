@@ -1,5 +1,5 @@
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Hl7.Fhir.ElementModel;
+namespace Hl7.Fhir.Model;
 
 #nullable enable
 
@@ -200,7 +200,7 @@ public static class PocoNodeExtensions
     
     internal static PocoNode? GetParentResource(this PocoNodeOrList node) => node.parents().FirstOrDefault(parentNode => parentNode is { Poco: Resource });
 
-    internal static string GetLocation(this PocoNode node) => ((ITypedElement)node).Location;
+    public static string GetLocation(this PocoNode node) => ((ITypedElement)node).Location;
     
     internal static string GetLocalLocation(this PocoNode node) =>
         node.Parent is null 
