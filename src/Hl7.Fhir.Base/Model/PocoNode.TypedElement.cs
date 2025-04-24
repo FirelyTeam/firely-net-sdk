@@ -1,16 +1,13 @@
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
+#nullable enable
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
-using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
-#nullable enable
-
-namespace Hl7.Fhir.ElementModel;
+namespace Hl7.Fhir.Model;
 
 public partial record PocoNode
 {

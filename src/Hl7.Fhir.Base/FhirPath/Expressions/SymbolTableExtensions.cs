@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System;
 
 namespace Hl7.FhirPath.Expressions;
