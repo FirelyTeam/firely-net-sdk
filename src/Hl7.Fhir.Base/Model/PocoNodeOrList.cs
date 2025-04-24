@@ -1,4 +1,4 @@
-using Hl7.Fhir.Model;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace Hl7.Fhir.ElementModel;
+namespace Hl7.Fhir.Model;
 
 #nullable enable
 

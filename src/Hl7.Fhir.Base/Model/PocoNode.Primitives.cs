@@ -1,12 +1,11 @@
-using Hl7.Fhir.Model;
+#nullable enable
+
 using Hl7.FhirPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-#nullable enable
-
-namespace Hl7.Fhir.ElementModel;
+namespace Hl7.Fhir.Model;
 
 public partial record PocoNode
 {
@@ -70,10 +69,10 @@ public record PrimitiveNode(PrimitiveType Primitive, PocoNodeOrList? ParentNode,
     
     internal static PrimitiveType InferFromValue(object value) => value switch
     {
-        Types.Quantity qt => new FPQuantity(qt),
-        Types.DateTime dt => new FPDateTime(dt),
-        Types.Date d => new FPDate(d),
-        Types.Time t => new FPTime(t),
+        ElementModel.Types.Quantity qt => new FPQuantity(qt),
+        ElementModel.Types.DateTime dt => new FPDateTime(dt),
+        ElementModel.Types.Date d => new FPDate(d),
+        ElementModel.Types.Time t => new FPTime(t),
         decimal dec => new FPDecimal(dec),
         float f => new FPDecimal((decimal)f),
         double d => new FPDecimal((decimal)d),
