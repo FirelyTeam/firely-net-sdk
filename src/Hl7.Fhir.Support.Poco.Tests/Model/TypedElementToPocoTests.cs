@@ -9,6 +9,7 @@
 using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -147,6 +148,30 @@ public class TypedElementToPocoTests
         subjectRt.TryGetValue("newListField", out var newListField).Should().BeTrue();
         newListField.Should().BeOfType<List<FhirString>>().Which
             .Should().BeEquivalentTo([new FhirString("hi1"), new FhirString("hi2")]);
+    }
+
+    [TestMethod]
+    public void TurnsRepeatingMarkedAsNonRepeatingIntoList()
+    {
+        var humanName = ElementNode.Root(ModelInfo.ModelInspector,"HumanName");
+        
+        humanName.Add(ModelInfo.ModelInspector, "family", "Brown", "string");
+        humanName.Add(ModelInfo.ModelInspector, "family", "Brown2", "string");
+        
+        var poco = humanName.ToPoco<HumanName>();
+        var act = () => poco.FamilyElement;
+        act.Should().Throw<CodedValidationException>().Which.ErrorCode.Should().Be(CodedValidationException.PROPERTY_TYPE_MISMATCH_CODE);
+        poco["family"].Should().BeOfType<List<FhirString>>().Which.Should().HaveCount(2);
+    }
+
+    [TestMethod]
+    public void DoesNotOverrideInstanceType()
+    {
+        var humanName = ElementNode.Root(ModelInfo.ModelInspector,"CustomHumanName");
+        
+        var poco = humanName.ToPoco();
+        poco.Should().BeOfType<DynamicDataType>().Which.DynamicTypeName.Should().Be("CustomHumanName");
+        poco.ToTypedElement().InstanceType.Should().Be("CustomHumanName");
     }
 
     private T toPoco<T>(T source) where T : Base, new()
