@@ -32,6 +32,11 @@ public class FhirXmlDeserializer(DeserializerSettings? settings = null)
     public static readonly FhirXmlDeserializer STRICT = new(new DeserializerSettings().UsingMode(DeserializationMode.Strict));
 
     /// <summary>
+    /// A parsers that only checks the FHIR XML syntax rules, but no content rules.
+    /// </summary>
+    public static readonly FhirXmlDeserializer SYNTAXONLY = new(new DeserializerSettings().UsingMode(DeserializationMode.SyntaxOnly));
+
+    /// <summary>
     /// A parser that allows all errors that will not lead to dataloss when roundtripping.
     /// </summary>
     public static readonly FhirXmlDeserializer RECOVERABLE = new(new DeserializerSettings().UsingMode(DeserializationMode.Recoverable));
