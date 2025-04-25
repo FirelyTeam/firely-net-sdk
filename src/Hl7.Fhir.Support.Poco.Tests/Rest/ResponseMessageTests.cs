@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Test
     public class ResponseMessageTests
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
-        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
+        private static readonly ModelInspector TESTINSPECTOR = ModelInfo.ModelInspector;
         private static readonly IFhirSerializationEngine ELEMENTENGINE = FhirSerializationEngineFactory.Legacy.Permissive(TESTINSPECTOR);
         private static readonly IFhirSerializationEngine POCOENGINE = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
 

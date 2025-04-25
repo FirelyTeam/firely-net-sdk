@@ -33,10 +33,10 @@ public static class PocoValidationExtensions
     /// <param name="validator"></param>
     public static IReadOnlyCollection<CodedValidationException> Validate(
         this Base poco,
+        ModelInspector inspector,
         NarrativeValidationKind narrativeValidation = NarrativeValidationKind.FhirXhtml,
-        ModelInspector? inspector = null, IPocoValidator? validator = null)
+        IPocoValidator? validator = null)
     {
-        inspector ??= ModelInspector.ForType(poco.GetType());
         validator ??= new FhirAttributeValidator();
         var validationContext = buildContext(poco, inspector, narrativeValidation);
 

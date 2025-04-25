@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Test
     public class RequestMessageTests
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
-        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
+        private static readonly ModelInspector TESTINSPECTOR = ModelInfo.ModelInspector;
         private static readonly IFhirSerializationEngine TESTENGINE = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
         private static readonly string TESTVERSION = "3.0.1";
 

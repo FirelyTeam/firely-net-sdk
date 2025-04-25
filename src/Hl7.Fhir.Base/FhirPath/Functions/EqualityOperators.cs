@@ -71,11 +71,15 @@ namespace Hl7.FhirPath.Functions
             if (left.InstanceType == "Quantity" && l == null)
                 l = left is PocoNode node 
                     ? Typecasts.ParseQuantity(node) 
+#pragma warning disable CS0618 // Type or member is obsolete
                     : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
+#pragma warning restore CS0618 // Type or member is obsolete
             if (right.InstanceType == "Quantity" && r == null)
                 r = right is PocoNode node 
                     ? Typecasts.ParseQuantity(node) 
+#pragma warning disable CS0618 // Type or member is obsolete
                     : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))
@@ -165,11 +169,15 @@ namespace Hl7.FhirPath.Functions
             if (left.InstanceType == "Quantity" && l == null)
                 l = left is PocoNode node 
                     ? Typecasts.ParseQuantity(node) 
+#pragma warning disable CS0618 // Type or member is obsolete
                     : Typecasts.ParseQuantity(left.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
+#pragma warning restore CS0618 // Type or member is obsolete
             if (right.InstanceType == "Quantity" && r == null)
                 r = right is PocoNode node 
                     ? Typecasts.ParseQuantity(node) 
+#pragma warning disable CS0618 // Type or member is obsolete
                     : Typecasts.ParseQuantity(right.ToPoco<Quantity>(ModelInspector.ForAssembly(typeof(Quantity).Assembly)).ToPocoNode());
+#pragma warning restore CS0618 // Type or member is obsolete
 
             // Compare primitives (or extended primitives)
             if (l != null && r != null && P.Any.TryConvert(l, out var lAny) && P.Any.TryConvert(r, out var rAny))

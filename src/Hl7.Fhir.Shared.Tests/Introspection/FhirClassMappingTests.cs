@@ -84,7 +84,9 @@ namespace Hl7.Fhir.Tests.Introspection
         public void LoadsDependentSatelliteAssemblies()
         {
             var satellite = typeof(ModelInfo).Assembly;
+#pragma warning disable CS0618 // Type or member is obsolete
             var inspector = ModelInspector.ForAssembly(satellite);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             inspector.FindClassMapping(typeof(Patient)).Should().NotBeNull();
             inspector.FindClassMapping(typeof(StructureDefinition)).Should().NotBeNull();
@@ -98,7 +100,9 @@ namespace Hl7.Fhir.Tests.Introspection
         public void LoadsDependentConformanceAssemblies()
         {
             var satellite = typeof(StructureDefinition).Assembly;
+#pragma warning disable CS0618 // Type or member is obsolete
             var inspector = ModelInspector.ForAssembly(satellite);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             inspector.FindClassMapping(typeof(StructureDefinition)).Should().NotBeNull();
             inspector.FindClassMapping(typeof(ValueSet)).Should().NotBeNull();
@@ -110,9 +114,7 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void FindsCorrectFhirVersion()
         {
-            var satellite = typeof(ModelInfo).Assembly;
-            IModelInfo mi = ModelInspector.ForAssembly(satellite);  // R5 is arbitrary here
-
+            var mi = ModelInfo.ModelInspector;  // R5 is arbitrary here
             mi.FhirVersion.Should().Be(ModelInfo.Version);
         }
     }

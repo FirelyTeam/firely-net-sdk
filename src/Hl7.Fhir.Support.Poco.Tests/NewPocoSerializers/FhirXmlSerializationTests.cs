@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             // For now, deserialize with the existing deserializer, until we have completed
             // the dynamicserializer too.
-            return (FhirXmlNode.Parse(expected).ToPoco<Patient>(ModelInspector.ForType<Patient>()), expected);
+            return (FhirXmlNode.Parse(expected).ToPoco<Patient>(), expected);
         }
 
         [TestMethod]

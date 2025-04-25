@@ -585,8 +585,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             return reader;
         }
 
-        private static BaseFhirXmlDeserializer getTestDeserializer(DeserializerSettings settings) =>
-                new(ModelInspector.ForType<Patient>(), settings);
+        private static FhirXmlDeserializer getTestDeserializer(DeserializerSettings settings) => new(settings);
         
         [TestMethod]
         public void TestDateTimeStuff()

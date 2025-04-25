@@ -59,12 +59,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 ));
 
             var options = new JsonSerializerOptions()
-                .ForFhir(typeof(Patient).Assembly, new FhirJsonConverterOptions { SummaryFilter = filter })
+                .ForFhir(new FhirJsonConverterOptions { SummaryFilter = filter })
                 .Pretty();
             string actual = JsonSerializer.Serialize(b, options);
 
             // Root bundle should not have been filtered at all
-            var bp = FhirJsonNode.Parse(actual).ToPoco<Bundle>(ModelInspector.ForType<Patient>());
+            var bp = FhirJsonNode.Parse(actual).ToPoco<Bundle>();
             assertIdentifier(bp.Identifier);
             bp.Type.Value.Should().Be(Bundle.BundleType.Batch);
             bp.Count().Should().Be(4);
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             // Non-bundle root resources should be filtered normally too 
             actual = JsonSerializer.Serialize(p, options);
-            pat = FhirJsonNode.Parse(actual).ToPoco<Patient>(ModelInspector.ForType<Patient>());
+            pat = FhirJsonNode.Parse(actual).ToPoco<Patient>();
             pat.Count().Should().Be(1);
             pat.Communication.Should().NotBeNull();
 
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         public void AllSummaryIndeed()
         {
             var (_, summarized) = runSummarize<CodeSystem>("mask-text.xml", SerializationFilter.ForSummary());
-            var codeSystemCm = ModelInspector.ForAssembly(typeof(Patient).Assembly).FindClassMapping(typeof(CodeSystem))!;
+            var codeSystemCm = ModelInfo.ModelInspector.FindClassMapping(typeof(CodeSystem))!;
 
             summarized.EnumerateElements().All(element => codeSystemCm.FindMappedElementByName(element.Key)!.InSummary).Should().BeTrue();
             summarized.Count().Should().BeLessThan(codeSystemCm.PropertyMappings.Count(pm => pm.InSummary));
@@ -157,14 +157,14 @@ namespace Hl7.Fhir.Support.Poco.Tests
         private (T full, T summarized) runSummarize<T>(string filename, SerializationFilter filter) where T : Resource
         {
             var fullXml = File.ReadAllText(Path.Combine("TestData", filename));
-            var full = FhirXmlNode.Parse(fullXml).ToPoco<T>(ModelInspector.ForType<T>());
+            var full = FhirXmlNode.Parse(fullXml).ToPoco<T>();
 
             var options = new JsonSerializerOptions()
-                .ForFhir(typeof(Patient).Assembly, new FhirJsonConverterOptions { SummaryFilter = filter })
+                .ForFhir(new FhirJsonConverterOptions { SummaryFilter = filter })
                 .Pretty();
             string summarizedJson = JsonSerializer.Serialize(full, options);
 
-            var summarized = FhirJsonNode.Parse(summarizedJson).ToPoco<T>(ModelInspector.ForType<T>());
+            var summarized = FhirJsonNode.Parse(summarizedJson).ToPoco<T>();
 
             return (full, summarized);
         }

@@ -61,7 +61,9 @@ public static partial class TypedElementExtensions
         if (source is not PocoNode { Poco: Resource resource } node)
             return SerializationUtil.WriteJsonToString(source.WriteTo, pretty);
 
-        var inspector = node.FindInspector() ?? ModelInspector.ForType(resource.GetType());
+#pragma warning disable CS0618 // Type or member is obsolete
+        var inspector = node.FindInspector() ?? ModelInspector.ForAssembly(resource.GetType().Assembly);
+#pragma warning restore CS0618 // Type or member is obsolete
         var ser = new BaseFhirJsonSerializer(inspector);
         return ser.SerializeToString(resource, pretty);
     }

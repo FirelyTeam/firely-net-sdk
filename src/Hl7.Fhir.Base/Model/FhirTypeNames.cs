@@ -49,5 +49,6 @@ internal static class FhirTypeNames
     public const string ELEMENT_NAME = "Element";
     public const string STRING_NAME = "string";
     public const string MARKDOWN_NAME = "markdown";
+    public const string VALUESET_NAME = "ValueSet";
 
 }

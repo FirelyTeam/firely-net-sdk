@@ -75,10 +75,10 @@ namespace Hl7.Fhir.Support.Tests
             var xml = "<Parameters xmlns=\"http://hl7.org/fhir\"><parameter><name value=\"item\" /><valueString value=\"test\"/></parameter></Parameters>";
             var sourceNode = FhirXmlNode.Parse(xml);
 
-            yield return new object[] { sourceNode.ToTypedElement(ModelInspector.ForAssembly(typeof(Resource).Assembly)), "sourceNode to TypedElement" };
+            yield return [sourceNode.ToTypedElement(ModelInspector.Base), "sourceNode to TypedElement"];
 
             var poco = sourceNode.ToPoco<Parameters>(ModelInspector.Base);
-            yield return new object[] { poco.ToTypedElement(ModelInspector.Base), "poco to TypedElement" };
+            yield return [poco.ToTypedElement(ModelInspector.Base), "poco to TypedElement"];
         }
 
         public static IEnumerable<object[]> LowBoundaryTestCases() =>

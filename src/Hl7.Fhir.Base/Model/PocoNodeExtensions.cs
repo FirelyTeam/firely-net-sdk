@@ -311,7 +311,9 @@ public static class PocoNodeExtensions
     
     internal static string SerializeToString(this PocoNode pn, bool pretty)
     {
-        var serializer = new BaseFhirXmlSerializer(pn.FindInspector() ?? ModelInspector.ForType(pn.Poco.GetType()));
+#pragma warning disable CS0618 // Type or member is obsolete
+        var serializer = new BaseFhirXmlSerializer(pn.FindInspector() ?? ModelInspector.ForAssembly(pn.Poco.GetType().Assembly));
+#pragma warning restore CS0618 // Type or member is obsolete
 
         // If we are serializing a subtree of a resource, then if the current node is a datatype or a nested resource,
         // we need to pick a name for this root element.

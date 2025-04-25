@@ -37,16 +37,6 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     public static void Clear() => _inspectedAssemblies.Clear();
 
     /// <summary>
-    /// Finds or creates the <see cref="ClassMapping"/> for a given type.
-    /// Calling this function repeatedly for the same type will return the same ClassMapping.
-    /// </summary>
-    /// <remarks>If the type given is FHIR Release specific, the returned mapping will contain
-    /// metadata for that release only. If the type is from the base assembly, it will contain
-    /// metadata for that type from the most recent release of the base assembly.</remarks>
-    public static ClassMapping? GetClassMappingForType(Type t) =>
-        ForAssembly(t.Assembly).FindOrImportClassMapping(t);
-
-    /// <summary>
     /// Returns a fully configured <see cref="ModelInspector"/> with the
     /// FHIR metadata contents of the given assembly, plus all the assemblies it depends upon.
     /// Calling this function repeatedly for the same assembly will return the same inspector.
@@ -54,6 +44,7 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     /// <remarks>If the assembly given is FHIR Release specific, the returned inspector will contain
     /// metadata for that release only. If the assembly is the base assembly, it will contain
     /// metadata for the most recent release for those base classes.</remarks>
+    [Obsolete("ModelInspectors should be retrieved from the ModelInfo, or while using Base only, from ModelInspector.Base.")]
     public static ModelInspector ForAssembly(Assembly a)
     {
         return _inspectedAssemblies.GetOrAdd(a.FullName ?? throw Error.ArgumentNull(nameof(a.FullName)),
@@ -109,6 +100,7 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     /// repeatedly for the same type will return the same inspector.
     /// </summary>
     /// <param name="type"></param>
+    [Obsolete("ModelInspectors should be retrieved from the ModelInfo, or while using Base only, from ModelInspector.Base.")]
     public static ModelInspector ForType(Type type) => ForAssembly(type.Assembly);
 
     /// <summary>
@@ -117,13 +109,16 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     /// repeatedly for the same type will return the same inspector.
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Obsolete("ModelInspectors should be retrieved from the ModelInfo, or while using Base only, from ModelInspector.Base.")]
     public static ModelInspector ForType<T>() where T : Resource => ForType(typeof(T));
 
     /// <summary>
     /// Returns a fully configured <see cref="ModelInspector"/> with the
     /// FHIR metadata contents of the base assembly
     /// </summary>
-    public static ModelInspector Base => ForType(typeof(ModelInspector));
+#pragma warning disable CS0618 // Type or member is obsolete
+    public static ModelInspector Base => ForAssembly(typeof(ModelInspector).Assembly);
+#pragma warning restore CS0618 // Type or member is obsolete
 
     /// <summary>
     /// Constructs a ModelInspector that will reflect the FHIR metadata for the given FHIR release
@@ -175,7 +170,7 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         extractEnums(exportedEnums);
 
         // Find and extract all ClassMappings
-        var exportedClasses = exportedTypes.Where(et => et.IsClass && !et.IsEnum);
+        var exportedClasses = exportedTypes.Where(et => et is { IsClass: true, IsEnum: false });
         return exportedClasses.Select(ImportType)
             .Where(cm => cm is not null)
             .ToList()!;

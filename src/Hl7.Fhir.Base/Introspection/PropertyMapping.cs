@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Introspection
         /// <c>FiveWs</c> pattern from http://hl7.org/fhir/fivews.html. Choice elements are spelled with the
         /// [x] suffix, like <c>done[x]</c>. </remarks>
         /// </summary>
-        public string FiveWs { get; private set; }
+        public string? FiveWs { get; private set; }
 
         /// <summary>
         /// Whether the element has a cardinality higher than 0.
@@ -180,12 +180,12 @@ namespace Hl7.Fhir.Introspection
             result = default;
 
             // If there is no [FhirElement] on the property, skip it
-            var elementAttr = ClassMapping.GetAttribute<FhirElementAttribute>(prop, release);
+            var elementAttr = prop.GetFhirModelAttribute<FhirElementAttribute>(release);
             if (elementAttr == null) return false;
 
             // If there is an explicit [NotMapped] on the property, skip it
             // (in combination with `Since` useful to remove a property from the serialization)
-            var notmappedAttr = ClassMapping.GetAttribute<NotMappedAttribute>(prop, release);
+            var notmappedAttr = prop.GetFhirModelAttribute<NotMappedAttribute>(release);
             if (notmappedAttr != null) return false;
 
             // We broadly use .IsArray here - this means arrays in POCOs cannot be used to represent
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Introspection
             // This is pretty ugly, so we prefer to not support arrays - you should use lists instead.
             _ = ReflectionHelper.TryGetRepeatingElementType(prop.PropertyType, out var collectionItemType);
 
-            var cardinalityAttr = ClassMapping.GetAttribute<CardinalityAttribute>(prop, release);
+            var cardinalityAttr = prop.GetFhirModelAttribute<CardinalityAttribute>(release);
 
             // Get to the actual (native) type representing this element
             var implementingType = prop.PropertyType;
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Introspection
             // The [AllowedTypes] attribute can specify a set of allowed types for this element.
             // If this is a choice element, then take this list as the declared list of FHIR types,
             // otherwise assume this is the implementing FHIR type above
-            var overridingTypes = ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release)?.Types;
+            var overridingTypes = prop.GetFhirModelAttribute<AllowedTypesAttribute>(release)?.Types;
             Type mappingType = determineMappingType(overridingTypes, implementingType, elementAttr, declaringClass.Name);
 
             if (!ClassMapping.TryGetMappingForType(mappingType, release, out var propertyTypeMapping))
@@ -227,9 +227,9 @@ namespace Hl7.Fhir.Introspection
                 IsMandatoryElement = cardinalityAttr?.Min > 0,
                 IsPrimitive = isPrimitive,
                 RepresentsValueElement = elementAttr.IsPrimitiveValue,
-                ValidationAttributes = ClassMapping.GetValidatingAttributes(prop, release).ToArray(),
+                ValidationAttributes = prop.GetValidatingAttributes(release).ToArray(),
                 FiveWs = elementAttr.FiveWs,
-                BindingName = ClassMapping.GetAttribute<BindingAttribute>(prop, release)?.Name
+                BindingName = prop.GetFhirModelAttribute<BindingAttribute>(release)?.Name
             };
 
             return true;

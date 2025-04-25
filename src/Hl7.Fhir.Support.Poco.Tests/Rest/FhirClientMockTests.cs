@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
     [TestClass]
     public class FhirClientMockTest
     {
-        private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
+        private static readonly ModelInspector TESTINSPECTOR = ModelInfo.ModelInspector;
         private static readonly string TESTVERSION = "3.0.1";
 
         private static async Task mockVersionResponse(string capabilityStatementResponseJson, string patientResponseJson, bool verifyFhirVersion = true)

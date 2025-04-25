@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Introspection
                 IsBackboneType = typeAttribute.IsBackboneType,
                 IsBindable = typeof(ICoded).IsAssignableFrom(type),
                 Canonical = typeAttribute.Canonical,
-                ValidationAttributes = GetAttributes<ValidatingFhirModelAttribute>(type, release).ToArray(),
+                ValidationAttributes = type.GetFhirModelAttributes<ValidatingFhirModelAttribute>(release).ToArray(),
             };
 
             return true;
@@ -256,23 +256,6 @@ namespace Hl7.Fhir.Introspection
             {
                 return null;
             }
-        }
-
-        internal static T? GetAttribute<T>(MemberInfo t, FhirRelease version) where T : FhirModelAttribute => GetAttributes<T>(t, version).LastOrDefault();
-
-        internal static IEnumerable<T> GetAttributes<T>(MemberInfo t, FhirRelease version) where T : FhirModelAttribute
-        {
-            return t.GetCustomAttributes<T>().Where(isRelevant).OrderBy(att => att.Since);
-
-            bool isRelevant(FhirModelAttribute a) => a.AppliesToRelease(version);
-        }
-
-        internal static IEnumerable<ValidatingFhirModelAttribute> GetValidatingAttributes(MemberInfo t, FhirRelease version)
-        {
-            return GetAttributes<ValidatingFhirModelAttribute>(t, version)
-                .GroupBy(att => att.GetType())
-                .Select(g => g.LastOrDefault())
-                .OfType<ValidatingFhirModelAttribute>();
         }
 
         #region IStructureDefinitionSummary members

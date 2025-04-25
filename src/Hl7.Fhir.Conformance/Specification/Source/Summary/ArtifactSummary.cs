@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Specification.Source
     public class ArtifactSummary : IArtifactSummaryPropertyBag
     {
         /// <summary>Returns an empty <see cref="ArtifactSummary"/> instance.</summary>
-        public static ArtifactSummary Empty => new ArtifactSummary(ArtifactSummaryPropertyBag.Empty, ModelInspector.ForAssembly(typeof(IModelInfo).Assembly));
+        public static ArtifactSummary Empty => new(ArtifactSummaryPropertyBag.Empty, ModelInspector.Base);
 
         // Note: omit leading underscore to be CLS compliant
         protected readonly IArtifactSummaryPropertyBag properties;
