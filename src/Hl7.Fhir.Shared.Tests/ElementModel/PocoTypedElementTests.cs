@@ -188,8 +188,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             var fiveWsProp = aResourceMapping.PropertyMappings.Where(p => p.FiveWs != null && p.FiveWs.StartsWith("FiveWs.subject")).FirstOrDefault();
             fiveWsProp.Should().NotBeNull("There should be a fiveW mapping for subject");
 
-            var subjectProp = fiveWsProp.GetValue(poco) as ResourceReference;
-
+            var subjectProp = poco[fiveWsProp.Name];
             Assert.AreEqual(poco.Subject, subjectProp);
         }
 

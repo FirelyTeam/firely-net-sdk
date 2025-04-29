@@ -22,13 +22,35 @@ namespace Hl7.Fhir.Introspection;
 /// <summary>
 /// A container for the metadata of a FHIR valueset as present on the .NET Enum.
 /// </summary>
-public class EnumMapping(
-    string name,
-    string? canonical,
-    Type nativeType,
-    FhirRelease release,
-    Func<IReadOnlyDictionary<string, EnumMemberMapping>> memberMapper)
+public record EnumMapping
 {
+    public delegate IReadOnlyDictionary<string, EnumMemberMapping> EnumMemberMapper(Type nativeType, string? defaultCodeSystem);
+
+    public EnumMapping(
+        string name,
+        Type nativeType,
+        FhirRelease release,
+        EnumMemberMapper memberMapper)
+    {
+        Name = name;
+        NativeType = nativeType;
+        Release = release;
+        _memberMapper = memberMapper;
+    }
+
+    public EnumMapping(string name, Type nativeType, FhirRelease release)
+        : this(name, nativeType, release, defaultMappingInitializer)
+    {
+        // Nothing
+    }
+
+    public EnumMapping(string name, Type nativeType, FhirRelease release,
+        IReadOnlyDictionary<string, EnumMemberMapping> mappings)
+        : this(name, nativeType, release, (_,_) => mappings)
+    {
+        // Nothing
+    }
+
     private static readonly ConcurrentDictionary<(Type, FhirRelease), EnumMapping?> _mappedEnums = new();
 
     public static void Clear() => _mappedEnums.Clear();
@@ -56,37 +78,31 @@ public class EnumMapping(
     /// </summary>
     /// <remarks>For classes shared across FHIR versions, there may be metadata present for different versions
     /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract.</remarks>
-    public static bool TryCreate(Type type, [NotNullWhen(true)] out EnumMapping? result, FhirRelease release = (FhirRelease)int.MaxValue)
+    public static bool TryCreate(Type type, [NotNullWhen(true)] out EnumMapping? result,
+        FhirRelease release = (FhirRelease)int.MaxValue)
     {
         result = null;
         if (!type.IsEnum) return false;
 
         if (type.GetTypeInfo().GetFhirModelAttribute<FhirEnumerationAttribute>(release) is not { } typeAttribute) return false;
 
-        result = new EnumMapping(typeAttribute.BindingName, typeAttribute.Valueset, type, release, (typeAttribute.DefaultCodeSystem is not null) ? string.Intern(typeAttribute.DefaultCodeSystem) : null);
+        result = new EnumMapping(typeAttribute.BindingName, type, release)
+        {
+        Canonical = typeAttribute.Valueset,
+        DefaultCodeSystem = typeAttribute.DefaultCodeSystem is not null
+            ? string.Intern(typeAttribute.DefaultCodeSystem)
+            : null
+        };
+
         return true;
     }
-
-    public EnumMapping(string name, string? canonical, Type nativeType, FhirRelease release, string? defaultCodeSystem)
-     : this(name, canonical, nativeType, release, () => defaultMappingInitializer(defaultCodeSystem,nativeType))
-    {
-        // Nothing
-    }
-
-    public EnumMapping(string name, string? canonical, Type nativeType, FhirRelease release,
-        IReadOnlyDictionary<string, EnumMemberMapping> mappings)
-    : this(name, canonical, nativeType, release, () => mappings)
-    {
-        // Nothing
-    }
-
 
     /// <summary>
     /// The FHIR release which this mapping reflects.
     /// </summary>
     /// <remarks>The mapping will contain the metadata that applies to this version (or older), using the
     /// newest metadata when multiple exist.</remarks>
-    public FhirRelease? Release { get; } = release;
+    public FhirRelease? Release { get; }
 
     /// <summary>
     /// Name of the mapping, derived from the valueset's name or id.
@@ -94,12 +110,7 @@ public class EnumMapping(
     /// <remarks>
     /// This is the FHIR name
     /// </remarks>
-    public string Name { get; } = name;
-
-    /// <summary>
-    /// The canonical of the ValueSet where this enum was derived from.
-    /// </summary>
-    public string? Canonical { get; init; } = canonical;
+    public string Name { get; }
 
     /// <summary>
     /// The code system of most of the member of the ValueSet
@@ -108,7 +119,14 @@ public class EnumMapping(
     /// <summary>
     /// The .NET class that implements the FHIR datatype/resource
     /// </summary>
-    public Type NativeType { get; } = nativeType;
+    public Type NativeType { get; }
+
+    /// <summary>
+    /// The canonical of the ValueSet where this enum was derived from.
+    /// </summary>
+    public string? Canonical { get; init; }
+
+    public string? DefaultCodeSystem { get; init; }
 
     /// <summary>
     /// The list of enum members.
@@ -117,11 +135,14 @@ public class EnumMapping(
     /// The list of enum members.
     /// </summary>
     public IReadOnlyDictionary<string, EnumMemberMapping> Members =>
-        LazyInitializer.EnsureInitialized(ref _mappings, memberMapper)!;
+        LazyInitializer.EnsureInitialized(ref _mappings, () => _memberMapper(NativeType, DefaultCodeSystem))!;
+
+    private readonly EnumMemberMapper _memberMapper;
 
     private IReadOnlyDictionary<string, EnumMemberMapping>? _mappings;
 
-    private static Dictionary<string, EnumMemberMapping> defaultMappingInitializer(string? defaultCodeSystem, Type nativeType)
+    private static Dictionary<string, EnumMemberMapping> defaultMappingInitializer(Type nativeType,
+        string? defaultCodeSystem)
     {
         var result = new Dictionary<string, EnumMemberMapping>();
 

@@ -74,14 +74,14 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
                     Where(typ => typeof(ElementModel.Types.Any).IsAssignableFrom(typ));
             }
 
-            void importRecursively(Assembly a)
+            void importRecursively(Assembly assembly)
             {
-                if (imported.Contains(a)) return;
+                if (imported.Contains(assembly)) return;
 
-                newInspector.Import(a);
-                imported.Add(a);
+                newInspector.Import(assembly);
+                imported.Add(assembly);
 
-                var referencedFhirAssemblies = a.GetReferencedAssemblies()
+                var referencedFhirAssemblies = assembly.GetReferencedAssemblies()
                     .Select(Assembly.Load)
                     .Where(isFhirModelAssembly);
 
@@ -128,12 +128,26 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         FhirRelease = fhirRelease;
     }
 
+    private ModelInspector(FhirRelease fhirRelease, IEnumerable<ClassMapping> classMappings,
+        IEnumerable<EnumMapping> enumMappings) : this(fhirRelease)
+    {
+        _classMappings = new ClassMappingCollection(classMappings);
+        _enumMappings = new EnumMappingCollection(enumMappings);
+    }
+
+    /// <summary>
+    /// Returns a configured <see cref="ModelInspector"/> with the given predefined mappings.
+    /// </summary>
+    public static ModelInspector ForPredefinedMappings(FhirRelease version,
+        IEnumerable<ClassMapping> classMappings,
+        IEnumerable<EnumMapping> enumMappings) => new(version, classMappings, enumMappings);
+
     /// <summary>
     /// The release of FHIR (i.e. STU3, R4) that this metadata is constructor for.
     /// </summary>
     /// <remarks>This is taken in consideration when encountering versioned FHIR attributes, to be able to
     /// use a single POCO class to reflect the members for different FHIR releases.</remarks>
-    public FhirRelease FhirRelease { get; init; }
+    public FhirRelease FhirRelease { get; }
 
     /// <summary>
     /// The detected version of FHIR (i.e. 4.0.2) on the loaded assembly.
@@ -186,7 +200,7 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         if (!ClassMapping.TryGetMappingForType(type, FhirRelease, out var mapping))
             return null;
 
-        _classMappings.Add(mapping!);
+        _classMappings.Add(mapping);
 
         var nestedTypes = type.GetNestedTypes(BindingFlags.Public);
         var nestedEnums = nestedTypes.Where(t => t.IsEnum);
@@ -285,13 +299,13 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
 
     #region IModelInfo
 
-    public Canonical? CanonicalUriForFhirCoreType(string typeName) => Canonical.ForCoreType(typeName);
+    public Canonical CanonicalUriForFhirCoreType(string typeName) => Canonical.ForCoreType(typeName);
 
     public Canonical? CanonicalUriForFhirCoreType(Type type) => GetFhirTypeNameForType(type) is { } name ? CanonicalUriForFhirCoreType(name) : null;
 
     public Type? GetTypeForFhirType(string name) => FindClassMapping(name) is { } mapping ? mapping.NativeType : null;
 
-    public bool IsBindable(string type) => FindClassMapping(type) is { } mapping && mapping.IsBindable;
+    public bool IsBindable(string type) => FindClassMapping(type) is { IsBindable: true };
 
     public bool IsConformanceResource(string name) => GetTypeForFhirType(name) is { } type && IsConformanceResource(type);
 
@@ -301,12 +315,9 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
 
     public bool IsCoreModelType(Type type) => FindClassMapping(type) is not null;
 
-    public bool IsCoreModelTypeUri(Uri uri) => uri is not null
-                                               // [WMR 20181025] Issue #746
-                                               // Note: FhirCoreProfileBaseUri.IsBaseOf(new Uri("Dummy", UriKind.RelativeOrAbsolute)) = true...?!
-                                               && uri.IsAbsoluteUri
-                                               && Canonical.FHIR_CORE_PROFILE_BASE_URI.IsBaseOf(uri)
-                                               && IsCoreModelType(Canonical.FHIR_CORE_PROFILE_BASE_URI.MakeRelativeUri(uri).ToString());
+    public bool IsCoreModelTypeUri(Uri uri) =>
+        uri.IsAbsoluteUri && Canonical.FHIR_CORE_PROFILE_BASE_URI.IsBaseOf(uri)
+                          && IsCoreModelType(Canonical.FHIR_CORE_PROFILE_BASE_URI.MakeRelativeUri(uri).ToString());
 
     public bool IsCoreSuperType(string name) => GetTypeForFhirType(name) is { } type && IsCoreSuperType(type);
 
@@ -320,9 +331,9 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         type == typeof(PrimitiveType) ||
         type == typeof(BackboneType);
 
-    public bool IsDataType(string name) => FindClassMapping(name) is { } mapping && !mapping.IsFhirPrimitive && !mapping.IsResource;
+    public bool IsDataType(string name) => FindClassMapping(name) is { IsFhirPrimitive: false, IsResource: false };
 
-    public bool IsDataType(Type type) => FindClassMapping(type) is { } mapping && !mapping.IsFhirPrimitive && !mapping.IsResource;
+    public bool IsDataType(Type type) => FindClassMapping(type) is { IsFhirPrimitive: false, IsResource: false };
 
     public bool IsInstanceTypeFor(string superclass, string subclass)
     {
@@ -334,9 +345,9 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
 
     public bool IsInstanceTypeFor(Type superclass, Type subclass) => superclass == subclass || superclass.IsAssignableFrom(subclass);
 
-    public bool IsKnownResource(string name) => FindClassMapping(name) is { } mapping && mapping.IsResource;
+    public bool IsKnownResource(string name) => FindClassMapping(name) is { IsResource: true };
 
-    public bool IsKnownResource(Type type) => FindClassMapping(type) is { } mapping && mapping.IsResource;
+    public bool IsKnownResource(Type type) => FindClassMapping(type) is { IsResource: true };
 
     public bool IsPrimitive(string name) => FindClassMapping(name)?.IsFhirPrimitive ?? false;
 
