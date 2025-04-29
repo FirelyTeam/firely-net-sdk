@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Introspection;
 /// </summary>
 public record EnumMapping
 {
-    public delegate IReadOnlyDictionary<string, EnumMemberMapping> EnumMemberMapper(Type nativeType, string? defaultCodeSystem);
+    public delegate IReadOnlyDictionary<string, EnumMemberMapping> EnumMemberMapper(EnumMapping parent);
 
     public EnumMapping(
         string name,
@@ -39,14 +39,14 @@ public record EnumMapping
     }
 
     public EnumMapping(string name, Type nativeType, FhirRelease release)
-        : this(name, nativeType, release, defaultMappingInitializer)
+        : this(name, nativeType, release, DefaultEnumMemberMapper)
     {
         // Nothing
     }
 
     public EnumMapping(string name, Type nativeType, FhirRelease release,
         IReadOnlyDictionary<string, EnumMemberMapping> mappings)
-        : this(name, nativeType, release, (_,_) => mappings)
+        : this(name, nativeType, release, _ => mappings)
     {
         // Nothing
     }
@@ -135,20 +135,23 @@ public record EnumMapping
     /// The list of enum members.
     /// </summary>
     public IReadOnlyDictionary<string, EnumMemberMapping> Members =>
-        LazyInitializer.EnsureInitialized(ref _mappings, () => _memberMapper(NativeType, DefaultCodeSystem))!;
+        LazyInitializer.EnsureInitialized(ref _mappings, () => _memberMapper(this))!;
 
     private readonly EnumMemberMapper _memberMapper;
 
     private IReadOnlyDictionary<string, EnumMemberMapping>? _mappings;
 
-    private static Dictionary<string, EnumMemberMapping> defaultMappingInitializer(Type nativeType,
-        string? defaultCodeSystem)
+    /// <summary>
+    /// Enumerate this enums fields using reflection to create EnumMemberMappings.
+    /// </summary>
+    /// <remarks>This is the mapper used when no other mapper is specified in the constructor.</remarks>
+    public static Dictionary<string, EnumMemberMapping> DefaultEnumMemberMapper(EnumMapping parent)
     {
         var result = new Dictionary<string, EnumMemberMapping>();
 
-        foreach (var member in ReflectionHelper.FindEnumFields(nativeType))
+        foreach (var member in ReflectionHelper.FindEnumFields(parent.NativeType))
         {
-            var success = EnumMemberMapping.TryCreate(member, out var mapping, (FhirRelease)int.MaxValue, defaultCodeSystem);
+            var success = EnumMemberMapping.TryCreate(member, out var mapping, (FhirRelease)int.MaxValue, parent.DefaultCodeSystem);
 
             if (success) result.Add(mapping!.Code, mapping);
         }

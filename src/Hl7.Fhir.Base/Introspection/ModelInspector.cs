@@ -121,26 +121,22 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
 #pragma warning restore CS0618 // Type or member is obsolete
 
     /// <summary>
-    /// Constructs a ModelInspector that will reflect the FHIR metadata for the given FHIR release
+    /// Constructs an empty <see cref="ModelInspector"/> with the given FHIR release.
     /// </summary>
     public ModelInspector(FhirRelease fhirRelease)
     {
         FhirRelease = fhirRelease;
     }
 
-    private ModelInspector(FhirRelease fhirRelease, IEnumerable<ClassMapping> classMappings,
+    /// <summary>
+    /// Constructs a <see cref="ModelInspector"/> with the given predefined mappings.
+    /// </summary>
+    public ModelInspector(FhirRelease fhirRelease, IEnumerable<ClassMapping> classMappings,
         IEnumerable<EnumMapping> enumMappings) : this(fhirRelease)
     {
         _classMappings = new ClassMappingCollection(classMappings);
         _enumMappings = new EnumMappingCollection(enumMappings);
     }
-
-    /// <summary>
-    /// Returns a configured <see cref="ModelInspector"/> with the given predefined mappings.
-    /// </summary>
-    public static ModelInspector ForPredefinedMappings(FhirRelease version,
-        IEnumerable<ClassMapping> classMappings,
-        IEnumerable<EnumMapping> enumMappings) => new(version, classMappings, enumMappings);
 
     /// <summary>
     /// The release of FHIR (i.e. STU3, R4) that this metadata is constructor for.
@@ -282,9 +278,9 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     /// <summary>
     /// List of ClassMappings registered with the inspector.
     /// </summary>
-    public ICollection<ClassMapping> ClassMappings => _classMappings.ByName.Values.ToList();
+    public ICollection<ClassMapping> ClassMappings => _classMappings;
 
-    private readonly ClassMappingCollection _classMappings = new();
+    private readonly ClassMappingCollection _classMappings = [];
 
     /// <summary>
     /// List of EnumMappings registered with the inspector.

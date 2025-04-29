@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Introspection;
 /// </summary>
 public record ClassMapping : IStructureDefinitionSummary
 {
-    public delegate IEnumerable<PropertyMapping> PropertyMapper(ClassMapping parent, Type nativeType);
+    public delegate IEnumerable<PropertyMapping> PropertyMapper(ClassMapping parent);
 
     public ClassMapping(string name, Type nativeType, FhirRelease release,
         PropertyMapper propertyMapper)
@@ -40,13 +40,13 @@ public record ClassMapping : IStructureDefinitionSummary
     }
 
     public ClassMapping(string name, Type nativeType, FhirRelease release,
-        IEnumerable<PropertyMapping> properties) : this(name, nativeType, release, (_,_) => properties)
+        IEnumerable<PropertyMapping> properties) : this(name, nativeType, release, _ => properties)
     {
         // Nothing
     }
 
     public ClassMapping(string name, Type nativeType, FhirRelease release)
-         : this(name, nativeType, release, defaultPropertyMapper)
+         : this(name, nativeType, release, DefaultPropertyMapper)
     {
         // Nothing
     }
@@ -212,7 +212,7 @@ public record ClassMapping : IStructureDefinitionSummary
 
             PropertyMappingCollection createCollection()
             {
-                var properties = _propertyMapper(this, NativeType).ToList();
+                var properties = _propertyMapper(this).ToList();
                 if(properties.FirstOrDefault(m => m.DeclaringClass != this) is {} errorMapping)
                     throw new InvalidOperationException($"PropertyMapping '{errorMapping}' is already used for another ClassMapping '{errorMapping.DeclaringClass.Name}'.");
 
@@ -334,11 +334,13 @@ public record ClassMapping : IStructureDefinitionSummary
 
     private Func<IList>? _listFactory;
 
-    // Enumerate this class' properties using reflection and create PropertyMappings.
-    // Is used when no external mapping has been passed to the constructor.
-    private static IEnumerable<PropertyMapping> defaultPropertyMapper(ClassMapping parent, Type nativeType)
+    /// <summary>
+    /// Enumerate this class' properties using reflection to create PropertyMappings.
+    /// </summary>
+    /// <remarks>This is the mapper used when no other mapper is specified in the constructor.</remarks>
+    public static IEnumerable<PropertyMapping> DefaultPropertyMapper(ClassMapping parent)
     {
-        var properties = selectNearestProperties(ReflectionHelper.FindPublicProperties(nativeType));
+        var properties = selectNearestProperties(ReflectionHelper.FindPublicProperties(parent.NativeType));
 
         foreach (var property in properties)
         {
