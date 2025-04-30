@@ -57,4 +57,7 @@ public static class VersionedConversionExtensions
 
     public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings? settings = null) where T : Base =>
         (T)element.ToPoco(ModelInfo.ModelInspector, settings);
+    
+    public static PocoNode ToPocoNode(this ITypedElement node) =>
+        node.ToPocoNode(ModelInfo.ModelInspector);
 }
