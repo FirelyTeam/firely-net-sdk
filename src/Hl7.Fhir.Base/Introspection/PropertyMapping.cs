@@ -167,6 +167,11 @@ public record PropertyMapping : IElementDefinitionSummary
     public string? BindingName { get; init; }
 
     /// <summary>
+    /// The <see cref="ModelInspector"/> for which this mapping was created.
+    /// </summary>
+    public ModelInspector Inspector => DeclaringClass?.Inspector ?? throw new InvalidOperationException("Property is not (yet) part of a ClassMapping.");
+
+    /// <summary>
     /// The release of FHIR for which the metadata was extracted from the property.
     /// </summary>
     public FhirRelease Release => DeclaringClass?.Release ?? throw new InvalidOperationException("Property is not (yet) part of a ClassMapping.");
@@ -202,7 +207,7 @@ public record PropertyMapping : IElementDefinitionSummary
         var overridingTypes = prop.GetFhirModelAttribute<AllowedTypesAttribute>(release)?.Types;
         Type mappingType = determineMappingType(overridingTypes, implementingType, elementAttr, declaringClass.Name);
 
-        if (!ClassMapping.TryGetMappingForType(mappingType, release, out var propertyTypeMapping))
+        if (declaringClass.Inspector.FindOrImportClassMapping(mappingType) is not {} propertyTypeMapping)
             throw new InvalidOperationException($"Property {prop.Name} in class {prop.DeclaringType!.Name} is of type " +
                                                 $"{mappingType}, for which a classmapping cannot be found.");
 
@@ -371,10 +376,9 @@ public record PropertyMapping : IElementDefinitionSummary
 
         string getFhirTypeName(Type ft)
         {
-            var release = DeclaringClass?.Release ?? throw new InvalidOperationException("Property is not (yet) part of a ClassMapping.");
             // The special case where the mapping name is a backbone element name can safely
             // be ignored here, since that is handled by the first case in the if statement above.
-            return ClassMapping.TryGetMappingForType(ft, release, out var tm)
+            return Inspector.FindOrImportClassMapping(ft) is {} tm
                 ? ((IStructureDefinitionSummary)tm).TypeName
                 : throw new NotSupportedException($"Type '{ft.Name}' is listed as an allowed type for property " +
                                                   $"'{QualifiedPropName}', but it does not seem to" +

@@ -56,12 +56,12 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void TestResourceMappingCreation()
         {
-            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way), out var mapping));
+            Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(Way), out var mapping));
             Assert.IsTrue(mapping.IsResource);
             Assert.AreEqual("Way", mapping.Name);
             Assert.AreEqual(typeof(Way), mapping.NativeType);
 
-            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way2), out mapping));
+            Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(Way2), out mapping));
             Assert.IsTrue(mapping.IsResource);
             Assert.AreEqual("Way2", mapping.Name);
             Assert.AreEqual(typeof(Way2), mapping.NativeType);
@@ -70,15 +70,19 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void Mapping_Creation_Is_Sensitive_To_Fhir_Version()
         {
-            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way2), out var mapping, FhirRelease.STU3));
+            var mir3 = new ModelInspector(FhirRelease.STU3);
+
+            Assert.IsTrue(ClassMapping.TryCreate(mir3, typeof(Way2), out var mapping));
             mapping.PropertyMappings.Should().Contain(pm => pm.Name == "original");
             mapping.PropertyMappings.Should().NotContain(pm => pm.Name == "r4");
 
-            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way2), out mapping, FhirRelease.R4));
+            var mir4 = new ModelInspector(FhirRelease.R4);
+            Assert.IsTrue(ClassMapping.TryCreate(mir4, typeof(Way2), out mapping));
             mapping.PropertyMappings.Should().Contain(pm => pm.Name == "original");
             mapping.PropertyMappings.Should().Contain(pm => pm.Name == "r4");
 
-            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way2), out mapping, FhirRelease.R5));
+            var mir5 = new ModelInspector(FhirRelease.R5);
+            Assert.IsTrue(ClassMapping.TryCreate(mir5, typeof(Way2), out mapping));
             mapping.PropertyMappings.Should().Contain(pm => pm.Name == "original");
             mapping.PropertyMappings.Should().NotContain(pm => pm.Name == "r4");
         }
@@ -86,7 +90,7 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void TestCqlInformation()
         {
-            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way), out var mapping));
+            Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(Way), out var mapping));
 
             Assert.IsTrue(mapping.IsPatientClass);
             Assert.IsTrue(typeof(Way).IsAssignableTo(typeof(ICoded<string>)));
@@ -124,21 +128,40 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsTrue(result.IsCompleted);
 
             // Create mapping (presumably once) && also touch properties to initialize them as well.
-            static void task(Type t) => Assert.IsTrue(ClassMapping.TryCreate(t, out var map) && map.PropertyMappings != null);
+            static void task(Type t) => Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, t, result: out var _));
         }
 
         [TestMethod]
         public void TestDatatypeMappingCreation()
         {
-            Assert.IsTrue(ClassMapping.TryCreate(typeof(AnimalName), out var mapping, (Specification.FhirRelease)int.MaxValue));
+            Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(AnimalName), out var mapping));
             Assert.IsFalse(mapping.IsResource);
             Assert.AreEqual("AnimalName", mapping.Name);
             Assert.AreEqual(typeof(AnimalName), mapping.NativeType);
 
-            Assert.IsTrue(ClassMapping.TryCreate(typeof(NewAnimalName), out mapping));
+            Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(NewAnimalName), out mapping));
             Assert.IsFalse(mapping.IsResource);
             Assert.AreEqual("AnimalName", mapping.Name);
             Assert.AreEqual(typeof(NewAnimalName), mapping.NativeType);
+        }
+
+        [TestMethod]
+        public void CanManipulatePropertyMappingsList()
+        {
+            var inspector = new ModelInspector(FhirRelease.STU3);
+
+            // Inspect the HL7.Fhir.Model common assembly
+            inspector.Import(typeof(Resource).GetTypeInfo().Assembly);
+            var metaMapping = inspector.FindClassMapping("Meta")!;
+            var profileMapping = metaMapping.FindMappedElementByName("profile")!;
+
+            // Try to remove a mapping
+            metaMapping.PropertyMappings.Remove(profileMapping);
+            metaMapping.FindMappedElementByName("profile").Should().BeNull();
+
+            // And add it back.
+            metaMapping.PropertyMappings.Add(profileMapping);
+            metaMapping.FindMappedElementByName("profile").Should().NotBeNull();
         }
     }
 

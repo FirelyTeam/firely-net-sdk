@@ -13,7 +13,6 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -30,33 +29,38 @@ public record ClassMapping : IStructureDefinitionSummary
 {
     public delegate IEnumerable<PropertyMapping> PropertyMapper(ClassMapping parent);
 
-    public ClassMapping(string name, Type nativeType, FhirRelease release,
+    public ClassMapping(ModelInspector parent, string name, Type nativeType,
         PropertyMapper propertyMapper)
     {
+        Inspector = parent;
         Name = name;
         NativeType = nativeType;
-        Release = release;
         _propertyMapper = propertyMapper;
     }
 
-    public ClassMapping(string name, Type nativeType, FhirRelease release,
-        IEnumerable<PropertyMapping> properties) : this(name, nativeType, release, _ => properties)
+    public ClassMapping(ModelInspector parent, string name, Type nativeType,
+        IEnumerable<PropertyMapping> properties) : this(parent, name, nativeType, _ => properties)
     {
         // Nothing
     }
 
-    public ClassMapping(string name, Type nativeType, FhirRelease release)
-         : this(name, nativeType, release, DefaultPropertyMapper)
+    public ClassMapping(ModelInspector parent, string name, Type nativeType)
+         : this(parent, name, nativeType, DefaultPropertyMapper)
     {
         // Nothing
     }
+
+    /// <summary>
+    /// The <see cref="ModelInspector"/> for which this mapping was created.
+    /// </summary>
+    public ModelInspector Inspector { get; }
 
     /// <summary>
     /// The FHIR release which this mapping reflects.
     /// </summary>
     /// <remarks>The mapping will contain the metadata that applies to this version (or older), using the
     /// newest metadata when multiple exist.</remarks>
-    public FhirRelease Release { get; }
+    public FhirRelease Release => Inspector.FhirRelease;
 
     /// <summary>
     /// Name of the mapping.
@@ -105,33 +109,10 @@ public record ClassMapping : IStructureDefinitionSummary
     /// </summary>
     public ValidatingFhirModelAttribute[] ValidationAttributes { get; private set; } = [];
 
-    private static readonly ConcurrentDictionary<(Type, FhirRelease), ClassMapping?> _mappedClasses = new();
-
-    public static void Clear() => _mappedClasses.Clear();
-
-    /// <summary>
-    /// Gets the <see cref="ClassMapping"/> for the given <see cref="Type"/>. Calling this function multiple
-    /// times for the same type and release will return the same ClassMapping.
-    /// </summary>
-    /// <returns>true if the mapping was found or false if it was not one of the supported and reflectable types.</returns>
-    /// <remarks>For classes shared across FHIR versions, there may be metadata present for different versions
-    /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract. </remarks>
-    /// <seealso cref="TryCreate(Type, out ClassMapping?, FhirRelease)"/>
-    public static bool TryGetMappingForType(Type t, FhirRelease release, [NotNullWhen(true)] out ClassMapping? mapping)
-    {
-        mapping = _mappedClasses.GetOrAdd((t, release), createMapping);
-        return mapping is not null;
-
-        static ClassMapping? createMapping((Type, FhirRelease) typeAndRelease) =>
-            TryCreate(typeAndRelease.Item1, out var m, typeAndRelease.Item2) ? m : null;
-    }
-
     /// <summary>
     /// Inspects the given type, extracting metadata from its attributes and creating a new <see cref="ClassMapping"/>.
     /// </summary>
-    /// <remarks>For classes shared across FHIR versions, there may be metadata present for different versions
-    /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract.</remarks>
-    public static bool TryCreate(Type type, [NotNullWhen(true)]out ClassMapping? result, FhirRelease release = (FhirRelease)int.MaxValue)
+    internal static bool TryCreate(ModelInspector parent, Type type, [NotNullWhen(true)]out ClassMapping? result)
     {
         // Simulate reading the ClassMappings from the primitive types (from http://hl7.org/fhirpath namespace).
         // These are in fact defined as POCOs in Hl7.Fhir.ElementModel.Types,
@@ -140,7 +121,7 @@ public record ClassMapping : IStructureDefinitionSummary
         // since these basic primitives have hardly any additional metadata apart from their names.
         if (typeof(ElementModel.Types.Any).GetTypeInfo().IsAssignableFrom(type))
         {
-            result = buildCqlClassMapping(type, release);
+            result = buildCqlClassMapping(type, parent);
             return true;
         }
 
@@ -150,7 +131,7 @@ public record ClassMapping : IStructureDefinitionSummary
         // classmappings more consistent in handling both FHIR and .NET datatypes.
         if (SupportedDotNetPrimitiveTypes.Contains(type))
         {
-            result = buildNetPrimitiveClassMapping(type, release);
+            result = buildNetPrimitiveClassMapping(type, parent);
             return true;
         }
 
@@ -165,13 +146,13 @@ public record ClassMapping : IStructureDefinitionSummary
         // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
         if (type.GetCustomAttribute<FhirTypeAttribute>() is not { } typeAttribute) return false;
 
-        result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
+        result = new ClassMapping(parent, collectTypeName(typeAttribute, type), type)
         {
             EnumType = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Code<>) ?
                 type.GenericTypeArguments[0] : null,
             IsBackboneType = typeAttribute.IsBackboneType,
             Canonical = typeAttribute.Canonical,
-            ValidationAttributes = type.GetFhirModelAttributes<ValidatingFhirModelAttribute>(release).ToArray(),
+            ValidationAttributes = type.GetFhirModelAttributes<ValidatingFhirModelAttribute>(parent.FhirRelease).ToArray(),
         };
 
         return true;
@@ -229,7 +210,7 @@ public record ClassMapping : IStructureDefinitionSummary
     /// <summary>
     /// List of PropertyMappings for this class, in the order of listing in the FHIR specification.
     /// </summary>
-    public IReadOnlyList<PropertyMapping> PropertyMappings => _propertyMappings.ByOrder;
+    public ICollection<PropertyMapping> PropertyMappings => _propertyMappings;
 
     private PropertyMapper _propertyMapper;
 
@@ -402,13 +383,13 @@ public record ClassMapping : IStructureDefinitionSummary
         typeof(object)
     ];
 
-    private static ClassMapping buildCqlClassMapping(Type t, FhirRelease release) =>
-        new("System." + t.Name, t, release);
+    private static ClassMapping buildCqlClassMapping(Type t, ModelInspector inspector) =>
+        new(inspector, "System." + t.Name, t);
 
-    private static ClassMapping buildNetPrimitiveClassMapping(Type t, FhirRelease release) =>
-        new("Net." + t.FullName, t, release) { IsPrimitive = true };
+    private static ClassMapping buildNetPrimitiveClassMapping(Type t, ModelInspector inspector) =>
+        new(inspector, "Net." + t.FullName, t) { IsPrimitive = true };
 
-    internal static ClassMapping DynamicResource => new(typeof(DynamicResource).FullName!, typeof(DynamicResource), (FhirRelease)int.MaxValue);
-    internal static ClassMapping DynamicPrimitive => new(typeof(DynamicPrimitive).FullName!, typeof(DynamicPrimitive), (FhirRelease)int.MaxValue);
-    internal static ClassMapping DynamicDataType => new(typeof(DynamicDataType).FullName!, typeof(DynamicDataType), (FhirRelease)int.MaxValue);
+    internal static ClassMapping DynamicResource => new(ModelInspector.Base, typeof(DynamicResource).FullName!, typeof(DynamicResource));
+    internal static ClassMapping DynamicPrimitive => new(ModelInspector.Base, typeof(DynamicPrimitive).FullName!, typeof(DynamicPrimitive));
+    internal static ClassMapping DynamicDataType => new(ModelInspector.Base, typeof(DynamicDataType).FullName!, typeof(DynamicDataType));
 }
