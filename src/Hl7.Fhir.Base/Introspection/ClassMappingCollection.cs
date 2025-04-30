@@ -57,10 +57,10 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
 
     public bool Remove(ClassMapping item)
     {
-        if (!_byName.Values.Remove(item)) return false;
-
-        _byType.Values.Remove(item);
-        _byCanonical.Values.Remove(item);
+        if (!_byName.TryRemove(item.Name, out _)) return false;
+        _byType.TryRemove(item.NativeType, out _);
+        if (item.Canonical is not null)
+            _byCanonical.TryRemove(item.Canonical, out _);
 
         return true;
     }
