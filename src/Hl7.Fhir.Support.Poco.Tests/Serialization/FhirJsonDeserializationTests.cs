@@ -2,6 +2,7 @@ using FluentAssertions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
@@ -15,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
+using DataType = Hl7.Fhir.Model.DataType;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 using FhirJsonConverterFactory = Hl7.Fhir.Serialization.FhirJsonConverterFactory;
 
@@ -1050,5 +1052,44 @@ public class FhirJsonDeserializationTests
     {
         var shouldThrow = () => (_ = new JsonSerializerOptions().UsingMode(DeserializationMode.Ostrich));
         shouldThrow.Should().Throw<NotSupportedException>("Expected error trying to set the mode of a non-existent converter");
+    }
+
+    [TestMethod]
+    public void CanParseAndSerializeCustomProperty()
+    {
+        var inspector = new ModelInspector(FhirRelease.STU3);
+        inspector.Import(typeof(Patient).Assembly);
+        inspector.Import(typeof(Base).Assembly);
+
+        var originalPatientMapping = inspector.FindClassMapping(typeof(Patient))!;
+        var originalProperties = originalPatientMapping.PropertyMappings;
+
+        var customPropertyA = PropertyMapping.CreateCustom("patientLocation", inspector, typeof(FhirUri));
+        var customPropertyB = PropertyMapping.CreateCustom("remarks", inspector, typeof(DataType), [typeof(FhirString), typeof(Markdown)]);
+        var newList = originalProperties.Concat([customPropertyA, customPropertyB]);
+
+        var newPatientMapping = originalPatientMapping.WithProperties(newList);
+        inspector.ClassMappings.Add(newPatientMapping);
+
+        inspector.FindClassMapping(typeof(Patient)).Should().Be(newPatientMapping);
+
+        const string json = """
+                            { 
+                                "resourceType": "Patient", 
+                                "active": true, 
+                                "patientLocation": "http://nu.nl",
+                                "remarksString": "Nice guy"
+                            }
+                            """;
+        var parser = new BaseFhirJsonDeserializer(inspector);
+        var parsed = parser.DeserializeResource(json).Should().BeOfType<Patient>().Subject;
+
+        parsed.Active.Should().BeTrue();
+        parsed["patientLocation"].Should().BeOfType<FhirUri>().Which.Value.Should().Be("http://nu.nl");
+        parsed["remarks"].Should().BeOfType<FhirString>().Which.Value.Should().Be("Nice guy");
+
+        var serializer = new BaseFhirJsonSerializer(inspector);
+        var serialized = serializer.SerializeToString(parsed);
+        JsonAssert.AreSame("parsed", json, serialized);
     }
 }

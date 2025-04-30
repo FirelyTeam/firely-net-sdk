@@ -29,12 +29,16 @@ public record PropertyMapping : IElementDefinitionSummary
 {
     public PropertyMapping(
         string name,
-        ClassMapping declaringClass,
-        PropertyInfo pi)
+        PropertyInfo? nativeProperty,
+        Type? propertyType = null)
     {
-        DeclaringClass = declaringClass;
+        if (nativeProperty is null && propertyType is null)
+            throw new ArgumentException($"Either {nameof(nativeProperty)} or {nameof(propertyType)} must be provided");
+
+        DeclaringClass = null;
         Name = name;
-        NativeProperty = pi;
+        NativeProperty = nativeProperty;
+        _propertyType = propertyType;
     }
 
     /// <summary>
@@ -45,12 +49,21 @@ public record PropertyMapping : IElementDefinitionSummary
     /// <summary>
     /// The ClassMapping for the type this property is a member of.
     /// </summary>
-    public ClassMapping DeclaringClass { get; }
+    public ClassMapping? DeclaringClass { get; internal set; }
 
     /// <summary>
     /// The original <see cref="PropertyInfo"/> the metadata was obtained from.
     /// </summary>
-    public PropertyInfo NativeProperty { get; }
+    public PropertyInfo? NativeProperty { get; }
+
+    private readonly Type? _propertyType;
+
+    /// <summary>
+    /// This is the type of the property, exactly as it is declared in the POCO class.
+    /// </summary>
+    public Type PropertyType => _propertyType ?? NativeProperty?.PropertyType ??
+        throw new InvalidOperationException("PropertyType is not set and NativeProperty is null. This should have been" +
+                                            "caught by the constructor.");
 
     /// <summary>
     /// The native type of the element.
@@ -156,7 +169,7 @@ public record PropertyMapping : IElementDefinitionSummary
     /// <summary>
     /// The release of FHIR for which the metadata was extracted from the property.
     /// </summary>
-    public FhirRelease Release => DeclaringClass.Release;
+    public FhirRelease Release => DeclaringClass?.Release ?? throw new InvalidOperationException("Property is not (yet) part of a ClassMapping.");
 
     /// <summary>
     /// Inspects the given PropertyInfo, extracting metadata from its attributes and creating a new <see cref="PropertyMapping"/>.
@@ -165,30 +178,22 @@ public record PropertyMapping : IElementDefinitionSummary
     /// a ClassMapping - which will cache this information as well. This constructor is public for historical reasons only.</remarks>
     public static bool TryCreate(PropertyInfo prop, [NotNullWhen(true)] out PropertyMapping? result, ClassMapping declaringClass)
     {
-        if (prop == null) throw Error.ArgumentNull(nameof(prop));
         result = null;
         var release = declaringClass.Release;
 
         // If there is no [FhirElement] on the property, skip it
-        var elementAttr = prop.GetFhirModelAttribute<FhirElementAttribute>(release);
-        if (elementAttr == null) return false;
+        if (prop.GetFhirModelAttribute<FhirElementAttribute>(release) is not { } elementAttr) return false;
 
         // If there is an explicit [NotMapped] on the property, skip it
         // (in combination with `Since` useful to remove a property from the serialization)
-        var notmappedAttr = prop.GetFhirModelAttribute<NotMappedAttribute>(release);
-        if (notmappedAttr != null) return false;
+        if (prop.GetFhirModelAttribute<NotMappedAttribute>(release) is not null) return false;
 
-        // We broadly use .IsArray here - this means arrays in POCOs cannot be used to represent
-        // FHIR repeating elements. If we would allow this, we'd also have stuff like `string` and binary
-        // data as repeating element, and would need to exclude these exceptions on a case by case basis.
-        // This is pretty ugly, so we prefer to not support arrays - you should use lists instead.
         _ = ReflectionHelper.TryGetRepeatingElementType(prop.PropertyType, out var collectionItemType);
 
         var cardinalityAttr = prop.GetFhirModelAttribute<CardinalityAttribute>(release);
 
         // Get to the actual (native) type representing this element
-        var implementingType = prop.PropertyType;
-        if (collectionItemType is not null) implementingType = collectionItemType;
+        var implementingType = collectionItemType ?? prop.PropertyType;
         if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
 
         // The [AllowedTypes] attribute can specify a set of allowed types for this element.
@@ -206,7 +211,7 @@ public record PropertyMapping : IElementDefinitionSummary
         var fhirTypes = overridingTypes ?? [mappingType];
         var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
 
-        result = new PropertyMapping(elementAttr.Name, declaringClass, prop)
+        result = new PropertyMapping(elementAttr.Name, prop)
         {
             InSummary = elementAttr.InSummary,
             IsModifier = elementAttr.IsModifier,
@@ -226,6 +231,32 @@ public record PropertyMapping : IElementDefinitionSummary
         };
 
         return true;
+    }
+
+    /// <summary>
+    /// Creates a custom PropertyMapping representing the metadata for a property in the overflow.
+    /// </summary>
+    public static PropertyMapping CreateCustom(string name, ModelInspector inspector, Type propertyType, Type[]? allowedTypes = null)
+    {
+        _ = ReflectionHelper.TryGetRepeatingElementType(propertyType, out var collectionItemType);
+
+        // Get to the actual (native) type representing this element
+        var implementingType = collectionItemType ?? propertyType;
+        if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
+
+        if (inspector.FindOrImportClassMapping(implementingType) is not {} propertyTypeMapping)
+            throw new InvalidOperationException($"Custom property {name} is of type " +
+                                                $"{implementingType}, for which a classmapping cannot be found.");
+
+        return new PropertyMapping(name, null, propertyType)
+        {
+            Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None,
+            Order = Int32.MaxValue,
+            IsCollection = collectionItemType is not null,
+            PropertyTypeMapping = propertyTypeMapping,
+            FhirType = allowedTypes is not null? allowedTypes.ToArray() : [implementingType],
+            ImplementingType = implementingType,
+        };
     }
 
     private static Type determineMappingType(Type[]? overridingTypes, Type implementingType, FhirElementAttribute felem, string parentTypeName)
@@ -282,7 +313,7 @@ public record PropertyMapping : IElementDefinitionSummary
         return ImplementingType;
     }
 
-    internal string QualifiedPropName => $"{DeclaringClass.Name}.{Name}";
+    internal string QualifiedPropName => $"{DeclaringClass?.Name ?? "(no class)"}.{Name}";
 
     private static bool isAllowedNativeTypeForDataTypeValue(Type type) =>
         type.IsEnum || ClassMapping.SupportedDotNetPrimitiveTypes.Contains(type);
@@ -340,9 +371,10 @@ public record PropertyMapping : IElementDefinitionSummary
 
         string getFhirTypeName(Type ft)
         {
+            var release = DeclaringClass?.Release ?? throw new InvalidOperationException("Property is not (yet) part of a ClassMapping.");
             // The special case where the mapping name is a backbone element name can safely
             // be ignored here, since that is handled by the first case in the if statement above.
-            return ClassMapping.TryGetMappingForType(ft, DeclaringClass.Release, out var tm)
+            return ClassMapping.TryGetMappingForType(ft, release, out var tm)
                 ? ((IStructureDefinitionSummary)tm).TypeName
                 : throw new NotSupportedException($"Type '{ft.Name}' is listed as an allowed type for property " +
                                                   $"'{QualifiedPropName}', but it does not seem to" +

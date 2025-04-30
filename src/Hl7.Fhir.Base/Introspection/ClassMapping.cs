@@ -199,12 +199,11 @@ public record ClassMapping : IStructureDefinitionSummary
     /// <remarks>See <see cref="Name"></see>.</remarks>
     public bool IsCodeOfT => EnumType is not null;
 
-
     // This list is created lazily. This not only improves initial startup time of
     // applications but also ensures circular references between types will not cause loops.
     private PropertyMappingCollection? _mappings;
 
-    private PropertyMappingCollection propertyMappings
+    private PropertyMappingCollection _propertyMappings
     {
         get
         {
@@ -213,8 +212,7 @@ public record ClassMapping : IStructureDefinitionSummary
             PropertyMappingCollection createCollection()
             {
                 var properties = _propertyMapper(this).ToList();
-                if(properties.FirstOrDefault(m => m.DeclaringClass != this) is {} errorMapping)
-                    throw new InvalidOperationException($"PropertyMapping '{errorMapping}' is already used for another ClassMapping '{errorMapping.DeclaringClass.Name}'.");
+                properties.ForEach(p => p.DeclaringClass = this);
 
                 return new PropertyMappingCollection(properties);
             }
@@ -222,11 +220,18 @@ public record ClassMapping : IStructureDefinitionSummary
     }
 
     /// <summary>
+    /// Return a copy of these ClassMappings, with the given <paramref name="propertyMappings"/> replacing the
+    /// old list of properties.
+    /// </summary>
+    public ClassMapping WithProperties(IEnumerable<PropertyMapping> propertyMappings) =>
+        this with { _propertyMapper = _ => propertyMappings, _mappings = null };
+
+    /// <summary>
     /// List of PropertyMappings for this class, in the order of listing in the FHIR specification.
     /// </summary>
-    public IReadOnlyList<PropertyMapping> PropertyMappings => propertyMappings.ByOrder;
+    public IReadOnlyList<PropertyMapping> PropertyMappings => _propertyMappings.ByOrder;
 
-    private readonly PropertyMapper _propertyMapper;
+    private PropertyMapper _propertyMapper;
 
     /// <summary>
     /// Holds a reference to a property that represents the value of a FHIR Primitive. This
@@ -250,7 +255,7 @@ public record ClassMapping : IStructureDefinitionSummary
     /// </summary>
     public PropertyMapping? FindMappedElementByName(string name) =>
         name != null
-            ? propertyMappings.ByName.GetValueOrDefault(name)
+            ? _propertyMappings.ByName.GetValueOrDefault(name)
             : throw Error.ArgumentNull(nameof(name));
 
     /// <summary>
@@ -269,7 +274,7 @@ public record ClassMapping : IStructureDefinitionSummary
         if (FindMappedElementByName(name) is { } pm) return pm;
 
         // Now, check the choice elements for a match.
-        var matches = propertyMappings.ChoiceProperties
+        var matches = _propertyMappings.ChoiceProperties
             .Where(m => name.StartsWith(m.Name)).ToList();
 
         // Loop through possible matches and return the longest match.
