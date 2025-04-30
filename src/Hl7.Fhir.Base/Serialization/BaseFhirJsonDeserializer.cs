@@ -526,7 +526,7 @@ public class BaseFhirJsonDeserializer
             }
 
             if (Settings.AnnotateLineInfo && existingList[^1] is Base b)
-                b.AddAnnotation(new JsonSerializationDetails { LineNumber = (int)line, LinePosition = (int)pos, ArrayIndex = existingList.Count});
+                b.AddAnnotation(new JsonSerializationDetails { LineNumber = (int)line, LinePosition = (int)pos, ArrayIndex = existingList.Count - 1});
             
             state.Path.IncrementIndex();
         }
