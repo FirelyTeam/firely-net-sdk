@@ -220,6 +220,9 @@ namespace Hl7.Fhir.Serialization
             var hasValueAttribute = reader.GetAttribute("value") != null;
             var depth = reader.Depth;
             var name = reader.LocalName;
+            
+            if (Settings.AnnotateLineInfo)
+                target.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
 
             //check if on opening tag
             if (reader.NodeType != XmlNodeType.Element)
@@ -333,7 +336,7 @@ namespace Hl7.Fhir.Serialization
             {
                 state.Errors.Add(ERR.INVALID_DUPLICATE_PROPERTY(reader, state.Path.GetInstancePath(), propMapping.Name));
             }
-
+            
             if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
             {
                 var context = new PropertyDeserializationContext(
@@ -344,6 +347,9 @@ namespace Hl7.Fhir.Serialization
 
                 PocoDeserializationHelper.RunPropertyValidation(ref result, Settings.Validator, context, state.Errors);
             }
+            
+            if (Settings.AnnotateLineInfo && result is Base b)
+                b.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
 
             propMapping.SetValue(target, result);
         }
@@ -513,9 +519,10 @@ namespace Hl7.Fhir.Serialization
 
             if (parsedValue != null)
             {
+                var (lineNumber, position) = reader.GenerateLineInfo();
+                
                 if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
                 {
-                    var (lineNumber, position) = reader.GenerateLineInfo();
                     var name = reader.LocalName;
 
                     var context = new PropertyDeserializationContext(
@@ -530,6 +537,9 @@ namespace Hl7.Fhir.Serialization
                 if (target is PrimitiveType primitive && propMapping.Name == "value")
                 {
                     primitive.ObjectValue = parsedValue;
+                    
+                    if (Settings.AnnotateLineInfo)
+                        target.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
                 }
                 else
                 {

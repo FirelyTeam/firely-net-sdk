@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientJsonTyped.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientJsonUntyped.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientLineInfoAnnotationPoco.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientXmlTyped.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientXmlUntyped.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseXMLElements.cs" />
