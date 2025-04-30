@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Model;
+﻿using FluentAssertions;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections;
@@ -56,32 +57,31 @@ namespace Hl7.Fhir.Serialization.Tests
                 CheckAllElementsAnnotated<JsonSerializationDetails>(c);
             }
         }
-
+        
         public void CheckAllElementsAnnotated<T>(object element) where T : IPositionInfo
         {
             Assert.IsNotNull(element);
-            if (element is Base b)
+            if (element is Base baseElement)
             {
-                var posInfo = b.Annotation<T>();
-                Assert.IsNotNull(posInfo);
-                Assert.AreNotEqual(-1, posInfo.LineNumber);
-                Assert.AreNotEqual(-1, posInfo.LinePosition);
-                Assert.AreNotEqual(0, posInfo.LineNumber);
-                Assert.AreNotEqual(0, posInfo.LinePosition);
-                foreach (var (name, c) in b.EnumerateElements())
+                var posInfo = baseElement.Annotation<T>();
+
+                posInfo.Should().NotBeNull();
+                posInfo.LineNumber.Should().NotBe(-1).And.NotBe(0);
+                posInfo.LinePosition.Should().NotBe(-1).And.NotBe(0);
+                
+                foreach (var (_, baseChild) in baseElement.EnumerateElements())
                 {
-                    CheckAllElementsAnnotated<T>(c);
+                    CheckAllElementsAnnotated<T>(baseChild);
                 }
             }
 
-            if (element is IList l)
+            if (element is IList list)
             {
-                foreach (var e in l)
+                foreach (var listElement in list)
                 {
-                    CheckAllElementsAnnotated<T>(e);
+                    CheckAllElementsAnnotated<T>(listElement);
                 }
             }
-
         }
     }
 }
