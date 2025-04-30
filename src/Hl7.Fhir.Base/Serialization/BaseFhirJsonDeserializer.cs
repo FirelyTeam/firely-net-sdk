@@ -268,7 +268,7 @@ public class BaseFhirJsonDeserializer
         bool forceDelayedValidation = false)
     {
         object? result;
-        var (line, pos) = reader.CurrentState.GetLocation();
+        var (line, pos) = reader.GetLocation();
         var (name, propertyValueMapping) = tryDetectNameAndMapping(propertyName, propertyMapping, propertyValueSuggestion);
 
         target.TryGetValue(name, out var existingValue);
@@ -502,7 +502,7 @@ public class BaseFhirJsonDeserializer
         // to simply create a list by Adding(). Not the fastest approach :-(
         while (reader.TokenType != JsonTokenType.EndArray)
         {
-            var (line, pos) = reader.CurrentState.GetLocation();
+            var (line, pos) = reader.GetLocation();
             if (reader.TokenType == JsonTokenType.StartObject)
             {
                 var result = deserializeSingleValue(ref reader, propertyValueMapping, state);
@@ -612,7 +612,7 @@ public class BaseFhirJsonDeserializer
 
         while (reader.TokenType != JsonTokenType.EndArray)
         {
-            var (line, pos) = reader.CurrentState.GetLocation();
+            var (line, pos) = reader.GetLocation();
             if (elementIndex >= originalSize)
                 existingList.Add(null);
 
@@ -677,7 +677,7 @@ public class BaseFhirJsonDeserializer
     )
     {
         var targetPrimitive = existingPrimitive ?? (PrimitiveType)propertyValueMapping.CreateInstance();
-        var (line, pos) = reader.CurrentState.GetLocation();
+        var (line, pos) = reader.GetLocation();
 
         if (isOnJsonPrimitiveToken(ref reader))
         {
