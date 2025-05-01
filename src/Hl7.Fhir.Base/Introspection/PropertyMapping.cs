@@ -139,7 +139,7 @@ public class PropertyMapping : IElementDefinitionSummary
     /// The numeric order of the element (relevant for the XML serialization, which
     /// needs to be in order).
     /// </summary>
-    public int Order { get; init; }
+    public int? Order { get; init; }
 
     /// <summary>
     /// How this element is represented in the XML serialization.
@@ -180,7 +180,7 @@ public class PropertyMapping : IElementDefinitionSummary
     /// <remarks>If left null, the framework will determine the fastest way to set the value on the
     /// first call to <see cref="SetValue"/>.</remarks>
     public Action<Base, object?>? Setter { get => _setter; init => _setter = value; }
-    
+
     /// <summary>
     /// The <see cref="ModelInspector"/> for which this mapping was created.
     /// </summary>
@@ -256,7 +256,8 @@ public class PropertyMapping : IElementDefinitionSummary
     /// <summary>
     /// Creates a custom PropertyMapping representing the metadata for a property in the overflow.
     /// </summary>
-    public static PropertyMapping CreateCustom(ClassMapping declaringClass, string name, ModelInspector inspector, Type propertyType, Type[]? allowedTypes = null)
+    public static PropertyMapping CreateCustom(ClassMapping declaringClass, string name, Type propertyType,
+        Type[]? allowedTypes = null, XmlRepresentation xmlSerializationHint = XmlRepresentation.None)
     {
         _ = ReflectionHelper.TryGetRepeatingElementType(propertyType, out var collectionItemType);
 
@@ -264,18 +265,18 @@ public class PropertyMapping : IElementDefinitionSummary
         var implementingType = collectionItemType ?? propertyType;
         if (Nullable.GetUnderlyingType(implementingType) is { } underlyingType) implementingType = underlyingType;
 
-        if (inspector.FindOrImportClassMapping(implementingType) is not {} propertyTypeMapping)
+        if (declaringClass.Inspector.FindOrImportClassMapping(implementingType) is not {} propertyTypeMapping)
             throw new InvalidOperationException($"Custom property {name} is of type " +
                                                 $"{implementingType}, for which a classmapping cannot be found.");
 
         return new PropertyMapping(declaringClass, name, nativeProperty: null, propertyType)
         {
             Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None,
-            Order = Int32.MaxValue,
             IsCollection = collectionItemType is not null,
             PropertyTypeMapping = propertyTypeMapping,
             FhirType = allowedTypes is not null? allowedTypes.ToArray() : [implementingType],
             ImplementingType = implementingType,
+            SerializationHint = xmlSerializationHint
         };
     }
 
@@ -403,7 +404,7 @@ public class PropertyMapping : IElementDefinitionSummary
         SerializationHint != XmlRepresentation.None ?
             SerializationHint : XmlRepresentation.XmlElement;
 
-    int IElementDefinitionSummary.Order => Order;
+    int IElementDefinitionSummary.Order => Order ?? Int32.MaxValue;
 
     private ITypeSerializationInfo[] buildTypes()
     {

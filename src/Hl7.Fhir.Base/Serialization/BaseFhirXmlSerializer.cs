@@ -93,10 +93,11 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
         {
             // Make sure that known attributes are serialized first.
             if (mapping?.SerializationHint == XmlRepresentation.XmlAttr)
-                return mapping?.Order is { } number ? Int32.MinValue + number : -1;
+                return mapping.Order is { } number ? Int32.MinValue + number : -1;
             if (value?.Annotation<XmlRepresentationAnnotation>()?.Value == XmlRepresentation.XmlAttr)
                 return -1;
 
+            // Order elements by order after the attributes, unknown elements at the end.
             return mapping?.Order ?? Int32.MaxValue;
         }
 

@@ -647,12 +647,12 @@ public class FhirXmlDeserializationTests
 
         var patientMapping = inspector.FindClassMapping(typeof(Patient))!;
         var customPropertyA =
-            PropertyMapping.CreateCustom(patientMapping, "patientLocation", inspector, typeof(FhirUri));
+            PropertyMapping.CreateCustom(patientMapping, "patientLocation", typeof(FhirUri));
         patientMapping.PropertyMappings.Add(customPropertyA);
-        var customPropertyB = PropertyMapping.CreateCustom(patientMapping, "remarks", inspector, typeof(DataType),
+        var customPropertyB = PropertyMapping.CreateCustom(patientMapping, "remarks", typeof(DataType),
             [typeof(FhirString), typeof(Markdown)]);
         patientMapping.PropertyMappings.Add(customPropertyB);
-        var customPropertyC = PropertyMapping.CreateCustom(patientMapping, "newList", inspector, typeof(List<FhirString>));
+        var customPropertyC = PropertyMapping.CreateCustom(patientMapping, "newList", typeof(List<FhirString>));
         patientMapping.PropertyMappings.Add(customPropertyC);
 
         parsed = parser.DeserializeResource(json).Should().BeOfType<Patient>().Subject;
