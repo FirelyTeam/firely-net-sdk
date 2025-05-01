@@ -1060,18 +1060,9 @@ public class FhirJsonDeserializationTests
         var inspector = new ModelInspector(FhirRelease.STU3);
         inspector.Import(typeof(Patient).Assembly);
         inspector.Import(typeof(Base).Assembly);
+        var p = FhirJsonDeserializer.DEFAULT
 
-        var originalPatientMapping = inspector.FindClassMapping(typeof(Patient))!;
-        var originalProperties = originalPatientMapping.PropertyMappings;
-
-        var customPropertyA = PropertyMapping.CreateCustom("patientLocation", inspector, typeof(FhirUri));
-        var customPropertyB = PropertyMapping.CreateCustom("remarks", inspector, typeof(DataType), [typeof(FhirString), typeof(Markdown)]);
-        var newList = originalProperties.Concat([customPropertyA, customPropertyB]);
-
-        var newPatientMapping = originalPatientMapping.WithProperties(newList);
-        inspector.ClassMappings.Add(newPatientMapping);
-
-        inspector.FindClassMapping(typeof(Patient)).Should().Be(newPatientMapping);
+        var parser = new BaseFhirJsonDeserializer(inspector, new DeserializerSettings().UsingMode(DeserializationMode.Ostrich));
 
         const string json = """
                             { 
@@ -1081,9 +1072,20 @@ public class FhirJsonDeserializationTests
                                 "remarksString": "Nice guy"
                             }
                             """;
-        var parser = new BaseFhirJsonDeserializer(inspector);
-        var parsed = parser.DeserializeResource(json).Should().BeOfType<Patient>().Subject;
 
+        var parsed = parser.DeserializeResource(json).Should().BeOfType<Patient>().Subject;
+        parsed.Active.Should().BeTrue();
+        parsed["active"].Should().BeOfType<FhirBoolean>().Which.Value.Should().BeTrue();
+        parsed["patientLocation"].Should().BeOfType<FhirString>().Which.Value.Should().Be("http://nu.nl");
+        parsed["remarksString"].Should().BeOfType<FhirString>().Which.Value.Should().Be("Nice guy");
+
+        var patientMapping = inspector.FindClassMapping(typeof(Patient))!;
+        var customPropertyA = PropertyMapping.CreateCustom(patientMapping, "patientLocation", inspector, typeof(FhirUri));
+        patientMapping.PropertyMappings.Add(customPropertyA);
+        var customPropertyB = PropertyMapping.CreateCustom(patientMapping, "remarks", inspector, typeof(DataType), [typeof(FhirString), typeof(Markdown)]);
+        patientMapping.PropertyMappings.Add(customPropertyB);
+
+        parsed = parser.DeserializeResource(json).Should().BeOfType<Patient>().Subject;
         parsed.Active.Should().BeTrue();
         parsed["patientLocation"].Should().BeOfType<FhirUri>().Which.Value.Should().Be("http://nu.nl");
         parsed["remarks"].Should().BeOfType<FhirString>().Which.Value.Should().Be("Nice guy");

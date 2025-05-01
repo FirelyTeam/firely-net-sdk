@@ -25,18 +25,14 @@ namespace Hl7.Fhir.Introspection;
 /// <summary>
 /// A container for the metadata of a FHIR datatype as present on the (generated) .NET POCO class.
 /// </summary>
-public record ClassMapping : IStructureDefinitionSummary
+public class ClassMapping(
+    ModelInspector parent,
+    string name,
+    Type nativeType,
+    ClassMapping.PropertyMapper propertyMapper)
+    : IStructureDefinitionSummary
 {
     public delegate IEnumerable<PropertyMapping> PropertyMapper(ClassMapping parent);
-
-    public ClassMapping(ModelInspector parent, string name, Type nativeType,
-        PropertyMapper propertyMapper)
-    {
-        Inspector = parent;
-        Name = name;
-        NativeType = nativeType;
-        _propertyMapper = propertyMapper;
-    }
 
     public ClassMapping(ModelInspector parent, string name, Type nativeType,
         IEnumerable<PropertyMapping> properties) : this(parent, name, nativeType, _ => properties)
@@ -53,7 +49,7 @@ public record ClassMapping : IStructureDefinitionSummary
     /// <summary>
     /// The <see cref="ModelInspector"/> for which this mapping was created.
     /// </summary>
-    public ModelInspector Inspector { get; }
+    public ModelInspector Inspector { get; } = parent;
 
     /// <summary>
     /// The FHIR release which this mapping reflects.
@@ -75,12 +71,12 @@ public record ClassMapping : IStructureDefinitionSummary
     /// <item>.NET primitive types have their <see cref="Type.FullName"/> name prepended with "Net.", e.g. <c>Net.System.Int32</c>.</item>
     /// </list>
     /// </remarks>
-    public string Name { get; }
+    public string Name { get; } = name;
 
     /// <summary>
     /// The .NET class that implements the FHIR datatype/resource
     /// </summary>
-    public Type NativeType { get; }
+    public Type NativeType { get; } = nativeType;
 
     /// <summary>
     /// The element is of an atomic .NET type, not a FHIR generated POCO.
@@ -184,7 +180,7 @@ public record ClassMapping : IStructureDefinitionSummary
     // applications but also ensures circular references between types will not cause loops.
     private PropertyMappingCollection? _mappings;
 
-    private PropertyMappingCollection _propertyMappings
+    private PropertyMappingCollection PropertyMappingsInternal
     {
         get
         {
@@ -192,8 +188,9 @@ public record ClassMapping : IStructureDefinitionSummary
 
             PropertyMappingCollection createCollection()
             {
-                var properties = _propertyMapper(this).ToList();
-                properties.ForEach(p => p.DeclaringClass = this);
+                var properties = propertyMapper(this).ToList();
+                if(properties.FirstOrDefault(m => m.DeclaringClass != this) is {} errorMapping)
+                    throw new InvalidOperationException($"PropertyMapping '{errorMapping.Name}' is already used for another ClassMapping '{errorMapping.DeclaringClass.Name}'.");
 
                 return new PropertyMappingCollection(properties);
             }
@@ -201,18 +198,9 @@ public record ClassMapping : IStructureDefinitionSummary
     }
 
     /// <summary>
-    /// Return a copy of these ClassMappings, with the given <paramref name="propertyMappings"/> replacing the
-    /// old list of properties.
-    /// </summary>
-    public ClassMapping WithProperties(IEnumerable<PropertyMapping> propertyMappings) =>
-        this with { _propertyMapper = _ => propertyMappings, _mappings = null };
-
-    /// <summary>
     /// List of PropertyMappings for this class, in the order of listing in the FHIR specification.
     /// </summary>
-    public ICollection<PropertyMapping> PropertyMappings => _propertyMappings;
-
-    private PropertyMapper _propertyMapper;
+    public ICollection<PropertyMapping> PropertyMappings => PropertyMappingsInternal;
 
     /// <summary>
     /// Holds a reference to a property that represents the value of a FHIR Primitive. This
@@ -236,7 +224,7 @@ public record ClassMapping : IStructureDefinitionSummary
     /// </summary>
     public PropertyMapping? FindMappedElementByName(string name) =>
         name != null
-            ? _propertyMappings.ByName.GetValueOrDefault(name)
+            ? PropertyMappingsInternal.ByName.GetValueOrDefault(name)
             : throw Error.ArgumentNull(nameof(name));
 
     /// <summary>
@@ -255,7 +243,7 @@ public record ClassMapping : IStructureDefinitionSummary
         if (FindMappedElementByName(name) is { } pm) return pm;
 
         // Now, check the choice elements for a match.
-        var matches = _propertyMappings.ChoiceProperties
+        var matches = PropertyMappingsInternal.ChoiceProperties
             .Where(m => name.StartsWith(m.Name)).ToList();
 
         // Loop through possible matches and return the longest match.

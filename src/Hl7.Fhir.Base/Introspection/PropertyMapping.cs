@@ -25,9 +25,10 @@ namespace Hl7.Fhir.Introspection;
 /// A container for the metadata of an element of a FHIR datatype as present on a property of a (generated) .NET POCO class.
 /// </summary>
 [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ImplementingType.Name}}")]
-public record PropertyMapping : IElementDefinitionSummary
+public class PropertyMapping : IElementDefinitionSummary
 {
     public PropertyMapping(
+        ClassMapping declaringClass,
         string name,
         PropertyInfo? nativeProperty,
         Type? propertyType = null)
@@ -35,7 +36,7 @@ public record PropertyMapping : IElementDefinitionSummary
         if (nativeProperty is null && propertyType is null)
             throw new ArgumentException($"Either {nameof(nativeProperty)} or {nameof(propertyType)} must be provided");
 
-        DeclaringClass = null;
+        DeclaringClass = declaringClass;
         Name = name;
         NativeProperty = nativeProperty;
         _propertyType = propertyType;
@@ -49,7 +50,7 @@ public record PropertyMapping : IElementDefinitionSummary
     /// <summary>
     /// The ClassMapping for the type this property is a member of.
     /// </summary>
-    public ClassMapping? DeclaringClass { get; internal set; }
+    public ClassMapping DeclaringClass { get; }
 
     /// <summary>
     /// The original <see cref="PropertyInfo"/> the metadata was obtained from.
@@ -169,12 +170,12 @@ public record PropertyMapping : IElementDefinitionSummary
     /// <summary>
     /// The <see cref="ModelInspector"/> for which this mapping was created.
     /// </summary>
-    public ModelInspector Inspector => DeclaringClass?.Inspector ?? throw new InvalidOperationException("Property is not (yet) part of a ClassMapping.");
+    public ModelInspector Inspector => DeclaringClass.Inspector;
 
     /// <summary>
     /// The release of FHIR for which the metadata was extracted from the property.
     /// </summary>
-    public FhirRelease Release => DeclaringClass?.Release ?? throw new InvalidOperationException("Property is not (yet) part of a ClassMapping.");
+    public FhirRelease Release => DeclaringClass.Release;
 
     /// <summary>
     /// Inspects the given PropertyInfo, extracting metadata from its attributes and creating a new <see cref="PropertyMapping"/>.
@@ -216,7 +217,7 @@ public record PropertyMapping : IElementDefinitionSummary
         var fhirTypes = overridingTypes ?? [mappingType];
         var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
 
-        result = new PropertyMapping(elementAttr.Name, prop)
+        result = new PropertyMapping(declaringClass, elementAttr.Name, prop)
         {
             InSummary = elementAttr.InSummary,
             IsModifier = elementAttr.IsModifier,
@@ -241,7 +242,7 @@ public record PropertyMapping : IElementDefinitionSummary
     /// <summary>
     /// Creates a custom PropertyMapping representing the metadata for a property in the overflow.
     /// </summary>
-    public static PropertyMapping CreateCustom(string name, ModelInspector inspector, Type propertyType, Type[]? allowedTypes = null)
+    public static PropertyMapping CreateCustom(ClassMapping declaringClass, string name, ModelInspector inspector, Type propertyType, Type[]? allowedTypes = null)
     {
         _ = ReflectionHelper.TryGetRepeatingElementType(propertyType, out var collectionItemType);
 
@@ -253,7 +254,7 @@ public record PropertyMapping : IElementDefinitionSummary
             throw new InvalidOperationException($"Custom property {name} is of type " +
                                                 $"{implementingType}, for which a classmapping cannot be found.");
 
-        return new PropertyMapping(name, null, propertyType)
+        return new PropertyMapping(declaringClass, name, nativeProperty: null, propertyType)
         {
             Choice = allowedTypes is not null ? ChoiceType.DatatypeChoice : ChoiceType.None,
             Order = Int32.MaxValue,
@@ -318,7 +319,7 @@ public record PropertyMapping : IElementDefinitionSummary
         return ImplementingType;
     }
 
-    internal string QualifiedPropName => $"{DeclaringClass?.Name ?? "(no class)"}.{Name}";
+    public string QualifiedPropName => $"{DeclaringClass.Name}.{Name}";
 
     private static bool isAllowedNativeTypeForDataTypeValue(Type type) =>
         type.IsEnum || ClassMapping.SupportedDotNetPrimitiveTypes.Contains(type);

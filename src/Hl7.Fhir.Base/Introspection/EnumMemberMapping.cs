@@ -19,29 +19,22 @@ namespace Hl7.Fhir.Introspection;
 /// <summary>
 /// A container for the metadata of a FHIR code from a valueset as present on the .NET Enum member.
 /// </summary>
-public record EnumMemberMapping
+public class EnumMemberMapping(FieldInfo fieldInfo, string code, object value)
 {
-    public EnumMemberMapping(FieldInfo fieldInfo, string code, object value)
-    {
-        NativeField = fieldInfo;
-        Code = code;
-        Value = value;
-    }
-
     /// <summary>
     /// The original <see cref="FieldInfo"/> the metadata was extracted from.
     /// </summary>
-    public FieldInfo NativeField { get; }
+    public FieldInfo NativeField { get; } = fieldInfo;
 
     /// <summary>
     /// The code that is represented by this member.
     /// </summary>
-    public string Code { get; }
+    public string Code { get; } = code;
 
     /// <summary>
     /// The .NET enum value for this enum member.
     /// </summary>
-    public object Value { get; }
+    public object Value { get; } = value;
 
     /// <summary>
     /// The coding system that is associated with the code.
@@ -52,7 +45,6 @@ public record EnumMemberMapping
     /// A description of the concept.
     /// </summary>
     public string? Description { get; init; }
-
 
     /// <summary>
     /// Inspects the given enum member, extracting metadata from its attributes and creating a new <see cref="EnumMemberMapping"/>.
