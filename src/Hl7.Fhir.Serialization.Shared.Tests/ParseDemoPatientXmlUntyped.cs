@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlUntyped
     {
-        public ISourceNode getXmlUntyped(string xml, FhirXmlParsingSettings settings = null)
+        private ISourceNode getXmlUntyped(string xml, FhirXmlParsingSettings settings = null)
         {
             settings ??= FhirXmlParsingSettings.CreateDefault();
             settings.PermissiveParsing = false;

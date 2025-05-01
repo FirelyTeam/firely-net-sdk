@@ -10,28 +10,14 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientLineInfoAnnotationPoco
     {
-        public T getXmlPocoAnnotated<T>(string xml) where T : Base
+        private static T getXmlPocoAnnotated<T>(string xml) where T : Base
         {
-            try
-            {
-                return new FhirXmlDeserializer(new DeserializerSettings(){ AnnotateLineInfo = true }).Deserialize<T>(xml);
-            }
-            catch (DeserializationFailedException e)
-            {
-                return (T)e.PartialResult;
-            }
+            return new FhirXmlDeserializer(new DeserializerSettings() { AnnotateLineInfo = true }.UsingMode(DeserializationMode.Ostrich)).Deserialize<T>(xml);
         }
-        
-        public T getJsonPocoAnnotated<T>(string json) where T : Base
+
+        private static T getJsonPocoAnnotated<T>(string json) where T : Base
         {
-            try
-            {
-                return new FhirJsonDeserializer(new DeserializerSettings(){ AnnotateLineInfo = true }).Deserialize<T>(json);
-            }
-            catch (DeserializationFailedException e)
-            {
-                return (T)e.PartialResult;
-            }
+            return new FhirJsonDeserializer(new DeserializerSettings() { AnnotateLineInfo = true }.UsingMode(DeserializationMode.Ostrich)).Deserialize<T>(json);
         }
 
         [TestMethod]
