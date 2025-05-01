@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Serialization
         {
             object? result;
             var oldErrorCount = state.Errors.Count;
-            var (line, pos) = reader.CurrentState.GetLocation();
+            var (line, pos) = reader.GetLocation();
 
             // There might be an existing value, since FhirPrimitives may be spread out over two properties
             // (one with, and one without the '_')
@@ -391,6 +391,9 @@ namespace Hl7.Fhir.Serialization
                     result = deserializeSingleValue(ref reader, propertyValueMapping, propertyMapping, state);
                 }
             }
+
+            if (Settings.AnnotateLineInfo && result is Base b)
+                b.AddAnnotation(new JsonSerializationDetails { LineNumber = (int)line, LinePosition = (int)pos });
 
             // Only do validation when no parse errors were encountered, otherwise we'll just
             // produce spurious messages.
@@ -456,7 +459,12 @@ namespace Hl7.Fhir.Serialization
             // to simply create a list by Adding(). Not the fastest approach :-(
             while (reader.TokenType != JsonTokenType.EndArray)
             {
+                var (line, pos) = reader.GetLocation();
+                
                 var result = deserializeSingleValue(ref reader, propertyValueMapping, propertyMapping, state);
+                if (Settings.AnnotateLineInfo && result is Base b)
+                    b.AddAnnotation(new JsonSerializationDetails { LineNumber = (int)line, LinePosition = (int)pos, ArrayIndex = listInstance.Count });
+                
                 listInstance.Add(result);
                 state.Path.IncrementIndex();
 
@@ -548,6 +556,7 @@ namespace Hl7.Fhir.Serialization
 
             while (reader.TokenType != JsonTokenType.EndArray)
             {
+                var (line, pos) = reader.GetLocation();
                 if (elementIndex >= originalSize)
                     existingList.Add(null);
 
@@ -564,6 +573,9 @@ namespace Hl7.Fhir.Serialization
                     onlyNulls = false;
                     _ = DeserializeFhirPrimitive((PrimitiveType)existingList[elementIndex]!, propertyName, propertyValueMapping, fhirType, ref reader, delayedValidations, state);
 
+                    if (Settings.AnnotateLineInfo && existingList[elementIndex] is Base b)
+                        b.AddAnnotation(new JsonSerializationDetails { LineNumber = (int)line, LinePosition = (int)pos, ArrayIndex = elementIndex });
+                    
                     delayedValidations.SetPropertyIndex(propertyName, existingList.Count);
                 }
 

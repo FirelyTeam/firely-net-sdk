@@ -62,6 +62,15 @@ namespace Hl7.Fhir.Serialization
         /// resource was clean and possibly ok to process).
         /// </remarks>
         public bool AnnotateResourceParseExceptions { get; init; } = false;
+
+        /// <summary>
+        /// Enable annotating line information of the parsed resources and properties.
+        /// </summary>
+        /// <remarks>
+        /// This has a big impact on memory usage, as every element has to be aware where it was in the source data.
+        /// It is recommended to be kept disabled.
+        /// </remarks>
+        public bool AnnotateLineInfo { get; init; } = false;
     }
 
     /// <summary>
