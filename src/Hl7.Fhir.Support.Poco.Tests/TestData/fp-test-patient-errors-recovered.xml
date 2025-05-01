@@ -35,7 +35,7 @@
   </contained>
   <contained>
     <Patient>
-      <active anotherAttribute="true" value="false" />
+      <active value="false" anotherAttribute="true" />
       <birthDate value="February" />
     </Patient>
   </contained>
@@ -52,9 +52,9 @@
   </contained>
   <contained>
     <Patient no="yes">
-      <unknown />
       <id />
       <name value="Doe" />
+      <unknown />
     </Patient>
   </contained>
   <contained>
@@ -136,7 +136,7 @@
     <extension url="urn:oid:crap">
       <valueCode value="metrosexual" />
     </extension>
-    <extension huh="hi!" url="http://then.nl">
+    <extension url="http://then.nl" huh="hi!">
       <valueCode value="metrosexual" />
     </extension>
     <extension url="http://nu.nl">

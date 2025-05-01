@@ -10,7 +10,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -1068,6 +1067,7 @@ public class FhirJsonDeserializationTests
                                 "resourceType": "Patient", 
                                 "active": true, 
                                 "patientLocation": "http://nu.nl",
+                                "newList": ["singleitem"],
                                 "remarksString": "Nice guy"
                             }
                             """;
@@ -1076,6 +1076,7 @@ public class FhirJsonDeserializationTests
         parsed.Active.Should().BeTrue();
         parsed["active"].Should().BeOfType<FhirBoolean>().Which.Value.Should().BeTrue();
         parsed["patientLocation"].Should().BeOfType<FhirString>().Which.Value.Should().Be("http://nu.nl");
+        parsed["newList"].Should().BeOfType<List<FhirString>>().Which.Single().Value.Should().Be("singleitem");
         parsed["remarksString"].Should().BeOfType<FhirString>().Which.Value.Should().Be("Nice guy");
 
         var patientMapping = inspector.FindClassMapping(typeof(Patient))!;
@@ -1083,11 +1084,14 @@ public class FhirJsonDeserializationTests
         patientMapping.PropertyMappings.Add(customPropertyA);
         var customPropertyB = PropertyMapping.CreateCustom(patientMapping, "remarks", inspector, typeof(DataType), [typeof(FhirString), typeof(Markdown)]);
         patientMapping.PropertyMappings.Add(customPropertyB);
+        var customPropertyC = PropertyMapping.CreateCustom(patientMapping, "newList", inspector, typeof(List<FhirString>));
+        patientMapping.PropertyMappings.Add(customPropertyC);
 
         parsed = parser.DeserializeResource(json).Should().BeOfType<Patient>().Subject;
         parsed.Active.Should().BeTrue();
         parsed["patientLocation"].Should().BeOfType<FhirUri>().Which.Value.Should().Be("http://nu.nl");
         parsed["remarks"].Should().BeOfType<FhirString>().Which.Value.Should().Be("Nice guy");
+        parsed["newList"].Should().BeOfType<List<FhirString>>().Which.Single().Value.Should().Be("singleitem");
 
         var serializer = new BaseFhirJsonSerializer(inspector);
         var serialized = serializer.SerializeToString(parsed);

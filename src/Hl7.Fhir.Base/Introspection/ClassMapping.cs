@@ -280,7 +280,7 @@ public class ClassMapping(
 
     /// <inheritdoc />
     IReadOnlyCollection<IElementDefinitionSummary> IStructureDefinitionSummary.GetElements() =>
-        PropertyMappings.Where(pm => !pm.RepresentsValueElement).ToList();
+        PropertyMappingsInternal.ByOrder.Where(pm => !pm.RepresentsValueElement).ToList();
 
     #endregion
 
@@ -377,7 +377,12 @@ public class ClassMapping(
     private static ClassMapping buildNetPrimitiveClassMapping(Type t, ModelInspector inspector) =>
         new(inspector, "Net." + t.FullName, t) { IsPrimitive = true };
 
-    internal static ClassMapping DynamicResource => new(ModelInspector.Base, typeof(DynamicResource).FullName!, typeof(DynamicResource));
-    internal static ClassMapping DynamicPrimitive => new(ModelInspector.Base, typeof(DynamicPrimitive).FullName!, typeof(DynamicPrimitive));
-    internal static ClassMapping DynamicDataType => new(ModelInspector.Base, typeof(DynamicDataType).FullName!, typeof(DynamicDataType));
+    internal static ClassMapping DynamicResource => ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicResource)) ??
+                                                    throw new InvalidOperationException($"{nameof(DynamicResource)} mapping not found in Base.");
+    internal static ClassMapping DynamicPrimitive => ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicPrimitive)) ??
+                                                     throw new InvalidOperationException($"{nameof(DynamicPrimitive)} mapping not found in Base.");
+    internal static ClassMapping DynamicDataType => ModelInspector.Base.FindOrImportClassMapping(typeof(DynamicDataType)) ??
+                                                    throw new InvalidOperationException($"{nameof(DynamicDataType)} mapping not found in Base.");
+    internal static ClassMapping FhirString => ModelInspector.Base.FindOrImportClassMapping(typeof(FhirString)) ??
+                                                    throw new InvalidOperationException($"{nameof(FhirString)} mapping not found in Base.");
 }
