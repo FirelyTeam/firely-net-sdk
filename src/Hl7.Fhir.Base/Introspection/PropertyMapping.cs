@@ -168,6 +168,20 @@ public class PropertyMapping : IElementDefinitionSummary
     public string? BindingName { get; init; }
 
     /// <summary>
+    /// The function to use to get the value of this property on an instance of the class.
+    /// </summary>
+    /// <remarks>If left null, the framework will determine the fastest way to get the value on the
+    /// first call to <see cref="GetValue"/>.</remarks>
+    public Func<Base, object?>? Getter { get => _getter; init => _getter = value; }
+
+    /// <summary>
+    /// The function to use to set the value of this property on an instance of the class.
+    /// </summary>
+    /// <remarks>If left null, the framework will determine the fastest way to set the value on the
+    /// first call to <see cref="SetValue"/>.</remarks>
+    public Action<Base, object?>? Setter { get => _setter; init => _setter = value; }
+    
+    /// <summary>
     /// The <see cref="ModelInspector"/> for which this mapping was created.
     /// </summary>
     public ModelInspector Inspector => DeclaringClass.Inspector;
@@ -319,10 +333,40 @@ public class PropertyMapping : IElementDefinitionSummary
         return ImplementingType;
     }
 
-    public string QualifiedPropName => $"{DeclaringClass.Name}.{Name}";
+    internal string QualifiedPropName => $"{DeclaringClass.Name}.{Name}";
 
     private static bool isAllowedNativeTypeForDataTypeValue(Type type) =>
         type.IsEnum || ClassMapping.SupportedDotNetPrimitiveTypes.Contains(type);
+
+    /// <summary>
+    /// Given an instance of the parent class, gets the value for this property.
+    /// </summary>
+    public object? GetValue(Base instance) =>
+        LazyInitializer.EnsureInitialized(ref _getter, getValueGetter)!.Invoke(instance);
+    private Func<Base, object?>? _getter;
+
+    private Func<Base, object?> getValueGetter()
+    {
+        // If this is a custom property, or this platform does not support code generation,
+        // use dictionary access, otherwise use the generated getter.
+        if (NativeProperty?.GetValueGetter<Base>() is { } getter) return getter;
+        return b => b.TryGetValue(Name, out var value) ? value : null;
+    }
+
+    /// <summary>
+    /// Given an instance of the parent class, sets the value for this property.
+    /// </summary>
+    public void SetValue(Base instance, object? value) =>
+        LazyInitializer.EnsureInitialized(ref _setter, getValueSetter)!(instance, value);
+    private Action<Base, object?>? _setter;
+
+    private Action<Base, object?> getValueSetter()
+    {
+        // If this is a custom property, or this platform does not support code generation,
+        // use dictionary access, otherwise use the generated setter.
+        if (NativeProperty?.GetValueSetter<Base>() is { } setter) return setter;
+        return (b,v) => b.SetValue(Name, v);
+    }
 
     #region IElementDefinitionSummary members
     string IElementDefinitionSummary.ElementName => this.Name;

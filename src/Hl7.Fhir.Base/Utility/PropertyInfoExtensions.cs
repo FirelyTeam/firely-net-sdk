@@ -61,6 +61,89 @@ public static class PropertyInfoExtensions
         object createInstance() => Activator.CreateInstance(type)!;
     }
 
+        /// <summary>
+        /// Generates a function that, when passed an instance, gets the value of the given property.
+        /// </summary>
+        /// <returns><c>null</c> if the platform does not support code generation.</returns>
+        public static Func<T, object>? GetValueGetter<T>(this PropertyInfo propertyInfo)
+        {
+            MethodInfo getMethod = propertyInfo.GetMethod ?? throw new InvalidOperationException($"Property {propertyInfo.Name} does not have a getter.");
+
+         //   if (typeof(T) != propertyInfo.DeclaringType && typeof(T) != typeof(object))
+         //       throw new ArgumentException("Generic param T should be the type of property's declaring class.", nameof(propertyInfo));
+
+            try
+            {
+                if (NoCodeGenSupport) return null;
+
+                DynamicMethod getter = new($"{propertyInfo.Name}_get", typeof(object), [typeof(object)],
+                    propertyInfo.DeclaringType!);
+
+                ILGenerator il = getter.GetILGenerator();
+                il.Emit(OpCodes.Ldarg_0);
+                il.Emit(OpCodes.Castclass, propertyInfo.DeclaringType!);
+                il.EmitCall(OpCodes.Callvirt, getMethod, null);
+
+                if (propertyInfo.PropertyType.GetTypeInfo().IsValueType)
+                    il.Emit(OpCodes.Box, propertyInfo.PropertyType);
+
+                il.Emit(OpCodes.Ret);
+
+                return (Func<T, object>)getter.CreateDelegate(typeof(Func<T, object>));
+            }
+            catch (PlatformNotSupportedException)
+            {
+                NoCodeGenSupport = true;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Generates a function that, when passed an instance and a value, sets the value of the given property.
+        /// </summary>
+        /// <returns><c>null</c> if the platform does not support code generation.</returns>
+        public static Action<T, object?>? GetValueSetter<T>(this PropertyInfo propertyInfo)
+        {
+            MethodInfo setMethod = propertyInfo.SetMethod ?? throw new InvalidOperationException($"Property {propertyInfo.Name} does not have a setter."); ;
+
+         //   if (typeof(T) != propertyInfo.DeclaringType && typeof(T) != typeof(object))
+         //       throw new ArgumentException("Generic param T should be the type of property's declaring class.", nameof(propertyInfo));
+
+            try
+            {
+                if (NoCodeGenSupport) return null;
+
+                Type[] arguments = [typeof(object), typeof(object)];
+                DynamicMethod setter = new($"{propertyInfo.Name}_set", typeof(object), arguments, propertyInfo.DeclaringType!, true);
+                ILGenerator il = setter.GetILGenerator();
+
+                il.Emit(OpCodes.Ldarg_0);
+                il.Emit(OpCodes.Castclass, propertyInfo.DeclaringType!);
+                il.Emit(OpCodes.Ldarg_1);
+
+                if (propertyInfo.PropertyType.GetTypeInfo().IsClass)
+                    il.Emit(OpCodes.Castclass, propertyInfo.PropertyType);
+                else
+                    il.Emit(OpCodes.Unbox_Any, propertyInfo.PropertyType);
+
+                il.EmitCall(OpCodes.Callvirt, setMethod, null);
+                il.Emit(OpCodes.Ldarg_0);
+
+                il.Emit(OpCodes.Ret);
+
+                var del = (Func<T, object?, object>)setter.CreateDelegate(typeof(Func<T, object?, object>));
+                void actionDelegate(T obj, object? val) => del(obj, val);
+
+                return actionDelegate;
+            }
+            catch (PlatformNotSupportedException)
+            {
+                NoCodeGenSupport = true;
+                return null;
+            }
+        }
+
+
     /// <summary>
     /// Generates a function that creates an instance of a list of the given type.
     /// </summary>

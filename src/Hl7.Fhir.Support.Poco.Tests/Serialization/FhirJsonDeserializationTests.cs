@@ -1097,4 +1097,40 @@ public class FhirJsonDeserializationTests
         var serialized = serializer.SerializeToString(parsed);
         JsonAssert.AreSame("parsed", json, serialized);
     }
+
+
+    [TestMethod]
+    public void CanAccessPropertiesViaPropertyMapping()
+    {
+        var inspector = new ModelInspector(FhirRelease.STU3);
+        inspector.Import(typeof(Patient).Assembly);
+        inspector.Import(typeof(Base).Assembly);
+
+        var patientMapping = inspector.FindClassMapping(typeof(Patient))!;
+        var patientLocPm = PropertyMapping.CreateCustom(patientMapping, "patientLocation", inspector, typeof(FhirUri));
+        patientMapping.PropertyMappings.Add(patientLocPm);
+
+        var parser = new BaseFhirJsonDeserializer(inspector,
+            new DeserializerSettings().UsingMode(DeserializationMode.Ostrich));
+
+        const string json = """
+                            { 
+                                "resourceType": "Patient", 
+                                "active": true, 
+                                "patientLocation": "http://nu.nl",
+                            }
+                            """;
+
+        var parsed = parser.DeserializeResource(json).Should().BeOfType<Patient>().Subject;
+
+        var activePm = patientMapping.FindMappedElementByName("active")!;
+        activePm.GetValue(parsed).Should().BeOfType<FhirBoolean>().Which.Value.Should().BeTrue();
+        activePm.SetValue(parsed, new FhirBoolean(false));
+        parsed.Active.Should().BeFalse();
+
+        patientLocPm.GetValue(parsed).Should().BeOfType<FhirUri>().Which.Value.Should().Be("http://nu.nl");
+        patientLocPm.SetValue(parsed, new FhirUri("there"));
+        parsed["patientLocation"].Should().BeOfType<FhirUri>().Which.Value.Should().Be("there");
+    }
+
 }
