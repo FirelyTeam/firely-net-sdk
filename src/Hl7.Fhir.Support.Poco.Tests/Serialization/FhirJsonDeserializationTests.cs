@@ -1060,7 +1060,6 @@ public class FhirJsonDeserializationTests
         var inspector = new ModelInspector(FhirRelease.STU3);
         inspector.Import(typeof(Patient).Assembly);
         inspector.Import(typeof(Base).Assembly);
-        var p = FhirJsonDeserializer.DEFAULT
 
         var parser = new BaseFhirJsonDeserializer(inspector, new DeserializerSettings().UsingMode(DeserializationMode.Ostrich));
 
