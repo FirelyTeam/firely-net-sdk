@@ -619,14 +619,3 @@ public class BaseFhirXmlDeserializer
         }
     }
 }
-
-internal record ClassMappingDynamic(ClassMapping Original, string? DynamicName)
-{
-    public Base CreateInstance()
-    {
-        var result = (Base)Original.Factory();
-        if(result is IDynamicType dt) dt.DynamicTypeName = DynamicName;
-
-        return result;
-    }
-}

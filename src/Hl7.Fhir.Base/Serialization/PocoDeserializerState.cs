@@ -16,24 +16,4 @@ internal class PocoDeserializerState
 {
     public readonly ExceptionAggregator Errors = new();
     public readonly PathStack Path = new();
-
-    private readonly Dictionary<string, Action> _validations = new();
-
-    /// <summary>
-    /// Add a validation for a given key (mostly, property name), overwriting
-    /// an already scheduled action for the same key, if any.
-    /// </summary>
-    public void ScheduleDelayedValidation(string key, Action validation)
-    {
-        _validations[key] = validation;
-    }
-
-    /// <summary>
-    /// Run all delayed validations, clear the list.
-    /// </summary>
-    public void RunDelayedValidations()
-    {
-        foreach (var validation in _validations.Values) validation();
-        _validations.Clear();
-    }
 }
