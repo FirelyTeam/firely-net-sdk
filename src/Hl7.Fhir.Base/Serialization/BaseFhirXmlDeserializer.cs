@@ -185,6 +185,9 @@ public class BaseFhirXmlDeserializer
         var (lineNumber, position) = reader.GenerateLineInfo();
         var hasValueAttribute = reader.GetAttribute("value") != null;
         bool hasChildElements = false;
+        
+        if (Settings.AnnotateLineInfo)
+            target.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
 
         //check if on opening tag
         verifyOpeningElement(reader);
@@ -354,6 +357,8 @@ public class BaseFhirXmlDeserializer
 
     private IReadOnlyCollection<Base> readSingleValue(ClassMappingDynamic propValueMapping, PropertyMapping? propMapping, XmlReader reader, PocoDeserializerState state)
     {
+        var (lineNumber, position) = reader.GenerateLineInfo();
+        
         if (propMapping?.Choice == ChoiceType.ResourceChoice)
         {
             validateNameSpace(reader, state);
@@ -367,7 +372,11 @@ public class BaseFhirXmlDeserializer
                 state.Errors.Add(ERR.INCORRECT_XHTML_NAMESPACE(reader, state.Path.GetInstancePath()));
             }
 
-            return [readXhtml(reader)];
+            var xhtml = readXhtml(reader);
+            if (Settings.AnnotateLineInfo)
+                xhtml.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
+            
+            return [xhtml];
         }
 
         var newDatatype = propValueMapping.CreateInstance();
@@ -494,6 +503,9 @@ public class BaseFhirXmlDeserializer
             // as an attribute.
             if(propMapping is null)
                 targetElement.AddAnnotation(new XmlRepresentationAnnotation(XmlRepresentation.XmlAttr));
+
+            if (Settings.AnnotateLineInfo)
+                targetElement.AddAnnotation(new XmlSerializationDetails { LineNumber = lineNumber, LinePosition = position });
 
             targetElement.JsonValue = parsedValue;
 

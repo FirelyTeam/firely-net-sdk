@@ -55,6 +55,15 @@ public record DeserializerSettings
     public bool AnnotateResourceParseExceptions { get; init; } = false;
 
     /// <summary>
+    /// Enable annotating line information of the parsed resources and properties.
+    /// </summary>
+    /// <remarks>
+    /// This has a big impact on memory usage, as every element has to be aware where it was in the source data.
+    /// It is recommended to be kept disabled.
+    /// </remarks>
+    public bool AnnotateLineInfo { get; init; } = false;
+
+    /// <summary>
     /// For performance reasons, validation of Xhtml again the rules specified in the FHIR
     /// specification for Narrative (http://hl7.org/fhir/narrative.html#2.4.0) is turned off by
     /// default. Set this property to any other value than <see cref="None{T}"/>
