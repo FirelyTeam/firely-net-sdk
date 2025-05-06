@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonTyped
     {
-        public async Task<ITypedElement> getJsonNode(string json, FhirJsonParsingSettings settings = null) 
+        private async Task<ITypedElement> getJsonNode(string json, FhirJsonParsingSettings settings = null) 
             => await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider(), settings: settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)

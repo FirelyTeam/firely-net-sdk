@@ -268,7 +268,7 @@ public class BaseFhirJsonDeserializer
         bool forceDelayedValidation = false)
     {
         object? result;
-        var (line, pos) = reader.CurrentState.GetLocation();
+        var (line, pos) = reader.GetLocation();
         var (name, propertyValueMapping) = tryDetectNameAndMapping(propertyName, propertyMapping, propertyValueSuggestion);
 
         target.TryGetValue(name, out var existingValue);
@@ -285,6 +285,9 @@ public class BaseFhirJsonDeserializer
         }
         
         target.SetValue(propertyMapping is null ? propertyName : name, result);
+
+        if (Settings.AnnotateLineInfo && result is Base b)
+            b.AddAnnotation(new JsonSerializationDetails { LineNumber = (int)line, LinePosition = (int)pos });
         
         if (Settings.Validator is not null)
         {
@@ -495,11 +498,11 @@ public class BaseFhirJsonDeserializer
                 : ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
         }
 
-
         // Can't make an iterator because of the ref readers struct, so need
         // to simply create a list by Adding(). Not the fastest approach :-(
         while (reader.TokenType != JsonTokenType.EndArray)
         {
+            var (line, pos) = reader.GetLocation();
             if (reader.TokenType == JsonTokenType.StartObject)
             {
                 var result = deserializeSingleValue(ref reader, propertyValueMapping, state);
@@ -522,6 +525,9 @@ public class BaseFhirJsonDeserializer
 //                hasUnexpectedElements = true;
             }
 
+            if (Settings.AnnotateLineInfo && existingList[^1] is Base b)
+                b.AddAnnotation(new JsonSerializationDetails { LineNumber = (int)line, LinePosition = (int)pos, ArrayIndex = existingList.Count - 1});
+            
             state.Path.IncrementIndex();
         }
 
@@ -606,6 +612,7 @@ public class BaseFhirJsonDeserializer
 
         while (reader.TokenType != JsonTokenType.EndArray)
         {
+            var (line, pos) = reader.GetLocation();
             if (elementIndex >= originalSize)
                 existingList.Add(null);
 
@@ -631,6 +638,9 @@ public class BaseFhirJsonDeserializer
 
                 delayedValidations.SetPropertyIndex(propertyName, existingList.Count);
             }
+            
+            if (Settings.AnnotateLineInfo && existingList[elementIndex] is Base b)
+                b.AddAnnotation(new JsonSerializationDetails { LineNumber = (int)line, LinePosition = (int)pos, ArrayIndex = elementIndex});
             
             elementIndex += 1;
             state.Path.IncrementIndex();
@@ -667,7 +677,7 @@ public class BaseFhirJsonDeserializer
     )
     {
         var targetPrimitive = existingPrimitive ?? (PrimitiveType)propertyValueMapping.CreateInstance();
-        var (line, pos) = reader.CurrentState.GetLocation();
+        var (line, pos) = reader.GetLocation();
 
         if (isOnJsonPrimitiveToken(ref reader))
         {
@@ -706,7 +716,7 @@ public class BaseFhirJsonDeserializer
         else
         {
             throw new InvalidOperationException("Function should be called with a `name` with a primitive or a `_name` with an object.");
-        }        
+        }
 
         // Only do validation on this instance when no parse errors were encountered, otherwise we'll just
         // produce spurious messages. Also, delay validation of this instance until we have processed both

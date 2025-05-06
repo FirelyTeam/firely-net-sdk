@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientXmlTyped
     {
-        public ITypedElement getXmlNode(string xml, FhirXmlParsingSettings settings = null, TypedElementSettings tnSettings=null)
+        private ITypedElement getXmlNode(string xml, FhirXmlParsingSettings settings = null, TypedElementSettings tnSettings=null)
         {
             settings = settings ?? FhirXmlParsingSettings.CreateDefault();
             settings.PermissiveParsing = false;

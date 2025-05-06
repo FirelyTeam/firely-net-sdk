@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class ParseDemoPatientJsonUntyped
     {
-        public async Task<ISourceNode> getJsonNodeU(string json, FhirJsonParsingSettings settings = null) =>
+        private async Task<ISourceNode> getJsonNodeU(string json, FhirJsonParsingSettings settings = null) =>
             await FhirJsonNode.ParseAsync(json, settings: settings);
 
         async Task<ISourceNode> FhirJsonNodeParse(string json, string rootName) =>
