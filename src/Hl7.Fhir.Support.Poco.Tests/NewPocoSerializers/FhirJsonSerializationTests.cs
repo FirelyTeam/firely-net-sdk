@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
     [TestClass]
     public class FhirJsonSerializationTests
     {
-        public JsonSerializerOptions BaseOptions = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+        public JsonSerializerOptions BaseOptions = new JsonSerializerOptions().ForFhir();
 
         private (Patient, string) getEdgecases()
         {
@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var (poco, expected) = getEdgecases();
 
-            var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).Pretty();
+            var options = new JsonSerializerOptions().ForFhir().Pretty();
 
             string actual = JsonSerializer.Serialize(poco, options);
 
@@ -43,11 +43,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var (poco, _) = getEdgecases();
 
-            var optionsCompact = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+            var optionsCompact = new JsonSerializerOptions().ForFhir();
             string compact = JsonSerializer.Serialize(poco, optionsCompact);
             var compactWS = compact.Where(c => char.IsWhiteSpace(c)).Count();
 
-            var optionsPretty = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).Pretty();
+            var optionsPretty = new JsonSerializerOptions().ForFhir().Pretty();
             string pretty = JsonSerializer.Serialize(poco, optionsPretty);
             var prettyWS = pretty.Where(c => char.IsWhiteSpace(c)).Count();
 
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void SerializesInvalidData()
         {
-            var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+            var options = new JsonSerializerOptions().ForFhir();
 
             var b = new FhirBoolean() { JsonValue = "treu" };
             var pInvalid = new Patient { ActiveElement = b };

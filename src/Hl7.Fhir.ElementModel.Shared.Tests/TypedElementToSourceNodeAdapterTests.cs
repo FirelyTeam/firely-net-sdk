@@ -110,7 +110,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             var poco = new Patient();
             poco.Extension.Add(new Extension("http://hl7.org/fhir/StructureDefinition/patient-birthTime", new FhirDateTime("2021-01-01T00:00:00Z")));
 
-            var result = poco.ToSourceNode(ModelInspector.ForType<Patient>());
+            var result = poco.ToSourceNode(ModelInfo.ModelInspector);
             result.Children("extension").First().Children("valueDateTime").First().Location.Should()
                 .Be(extensionValueSourceLocation,
                     "On a SourceNode from a TypedElement, a choice type should again have the same Location as if it was constructed as SourceNode");

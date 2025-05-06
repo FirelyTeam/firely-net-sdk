@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Support.Poco.Tests;
 [TestClass]
 public class FhirSerializationEngineTests
 {
-    private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(Patient));
+    private static readonly ModelInspector TESTINSPECTOR = ModelInfo.ModelInspector;
 
     // Shared test data for EM+Poco
     private const string CORRECTXML = """<Patient xmlns="http://hl7.org/fhir"><active value="true"  /></Patient>""";

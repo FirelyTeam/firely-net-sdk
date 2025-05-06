@@ -27,5 +27,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\PocoSerializationExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirXmlPocoSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\PocoStructureDefinitionSummaryProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validation\PocoValidationExtensions.cs" />
   </ItemGroup>
 </Project>

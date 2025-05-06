@@ -39,17 +39,6 @@ public static class FhirJsonConverterOptionsExtensions
         FhirJsonConverterOptions? deserializerSettings = null) =>
         options.ForFhir(inspector, deserializerSettings ?? new FhirJsonConverterOptions()).addCdsHooks();
 
-
-#if NET8_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.Experimental(diagnosticId: "ExperimentalApi")]
-#else
-        [System.Obsolete("This function is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.")]
-#endif
-    public static JsonSerializerOptions ForCdsHooks(this JsonSerializerOptions options, Assembly modelAssembly,
-        FhirJsonConverterOptions? deserializerSettings = null) =>
-        options.ForFhir(modelAssembly, deserializerSettings ?? new FhirJsonConverterOptions())
-            .addCdsHooks();
-
     private static JsonSerializerOptions addCdsHooks(this JsonSerializerOptions options)
     {
         options.TypeInfoResolver = (options.TypeInfoResolver ?? new DefaultJsonTypeInfoResolver()).WithAddedModifier(changeCdsHookPropertyNames);
@@ -68,9 +57,13 @@ public static class FhirJsonConverterOptionsExtensions
     /// <summary>
     /// Initialize the options to serialize using the JsonFhirConverter, producing compact output without whitespace.
     /// </summary>
+    [Obsolete("Use the overload that takes a ModelInspector instead. " +
+              "You can find the right ModelInspector for an assembly by calling ModelInspector.ForAssembly(assembly).")]
     public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, Assembly modelAssembly) =>
         options.ForFhir(modelAssembly, new FhirJsonConverterOptions());
 
+    [Obsolete("Use the overload that takes a ModelInspector instead. " +
+              "You can find the right ModelInspector for an assembly by calling ModelInspector.ForAssembly(assembly).")]
     public static JsonSerializerOptions ForFhir(
         this JsonSerializerOptions options,
         Assembly modelAssembly,

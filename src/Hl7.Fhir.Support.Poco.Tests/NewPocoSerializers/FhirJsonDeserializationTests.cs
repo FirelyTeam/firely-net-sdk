@@ -44,7 +44,7 @@ public class FhirJsonDeserializationTests
 
         static (ClassMapping?, CodedException?) test(object? typename)
         {
-            var inspector = ModelInspector.ForAssembly(typeof(Resource).Assembly);
+            var inspector = ModelInspector.Base;
 
             var jsonBytes = typename != null
                 ? JsonSerializer.SerializeToUtf8Bytes(new { resourceType = typename })
@@ -93,7 +93,7 @@ public class FhirJsonDeserializationTests
 
         PrimitiveType test()
         {
-            var inspector = ModelInspector.ForType(typeof(Patient));
+            var inspector = ModelInfo.ModelInspector;
             var deserializer = new BaseFhirJsonDeserializer(inspector);
             var mapping = new ClassMappingDynamic(inspector.ImportType(targetType)!, null);
 
@@ -126,7 +126,7 @@ public class FhirJsonDeserializationTests
         FhirJsonConverterOptions settings)
     {
         // For the tests, enable full XHML validation so we can test it when necessary.
-        var deserializer = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>(), settings);
+        var deserializer = new FhirJsonDeserializer(settings);
         Utf8JsonReader reader = constructReader(testObject);
         reader.Read();
 
@@ -161,7 +161,7 @@ public class FhirJsonDeserializationTests
         var reader = constructReader(testObject);
         reader.Read();
 
-        var deserializer = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
+        var deserializer = new FhirJsonDeserializer();
         var state = new PocoDeserializerState();
         _ = deserializer.DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
         state.Errors.Select(err => err.ErrorCode).Should().BeEquivalentTo(errors);
@@ -474,7 +474,7 @@ public class FhirJsonDeserializationTests
         var errorsFileName = Path.Combine(fileDir, "fp-test-patient-errors-expected-json.txt");
         var jsonInput = File.ReadAllText(patientFileName);
 
-        var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+        var options = new JsonSerializerOptions().ForFhir();
         if (overwrite)
             options = options.Pretty();
 
@@ -572,7 +572,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void JsonDeserializerSupportsUnknownPropertiesOnKnownTypes()
     {
-        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
+        var parser = new FhirJsonDeserializer();
 
         var dt = DateTimeOffset.UtcNow;
         
@@ -601,7 +601,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void JsonDeserializerHandleUnexpectedObject()
     {
-        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
+        var parser = new FhirJsonDeserializer();
 
         var test = new
         {
@@ -625,7 +625,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void JsonDeserializerHandleContainedStuff()
     {
-        var parser = new BaseFhirJsonDeserializer(ModelInspector.ForType<Patient>());
+        var parser = new FhirJsonDeserializer();
 
         var test = new
         {
@@ -712,7 +712,7 @@ public class FhirJsonDeserializationTests
     {
         var reader = constructReader(new { system = "http://nu.nl", value = "bla" });
 
-        var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+        var options = new JsonSerializerOptions().ForFhir();
 
         var identifier = JsonSerializer.Deserialize<Identifier>(ref reader, options)!;
         identifier.Should().BeOfType<Identifier>();
@@ -722,7 +722,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void CanParseMixedClass()
     {
-        var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+        var options = new JsonSerializerOptions().ForFhir();
 
         var mc = new MixedClass
         {
@@ -862,7 +862,7 @@ public class FhirJsonDeserializationTests
     [DynamicData(nameof(getDuplicatePropertyTests), DynamicDataSourceType.Method)]
     public void TestDuplicateProperties(string testJson, string[] expectedErrs)
     {
-        var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+        var options = new JsonSerializerOptions().ForFhir();
 
         try
         {
@@ -888,7 +888,7 @@ public class FhirJsonDeserializationTests
 
         string expected = ERR.DUPLICATE_PROPERTY_CODE;
 
-        var jsonSerializerOptions = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+        var jsonSerializerOptions = new JsonSerializerOptions().ForFhir();
 
         try
         {
@@ -904,7 +904,7 @@ public class FhirJsonDeserializationTests
     [TestMethod]
     public void TestBackboneElementEmptyStack()
     {
-        var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly);
+        var options = new JsonSerializerOptions().ForFhir();
 
         var bundleEntryComponent = new Parameters.ParameterComponent()
         {
@@ -926,31 +926,31 @@ public class FhirJsonDeserializationTests
     {
         yield return
         [
-            new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
+            new JsonSerializerOptions().ForFhir()
                 .UsingMode(DeserializationMode.Ostrich),
             new Predicate<IEnumerable<CodedException>>(errs => !errs.Any())
         ];
         yield return
         [
-            new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
+            new JsonSerializerOptions().ForFhir()
                 .UsingMode(DeserializationMode.Recoverable),
             new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => CodedExceptionFilters.IsRecoverableIssue(e)))
         ];
         yield return
         [
-            new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
+            new JsonSerializerOptions().ForFhir()
                 .UsingMode(DeserializationMode.BackwardsCompatible),
             new Predicate<IEnumerable<CodedException>>(errs => !errs.Any(e => CodedExceptionFilters.IsBackwardsCompatibilityIssue(e)))
         ];
         yield return
         [
-            new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
+            new JsonSerializerOptions().ForFhir()
                 .Ignoring([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE]),
             new Predicate<IEnumerable<CodedException>>(errs => errs.All(e => e.ErrorCode != COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE))
         ];
         yield return
         [
-            new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).UsingMode(DeserializationMode.Ostrich)
+            new JsonSerializerOptions().ForFhir().UsingMode(DeserializationMode.Ostrich)
                 .Enforcing([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, COVE.LITERAL_INVALID_CODE]),
             new Predicate<IEnumerable<CodedException>>(errs =>
             {
@@ -989,7 +989,7 @@ public class FhirJsonDeserializationTests
         yield return
         [
             getPredicateFromOptions(new JsonSerializerOptions()
-                .ForFhir(typeof(Patient).Assembly)
+                .ForFhir()
                 .Ignoring([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])
                 .Ignoring([ERR.ARRAYS_CANNOT_BE_EMPTY_CODE])
                 .Ignoring([COVE.INVALID_BASE64_VALUE_CODE])),
@@ -1000,7 +1000,7 @@ public class FhirJsonDeserializationTests
         yield return
         [
             getPredicateFromOptions(new JsonSerializerOptions()
-                .ForFhir(typeof(Patient).Assembly)
+                .ForFhir()
                 .Ignoring([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])
                 .Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])),
             new Predicate<CodedException>(_ => false)
@@ -1008,7 +1008,7 @@ public class FhirJsonDeserializationTests
         yield return
         [
             getPredicateFromOptions(new JsonSerializerOptions()
-                .ForFhir(typeof(Patient).Assembly)
+                .ForFhir()
                 .Ignoring([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])
                 .Enforcing([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])
                 .Ignoring([COVE.INCORRECT_LITERAL_VALUE_TYPE_CODE])),
@@ -1018,7 +1018,7 @@ public class FhirJsonDeserializationTests
 
     private static IEnumerable<CodedException> getErrorsList()
     {
-        var testDeserializerOptions = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly)
+        var testDeserializerOptions = new JsonSerializerOptions().ForFhir()
             .UsingMode(DeserializationMode.Strict);
         string testJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient-errors.json"));
 

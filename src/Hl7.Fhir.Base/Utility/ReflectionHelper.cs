@@ -8,6 +8,8 @@
 
 #nullable enable
 
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,17 +19,18 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Utility;
 
+/// <summary>
+/// A set of helper methods to make working with the FHIR reflection model metadata easier.
+/// </summary>
 internal static class ReflectionHelper
 {
-    public static bool CanBeTreatedAsType(this Type? currentType, Type? typeToCompareWith)
-    {
-        // Always return false if either Type is null
-        if (currentType == null || typeToCompareWith == null)
-            return false;
-
-        // Return the result of the assignability test
-        return typeToCompareWith.IsAssignableFrom(currentType);
-    }
+    /// <summary>
+    /// Determines whether the specified type is a subclass of the type in <paramref name="typeToCompareWith"/>.
+    /// </summary>
+    /// <remarks>This function simply inverts the arguments for <see cref="Type.IsAssignableFrom(Type)"/>
+    /// for better readability.</remarks>
+    public static bool CanBeTreatedAsType(this Type currentType, Type typeToCompareWith) =>
+        typeToCompareWith.IsAssignableFrom(currentType);
 
     /// <summary>
     /// Gets an attribute on an enum field value
@@ -65,7 +68,7 @@ internal static class ReflectionHelper
     /// <returns>The type of the typed collection's items.</returns>
     public static Type GetRepeatingElementType(Type type) =>
         TryGetRepeatingElementType(type, out var itemType) ? itemType :
-            throw Error.Argument("type", "Type {0} is not a typed collection.".FormatWith(type.Name));
+            throw Error.Argument("type", $"Type {type.Name} is not a typed collection.");
 
     public static bool TryGetRepeatingElementType(Type type, [NotNullWhen(true)] out Type? itemType)
     {
@@ -101,4 +104,32 @@ internal static class ReflectionHelper
 
         return cleanedInformationalVersion;
     }
+
+    /// <summary>
+    /// Gets an attribute of <typeparamref name="T"/> or subclasses on a given member that is relevant for the
+    /// given <paramref name="version" />. Returns the last one if there are multiple matching attributes.
+    /// </summary>
+    public static T? GetFhirModelAttribute<T>(this MemberInfo t, FhirRelease version) where T : FhirModelAttribute =>
+        t.GetFhirModelAttributes<T>(version).LastOrDefault();
+
+    /// <summary>
+    /// Gets all attribute of <typeparamref name="T"/> or subclasses on a given member that is relevant for the
+    /// given <paramref name="version" />.
+    /// </summary>
+    public static IEnumerable<T> GetFhirModelAttributes<T>(this MemberInfo t, FhirRelease version) where T : FhirModelAttribute
+    {
+        return t.GetCustomAttributes<T>().Where(isRelevant).OrderBy(att => att.Since);
+
+        bool isRelevant(FhirModelAttribute a) => a.AppliesToRelease(version);
+    }
+
+    /// <summary>
+    /// Gets all <see cref="ValidatingFhirModelAttribute"/> attributes (including) subclasses on a given member
+    /// that is relevant for the given <paramref name="version" />. Will return at most one result per type of the attribute.
+    /// </summary>
+    public static IEnumerable<ValidatingFhirModelAttribute> GetValidatingAttributes(this MemberInfo t, FhirRelease version) =>
+        GetFhirModelAttributes<ValidatingFhirModelAttribute>(t, version)
+            .GroupBy(att => att.GetType())
+            .Select(g => g.LastOrDefault())
+            .OfType<ValidatingFhirModelAttribute>();
 }

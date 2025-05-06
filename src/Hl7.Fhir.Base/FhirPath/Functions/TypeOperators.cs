@@ -24,7 +24,9 @@ namespace Hl7.FhirPath.Functions
         public static bool Is(this PocoNode focus, string type)
         {
             var selfAndBaseClasses = getBaseClasses(focus.Poco.GetType())
-                .Select(t => ModelInspector.ForType(t).GetFhirTypeNameForType(t))
+#pragma warning disable CS0618 // Type or member is obsolete
+                .Select(t => ModelInspector.ForAssembly(t.Assembly).GetFhirTypeNameForType(t))
+#pragma warning restore CS0618 // Type or member is obsolete
                 .Append(((ITypedElement)focus).InstanceType);
             return selfAndBaseClasses.Any(typeString => Is(typeString, type));
             

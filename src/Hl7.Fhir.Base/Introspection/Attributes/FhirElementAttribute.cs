@@ -88,5 +88,5 @@ public sealed class FhirElementAttribute : FhirModelAttribute
     /// </summary>
     public bool IsModifier { get; set; }
 
-    public string FiveWs { get; set; } = string.Empty;
+    public string? FiveWs { get; set; }
 }
