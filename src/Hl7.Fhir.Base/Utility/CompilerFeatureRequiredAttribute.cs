@@ -8,17 +8,12 @@ namespace System.Runtime.CompilerServices
     /// Indicates that compiler support for a particular feature is required for the location where this attribute is applied.
     /// </summary>
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = false)]
-    public sealed class CompilerFeatureRequiredAttribute : Attribute
+    internal sealed class CompilerFeatureRequiredAttribute(string featureName) : Attribute
     {
-        public CompilerFeatureRequiredAttribute(string featureName)
-        {
-            FeatureName = featureName;
-        }
-
         /// <summary>
         /// The name of the compiler feature.
         /// </summary>
-        public string FeatureName { get; }
+        public string FeatureName { get; } = featureName;
 
         /// <summary>
         /// If true, the compiler can choose to allow access to the location where this attribute is applied if it does not understand <see cref="FeatureName"/>.

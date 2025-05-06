@@ -55,11 +55,11 @@ public class FhirAttributeValidator : IPocoValidator
         // if we have no allowed types attribute, we should still check against the implementing type, in case someone messed with the model (overflow)
         if (
             !propertyMapping.ValidationAttributes.Any(attr => attr is AllowedTypesAttribute) && 
-            !propertyMapping.NativeProperty.PropertyType.IsInstanceOfType(propertyValue)
+            !propertyMapping.PropertyType.IsInstanceOfType(propertyValue)
         )
         {
             return [
-                CodedValidationException.FromTypes(propertyMapping.NativeProperty.PropertyType, propertyValue, context), 
+                CodedValidationException.FromTypes(propertyMapping.PropertyType, propertyValue, context),
                 ..runAttributeValidation(propertyValue, propertyMapping.ValidationAttributes, context)
             ];
         }

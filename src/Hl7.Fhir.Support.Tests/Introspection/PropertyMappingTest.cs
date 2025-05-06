@@ -9,6 +9,7 @@
 using FluentAssertions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,9 @@ public class ModelInspectorMembersTest
     [TestMethod]
     public void TestPrimitiveDataTypeMapping()
     {
-        Assert.IsTrue(ClassMapping.TryCreate(typeof(Base64Binary), out var mapping));
+
+
+        Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(Base64Binary), out var mapping));
         Assert.AreEqual("base64Binary", mapping.Name);
         Assert.IsTrue(mapping.HasPrimitiveValueMember);
         Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
@@ -32,7 +35,7 @@ public class ModelInspectorMembersTest
         Assert.IsFalse(valueProp.IsCollection);     // don't see byte[] as a collection of byte in FHIR
         Assert.IsTrue(valueProp.RepresentsValueElement);
 
-        Assert.IsTrue(ClassMapping.TryCreate(typeof(Code<SomeEnum>), out mapping));
+        Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(Code<SomeEnum>), out mapping));
         Assert.AreEqual("codeOfT<Hl7.Fhir.Tests.Introspection.SomeEnum>", mapping.Name);
         Assert.IsTrue(mapping.HasPrimitiveValueMember);
         Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
@@ -42,7 +45,7 @@ public class ModelInspectorMembersTest
         Assert.IsTrue(valueProp.RepresentsValueElement);
         Assert.AreEqual(typeof(SomeEnum), valueProp.ImplementingType);
 
-        Assert.IsTrue(ClassMapping.TryCreate(typeof(FhirUri), out mapping));
+        Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(FhirUri), out mapping));
         Assert.AreEqual("uri", mapping.Name);
         Assert.IsTrue(mapping.HasPrimitiveValueMember);
         Assert.AreEqual(3, mapping.PropertyMappings.Count); // id, extension, fhir_comments & value
@@ -56,13 +59,19 @@ public class ModelInspectorMembersTest
     [TestMethod]
     public void TestVersionSpecificMapping()
     {
-        Assert.IsTrue(ClassMapping.TryCreate(typeof(Meta), out var mapping, Specification.FhirRelease.STU3));
+        var r3Inspector = new ModelInspector(FhirRelease.STU3);
+        r3Inspector.Import(typeof(Meta).Assembly);
+
+        Assert.IsTrue(ClassMapping.TryCreate(r3Inspector, typeof(Meta), out var mapping));
         Assert.IsNull(mapping.FindMappedElementByName("source"));
         var profile = mapping.FindMappedElementByName("profile");
         Assert.IsNotNull(profile);
         Assert.AreEqual(typeof(FhirUri), profile.PropertyTypeMapping.NativeType);
 
-        Assert.IsTrue(ClassMapping.TryCreate(typeof(Meta), out mapping, Specification.FhirRelease.R4));
+        var r4Inspector = new ModelInspector(FhirRelease.R4);
+        r4Inspector.Import(typeof(Meta).Assembly);
+
+        Assert.IsTrue(ClassMapping.TryCreate(r4Inspector, typeof(Meta), out mapping));
         Assert.IsNotNull(mapping.FindMappedElementByName("source"));
         profile = mapping.FindMappedElementByName("profile");
         Assert.IsNotNull(profile);
@@ -72,7 +81,7 @@ public class ModelInspectorMembersTest
     [TestMethod]
     public void TestGetByName()
     {
-        ClassMapping.TryCreate(typeof(Extension), out var cm).Should().BeTrue();
+        ClassMapping.TryCreate(ModelInspector.Base, typeof(Extension), out var cm).Should().BeTrue();
         cm.FindMappedElementByName("url").Should().NotBeNull();
         cm.FindMappedElementByName("urlx").Should().BeNull();
         cm.FindMappedElementByName("ur").Should().BeNull();
@@ -89,7 +98,7 @@ public class ModelInspectorMembersTest
     [TestMethod]
     public void TestPropsWithRedirect()
     {
-        Assert.IsTrue(ClassMapping.TryCreate(typeof(TypeWithCodeOfT), out var mapping));
+        Assert.IsTrue(ClassMapping.TryCreate(ModelInspector.Base, typeof(TypeWithCodeOfT), out var mapping));
 
         var propMapping = mapping.FindMappedElementByName("type1");
         Assert.AreEqual(typeof(Code<SomeEnum>), propMapping.ImplementingType);
@@ -101,25 +110,25 @@ public class ModelInspectorMembersTest
     public void GetClassMappingForProperty()
     {
         // Canonical.Value - a system primitive
-        ClassMapping.TryCreate(typeof(Canonical), out var canonicalMapping);
+        ClassMapping.TryCreate(ModelInspector.Base, typeof(Canonical), out var canonicalMapping);
         canonicalMapping.FindMappedElementByName("value").PropertyTypeMapping.Name.Should().Be("System.String");
 
         // ConcactPoint.System - a Code<T> -> Code
-        ClassMapping.TryCreate(typeof(ContactPoint), out var contactPointMapping);
+        ClassMapping.TryCreate(ModelInspector.Base, typeof(ContactPoint), out var contactPointMapping);
         contactPointMapping.FindMappedElementByName("system").PropertyTypeMapping.Name.Should().Be("code");
 
         // ContactPoint.Value - a FhirString
         contactPointMapping.FindMappedElementByName("value").PropertyTypeMapping.Name.Should().Be("string");
 
         // Extension.Url - now a FhirString
-        ClassMapping.TryCreate(typeof(Extension), out var extensionMapping);
+        ClassMapping.TryCreate(ModelInspector.Base, typeof(Extension), out var extensionMapping);
         extensionMapping.FindMappedElementByName("url").PropertyTypeMapping.Name.Should().Be("uri");
 
         // Extension.Value - an abstract DataType
         extensionMapping.FindMappedElementByName("value").PropertyTypeMapping.Name.Should().Be("DataType");
 
         // Parameters.Parameter - a backbone
-        ClassMapping.TryCreate(typeof(Parameters), out var parametersMapping);
+        ClassMapping.TryCreate(ModelInspector.Base, typeof(Parameters), out var parametersMapping);
         var parameterComponentMapping = parametersMapping.FindMappedElementByName("parameter").PropertyTypeMapping;
         parameterComponentMapping.Name.Should().Be("Parameters.parameter");
 
@@ -146,11 +155,11 @@ public class ModelInspectorMembersTest
     [TestMethod]
     public void IsBindableTest()
     {
-        ClassMapping.TryCreate(typeof(BindableClass), out var mapping);
+        ClassMapping.TryCreate(ModelInspector.Base, typeof(BindableClass), out var mapping);
         mapping.Should().NotBeNull();
         mapping.IsBindable.Should().BeTrue();
 
-        ClassMapping.TryCreate(typeof(NonBindableClass), out mapping);
+        ClassMapping.TryCreate(ModelInspector.Base, typeof(NonBindableClass), out mapping);
         mapping.Should().NotBeNull();
         mapping.IsBindable.Should().BeFalse();
     }
@@ -159,7 +168,7 @@ public class ModelInspectorMembersTest
     public void TestPerformanceOfMapping()
     {
         // just a random list of POCO types available in common
-        var typesToTest = new Type[] { typeof(BackboneElement), typeof(BackboneType),
+        var typesToTest = new[] { typeof(BackboneElement), typeof(BackboneType),
             typeof(Base64Binary), typeof(Canonical), typeof(Element), typeof(FhirString),
             typeof(Extension), typeof(Resource), typeof(Meta), typeof(XHtml) };
 
@@ -181,7 +190,7 @@ public class ModelInspectorMembersTest
 
         int createMapping(Type t, bool touchProps = false)
         {
-            ClassMapping.TryCreate(t, out var mapping);
+            ClassMapping.TryCreate(ModelInspector.Base, t, out var mapping);
             return touchProps ? mapping.PropertyMappings.Count : -1;
         }
     }

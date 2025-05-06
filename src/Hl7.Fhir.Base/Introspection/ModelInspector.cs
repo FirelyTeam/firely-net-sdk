@@ -193,10 +193,12 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     /// <returns>The created ClassMapping.</returns>
     public ClassMapping? ImportType(Type type)
     {
-        if (!ClassMapping.TryGetMappingForType(type, FhirRelease, out var mapping))
+        if (FindClassMapping(type) is { } existingMapping) return existingMapping;
+
+        if(!ClassMapping.TryCreate(this, type, out var newMapping))
             return null;
 
-        _classMappings.Add(mapping);
+        _classMappings.Add(newMapping);
 
         var nestedTypes = type.GetNestedTypes(BindingFlags.Public);
         var nestedEnums = nestedTypes.Where(t => t.IsEnum);
@@ -205,7 +207,7 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
         var nestedClasses = nestedTypes.Where(t => t is { IsClass: true, IsEnum: false });
         extractBackbonesFromClasses(nestedClasses);
 
-        return mapping;
+        return newMapping;
     }
 
     private void extractEnums(IEnumerable<Type> enumTypes)
@@ -230,8 +232,7 @@ public class ModelInspector : IStructureDefinitionSummaryProvider, IModelInfo
     /// it when not found.
     /// </summary>
     /// <returns>May return <c>null</c> if the type cannot be imported.</returns>
-    public ClassMapping? FindOrImportClassMapping(Type nativeType) =>
-        FindClassMapping(nativeType) ?? ImportType(nativeType);
+    public ClassMapping? FindOrImportClassMapping(Type nativeType) => ImportType(nativeType);
 
     /// <summary>
     /// Retrieves an already imported <see cref="ClassMapping" /> given a FHIR type name.

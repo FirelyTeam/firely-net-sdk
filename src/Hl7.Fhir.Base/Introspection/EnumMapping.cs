@@ -22,21 +22,13 @@ namespace Hl7.Fhir.Introspection;
 /// <summary>
 /// A container for the metadata of a FHIR valueset as present on the .NET Enum.
 /// </summary>
-public record EnumMapping
+public class EnumMapping(
+    string name,
+    Type nativeType,
+    FhirRelease release,
+    EnumMapping.EnumMemberMapper memberMapper)
 {
     public delegate IReadOnlyDictionary<string, EnumMemberMapping> EnumMemberMapper(EnumMapping parent);
-
-    public EnumMapping(
-        string name,
-        Type nativeType,
-        FhirRelease release,
-        EnumMemberMapper memberMapper)
-    {
-        Name = name;
-        NativeType = nativeType;
-        Release = release;
-        _memberMapper = memberMapper;
-    }
 
     public EnumMapping(string name, Type nativeType, FhirRelease release)
         : this(name, nativeType, release, DefaultEnumMemberMapper)
@@ -102,7 +94,7 @@ public record EnumMapping
     /// </summary>
     /// <remarks>The mapping will contain the metadata that applies to this version (or older), using the
     /// newest metadata when multiple exist.</remarks>
-    public FhirRelease? Release { get; }
+    public FhirRelease? Release { get; } = release;
 
     /// <summary>
     /// Name of the mapping, derived from the valueset's name or id.
@@ -110,7 +102,7 @@ public record EnumMapping
     /// <remarks>
     /// This is the FHIR name
     /// </remarks>
-    public string Name { get; }
+    public string Name { get; } = name;
 
     /// <summary>
     /// The code system of most of the member of the ValueSet
@@ -119,7 +111,7 @@ public record EnumMapping
     /// <summary>
     /// The .NET class that implements the FHIR datatype/resource
     /// </summary>
-    public Type NativeType { get; }
+    public Type NativeType { get; } = nativeType;
 
     /// <summary>
     /// The canonical of the ValueSet where this enum was derived from.
@@ -135,9 +127,7 @@ public record EnumMapping
     /// The list of enum members.
     /// </summary>
     public IReadOnlyDictionary<string, EnumMemberMapping> Members =>
-        LazyInitializer.EnsureInitialized(ref _mappings, () => _memberMapper(this))!;
-
-    private readonly EnumMemberMapper _memberMapper;
+        LazyInitializer.EnsureInitialized(ref _mappings, () => memberMapper(this))!;
 
     private IReadOnlyDictionary<string, EnumMemberMapping>? _mappings;
 

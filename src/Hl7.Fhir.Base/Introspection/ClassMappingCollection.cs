@@ -44,6 +44,17 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
             _byCanonical[canonical] = mapping;
     }
 
+    /// <summary>
+    /// Add every mapping in the collection to the current collection.
+    /// </summary>
+    /// <param name="mappings"></param>
+    public void AddRange(IEnumerable<ClassMapping> mappings)
+    {
+        foreach (var mapping in mappings)
+            Add(mapping);
+    }
+
+
     public void Clear()
     {
         _byName.Clear();
@@ -65,15 +76,9 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
         return true;
     }
 
-    public int Count => _byType.Count;
+    public int Count => _byName.Count;
 
     public bool IsReadOnly => false;
-
-    public void AddRange(IEnumerable<ClassMapping> mappings)
-    {
-        foreach (var mapping in mappings)
-            Add(mapping);
-    }
 
     /// <summary>
     /// List of the class mappings, keyed by name.
@@ -91,7 +96,7 @@ internal class ClassMappingCollection : ICollection<ClassMapping>
     /// List of the class mappings, keyed by canonical.
     /// </summary>
     public IReadOnlyDictionary<Type, ClassMapping> ByType => _byType;
-    public readonly ConcurrentDictionary<Type, ClassMapping> _byType = new();
+    private readonly ConcurrentDictionary<Type, ClassMapping> _byType = new();
 
     IEnumerator<ClassMapping> IEnumerable<ClassMapping>.GetEnumerator() => _byName.Values.GetEnumerator();
 

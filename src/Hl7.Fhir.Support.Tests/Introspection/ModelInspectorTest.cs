@@ -88,8 +88,7 @@ namespace Hl7.Fhir.Tests.Introspection
             inspector.FindClassMapping("Meta").Should().BeNull();
 
             // And add it back.
-            ClassMapping.TryGetMappingForType(typeof(Meta), FhirRelease.STU3, out var newMapping).Should().BeTrue();
-            inspector.ClassMappings.Add(newMapping);
+            inspector.ClassMappings.Add(metaMapping);
             inspector.FindClassMapping("Meta").Should().NotBeNull();
         }
     }

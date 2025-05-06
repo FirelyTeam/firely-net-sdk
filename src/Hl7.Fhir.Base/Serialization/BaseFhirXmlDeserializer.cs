@@ -290,7 +290,7 @@ public class BaseFhirXmlDeserializer
         }
 
         // If the element did not repeat, and is not a list, then it is a single item after all
-        object newElement = targetList.Count == 1 && propMapping?.IsCollection == false
+        object newElement = targetList.Count == 1 && propMapping?.IsCollection != true
             ? targetList[0]!
             : targetList;
 
@@ -590,7 +590,7 @@ public class BaseFhirXmlDeserializer
         if (propertyMapping is null)
         {
             return reader.GetAttribute("value") != null
-                ? (null, new ClassMappingDynamic(ClassMapping.DynamicPrimitive, null))
+                ? (null, new ClassMappingDynamic(ClassMapping.FhirString, null))
                 : (null, new ClassMappingDynamic(ClassMapping.DynamicDataType, null));
         }
 

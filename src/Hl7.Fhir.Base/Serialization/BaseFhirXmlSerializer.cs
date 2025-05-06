@@ -89,15 +89,17 @@ public class BaseFhirXmlSerializer(ModelInspector inspector)
 
     private void serializeElement(Base element, XmlWriter writer, SerializationFilter? filter, ClassMapping? mapping)
     {
-        static bool attributeSorter(PropertyMapping? mapping, Base? value)
+        static int attributeSorter(PropertyMapping? mapping, Base? value)
         {
+            // Make sure that known attributes are serialized first.
             if (mapping?.SerializationHint == XmlRepresentation.XmlAttr)
-                return false;
+                return mapping?.Order is { } number ? Int32.MinValue + number : -1;
             if (value?.Annotation<XmlRepresentationAnnotation>()?.Value == XmlRepresentation.XmlAttr)
-                return false;
+                return -1;
 
-            return true;
+            return mapping?.Order ?? Int32.MaxValue;
         }
+
         // Make sure that elements with attributes are serialized first.
         // Add the special "value" attribute if this is a FhirPrimitive.
         var orderedMembers = element
