@@ -20,6 +20,7 @@ public class BaseFhirJsonPocoDeserializer : BaseFhirJsonDeserializer
     /// Initializes an instance of the deserializer.
     /// </summary>
     /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
+    [Obsolete("Use the constructor that takes a ModelInspector instead.")]
     public BaseFhirJsonPocoDeserializer(Assembly assembly) : this(ModelInspector.ForAssembly(assembly),
         new FhirJsonConverterOptions())
     {
