@@ -451,18 +451,6 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
-    <Target>T:System.Runtime.CompilerServices.CompilerFeatureRequiredAttribute</Target>
-    <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
-    <Right>lib/net8.0/Hl7.Fhir.Base.dll</Right>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Hl7.Fhir.ElementModel.ElementNodeExtensions</Target>
     <Left>lib/netstandard2.1/Hl7.Fhir.Base.dll</Left>
     <Right>lib/netstandard2.1/Hl7.Fhir.Base.dll</Right>
