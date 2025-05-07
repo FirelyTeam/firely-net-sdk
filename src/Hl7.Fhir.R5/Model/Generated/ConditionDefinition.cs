@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ConditionDefinition"; } }
+    public override string TypeName => "ConditionDefinition";
 
     /// <summary>
     /// Kind of precondition for the condition.
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConditionDefinition.observation"; } }
+      public override string TypeName => "ConditionDefinition.observation";
 
       /// <summary>
       /// Category that is relevant.
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConditionDefinition.medication"; } }
+      public override string TypeName => "ConditionDefinition.medication";
 
       /// <summary>
       /// Category that is relevant.
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConditionDefinition.precondition"; } }
+      public override string TypeName => "ConditionDefinition.precondition";
 
       /// <summary>
       /// sensitive | specific.
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConditionDefinition.questionnaire"; } }
+      public override string TypeName => "ConditionDefinition.questionnaire";
 
       /// <summary>
       /// preadmit | diff-diagnosis | outcome.
@@ -845,7 +845,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ConditionDefinition.plan"; } }
+      public override string TypeName => "ConditionDefinition.plan";
 
       /// <summary>
       /// Use for the plan.
@@ -1041,6 +1041,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1426,6 +1427,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1494,6 +1496,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1522,6 +1525,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -1781,6 +1785,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("definition", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> DefinitionElement
     {
       get
@@ -1826,6 +1831,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("observation", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ConditionDefinition.ObservationComponent> Observation
     {
       get
@@ -1853,6 +1859,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("medication", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ConditionDefinition.MedicationComponent> Medication
     {
       get
@@ -1880,6 +1887,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("precondition", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ConditionDefinition.PreconditionComponent> Precondition
     {
       get
@@ -1909,6 +1917,7 @@ namespace Hl7.Fhir.Model
     [References("CareTeam")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Team
     {
       get
@@ -1936,6 +1945,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("questionnaire", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ConditionDefinition.QuestionnaireComponent> Questionnaire
     {
       get
@@ -1963,6 +1973,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("plan", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ConditionDefinition.PlanComponent> Plan
     {
       get

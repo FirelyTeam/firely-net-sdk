@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ProductShelfLife"; } }
+    public override string TypeName => "ProductShelfLife";
 
     /// <summary>
     /// Unique identifier for the packaged Medicinal Product.
@@ -146,6 +146,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("specialPrecautionsForStorage", InSummary=true, Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> SpecialPrecautionsForStorage
     {
       get

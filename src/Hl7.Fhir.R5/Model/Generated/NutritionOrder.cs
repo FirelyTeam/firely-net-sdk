@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "NutritionOrder"; } }
+    public override string TypeName => "NutritionOrder";
 
     /// <summary>
     /// Oral diet components
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder.oralDiet"; } }
+      public override string TypeName => "NutritionOrder.oralDiet";
 
       /// <summary>
       /// Type of oral diet or diet restrictions that describe what can be consumed orally.
@@ -87,6 +87,7 @@ namespace Hl7.Fhir.Model
       [Binding("OralDiet")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -140,6 +141,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("nutrient", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent> Nutrient
       {
         get
@@ -167,6 +169,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("texture", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.NutritionOrder.TextureComponent> Texture
       {
         get
@@ -195,6 +198,7 @@ namespace Hl7.Fhir.Model
       [Binding("FluidConsistencyType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> FluidConsistencyType
       {
         get
@@ -439,7 +443,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder.oralDiet.schedule"; } }
+      public override string TypeName => "NutritionOrder.oralDiet.schedule";
 
       /// <summary>
       /// Scheduled frequency of diet.
@@ -447,6 +451,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("timing", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Timing> Timing
       {
         get
@@ -661,7 +666,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder.oralDiet.nutrient"; } }
+      public override string TypeName => "NutritionOrder.oralDiet.nutrient";
 
       /// <summary>
       /// Type of nutrient that is being modified.
@@ -822,7 +827,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder.oralDiet.texture"; } }
+      public override string TypeName => "NutritionOrder.oralDiet.texture";
 
       /// <summary>
       /// Code to indicate how to alter the texture of the foods, e.g. pureed.
@@ -984,7 +989,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder.supplement"; } }
+      public override string TypeName => "NutritionOrder.supplement";
 
       /// <summary>
       /// Type of supplement product requested.
@@ -1310,7 +1315,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder.supplement.schedule"; } }
+      public override string TypeName => "NutritionOrder.supplement.schedule";
 
       /// <summary>
       /// Scheduled frequency of diet.
@@ -1318,6 +1323,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("timing", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Timing> Timing
       {
         get
@@ -1532,7 +1538,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder.enteralFormula"; } }
+      public override string TypeName => "NutritionOrder.enteralFormula";
 
       /// <summary>
       /// Type of enteral or infant formula.
@@ -1608,6 +1614,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("deliveryDevice", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> DeliveryDevice
       {
         get
@@ -1635,6 +1642,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("additive", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.NutritionOrder.AdditiveComponent> Additive
       {
         get
@@ -1715,6 +1723,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("administration", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent> Administration
       {
         get
@@ -2042,7 +2051,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder.enteralFormula.additive"; } }
+      public override string TypeName => "NutritionOrder.enteralFormula.additive";
 
       /// <summary>
       /// Type of modular component to add to the feeding.
@@ -2264,7 +2273,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder.enteralFormula.administration"; } }
+      public override string TypeName => "NutritionOrder.enteralFormula.administration";
 
       /// <summary>
       /// Scheduling information for enteral formula products.
@@ -2471,7 +2480,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionOrder.enteralFormula.administration.schedule"; } }
+      public override string TypeName => "NutritionOrder.enteralFormula.administration.schedule";
 
       /// <summary>
       /// Scheduled frequency of enteral formula.
@@ -2479,6 +2488,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("timing", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Timing> Timing
       {
         get
@@ -2685,6 +2695,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -2712,6 +2723,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
     {
       get
@@ -2757,6 +2769,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
     {
       get
@@ -2802,6 +2815,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instantiates", Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesElement
     {
       get
@@ -2849,6 +2863,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","NutritionOrder","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -3089,6 +3104,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
       get
@@ -3186,6 +3202,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Performer
     {
       get
@@ -3215,6 +3232,7 @@ namespace Hl7.Fhir.Model
     [References("AllergyIntolerance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> AllergyIntolerance
     {
       get
@@ -3243,6 +3261,7 @@ namespace Hl7.Fhir.Model
     [Binding("PatientDiet")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> FoodPreferenceModifier
     {
       get
@@ -3271,6 +3290,7 @@ namespace Hl7.Fhir.Model
     [Binding("FoodType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ExcludeFoodModifier
     {
       get
@@ -3365,6 +3385,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("supplement", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent> Supplement
     {
       get
@@ -3418,6 +3439,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

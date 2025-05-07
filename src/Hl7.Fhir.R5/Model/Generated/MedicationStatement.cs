@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicationStatement"; } }
+    public override string TypeName => "MedicationStatement";
 
     /// <summary>
     /// MedicationStatement Status Codes
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationStatement.adherence"; } }
+      public override string TypeName => "MedicationStatement.adherence";
 
       /// <summary>
       /// Type of adherence.
@@ -262,6 +262,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -291,6 +292,7 @@ namespace Hl7.Fhir.Model
     [References("Procedure","MedicationStatement")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -362,6 +364,7 @@ namespace Hl7.Fhir.Model
     [Binding("MedicationStatementAdministrationLocation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -545,6 +548,7 @@ namespace Hl7.Fhir.Model
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> InformationSource
     {
       get
@@ -574,6 +578,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
     {
       get
@@ -602,6 +607,7 @@ namespace Hl7.Fhir.Model
     [Binding("MedicationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
       get
@@ -629,6 +635,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -658,6 +665,7 @@ namespace Hl7.Fhir.Model
     [References("Observation","Condition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> RelatedClinicalInformation
     {
       get
@@ -726,6 +734,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("dosage", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Dosage> Dosage
     {
       get

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Person"; } }
+    public override string TypeName => "Person";
 
     /// <summary>
     /// The level of confidence that this link represents the same actual person, based on NIST Authentication Levels.
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Person.link"; } }
+      public override string TypeName => "Person.link";
 
       /// <summary>
       /// The resource to which this actual person is associated.
@@ -280,6 +280,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -307,6 +308,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.HumanName> Name
     {
       get
@@ -334,6 +336,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("telecom", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
       get
@@ -444,6 +447,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("address", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Address> Address
     {
       get
@@ -566,6 +570,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("link", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Person.LinkComponent> Link
     {
       get

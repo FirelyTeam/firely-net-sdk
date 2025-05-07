@@ -90,6 +90,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contained", Order=60, Choice=ChoiceType.ResourceChoice)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Resource> Contained
     {
       get
@@ -117,6 +118,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("extension", Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
       get
@@ -144,6 +146,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("modifierExtension", InSummary=true, IsModifier=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Extension> ModifierExtension
     {
       get

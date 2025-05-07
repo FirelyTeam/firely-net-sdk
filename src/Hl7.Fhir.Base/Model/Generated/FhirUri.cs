@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "uri"; } }
+    public override string TypeName => "uri";
 
     /// Must conform to the pattern "\S*"
     public const string PATTERN = @"\S*";

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Linkage"; } }
+    public override string TypeName => "Linkage";
 
     /// <summary>
     /// Used to distinguish different roles a resource can play within a set of linked resources.
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Linkage.item"; } }
+      public override string TypeName => "Linkage.item";
 
       /// <summary>
       /// source | alternate | historical.
@@ -346,6 +346,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("item", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Linkage.ItemComponent> Item
     {
       get

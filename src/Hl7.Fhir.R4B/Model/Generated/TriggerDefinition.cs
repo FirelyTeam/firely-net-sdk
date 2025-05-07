@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "TriggerDefinition"; } }
+    public override string TypeName => "TriggerDefinition";
 
     /// <summary>
     /// The type of trigger.
@@ -241,6 +241,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("data", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DataRequirement> Data
     {
       get

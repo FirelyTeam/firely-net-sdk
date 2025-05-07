@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DeviceAssociation"; } }
+    public override string TypeName => "DeviceAssociation";
 
     /// <summary>
     /// DeviceAssociation Status Codes
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceAssociation.operation"; } }
+      public override string TypeName => "DeviceAssociation.operation";
 
       /// <summary>
       /// Device operational condition.
@@ -149,6 +149,7 @@ namespace Hl7.Fhir.Model
       [References("Patient","Practitioner","RelatedPerson")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Operator
       {
         get
@@ -313,6 +314,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -369,6 +371,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("category", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -425,6 +428,7 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceAssociationStatusReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
     {
       get
@@ -534,6 +538,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("operation", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceAssociation.OperationComponent> Operation
     {
       get

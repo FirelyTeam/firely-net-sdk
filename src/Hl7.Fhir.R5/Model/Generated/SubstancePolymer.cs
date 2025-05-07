@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SubstancePolymer"; } }
+    public override string TypeName => "SubstancePolymer";
 
     /// <summary>
     /// Todo
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstancePolymer.monomerSet"; } }
+      public override string TypeName => "SubstancePolymer.monomerSet";
 
       /// <summary>
       /// Captures the type of ratio to the entire polymer, e.g. Monomer/Polymer ratio, SRU/Polymer Ratio.
@@ -105,6 +105,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("startingMaterial", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent> StartingMaterial
       {
         get
@@ -229,7 +230,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstancePolymer.monomerSet.startingMaterial"; } }
+      public override string TypeName => "SubstancePolymer.monomerSet.startingMaterial";
 
       /// <summary>
       /// The type of substance for this starting material.
@@ -491,7 +492,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstancePolymer.repeat"; } }
+      public override string TypeName => "SubstancePolymer.repeat";
 
       /// <summary>
       /// A representation of an (average) molecular formula from a polymer.
@@ -566,6 +567,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("repeatUnit", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent> RepeatUnit
       {
         get
@@ -709,7 +711,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstancePolymer.repeat.repeatUnit"; } }
+      public override string TypeName => "SubstancePolymer.repeat.repeatUnit";
 
       /// <summary>
       /// Structural repeat units are essential elements for defining polymers.
@@ -825,6 +827,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("degreeOfPolymerisation", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent> DegreeOfPolymerisation
       {
         get
@@ -852,6 +855,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("structuralRepresentation", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent> StructuralRepresentation
       {
         get
@@ -1033,7 +1037,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation"; } }
+      public override string TypeName => "SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation";
 
       /// <summary>
       /// The type of the degree of polymerisation shall be described, e.g. SRU/Polymer Ratio.
@@ -1325,7 +1329,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstancePolymer.repeat.repeatUnit.structuralRepresentation"; } }
+      public override string TypeName => "SubstancePolymer.repeat.repeatUnit.structuralRepresentation";
 
       /// <summary>
       /// The type of structure (e.g. Full, Partial, Representative).
@@ -1660,6 +1664,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("copolymerConnectivity", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> CopolymerConnectivity
     {
       get
@@ -1728,6 +1733,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("monomerSet", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent> MonomerSet
     {
       get
@@ -1755,6 +1761,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("repeat", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent> Repeat
     {
       get

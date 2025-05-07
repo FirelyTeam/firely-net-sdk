@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SubscriptionStatus"; } }
+    public override string TypeName => "SubscriptionStatus";
 
     /// <summary>
     /// The type of notification represented by the status message.
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubscriptionStatus.notificationEvent"; } }
+      public override string TypeName => "SubscriptionStatus.notificationEvent";
 
       /// <summary>
       /// Sequencing index of this event.
@@ -238,6 +238,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> AdditionalContext
       {
         get
@@ -521,6 +522,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("notificationEvent", Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent> NotificationEvent
     {
       get
@@ -619,6 +621,7 @@ namespace Hl7.Fhir.Model
     [Binding("SubscriptionError")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Error
     {
       get

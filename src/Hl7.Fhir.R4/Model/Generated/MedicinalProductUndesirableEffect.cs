@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicinalProductUndesirableEffect"; } }
+    public override string TypeName => "MedicinalProductUndesirableEffect";
 
     /// <summary>
     /// The medication for which this is an indication.
@@ -71,6 +71,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProduct","Medication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
       get
@@ -176,6 +177,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("population", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Population> Population
     {
       get

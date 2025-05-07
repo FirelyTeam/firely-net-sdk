@@ -61,11 +61,13 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this CanonicalResource, represented as an absolute URI (globally unique).
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.FhirUri? UrlElement { get; set; }
 
     /// <summary>
     /// Additional identifier for the CanonicalResource.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
     /// <summary>
@@ -77,11 +79,13 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the CanonicalResource.
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.FhirString? VersionElement { get; set; }
 
     /// <summary>
     /// How to compare versions.
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.DataType? VersionAlgorithm { get; set; }
 
     /// <summary>
@@ -93,6 +97,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this CanonicalResource (computer friendly).
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.FhirString? NameElement { get; set; }
 
     /// <summary>
@@ -104,6 +109,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this CanonicalResource (human friendly).
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.FhirString? TitleElement { get; set; }
 
     /// <summary>
@@ -115,6 +121,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown.
     /// </summary>
+    [AllowNull]
     Code<Hl7.Fhir.Model.PublicationStatus>? StatusElement { get; set; }
 
     /// <summary>
@@ -126,6 +133,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage.
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.FhirBoolean? ExperimentalElement { get; set; }
 
     /// <summary>
@@ -137,6 +145,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed.
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.FhirDateTime? DateElement { get; set; }
 
     /// <summary>
@@ -148,11 +157,13 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher/steward (organization or individual).
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.FhirString? PublisherElement { get; set; }
 
     /// <summary>
     /// Contact details for the publisher.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.ContactDetail> Contact { get; set; }
 
     /// <summary>
@@ -164,16 +175,19 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the CanonicalResource.
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.Markdown? DescriptionElement { get; set; }
 
     /// <summary>
     /// The context that the content is intended to support.
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.UsageContext> UseContext { get; set; }
 
     /// <summary>
     /// Intended jurisdiction for CanonicalResource (if applicable).
     /// </summary>
+    [AllowNull]
     List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction { get; set; }
 
     /// <summary>
@@ -185,6 +199,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this CanonicalResource is defined.
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.Markdown? PurposeElement { get; set; }
 
     /// <summary>
@@ -196,6 +211,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions.
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.Markdown? CopyrightElement { get; set; }
 
     /// <summary>
@@ -207,6 +223,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Copyright holder and year(s).
     /// </summary>
+    [AllowNull]
     Hl7.Fhir.Model.FhirString? CopyrightLabelElement { get; set; }
 
   }
@@ -227,6 +244,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -339,6 +357,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -360,6 +379,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -367,6 +387,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -434,6 +455,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -546,6 +568,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -567,6 +590,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -574,6 +598,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -641,6 +666,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -753,6 +779,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -774,6 +801,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -781,6 +809,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -848,6 +877,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -960,6 +990,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -981,6 +1012,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -988,6 +1020,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -1055,6 +1088,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -1167,6 +1201,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -1188,6 +1223,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -1195,6 +1231,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -1262,6 +1299,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -1374,6 +1412,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -1395,6 +1434,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -1402,6 +1442,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -1469,6 +1510,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -1581,6 +1623,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -1602,6 +1645,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -1609,6 +1653,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -1676,6 +1721,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -1788,6 +1834,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -1809,6 +1856,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -1816,6 +1864,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -1883,6 +1932,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -1995,6 +2045,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -2016,6 +2067,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -2023,6 +2075,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -2090,6 +2143,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -2202,6 +2256,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -2223,6 +2278,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource EvidenceReport does not implement ICanonicalResource.description");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -2230,6 +2286,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -2297,6 +2354,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -2409,6 +2467,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -2430,6 +2489,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -2437,6 +2497,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -2504,6 +2565,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -2616,6 +2678,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -2637,6 +2700,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -2644,6 +2708,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -2711,6 +2776,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -2823,6 +2889,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -2844,6 +2911,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -2851,6 +2919,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -2918,6 +2987,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -3030,6 +3100,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -3051,6 +3122,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -3058,6 +3130,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -3125,6 +3198,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -3237,6 +3311,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -3258,6 +3333,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -3265,6 +3341,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -3332,6 +3409,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -3444,6 +3522,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -3465,6 +3544,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -3472,6 +3552,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -3539,6 +3620,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.url");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -3663,6 +3745,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.publisher");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -3684,6 +3767,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.description");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -3691,6 +3775,7 @@ namespace Hl7.Fhir.Model
       set => throw new NotImplementedException("Resource MedicationKnowledge does not implement ICanonicalResource.useContext");
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -3758,6 +3843,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -3870,6 +3956,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -3891,6 +3978,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -3898,6 +3986,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -3965,6 +4054,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -4077,6 +4167,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -4098,6 +4189,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -4105,6 +4197,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -4172,6 +4265,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -4292,6 +4386,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -4313,6 +4408,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -4320,6 +4416,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -4387,6 +4484,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -4499,6 +4597,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -4520,6 +4619,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -4527,6 +4627,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -4594,6 +4695,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -4706,6 +4808,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -4727,6 +4830,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -4734,6 +4838,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -4801,6 +4906,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -4913,6 +5019,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -4934,6 +5041,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -4941,6 +5049,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -5008,6 +5117,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -5120,6 +5230,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -5141,6 +5252,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -5148,6 +5260,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -5215,6 +5328,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -5327,6 +5441,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -5348,6 +5463,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -5355,6 +5471,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -5422,6 +5539,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -5542,6 +5660,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -5563,6 +5682,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -5570,6 +5690,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -5637,6 +5758,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -5749,6 +5871,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -5770,6 +5893,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -5777,6 +5901,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -5844,6 +5969,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -5956,6 +6082,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -5977,6 +6104,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -5984,6 +6112,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -6051,6 +6180,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -6163,6 +6293,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -6184,6 +6315,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -6191,6 +6323,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -6258,6 +6391,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -6370,6 +6504,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -6391,6 +6526,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -6398,6 +6534,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {
@@ -6465,6 +6602,7 @@ namespace Hl7.Fhir.Model
       set => Url = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.Identifier> ICanonicalResource.Identifier
     {
@@ -6577,6 +6715,7 @@ namespace Hl7.Fhir.Model
       set => Publisher = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.ContactDetail> ICanonicalResource.Contact
     {
@@ -6598,6 +6737,7 @@ namespace Hl7.Fhir.Model
       set => Description = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.UsageContext> ICanonicalResource.UseContext
     {
@@ -6605,6 +6745,7 @@ namespace Hl7.Fhir.Model
       set => UseContext = value;
     }
 
+    [AllowNull]
     [IgnoreDataMember]
     List<Hl7.Fhir.Model.CodeableConcept> ICanonicalResource.Jurisdiction
     {

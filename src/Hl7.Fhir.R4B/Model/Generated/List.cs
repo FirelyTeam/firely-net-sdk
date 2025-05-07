@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "List"; } }
+    public override string TypeName => "List";
 
     /// <summary>
     /// The current state of the list.
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "List.entry"; } }
+      public override string TypeName => "List.entry";
 
       /// <summary>
       /// Status/Workflow information about this item.
@@ -379,6 +379,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -712,6 +713,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -739,6 +741,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("entry", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.List.EntryComponent> Entry
     {
       get

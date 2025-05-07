@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ChargeItemDefinition"; } }
+    public override string TypeName => "ChargeItemDefinition";
 
     /// <summary>
     /// Whether or not the billing code is applicable
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ChargeItemDefinition.applicability"; } }
+      public override string TypeName => "ChargeItemDefinition.applicability";
 
       /// <summary>
       /// Natural language description of the condition.
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ChargeItemDefinition.propertyGroup"; } }
+      public override string TypeName => "ChargeItemDefinition.propertyGroup";
 
       /// <summary>
       /// Conditions under which the priceComponent is applicable.
@@ -336,6 +336,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("applicability", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent> Applicability
       {
         get
@@ -363,6 +364,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("priceComponent", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ChargeItemDefinition.PriceComponentComponent> PriceComponent
       {
         get
@@ -490,7 +492,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ChargeItemDefinition.propertyGroup.priceComponent"; } }
+      public override string TypeName => "ChargeItemDefinition.propertyGroup.priceComponent";
 
       /// <summary>
       /// base | surcharge | deduction | discount | tax | informational.
@@ -806,6 +808,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -915,6 +918,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("derivedFromUri", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> DerivedFromUriElement
     {
       get
@@ -960,6 +964,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("partOf", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> PartOfElement
     {
       get
@@ -1005,6 +1010,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("replaces", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> ReplacesElement
     {
       get
@@ -1216,6 +1222,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1284,6 +1291,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1312,6 +1320,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -1517,6 +1526,7 @@ namespace Hl7.Fhir.Model
     [References("Medication","Substance","Device")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Instance
     {
       get
@@ -1544,6 +1554,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("applicability", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent> Applicability
     {
       get
@@ -1571,6 +1582,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("propertyGroup", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ChargeItemDefinition.PropertyGroupComponent> PropertyGroup
     {
       get

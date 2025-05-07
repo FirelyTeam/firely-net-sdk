@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicationKnowledge"; } }
+    public override string TypeName => "MedicationKnowledge";
 
     /// <summary>
     /// MedicationKnowledge Status Codes
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.relatedMedicationKnowledge"; } }
+      public override string TypeName => "MedicationKnowledge.relatedMedicationKnowledge";
 
       /// <summary>
       /// Category of medicationKnowledge.
@@ -142,6 +142,7 @@ namespace Hl7.Fhir.Model
       [References("MedicationKnowledge")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Reference
       {
         get
@@ -266,7 +267,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.monograph"; } }
+      public override string TypeName => "MedicationKnowledge.monograph";
 
       /// <summary>
       /// The category of medication document.
@@ -428,7 +429,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.cost"; } }
+      public override string TypeName => "MedicationKnowledge.cost";
 
       /// <summary>
       /// The date range for which the cost is effective.
@@ -436,6 +437,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("effectiveDate", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Period> EffectiveDate
       {
         get
@@ -699,7 +701,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.monitoringProgram"; } }
+      public override string TypeName => "MedicationKnowledge.monitoringProgram";
 
       /// <summary>
       /// Type of program under which the medication is monitored.
@@ -874,7 +876,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.indicationGuideline"; } }
+      public override string TypeName => "MedicationKnowledge.indicationGuideline";
 
       /// <summary>
       /// Indication for use that applies to the specific administration guideline.
@@ -882,6 +884,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("indication", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> Indication
       {
         get
@@ -909,6 +912,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dosingGuideline", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicationKnowledge.DosingGuidelineComponent> DosingGuideline
       {
         get
@@ -1036,7 +1040,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.indicationGuideline.dosingGuideline"; } }
+      public override string TypeName => "MedicationKnowledge.indicationGuideline.dosingGuideline";
 
       /// <summary>
       /// Intention of the treatment.
@@ -1070,6 +1074,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dosage", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicationKnowledge.DosageComponent> Dosage
       {
         get
@@ -1123,6 +1128,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("patientCharacteristic", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicComponent> PatientCharacteristic
       {
         get
@@ -1285,7 +1291,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.indicationGuideline.dosingGuideline.dosage"; } }
+      public override string TypeName => "MedicationKnowledge.indicationGuideline.dosingGuideline.dosage";
 
       /// <summary>
       /// Category of dosage for a medication.
@@ -1320,6 +1326,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dosage", Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Dosage> Dosage
       {
         get
@@ -1447,7 +1454,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic"; } }
+      public override string TypeName => "MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic";
 
       /// <summary>
       /// Categorization of specific characteristic that is relevant to the administration guideline.
@@ -1607,7 +1614,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.medicineClassification"; } }
+      public override string TypeName => "MedicationKnowledge.medicineClassification";
 
       /// <summary>
       /// The type of category for the medication (for example, therapeutic classification, therapeutic sub-classification).
@@ -1670,6 +1677,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("classification", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Classification
       {
         get
@@ -1816,7 +1824,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.packaging"; } }
+      public override string TypeName => "MedicationKnowledge.packaging";
 
       /// <summary>
       /// Cost of the packaged medication.
@@ -1824,6 +1832,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("cost", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicationKnowledge.CostComponent> Cost
       {
         get
@@ -1979,7 +1988,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.storageGuideline"; } }
+      public override string TypeName => "MedicationKnowledge.storageGuideline";
 
       /// <summary>
       /// Reference to additional information.
@@ -2028,6 +2037,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -2081,6 +2091,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("environmentalSetting", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicationKnowledge.EnvironmentalSettingComponent> EnvironmentalSetting
       {
         get
@@ -2246,7 +2257,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.storageGuideline.environmentalSetting"; } }
+      public override string TypeName => "MedicationKnowledge.storageGuideline.environmentalSetting";
 
       /// <summary>
       /// Categorization of the setting.
@@ -2407,7 +2418,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.regulatory"; } }
+      public override string TypeName => "MedicationKnowledge.regulatory";
 
       /// <summary>
       /// Specifies the authority of the regulation.
@@ -2444,6 +2455,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("substitution", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicationKnowledge.SubstitutionComponent> Substitution
       {
         get
@@ -2471,6 +2483,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("schedule", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Schedule
       {
         get
@@ -2659,7 +2672,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.regulatory.substitution"; } }
+      public override string TypeName => "MedicationKnowledge.regulatory.substitution";
 
       /// <summary>
       /// Specifies the type of substitution allowed.
@@ -2833,7 +2846,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.regulatory.maxDispense"; } }
+      public override string TypeName => "MedicationKnowledge.regulatory.maxDispense";
 
       /// <summary>
       /// The maximum number of units of the medication that can be dispensed.
@@ -2994,7 +3007,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.definitional"; } }
+      public override string TypeName => "MedicationKnowledge.definitional";
 
       /// <summary>
       /// Definitional resources that provide more information about this medication.
@@ -3004,6 +3017,7 @@ namespace Hl7.Fhir.Model
       [References("MedicinalProductDefinition")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Definition
       {
         get
@@ -3059,6 +3073,7 @@ namespace Hl7.Fhir.Model
       [Binding("MedicationRoute")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> IntendedRoute
       {
         get
@@ -3086,6 +3101,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("ingredient", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicationKnowledge.IngredientComponent> Ingredient
       {
         get
@@ -3113,6 +3129,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("drugCharacteristic", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicationKnowledge.DrugCharacteristicComponent> DrugCharacteristic
       {
         get
@@ -3297,7 +3314,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.definitional.ingredient"; } }
+      public override string TypeName => "MedicationKnowledge.definitional.ingredient";
 
       /// <summary>
       /// Substances contained in the medication.
@@ -3507,7 +3524,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationKnowledge.definitional.drugCharacteristic"; } }
+      public override string TypeName => "MedicationKnowledge.definitional.drugCharacteristic";
 
       /// <summary>
       /// Code specifying the type of characteristic of medication.
@@ -3662,6 +3679,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -3786,6 +3804,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("intendedJurisdiction", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> IntendedJurisdiction
     {
       get
@@ -3813,6 +3832,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> NameElement
     {
       get
@@ -3858,6 +3878,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedMedicationKnowledge", Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicationKnowledge.RelatedMedicationKnowledgeComponent> RelatedMedicationKnowledge
     {
       get
@@ -3887,6 +3908,7 @@ namespace Hl7.Fhir.Model
     [References("Medication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> AssociatedMedication
     {
       get
@@ -3914,6 +3936,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("productType", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ProductType
     {
       get
@@ -3941,6 +3964,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("monograph", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicationKnowledge.MonographComponent> Monograph
     {
       get
@@ -4009,6 +4033,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("cost", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicationKnowledge.CostComponent> Cost
     {
       get
@@ -4036,6 +4061,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("monitoringProgram", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicationKnowledge.MonitoringProgramComponent> MonitoringProgram
     {
       get
@@ -4063,6 +4089,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("indicationGuideline", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicationKnowledge.IndicationGuidelineComponent> IndicationGuideline
     {
       get
@@ -4090,6 +4117,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("medicineClassification", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicationKnowledge.MedicineClassificationComponent> MedicineClassification
     {
       get
@@ -4117,6 +4145,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("packaging", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicationKnowledge.PackagingComponent> Packaging
     {
       get
@@ -4146,6 +4175,7 @@ namespace Hl7.Fhir.Model
     [References("ClinicalUseDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ClinicalUseIssue
     {
       get
@@ -4173,6 +4203,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("storageGuideline", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicationKnowledge.StorageGuidelineComponent> StorageGuideline
     {
       get
@@ -4200,6 +4231,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("regulatory", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicationKnowledge.RegulatoryComponent> Regulatory
     {
       get

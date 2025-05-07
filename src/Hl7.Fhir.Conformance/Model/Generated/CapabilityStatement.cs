@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CapabilityStatement"; } }
+    public override string TypeName => "CapabilityStatement";
 
     /// <summary>
     /// The mode of a RESTful capability statement.
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.software"; } }
+      public override string TypeName => "CapabilityStatement.software";
 
       /// <summary>
       /// A name the software is known by.
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.implementation"; } }
+      public override string TypeName => "CapabilityStatement.implementation";
 
       /// <summary>
       /// Describes this specific instance.
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.rest"; } }
+      public override string TypeName => "CapabilityStatement.rest";
 
       /// <summary>
       /// client | server.
@@ -1000,6 +1000,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("resource", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CapabilityStatement.ResourceComponent> Resource
       {
         get
@@ -1027,6 +1028,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("interaction", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CapabilityStatement.SystemInteractionComponent> Interaction
       {
         get
@@ -1054,6 +1056,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("searchParam", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CapabilityStatement.SearchParamComponent> SearchParam
       {
         get
@@ -1081,6 +1084,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("operation", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CapabilityStatement.OperationComponent> Operation
       {
         get
@@ -1108,6 +1112,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("compartment", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Canonical> CompartmentElement
       {
         get
@@ -1367,7 +1372,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.rest.security"; } }
+      public override string TypeName => "CapabilityStatement.rest.security";
 
       /// <summary>
       /// Adds CORS Headers (http://enable-cors.org/).
@@ -1417,6 +1422,7 @@ namespace Hl7.Fhir.Model
       [Binding("RestfulSecurityService")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Service
       {
         get
@@ -1605,7 +1611,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.rest.resource"; } }
+      public override string TypeName => "CapabilityStatement.rest.resource";
 
       /// <summary>
       /// A resource type that is supported.
@@ -1697,6 +1703,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("supportedProfile", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Canonical> SupportedProfileElement
       {
         get
@@ -1783,6 +1790,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("interaction", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CapabilityStatement.ResourceInteractionComponent> Interaction
       {
         get
@@ -2145,6 +2153,7 @@ namespace Hl7.Fhir.Model
       [Binding("ReferenceHandlingPolicy")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>> ReferencePolicyElement
       {
         get
@@ -2190,6 +2199,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("searchInclude", Order=180)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> SearchIncludeElement
       {
         get
@@ -2235,6 +2245,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("searchRevInclude", Order=190)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> SearchRevIncludeElement
       {
         get
@@ -2280,6 +2291,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("searchParam", Order=200)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CapabilityStatement.SearchParamComponent> SearchParam
       {
         get
@@ -2307,6 +2319,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("operation", InSummary=true, Order=210)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CapabilityStatement.OperationComponent> Operation
       {
         get
@@ -2739,7 +2752,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.rest.resource.interaction"; } }
+      public override string TypeName => "CapabilityStatement.rest.resource.interaction";
 
       /// <summary>
       /// read | vread | update | patch | delete | history-instance | history-type | create | search-type.
@@ -2932,7 +2945,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.rest.resource.searchParam"; } }
+      public override string TypeName => "CapabilityStatement.rest.resource.searchParam";
 
       /// <summary>
       /// Name for parameter in search url.
@@ -3247,7 +3260,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.rest.resource.operation"; } }
+      public override string TypeName => "CapabilityStatement.rest.resource.operation";
 
       /// <summary>
       /// Name by which the operation/query is invoked.
@@ -3499,7 +3512,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.rest.interaction"; } }
+      public override string TypeName => "CapabilityStatement.rest.interaction";
 
       /// <summary>
       /// transaction | batch | search-system | history-system.
@@ -3692,7 +3705,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.messaging"; } }
+      public override string TypeName => "CapabilityStatement.messaging";
 
       /// <summary>
       /// Where messages should be sent.
@@ -3700,6 +3713,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("endpoint", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CapabilityStatement.EndpointComponent> Endpoint
       {
         get
@@ -3809,6 +3823,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("supportedMessage", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CapabilityStatement.SupportedMessageComponent> SupportedMessage
       {
         get
@@ -3974,7 +3989,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.messaging.endpoint"; } }
+      public override string TypeName => "CapabilityStatement.messaging.endpoint";
 
       /// <summary>
       /// http | ftp | mllp +.
@@ -4153,7 +4168,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.messaging.supportedMessage"; } }
+      public override string TypeName => "CapabilityStatement.messaging.supportedMessage";
 
       /// <summary>
       /// sender | receiver.
@@ -4346,7 +4361,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CapabilityStatement.document"; } }
+      public override string TypeName => "CapabilityStatement.document";
 
       /// <summary>
       /// producer | consumer.
@@ -4635,6 +4650,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier", Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -4983,6 +4999,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -5051,6 +5068,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -5079,6 +5097,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -5275,6 +5294,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instantiates", InSummary=true, Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesElement
     {
       get
@@ -5320,6 +5340,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("imports", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> ImportsElement
     {
       get
@@ -5461,6 +5482,7 @@ namespace Hl7.Fhir.Model
     [Binding("MimeType")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Code> FormatElement
     {
       get
@@ -5507,6 +5529,7 @@ namespace Hl7.Fhir.Model
     [Binding("MimeType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Code> PatchFormatElement
     {
       get
@@ -5556,6 +5579,7 @@ namespace Hl7.Fhir.Model
     [Binding("Language")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Code> AcceptLanguageElement
     {
       get
@@ -5601,6 +5625,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("implementationGuide", InSummary=true, Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> ImplementationGuideElement
     {
       get
@@ -5646,6 +5671,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("rest", InSummary=true, Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CapabilityStatement.RestComponent> Rest
     {
       get
@@ -5673,6 +5699,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("messaging", InSummary=true, Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CapabilityStatement.MessagingComponent> Messaging
     {
       get
@@ -5700,6 +5727,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("document", InSummary=true, Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CapabilityStatement.DocumentComponent> Document
     {
       get

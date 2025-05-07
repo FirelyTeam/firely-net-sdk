@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DetectedIssue"; } }
+    public override string TypeName => "DetectedIssue";
 
     /// <summary>
     /// Indicates the status of a detected issue
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DetectedIssue.evidence"; } }
+      public override string TypeName => "DetectedIssue.evidence";
 
       /// <summary>
       /// Manifestation.
@@ -148,6 +148,7 @@ namespace Hl7.Fhir.Model
       [Binding("DetectedIssueEvidenceCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
         get
@@ -177,6 +178,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Detail
       {
         get
@@ -304,7 +306,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DetectedIssue.mitigation"; } }
+      public override string TypeName => "DetectedIssue.mitigation";
 
       /// <summary>
       /// What mitigation?.
@@ -409,6 +411,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -566,6 +569,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -637,6 +641,7 @@ namespace Hl7.Fhir.Model
     [Binding("DetectedIssueCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -847,6 +852,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Implicated
     {
       get
@@ -874,6 +880,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("evidence", Order=190, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent> Evidence
     {
       get
@@ -983,6 +990,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("mitigation", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> Mitigation
     {
       get

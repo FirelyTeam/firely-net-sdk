@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SupplyRequest"; } }
+    public override string TypeName => "SupplyRequest";
 
     /// <summary>
     /// Status of the supply request
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SupplyRequest.orderedItem"; } }
+      public override string TypeName => "SupplyRequest.orderedItem";
 
       /// <summary>
       /// The requested amount of the item indicated.
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SupplyRequest.requester"; } }
+      public override string TypeName => "SupplyRequest.requester";
 
       /// <summary>
       /// Individual making the request.
@@ -708,6 +708,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Supplier
     {
       get

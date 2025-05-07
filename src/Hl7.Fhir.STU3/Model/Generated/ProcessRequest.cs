@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ProcessRequest"; } }
+    public override string TypeName => "ProcessRequest";
 
     /// <summary>
     /// List of allowable action which this resource can request.
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ProcessRequest.item"; } }
+      public override string TypeName => "ProcessRequest.item";
 
       /// <summary>
       /// Service instance.
@@ -234,6 +234,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -608,6 +609,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("item", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent> Item
     {
       get
@@ -635,6 +637,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("include", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> IncludeElement
     {
       get
@@ -680,6 +683,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("exclude", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> ExcludeElement
     {
       get

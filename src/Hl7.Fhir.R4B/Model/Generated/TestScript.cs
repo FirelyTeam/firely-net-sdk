@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "TestScript"; } }
+    public override string TypeName => "TestScript";
 
     /// <summary>
     /// The allowable request method or HTTP operation codes.
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.origin"; } }
+      public override string TypeName => "TestScript.origin";
 
       /// <summary>
       /// The index of the abstract origin server starting at 1.
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.destination"; } }
+      public override string TypeName => "TestScript.destination";
 
       /// <summary>
       /// The index of the abstract destination server starting at 1.
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.metadata"; } }
+      public override string TypeName => "TestScript.metadata";
 
       /// <summary>
       /// Links to the FHIR specification.
@@ -675,6 +675,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("link", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestScript.LinkComponent> Link
       {
         get
@@ -702,6 +703,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("capability", Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestScript.CapabilityComponent> Capability
       {
         get
@@ -829,7 +831,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.metadata.link"; } }
+      public override string TypeName => "TestScript.metadata.link";
 
       /// <summary>
       /// URL to the specification.
@@ -1021,7 +1023,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.metadata.capability"; } }
+      public override string TypeName => "TestScript.metadata.capability";
 
       /// <summary>
       /// Are the capabilities required?.
@@ -1154,6 +1156,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("origin", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Integer> OriginElement
       {
         get
@@ -1240,6 +1243,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("link", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirUri> LinkElement
       {
         get
@@ -1522,7 +1526,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.fixture"; } }
+      public override string TypeName => "TestScript.fixture";
 
       /// <summary>
       /// Whether or not to implicitly create the fixture during setup.
@@ -1762,7 +1766,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.variable"; } }
+      public override string TypeName => "TestScript.variable";
 
       /// <summary>
       /// Descriptive name for this variable.
@@ -2310,7 +2314,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.setup"; } }
+      public override string TypeName => "TestScript.setup";
 
       /// <summary>
       /// A setup operation or assert to perform.
@@ -2318,6 +2322,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestScript.SetupActionComponent> Action
       {
         get
@@ -2427,7 +2432,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.setup.action"; } }
+      public override string TypeName => "TestScript.setup.action";
 
       /// <summary>
       /// The setup operation to perform.
@@ -2587,7 +2592,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.setup.action.operation"; } }
+      public override string TypeName => "TestScript.setup.action.operation";
 
       /// <summary>
       /// The operation code type that will be executed.
@@ -3037,6 +3042,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("requestHeader", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent> RequestHeader
       {
         get
@@ -3655,7 +3661,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.setup.action.operation.requestHeader"; } }
+      public override string TypeName => "TestScript.setup.action.operation.requestHeader";
 
       /// <summary>
       /// HTTP header field name.
@@ -3848,7 +3854,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.setup.action.assert"; } }
+      public override string TypeName => "TestScript.setup.action.assert";
 
       /// <summary>
       /// Tracking/logging assertion label.
@@ -5242,7 +5248,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.test"; } }
+      public override string TypeName => "TestScript.test";
 
       /// <summary>
       /// Tracking/logging name of this test.
@@ -5332,6 +5338,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("action", Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestScript.TestActionComponent> Action
       {
         get
@@ -5479,7 +5486,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.test.action"; } }
+      public override string TypeName => "TestScript.test.action";
 
       /// <summary>
       /// The setup operation to perform.
@@ -5639,7 +5646,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.teardown"; } }
+      public override string TypeName => "TestScript.teardown";
 
       /// <summary>
       /// One or more teardown operations to perform.
@@ -5647,6 +5654,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestScript.TeardownActionComponent> Action
       {
         get
@@ -5756,7 +5764,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestScript.teardown.action"; } }
+      public override string TypeName => "TestScript.teardown.action";
 
       /// <summary>
       /// The teardown operation to perform.
@@ -6222,6 +6230,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -6290,6 +6299,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -6318,6 +6328,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -6427,6 +6438,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("origin", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TestScript.OriginComponent> Origin
     {
       get
@@ -6454,6 +6466,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("destination", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TestScript.DestinationComponent> Destination
     {
       get
@@ -6507,6 +6520,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("fixture", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TestScript.FixtureComponent> Fixture
     {
       get
@@ -6536,6 +6550,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Profile
     {
       get
@@ -6563,6 +6578,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("variable", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TestScript.VariableComponent> Variable
     {
       get
@@ -6616,6 +6632,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("test", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TestScript.TestComponent> Test
     {
       get

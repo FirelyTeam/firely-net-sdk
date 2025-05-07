@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CatalogEntry"; } }
+    public override string TypeName => "CatalogEntry";
 
     /// <summary>
     /// The type of relations between entries.
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CatalogEntry.relatedEntry"; } }
+      public override string TypeName => "CatalogEntry.relatedEntry";
 
       /// <summary>
       /// triggers | is-replaced-by.
@@ -271,6 +271,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -395,6 +396,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("additionalIdentifier", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> AdditionalIdentifier
     {
       get
@@ -422,6 +424,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("classification", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Classification
     {
       get
@@ -599,6 +602,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("additionalCharacteristic", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalCharacteristic
     {
       get
@@ -626,6 +630,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("additionalClassification", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> AdditionalClassification
     {
       get
@@ -653,6 +658,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedEntry", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent> RelatedEntry
     {
       get

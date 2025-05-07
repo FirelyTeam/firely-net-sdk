@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DeviceUseStatement"; } }
+    public override string TypeName => "DeviceUseStatement";
 
     /// <summary>
     /// A coded concept indicating the current status of a the Device Usage
@@ -115,6 +115,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -366,6 +367,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("indication", Order=170, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Indication
     {
       get
@@ -420,6 +422,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

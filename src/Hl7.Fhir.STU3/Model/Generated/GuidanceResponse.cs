@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "GuidanceResponse"; } }
+    public override string TypeName => "GuidanceResponse";
 
     /// <summary>
     /// The status of a guidance response
@@ -408,6 +408,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -437,6 +438,7 @@ namespace Hl7.Fhir.Model
     [References("OperationOutcome")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> EvaluationMessage
     {
       get
@@ -520,6 +522,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("dataRequirement", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DataRequirement> DataRequirement
     {
       get

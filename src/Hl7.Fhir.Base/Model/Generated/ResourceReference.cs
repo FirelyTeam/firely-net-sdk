@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Reference"; } }
+    public override string TypeName => "Reference";
 
     /// <summary>
     /// Literal reference, Relative, internal or absolute URL.

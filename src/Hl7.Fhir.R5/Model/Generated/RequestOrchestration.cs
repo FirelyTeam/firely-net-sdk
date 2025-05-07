@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "RequestOrchestration"; } }
+    public override string TypeName => "RequestOrchestration";
 
     /// <summary>
     /// Proposed actions, if any
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration.action"; } }
+      public override string TypeName => "RequestOrchestration.action";
 
       /// <summary>
       /// Pointer to specific item from the PlanDefinition.
@@ -333,6 +333,7 @@ namespace Hl7.Fhir.Model
       [Binding("ActionCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
         get
@@ -360,6 +361,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("documentation", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
       {
         get
@@ -389,6 +391,7 @@ namespace Hl7.Fhir.Model
       [References("Goal")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Goal
       {
         get
@@ -416,6 +419,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("condition", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RequestOrchestration.ConditionComponent> Condition
       {
         get
@@ -443,6 +447,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("input", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RequestOrchestration.InputComponent> Input
       {
         get
@@ -470,6 +475,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("output", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RequestOrchestration.OutputComponent> Output
       {
         get
@@ -497,6 +503,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("relatedAction", Order=160)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RequestOrchestration.RelatedActionComponent> RelatedAction
       {
         get
@@ -578,6 +585,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("participant", Order=190, FiveWs="FiveWs.actor")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RequestOrchestration.ParticipantComponent> Participant
       {
         get
@@ -939,6 +947,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dynamicValue", Order=290)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RequestOrchestration.DynamicValueComponent> DynamicValue
       {
         get
@@ -966,6 +975,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("action", Order=300)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RequestOrchestration.ActionComponent> Action
       {
         get
@@ -1569,7 +1579,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration.action.condition"; } }
+      public override string TypeName => "RequestOrchestration.action.condition";
 
       /// <summary>
       /// applicability | start | stop.
@@ -1746,7 +1756,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration.action.input"; } }
+      public override string TypeName => "RequestOrchestration.action.input";
 
       /// <summary>
       /// User-visible title.
@@ -1981,7 +1991,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration.action.output"; } }
+      public override string TypeName => "RequestOrchestration.action.output";
 
       /// <summary>
       /// User-visible title.
@@ -2216,7 +2226,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration.action.relatedAction"; } }
+      public override string TypeName => "RequestOrchestration.action.relatedAction";
 
       /// <summary>
       /// What action this is related to.
@@ -2518,7 +2528,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration.action.participant"; } }
+      public override string TypeName => "RequestOrchestration.action.participant";
 
       /// <summary>
       /// careteam | device | group | healthcareservice | location | organization | patient | practitioner | practitionerrole | relatedperson.
@@ -2897,7 +2907,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RequestOrchestration.action.dynamicValue"; } }
+      public override string TypeName => "RequestOrchestration.action.dynamicValue";
 
       /// <summary>
       /// The path to the element to be set dynamically.
@@ -3064,6 +3074,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -3091,6 +3102,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
     {
       get
@@ -3136,6 +3148,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
     {
       get
@@ -3183,6 +3196,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -3212,6 +3226,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
     {
       get
@@ -3546,6 +3561,7 @@ namespace Hl7.Fhir.Model
     [Binding("ActionReasonCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
       get
@@ -3575,6 +3591,7 @@ namespace Hl7.Fhir.Model
     [References("Goal")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Goal
     {
       get
@@ -3602,6 +3619,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -3629,6 +3647,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("action", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RequestOrchestration.ActionComponent> Action
     {
       get

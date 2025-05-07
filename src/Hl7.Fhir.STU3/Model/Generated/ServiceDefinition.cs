@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ServiceDefinition"; } }
+    public override string TypeName => "ServiceDefinition";
 
     /// <summary>
     /// Logical URI to reference this service definition (globally unique).
@@ -110,6 +110,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -657,6 +658,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -685,6 +687,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -713,6 +716,7 @@ namespace Hl7.Fhir.Model
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
       get
@@ -740,6 +744,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contributor", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Contributor> Contributor
     {
       get
@@ -767,6 +772,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -835,6 +841,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -862,6 +869,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("trigger", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TriggerDefinition> Trigger
     {
       get
@@ -889,6 +897,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("dataRequirement", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DataRequirement> DataRequirement
     {
       get

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ObservationDefinition"; } }
+    public override string TypeName => "ObservationDefinition";
 
     /// <summary>
     /// Permitted data type for observation value.
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ObservationDefinition.quantitativeDetails"; } }
+      public override string TypeName => "ObservationDefinition.quantitativeDetails";
 
       /// <summary>
       /// Customary unit for quantitative results.
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ObservationDefinition.qualifiedInterval"; } }
+      public override string TypeName => "ObservationDefinition.qualifiedInterval";
 
       /// <summary>
       /// reference | critical | absolute.
@@ -568,6 +568,7 @@ namespace Hl7.Fhir.Model
       [Binding("ObservationRangeAppliesTo")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
       {
         get
@@ -937,6 +938,7 @@ namespace Hl7.Fhir.Model
     [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -992,6 +994,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1020,6 +1023,7 @@ namespace Hl7.Fhir.Model
     [Binding("ObservationDataType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
     {
       get
@@ -1200,6 +1204,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("qualifiedInterval", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent> QualifiedInterval
     {
       get

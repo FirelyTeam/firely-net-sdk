@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "HumanName"; } }
+    public override string TypeName => "HumanName";
 
     /// <summary>
     /// The use of a human name.
@@ -246,6 +246,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("given", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> GivenElement
     {
       get
@@ -291,6 +292,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("prefix", InSummary=true, Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> PrefixElement
     {
       get
@@ -336,6 +338,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("suffix", InSummary=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> SuffixElement
     {
       get

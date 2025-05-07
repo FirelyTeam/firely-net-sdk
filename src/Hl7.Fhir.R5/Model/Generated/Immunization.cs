@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Immunization"; } }
+    public override string TypeName => "Immunization";
 
     /// <summary>
     /// The value set to instantiate this attribute should be drawn from a terminologically robust code system that consists of or contains concepts to support describing the current status of the administered dose of vaccine.
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization.performer"; } }
+      public override string TypeName => "Immunization.performer";
 
       /// <summary>
       /// What type of performance was done.
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization.programEligibility"; } }
+      public override string TypeName => "Immunization.programEligibility";
 
       /// <summary>
       /// The program that eligibility is declared for.
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization.reaction"; } }
+      public override string TypeName => "Immunization.reaction";
 
       /// <summary>
       /// When reaction started.
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization.protocolApplied"; } }
+      public override string TypeName => "Immunization.protocolApplied";
 
       /// <summary>
       /// Name of vaccine series.
@@ -747,6 +747,7 @@ namespace Hl7.Fhir.Model
       [Binding("TargetDisease")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
       {
         get
@@ -1006,6 +1007,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1035,6 +1037,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","MedicationRequest","ServiceRequest","ImmunizationRecommendation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -1353,6 +1356,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
       get
@@ -1585,6 +1589,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Immunization.PerformerComponent> Performer
     {
       get
@@ -1612,6 +1617,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1640,6 +1646,7 @@ namespace Hl7.Fhir.Model
     [Binding("ImmunizationReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
       get
@@ -1709,6 +1716,7 @@ namespace Hl7.Fhir.Model
     [Binding("SubpotentReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> SubpotentReason
     {
       get
@@ -1736,6 +1744,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("programEligibility", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Immunization.ProgramEligibilityComponent> ProgramEligibility
     {
       get
@@ -1790,6 +1799,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reaction", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Immunization.ReactionComponent> Reaction
     {
       get
@@ -1817,6 +1827,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("protocolApplied", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent> ProtocolApplied
     {
       get

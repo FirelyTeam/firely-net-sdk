@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ProdCharacteristic"; } }
+    public override string TypeName => "ProdCharacteristic";
 
     /// <summary>
     /// Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.
@@ -263,6 +263,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("color", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> ColorElement
     {
       get
@@ -308,6 +309,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("imprint", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> ImprintElement
     {
       get
@@ -353,6 +355,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("image", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
       get

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CodeSystem"; } }
+    public override string TypeName => "CodeSystem";
 
     /// <summary>
     /// The meaning of the hierarchy of concepts in a code system.
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CodeSystem.filter"; } }
+      public override string TypeName => "CodeSystem.filter";
 
       /// <summary>
       /// Code that identifies the filter.
@@ -256,6 +256,7 @@ namespace Hl7.Fhir.Model
       [Binding("FilterOperator")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.FilterOperator>> OperatorElement
       {
         get
@@ -482,7 +483,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CodeSystem.property"; } }
+      public override string TypeName => "CodeSystem.property";
 
       /// <summary>
       /// Identifies the property on the concepts, and when referred to in operations.
@@ -796,7 +797,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CodeSystem.concept"; } }
+      public override string TypeName => "CodeSystem.concept";
 
       /// <summary>
       /// Code that identifies concept.
@@ -928,6 +929,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("designation", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeSystem.DesignationComponent> Designation
       {
         get
@@ -955,6 +957,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("property", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent> Property
       {
         get
@@ -982,6 +985,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("concept", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> Concept
       {
         get
@@ -1186,7 +1190,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CodeSystem.concept.designation"; } }
+      public override string TypeName => "CodeSystem.concept.designation";
 
       /// <summary>
       /// Human language of the designation.
@@ -1267,6 +1271,7 @@ namespace Hl7.Fhir.Model
       [Binding("ConceptDesignationUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> AdditionalUse
       {
         get
@@ -1474,7 +1479,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CodeSystem.concept.property"; } }
+      public override string TypeName => "CodeSystem.concept.property";
 
       /// <summary>
       /// Reference to CodeSystem.property.code.
@@ -1686,6 +1691,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -2033,6 +2039,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -2101,6 +2108,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -2129,6 +2137,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2403,6 +2412,7 @@ namespace Hl7.Fhir.Model
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
       get
@@ -2433,6 +2443,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", Order=300, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
       get
@@ -2463,6 +2474,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("editor", Order=310, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
       get
@@ -2493,6 +2505,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reviewer", Order=320, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
       get
@@ -2523,6 +2536,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("endorser", Order=330, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
       get
@@ -2553,6 +2567,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=340, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -2911,6 +2926,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("filter", InSummary=true, Order=430)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeSystem.FilterComponent> Filter
     {
       get
@@ -2938,6 +2954,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("property", InSummary=true, Order=440)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeSystem.PropertyComponent> Property
     {
       get
@@ -2965,6 +2982,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("concept", Order=450)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> Concept
     {
       get

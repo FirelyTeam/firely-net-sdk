@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Claim"; } }
+    public override string TypeName => "Claim";
 
     /// <summary>
     /// Complete, proposed, exploratory, other
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.related"; } }
+      public override string TypeName => "Claim.related";
 
       /// <summary>
       /// Reference to the related claim.
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.payee"; } }
+      public override string TypeName => "Claim.payee";
 
       /// <summary>
       /// Type of party: Subscriber, Provider, other.
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.careTeam"; } }
+      public override string TypeName => "Claim.careTeam";
 
       /// <summary>
       /// Number to covey order of careTeam.
@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.information"; } }
+      public override string TypeName => "Claim.information";
 
       /// <summary>
       /// Information instance identifier.
@@ -1225,7 +1225,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.diagnosis"; } }
+      public override string TypeName => "Claim.diagnosis";
 
       /// <summary>
       /// Number to covey order of diagnosis.
@@ -1307,6 +1307,7 @@ namespace Hl7.Fhir.Model
       [Binding("DiagnosisType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -1499,7 +1500,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.procedure"; } }
+      public override string TypeName => "Claim.procedure";
 
       /// <summary>
       /// Procedure sequence for reference.
@@ -1740,7 +1741,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.insurance"; } }
+      public override string TypeName => "Claim.insurance";
 
       /// <summary>
       /// Service instance identifier.
@@ -1902,6 +1903,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("preAuthRef", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> PreAuthRefElement
       {
         get
@@ -2151,7 +2153,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.accident"; } }
+      public override string TypeName => "Claim.accident";
 
       /// <summary>
       /// When the accident occurred
@@ -2380,7 +2382,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.item"; } }
+      public override string TypeName => "Claim.item";
 
       /// <summary>
       /// Service instance.
@@ -2430,6 +2432,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("careTeamLinkId", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> CareTeamLinkIdElement
       {
         get
@@ -2475,6 +2478,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("diagnosisLinkId", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> DiagnosisLinkIdElement
       {
         get
@@ -2520,6 +2524,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("procedureLinkId", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> ProcedureLinkIdElement
       {
         get
@@ -2565,6 +2570,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("informationLinkId", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> InformationLinkIdElement
       {
         get
@@ -2692,6 +2698,7 @@ namespace Hl7.Fhir.Model
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
         get
@@ -2720,6 +2727,7 @@ namespace Hl7.Fhir.Model
       [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
       {
         get
@@ -2926,6 +2934,7 @@ namespace Hl7.Fhir.Model
       [References("Device")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Udi
       {
         get
@@ -2981,6 +2990,7 @@ namespace Hl7.Fhir.Model
       [Binding("Surface")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> SubSite
       {
         get
@@ -3010,6 +3020,7 @@ namespace Hl7.Fhir.Model
       [References("Encounter")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Encounter
       {
         get
@@ -3037,6 +3048,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("detail", Order=240)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Claim.DetailComponent> Detail
       {
         get
@@ -3525,7 +3537,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.item.detail"; } }
+      public override string TypeName => "Claim.item.detail";
 
       /// <summary>
       /// Service instance.
@@ -3657,6 +3669,7 @@ namespace Hl7.Fhir.Model
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
         get
@@ -3685,6 +3698,7 @@ namespace Hl7.Fhir.Model
       [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
       {
         get
@@ -3833,6 +3847,7 @@ namespace Hl7.Fhir.Model
       [References("Device")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Udi
       {
         get
@@ -3860,6 +3875,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("subDetail", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Claim.SubDetailComponent> SubDetail
       {
         get
@@ -4177,7 +4193,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Claim.item.detail.subDetail"; } }
+      public override string TypeName => "Claim.item.detail.subDetail";
 
       /// <summary>
       /// Service instance.
@@ -4309,6 +4325,7 @@ namespace Hl7.Fhir.Model
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
         get
@@ -4337,6 +4354,7 @@ namespace Hl7.Fhir.Model
       [Binding("ProgramCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ProgramCode
       {
         get
@@ -4485,6 +4503,7 @@ namespace Hl7.Fhir.Model
       [References("Device")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Udi
       {
         get
@@ -4775,6 +4794,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -4872,6 +4892,7 @@ namespace Hl7.Fhir.Model
     [Binding("ClaimSubType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> SubType
     {
       get
@@ -5202,6 +5223,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("related", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Claim.RelatedClaimComponent> Related
     {
       get
@@ -5367,6 +5389,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("careTeam", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Claim.CareTeamComponent> CareTeam
     {
       get
@@ -5394,6 +5417,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("information", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Claim.SpecialConditionComponent> Information
     {
       get
@@ -5421,6 +5445,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("diagnosis", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Claim.DiagnosisComponent> Diagnosis
     {
       get
@@ -5448,6 +5473,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("procedure", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Claim.ProcedureComponent> Procedure
     {
       get
@@ -5475,6 +5501,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("insurance", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Claim.InsuranceComponent> Insurance
     {
       get
@@ -5580,6 +5607,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("item", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Claim.ItemComponent> Item
     {
       get

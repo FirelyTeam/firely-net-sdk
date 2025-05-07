@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "InsurancePlan"; } }
+    public override string TypeName => "InsurancePlan";
 
     /// <summary>
     /// Whether the cost applies to in-network or out-of-network providers.
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan.coverage"; } }
+      public override string TypeName => "InsurancePlan.coverage";
 
       /// <summary>
       /// Type of coverage.
@@ -139,6 +139,7 @@ namespace Hl7.Fhir.Model
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Network
       {
         get
@@ -166,6 +167,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("benefit", Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.InsurancePlan.CoverageBenefitComponent> Benefit
       {
         get
@@ -312,7 +314,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan.coverage.benefit"; } }
+      public override string TypeName => "InsurancePlan.coverage.benefit";
 
       /// <summary>
       /// Type of benefit.
@@ -388,6 +390,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("limit", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.InsurancePlan.LimitComponent> Limit
       {
         get
@@ -534,7 +537,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan.coverage.benefit.limit"; } }
+      public override string TypeName => "InsurancePlan.coverage.benefit.limit";
 
       /// <summary>
       /// Maximum value allowed.
@@ -694,7 +697,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan.plan"; } }
+      public override string TypeName => "InsurancePlan.plan";
 
       /// <summary>
       /// Business Identifier for Product.
@@ -702,6 +705,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", InSummary=true, Order=40, FiveWs="FiveWs.identifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -757,6 +761,7 @@ namespace Hl7.Fhir.Model
       [References("Location")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
       {
         get
@@ -786,6 +791,7 @@ namespace Hl7.Fhir.Model
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Network
       {
         get
@@ -813,6 +819,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("generalCost", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.InsurancePlan.GeneralCostComponent> GeneralCost
       {
         get
@@ -840,6 +847,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("specificCost", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.InsurancePlan.SpecificCostComponent> SpecificCost
       {
         get
@@ -1043,7 +1051,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan.plan.generalCost"; } }
+      public override string TypeName => "InsurancePlan.plan.generalCost";
 
       /// <summary>
       /// Type of cost.
@@ -1323,7 +1331,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan.plan.specificCost"; } }
+      public override string TypeName => "InsurancePlan.plan.specificCost";
 
       /// <summary>
       /// General category of benefit.
@@ -1358,6 +1366,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("benefit", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.InsurancePlan.PlanBenefitComponent> Benefit
       {
         get
@@ -1485,7 +1494,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan.plan.specificCost.benefit"; } }
+      public override string TypeName => "InsurancePlan.plan.specificCost.benefit";
 
       /// <summary>
       /// Type of specific benefit.
@@ -1520,6 +1529,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("cost", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.InsurancePlan.CostComponent> Cost
       {
         get
@@ -1647,7 +1657,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InsurancePlan.plan.specificCost.benefit.cost"; } }
+      public override string TypeName => "InsurancePlan.plan.specificCost.benefit.cost";
 
       /// <summary>
       /// Type of cost.
@@ -1709,6 +1719,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("qualifiers", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Qualifiers
       {
         get
@@ -1892,6 +1903,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1962,6 +1974,7 @@ namespace Hl7.Fhir.Model
     [Binding("InsurancePlanType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -2030,6 +2043,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("alias", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> AliasElement
     {
       get
@@ -2159,6 +2173,7 @@ namespace Hl7.Fhir.Model
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> CoverageArea
     {
       get
@@ -2186,6 +2201,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ExtendedContactDetail> Contact
     {
       get
@@ -2215,6 +2231,7 @@ namespace Hl7.Fhir.Model
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
       get
@@ -2244,6 +2261,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Network
     {
       get
@@ -2271,6 +2289,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("coverage", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.InsurancePlan.CoverageComponent> Coverage
     {
       get
@@ -2298,6 +2317,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("plan", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.InsurancePlan.PlanComponent> Plan
     {
       get

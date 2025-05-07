@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ManufacturedItemDefinition"; } }
+    public override string TypeName => "ManufacturedItemDefinition";
 
     /// <summary>
     /// General characteristics of this item
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ManufacturedItemDefinition.property"; } }
+      public override string TypeName => "ManufacturedItemDefinition.property";
 
       /// <summary>
       /// A code expressing the type of characteristic.
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ManufacturedItemDefinition.component"; } }
+      public override string TypeName => "ManufacturedItemDefinition.component";
 
       /// <summary>
       /// Defining type of the component e.g. shell, layer, ink.
@@ -268,6 +268,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("function", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Function
       {
         get
@@ -295,6 +296,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("amount", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Quantity> Amount
       {
         get
@@ -322,6 +324,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("constituent", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ManufacturedItemDefinition.ConstituentComponent> Constituent
       {
         get
@@ -349,6 +352,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("property", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> Property
       {
         get
@@ -376,6 +380,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("component", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent> Component
       {
         get
@@ -576,7 +581,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ManufacturedItemDefinition.component.constituent"; } }
+      public override string TypeName => "ManufacturedItemDefinition.component.constituent";
 
       /// <summary>
       /// The measurable amount of the substance, expressable in different ways (e.g. by mass or volume).
@@ -584,6 +589,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("amount", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Quantity> Amount
       {
         get
@@ -611,6 +617,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("location", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Location
       {
         get
@@ -638,6 +645,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("function", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Function
       {
         get
@@ -665,6 +673,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("hasIngredient", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> HasIngredient
       {
         get
@@ -822,6 +831,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -990,6 +1000,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
       get
@@ -1017,6 +1028,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("marketingStatus", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
       get
@@ -1045,6 +1057,7 @@ namespace Hl7.Fhir.Model
     [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
     {
       get
@@ -1072,6 +1085,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("property", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> Property
     {
       get
@@ -1099,6 +1113,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("component", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ManufacturedItemDefinition.ComponentComponent> Component
     {
       get

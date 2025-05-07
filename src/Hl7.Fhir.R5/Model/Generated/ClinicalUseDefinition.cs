@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ClinicalUseDefinition"; } }
+    public override string TypeName => "ClinicalUseDefinition";
 
     /// <summary>
     /// Overall defining type of this clinical use definition.
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition.contraindication"; } }
+      public override string TypeName => "ClinicalUseDefinition.contraindication";
 
       /// <summary>
       /// The situation that is being documented as contraindicating against this item.
@@ -174,6 +174,7 @@ namespace Hl7.Fhir.Model
       [Binding("DiseaseSymptomProcedure")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> Comorbidity
       {
         get
@@ -203,6 +204,7 @@ namespace Hl7.Fhir.Model
       [References("ClinicalUseDefinition")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Indication
       {
         get
@@ -256,6 +258,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("otherTherapy", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent> OtherTherapy
       {
         get
@@ -459,7 +462,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition.contraindication.otherTherapy"; } }
+      public override string TypeName => "ClinicalUseDefinition.contraindication.otherTherapy";
 
       /// <summary>
       /// The type of relationship between the product indication/contraindication and another therapy.
@@ -620,7 +623,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition.indication"; } }
+      public override string TypeName => "ClinicalUseDefinition.indication";
 
       /// <summary>
       /// The situation that is being documented as an indicaton for this item.
@@ -683,6 +686,7 @@ namespace Hl7.Fhir.Model
       [Binding("DiseaseSymptomProcedure")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> Comorbidity
       {
         get
@@ -767,6 +771,7 @@ namespace Hl7.Fhir.Model
       [References("ClinicalUseDefinition")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> UndesirableEffect
       {
         get
@@ -820,6 +825,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("otherTherapy", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent> OtherTherapy
       {
         get
@@ -1058,7 +1064,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition.interaction"; } }
+      public override string TypeName => "ClinicalUseDefinition.interaction";
 
       /// <summary>
       /// The specific medication, product, food etc. or laboratory test that interacts.
@@ -1066,6 +1072,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("interactant", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent> Interactant
       {
         get
@@ -1175,6 +1182,7 @@ namespace Hl7.Fhir.Model
       [Binding("InteractionManagement")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Management
       {
         get
@@ -1359,7 +1367,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition.interaction.interactant"; } }
+      public override string TypeName => "ClinicalUseDefinition.interaction.interactant";
 
       /// <summary>
       /// The specific medication, product, food etc. or laboratory test that interacts.
@@ -1479,7 +1487,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition.undesirableEffect"; } }
+      public override string TypeName => "ClinicalUseDefinition.undesirableEffect";
 
       /// <summary>
       /// The situation in which the undesirable effect may manifest.
@@ -1687,7 +1695,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalUseDefinition.warning"; } }
+      public override string TypeName => "ClinicalUseDefinition.warning";
 
       /// <summary>
       /// A textual definition of this warning, with formatting.
@@ -1855,6 +1863,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1926,6 +1935,7 @@ namespace Hl7.Fhir.Model
     [Binding("ClinicalUseDefinitionCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -1955,6 +1965,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProductDefinition","Medication","ActivityDefinition","PlanDefinition","Device","DeviceDefinition","Substance","NutritionProduct","BiologicallyDerivedProduct")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
       get
@@ -2089,6 +2100,7 @@ namespace Hl7.Fhir.Model
     [References("Group")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Population
     {
       get
@@ -2116,6 +2128,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("library", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> LibraryElement
     {
       get

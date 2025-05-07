@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DeviceDispense"; } }
+    public override string TypeName => "DeviceDispense";
 
     /// <summary>
     /// DeviceDispense Status Codes
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DeviceDispense.performer"; } }
+      public override string TypeName => "DeviceDispense.performer";
 
       /// <summary>
       /// Who performed the dispense and what they did.
@@ -296,6 +296,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -325,6 +326,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","DeviceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -354,6 +356,7 @@ namespace Hl7.Fhir.Model
     [References("Procedure")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -451,6 +454,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("category", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -592,6 +596,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
       get
@@ -619,6 +624,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DeviceDispense.PerformerComponent> Performer
     {
       get
@@ -836,6 +842,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -906,6 +913,7 @@ namespace Hl7.Fhir.Model
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> EventHistory
     {
       get

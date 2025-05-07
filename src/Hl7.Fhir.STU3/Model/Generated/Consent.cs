@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Consent"; } }
+    public override string TypeName => "Consent";
 
     /// <summary>
     /// Indicates the state of the consent
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.actor"; } }
+      public override string TypeName => "Consent.actor";
 
       /// <summary>
       /// How the actor is involved.
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.policy"; } }
+      public override string TypeName => "Consent.policy";
 
       /// <summary>
       /// Enforcement source for policy.
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.data"; } }
+      public override string TypeName => "Consent.data";
 
       /// <summary>
       /// instance | related | dependents | authoredby.
@@ -715,7 +715,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.except"; } }
+      public override string TypeName => "Consent.except";
 
       /// <summary>
       /// deny | permit.
@@ -792,6 +792,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("actor", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Consent.ExceptActorComponent> Actor
       {
         get
@@ -820,6 +821,7 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentAction")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
       {
         get
@@ -848,6 +850,7 @@ namespace Hl7.Fhir.Model
       [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
       {
         get
@@ -876,6 +879,7 @@ namespace Hl7.Fhir.Model
       [Binding("PurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> Purpose
       {
         get
@@ -904,6 +908,7 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentContentClass")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> Class
       {
         get
@@ -932,6 +937,7 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentContentCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> Code
       {
         get
@@ -985,6 +991,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("data", InSummary=true, Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Consent.ExceptDataComponent> Data
       {
         get
@@ -1264,7 +1271,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.except.actor"; } }
+      public override string TypeName => "Consent.except.actor";
 
       /// <summary>
       /// How the actor is involved.
@@ -1429,7 +1436,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.except.data"; } }
+      public override string TypeName => "Consent.except.data";
 
       /// <summary>
       /// instance | related | dependents | authoredby.
@@ -1671,6 +1678,7 @@ namespace Hl7.Fhir.Model
     [Binding("ConsentCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -1796,6 +1804,7 @@ namespace Hl7.Fhir.Model
     [References("Organization","Patient","Practitioner","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ConsentingParty
     {
       get
@@ -1823,6 +1832,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("actor", InSummary=true, Order=160, FiveWs="who.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Consent.ActorComponent> Actor
     {
       get
@@ -1851,6 +1861,7 @@ namespace Hl7.Fhir.Model
     [Binding("ConsentAction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Action
     {
       get
@@ -1880,6 +1891,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Organization
     {
       get
@@ -1936,6 +1948,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("policy", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Consent.PolicyComponent> Policy
     {
       get
@@ -2005,6 +2018,7 @@ namespace Hl7.Fhir.Model
     [Binding("SecurityLabels")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> SecurityLabel
     {
       get
@@ -2033,6 +2047,7 @@ namespace Hl7.Fhir.Model
     [Binding("PurposeOfUse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Purpose
     {
       get
@@ -2086,6 +2101,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("data", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Consent.DataComponent> Data
     {
       get
@@ -2113,6 +2129,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("except", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Consent.ExceptComponent> Except
     {
       get

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicationDispense"; } }
+    public override string TypeName => "MedicationDispense";
 
     /// <summary>
     /// MedicationDispense Status Codes
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationDispense.performer"; } }
+      public override string TypeName => "MedicationDispense.performer";
 
       /// <summary>
       /// Who performed the dispense and what they did.
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationDispense.substitution"; } }
+      public override string TypeName => "MedicationDispense.substitution";
 
       /// <summary>
       /// Whether a substitution was or was not performed on the dispense.
@@ -383,6 +383,7 @@ namespace Hl7.Fhir.Model
       [Binding("MedicationIntendedSubstitutionReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
       {
         get
@@ -568,6 +569,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -597,6 +599,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -626,6 +629,7 @@ namespace Hl7.Fhir.Model
     [References("Procedure","MedicationAdministration")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -765,6 +769,7 @@ namespace Hl7.Fhir.Model
     [Binding("MedicationDispenseAdminLocation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -879,6 +884,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
       get
@@ -906,6 +912,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicationDispense.PerformerComponent> Performer
     {
       get
@@ -963,6 +970,7 @@ namespace Hl7.Fhir.Model
     [References("MedicationRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> AuthorizingPrescription
     {
       get
@@ -1222,6 +1230,7 @@ namespace Hl7.Fhir.Model
     [References("Patient","Practitioner","RelatedPerson","Location","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Receiver
     {
       get
@@ -1249,6 +1258,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1317,6 +1327,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("dosageInstruction", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Dosage> DosageInstruction
     {
       get
@@ -1372,6 +1383,7 @@ namespace Hl7.Fhir.Model
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> EventHistory
     {
       get

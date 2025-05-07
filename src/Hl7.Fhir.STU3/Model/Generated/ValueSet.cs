@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ValueSet"; } }
+    public override string TypeName => "ValueSet";
 
     /// <summary>
     /// Definition of the content of the value set (CLD)
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet.compose"; } }
+      public override string TypeName => "ValueSet.compose";
 
       /// <summary>
       /// Fixed date for version-less references (transitive).
@@ -167,6 +167,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("include", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> Include
       {
         get
@@ -194,6 +195,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("exclude", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> Exclude
       {
         get
@@ -359,7 +361,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet.compose.include"; } }
+      public override string TypeName => "ValueSet.compose.include";
 
       /// <summary>
       /// The system the codes come from.
@@ -449,6 +451,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("concept", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ValueSet.ConceptReferenceComponent> Concept
       {
         get
@@ -476,6 +479,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("filter", InSummary=true, IsModifier=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ValueSet.FilterComponent> Filter
       {
         get
@@ -503,6 +507,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("valueSet", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirUri> ValueSetElement
       {
         get
@@ -706,7 +711,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet.compose.include.concept"; } }
+      public override string TypeName => "ValueSet.compose.include.concept";
 
       /// <summary>
       /// Code or expression from system.
@@ -797,6 +802,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("designation", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ValueSet.DesignationComponent> Designation
       {
         get
@@ -943,7 +949,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet.compose.include.concept.designation"; } }
+      public override string TypeName => "ValueSet.compose.include.concept.designation";
 
       /// <summary>
       /// Human language of the designation.
@@ -1182,7 +1188,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet.compose.include.filter"; } }
+      public override string TypeName => "ValueSet.compose.include.filter";
 
       /// <summary>
       /// A property defined by the code system.
@@ -1437,7 +1443,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet.expansion"; } }
+      public override string TypeName => "ValueSet.expansion";
 
       /// <summary>
       /// Uniquely identifies this expansion.
@@ -1611,6 +1617,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("parameter", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ValueSet.ParameterComponent> Parameter
       {
         get
@@ -1638,6 +1645,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("contains", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ValueSet.ContainsComponent> Contains
       {
         get
@@ -1842,7 +1850,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet.expansion.parameter"; } }
+      public override string TypeName => "ValueSet.expansion.parameter";
 
       /// <summary>
       /// Name as assigned by the server.
@@ -2020,7 +2028,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ValueSet.expansion.contains"; } }
+      public override string TypeName => "ValueSet.expansion.contains";
 
       /// <summary>
       /// System value for the code.
@@ -2274,6 +2282,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("designation", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ValueSet.DesignationComponent> Designation
       {
         get
@@ -2301,6 +2310,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("contains", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ValueSet.ContainsComponent> Contains
       {
         get
@@ -2575,6 +2585,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -2891,6 +2902,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -2959,6 +2971,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -2987,6 +3000,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get

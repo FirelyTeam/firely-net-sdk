@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "GuidanceResponse"; } }
+    public override string TypeName => "GuidanceResponse";
 
     /// <summary>
     /// The status of a guidance response.
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -366,6 +367,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reason", Order=170, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
       get
@@ -393,6 +395,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -478,6 +481,7 @@ namespace Hl7.Fhir.Model
     [References("Appointment","AppointmentResponse","CarePlan","Claim","CommunicationRequest","Contract","CoverageEligibilityRequest","DeviceRequest","EnrollmentRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","RequestOrchestration","ServiceRequest","SupplyRequest","Task","VisionPrescription")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Result
     {
       get
@@ -505,6 +509,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("dataRequirement", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DataRequirement> DataRequirement
     {
       get

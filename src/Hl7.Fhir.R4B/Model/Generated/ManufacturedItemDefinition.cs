@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ManufacturedItemDefinition"; } }
+    public override string TypeName => "ManufacturedItemDefinition";
 
     /// <summary>
     /// General characteristics of this item
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ManufacturedItemDefinition.property"; } }
+      public override string TypeName => "ManufacturedItemDefinition.property";
 
       /// <summary>
       /// A code expressing the type of characteristic.
@@ -227,6 +227,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -354,6 +355,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
       get
@@ -382,6 +384,7 @@ namespace Hl7.Fhir.Model
     [Binding("SNOMEDCTSubstanceCodes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
     {
       get
@@ -409,6 +412,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("property", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> Property
     {
       get

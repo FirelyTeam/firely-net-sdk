@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Timing"; } }
+    public override string TypeName => "Timing";
 
     /// <summary>
     /// A unit of time (units from UCUM).
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Timing.repeat"; } }
+      public override string TypeName => "Timing.repeat";
 
       /// <summary>
       /// Length/Range of lengths, or (Start and/or end) limits.
@@ -707,6 +707,7 @@ namespace Hl7.Fhir.Model
       [Binding("DayOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DayOfWeekElement
       {
         get
@@ -752,6 +753,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("timeOfDay", InSummary=true, Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Time> TimeOfDayElement
       {
         get
@@ -798,6 +800,7 @@ namespace Hl7.Fhir.Model
       [Binding("EventTiming")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.Timing.EventTiming>> WhenElement
       {
         get
@@ -1223,6 +1226,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("event", InSummary=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirDateTime> EventElement
     {
       get

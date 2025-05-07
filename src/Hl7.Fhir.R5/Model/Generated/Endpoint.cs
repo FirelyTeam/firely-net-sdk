@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Endpoint"; } }
+    public override string TypeName => "Endpoint";
 
     /// <summary>
     /// The status of the endpoint.
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Endpoint.payload"; } }
+      public override string TypeName => "Endpoint.payload";
 
       /// <summary>
       /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries).
@@ -127,6 +127,7 @@ namespace Hl7.Fhir.Model
       [Binding("PayloadType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -155,6 +156,7 @@ namespace Hl7.Fhir.Model
       [Binding("MimeType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Code> MimeTypeElement
       {
         get
@@ -292,6 +294,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -363,6 +366,7 @@ namespace Hl7.Fhir.Model
     [Binding("endpoint-contype")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ConnectionType
     {
       get
@@ -473,6 +477,7 @@ namespace Hl7.Fhir.Model
     [Binding("endpoint-environment-type")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> EnvironmentType
     {
       get
@@ -528,6 +533,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
       get
@@ -581,6 +587,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("payload", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Endpoint.PayloadComponent> Payload
     {
       get
@@ -650,6 +657,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("header", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> HeaderElement
     {
       get

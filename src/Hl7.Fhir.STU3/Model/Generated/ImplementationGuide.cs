@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ImplementationGuide"; } }
+    public override string TypeName => "ImplementationGuide";
 
     /// <summary>
     /// How a dependency is represented when the guide is published.
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide.dependency"; } }
+      public override string TypeName => "ImplementationGuide.dependency";
 
       /// <summary>
       /// reference | inclusion.
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide.package"; } }
+      public override string TypeName => "ImplementationGuide.package";
 
       /// <summary>
       /// Name used .page.package.
@@ -441,6 +441,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("resource", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent> Resource
       {
         get
@@ -587,7 +588,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide.package.resource"; } }
+      public override string TypeName => "ImplementationGuide.package.resource";
 
       /// <summary>
       /// If not an example, has its normal meaning.
@@ -995,7 +996,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide.global"; } }
+      public override string TypeName => "ImplementationGuide.global";
 
       /// <summary>
       /// Type this profiles applies to.
@@ -1176,7 +1177,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImplementationGuide.page"; } }
+      public override string TypeName => "ImplementationGuide.page";
 
       /// <summary>
       /// Where to find that page.
@@ -1312,6 +1313,7 @@ namespace Hl7.Fhir.Model
       [Binding("ResourceType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.ResourceType>> TypeElement
       {
         get
@@ -1357,6 +1359,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("package", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> PackageElement
       {
         get
@@ -1444,6 +1447,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("page", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImplementationGuide.PageComponent> Page
       {
         get
@@ -1949,6 +1953,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -2017,6 +2022,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -2045,6 +2051,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2154,6 +2161,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("dependency", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent> Dependency
     {
       get
@@ -2181,6 +2189,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("package", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent> Package
     {
       get
@@ -2208,6 +2217,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("global", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent> Global
     {
       get
@@ -2235,6 +2245,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("binary", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> BinaryElement
     {
       get

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "RatioRange"; } }
+    public override string TypeName => "RatioRange";
 
     /// <summary>
     /// Low Numerator limit.

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicationRequest"; } }
+    public override string TypeName => "MedicationRequest";
 
     /// <summary>
     /// MedicationRequest Status Codes
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationRequest.dispenseRequest"; } }
+      public override string TypeName => "MedicationRequest.dispenseRequest";
 
       /// <summary>
       /// First fill details.
@@ -406,6 +406,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dispenserInstruction", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> DispenserInstruction
       {
         get
@@ -694,7 +695,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationRequest.dispenseRequest.initialFill"; } }
+      public override string TypeName => "MedicationRequest.dispenseRequest.initialFill";
 
       /// <summary>
       /// First fill quantity.
@@ -854,7 +855,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicationRequest.substitution"; } }
+      public override string TypeName => "MedicationRequest.substitution";
 
       /// <summary>
       /// Whether substitution is allowed or not.
@@ -1011,6 +1012,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1040,6 +1042,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","MedicationRequest","ServiceRequest","ImmunizationRecommendation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -1276,6 +1279,7 @@ namespace Hl7.Fhir.Model
     [Binding("MedicationRequestAdministrationLocation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -1445,6 +1449,7 @@ namespace Hl7.Fhir.Model
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> InformationSource
     {
       get
@@ -1502,6 +1507,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
       get
@@ -1668,6 +1674,7 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole","Organization","Patient","DeviceDefinition","RelatedPerson","CareTeam","HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Performer
     {
       get
@@ -1695,6 +1702,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("device", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Device
     {
       get
@@ -1751,6 +1759,7 @@ namespace Hl7.Fhir.Model
     [Binding("MedicationRequestReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
       get
@@ -1807,6 +1816,7 @@ namespace Hl7.Fhir.Model
     [References("Coverage","ClaimResponse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Insurance
     {
       get
@@ -1834,6 +1844,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1928,6 +1939,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("dosageInstruction", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Dosage> DosageInstruction
     {
       get
@@ -2009,6 +2021,7 @@ namespace Hl7.Fhir.Model
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> EventHistory
     {
       get

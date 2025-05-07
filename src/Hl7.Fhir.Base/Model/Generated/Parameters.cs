@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Parameters"; } }
+    public override string TypeName => "Parameters";
 
     /// <summary>
     /// Operation Parameter
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Parameters.parameter"; } }
+      public override string TypeName => "Parameters.parameter";
 
       /// <summary>
       /// Name from the definition.
@@ -180,6 +180,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("part", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Part
       {
         get
@@ -337,6 +338,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("parameter", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Parameter
     {
       get

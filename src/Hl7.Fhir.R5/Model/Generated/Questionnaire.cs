@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Questionnaire"; } }
+    public override string TypeName => "Questionnaire";
 
     /// <summary>
     /// Distinguishes groups from questions and display text and indicates data type for questions.
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire.item"; } }
+      public override string TypeName => "Questionnaire.item";
 
       /// <summary>
       /// Unique id for item in questionnaire.
@@ -400,6 +400,7 @@ namespace Hl7.Fhir.Model
       [Binding("QuestionnaireConcept")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> Code
       {
         get
@@ -552,6 +553,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("enableWhen", IsModifier=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Questionnaire.EnableWhenComponent> EnableWhen
       {
         get
@@ -910,6 +912,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("answerOption", Order=190)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Questionnaire.AnswerOptionComponent> AnswerOption
       {
         get
@@ -937,6 +940,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("initial", Order=200)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Questionnaire.InitialComponent> Initial
       {
         get
@@ -964,6 +968,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("item", Order=210)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Questionnaire.ItemComponent> Item
       {
         get
@@ -1396,7 +1401,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire.item.enableWhen"; } }
+      public override string TypeName => "Questionnaire.item.enableWhen";
 
       /// <summary>
       /// The linkId of question that determines whether item is enabled/disabled.
@@ -1640,7 +1645,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire.item.answerOption"; } }
+      public override string TypeName => "Questionnaire.item.answerOption";
 
       /// <summary>
       /// Answer value.
@@ -1821,7 +1826,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Questionnaire.item.initial"; } }
+      public override string TypeName => "Questionnaire.item.initial";
 
       /// <summary>
       /// Actual value for initializing the question.
@@ -1974,6 +1979,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -2152,6 +2158,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("derivedFrom", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> DerivedFromElement
     {
       get
@@ -2282,6 +2289,7 @@ namespace Hl7.Fhir.Model
     [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement
     {
       get
@@ -2409,6 +2417,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -2477,6 +2486,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -2505,6 +2515,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2764,6 +2775,7 @@ namespace Hl7.Fhir.Model
     [Binding("QuestionnaireConcept")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Code
     {
       get
@@ -2791,6 +2803,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("item", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Questionnaire.ItemComponent> Item
     {
       get

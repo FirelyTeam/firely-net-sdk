@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "AllergyIntolerance"; } }
+    public override string TypeName => "AllergyIntolerance";
 
     /// <summary>
     /// Preferred value set for AllergyIntolerance Clinical Status.
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AllergyIntolerance.reaction"; } }
+      public override string TypeName => "AllergyIntolerance.reaction";
 
       /// <summary>
       /// Specific substance or pharmaceutical product considered to be responsible for event.
@@ -288,6 +288,7 @@ namespace Hl7.Fhir.Model
       [Binding("Manifestation")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Manifestation
       {
         get
@@ -466,6 +467,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("note", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Annotation> Note
       {
         get
@@ -680,6 +682,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -804,6 +807,7 @@ namespace Hl7.Fhir.Model
     [Binding("AllergyIntoleranceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>> CategoryElement
     {
       get
@@ -1141,6 +1145,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1168,6 +1173,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reaction", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> Reaction
     {
       get

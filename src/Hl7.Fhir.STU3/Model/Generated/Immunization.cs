@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Immunization"; } }
+    public override string TypeName => "Immunization";
 
     /// <summary>
     /// The value set to instantiate this attribute should be drawn from a terminologically robust code system that consists of or contains concepts to support describing the current status of the administered dose of vaccine.
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization.practitioner"; } }
+      public override string TypeName => "Immunization.practitioner";
 
       /// <summary>
       /// What type of performance was done.
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization.explanation"; } }
+      public override string TypeName => "Immunization.explanation";
 
       /// <summary>
       /// Why immunization occurred.
@@ -272,6 +272,7 @@ namespace Hl7.Fhir.Model
       [Binding("ImmunizationReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
       {
         get
@@ -300,6 +301,7 @@ namespace Hl7.Fhir.Model
       [Binding("NoImmunizationReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
       {
         get
@@ -428,7 +430,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization.reaction"; } }
+      public override string TypeName => "Immunization.reaction";
 
       /// <summary>
       /// When reaction started.
@@ -665,7 +667,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Immunization.vaccinationProtocol"; } }
+      public override string TypeName => "Immunization.vaccinationProtocol";
 
       /// <summary>
       /// Dose number within series.
@@ -866,6 +868,7 @@ namespace Hl7.Fhir.Model
       [Binding("VaccinationProtocoltargetDisease")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
       {
         get
@@ -1154,6 +1157,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1679,6 +1683,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("practitioner", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Immunization.PractitionerComponent> Practitioner
     {
       get
@@ -1706,6 +1711,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1759,6 +1765,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reaction", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Immunization.ReactionComponent> Reaction
     {
       get
@@ -1786,6 +1793,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("vaccinationProtocol", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> VaccinationProtocol
     {
       get

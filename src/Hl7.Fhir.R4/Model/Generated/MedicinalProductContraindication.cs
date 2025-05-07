@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicinalProductContraindication"; } }
+    public override string TypeName => "MedicinalProductContraindication";
 
     /// <summary>
     /// Information about the use of the medicinal product in relation to other therapies described as part of the indication
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductContraindication.otherTherapy"; } }
+      public override string TypeName => "MedicinalProductContraindication.otherTherapy";
 
       /// <summary>
       /// The type of relationship between the medicinal product indication or contraindication and another therapy.
@@ -233,6 +233,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProduct","Medication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
       get
@@ -312,6 +313,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("comorbidity", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Comorbidity
     {
       get
@@ -341,6 +343,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProductIndication")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> TherapeuticIndication
     {
       get
@@ -368,6 +371,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("otherTherapy", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent> OtherTherapy
     {
       get
@@ -395,6 +399,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("population", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Population> Population
     {
       get

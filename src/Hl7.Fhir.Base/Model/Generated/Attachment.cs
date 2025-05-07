@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Attachment"; } }
+    public override string TypeName => "Attachment";
 
     /// <summary>
     /// Mime type of the content, with charset etc.

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ElementDefinition"; } }
+    public override string TypeName => "ElementDefinition";
 
     /// <summary>
     /// How a property is represented when serialized.
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition.slicing"; } }
+      public override string TypeName => "ElementDefinition.slicing";
 
       /// <summary>
       /// Element values that are used to distinguish the slices.
@@ -272,6 +272,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("discriminator", InSummary=true, Order=30)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent> Discriminator
       {
         get
@@ -563,7 +564,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition.slicing.discriminator"; } }
+      public override string TypeName => "ElementDefinition.slicing.discriminator";
 
       /// <summary>
       /// value | exists | pattern | type | profile.
@@ -757,7 +758,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition.base"; } }
+      public override string TypeName => "ElementDefinition.base";
 
       /// <summary>
       /// Path that identifies the base element.
@@ -1011,7 +1012,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition.type"; } }
+      public override string TypeName => "ElementDefinition.type";
 
       /// <summary>
       /// Data type or Resource (reference to definition).
@@ -1145,6 +1146,7 @@ namespace Hl7.Fhir.Model
       [Binding("AggregationMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>> AggregationElement
       {
         get
@@ -1390,7 +1392,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition.example"; } }
+      public override string TypeName => "ElementDefinition.example";
 
       /// <summary>
       /// Describes the purpose of this example.
@@ -1570,7 +1572,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition.constraint"; } }
+      public override string TypeName => "ElementDefinition.constraint";
 
       /// <summary>
       /// Target of 'condition' reference above.
@@ -2070,7 +2072,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition.binding"; } }
+      public override string TypeName => "ElementDefinition.binding";
 
       /// <summary>
       /// required | extensible | preferred | example.
@@ -2311,7 +2313,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ElementDefinition.mapping"; } }
+      public override string TypeName => "ElementDefinition.mapping";
 
       /// <summary>
       /// Reference to mapping declaration.
@@ -2659,6 +2661,7 @@ namespace Hl7.Fhir.Model
     [Binding("PropertyRepresentation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>> RepresentationElement
     {
       get
@@ -2787,6 +2790,7 @@ namespace Hl7.Fhir.Model
     [Binding("ElementDefinitionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Code
     {
       get
@@ -3004,6 +3008,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("alias", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> AliasElement
     {
       get
@@ -3198,6 +3203,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("type", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ElementDefinition.TypeRefComponent> Type
     {
       get
@@ -3391,6 +3397,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("example", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ElementDefinition.ExampleComponent> Example
     {
       get
@@ -3515,6 +3522,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("condition", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Id> ConditionElement
     {
       get
@@ -3560,6 +3568,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("constraint", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ElementDefinition.ConstraintComponent> Constraint
     {
       get
@@ -3736,6 +3745,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("mapping", InSummary=true, Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ElementDefinition.MappingComponent> Mapping
     {
       get

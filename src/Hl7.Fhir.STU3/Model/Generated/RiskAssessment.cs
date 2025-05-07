@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "RiskAssessment"; } }
+    public override string TypeName => "RiskAssessment";
 
     /// <summary>
     /// Outcome predicted
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "RiskAssessment.prediction"; } }
+      public override string TypeName => "RiskAssessment.prediction";
 
       /// <summary>
       /// Possible outcome for the subject.
@@ -796,6 +796,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Basis
     {
       get
@@ -823,6 +824,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("prediction", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> Prediction
     {
       get

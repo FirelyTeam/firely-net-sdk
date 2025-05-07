@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Observation"; } }
+    public override string TypeName => "Observation";
 
     /// <summary>
     /// Provides guide for interpretation
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Observation.referenceRange"; } }
+      public override string TypeName => "Observation.referenceRange";
 
       /// <summary>
       /// Low Range, if relevant.
@@ -167,6 +167,7 @@ namespace Hl7.Fhir.Model
       [Binding("ObservationRangeType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> AppliesTo
       {
         get
@@ -438,7 +439,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Observation.component"; } }
+      public override string TypeName => "Observation.component";
 
       /// <summary>
       /// Type of component observation (code / type).
@@ -530,6 +531,7 @@ namespace Hl7.Fhir.Model
       [Binding("ObservationInterpretation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Interpretation
       {
         get
@@ -557,6 +559,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("referenceRange", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> ReferenceRange
       {
         get
@@ -733,6 +736,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -762,6 +766,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","DeviceRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -791,6 +796,7 @@ namespace Hl7.Fhir.Model
     [References("MedicationAdministration","MedicationDispense","MedicationStatement","Procedure","Immunization","ImagingStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -862,6 +868,7 @@ namespace Hl7.Fhir.Model
     [Binding("ObservationCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -947,6 +954,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Focus
     {
       get
@@ -1073,6 +1081,7 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Performer
     {
       get
@@ -1156,6 +1165,7 @@ namespace Hl7.Fhir.Model
     [Binding("ObservationInterpretation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Interpretation
     {
       get
@@ -1183,6 +1193,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1320,6 +1331,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("referenceRange", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> ReferenceRange
     {
       get
@@ -1349,6 +1361,7 @@ namespace Hl7.Fhir.Model
     [References("Observation","QuestionnaireResponse","MolecularSequence")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> HasMember
     {
       get
@@ -1378,6 +1391,7 @@ namespace Hl7.Fhir.Model
     [References("DocumentReference","ImagingStudy","Media","QuestionnaireResponse","Observation","MolecularSequence")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
     {
       get
@@ -1405,6 +1419,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("component", InSummary=true, Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Observation.ComponentComponent> Component
     {
       get

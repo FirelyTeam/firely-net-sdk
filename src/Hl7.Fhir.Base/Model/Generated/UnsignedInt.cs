@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "unsignedInt"; } }
+    public override string TypeName => "unsignedInt";
 
     /// Must conform to the pattern "[0]|([1-9][0-9]*)"
     public const string PATTERN = @"[0]|([1-9][0-9]*)";

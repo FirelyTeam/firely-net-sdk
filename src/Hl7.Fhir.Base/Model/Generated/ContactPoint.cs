@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ContactPoint"; } }
+    public override string TypeName => "ContactPoint";
 
     /// <summary>
     /// Telecommunications form for contact point.

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Consent"; } }
+    public override string TypeName => "Consent";
 
     /// <summary>
     /// Indicates the state of the consent.
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.policyBasis"; } }
+      public override string TypeName => "Consent.policyBasis";
 
       /// <summary>
       /// Reference backing policy resource.
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.verification"; } }
+      public override string TypeName => "Consent.verification";
 
       /// <summary>
       /// Has been verified.
@@ -434,6 +434,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("verificationDate", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirDateTime> VerificationDateElement
       {
         get
@@ -636,7 +637,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.provision"; } }
+      public override string TypeName => "Consent.provision";
 
       /// <summary>
       /// Timeframe for this provision.
@@ -670,6 +671,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("actor", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Consent.provisionActorComponent> Actor
       {
         get
@@ -698,6 +700,7 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentAction")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
       {
         get
@@ -726,6 +729,7 @@ namespace Hl7.Fhir.Model
       [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
       {
         get
@@ -754,6 +758,7 @@ namespace Hl7.Fhir.Model
       [Binding("PurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> Purpose
       {
         get
@@ -782,6 +787,7 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentContentClass")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> DocumentType
       {
         get
@@ -810,6 +816,7 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentContentClass")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> ResourceType
       {
         get
@@ -838,6 +845,7 @@ namespace Hl7.Fhir.Model
       [Binding("ConsentContentCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
         get
@@ -891,6 +899,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("data", InSummary=true, Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Consent.provisionDataComponent> Data
       {
         get
@@ -944,6 +953,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("provision", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Consent.provisionComponent> Provision
       {
         get
@@ -1261,7 +1271,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.provision.actor"; } }
+      public override string TypeName => "Consent.provision.actor";
 
       /// <summary>
       /// How the actor is involved.
@@ -1424,7 +1434,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Consent.provision.data"; } }
+      public override string TypeName => "Consent.provision.data";
 
       /// <summary>
       /// instance | related | dependents | authoredby.
@@ -1596,6 +1606,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1667,6 +1678,7 @@ namespace Hl7.Fhir.Model
     [Binding("ConsentCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -1791,6 +1803,7 @@ namespace Hl7.Fhir.Model
     [References("CareTeam","HealthcareService","Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Grantor
     {
       get
@@ -1820,6 +1833,7 @@ namespace Hl7.Fhir.Model
     [References("CareTeam","HealthcareService","Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Grantee
     {
       get
@@ -1849,6 +1863,7 @@ namespace Hl7.Fhir.Model
     [References("HealthcareService","Organization","Patient","Practitioner")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Manager
     {
       get
@@ -1878,6 +1893,7 @@ namespace Hl7.Fhir.Model
     [References("HealthcareService","Organization","Patient","Practitioner")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Controller
     {
       get
@@ -1905,6 +1921,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("sourceAttachment", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> SourceAttachment
     {
       get
@@ -1934,6 +1951,7 @@ namespace Hl7.Fhir.Model
     [References("Consent","DocumentReference","Contract","QuestionnaireResponse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SourceReference
     {
       get
@@ -1962,6 +1980,7 @@ namespace Hl7.Fhir.Model
     [Binding("ConsentRegulatoryBasis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> RegulatoryBasis
     {
       get
@@ -2017,6 +2036,7 @@ namespace Hl7.Fhir.Model
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PolicyText
     {
       get
@@ -2044,6 +2064,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("verification", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Consent.VerificationComponent> Verification
     {
       get
@@ -2113,6 +2134,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("provision", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Consent.provisionComponent> Provision
     {
       get

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicinalProductInteraction"; } }
+    public override string TypeName => "MedicinalProductInteraction";
 
     /// <summary>
     /// The specific medication, food or laboratory test that interacts
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductInteraction.interactant"; } }
+      public override string TypeName => "MedicinalProductInteraction.interactant";
 
       /// <summary>
       /// The specific medication, food or laboratory test that interacts.
@@ -187,6 +187,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProduct","Medication","Substance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
       get
@@ -255,6 +256,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("interactant", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent> Interactant
     {
       get

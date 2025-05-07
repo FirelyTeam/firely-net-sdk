@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "QuestionnaireResponse"; } }
+    public override string TypeName => "QuestionnaireResponse";
 
     /// <summary>
     /// Lifecycle status of the questionnaire response.
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "QuestionnaireResponse.item"; } }
+      public override string TypeName => "QuestionnaireResponse.item";
 
       /// <summary>
       /// Pointer to specific item from Questionnaire.
@@ -279,6 +279,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("answer", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> Answer
       {
         get
@@ -306,6 +307,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("item", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
       {
         get
@@ -510,7 +512,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "QuestionnaireResponse.item.answer"; } }
+      public override string TypeName => "QuestionnaireResponse.item.answer";
 
       /// <summary>
       /// Single-valued answer to the question.
@@ -548,6 +550,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("item", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
       {
         get
@@ -695,6 +698,7 @@ namespace Hl7.Fhir.Model
     [References("ReferralRequest","CarePlan","ProcedureRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -724,6 +728,7 @@ namespace Hl7.Fhir.Model
     [References("Observation","Procedure")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Parent
     {
       get
@@ -975,6 +980,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("item", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
     {
       get

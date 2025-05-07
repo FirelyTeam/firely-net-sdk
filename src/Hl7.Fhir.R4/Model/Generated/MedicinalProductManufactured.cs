@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicinalProductManufactured"; } }
+    public override string TypeName => "MedicinalProductManufactured";
 
     /// <summary>
     /// Dose form as manufactured and before any transformation into the pharmaceutical product.
@@ -148,6 +148,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
       get
@@ -177,6 +178,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProductIngredient")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Ingredient
     {
       get
@@ -230,6 +232,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("otherCharacteristics", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> OtherCharacteristics
     {
       get

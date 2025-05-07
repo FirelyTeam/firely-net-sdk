@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MessageDefinition"; } }
+    public override string TypeName => "MessageDefinition";
 
     /// <summary>
     /// Resource(s) that are the subject of the event
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageDefinition.focus"; } }
+      public override string TypeName => "MessageDefinition.focus";
 
       /// <summary>
       /// Type of resource.
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageDefinition.allowedResponse"; } }
+      public override string TypeName => "MessageDefinition.allowedResponse";
 
       /// <summary>
       /// Reference to allowed message definition response.
@@ -905,6 +905,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -973,6 +974,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1001,6 +1003,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -1140,6 +1143,7 @@ namespace Hl7.Fhir.Model
     [References("ActivityDefinition","PlanDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Parent
     {
       get
@@ -1169,6 +1173,7 @@ namespace Hl7.Fhir.Model
     [References("MessageDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
     {
       get
@@ -1266,6 +1271,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("focus", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MessageDefinition.FocusComponent> Focus
     {
       get
@@ -1334,6 +1340,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("allowedResponse", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent> AllowedResponse
     {
       get

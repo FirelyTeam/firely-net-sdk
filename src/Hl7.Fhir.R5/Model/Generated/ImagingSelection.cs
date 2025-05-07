@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ImagingSelection"; } }
+    public override string TypeName => "ImagingSelection";
 
     /// <summary>
     /// The status of the ImagingSelection.
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection.performer"; } }
+      public override string TypeName => "ImagingSelection.performer";
 
       /// <summary>
       /// Type of performer.
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection.instance"; } }
+      public override string TypeName => "ImagingSelection.instance";
 
       /// <summary>
       /// DICOM SOP Instance UID.
@@ -472,6 +472,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("subset", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> SubsetElement
       {
         get
@@ -517,6 +518,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("imageRegion2D", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImagingSelection.ImageRegion2DComponent> ImageRegion2D
       {
         get
@@ -544,6 +546,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("imageRegion3D", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImagingSelection.ImageRegion3DComponent> ImageRegion3D
       {
         get
@@ -748,7 +751,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection.instance.imageRegion2D"; } }
+      public override string TypeName => "ImagingSelection.instance.imageRegion2D";
 
       /// <summary>
       /// point | polyline | interpolated | circle | ellipse.
@@ -799,6 +802,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("coordinate", Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirDecimal> CoordinateElement
       {
         get
@@ -944,7 +948,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingSelection.instance.imageRegion3D"; } }
+      public override string TypeName => "ImagingSelection.instance.imageRegion3D";
 
       /// <summary>
       /// point | multipoint | polyline | polygon | ellipse | ellipsoid.
@@ -995,6 +999,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("coordinate", Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirDecimal> CoordinateElement
       {
         get
@@ -1132,6 +1137,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1271,6 +1277,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", InSummary=true, Order=130, FiveWs="FiveWs.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent> Performer
     {
       get
@@ -1300,6 +1307,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","ServiceRequest","Appointment","AppointmentResponse","Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -1328,6 +1336,7 @@ namespace Hl7.Fhir.Model
     [Binding("ImagingSelectionCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -1426,6 +1435,7 @@ namespace Hl7.Fhir.Model
     [References("ImagingStudy","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
     {
       get
@@ -1455,6 +1465,7 @@ namespace Hl7.Fhir.Model
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
       get
@@ -1634,6 +1645,7 @@ namespace Hl7.Fhir.Model
     [References("ImagingSelection")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Focus
     {
       get
@@ -1661,6 +1673,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instance", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImagingSelection.InstanceComponent> Instance
     {
       get

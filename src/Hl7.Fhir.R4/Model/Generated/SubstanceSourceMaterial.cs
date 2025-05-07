@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SubstanceSourceMaterial"; } }
+    public override string TypeName => "SubstanceSourceMaterial";
 
     /// <summary>
     /// Many complex materials are fractions of parts of plants, animals, or minerals. Fraction elements are often necessary to define both Substances and Specified Group 1 Substances. For substances derived from Plants, fraction information will be captured at the Substance information level ( . Oils, Juices and Exudates). Additional information for Extracts, such as extraction solvent composition, will be captured at the Specified Substance Group 1 information level. For plasma-derived products fraction information will be captured at the Substance and the Specified Substance Group 1 levels
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSourceMaterial.fractionDescription"; } }
+      public override string TypeName => "SubstanceSourceMaterial.fractionDescription";
 
       /// <summary>
       /// This element is capturing information about the fraction of a plant part, or human plasma for fractionation.
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSourceMaterial.organism"; } }
+      public override string TypeName => "SubstanceSourceMaterial.organism";
 
       /// <summary>
       /// The family of an organism shall be specified.
@@ -396,6 +396,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("author", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent> Author
       {
         get
@@ -686,7 +687,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSourceMaterial.organism.author"; } }
+      public override string TypeName => "SubstanceSourceMaterial.organism.author";
 
       /// <summary>
       /// The type of author of an organism species shall be specified. The parenthetical author of an organism species refers to the first author who published the plant/animal name (of any rank). The primary author of an organism species refers to the first author(s), who validly published the plant/animal name.
@@ -858,7 +859,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSourceMaterial.organism.hybrid"; } }
+      public override string TypeName => "SubstanceSourceMaterial.organism.hybrid";
 
       /// <summary>
       /// The identifier of the maternal species constituting the hybrid organism shall be specified based on a controlled vocabulary. For plants, the parents aren’t always known, and it is unlikely that it will be known which is maternal and which is paternal.
@@ -1210,7 +1211,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSourceMaterial.organism.organismGeneral"; } }
+      public override string TypeName => "SubstanceSourceMaterial.organism.organismGeneral";
 
       /// <summary>
       /// The kingdom of an organism shall be specified.
@@ -1457,7 +1458,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSourceMaterial.partDescription"; } }
+      public override string TypeName => "SubstanceSourceMaterial.partDescription";
 
       /// <summary>
       /// Entity of anatomical origin of source material within an organism.
@@ -1754,6 +1755,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("parentSubstanceId", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> ParentSubstanceId
     {
       get
@@ -1781,6 +1783,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("parentSubstanceName", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> ParentSubstanceNameElement
     {
       get
@@ -1826,6 +1829,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("countryOfOrigin", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> CountryOfOrigin
     {
       get
@@ -1853,6 +1857,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("geographicalLocation", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> GeographicalLocationElement
     {
       get
@@ -1924,6 +1929,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("fractionDescription", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent> FractionDescription
     {
       get
@@ -1977,6 +1983,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("partDescription", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent> PartDescription
     {
       get

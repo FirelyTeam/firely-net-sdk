@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "NutritionIntake"; } }
+    public override string TypeName => "NutritionIntake";
 
     /// <summary>
     /// What food or fluid product or item was consumed
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionIntake.consumedItem"; } }
+      public override string TypeName => "NutritionIntake.consumedItem";
 
       /// <summary>
       /// The type of food or fluid product.
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionIntake.ingredientLabel"; } }
+      public override string TypeName => "NutritionIntake.ingredientLabel";
 
       /// <summary>
       /// Total nutrient consumed.
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "NutritionIntake.performer"; } }
+      public override string TypeName => "NutritionIntake.performer";
 
       /// <summary>
       /// Type of performer.
@@ -799,6 +799,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -826,6 +827,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instantiatesCanonical", Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
     {
       get
@@ -871,6 +873,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("instantiatesUri", Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
     {
       get
@@ -918,6 +921,7 @@ namespace Hl7.Fhir.Model
     [References("NutritionOrder","CarePlan","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -947,6 +951,7 @@ namespace Hl7.Fhir.Model
     [References("NutritionIntake","Procedure","Observation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -1018,6 +1023,7 @@ namespace Hl7.Fhir.Model
     [Binding("NutritionIntakeStatusReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
     {
       get
@@ -1227,6 +1233,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("consumedItem", Order=220)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.NutritionIntake.ConsumedItemComponent> ConsumedItem
     {
       get
@@ -1254,6 +1261,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("ingredientLabel", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.NutritionIntake.IngredientLabelComponent> IngredientLabel
     {
       get
@@ -1281,6 +1289,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.NutritionIntake.PerformerComponent> Performer
     {
       get
@@ -1338,6 +1347,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> DerivedFrom
     {
       get
@@ -1366,6 +1376,7 @@ namespace Hl7.Fhir.Model
     [Binding("IntakeReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
       get
@@ -1393,6 +1404,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

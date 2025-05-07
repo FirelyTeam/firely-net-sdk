@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "positiveInt"; } }
+    public override string TypeName => "positiveInt";
 
     /// Must conform to the pattern "[1-9][0-9]*"
     public const string PATTERN = @"[1-9][0-9]*";

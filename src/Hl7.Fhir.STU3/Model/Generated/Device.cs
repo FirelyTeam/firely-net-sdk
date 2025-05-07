@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Device"; } }
+    public override string TypeName => "Device";
 
     /// <summary>
     /// The availability status of the device.
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Device.udi"; } }
+      public override string TypeName => "Device.udi";
 
       /// <summary>
       /// Mandatory fixed portion of UDI.
@@ -641,6 +641,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1065,6 +1066,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", Order=210, FiveWs="who.source")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
       get
@@ -1161,6 +1163,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1189,6 +1192,7 @@ namespace Hl7.Fhir.Model
     [Binding("DeviceSafety")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Safety
     {
       get

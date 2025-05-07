@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "InventoryItem"; } }
+    public override string TypeName => "InventoryItem";
 
     /// <summary>
     /// InventoryItem Status Codes
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem.name"; } }
+      public override string TypeName => "InventoryItem.name";
 
       /// <summary>
       /// The type of name e.g. 'brand-name', 'functional-name', 'common-name'.
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem.responsibleOrganization"; } }
+      public override string TypeName => "InventoryItem.responsibleOrganization";
 
       /// <summary>
       /// The role of the organization e.g. manufacturer, distributor, or other.
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem.description"; } }
+      public override string TypeName => "InventoryItem.description";
 
       /// <summary>
       /// The language that is used in the item description.
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem.association"; } }
+      public override string TypeName => "InventoryItem.association";
 
       /// <summary>
       /// The type of association between the device and the other item.
@@ -907,7 +907,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem.characteristic"; } }
+      public override string TypeName => "InventoryItem.characteristic";
 
       /// <summary>
       /// The characteristic that is being defined.
@@ -1068,7 +1068,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "InventoryItem.instance"; } }
+      public override string TypeName => "InventoryItem.instance";
 
       /// <summary>
       /// The identifier for the physical instance, typically a serial number.
@@ -1076,6 +1076,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -1390,6 +1391,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1460,6 +1462,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("category", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -1487,6 +1490,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("code", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Code
     {
       get
@@ -1514,6 +1518,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.InventoryItem.NameComponent> Name
     {
       get
@@ -1541,6 +1546,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("responsibleOrganization", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.InventoryItem.ResponsibleOrganizationComponent> ResponsibleOrganization
     {
       get
@@ -1594,6 +1600,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("inventoryStatus", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> InventoryStatus
     {
       get
@@ -1673,6 +1680,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("association", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.InventoryItem.AssociationComponent> Association
     {
       get
@@ -1700,6 +1708,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("characteristic", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.InventoryItem.CharacteristicComponent> Characteristic
     {
       get

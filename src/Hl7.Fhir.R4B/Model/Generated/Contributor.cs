@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Contributor"; } }
+    public override string TypeName => "Contributor";
 
     /// <summary>
     /// The type of contributor.
@@ -188,6 +188,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get

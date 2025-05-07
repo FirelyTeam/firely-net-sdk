@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ParameterDefinition"; } }
+    public override string TypeName => "ParameterDefinition";
 
     /// <summary>
     /// Name used to access the parameter value.

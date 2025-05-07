@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ProcessResponse"; } }
+    public override string TypeName => "ProcessResponse";
 
     /// <summary>
     /// Processing comments or additional requirements
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ProcessResponse.processNote"; } }
+      public override string TypeName => "ProcessResponse.processNote";
 
       /// <summary>
       /// display | print | printoper.
@@ -245,6 +245,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -562,6 +563,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("processNote", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ProcessResponse.ProcessNoteComponent> ProcessNote
     {
       get
@@ -590,6 +592,7 @@ namespace Hl7.Fhir.Model
     [Binding("AdjudicationError")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Error
     {
       get
@@ -619,6 +622,7 @@ namespace Hl7.Fhir.Model
     [References("CommunicationRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> CommunicationRequest
     {
       get

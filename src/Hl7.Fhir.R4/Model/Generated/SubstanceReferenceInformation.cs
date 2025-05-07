@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SubstanceReferenceInformation"; } }
+    public override string TypeName => "SubstanceReferenceInformation";
 
     /// <summary>
     /// Todo
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceReferenceInformation.gene"; } }
+      public override string TypeName => "SubstanceReferenceInformation.gene";
 
       /// <summary>
       /// Todo.
@@ -133,6 +133,7 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
         get
@@ -276,7 +277,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceReferenceInformation.geneElement"; } }
+      public override string TypeName => "SubstanceReferenceInformation.geneElement";
 
       /// <summary>
       /// Todo.
@@ -338,6 +339,7 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
         get
@@ -481,7 +483,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceReferenceInformation.classification"; } }
+      public override string TypeName => "SubstanceReferenceInformation.classification";
 
       /// <summary>
       /// Todo.
@@ -541,6 +543,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("subtype", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Subtype
       {
         get
@@ -570,6 +573,7 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
         get
@@ -732,7 +736,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceReferenceInformation.target"; } }
+      public override string TypeName => "SubstanceReferenceInformation.target";
 
       /// <summary>
       /// Todo.
@@ -926,6 +930,7 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
         get
@@ -1200,6 +1205,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("gene", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent> Gene
     {
       get
@@ -1227,6 +1233,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("geneElement", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent> GeneElement
     {
       get
@@ -1254,6 +1261,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("classification", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceReferenceInformation.ClassificationComponent> Classification
     {
       get
@@ -1281,6 +1289,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("target", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent> Target
     {
       get

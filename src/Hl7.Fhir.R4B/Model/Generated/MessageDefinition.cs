@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MessageDefinition"; } }
+    public override string TypeName => "MessageDefinition";
 
     /// <summary>
     /// The impact of the content of a message.
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageDefinition.focus"; } }
+      public override string TypeName => "MessageDefinition.focus";
 
       /// <summary>
       /// Type of resource.
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MessageDefinition.allowedResponse"; } }
+      public override string TypeName => "MessageDefinition.allowedResponse";
 
       /// <summary>
       /// Reference to allowed message definition response.
@@ -644,6 +644,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -794,6 +795,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("replaces", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> ReplacesElement
     {
       get
@@ -1006,6 +1008,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1074,6 +1077,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1102,6 +1106,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -1252,6 +1257,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("parent", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> ParentElement
     {
       get
@@ -1369,6 +1375,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("focus", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MessageDefinition.FocusComponent> Focus
     {
       get
@@ -1438,6 +1445,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("allowedResponse", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent> AllowedResponse
     {
       get
@@ -1465,6 +1473,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("graph", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> GraphElement
     {
       get

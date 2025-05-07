@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Medication"; } }
+    public override string TypeName => "Medication";
 
     /// <summary>
     /// Medication Status Codes
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication.ingredient"; } }
+      public override string TypeName => "Medication.ingredient";
 
       /// <summary>
       /// The ingredient (substance or medication) that the ingredient.strength relates to.
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Medication.batch"; } }
+      public override string TypeName => "Medication.batch";
 
       /// <summary>
       /// Identifier assigned to batch.
@@ -513,6 +513,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -690,6 +691,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("ingredient", Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Medication.IngredientComponent> Ingredient
     {
       get

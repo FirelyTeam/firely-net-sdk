@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "EncounterHistory"; } }
+    public override string TypeName => "EncounterHistory";
 
     /// <summary>
     /// Location of the patient at this point in the encounter
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "EncounterHistory.location"; } }
+      public override string TypeName => "EncounterHistory.location";
 
       /// <summary>
       /// Location the encounter takes place.
@@ -262,6 +262,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -361,6 +362,7 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -389,6 +391,7 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterServiceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
     {
       get
@@ -605,6 +608,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("location", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.EncounterHistory.LocationComponent> Location
     {
       get

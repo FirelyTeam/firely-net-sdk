@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CompartmentDefinition"; } }
+    public override string TypeName => "CompartmentDefinition";
 
     /// <summary>
     /// How a resource is related to the compartment
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "CompartmentDefinition.resource"; } }
+      public override string TypeName => "CompartmentDefinition.resource";
 
       /// <summary>
       /// Name of resource type.
@@ -129,6 +129,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("param", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> ParamElement
       {
         get
@@ -806,6 +807,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -874,6 +876,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1027,6 +1030,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("resource", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CompartmentDefinition.ResourceComponent> Resource
     {
       get

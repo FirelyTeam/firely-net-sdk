@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicinalProduct"; } }
+    public override string TypeName => "MedicinalProduct";
 
     /// <summary>
     /// The product's name, including full name and possibly coded parts
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProduct.name"; } }
+      public override string TypeName => "MedicinalProduct.name";
 
       /// <summary>
       /// The full product name.
@@ -121,6 +121,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("namePart", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProduct.NamePartComponent> NamePart
       {
         get
@@ -148,6 +149,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("countryLanguage", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProduct.CountryLanguageComponent> CountryLanguage
       {
         get
@@ -291,7 +293,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProduct.name.namePart"; } }
+      public override string TypeName => "MedicinalProduct.name.namePart";
 
       /// <summary>
       /// A fragment of a product name.
@@ -465,7 +467,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProduct.name.countryLanguage"; } }
+      public override string TypeName => "MedicinalProduct.name.countryLanguage";
 
       /// <summary>
       /// Country code for where this name applies.
@@ -669,7 +671,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProduct.manufacturingBusinessOperation"; } }
+      public override string TypeName => "MedicinalProduct.manufacturingBusinessOperation";
 
       /// <summary>
       /// The type of manufacturing operation.
@@ -798,6 +800,7 @@ namespace Hl7.Fhir.Model
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
       {
         get
@@ -1026,7 +1029,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProduct.specialDesignation"; } }
+      public override string TypeName => "MedicinalProduct.specialDesignation";
 
       /// <summary>
       /// Identifier for the designation, or procedure number.
@@ -1034,6 +1037,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -1422,6 +1426,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1579,6 +1584,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("specialMeasures", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> SpecialMeasuresElement
     {
       get
@@ -1650,6 +1656,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("productClassification", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> ProductClassification
     {
       get
@@ -1677,6 +1684,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("marketingStatus", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
       get
@@ -1706,6 +1714,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProductPharmaceutical")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PharmaceuticalProduct
     {
       get
@@ -1735,6 +1744,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProductPackaged")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PackagedMedicinalProduct
     {
       get
@@ -1764,6 +1774,7 @@ namespace Hl7.Fhir.Model
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> AttachedDocument
     {
       get
@@ -1793,6 +1804,7 @@ namespace Hl7.Fhir.Model
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> MasterFile
     {
       get
@@ -1822,6 +1834,7 @@ namespace Hl7.Fhir.Model
     [References("Organization","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Contact
     {
       get
@@ -1851,6 +1864,7 @@ namespace Hl7.Fhir.Model
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ClinicalTrial
     {
       get
@@ -1878,6 +1892,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=250)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProduct.NameComponent> Name
     {
       get
@@ -1905,6 +1920,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("crossReference", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> CrossReference
     {
       get
@@ -1932,6 +1948,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("manufacturingBusinessOperation", InSummary=true, Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProduct.ManufacturingBusinessOperationComponent> ManufacturingBusinessOperation
     {
       get
@@ -1959,6 +1976,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("specialDesignation", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProduct.SpecialDesignationComponent> SpecialDesignation
     {
       get

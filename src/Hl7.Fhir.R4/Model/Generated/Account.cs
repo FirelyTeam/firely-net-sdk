@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Account"; } }
+    public override string TypeName => "Account";
 
     /// <summary>
     /// Indicates whether the account is available to be used.
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account.coverage"; } }
+      public override string TypeName => "Account.coverage";
 
       /// <summary>
       /// The party(s), such as insurances, that may contribute to the payment of this account.
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account.guarantor"; } }
+      public override string TypeName => "Account.guarantor";
 
       /// <summary>
       /// Responsible entity.
@@ -512,6 +512,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -652,6 +653,7 @@ namespace Hl7.Fhir.Model
     [References("Patient","Device","Practitioner","PractitionerRole","Location","HealthcareService","Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
       get
@@ -705,6 +707,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("coverage", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Account.CoverageComponent> Coverage
     {
       get
@@ -801,6 +804,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("guarantor", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Account.GuarantorComponent> Guarantor
     {
       get

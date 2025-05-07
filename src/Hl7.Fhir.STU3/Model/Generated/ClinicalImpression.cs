@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ClinicalImpression"; } }
+    public override string TypeName => "ClinicalImpression";
 
     /// <summary>
     /// The workflow state of a clinical impression.
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalImpression.investigation"; } }
+      public override string TypeName => "ClinicalImpression.investigation";
 
       /// <summary>
       /// A name/code for the set.
@@ -143,6 +143,7 @@ namespace Hl7.Fhir.Model
       [References("Observation","QuestionnaireResponse","FamilyMemberHistory","DiagnosticReport","RiskAssessment","ImagingStudy")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Item
       {
         get
@@ -270,7 +271,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClinicalImpression.finding"; } }
+      public override string TypeName => "ClinicalImpression.finding";
 
       /// <summary>
       /// What was found.
@@ -442,6 +443,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -764,6 +766,7 @@ namespace Hl7.Fhir.Model
     [References("Condition","AllergyIntolerance")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Problem
     {
       get
@@ -791,6 +794,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("investigation", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ClinicalImpression.InvestigationComponent> Investigation
     {
       get
@@ -818,6 +822,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("protocol", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> ProtocolElement
     {
       get
@@ -904,6 +909,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("finding", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ClinicalImpression.FindingComponent> Finding
     {
       get
@@ -932,6 +938,7 @@ namespace Hl7.Fhir.Model
     [Binding("ClinicalImpressionPrognosis")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> PrognosisCodeableConcept
     {
       get
@@ -961,6 +968,7 @@ namespace Hl7.Fhir.Model
     [References("RiskAssessment")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PrognosisReference
     {
       get
@@ -990,6 +998,7 @@ namespace Hl7.Fhir.Model
     [References("ReferralRequest","ProcedureRequest","Procedure","MedicationRequest","Appointment")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Action
     {
       get
@@ -1017,6 +1026,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

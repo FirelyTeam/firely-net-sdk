@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "markdown"; } }
+    public override string TypeName => "markdown";
 
     /// Must conform to the pattern "^[\s\S]+$"
     public const string PATTERN = @"^[\s\S]+$";

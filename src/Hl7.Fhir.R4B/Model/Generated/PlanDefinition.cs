@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "PlanDefinition"; } }
+    public override string TypeName => "PlanDefinition";
 
     /// <summary>
     /// What the plan is trying to accomplish
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition.goal"; } }
+      public override string TypeName => "PlanDefinition.goal";
 
       /// <summary>
       /// E.g. Treatment, dietary, behavioral.
@@ -195,6 +195,7 @@ namespace Hl7.Fhir.Model
       [Binding("GoalAddresses")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Addresses
       {
         get
@@ -222,6 +223,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("documentation", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
       {
         get
@@ -249,6 +251,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("target", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PlanDefinition.TargetComponent> Target
       {
         get
@@ -471,7 +474,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition.goal.target"; } }
+      public override string TypeName => "PlanDefinition.goal.target";
 
       /// <summary>
       /// The parameter whose value is to be tracked.
@@ -680,7 +683,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition.action"; } }
+      public override string TypeName => "PlanDefinition.action";
 
       /// <summary>
       /// User-visible prefix for the action (e.g. 1. or A.).
@@ -895,6 +898,7 @@ namespace Hl7.Fhir.Model
       [Binding("ActionCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
         get
@@ -923,6 +927,7 @@ namespace Hl7.Fhir.Model
       [Binding("ActionReasonCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Reason
       {
         get
@@ -950,6 +955,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("documentation", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
       {
         get
@@ -977,6 +983,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("goalId", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Id> GoalIdElement
       {
         get
@@ -1052,6 +1059,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("trigger", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TriggerDefinition> Trigger
       {
         get
@@ -1079,6 +1087,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("condition", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PlanDefinition.ConditionComponent> Condition
       {
         get
@@ -1106,6 +1115,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("input", Order=160)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.DataRequirement> Input
       {
         get
@@ -1133,6 +1143,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("output", Order=170)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.DataRequirement> Output
       {
         get
@@ -1160,6 +1171,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("relatedAction", Order=180)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent> RelatedAction
       {
         get
@@ -1215,6 +1227,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("participant", Order=200)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PlanDefinition.ParticipantComponent> Participant
       {
         get
@@ -1548,6 +1561,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dynamicValue", Order=290)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent> DynamicValue
       {
         get
@@ -1575,6 +1589,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("action", Order=300)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> Action
       {
         get
@@ -2178,7 +2193,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition.action.condition"; } }
+      public override string TypeName => "PlanDefinition.action.condition";
 
       /// <summary>
       /// applicability | start | stop.
@@ -2356,7 +2371,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition.action.relatedAction"; } }
+      public override string TypeName => "PlanDefinition.action.relatedAction";
 
       /// <summary>
       /// What action is this related to.
@@ -2596,7 +2611,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition.action.participant"; } }
+      public override string TypeName => "PlanDefinition.action.participant";
 
       /// <summary>
       /// patient | practitioner | related-person | device.
@@ -2775,7 +2790,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PlanDefinition.action.dynamicValue"; } }
+      public override string TypeName => "PlanDefinition.action.dynamicValue";
 
       /// <summary>
       /// The path to the element to be set dynamically.
@@ -2983,6 +2998,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -3397,6 +3413,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -3465,6 +3482,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -3493,6 +3511,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -3752,6 +3771,7 @@ namespace Hl7.Fhir.Model
     [Binding("DefinitionTopic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
     {
       get
@@ -3779,6 +3799,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("author", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Author
     {
       get
@@ -3806,6 +3827,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("editor", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
     {
       get
@@ -3833,6 +3855,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reviewer", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
     {
       get
@@ -3860,6 +3883,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("endorser", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
     {
       get
@@ -3887,6 +3911,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedArtifact", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
     {
       get
@@ -3914,6 +3939,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("library", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> LibraryElement
     {
       get
@@ -3959,6 +3985,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("goal", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.PlanDefinition.GoalComponent> Goal
     {
       get
@@ -3986,6 +4013,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("action", Order=390)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> Action
     {
       get

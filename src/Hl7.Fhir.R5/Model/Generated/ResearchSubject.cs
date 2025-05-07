@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ResearchSubject"; } }
+    public override string TypeName => "ResearchSubject";
 
     /// <summary>
     /// Indicates the progression of a study subject through a study.
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ResearchSubject.progress"; } }
+      public override string TypeName => "ResearchSubject.progress";
 
       /// <summary>
       /// state | milestone.
@@ -534,6 +534,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -604,6 +605,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("progress", Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResearchSubject.ProgressComponent> Progress
     {
       get
@@ -799,6 +801,7 @@ namespace Hl7.Fhir.Model
     [References("Consent")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Consent
     {
       get

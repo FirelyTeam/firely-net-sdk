@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Organization"; } }
+    public override string TypeName => "Organization";
 
     /// <summary>
     /// Qualifications, certifications, accreditations, licenses, training, etc. pertaining to the provision of care
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Organization.qualification"; } }
+      public override string TypeName => "Organization.qualification";
 
       /// <summary>
       /// An identifier for this qualification for the organization.
@@ -86,6 +86,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -325,6 +326,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -394,6 +396,7 @@ namespace Hl7.Fhir.Model
     [Binding("OrganizationType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -462,6 +465,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("alias", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> AliasElement
     {
       get
@@ -548,6 +552,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ExtendedContactDetail> Contact
     {
       get
@@ -605,6 +610,7 @@ namespace Hl7.Fhir.Model
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
       get
@@ -632,6 +638,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("qualification", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Organization.QualificationComponent> Qualification
     {
       get

@@ -105,6 +105,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("extension", Order=20)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Extension> Extension
     {
       get

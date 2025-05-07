@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "BiologicallyDerivedProduct"; } }
+    public override string TypeName => "BiologicallyDerivedProduct";
 
     /// <summary>
     /// How this product was collected
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct.collection"; } }
+      public override string TypeName => "BiologicallyDerivedProduct.collection";
 
       /// <summary>
       /// Individual performing collection.
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "BiologicallyDerivedProduct.property"; } }
+      public override string TypeName => "BiologicallyDerivedProduct.property";
 
       /// <summary>
       /// Code that specifies the property.
@@ -500,6 +500,7 @@ namespace Hl7.Fhir.Model
     [References("BiologicallyDerivedProduct")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Parent
     {
       get
@@ -529,6 +530,7 @@ namespace Hl7.Fhir.Model
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Request
     {
       get
@@ -556,6 +558,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=130, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -611,6 +614,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ProcessingFacility
     {
       get
@@ -799,6 +803,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("property", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent> Property
     {
       get

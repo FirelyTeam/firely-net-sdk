@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Period"; } }
+    public override string TypeName => "Period";
 
     /// <summary>
     /// Starting time with inclusive boundary.

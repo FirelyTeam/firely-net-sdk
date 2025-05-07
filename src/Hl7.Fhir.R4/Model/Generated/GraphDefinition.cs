@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "GraphDefinition"; } }
+    public override string TypeName => "GraphDefinition";
 
     /// <summary>
     /// Defines how a compartment rule is used.
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GraphDefinition.link"; } }
+      public override string TypeName => "GraphDefinition.link";
 
       /// <summary>
       /// Path in the resource that contains the link.
@@ -343,6 +343,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("target", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.GraphDefinition.TargetComponent> Target
       {
         get
@@ -543,7 +544,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GraphDefinition.link.target"; } }
+      public override string TypeName => "GraphDefinition.link.target";
 
       /// <summary>
       /// Type of resource this link refers to.
@@ -676,6 +677,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("compartment", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.GraphDefinition.CompartmentComponent> Compartment
       {
         get
@@ -703,6 +705,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("link", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.GraphDefinition.LinkComponent> Link
       {
         get
@@ -884,7 +887,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "GraphDefinition.link.target.compartment"; } }
+      public override string TypeName => "GraphDefinition.link.target.compartment";
 
       /// <summary>
       /// condition | requirement.
@@ -1542,6 +1545,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1610,6 +1614,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1638,6 +1643,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -1790,6 +1796,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("link", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.GraphDefinition.LinkComponent> Link
     {
       get

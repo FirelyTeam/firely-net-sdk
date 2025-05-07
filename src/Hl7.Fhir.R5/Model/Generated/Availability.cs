@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Availability"; } }
+    public override string TypeName => "Availability";
 
     /// <summary>
     /// Times the {item} is available
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Availability.availableTime"; } }
+      public override string TypeName => "Availability.availableTime";
 
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun.
@@ -80,6 +80,7 @@ namespace Hl7.Fhir.Model
       [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
         get
@@ -383,7 +384,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Availability.notAvailableTime"; } }
+      public override string TypeName => "Availability.notAvailableTime";
 
       /// <summary>
       /// Reason presented to the user explaining why time not available.
@@ -550,6 +551,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("availableTime", InSummary=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Availability.AvailableTimeComponent> AvailableTime
     {
       get
@@ -577,6 +579,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("notAvailableTime", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Availability.NotAvailableTimeComponent> NotAvailableTime
     {
       get

@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MonetaryComponent"; } }
+    public override string TypeName => "MonetaryComponent";
 
     /// <summary>
     /// Codes indicating the kind of the price component.

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "BodyStructure"; } }
+    public override string TypeName => "BodyStructure";
 
     /// <summary>
     /// Bodystructure identifier.
@@ -69,6 +69,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -192,6 +193,7 @@ namespace Hl7.Fhir.Model
     [Binding("BodyStructureQualifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> LocationQualifier
     {
       get
@@ -260,6 +262,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("image", Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> Image
     {
       get

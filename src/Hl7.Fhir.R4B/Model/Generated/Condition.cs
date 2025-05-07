@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Condition"; } }
+    public override string TypeName => "Condition";
 
     /// <summary>
     /// Preferred value set for Condition Clinical Status.
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Condition.stage"; } }
+      public override string TypeName => "Condition.stage";
 
       /// <summary>
       /// Simple summary (disease specific).
@@ -206,6 +206,7 @@ namespace Hl7.Fhir.Model
       [References("ClinicalImpression","DiagnosticReport","Observation")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Assessment
       {
         get
@@ -380,7 +381,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Condition.evidence"; } }
+      public override string TypeName => "Condition.evidence";
 
       /// <summary>
       /// Manifestation/symptom.
@@ -389,6 +390,7 @@ namespace Hl7.Fhir.Model
       [Binding("ManifestationOrSymptom")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
       {
         get
@@ -418,6 +420,7 @@ namespace Hl7.Fhir.Model
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Detail
       {
         get
@@ -537,6 +540,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -619,6 +623,7 @@ namespace Hl7.Fhir.Model
     [Binding("ConditionCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -701,6 +706,7 @@ namespace Hl7.Fhir.Model
     [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
     {
       get
@@ -938,6 +944,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("stage", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Condition.StageComponent> Stage
     {
       get
@@ -965,6 +972,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("evidence", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Condition.EvidenceComponent> Evidence
     {
       get
@@ -992,6 +1000,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

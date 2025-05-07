@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SubstanceSpecification"; } }
+    public override string TypeName => "SubstanceSpecification";
 
     /// <summary>
     /// Moiety, for structural modifications
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSpecification.moiety"; } }
+      public override string TypeName => "SubstanceSpecification.moiety";
 
       /// <summary>
       /// Role that the moiety is playing.
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSpecification.property"; } }
+      public override string TypeName => "SubstanceSpecification.property";
 
       /// <summary>
       /// A category for this property, e.g. Physical, Chemical, Enzymatic.
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSpecification.structure"; } }
+      public override string TypeName => "SubstanceSpecification.structure";
 
       /// <summary>
       /// Stereochemistry type.
@@ -939,6 +939,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("isotope", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent> Isotope
       {
         get
@@ -994,6 +995,7 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
         get
@@ -1021,6 +1023,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("representation", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent> Representation
       {
         get
@@ -1259,7 +1262,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSpecification.structure.isotope"; } }
+      public override string TypeName => "SubstanceSpecification.structure.isotope";
 
       /// <summary>
       /// Substance identifier for each non-natural or radioisotope.
@@ -1551,7 +1554,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSpecification.structure.isotope.molecularWeight"; } }
+      public override string TypeName => "SubstanceSpecification.structure.isotope.molecularWeight";
 
       /// <summary>
       /// The method by which the molecular weight was determined.
@@ -1753,7 +1756,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSpecification.structure.representation"; } }
+      public override string TypeName => "SubstanceSpecification.structure.representation";
 
       /// <summary>
       /// The type of structure (e.g. Full, Partial, Representative).
@@ -1970,7 +1973,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSpecification.code"; } }
+      public override string TypeName => "SubstanceSpecification.code";
 
       /// <summary>
       /// The specific code.
@@ -2114,6 +2117,7 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
         get
@@ -2295,7 +2299,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSpecification.name"; } }
+      public override string TypeName => "SubstanceSpecification.name";
 
       /// <summary>
       /// The actual name.
@@ -2438,6 +2442,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("language", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Language
       {
         get
@@ -2465,6 +2470,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("domain", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Domain
       {
         get
@@ -2492,6 +2498,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("jurisdiction", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
       {
         get
@@ -2519,6 +2526,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("synonym", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> Synonym
       {
         get
@@ -2546,6 +2554,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("translation", InSummary=true, Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> Translation
       {
         get
@@ -2573,6 +2582,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("official", InSummary=true, Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent> Official
       {
         get
@@ -2602,6 +2612,7 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
         get
@@ -2897,7 +2908,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSpecification.name.official"; } }
+      public override string TypeName => "SubstanceSpecification.name.official";
 
       /// <summary>
       /// Which authority uses this official name.
@@ -3114,7 +3125,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceSpecification.relationship"; } }
+      public override string TypeName => "SubstanceSpecification.relationship";
 
       /// <summary>
       /// A pointer to another substance, as a resource or just a representational code.
@@ -3300,6 +3311,7 @@ namespace Hl7.Fhir.Model
       [References("DocumentReference")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
         get
@@ -3661,6 +3673,7 @@ namespace Hl7.Fhir.Model
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Source
     {
       get
@@ -3729,6 +3742,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("moiety", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent> Moiety
     {
       get
@@ -3756,6 +3770,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("property", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent> Property
     {
       get
@@ -3837,6 +3852,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("code", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceSpecification.CodeComponent> Code
     {
       get
@@ -3864,6 +3880,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("name", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceSpecification.NameComponent> Name
     {
       get
@@ -3891,6 +3908,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("molecularWeight", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent> MolecularWeight
     {
       get
@@ -3918,6 +3936,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relationship", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent> Relationship
     {
       get

@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MedicinalProductPackaged"; } }
+    public override string TypeName => "MedicinalProductPackaged";
 
     /// <summary>
     /// Batch numbering
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductPackaged.batchIdentifier"; } }
+      public override string TypeName => "MedicinalProductPackaged.batchIdentifier";
 
       /// <summary>
       /// A number appearing on the outer packaging of a specific batch.
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MedicinalProductPackaged.packageItem"; } }
+      public override string TypeName => "MedicinalProductPackaged.packageItem";
 
       /// <summary>
       /// Including possibly Data Carrier Identifier.
@@ -237,6 +237,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -318,6 +319,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("material", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Material
       {
         get
@@ -345,6 +347,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("alternateMaterial", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> AlternateMaterial
       {
         get
@@ -374,6 +377,7 @@ namespace Hl7.Fhir.Model
       [References("DeviceDefinition")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Device
       {
         get
@@ -403,6 +407,7 @@ namespace Hl7.Fhir.Model
       [References("MedicinalProductManufactured")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> ManufacturedItem
       {
         get
@@ -430,6 +435,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("packageItem", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> PackageItem
       {
         get
@@ -483,6 +489,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("otherCharacteristics", InSummary=true, Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> OtherCharacteristics
       {
         get
@@ -510,6 +517,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("shelfLifeStorage", InSummary=true, Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ProductShelfLife> ShelfLifeStorage
       {
         get
@@ -539,6 +547,7 @@ namespace Hl7.Fhir.Model
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
       {
         get
@@ -848,6 +857,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -877,6 +887,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProduct")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
       get
@@ -971,6 +982,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("marketingStatus", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
       get
@@ -1028,6 +1040,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
       get
@@ -1055,6 +1068,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("batchIdentifier", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent> BatchIdentifier
     {
       get
@@ -1082,6 +1096,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("packageItem", InSummary=true, Order=170)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent> PackageItem
     {
       get

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SearchParameter"; } }
+    public override string TypeName => "SearchParameter";
 
     /// <summary>
     /// How a search parameter relates to the set of elements returned by evaluating its xpath query.
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SearchParameter.component"; } }
+      public override string TypeName => "SearchParameter.component";
 
       /// <summary>
       /// Defines how the part works.
@@ -714,6 +714,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -741,6 +742,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -769,6 +771,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -880,6 +883,7 @@ namespace Hl7.Fhir.Model
     [Binding("ResourceType")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.ResourceType>> BaseElement
     {
       get
@@ -1176,6 +1180,7 @@ namespace Hl7.Fhir.Model
     [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.ResourceType>> TargetElement
     {
       get
@@ -1222,6 +1227,7 @@ namespace Hl7.Fhir.Model
     [Binding("SearchComparator")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.SearchParameter.SearchComparator>> ComparatorElement
     {
       get
@@ -1268,6 +1274,7 @@ namespace Hl7.Fhir.Model
     [Binding("SearchModifierCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Code<Hl7.Fhir.Model.SearchParameter.SearchModifierCode>> ModifierElement
     {
       get
@@ -1313,6 +1320,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("chain", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> ChainElement
     {
       get
@@ -1358,6 +1366,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("component", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SearchParameter.ComponentComponent> Component
     {
       get

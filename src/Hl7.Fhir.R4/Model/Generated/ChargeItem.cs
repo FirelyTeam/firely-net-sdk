@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ChargeItem"; } }
+    public override string TypeName => "ChargeItem";
 
     /// <summary>
     /// Codes identifying the lifecycle stage of a ChargeItem.
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ChargeItem.performer"; } }
+      public override string TypeName => "ChargeItem.performer";
 
       /// <summary>
       /// What type of performance was done.
@@ -285,6 +285,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -312,6 +313,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("definitionUri", Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUri> DefinitionUriElement
     {
       get
@@ -357,6 +359,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("definitionCanonical", Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> DefinitionCanonicalElement
     {
       get
@@ -447,6 +450,7 @@ namespace Hl7.Fhir.Model
     [References("ChargeItem")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -587,6 +591,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("performer", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ChargeItem.PerformerComponent> Performer
     {
       get
@@ -725,6 +730,7 @@ namespace Hl7.Fhir.Model
     [Binding("BodySite")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Bodysite
     {
       get
@@ -930,6 +936,7 @@ namespace Hl7.Fhir.Model
     [Binding("ChargeItemReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Reason
     {
       get
@@ -959,6 +966,7 @@ namespace Hl7.Fhir.Model
     [References("DiagnosticReport","ImagingStudy","Immunization","MedicationAdministration","MedicationDispense","Observation","Procedure","SupplyDelivery")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Service
     {
       get
@@ -1018,6 +1026,7 @@ namespace Hl7.Fhir.Model
     [References("Account")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Account
     {
       get
@@ -1045,6 +1054,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1074,6 +1084,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
     {
       get

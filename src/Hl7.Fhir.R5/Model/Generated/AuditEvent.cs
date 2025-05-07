@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "AuditEvent"; } }
+    public override string TypeName => "AuditEvent";
 
     /// <summary>
     /// Indicator for type of action performed during the event that generated the event.
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent.outcome"; } }
+      public override string TypeName => "AuditEvent.outcome";
 
       /// <summary>
       /// Whether the event succeeded or failed.
@@ -214,6 +214,7 @@ namespace Hl7.Fhir.Model
       [Binding("AuditEventOutcomeDetail")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Detail
       {
         get
@@ -344,7 +345,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent.agent"; } }
+      public override string TypeName => "AuditEvent.agent";
 
       /// <summary>
       /// How agent participated.
@@ -380,6 +381,7 @@ namespace Hl7.Fhir.Model
       [Binding("AuditAgentRole")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
       {
         get
@@ -505,6 +507,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("policy", Order=90, FiveWs="FiveWs.why[x]")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirUri> PolicyElement
       {
         get
@@ -580,6 +583,7 @@ namespace Hl7.Fhir.Model
       [Binding("AuditPurposeOfUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Authorization
       {
         get
@@ -822,7 +826,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent.source"; } }
+      public override string TypeName => "AuditEvent.source";
 
       /// <summary>
       /// Logical source location within the enterprise.
@@ -888,6 +892,7 @@ namespace Hl7.Fhir.Model
       [Binding("AuditEventSourceType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -1035,7 +1040,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent.entity"; } }
+      public override string TypeName => "AuditEvent.entity";
 
       /// <summary>
       /// Specific instance of resource.
@@ -1099,6 +1104,7 @@ namespace Hl7.Fhir.Model
       [Binding("SecurityLabels")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> SecurityLabel
       {
         get
@@ -1167,6 +1173,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("detail", Order=80, FiveWs="FiveWs.context")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.AuditEvent.DetailComponent> Detail
       {
         get
@@ -1194,6 +1201,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("agent", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
       {
         get
@@ -1397,7 +1405,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AuditEvent.entity.detail"; } }
+      public override string TypeName => "AuditEvent.entity.detail";
 
       /// <summary>
       /// Name of the property.
@@ -1555,6 +1563,7 @@ namespace Hl7.Fhir.Model
     [Binding("AuditEventType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -1791,6 +1800,7 @@ namespace Hl7.Fhir.Model
     [Binding("AuditPurposeOfUse")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Authorization
     {
       get
@@ -1820,6 +1830,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","DeviceRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ServiceRequest","Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -1903,6 +1914,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("agent", InSummary=true, Order=200, FiveWs="FiveWs.who")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
     {
       get
@@ -1957,6 +1969,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("entity", InSummary=true, Order=220, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.AuditEvent.EntityComponent> Entity
     {
       get

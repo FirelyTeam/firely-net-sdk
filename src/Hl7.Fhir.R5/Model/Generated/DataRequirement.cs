@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DataRequirement"; } }
+    public override string TypeName => "DataRequirement";
 
     /// <summary>
     /// The type of comparator operator to use
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement.codeFilter"; } }
+      public override string TypeName => "DataRequirement.codeFilter";
 
       /// <summary>
       /// A code-valued attribute to filter on.
@@ -282,6 +282,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("code", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Coding> Code
       {
         get
@@ -447,7 +448,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement.dateFilter"; } }
+      public override string TypeName => "DataRequirement.dateFilter";
 
       /// <summary>
       /// A date-valued attribute to filter on.
@@ -684,7 +685,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement.valueFilter"; } }
+      public override string TypeName => "DataRequirement.valueFilter";
 
       /// <summary>
       /// An attribute to filter on.
@@ -983,7 +984,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DataRequirement.sort"; } }
+      public override string TypeName => "DataRequirement.sort";
 
       /// <summary>
       /// The name of the attribute to perform the sort.
@@ -1211,6 +1212,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("profile", InSummary=true, Order=40)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> ProfileElement
     {
       get
@@ -1286,6 +1288,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("mustSupport", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> MustSupportElement
     {
       get
@@ -1331,6 +1334,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("codeFilter", InSummary=true, Order=70)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent> CodeFilter
     {
       get
@@ -1358,6 +1362,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("dateFilter", InSummary=true, Order=80)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> DateFilter
     {
       get
@@ -1385,6 +1390,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("valueFilter", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DataRequirement.ValueFilterComponent> ValueFilter
     {
       get
@@ -1453,6 +1459,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("sort", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DataRequirement.SortComponent> Sort
     {
       get

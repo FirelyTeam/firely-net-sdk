@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Identifier"; } }
+    public override string TypeName => "Identifier";
 
     /// <summary>
     /// Identifies the purpose for this identifier, if known .

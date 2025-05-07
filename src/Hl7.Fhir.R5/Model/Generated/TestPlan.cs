@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "TestPlan"; } }
+    public override string TypeName => "TestPlan";
 
     /// <summary>
     /// The required criteria to execute the test plan - e.g. preconditions, previous tests
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan.dependency"; } }
+      public override string TypeName => "TestPlan.dependency";
 
       /// <summary>
       /// Description of the dependency criterium.
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan.testCase"; } }
+      public override string TypeName => "TestPlan.testCase";
 
       /// <summary>
       /// Sequence of test case in the test plan.
@@ -301,6 +301,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("scope", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Scope
       {
         get
@@ -328,6 +329,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("dependency", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestPlan.TestCaseDependencyComponent> Dependency
       {
         get
@@ -355,6 +357,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("testRun", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestPlan.TestRunComponent> TestRun
       {
         get
@@ -382,6 +385,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("testData", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestPlan.TestDataComponent> TestData
       {
         get
@@ -409,6 +413,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("assertion", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.TestPlan.AssertionComponent> Assertion
       {
         get
@@ -612,7 +617,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan.testCase.dependency"; } }
+      public override string TypeName => "TestPlan.testCase.dependency";
 
       /// <summary>
       /// Description of the criteria.
@@ -784,7 +789,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan.testCase.testRun"; } }
+      public override string TypeName => "TestPlan.testCase.testRun";
 
       /// <summary>
       /// The narrative description of the tests.
@@ -956,7 +961,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan.testCase.testRun.script"; } }
+      public override string TypeName => "TestPlan.testCase.testRun.script";
 
       /// <summary>
       /// The language for the test cases e.g. 'gherkin', 'testscript'.
@@ -1115,7 +1120,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan.testCase.testData"; } }
+      public override string TypeName => "TestPlan.testCase.testData";
 
       /// <summary>
       /// The type of test data description, e.g. 'synthea'.
@@ -1323,7 +1328,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan.testCase.assertion"; } }
+      public override string TypeName => "TestPlan.testCase.assertion";
 
       /// <summary>
       /// Assertion type - for example 'informative' or 'required' .
@@ -1331,6 +1336,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -1358,6 +1364,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("object", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> Object
       {
         get
@@ -1385,6 +1392,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("result", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> Result
       {
         get
@@ -1564,6 +1572,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1908,6 +1917,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1976,6 +1986,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -2004,6 +2015,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -2155,6 +2167,7 @@ namespace Hl7.Fhir.Model
     [Binding("TestPlanCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -2182,6 +2195,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("scope", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Scope
     {
       get
@@ -2250,6 +2264,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("dependency", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TestPlan.DependencyComponent> Dependency
     {
       get
@@ -2318,6 +2333,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("testCase", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.TestPlan.TestCaseComponent> TestCase
     {
       get

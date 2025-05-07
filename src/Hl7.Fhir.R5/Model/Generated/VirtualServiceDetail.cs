@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "VirtualServiceDetail"; } }
+    public override string TypeName => "VirtualServiceDetail";
 
     /// <summary>
     /// Channel Type.
@@ -121,6 +121,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("additionalInfo", InSummary=true, Order=50)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUrl> AdditionalInfoElement
     {
       get

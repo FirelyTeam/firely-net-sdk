@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "MolecularSequence"; } }
+    public override string TypeName => "MolecularSequence";
 
     /// <summary>
     /// Type if a sequence -- DNA, RNA, or amino acid sequence.
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence.relative"; } }
+      public override string TypeName => "MolecularSequence.relative";
 
       /// <summary>
       /// Ways of identifying nucleotides or amino acids within a sequence.
@@ -272,6 +272,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("edit", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.MolecularSequence.EditComponent> Edit
       {
         get
@@ -456,7 +457,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence.relative.startingSequence"; } }
+      public override string TypeName => "MolecularSequence.relative.startingSequence";
 
       /// <summary>
       /// The genome assembly used for starting sequence, e.g. GRCh38.
@@ -906,7 +907,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "MolecularSequence.relative.edit"; } }
+      public override string TypeName => "MolecularSequence.relative.edit";
 
       /// <summary>
       /// Start position of the edit on the starting sequence.
@@ -1208,6 +1209,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1307,6 +1309,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Focus
     {
       get
@@ -1459,6 +1462,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("formatted", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Attachment> Formatted
     {
       get
@@ -1486,6 +1490,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relative", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MolecularSequence.RelativeComponent> Relative
     {
       get

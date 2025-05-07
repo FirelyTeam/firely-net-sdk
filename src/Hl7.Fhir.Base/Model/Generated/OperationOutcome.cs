@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "OperationOutcome"; } }
+    public override string TypeName => "OperationOutcome";
 
     /// <summary>
     /// How the issue affects the success of the action.
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "OperationOutcome.issue"; } }
+      public override string TypeName => "OperationOutcome.issue";
 
       /// <summary>
       /// fatal | error | warning | information | success.
@@ -489,6 +489,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("location", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> LocationElement
       {
         get
@@ -534,6 +535,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("expression", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> ExpressionElement
       {
         get
@@ -747,6 +749,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("issue", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.OperationOutcome.IssueComponent> Issue
     {
       get

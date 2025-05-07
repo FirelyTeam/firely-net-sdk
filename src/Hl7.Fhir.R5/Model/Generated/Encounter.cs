@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Encounter"; } }
+    public override string TypeName => "Encounter";
 
     /// <summary>
     /// The status of the location.
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter.participant"; } }
+      public override string TypeName => "Encounter.participant";
 
       /// <summary>
       /// Role of participant in encounter.
@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Model
       [Binding("ParticipantType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -326,7 +327,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter.reason"; } }
+      public override string TypeName => "Encounter.reason";
 
       /// <summary>
       /// What the reason value should be used for/as.
@@ -335,6 +336,7 @@ namespace Hl7.Fhir.Model
       [Binding("reason-use")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Use
       {
         get
@@ -363,6 +365,7 @@ namespace Hl7.Fhir.Model
       [Binding("EncounterReason")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> Value
       {
         get
@@ -490,7 +493,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter.diagnosis"; } }
+      public override string TypeName => "Encounter.diagnosis";
 
       /// <summary>
       /// The diagnosis relevant to the encounter.
@@ -499,6 +502,7 @@ namespace Hl7.Fhir.Model
       [Binding("condition-code")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableReference> Condition
       {
         get
@@ -527,6 +531,7 @@ namespace Hl7.Fhir.Model
       [Binding("DiagnosisUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Use
       {
         get
@@ -657,7 +662,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter.admission"; } }
+      public override string TypeName => "Encounter.admission";
 
       /// <summary>
       /// Pre-admission identifier.
@@ -1005,7 +1010,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Encounter.location"; } }
+      public override string TypeName => "Encounter.location";
 
       /// <summary>
       /// Location the encounter takes place.
@@ -1267,6 +1272,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1338,6 +1344,7 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterClass")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Class
     {
       get
@@ -1393,6 +1400,7 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -1421,6 +1429,7 @@ namespace Hl7.Fhir.Model
     [Binding("EncounterServiceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> ServiceType
     {
       get
@@ -1505,6 +1514,7 @@ namespace Hl7.Fhir.Model
     [References("EpisodeOfCare")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> EpisodeOfCare
     {
       get
@@ -1534,6 +1544,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","DeviceRequest","MedicationRequest","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -1563,6 +1574,7 @@ namespace Hl7.Fhir.Model
     [References("CareTeam")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> CareTeam
     {
       get
@@ -1646,6 +1658,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("participant", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Encounter.ParticipantComponent> Participant
     {
       get
@@ -1675,6 +1688,7 @@ namespace Hl7.Fhir.Model
     [References("Appointment")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Appointment
     {
       get
@@ -1702,6 +1716,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("virtualService", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.VirtualServiceDetail> VirtualService
     {
       get
@@ -1863,6 +1878,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reason", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Encounter.ReasonComponent> Reason
     {
       get
@@ -1890,6 +1906,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("diagnosis", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Encounter.DiagnosisComponent> Diagnosis
     {
       get
@@ -1919,6 +1936,7 @@ namespace Hl7.Fhir.Model
     [References("Account")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Account
     {
       get
@@ -1947,6 +1965,7 @@ namespace Hl7.Fhir.Model
     [Binding("PatientDiet")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> DietPreference
     {
       get
@@ -1975,6 +1994,7 @@ namespace Hl7.Fhir.Model
     [Binding("Arrangements")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> SpecialArrangement
     {
       get
@@ -2003,6 +2023,7 @@ namespace Hl7.Fhir.Model
     [Binding("Courtesies")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> SpecialCourtesy
     {
       get
@@ -2056,6 +2077,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("location", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Encounter.LocationComponent> Location
     {
       get

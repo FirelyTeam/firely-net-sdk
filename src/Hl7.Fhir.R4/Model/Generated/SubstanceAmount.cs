@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SubstanceAmount"; } }
+    public override string TypeName => "SubstanceAmount";
 
     /// <summary>
     /// Reference range of possible or expected values
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SubstanceAmount.referenceRange"; } }
+      public override string TypeName => "SubstanceAmount.referenceRange";
 
       /// <summary>
       /// Lower limit possible or expected.

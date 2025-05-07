@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "DocumentManifest"; } }
+    public override string TypeName => "DocumentManifest";
 
     /// <summary>
     /// Related things
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "DocumentManifest.related"; } }
+      public override string TypeName => "DocumentManifest.related";
 
       /// <summary>
       /// Identifiers of things that are related.
@@ -258,6 +258,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -426,6 +427,7 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole","Organization","Device","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Author
     {
       get
@@ -455,6 +457,7 @@ namespace Hl7.Fhir.Model
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Recipient
     {
       get
@@ -566,6 +569,7 @@ namespace Hl7.Fhir.Model
     [References("Resource")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Content
     {
       get
@@ -593,6 +597,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("related", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.DocumentManifest.RelatedComponent> Related
     {
       get

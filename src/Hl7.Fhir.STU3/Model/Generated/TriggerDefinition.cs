@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "TriggerDefinition"; } }
+    public override string TypeName => "TriggerDefinition";
 
     /// <summary>
     /// The type of trigger

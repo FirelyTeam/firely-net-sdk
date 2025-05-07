@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ResearchSubject"; } }
+    public override string TypeName => "ResearchSubject";
 
     /// <summary>
     /// Indicates the progression of a study subject through a study

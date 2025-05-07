@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Expression"; } }
+    public override string TypeName => "Expression";
 
     /// <summary>
     /// Natural language description of the condition.

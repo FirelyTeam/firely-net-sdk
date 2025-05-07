@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Location"; } }
+    public override string TypeName => "Location";
 
     /// <summary>
     /// Indicates whether the location is still in use.
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Location.position"; } }
+      public override string TypeName => "Location.position";
 
       /// <summary>
       /// Longitude with WGS84 datum.
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Location.hoursOfOperation"; } }
+      public override string TypeName => "Location.hoursOfOperation";
 
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun.
@@ -389,6 +389,7 @@ namespace Hl7.Fhir.Model
       [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
       {
         get
@@ -687,6 +688,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -824,6 +826,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("alias", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirString> AliasElement
     {
       get
@@ -953,6 +956,7 @@ namespace Hl7.Fhir.Model
     [Binding("LocationType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
     {
       get
@@ -980,6 +984,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("telecom", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
     {
       get
@@ -1142,6 +1147,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("hoursOfOperation", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Location.HoursOfOperationComponent> HoursOfOperation
     {
       get
@@ -1212,6 +1218,7 @@ namespace Hl7.Fhir.Model
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
       get

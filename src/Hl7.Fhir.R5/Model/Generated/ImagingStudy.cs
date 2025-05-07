@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ImagingStudy"; } }
+    public override string TypeName => "ImagingStudy";
 
     /// <summary>
     /// The status of the ImagingStudy.
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingStudy.series"; } }
+      public override string TypeName => "ImagingStudy.series";
 
       /// <summary>
       /// DICOM Series Instance UID for the series.
@@ -320,6 +320,7 @@ namespace Hl7.Fhir.Model
       [References("Endpoint")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Endpoint
       {
         get
@@ -403,6 +404,7 @@ namespace Hl7.Fhir.Model
       [References("Specimen")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Specimen
       {
         get
@@ -471,6 +473,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("performer", InSummary=true, Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImagingStudy.PerformerComponent> Performer
       {
         get
@@ -498,6 +501,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("instance", Order=150)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent> Instance
       {
         get
@@ -816,7 +820,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingStudy.series.performer"; } }
+      public override string TypeName => "ImagingStudy.series.performer";
 
       /// <summary>
       /// Type of performance.
@@ -980,7 +984,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ImagingStudy.series.instance"; } }
+      public override string TypeName => "ImagingStudy.series.instance";
 
       /// <summary>
       /// DICOM SOP Instance UID.
@@ -1270,6 +1274,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1341,6 +1346,7 @@ namespace Hl7.Fhir.Model
     [Binding("ImagingModality")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Modality
     {
       get
@@ -1468,6 +1474,7 @@ namespace Hl7.Fhir.Model
     [References("CarePlan","ServiceRequest","Appointment","AppointmentResponse","Task")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
     {
       get
@@ -1497,6 +1504,7 @@ namespace Hl7.Fhir.Model
     [References("Procedure")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PartOf
     {
       get
@@ -1554,6 +1562,7 @@ namespace Hl7.Fhir.Model
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Endpoint
     {
       get
@@ -1664,6 +1673,7 @@ namespace Hl7.Fhir.Model
     [Binding("ImagingProcedureCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Procedure
     {
       get
@@ -1720,6 +1730,7 @@ namespace Hl7.Fhir.Model
     [Binding("ImagingReason")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
     {
       get
@@ -1747,6 +1758,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get
@@ -1815,6 +1827,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("series", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent> Series
     {
       get

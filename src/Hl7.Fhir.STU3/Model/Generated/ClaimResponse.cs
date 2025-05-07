@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ClaimResponse"; } }
+    public override string TypeName => "ClaimResponse";
 
     /// <summary>
     /// Line items
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClaimResponse.item"; } }
+      public override string TypeName => "ClaimResponse.item";
 
       /// <summary>
       /// Service instance.
@@ -127,6 +127,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("noteNumber", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
         get
@@ -172,6 +173,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("adjudication", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent> Adjudication
       {
         get
@@ -199,6 +201,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("detail", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClaimResponse.ItemDetailComponent> Detail
       {
         get
@@ -364,7 +367,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClaimResponse.item.adjudication"; } }
+      public override string TypeName => "ClaimResponse.item.adjudication";
 
       /// <summary>
       /// Adjudication category such as co-pay, eligible, benefit, etc.
@@ -632,7 +635,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClaimResponse.item.detail"; } }
+      public override string TypeName => "ClaimResponse.item.detail";
 
       /// <summary>
       /// Service instance.
@@ -682,6 +685,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("noteNumber", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
         get
@@ -727,6 +731,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("adjudication", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent> Adjudication
       {
         get
@@ -754,6 +759,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("subDetail", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClaimResponse.SubDetailComponent> SubDetail
       {
         get
@@ -919,7 +925,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClaimResponse.item.detail.subDetail"; } }
+      public override string TypeName => "ClaimResponse.item.detail.subDetail";
 
       /// <summary>
       /// Service instance.
@@ -969,6 +975,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("noteNumber", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
         get
@@ -1014,6 +1021,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("adjudication", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent> Adjudication
       {
         get
@@ -1160,7 +1168,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClaimResponse.addItem"; } }
+      public override string TypeName => "ClaimResponse.addItem";
 
       /// <summary>
       /// Service instances.
@@ -1168,6 +1176,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("sequenceLinkId", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> SequenceLinkIdElement
       {
         get
@@ -1295,6 +1304,7 @@ namespace Hl7.Fhir.Model
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
         get
@@ -1348,6 +1358,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("noteNumber", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
         get
@@ -1393,6 +1404,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("adjudication", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent> Adjudication
       {
         get
@@ -1420,6 +1432,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("detail", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClaimResponse.AddedItemsDetailComponent> Detail
       {
         get
@@ -1680,7 +1693,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClaimResponse.addItem.detail"; } }
+      public override string TypeName => "ClaimResponse.addItem.detail";
 
       /// <summary>
       /// Revenue or cost center code.
@@ -1770,6 +1783,7 @@ namespace Hl7.Fhir.Model
       [Binding("Modifiers")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
       {
         get
@@ -1823,6 +1837,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("noteNumber", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PositiveInt> NoteNumberElement
       {
         get
@@ -1868,6 +1883,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("adjudication", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent> Adjudication
       {
         get
@@ -2090,7 +2106,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClaimResponse.error"; } }
+      public override string TypeName => "ClaimResponse.error";
 
       /// <summary>
       /// Item sequence number.
@@ -2387,7 +2403,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClaimResponse.payment"; } }
+      public override string TypeName => "ClaimResponse.payment";
 
       /// <summary>
       /// Partial or Complete.
@@ -2744,7 +2760,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClaimResponse.processNote"; } }
+      public override string TypeName => "ClaimResponse.processNote";
 
       /// <summary>
       /// Sequence Number for this note.
@@ -3026,7 +3042,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ClaimResponse.insurance"; } }
+      public override string TypeName => "ClaimResponse.insurance";
 
       /// <summary>
       /// Service instance identifier.
@@ -3188,6 +3204,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("preAuthRef", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> PreAuthRefElement
       {
         get
@@ -3429,6 +3446,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -3774,6 +3792,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("item", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ClaimResponse.ItemComponent> Item
     {
       get
@@ -3801,6 +3820,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("addItem", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ClaimResponse.AddedItemComponent> AddItem
     {
       get
@@ -3828,6 +3848,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("error", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ClaimResponse.ErrorComponent> Error
     {
       get
@@ -4013,6 +4034,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("processNote", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ClaimResponse.NoteComponent> ProcessNote
     {
       get
@@ -4042,6 +4064,7 @@ namespace Hl7.Fhir.Model
     [References("CommunicationRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> CommunicationRequest
     {
       get
@@ -4069,6 +4092,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("insurance", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent> Insurance
     {
       get

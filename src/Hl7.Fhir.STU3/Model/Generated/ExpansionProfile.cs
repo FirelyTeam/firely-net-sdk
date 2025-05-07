@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ExpansionProfile"; } }
+    public override string TypeName => "ExpansionProfile";
 
     /// <summary>
     /// How to manage the intersection between a fixed version in a value set, and a fixed version of the system in the expansion profile
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile.fixedVersion"; } }
+      public override string TypeName => "ExpansionProfile.fixedVersion";
 
       /// <summary>
       /// System to have its version fixed.
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile.excludedSystem"; } }
+      public override string TypeName => "ExpansionProfile.excludedSystem";
 
       /// <summary>
       /// The specific code system to be excluded.
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile.designation"; } }
+      public override string TypeName => "ExpansionProfile.designation";
 
       /// <summary>
       /// Designations to be included.
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile.designation.include"; } }
+      public override string TypeName => "ExpansionProfile.designation.include";
 
       /// <summary>
       /// The designation to be included.
@@ -716,6 +716,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("designation", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExpansionProfile.DesignationIncludeDesignationComponent> Designation
       {
         get
@@ -825,7 +826,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile.designation.include.designation"; } }
+      public override string TypeName => "ExpansionProfile.designation.include.designation";
 
       /// <summary>
       /// Human language of the designation to be included.
@@ -999,7 +1000,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile.designation.exclude"; } }
+      public override string TypeName => "ExpansionProfile.designation.exclude";
 
       /// <summary>
       /// The designation to be excluded.
@@ -1007,6 +1008,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("designation", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ExpansionProfile.DesignationExcludeDesignationComponent> Designation
       {
         get
@@ -1116,7 +1118,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ExpansionProfile.designation.exclude.designation"; } }
+      public override string TypeName => "ExpansionProfile.designation.exclude.designation";
 
       /// <summary>
       /// Human language of the designation to be excluded.
@@ -1600,6 +1602,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1668,6 +1671,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1696,6 +1700,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -1723,6 +1728,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("fixedVersion", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ExpansionProfile.FixedVersionComponent> FixedVersion
     {
       get

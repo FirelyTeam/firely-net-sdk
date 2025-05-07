@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Specimen"; } }
+    public override string TypeName => "Specimen";
 
     /// <summary>
     /// Codes providing the status/availability of a specimen.
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Specimen.collection"; } }
+      public override string TypeName => "Specimen.collection";
 
       /// <summary>
       /// Who collected the specimen.
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Specimen.processing"; } }
+      public override string TypeName => "Specimen.processing";
 
       /// <summary>
       /// Textual description of procedure.
@@ -490,6 +490,7 @@ namespace Hl7.Fhir.Model
       [References("Substance")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Additive
       {
         get
@@ -683,7 +684,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Specimen.container"; } }
+      public override string TypeName => "Specimen.container";
 
       /// <summary>
       /// Id for the container.
@@ -691,6 +692,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -1036,6 +1038,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1230,6 +1233,7 @@ namespace Hl7.Fhir.Model
     [References("Specimen")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Parent
     {
       get
@@ -1259,6 +1263,7 @@ namespace Hl7.Fhir.Model
     [References("ProcedureRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Request
     {
       get
@@ -1312,6 +1317,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("processing", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Specimen.ProcessingComponent> Processing
     {
       get
@@ -1339,6 +1345,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("container", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Specimen.ContainerComponent> Container
     {
       get
@@ -1366,6 +1373,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("note", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Annotation> Note
     {
       get

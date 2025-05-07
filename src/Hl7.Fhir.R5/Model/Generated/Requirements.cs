@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Requirements"; } }
+    public override string TypeName => "Requirements";
 
     /// <summary>
     /// Description Needed Here
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Requirements.statement"; } }
+      public override string TypeName => "Requirements.statement";
 
       /// <summary>
       /// Key that identifies this statement.
@@ -203,6 +203,7 @@ namespace Hl7.Fhir.Model
       [Binding("??")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>> ConformanceElement
       {
         get
@@ -413,6 +414,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("satisfiedBy", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirUrl> SatisfiedByElement
       {
         get
@@ -458,6 +460,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("reference", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirUrl> ReferenceElement
       {
         get
@@ -505,6 +508,7 @@ namespace Hl7.Fhir.Model
       [References("CareTeam","Device","Group","HealthcareService","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Source
       {
         get
@@ -817,6 +821,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1161,6 +1166,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
     {
       get
@@ -1229,6 +1235,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
     {
       get
@@ -1257,6 +1264,7 @@ namespace Hl7.Fhir.Model
     [Binding("Jurisdiction")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
     {
       get
@@ -1407,6 +1415,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("derivedFrom", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> DerivedFromElement
     {
       get
@@ -1452,6 +1461,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("reference", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.FhirUrl> ReferenceElement
     {
       get
@@ -1497,6 +1507,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("actor", Order=280, FiveWs="FiveWs.who")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Canonical> ActorElement
     {
       get
@@ -1542,6 +1553,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("statement", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Requirements.StatementComponent> Statement
     {
       get

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "SpecimenDefinition"; } }
+    public override string TypeName => "SpecimenDefinition";
 
     /// <summary>
     /// Degree of preference of a type of conditioned specimen.
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SpecimenDefinition.typeTested"; } }
+      public override string TypeName => "SpecimenDefinition.typeTested";
 
       /// <summary>
       /// Primary or secondary specimen.
@@ -312,6 +312,7 @@ namespace Hl7.Fhir.Model
       [Binding("RejectionCriterion")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> RejectionCriterion
       {
         get
@@ -339,6 +340,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("handling", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SpecimenDefinition.HandlingComponent> Handling
       {
         get
@@ -577,7 +579,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SpecimenDefinition.typeTested.container"; } }
+      public override string TypeName => "SpecimenDefinition.typeTested.container";
 
       /// <summary>
       /// Container material.
@@ -761,6 +763,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("additive", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent> Additive
       {
         get
@@ -1043,7 +1046,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SpecimenDefinition.typeTested.container.additive"; } }
+      public override string TypeName => "SpecimenDefinition.typeTested.container.additive";
 
       /// <summary>
       /// Additive associated with container.
@@ -1163,7 +1166,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "SpecimenDefinition.typeTested.handling"; } }
+      public override string TypeName => "SpecimenDefinition.typeTested.handling";
 
       /// <summary>
       /// Temperature qualifier.
@@ -1475,6 +1478,7 @@ namespace Hl7.Fhir.Model
     [Binding("PreparePatient")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> PatientPreparation
     {
       get
@@ -1544,6 +1548,7 @@ namespace Hl7.Fhir.Model
     [Binding("SpecimenCollection")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Collection
     {
       get
@@ -1571,6 +1576,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("typeTested", Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent> TypeTested
     {
       get

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Subscription"; } }
+    public override string TypeName => "Subscription";
 
     /// <summary>
     /// The status of a subscription.
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Subscription.channel"; } }
+      public override string TypeName => "Subscription.channel";
 
       /// <summary>
       /// rest-hook | websocket | email | sms | message.
@@ -284,6 +284,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("header", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.FhirString> HeaderElement
       {
         get
@@ -502,6 +503,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("contact", InSummary=true, Order=100, FiveWs="who.focus")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
     {
       get
@@ -723,6 +725,7 @@ namespace Hl7.Fhir.Model
     [Binding("SubscriptionTag")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Coding> Tag
     {
       get

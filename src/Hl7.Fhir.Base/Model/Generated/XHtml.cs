@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "xhtml"; } }
+    public override string TypeName => "xhtml";
 
     public XHtml(string? value)
     {

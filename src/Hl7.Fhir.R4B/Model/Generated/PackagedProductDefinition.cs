@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "PackagedProductDefinition"; } }
+    public override string TypeName => "PackagedProductDefinition";
 
     /// <summary>
     /// The legal status of supply of the packaged item as classified by the regulator
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition.legalStatusOfSupply"; } }
+      public override string TypeName => "PackagedProductDefinition.legalStatusOfSupply";
 
       /// <summary>
       /// The actual status of supply. In what situation this package type may be supplied for use.
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition.package"; } }
+      public override string TypeName => "PackagedProductDefinition.package";
 
       /// <summary>
       /// An identifier that is specific to this particular part of the packaging. Including possibly a Data Carrier Identifier.
@@ -241,6 +241,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Identifier> Identifier
       {
         get
@@ -337,6 +338,7 @@ namespace Hl7.Fhir.Model
       [Binding("PackageMaterial")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Material
       {
         get
@@ -365,6 +367,7 @@ namespace Hl7.Fhir.Model
       [Binding("PackageMaterial")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> AlternateMaterial
       {
         get
@@ -392,6 +395,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("shelfLifeStorage", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PackagedProductDefinition.ShelfLifeStorageComponent> ShelfLifeStorage
       {
         get
@@ -421,6 +425,7 @@ namespace Hl7.Fhir.Model
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
       {
         get
@@ -448,6 +453,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("property", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PackagedProductDefinition.PropertyComponent> Property
       {
         get
@@ -475,6 +481,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("containedItem", InSummary=true, Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PackagedProductDefinition.ContainedItemComponent> ContainedItem
       {
         get
@@ -502,6 +509,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("package", InSummary=true, Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.PackagedProductDefinition.PackageComponent> Package
       {
         get
@@ -778,7 +786,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition.package.shelfLifeStorage"; } }
+      public override string TypeName => "PackagedProductDefinition.package.shelfLifeStorage";
 
       /// <summary>
       /// This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified.
@@ -840,6 +848,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("specialPrecautionsForStorage", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> SpecialPrecautionsForStorage
       {
         get
@@ -983,7 +992,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition.package.property"; } }
+      public override string TypeName => "PackagedProductDefinition.package.property";
 
       /// <summary>
       /// A code expressing the type of characteristic.
@@ -1144,7 +1153,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "PackagedProductDefinition.package.containedItem"; } }
+      public override string TypeName => "PackagedProductDefinition.package.containedItem";
 
       /// <summary>
       /// The actual item(s) of medication, as manufactured, or a device, or other medically related item (food, biologicals, raw materials, medical fluids, gases etc.), as contained in the package.
@@ -1297,6 +1306,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1394,6 +1404,7 @@ namespace Hl7.Fhir.Model
     [References("MedicinalProductDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> PackageFor
     {
       get
@@ -1489,6 +1500,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("containedItemQuantity", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Quantity> ContainedItemQuantity
     {
       get
@@ -1557,6 +1569,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("legalStatusOfSupply", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.PackagedProductDefinition.LegalStatusOfSupplyComponent> LegalStatusOfSupply
     {
       get
@@ -1584,6 +1597,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("marketingStatus", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.MarketingStatus> MarketingStatus
     {
       get
@@ -1612,6 +1626,7 @@ namespace Hl7.Fhir.Model
     [Binding("PackageCharacteristic")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
     {
       get
@@ -1682,6 +1697,7 @@ namespace Hl7.Fhir.Model
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Manufacturer
     {
       get

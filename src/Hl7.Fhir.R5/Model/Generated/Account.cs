@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Account"; } }
+    public override string TypeName => "Account";
 
     /// <summary>
     /// Indicates whether the account is available to be used.
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account.coverage"; } }
+      public override string TypeName => "Account.coverage";
 
       /// <summary>
       /// The party(s), such as insurances, that may contribute to the payment of this account.
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account.guarantor"; } }
+      public override string TypeName => "Account.guarantor";
 
       /// <summary>
       /// Responsible entity.
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account.diagnosis"; } }
+      public override string TypeName => "Account.diagnosis";
 
       /// <summary>
       /// Ranking of the diagnosis (for each type).
@@ -639,6 +639,7 @@ namespace Hl7.Fhir.Model
       [Binding("DiagnosisUse")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -708,6 +709,7 @@ namespace Hl7.Fhir.Model
       [Binding("diagnosis-package-code")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> PackageCode
       {
         get
@@ -911,7 +913,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account.procedure"; } }
+      public override string TypeName => "Account.procedure";
 
       /// <summary>
       /// Ranking of the procedure (for each type).
@@ -1029,6 +1031,7 @@ namespace Hl7.Fhir.Model
       [Binding("procedure-type")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
       {
         get
@@ -1057,6 +1060,7 @@ namespace Hl7.Fhir.Model
       [Binding("procedure-package-code")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.CodeableConcept> PackageCode
       {
         get
@@ -1086,6 +1090,7 @@ namespace Hl7.Fhir.Model
       [References("Device")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.ResourceReference> Device
       {
         get
@@ -1286,7 +1291,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account.relatedAccount"; } }
+      public override string TypeName => "Account.relatedAccount";
 
       /// <summary>
       /// Relationship of the associated Account.
@@ -1451,7 +1456,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Account.balance"; } }
+      public override string TypeName => "Account.balance";
 
       /// <summary>
       /// Who is expected to pay this part of the balance.
@@ -1711,6 +1716,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -1878,6 +1884,7 @@ namespace Hl7.Fhir.Model
     [References("Patient","Device","Practitioner","PractitionerRole","Location","HealthcareService","Organization")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Subject
     {
       get
@@ -1931,6 +1938,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("coverage", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Account.CoverageComponent> Coverage
     {
       get
@@ -2027,6 +2035,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("guarantor", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Account.GuarantorComponent> Guarantor
     {
       get
@@ -2054,6 +2063,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("diagnosis", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Account.DiagnosisComponent> Diagnosis
     {
       get
@@ -2081,6 +2091,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("procedure", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Account.ProcedureComponent> Procedure
     {
       get
@@ -2108,6 +2119,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("relatedAccount", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Account.RelatedAccountComponent> RelatedAccount
     {
       get
@@ -2162,6 +2174,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("balance", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Account.BalanceComponent> Balance
     {
       get

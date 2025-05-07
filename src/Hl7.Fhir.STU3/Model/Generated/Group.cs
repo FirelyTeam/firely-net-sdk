@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Group"; } }
+    public override string TypeName => "Group";
 
     /// <summary>
     /// Types of resources that are part of group
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Group.characteristic"; } }
+      public override string TypeName => "Group.characteristic";
 
       /// <summary>
       /// Kind of characteristic.
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Group.member"; } }
+      public override string TypeName => "Group.member";
 
       /// <summary>
       /// Reference to the group member.
@@ -611,6 +611,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Identifier> Identifier
     {
       get
@@ -873,6 +874,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("characteristic", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Group.CharacteristicComponent> Characteristic
     {
       get
@@ -900,6 +902,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("member", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Group.MemberComponent> Member
     {
       get

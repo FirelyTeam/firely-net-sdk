@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "UsageContext"; } }
+    public override string TypeName => "UsageContext";
 
     /// <summary>
     /// Type of context being specified.

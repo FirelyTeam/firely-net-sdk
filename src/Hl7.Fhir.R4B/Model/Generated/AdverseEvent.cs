@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "AdverseEvent"; } }
+    public override string TypeName => "AdverseEvent";
 
     /// <summary>
     /// Overall nature of the adverse event, e.g. real or potential.
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdverseEvent.suspectEntity"; } }
+      public override string TypeName => "AdverseEvent.suspectEntity";
 
       /// <summary>
       /// Refers to the specific entity that caused the adverse event.
@@ -210,6 +210,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("causality", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.AdverseEvent.CausalityComponent> Causality
       {
         get
@@ -334,7 +335,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "AdverseEvent.suspectEntity.causality"; } }
+      public override string TypeName => "AdverseEvent.suspectEntity.causality";
 
       /// <summary>
       /// Assessment of if the entity caused the event.
@@ -665,6 +666,7 @@ namespace Hl7.Fhir.Model
     [Binding("AdverseEventCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
     {
       get
@@ -901,6 +903,7 @@ namespace Hl7.Fhir.Model
     [References("Condition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ResultingCondition
     {
       get
@@ -1067,6 +1070,7 @@ namespace Hl7.Fhir.Model
     [References("Practitioner","PractitionerRole","Device")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Contributor
     {
       get
@@ -1094,6 +1098,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("suspectEntity", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent> SuspectEntity
     {
       get
@@ -1123,6 +1128,7 @@ namespace Hl7.Fhir.Model
     [References("Condition","Observation","AllergyIntolerance","FamilyMemberHistory","Immunization","Procedure","Media","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> SubjectMedicalHistory
     {
       get
@@ -1152,6 +1158,7 @@ namespace Hl7.Fhir.Model
     [References("DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> ReferenceDocument
     {
       get
@@ -1181,6 +1188,7 @@ namespace Hl7.Fhir.Model
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.ResourceReference> Study
     {
       get

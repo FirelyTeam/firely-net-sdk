@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "Bundle"; } }
+    public override string TypeName => "Bundle";
 
     /// <summary>
     /// Indicates the purpose of a bundle - how it is intended to be used.
@@ -955,7 +955,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Bundle.link"; } }
+      public override string TypeName => "Bundle.link";
 
       /// <summary>
       /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1.
@@ -1167,7 +1167,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Bundle.entry"; } }
+      public override string TypeName => "Bundle.entry";
 
       /// <summary>
       /// Links related to this entry.
@@ -1175,6 +1175,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("link", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
+      [AllowNull]
       public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
       {
         get
@@ -1523,7 +1524,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Bundle.entry.search"; } }
+      public override string TypeName => "Bundle.entry.search";
 
       /// <summary>
       /// match | include - why this is in the result set.
@@ -1714,7 +1715,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Bundle.entry.request"; } }
+      public override string TypeName => "Bundle.entry.request";
 
       /// <summary>
       /// GET | HEAD | POST | PUT | DELETE | PATCH.
@@ -2147,7 +2148,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Bundle.entry.response"; } }
+      public override string TypeName => "Bundle.entry.response";
 
       /// <summary>
       /// Status response code (text optional).
@@ -2649,6 +2650,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("link", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
     {
       get
@@ -2676,6 +2678,7 @@ namespace Hl7.Fhir.Model
     [FhirElement("entry", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
+    [AllowNull]
     public List<Hl7.Fhir.Model.Bundle.EntryComponent> Entry
     {
       get
